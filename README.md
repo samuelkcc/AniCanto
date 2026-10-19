@@ -26,6 +26,16 @@ The big entrance. The awkward confession. The perfectly timed “出發啦！”
 
 **想用英文學廣東話？** 可以用英文介面，同時製作廣東話及英文音軌，再配合字幕比較意思。適合試聽同探索語言；AI 翻譯同發音仍要留意準確度。
 
+## A hobby project, made for learning · 由學習開始嘅興趣作品
+
+AniCanto began with a small family wish: helping the developer’s children hear everyday Hong Kong Cantonese while reading Chinese subtitles and learning Chinese characters. Animation made that idea fun. Sharing it is a way to invite more people — including English speakers — to discover Cantonese expression and culture.
+
+AniCanto 最初係一個家庭入面嘅小想法：希望小朋友一邊聽香港廣東話，一邊睇中文字幕，接觸日常口語同學中文字。動畫令學習多一份趣味；分享呢個興趣作品，亦希望世界各地、包括講英文嘅朋友，都可以認識廣東話嘅表達同文化。
+
+**With respect to voice performers.** Dubbing is a craft: character interpretation, emotion, timing, pronunciation and dramatic intent come from people’s training, creativity and dedication. AniCanto is for personal learning and creative experiments. **It is not intended to replace professional voice actors, and its AI output does not meet the standard of a professional performance.** Please recognise and support the performers behind the voices you love.
+
+**向專業配音員及聲優致敬。** 角色理解、情緒、節奏、發音同戲劇表達，背後都係表演者嘅訓練、創意同付出。AniCanto 係個人學習同創作實驗工具，**唔係用嚟取代專業配音員；AI 配音亦未達專業演繹水準。** 希望大家繼續欣賞同支持鍾意嘅聲音背後嗰位表演者。
+
 ## What makes it different · 有乜特別
 
 | | |
@@ -148,6 +158,8 @@ Normal mode attempts automatic checks and repair. High-speed mode skips quality 
 
 - **Animation first, Japanese first.** The main workflow targets Japanese animated dialogue, not live dubbing or every possible source language. / **以日本動畫為主**，唔係即時配音，亦唔保證適用所有原聲語言。
 - **Difficult audio is still difficult.** Overlapping speakers, shouting, whispers, songs, effects and noisy separation can affect recognition, reference quality and completeness. / **重疊對白、叫喊、細聲、歌曲、音效同分離雜音**都可能影響辨識、參考聲線及完整度。
+- **One character, not always one consistent voice.** Normal mode imitates a source reference for each line; it does not lock a character’s identity or timbre across a whole episode. Voice colour, accent and expression can vary between takes. / **同一角色，聲線唔一定完全一致**：一般模式逐句參考原聲模擬，唔係全片鎖定角色身份或音色；不同錄音之間仍可能有聲線、口音同情緒差異。
+- **Expressive acting can confuse the AI.** Professional Japanese performers may change timbre dramatically for whispers, shouting, comedy or emotion. When role analysis is used, AI can split the same character into different roles, or merge similar voices. That is a limit of AI recognition, not a flaw in the acting. / **精彩演繹亦可能令 AI 分錯角色**：日本聲優喺耳語、叫喊、搞笑或情緒轉換時，聲線可以有好大變化；做角色分析時，AI 可能將同一角色拆成幾個，亦可能將相似聲音合併。呢個係 AI 辨識限制，唔係表演者嘅問題。
 - **Automatic repair has limits.** Translation, names, accent, emotion, speaker identity and lip sync can still be wrong. A voice-per-line reference is not proof of a recognised character. / **自動修復唔係零錯誤保證**；翻譯、人名、口音、情緒、角色身份同嘴形同步仍可能有誤，逐句原聲參考亦唔等於已識別角色。
 - **No cut-off speech as a shortcut.** The workflow tries shorter wording, full retakes and safe timing changes; small tempo adjustments are bounded. Some lines can remain unresolved. / **唔以斬尾作捷徑**；流程會嘗試精簡、完整重錄同安全時間安排，調速幅度有限，仍可能有未解決對白。
 - **Opening/ending songs stay Japanese by default.** Detection can miss unusual arrangements; inspect the result. / **OP／ED 預設保留日文**；特殊編排可能偵測唔準，需要留意成品。

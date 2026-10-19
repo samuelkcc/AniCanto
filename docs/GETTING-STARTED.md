@@ -59,3 +59,13 @@ A labelled incomplete preview can contain original Japanese speech for unresolve
 English speakers can keep the English interface and compare the original Japanese, Cantonese and English text/audio. Check unfamiliar names and expressions: the app can mistranslate, and generated speech is not an authoritative pronunciation model.
 
 英語用戶可用英文介面，比較日文、廣東話及英文文字／音軌。人名同陌生用語記得核對：AI 可能譯錯，生成語音亦唔係權威發音教材。
+
+## Voice consistency / 角色聲線一致性
+
+Normal mode uses a source-voice reference for each line. The result is an imitation of that clip, not a guaranteed persistent voice identity. Even with Drama 3, accent, timbre and expression can change between takes. Optional role analysis may split one character or merge similar voices, especially when the original performer uses a wide emotional range.
+
+一般模式逐句模擬原聲參考，唔保證同一角色全片保持完全一致。即使用 Drama 3，口音、音色同情緒仍可能有差異。選用角色分析時，原聲演繹變化大可能令 AI 將同一角色拆開，亦可能合併相似聲線。
+
+AniCanto is a hobby project for learning and creative exploration. It does not replace professional dubbing. Please respect and support professional voice performers and use only voices and media you are permitted to process.
+
+AniCanto 係學習同創作探索嘅興趣作品，唔會取代專業配音。請尊重及支持配音員，只使用有權處理嘅聲音同影音。
