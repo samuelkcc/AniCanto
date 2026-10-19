@@ -26,6 +26,14 @@ Dubbing is a craft. Character interpretation, emotion, timing, pronunciation and
 
 AniCanto is for personal learning and creative experiments. **It is not intended to replace professional voice actors, and its AI output does not meet the standard of a professional performance.** Please recognise and support the performers behind the voices you love.
 
+## Built by learning from the failures
+
+Japanese animation is a particularly demanding test for AI dubbing: expressive performances, rapid changes of emotion, overlapping voices and cross-language voice imitation can all expose weaknesses in the workflow.
+
+Getting from the first prototype to the current build has taken repeated testing and refinement. Much of that work means watching failed conversions, listening to individual lines, tracing what went wrong and adjusting how the app handles exceptions. A fix is checked against other situations too; improving one scene should not damage another.
+
+**Human judgement remains essential.** AI can flag suspicious recordings and try repairs, but matching a character’s voice, preserving dramatic intent and deciding whether a line sounds natural still need a person to listen. Automatic checks do not prove that a performance is right. AniCanto is an evolving hobby project, and that process of listening, testing and improving continues.
+
 ## A new way to hear a familiar scene
 
 The big entrance. The awkward confession. The perfectly timed “Let’s go!” AniCanto lets you explore how a familiar scene feels in Hong Kong Cantonese, with English alongside it when you want a little help following along.
