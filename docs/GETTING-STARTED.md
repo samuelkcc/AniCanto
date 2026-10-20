@@ -46,7 +46,7 @@ High-speed mode deliberately omits quality review and quality-driven retakes. Ch
 
 The review report distinguishes unfinished work from verified results. When available, compare the original mix, separated speech and generated take. Expert mode lets you edit the script, inspect the timeline, audition or retake a line, and export a new version while retaining earlier recordings and exports.
 
-After original-voice repair attempts, the same engine may try a bundled target-language reference. This can change the voice; the report identifies it and does not call it verified character imitation.
+The app tries safe gaps, original-voice repairs and bounded gentle tempo adjustments first. If those are exhausted, the same engine may try a bundled target-language reference. This can change the voice; the report identifies it and does not call it verified character imitation.
 
 A labelled incomplete preview can contain original Japanese speech for unresolved lines. Do not mistake it for a fully verified Cantonese export. Hardware or model failures can still prevent an export.
 

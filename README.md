@@ -164,7 +164,7 @@ This is a developer-provided reference, not a newly repeated benchmark or a time
 5. **Generate and repair** — Generate takes, check language/content/timing, then try targeted rewriting, retakes, reference repair or bounded timing and tempo adjustments when needed.
 6. **Review and export** — Mix the selected voices with the background, keep the original track and produce a versioned export with the selected subtitles.
 
-After bounded attempts with the original voice, a target-language reference may be used to recover missing translated speech. The report identifies this voice change; it is not certified character imitation. Small timing differences can use safe neighbouring gaps, while scene boundaries and other dialogue remain protected.
+After bounded rewrites, reference repair and gentle timing adjustments with the original voice, a target-language reference may be used as a last resort to recover translated speech. The report identifies this voice change; it is not certified character imitation. Small timing differences can use safe neighbouring gaps, while OP/ED boundaries and other dialogue remain protected; a shot change alone does not require replacing a fitting voice.
 
 Normal mode attempts automatic checks and repair. High-speed mode skips quality review and quality-driven retakes. If a complete dub cannot be verified, a labelled incomplete preview may retain source speech for affected lines; that is not presented as a finished Cantonese dub.
 
