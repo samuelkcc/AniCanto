@@ -1,10 +1,12 @@
+[繁體中文](zh-HK/LICENSING.md) · **English**
+
 # Licensing & release scope
 
-[← AniCanto](../README.md)
+[← AniCanto](../README.en.md)
 
 ## What is in this repository
 
-At this preparation stage, the repository contains the English-led project introduction with a Chinese opening and English translation, guides and original demonstration screenshots/cover. It does not contain application binaries, model weights, user media or the complete application source tree. Public downloads and full source publication remain pending.
+At this preparation stage, the repository contains the Traditional Chinese and English project introductions, language-matched guides and original demonstration screenshots/cover. It does not contain application binaries, model weights, user media or the complete application source tree. Public downloads and full source publication remain pending.
 
 The original application code is MIT, copyright © 2026 SCKC. Preserve [LICENSE](../LICENSE). A root MIT licence does not relicense third-party dependencies or model weights.
 

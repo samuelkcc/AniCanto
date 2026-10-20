@@ -1,199 +1,203 @@
+**繁體中文** · [English](README.en.md)
+
 <p align="center">
-  <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話. Original assistants celebrating Hong Kong Cantonese around a studio microphone." width="1200">
+  <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話。原創助手圍住錄音咪，一齊探索香港廣東話。" width="1200">
 </p>
 
 # AniCanto
 
-**Your anime. A Cantonese voice.**
+**你嘅動畫，另一把聲音。**
 
-Local AI dubbing for Japanese animation — **Hong Kong Cantonese, English, or both in the same video.**
+為日本動畫而設嘅本機 AI 配音工作室——**香港廣東話、英文，或者同一條影片保留兩種配音。**
 
-## Why this little project exists
+## 點解會有呢個小作品
 
 AniCanto 係一個由興趣開始嘅小作品。最初只係希望小朋友可以一邊聽香港廣東話，一邊睇中文字幕，接觸日常口語同學中文字。App 以香港繁體中文為主要設計語言，另設英文介面，方便對廣東話有興趣嘅英語人士使用同參考。希望透過動畫嘅趣味，讓更多人認識香港廣東話嘅表達同文化。
 
 AniCanto started as a hobby project with a simple family wish: helping children hear everyday Hong Kong Cantonese while reading Chinese subtitles and learning Chinese characters. **The app is designed primarily in Hong Kong Traditional Chinese, with an English interface to help English speakers interested in Cantonese use it and follow along.** Through the fun of animation, the project invites more people to discover Cantonese expression and culture.
 
-[Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
+[睇吓介面](#睇吓工作室) · [影片與字幕來源](#由日文對白到廣東話及英文) · [模型及硬件](#模型及硬件建議) · [處理流程](#由影片到配音) · [使用限制](#使用前要知道嘅限制) · [☕ 支持計劃](#支持更多人認識廣東話)
 
-> **Development preview**
+> **開發預覽**
 >
-> This repository currently introduces the project. Public app downloads and the complete source release are being prepared; they are not available here yet.
+> 呢個儲存庫目前用嚟介紹計劃。公開 App 下載及完整原始碼仍在準備，暫時未提供下載。
 
-## With respect to voice performers
+## 向專業配音員致敬
 
-Dubbing is a craft. Character interpretation, emotion, timing, pronunciation and dramatic intent come from people’s training, creativity and dedication.
+配音係一門專業。角色演繹、情緒、節奏、發音同戲劇效果，都來自配音員嘅訓練、創意同投入。
 
-AniCanto is for personal learning and creative experiments. **It is not intended to replace professional voice actors, and its AI output does not meet the standard of a professional performance.** Please recognise and support the performers behind the voices you love.
+AniCanto 用於個人學習同創作實驗，**唔係用嚟取代專業配音員，AI 生成亦未達到專業演出嘅標準。** 希望大家欣賞熟悉嘅聲音之餘，繼續尊重同支持背後嘅表演者。
 
-## Built by learning from the failures
+## 由失敗片段一路學返嚟
 
-Japanese animation is a particularly demanding test for AI dubbing: expressive performances, rapid changes of emotion, overlapping voices and cross-language voice imitation can all expose weaknesses in the workflow.
+日本動畫對 AI 配音特別具挑戰：情緒轉變大、表演誇張、多人搭聲，加上跨語言模擬聲線，都會暴露流程嘅不足。
 
-Getting from the first prototype to the current build has taken repeated testing and refinement. Much of that work means watching failed conversions, listening to individual lines, tracing what went wrong and adjusting how the app handles exceptions. A fix is checked against other situations too; improving one scene should not damage another.
+由初版到目前版本，經歷咗反覆測試同調整。好多工作都係睇返失敗嘅轉換、逐句聽錄音、追查原因，再改善例外情況嘅處理。同時亦要檢查其他情況，避免修好一幕又影響另一幕。
 
-**Human judgement remains essential.** AI can flag suspicious recordings and try repairs, but matching a character’s voice, preserving dramatic intent and deciding whether a line sounds natural still need a person to listen. Automatic checks do not prove that a performance is right. AniCanto is an evolving hobby project, and that process of listening, testing and improving continues.
+**人嘅判斷仍然重要。** AI 可以標示疑點同嘗試修復，但角色聲線似唔似、意思有冇變、講出嚟自然唔自然，仍然需要人去聽。自動檢查通過唔代表演繹一定正確；呢個興趣計劃會繼續靠試聽、測試同改進慢慢成長。
 
-## A new way to hear a familiar scene
+## 用廣東話，再聽一次熟悉嘅一幕
 
-The big entrance. The awkward confession. The perfectly timed “Let’s go!” AniCanto lets you explore how a familiar scene feels in Hong Kong Cantonese, with English alongside it when you want a little help following along.
+登場嗰句說話、尷尬嘅告白、一聲「出發啦！」——試吓用香港廣東話，重新感受熟悉嘅場面；想比較意思，亦可以一齊加入英文配音同字幕。
 
-**Curious about Cantonese?** Use the English interface, generate Cantonese and English audio, and compare the subtitle options. Enjoy discovering new expressions while keeping in mind that AI translations and pronunciation can be wrong.
+**想認識廣東話？** 可以用英文介面，比較廣東話、英文同原裝日文，慢慢發掘新詞句。翻譯同發音仍可能出錯，適合探索同參考。
 
-## What makes it different
+## 特色功能
 
-| Made for animation | A studio to explore |
+| 為動畫而設 | 可以細聽細改嘅工作室 |
 |---|---|
-| **🎵 Keep the opening and ending**<br>Detect OP/ED songs and preserve their original Japanese audio by default. | **🔁 Repair, then listen again**<br>Automatic repair can adapt a line, regenerate a take and check the new recording. |
-| **🌏 Cantonese + English dubbing**<br>Generate both languages in one production, with separate Cantonese and English audio tracks in the same exported video and switchable subtitles. | **🎬 Simple start, detailed control**<br>Basic mode for automatic production; Expert mode adds a timeline, line editing and retakes. |
-| **🎧 Hear the evidence**<br>Compare the original mix, separated voice and generated recording in the review report when available. | **💻 Run on your own computer**<br>Model inference runs locally after setup. Queue videos, pause, save and resume your work. |
+| **🎵 保留片頭及片尾歌曲**<br>自動偵測 OP／ED，預設保留日文原聲。 | **🔁 自動修復，再覆聽**<br>按疑點調整台詞、重新生成，再檢查新錄音。 |
+| **🌏 廣東話＋英文雙語配音**<br>同一次製作生成兩種配音，放入同一條影片嘅獨立音軌，配合可切換字幕。 | **🎬 簡單開始，亦可深入編輯**<br>基本模式方便自動製作；專家模式提供時間軸、逐句編輯同重錄。 |
+| **🎧 聽返判斷依據**<br>校對報告可比較原裝混音、分離聲音同生成錄音，視乎檔案是否可用。 | **💻 喺自己電腦處理**<br>模型準備好後喺本機推論，支援影片排隊、暫停、儲存同繼續。 |
 
-OP/ED detection and repair are automatic attempts, not a guarantee that every song boundary, voice or line will be recognised correctly. The report keeps unfinished work visible.
+OP／ED 偵測同修復都係自動嘗試，唔保證每個歌曲邊界、角色或對白都判斷正確；未完成嘅項目會喺報告保留顯示。
 
-## A look inside
+## 睇吓工作室
 
-The app’s primary design language is **Hong Kong Traditional Chinese**. The English interface makes the same workspace accessible to English speakers exploring Cantonese. Screenshots below use that English interface for this project page; the [full gallery](docs/SCREENSHOTS.md) also includes Traditional Chinese views.
+App 以**香港繁體中文**為主要設計語言，另設英文介面。本頁用繁中介面截圖；切換到 [English 頁面](README.en.md) 就會見到英文介面截圖。[完整介面圖集](docs/zh-HK/SCREENSHOTS.md)亦有對應語言版本。
 
-Screenshots show the real application interface with original demonstration dialogue and illustrative project/model states. They contain no commercial anime footage and are not conversion benchmarks.
+截圖來自實際介面，使用原創示範對白同示意專案／模型狀態，唔包含商業動畫畫面，亦唔代表轉換效能測試。
 
-### 01 · Pick your way in
+### 01 · 揀你嘅開始方式
 
-![English Welcome screen with Basic and Expert mode choices](docs/images/welcome-en.png)
+![繁中歡迎畫面，可選基本模式或專家模式](docs/images/welcome-zh-HK.png)
 
-Original assistants and two ways into the same studio, with a choice of Hong Kong Traditional Chinese or English interface text.
+原創助手陪你進入工作室；可選香港繁體中文或英文介面。
 
-### 02 · Start simply
+### 02 · 簡單開始製作
 
-![English Basic mode with a demonstration video queue and automatic production settings](docs/images/basic-en.png)
+![繁中基本模式，顯示示範影片清單同自動製作設定](docs/images/basic-zh-HK.png)
 
-Import your videos, choose a dubbing language and an output folder, then let the workflow proceed.
+加入影片、揀配音語言同輸出資料夾，再交俾流程處理。
 
-### 03 · Get close to every line
+### 03 · 逐句細聽細改
 
-![English Expert mode with a timeline, source Japanese text, Cantonese script and recording controls](docs/images/timeline-en.png)
+![繁中專家模式，顯示時間軸、日文原文、廣東話台詞及錄音控制](docs/images/timeline-zh-HK.png)
 
-Browse the timeline, compare source text and the dubbing script, audition a line and keep earlier takes.
+瀏覽時間軸、比較原文同配音稿、試聽每句，亦可以保留先前錄音。
 
-### 04 · See what the AI checked
+### 04 · 睇返 AI 檢查過啲乜
 
-![English review report showing dialogue, timing measurements, automatic attempts and audio comparisons](docs/images/review-en.png)
+![繁中校對報告，顯示對白、時長、自動修復紀錄同試聽選項](docs/images/review-zh-HK.png)
 
-The report shows the source line, translated script, recognised generated speech, timing and repair attempts. Unresolved lines remain labelled.
+報告列出原文、翻譯稿、生成錄音辨識結果、時長同修復嘗試；未解決項目會清楚標示。
 
-### 05 · Keep a batch in order
+### 05 · 管理一批影片
 
-![English projects page with queue ordering controls and export destinations](docs/images/batch-en.png)
+![繁中專案管理，顯示影片排序、處理狀態同輸出位置](docs/images/batch-zh-HK.png)
 
-Reorder waiting videos, see each project’s status and resume unfinished work.
+調整等待中影片嘅次序，查看各專案狀態，繼續未完成工作。
 
 <details>
-<summary><strong>More screenshots</strong></summary>
+<summary><strong>更多介面截圖</strong></summary>
 
-| Models & setup | Preferences |
+| 模型及準備 | 偏好設定 |
 |---|---|
-| ![English model quality and setup options](docs/images/models-setup-en.png) | ![English language, theme and appearance preferences](docs/images/preferences-en.png) |
+| ![繁中模型品質及準備選項](docs/images/models-setup-zh-HK.png) | ![繁中語言、主題及外觀設定](docs/images/preferences-zh-HK.png) |
 
-[View the complete interface gallery](docs/SCREENSHOTS.md)
+[睇完整介面圖集](docs/zh-HK/SCREENSHOTS.md)
 
 </details>
 
-## Japanese dialogue, Chinese subtitles, two new voices
+## 由日文對白到廣東話及英文
 
-**AniCanto supports Cantonese and English bilingual dubbing.** Choose Cantonese, English, or both. With both selected, the exported video contains separate Cantonese and English dubbed audio tracks, alongside the original Japanese track when retained. Switch audio languages in a compatible player; the two dubs do not play over each other.
+**支援廣東話及英文雙語配音。** 可以揀廣東話、英文，或者兩種一齊製作。雙語成品會喺同一條影片內放入獨立廣東話及英文音軌；如有選擇，亦會保留原裝日文音軌。用相容播放器切換語言，兩種配音唔會同時疊住播放。
 
-The translation workflow combines Japanese dialogue with the Chinese subtitle evidence available in your source:
+翻譯會參考日文對白，以及來源影片可讀取嘅中文字幕：
 
-| Input source | How AniCanto uses it |
+| 來源 | 點樣使用 |
 |---|---|
-| **Japanese audio** | Recognises the spoken Japanese and its timing to build the dialogue transcript. |
-| **Embedded Chinese text subtitle tracks** | Reads selectable subtitle text stored inside the video container, such as a text track in an MKV or MP4, as supporting evidence for names and meaning. |
-| **Burned-in Chinese subtitles — screen OCR** | Reads Chinese captions that are part of the video image. OCR supplies time-matched text evidence; it is distinct from extracting an embedded text track. |
-| **External subtitle files** | Can use matching `.srt`, `.ass` or `.vtt` files alongside the video. |
+| **日文聲音** | 辨識實際講嘅日文同發聲時間，建立對白稿。 |
+| **影片內置中文字幕文字軌** | 讀取 MKV、MP4 等容器內可切換嘅字幕文字，輔助核對人名同意思。 |
+| **畫面內嵌式中文字幕——OCR** | 讀取已燒入影像嘅中文字幕，建立對應時間嘅文字參考；同抽取內置文字字幕軌係兩回事。 |
+| **外掛字幕檔** | 可以使用與影片配對嘅 `.srt`、`.ass` 或 `.vtt` 檔案。 |
 
-Qwen uses the recognised dialogue and available subtitle evidence to produce **Hong Kong Cantonese and English scripts**; the selected voice engine then generates the dubbed recordings. Subtitles help with context, but missing OCR text should not remove dialogue heard in Japanese. If no readable captions are available, the workflow can continue from Japanese speech recognition.
+Qwen 會根據辨識對白同可用字幕，整理成**香港廣東話及英文配音稿**，再由所選語音引擎生成錄音。字幕用嚟補充語境；冇 OCR 文字唔應該令聽到嘅日文對白消失。冇可讀字幕時，亦可以由日文語音辨識繼續處理。
 
-Automatic subtitle selection checks for a matching external file first, then an embedded text track, then burned-in captions through screen OCR. Expert mode also offers **Japanese audio only** or **Japanese audio + screen OCR** for a newly submitted conversion. OCR quality depends on caption clarity, layout and contrast; embedded subtitle support refers to usable text tracks, not every image-based subtitle format.
+自動字幕選擇會先找配對外掛字幕，再找內置文字軌，最後嘗試畫面 OCR。專家模式亦可為新轉換指定**只用日文聲音**或**日文聲音＋畫面 OCR**。OCR 效果受字幕清晰度、版面同對比影響；內置字幕支援指可讀取嘅文字軌，唔代表支援所有圖片字幕格式。
 
-For language comparison, choose separate Cantonese and English subtitles, or the combined learning track with **Cantonese on the first line and English underneath**. Audio and subtitle tracks can be selected independently in a compatible player.
+比較語言時，可揀獨立廣東話、英文字幕，或者**上行廣東話、下行英文**嘅雙行學習字幕。音軌同字幕可以喺相容播放器分開選擇。
 
-### Supported video formats
+### 支援影片格式
 
 **MP4 · MKV · MOV · M4V · AVI · WebM · TS**
 
-These are the video container formats accepted by the app. Actual compatibility also depends on the video/audio codecs and file integrity; an accepted extension does not guarantee every encoding will decode. Burned-in captions can be read with OCR, but cannot always be cleanly removed or replaced in the picture.
+以上係 App 接受嘅影片容器格式。實際仍取決於影像／聲音編碼同檔案完整性，副檔名相容唔代表每種編碼都讀得到。畫面字幕可以做 OCR，但未必可以乾淨移除或替換。
 
-## Start with the right voice
+## 模型及硬件建議
 
-**For a Hong Kong Cantonese accent, our recommendation is Drama 3 with Qwen 3.5 35B.** In the developer’s listening tests, Drama 3 sounded closest to the Cantonese commonly heard in Hong Kong. Accent and voice resemblance still depend on the reference recording and scene.
+**想接近香港廣東話口音，建議用 Drama 3 配合 Qwen 3.5 35B。** 喺開發者目前嘅試聽測試中，Drama 3 較接近香港人日常聽慣嘅發音；口音同聲線相似度仍受參考錄音及場景影響。
 
-| Voice model | What to expect |
+| 語音模型 | 大概效果 |
 |---|---|
-| **Drama 3 — recommended** | Closest to a Hong Kong Cantonese accent in current listening tests. |
-| **GPT-SoVITS** | May retain a Japanese accent when imitating a Japanese source voice. |
-| **CosyVoice 3** | May retain a Japanese accent in this workflow. Offered only with official native weights on Windows NVIDIA/CUDA; unavailable on Mac. |
+| **Drama 3——建議使用** | 目前試聽測試中，較接近香港廣東話口音。 |
+| **GPT-SoVITS** | 模擬日文原聲時，廣東話可能帶有日文口音。 |
+| **CosyVoice 3** | 呢個流程亦可能帶有日文口音；只喺 Windows NVIDIA／CUDA 提供官方原生權重，Mac 不提供。 |
 
-Qwen translates and helps plan repairs; Drama 3 generates speech. Download choices for text translation are **Qwen 3.5 9B and 35B**. Model versions without confirmed licence evidence have been removed from the download catalogues.
+Qwen 負責翻譯同協助規劃修復；Drama 3 負責生成聲音。文字模型下載選項為 **Qwen 3.5 9B 及 35B**。未能確認授權證據嘅版本已從下載清單移除。
 
-### Recommended Mac
+### 建議 Mac 配置
 
-| | Recommendation |
+| 項目 | 建議 |
 |---|---|
-| Computer | **Apple Silicon Mac with 64 GB or more unified memory** |
-| System | macOS 14 or later |
-| Voice | Drama 3 · 35B · 4-bit MLX |
-| Translation | Qwen 3.5 · 35B-A3B · 4-bit MLX |
-| Storage | Plan for **100 GB or more free space** for models, environments and working files; long videos need additional room. |
-| First setup | Internet access for model and runtime downloads; inference runs locally afterwards. |
+| 電腦 | **Apple Silicon Mac，64 GB 或以上統一記憶體** |
+| 系統 | macOS 14 或以上 |
+| 配音 | Drama 3 · 35B · 4-bit MLX |
+| 翻譯 | Qwen 3.5 · 35B-A3B · 4-bit MLX |
+| 儲存空間 | 模型、執行環境及工作檔案建議預留 **100 GB 或以上**；長影片需要額外空間。 |
+| 首次準備 | 下載模型及執行環境需要網絡；準備好後喺本機推論。 |
 
-Lower-memory presets can differ in accent, voice expression and translation detail. Windows candidates still need real-device startup and GPU testing. Intel Macs are not supported by this Apple Silicon setup.
+較省記憶體嘅組合，喺口音、聲線表情同翻譯細節方面可能有差異。Windows 測試版仍待實機啟動及 GPU 測試；呢套 Apple Silicon 配置不支援 Intel Mac。
 
-### Conversion time reference
+### 轉換時間參考
 
-| Input | Mode | Machine | Models | Approximate processing |
+| 影片 | 模式 | 電腦 | 模型 | 約需時間 |
 |---|---|---|---|---|
-| 25-minute animation | Normal | MacBook Pro M2 Max | Qwen 3.5 35B + Drama 3 | **45 minutes** |
+| 25 分鐘動畫 | 一般模式 | MacBook Pro M2 Max | Qwen 3.5 35B＋Drama 3 | **45 分鐘** |
 
-This is a developer-provided reference, not a newly repeated benchmark or a time guarantee. Dialogue density, first-time downloads, video encoding, memory pressure and automatic retakes can change the total substantially.
+呢個係開發者提供嘅參考，唔係重新量度嘅基準或時間保證。對白密度、首次下載、影片編碼、記憶體壓力同自動重錄，都可能明顯影響總時間。
 
-## From scene to speech
+## 由影片到配音
 
-1. **Prepare** — Read the video, audio and subtitle tracks; prepare the project and working files.
-2. **Find the dialogue** — Recognise Japanese speech, use available subtitle evidence and detect OP/ED regions.
-3. **Prepare source references** — Separate dialogue from background audio and collect reference clips for the chosen voice strategy.
-4. **Translate** — Adapt dialogue into Cantonese and/or English while considering meaning and the available speaking window.
-5. **Generate and repair** — Generate takes, check language/content/timing, then try targeted rewriting, retakes, reference repair or bounded timing and tempo adjustments when needed.
-6. **Review and export** — Mix the selected voices with the background, keep the original track and produce a versioned export with the selected subtitles.
+1. **準備**——讀取影片、聲音同字幕軌，建立專案及工作檔案。
+2. **找出對白**——辨識日文聲音，參考可用字幕，並偵測 OP／ED 範圍。
+3. **準備原聲參考**——分離對白同背景，按所選方式整理聲線參考錄音。
+4. **翻譯**——考慮原意同可用發聲時間，整理廣東話及／或英文台詞。
+5. **生成及修復**——生成錄音，檢查語言、內容同時長；有需要就改寫、重錄、修復參考或作有限時間微調及調速。
+6. **校對及匯出**——將選用錄音與背景混音，保留原聲音軌，輸出附有所選字幕嘅新版本。
 
-After bounded rewrites, reference repair and gentle timing adjustments with the original voice, a target-language reference may be used as a last resort to recover translated speech. The report identifies this voice change; it is not certified character imitation. Small timing differences automatically use safe neighbouring gaps and bounded onset shifts; complete final fallback recordings receive the same measured gentle-tempo trial before rejection. Dialogue and OP/ED ranges constrain placement. Camera cuts and arbitrary twelve-second divisions do not discard usable speech.
+會先嘗試修好原角色錄音，包括有限次改寫、原聲參考修復同微量時間調整；仍未成功，先由同一引擎嘗試內置目標語言參考，補回翻譯對白。呢個做法可能改變聲線，報告會標示，唔會當作已確認嘅角色模仿。
 
-Normal mode attempts automatic checks and repair. High-speed mode skips quality review and quality-driven retakes. If a complete dub cannot be verified, a labelled incomplete preview may retain source speech for affected lines; that is not presented as a finished Cantonese dub.
+少量時長差距會自動利用安全空檔同有限起點微調；完整後備錄音亦會先實測微量調速，再判斷能否採用。時間編排以實際對白同 OP／ED 保留範圍為準，唔會因為鏡頭跳切或固定十二秒分組而丟棄本來可用嘅錄音。
 
-## What to expect
+一般模式會嘗試自動檢查同修復；高速模式會略過品質校對及因品質問題觸發嘅重錄。如果未能確認完整配音，會標示為未完成預覽，部分句子可能保留日文原聲，唔會當作完整廣東話成品。
 
-- **Animation first, Japanese first.** The main workflow targets Japanese animated dialogue, not live dubbing or every possible source language.
-- **Difficult audio is still difficult.** Overlapping speakers, shouting, whispers, songs, effects and noisy separation can affect recognition, reference quality and completeness.
-- **One character, not always one consistent voice.** Normal mode imitates a source reference for each line; it does not lock a character’s identity or timbre across a whole episode. Voice colour, accent and expression can vary between takes.
-- **Expressive acting can confuse the AI.** Professional Japanese performers may change timbre dramatically for whispers, shouting, comedy or emotion. When role analysis is used, AI can split the same character into different roles, or merge similar voices. That is a limit of AI recognition, not a flaw in the acting.
-- **Automatic repair has limits.** Translation, names, accent, emotion, speaker identity and lip sync can still be wrong. A voice-per-line reference is not proof of a recognised character.
-- **No cut-off speech as a shortcut.** The workflow tries shorter wording, full retakes and safe timing changes; small tempo adjustments are bounded. Some lines can remain unresolved.
-- **Opening/ending songs stay Japanese by default.** Detection can miss unusual arrangements; inspect the result.
-- **Subtitles have boundaries.** Embedded text and speech recognition are useful evidence; burned-in captions cannot be cleanly replaced in every video.
-- **Local does not mean lightweight.** Large models need substantial memory, storage and processing time.
+## 使用前要知道嘅限制
 
-[Read the first-run guide](docs/GETTING-STARTED.md) · [Full screenshot gallery](docs/SCREENSHOTS.md)
+- **主要針對日本動畫。** 核心流程以日文動畫對白為主，唔係即時配音，亦唔支援所有來源語言。
+- **複雜聲音仍有難度。** 搭聲、叫喊、低語、歌曲、音效同分離殘留，都可能影響辨識、聲線參考同完整性。
+- **同一角色未必全程同一把聲。** 一般模式逐句模擬原聲參考，唔會鎖定全集嘅角色身份或音色；每次錄音嘅音色、口音同表情可能有分別。
+- **精彩演技亦可能令 AI 誤判。** 日本專業聲優會按低語、叫喊、搞笑或情緒大幅改變音色。使用角色分析時，同一角色可能被分開，或者相似聲音被合併；呢個係 AI 辨識嘅限制。
+- **自動修復有上限。** 翻譯、人名、口音、情緒、角色身份同口型仍可能有錯；有逐句參考唔代表已辨識到角色。
+- **唔會靠斬尾扮完整。** 流程會嘗試精簡、完整重讀及安全時間微調，微量加速亦有上限；部分句子仍可能未能解決。
+- **OP／ED 預設保留日文。** 特別編排嘅歌曲可能未被正確偵測，需要檢查成品。
+- **字幕證據亦有限制。** 文字軌同語音辨識可以互相參考，但畫面燒入式字幕未必能乾淨替換。
+- **本機處理仍需要資源。** 大模型需要足夠記憶體、空間同處理時間。
 
-## Your media, your choices
+[首次使用指南](docs/zh-HK/GETTING-STARTED.md) · [完整介面圖集](docs/zh-HK/SCREENSHOTS.md)
 
-Use only video, subtitles and voices you have permission to process. AniCanto does not provide anime episodes or grant rights to another person’s voice. Recognition and inference run locally after model setup; setup and updates contact the relevant download hosts.
+## 影片及聲音嘅使用權
 
-Original application code is **MIT · © 2026 SCKC**. Third-party tools, models and assets keep their own licences. **Built with Fish Audio** — Drama 3 uses the [Fish Audio Community License](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE), with separate use, commercial and hosted-service conditions. The MIT application licence does not replace those model terms.
+請只處理你有權使用嘅影片、字幕同聲音。AniCanto 唔提供動畫集數，亦唔授予使用他人聲音嘅權利。模型準備完成後，辨識同推論喺本機進行；準備同更新會連接相關下載來源。
 
-[Licence details](docs/LICENSING.md)
+原創應用程式碼採用 **MIT · © 2026 SCKC**；第三方工具、模型同素材保留各自授權。**Built with Fish Audio**——Drama 3 採用 [Fish Audio Community License](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE)，另有使用、商業及託管服務條件。App 嘅 MIT 授權唔會取代模型條款。
 
-## Support a little more Cantonese
+[授權詳情](docs/zh-HK/LICENSING.md)
 
-If AniCanto helps you discover a new phrase, enjoy a new voice, or share a little Hong Kong Cantonese with a friend, you can support its continued development. A coffee is optional; curiosity is always welcome.
+## 支持更多人認識廣東話
 
-<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Samuel a coffee — support AniCanto" width="217"></a>
+如果 AniCanto 令你認識多句廣東話、聽到熟悉場景嘅另一種演繹，或者同朋友分享多一點香港文化，歡迎支持計劃繼續發展。請飲咖啡純屬自願，一齊對廣東話保持好奇亦同樣有意思。
 
-Made by SCKC · For the fun of hearing Cantonese in a new scene.
+<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="請 Samuel 飲杯咖啡，支持 AniCanto" width="217"></a>
+
+SCKC 製作 · 為咗聽到熟悉一幕，用廣東話講多一次。

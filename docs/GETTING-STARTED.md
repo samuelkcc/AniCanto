@@ -1,6 +1,8 @@
+[繁體中文](zh-HK/GETTING-STARTED.md) · **English**
+
 # First-run guide
 
-[← AniCanto](../README.md)
+[← AniCanto](../README.en.md)
 
 This guide describes the current development workflow. Public downloads are not available in this repository yet.
 
