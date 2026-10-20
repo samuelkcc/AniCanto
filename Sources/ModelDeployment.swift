@@ -7,13 +7,14 @@ struct ModelOption:Decodable,Identifiable {
     let parameterB:Double
     let estimatedMemoryGB:Double
     let legacy:String?
+    let retired:Bool?
     let files:[VoiceModelVariant.ModelFile]
     static let all:[Self] = {
         guard let p=Bundle.main.url(forResource:"model-options",withExtension:"json"),let d=try? Data(contentsOf:p) else{return []}
         return (try? JSONDecoder().decode([Self].self,from:d)) ?? []
     }()
     var relativeFolder:String {legacy ?? (category=="voice" ? "models/voice-variants/":"models/variants/")+id.replacingOccurrences(of:":",with:"-")}
-    var deployable:Bool {!files.isEmpty && bytes>0}
+    var deployable:Bool {retired != true && !files.isEmpty && bytes>0}
     func ready(_ root:URL)->Bool {deployable && files.allSatisfy {f in
         let p=root.appendingPathComponent(relativeFolder).appendingPathComponent(f.path)
         guard let n=(try? FileManager.default.attributesOfItem(atPath:p.path)[.size]) as? NSNumber else{return false}
@@ -56,6 +57,7 @@ extension Engine {
     }
     func deployOption(_ option:ModelOption) throws {
         guard option.engine != "qwen-tts" else {throw AppFailure(message:L("Qwen TTS 已停用；請選擇 CosyVoice 或 GPT-SoVITS。"))}
+        guard option.retired != true else {throw AppFailure(message:"This model is retired and cannot be downloaded.")}
         switch option.category {
         case "text":try pullModel(option.id)
         case "voice":try installDubbing(VoiceEngineChoice.all.first {$0.id==option.engine}?.kind ?? "cosy",variant:option.id)

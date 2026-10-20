@@ -18,6 +18,16 @@ const zh={
 "Copied":"已複製",
 "Models downloading / preparing":"模型下載及準備中",
 "Automatic download":"自動下載",
+"Downloading":"下載中",
+"Setup failed":"部署失敗",
+"Setup failed · view details":"部署失敗・查看詳情",
+"Selected voice model":"目前選用配音模型",
+"Downloaded and ready":"已下載，可以使用。",
+"Download in progress":"正在下載，完成前暫時未能使用。",
+"Setup failed; this model is not ready.":"部署失敗，呢個模型暫時未能使用。",
+"Selected, but not downloaded yet.":"已選用，但尚未下載完成。",
+"Retry setup":"重新部署",
+"View error details":"查看錯誤詳情",
 "Downloaded":"已下載",
 "Cantonese only":"只支援廣東話",
 "Wait for the current task to finish before changing models.":"請等目前工作完成後再更換模型。",
@@ -474,6 +484,10 @@ const phases={prepare:'Preparation',recognition:'Japanese speech',roles:'Voice r
 Object.assign(zh,{"Automatic processing is running": "自動處理進行中", "Review status": "校對狀態", "AI repair runs automatically. These controls are optional fallbacks after pausing or completion.": "AI 會自動修復；以下只係暫停或完成後可揀嘅後備選項。", "Pending": "待處理", "Repaired": "已修復", "User choices": "用戶選擇", "Pause and save before changing a review choice.": "請先暫停保存，先可以更改校對選擇。", "The last attempt needs attention. Detailed process output is retained in Terminal.": "上次工作仍有問題，詳細程序紀錄保留喺終端機。", "Review checks pending": "校對檢查未完成", "No unresolved review issues": "沒有未解決校對項目", "No line-level issues reported": "暫未有逐句問題紀錄", "Review not available yet": "暫未有完整校對結果", "Processing and automatic checks are still running. This is not a quality pass.": "處理同自動檢查仍進行中，呢個唔代表品質通過。", "The completed automatic checks reported no unresolved lines.": "已完成嘅自動檢查沒有報告未解決對白。", "A complete quality verdict is not available. Processing details remain in Terminal.": "暫未有完整品質判定，處理詳情仍保留喺終端機。", "Recording too long": "錄音超出可用時段", "Translation missing": "欠缺翻譯稿", "Voice missing": "缺少配音", "Voice generation failed": "配音生成失敗", "Reference voice problem": "參考聲音有問題", "Language or completeness needs checking": "語言或完整度需要核對", "Automatic recovery": "自動修復", "Automatic repair in progress": "自動修復中", "Awaiting automatic recheck": "等待自動重新核對", "Not resolved": "仍未解決", "User choice saved": "已保存用戶選擇", "Dubbing needs attention": "配音需要處理", "Additional automatic recovery attempts recorded": "次額外自動修復已記錄", "Original audio selected for this line.": "本句已選擇保留原聲。", "Reported defects accepted for this recording.": "已明確接受呢段錄音嘅已報告缺陷。", "Export a new version to apply saved choices.": "匯出新版本先會套用已保存選擇。", "Original diagnostic evidence": "原始診斷證據", "Optional fallback": "可選後備處理", "Keep original Japanese voice": "保留日文原聲", "Keep original source voice": "保留來源原聲", "Accept a retained recording with defects": "接受有缺陷嘅保留錄音", "Remove my override": "移除我嘅覆寫選擇", "Retained recording": "保留錄音", "Reported defects": "有缺陷紀錄", "Listen to selection": "試聽所選錄音", "Save fallback choice": "保存後備選擇", "Repaired automatically": "已自動修復", "Confirm fallback choice": "確認後備選擇", "This line will keep its original source voice. The translated captions are retained.": "本句會保留來源原聲，翻譯字幕仍然保留。", "This recording may contain wrong pronunciation, a different language or missing words. Accepting it is your explicit editorial choice, not an AI quality pass.": "呢段錄音可能有讀音錯誤、語言唔同或漏字；接受係你明確嘅編輯選擇，唔代表 AI 品質通過。", "The saved override will be removed.": "已保存嘅覆寫選擇會移除。", "Earlier exports and recordings are retained. Export a new version to apply this choice.": "舊成品同錄音會保留，匯出新版本先會套用呢個選擇。", "Save choice": "保存選擇", "Fallback choice saved. Export a new version to apply it.": "後備選擇已保存，請匯出新版本套用。"});
 export const translate=(text,lang)=>lang==='zh-HK'?(zh[text]??text):(phases[text]??text);
 
+Object.assign(zh,{"Initial voice attempt":"原本聲線首次生成","Try another installed voice model":"試用另一個已下載嘅配音模型","Download another voice model":"下載另一個配音模型","Download without switching":"只下載，不切換","Automatically try another installed voice model for failed lines":"失敗對白自動試用另一個已下載配音模型","Only verified target-language recordings replace the original take.":"只會用通過目標語言核對嘅錄音代替原本錄音。"});
 Object.assign(zh,{"Target language restored; character voice differs":"已補回目標語言；角色聲線不同","Using a fallback voice":"使用後備聲線","Name pronunciation needs checking":"人名讀音需要核對","Pronunciation not confirmed":"讀音未確認"});
 
 Object.assign(zh,{"Retry AI repair":"再次 AI 修復","Repair reported lines only. Keep successful recordings and earlier exports.":"只修復有問題嘅對白，保留成功錄音同舊成品。","Save or export your edits before retrying automatic review.":"請先保存或匯出編輯，再重新進行自動修復。"});
+
+Object.assign(zh,{"Download only; deploy this voice engine before it can join automatic repair.":"只下載模型檔；完成配音引擎部署後先會參與自動補聲。"});
+Object.assign(zh,{"Listen to last failed recording":"試聽最後一次未通過錄音","Listen to selected / replacement recording":"試聽已採用／替代錄音","Heard in selected recording":"已採用錄音辨識結果","Heard in this attempt":"本次錄音辨識結果","Heard in last failed recording":"最後一次未通過錄音辨識結果","Retained rejected recording":"已保留嘅未通過錄音"});

@@ -17,7 +17,7 @@ class DownloadSourceTests(unittest.TestCase):
      if 'content' in expected:self.assertEqual(f['kind'],'generated');self.assertIsNone(f['url'])
   self.assertFalse(any(r['availability']!='catalogue' for r in rows))
   self.assertFalse(any('cosy-0.5b-8bit' in row['ids'] for row in rows))
-  cosy=next(r for r in rows if 'cosy-native-0.5b' in r['ids']);self.assertEqual(cosy['platform'],'Windows · NVIDIA')
+  cosy=next(r for r in rows if 'cosy-native-0.5b' in r['ids']);self.assertEqual(cosy['platform'],'Mac · CPU / Windows · NVIDIA')
   self.assertTrue(any('registry.ollama.ai' in (f['url'] or '') for r in rows for f in r['files']))
  def test_retired_voice_engine_is_hidden_but_selectable_voices_remain(self):
   rows=module.inventory()['models']

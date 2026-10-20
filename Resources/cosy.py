@@ -1,5 +1,4 @@
-"""Pinned CosyVoice 3 MLX adapter. Download only during setup; inference is offline."""
-from runtime_installer import ensure_env, pip_command
+"""Official CosyVoice 3 PyTorch adapter; optional weights are downloaded on demand."""
 from fast_mode import enabled as one_pass
 
 import contextlib
@@ -9,6 +8,13 @@ import sys
 import time
 
 RESOURCE_DIR = Path(__file__).resolve().parent
+DEFAULT_VARIANT = 'cosy-native-0.5b'
+
+
+def selected_variant(variant):
+    # Old MLX identifiers have no verified native weights. The caller must
+    # explicitly install the official row; an old marker never proves readiness.
+    return DEFAULT_VARIANT if variant in (None, 'cosy-0.5b-4bit') else variant
 
 
 def trim_padding(audio, sr=24000):
@@ -22,75 +28,94 @@ def trim_padding(audio, sr=24000):
     return audio[max(0, int(active[0])-pad):min(len(audio), int(active[-1])+pad+1)]
 
 
+def _extract_source(row, archive, target):
+    import shutil
+    import tarfile
+    revision = row['revision']
+    if (target / '.source-complete').is_file() and (target / '.source-complete').read_text() == revision:
+        return
+    target.mkdir(parents=True, exist_ok=True)
+    with tarfile.open(archive, 'r:gz') as bundle:
+        for member in bundle:
+            if Path(member.name).is_absolute():
+                raise ValueError('Invalid CosyVoice source archive path.')
+            parts = Path(member.name).parts[1:]
+            if not parts:
+                continue
+            if member.issym() or member.islnk() or '..' in parts or member.isdev():
+                raise ValueError('Invalid CosyVoice source archive entry.')
+            relative = Path(*parts)
+            if relative.is_absolute():
+                raise ValueError('Invalid CosyVoice source archive path.')
+            destination = target / relative
+            if member.isdir():
+                destination.mkdir(parents=True, exist_ok=True)
+            elif member.isfile():
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                with bundle.extractfile(member) as source, destination.open('wb') as output:
+                    shutil.copyfileobj(source, output)
+    (target / '.source-complete').write_text(revision)
+
+
 def install(root, variant=None):
     from engine_availability import require
-    require('cosyvoice3',root)
-    from dubbing_setup import call, download, emit
+    require('cosyvoice3', root)
+    from dubbing_setup import download, emit
+    from runtime_paths import packages_ready
+    from voice_models import install_files, mark_ready
+    root = Path(root)
+    variant = selected_variant(variant)
     marker = root / 'cosy-ready.json'
-    if variant in (None,'cosy-0.5b-4bit'):marker.unlink(missing_ok=True)
-    from runtime_paths import python_for,packages_ready
-    python = python_for(root,'cosy-runtime')
-    if not python.exists():
-        ensure_env(root, python.parent.parent, run=lambda args,**kw: call(args))
-    emit('安裝 CosyVoice 3 專用 MLX 環境，唔需要 CUDA。')
-    # All transitive packages are frozen after a clean inference test. Avoid
-    # mlx-audio-plus optional server/WebRTC extras and overlapping namespaces.
-    if not packages_ready(root,'cosy-runtime'):call(pip_command(python, root, 'install', '--only-binary', ':all:', '--no-deps', '-r', RESOURCE_DIR / 'cosy-requirements.lock'))
-    manifests = json.loads((RESOURCE_DIR / 'cosy-models.json').read_text())
-    from voice_models import install_files,mark_ready
-    row,model_path=install_files(root,'cosyvoice3',variant,download,emit)
-    for name, manifest in manifests.items():
-        if name=='cosy':continue
-        for file in manifest['files']:
-            emit(f'下載／校驗 CosyVoice 3：{name}/{file["path"]}（模型合共約 2.2 GB）')
-            download(f'https://huggingface.co/{manifest["repo"]}/resolve/{manifest["revision"]}/{file["path"]}',
-                     root / 'models/cosyvoice3' / name / file['path'], file['sha'])
-    call([python, RESOURCE_DIR / 'dubbing_runner.py', 'prepare-cosy', root, row['id']])
-    mark_ready(root,row)
-    if variant in (None,'cosy-0.5b-4bit') or not marker.exists():marker.write_text(json.dumps({'version':row['repo'],'variant':row['id'],'revision':row['revision'],'adapter':'mlx-audio-plus-0.1.8'}))
-    emit('CosyVoice 3 已部署，可以喺角色頁同 GPT-SoVITS 比較試聽。')
+    marker.unlink(missing_ok=True)
+    if sys.platform == 'darwin' and not packages_ready(root, 'cosy-runtime'):
+        from mac_runtime import ensure
+        emit('準備 CosyVoice 3 專用 PyTorch 執行環境。')
+        ensure(root, 'cosy-runtime')
+    sources = json.loads((RESOURCE_DIR / 'cosy-native-sources.json').read_text())
+    for name, target in [('cosy-source', root / 'sources/cosy'),
+                         ('matcha-source', root / 'sources/cosy/third_party/Matcha-TTS')]:
+        row = sources[name]
+        archive = root / 'downloads' / (name + '-' + row['revision'] + '.tar.gz')
+        emit('下載及校驗 CosyVoice 3 官方程式：' + name)
+        download(row['url'], archive, row['sha256'])
+        _extract_source(row, archive, target)
+    row, _ = install_files(root, 'cosyvoice3', variant, download, emit)
+    from runtime_paths import python_for
+    from dubbing_setup import call
+    call([python_for(root, 'cosy-runtime'), RESOURCE_DIR / 'dubbing_runner.py', 'prepare-cosy', root, row['id']])
+    mark_ready(root, row)
+    marker.write_text(json.dumps({'version': row['repo'], 'variant': row['id'],
+                                  'revision': row['revision'], 'adapter': 'official-pytorch-cpu-1'}))
+    emit('CosyVoice 3 官方模型已部署；Mac 使用 CPU 生成，請先試聽效果。')
 
 
 def load(root, variant=None):
     from engine_availability import require
-    require('cosyvoice3',root)
-    if sys.platform=='win32':
+    require('cosyvoice3', root)
+    variant = selected_variant(variant)
+    if sys.platform == 'win32':
         from native_cosy import load as native_load
-        return native_load(root,variant)
+        return native_load(root, variant)
     from dubbing_runner import offline
     offline()
-    import mlx.core as mx
-    from mlx_audio.tts.models.cosyvoice3 import Model, ModelConfig
-    from mlx_audio.codec.models.s3tokenizer import S3TokenizerV3
-    folder = root / 'models/cosyvoice3'
     from voice_models import resolve
-    model = Model(ModelConfig(model_path=str(resolve(root,'cosyvoice3',variant))))
-    # Upstream defaults to a Hub lookup. Explicit local loading keeps inference
-    # independent of network access and the user's global Hugging Face cache.
-    tokenizer = S3TokenizerV3()
-    tokenizer.load_weights(list(mx.load(str(folder / 's3/model.safetensors')).items()))
-    mx.eval(tokenizer.parameters())
-    model._s3_tokenizer = tokenizer
-    model._ensure_tokenizers_loaded()
-    return model
+    resolve(root, 'cosyvoice3', variant)
+    from cosy_native import load as native_load
+    return native_load(root, variant)
 
 
 def prepare(root, variant=None):
     from dubbing_runner import emit
     with contextlib.redirect_stdout(sys.stderr):
-        load(root,variant)
-    emit('部署配音', 'CosyVoice 3、聲音編碼器同文字元件已通過離線載入檢查。')
+        load(Path(root), variant)
+    emit('部署配音', 'CosyVoice 3 官方 PyTorch 模型已通過離線載入檢查；生成品質仍需試聽。')
 
 
 def synthesize(cfg, emit):
     emit('配音','準備生成音軌。',workID='tts',workCompleted=0,workTotal=len(cfg['items']))
-    emit('配音', '載入 CosyVoice 3（Windows · PyTorch），生成角色配音。' if sys.platform=='win32' else '載入 CosyVoice 3（Apple Silicon · MLX），生成角色配音。')
+    emit('配音', '載入 CosyVoice 3（Windows · PyTorch），生成角色配音。' if sys.platform=='win32' else '載入 CosyVoice 3（Apple Silicon · PyTorch CPU），生成角色配音。')
     with contextlib.redirect_stdout(sys.stderr):
         model = load(Path(cfg['storage']),cfg.get('cosyModel'))
-    if sys.platform=="win32":
-        import numpy as mx
-    else:
-        import mlx.core as mx
     import numpy as np
     import soundfile as sf
     import librosa
@@ -113,7 +138,8 @@ def synthesize(cfg, emit):
                 if not 3 <= len(ref) / sr <= 10.1:
                     raise ValueError('角色參考聲音必須係 3–10 秒。')
                 ref = librosa.resample(ref.mean(axis=1), orig_sr=sr, target_sr=24000)
-                mx.random.seed(item.get('seed',42)+31*retry)
+                import torch
+                torch.manual_seed(item.get('seed',42)+31*retry)
                 instruction = ('You are a helpful assistant. Speak natural, expressive English. Say every word exactly as written.' if cfg.get('targetLanguage')=='en' else 'You are a helpful assistant. 请用地道的香港粤语说话。')
                 if cfg.get('targetLanguage')=='en' and item.get('deliveryStyle') in ('brisk','measured','timed'):
                     instruction += f' Deliver the complete line in about {item["targetSeconds"]:.1f} seconds with natural expression and clear words. Do not add, omit or repeat words.'
@@ -128,7 +154,7 @@ def synthesize(cfg, emit):
                 instruction+=acting_instruction(expression['cosyExpression'],cfg.get('targetLanguage','yue'))
                 with contextlib.redirect_stdout(sys.stderr):
                     chunks = [np.asarray(result.audio).reshape(-1) for result in model.generate(
-                        text=item['text'].strip(), ref_audio=mx.array(ref),
+                        text=item['text'].strip(), ref_audio=ref,
                         instruct_text=instruction, temperature=expression['cosyTemperature'],
                         stt_model=None, verbose=False, stream=False)]
                 audio = np.concatenate(chunks) if chunks else np.empty(0)

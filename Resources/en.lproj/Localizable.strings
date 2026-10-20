@@ -7,8 +7,7 @@
 "ANIME DUBBING STUDIO · 日本動畫，講返廣東話。" = "ANIME DUBBING STUDIO · Give your anime a Cantonese voice.";
 "CPU · 相容模式，較慢" = "CPU · Compatibility mode, slower";
 "AniCanto 係 SCKC 因為興趣而整嘅小作品：想試吓，如果日本動畫角色講起廣東話，會係點？用本機 AI 將對白改編成廣東話，享受配音同學語言嘅樂趣。AI 唔係句句都譯得準，有時會講出意想不到嘅版本——呢份驚喜亦係玩味之一。歡迎試玩、比較同自己執稿；唔保證專業配音品質。" = "A hobby project by SCKC: discover what Japanese anime might sound like in Cantonese. Experiment, compare and enjoy the unexpected interpretations. Professional quality is not guaranteed.";
-"CosyVoice 3 · MLX 廣東話" = "CosyVoice 3 · MLX Cantonese";
-"CosyVoice 3 使用 Apple Silicon GPU · MLX，全本機生成。" = "CosyVoice 3 runs locally on the Apple Silicon GPU using MLX.";
+"CosyVoice 3 使用官方 PyTorch 模型；Mac 以 CPU 執行，可能較慢。首次下載約 9.7 GB，請先試聽目標語言及聲線。" = "CosyVoice 3 uses the official PyTorch model. Mac inference runs on CPU and may be slow. The initial model download is about 9.7 GB; audition the language and voice first.";
 "GPT-SoVITS · 角色廣東話" = "GPT-SoVITS · Cantonese voice cloning";
 "OCR 實際輸入預覽" = "Actual OCR input";
 "Ollama 模型名稱，例如 qwen3:4b" = "Ollama model tag, e.g. qwen3:4b";
@@ -455,7 +454,6 @@
 "Whisper small · 約 500 MB 模型及額外依賴 · CPU 原型" = "Whisper small · Approx. 500 MB model plus dependencies · CPU prototype";
 
 
-"Fun-CosyVoice3 0.5B · 4-bit · 約 2.2 GB 模型＋獨立環境 · Apple Silicon" = "Fun-CosyVoice3 0.5B · 4-bit · Approx. 2.2 GB model plus isolated environment · Apple Silicon";
 
 "Mel-Band RoFormer · 約 913 MB 模型＋獨立環境" = "Mel-Band RoFormer · Approx. 913 MB model plus isolated environment";
 

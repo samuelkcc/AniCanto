@@ -53,6 +53,7 @@ class ReviewDecisionTests(unittest.TestCase):
    result=review_report.project(r,review,dict(status='attention'));issue=result['issues'][0]
    self.assertEqual(issue['diagnostic']['sourceText'],'原文');self.assertEqual(issue['diagnostic']['overrunSeconds'],1.)
    self.assertEqual(set(issue['auditions']),{'original','separated','generated'});self.assertEqual(issue['auditions']['original']['end'],2)
+   self.assertEqual(issue['attempts'][0]['audition']['path'],str((r/'candidate.wav').resolve()))
    self.assertEqual(result['reviewState']['repaired'],0,'Language proof cannot clear an unresolved timing failure')
  def test_audio_outside_the_project_is_not_exposed_as_an_audition(self):
   from review_diagnostics import enrich
@@ -101,7 +102,25 @@ class ReviewDecisionTests(unittest.TestCase):
    for name in ('chosen.wav','rejected.wav'):
     with wave.open(str(root/name),'wb') as f:f.setparams((1,2,16000,0,'NONE','not compressed'));f.writeframes(b'\0\0'*16000)
    chosen=str(root/'chosen.wav');rejected=str(root/'rejected.wav');issue=dict(index=1,evidence=[])
-   director=dict(selectedAudio=chosen,attempts=[dict(candidateAudio=chosen,check=dict(heard='完整廣東話',decision='cantonese')),dict(candidateAudio=rejected,check=dict(heard='日本語',decision='japanese'))])
+   director=dict(selectedAudio=chosen,attempts=[dict(candidateAudio=chosen,status='adopted',check=dict(heard='完整廣東話',decision='cantonese')),dict(candidateAudio=rejected,status='not-verified',check=dict(heard='日本語',decision='japanese'))])
    enrich(issue,dict(start=0,end=2,cantonese='完整廣東話'),{},root,director=director)
    self.assertEqual(issue['auditions']['generated']['path'],str(Path(chosen).resolve()));self.assertEqual(issue['diagnostic']['heard'],'完整廣東話');self.assertEqual(issue['diagnostic']['detectedLanguage'],'cantonese')
+   self.assertEqual(issue['auditions']['lastFailed']['path'],str(Path(rejected).resolve()))
+   self.assertEqual(issue['diagnostic']['lastFailedHeard'],'日本語')
+   self.assertEqual(issue['diagnostic']['lastFailedDetectedLanguage'],'japanese')
+ def test_rejected_model_recording_is_retrievable_from_retry_archive(self):
+  import recording_history
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);review,_=self.fixture(root)
+   review['config'].update(ttsBackend='drama3',targetLanguage='yue')
+   retry=root/'normal-repairs'/'retry-a';retry.mkdir(parents=True)
+   source=retry/'failed.wav'
+   with wave.open(str(source),'wb') as f:f.setparams((1,2,16000,0,'NONE','not compressed'));f.writeframes(b'\0\0'*16000)
+   archive=recording_history.preserve(retry,'drama3','yue',dict(reviewIndex=0,text='完整台詞'),source,'Japanese language check',review['cues'][0],dict(speechCheck=dict(heard='日本語',decision='japanese')))
+   source.unlink()  # The immutable copy must remain audible after retry cleanup.
+   self.save(root/'segment-issues.json',[dict(index=1,kind='verification-unresolved')])
+   issue=review_report.project(root,review,dict(status='attention'))['issues'][0]
+   self.assertEqual(issue['auditions']['lastFailed']['path'],str((archive/'audio.wav').resolve()))
+   self.assertEqual(issue['diagnostic']['lastFailedHeard'],'日本語')
+   self.assertEqual(issue['attempts'][-1]['reason'],'Japanese language check')
 if __name__=='__main__':unittest.main()

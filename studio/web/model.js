@@ -16,4 +16,4 @@ export function captionAt(cues,t,language){const i=cueAt(cues,t);return i<0?'':c
 // legitimately restart; within a run, repairs cannot move the bar backwards.
 export function mergeJourney(previous,next,runID){return {...next,runID,progress:Math.max(previous?.runID===runID?previous.progress||0:0,Number(next?.progress)||0)}}
 
-export function selectableEngines(platform,hardware){return ENGINES.filter(([id])=>id!=='cosyvoice3'||platform==='win32'&&hardware?.backend==='cuda');}
+export function selectableEngines(platform,hardware){return ENGINES.filter(([id])=>id!=='cosyvoice3'||platform==='darwin'||platform==='macos'||platform==='win32'&&hardware?.backend==='cuda');}

@@ -1,0 +1,12 @@
+{
+  "cosy-source": {
+    "url": "https://codeload.github.com/FunAudioLLM/CosyVoice/tar.gz/074ca6dc9e80a2f424f1f74b48bdd7d3fea531cc",
+    "revision": "074ca6dc9e80a2f424f1f74b48bdd7d3fea531cc",
+    "sha256": "10c587f0853db27667a64a0a2dc0788b1c782cdab223682691db78702082a550"
+  },
+  "matcha-source": {
+    "url": "https://codeload.github.com/shivammehta25/Matcha-TTS/tar.gz/dd9105b34bf2be2230f4aa1e4769fb586a3c824e",
+    "revision": "dd9105b34bf2be2230f4aa1e4769fb586a3c824e",
+    "sha256": "59c43afae79110e4057eaa43f45b5558b556435da8fc85eab83f0c819ba3358d"
+  }
+}

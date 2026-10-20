@@ -5,6 +5,7 @@ DEFAULTS={'text':'mlx:qwen3.5-35b-a3b:4bit','asr':'asr-1.7b-bf16','speech':'whis
 def catalog():
     rows=json.loads(Path(__file__).with_name('model-options.json').read_text())
     if sys.platform=='win32':
+        rows=[r for r in rows if r.get('platform')!='darwin']
         native=Path(__file__).resolve().parent.parent/'native-models.json'
         if not native.is_file():native=Path(__file__).resolve().parent.parent/'windows/native-models.json'
         rows+=json.loads(native.read_text(encoding='utf-8'))

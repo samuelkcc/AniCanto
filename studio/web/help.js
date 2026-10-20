@@ -301,12 +301,12 @@ export const CHAPTERS=[
         },
         "body": [
           {
-            "en": "CosyVoice 3 is offered only on Windows with an NVIDIA GPU and a compatible CUDA runtime. It uses pinned official FunAudioLLM weights with their Apache-2.0 notice. Detecting an NVIDIA card alone is not a completed compatibility test: deployment must load the model and generate a speech sample before it is marked ready.",
-            "zh-HK": "CosyVoice 3 只向配備 NVIDIA 顯示卡及相容 CUDA 執行環境嘅 Windows 提供，使用固定版本嘅 FunAudioLLM 官方權重，保留 Apache-2.0 授權。偵測到 NVIDIA 卡唔等於已通過相容測試；部署要成功載入模型並生成語音樣本，先會標示可以使用。"
+            "en": "CosyVoice 3 is an optional voice engine on Apple Silicon Macs and Windows PCs with NVIDIA CUDA. It downloads pinned official FunAudioLLM PyTorch weights (about 9.7 GB) and retains the published Apache-2.0 notice. On Mac, inference uses CPU and may be considerably slower than Drama 3. Setup verifies files and model loading; always audition Cantonese, English and character resemblance before relying on a full episode.",
+            "zh-HK": "CosyVoice 3 係 Apple Silicon Mac 同配備 NVIDIA CUDA 嘅 Windows 電腦可選配音引擎。佢會下載固定版本嘅 FunAudioLLM 官方 PyTorch 權重（約 9.7 GB），並保留模型公布嘅 Apache-2.0 授權資料。Mac 會用 CPU 推理，可能明顯慢過 Drama 3。部署會校驗檔案同載入模型；轉完整一集之前，請先試聽廣東話、英文同角色聲線。"
           },
           {
-            "en": "Mac and Windows AMD/Intel/CPU-only configurations do not offer CosyVoice 3 in this release. Mac normally uses Drama 3 when memory permits; other engines follow the compatible choices shown for that computer. The community MLX CosyVoice 3 conversion remains unavailable because its exact conversion licence/provenance evidence has not been completed. This does not mean that the official CosyVoice 3 weights lack a licence. Existing downloaded files and recordings are not deleted automatically; old recordings remain available for playback and unused models can be removed in Model centre.",
-            "zh-HK": "本版 Mac，以及 Windows AMD／Intel／純 CPU 組合，唔提供 CosyVoice 3 選項。Mac 記憶體足夠時通常使用 Drama 3；其他引擎以該電腦顯示嘅相容選項為準。社群 MLX CosyVoice 3 轉換版本仍因指定轉換檔嘅授權／來源證據未完成而停用，唔代表官方 CosyVoice 3 權重冇授權。已下載檔案同錄音唔會自動刪除；舊錄音仍可播放，唔再需要嘅模型可喺模型中心移除。"
+            "en": "To add CosyVoice 3, open Model centre or Change models, select CosyVoice 3, check its download size and memory estimate, then download and switch. You can keep Drama 3 and another installed voice engine for automatic retries. WenetSpeech-Yue ZoengJyutGaai is the available Cantonese-only version; the older Base version is no longer offered for new downloads. Already installed Base files and earlier recordings remain available. Unverified community MLX CosyVoice 3 conversions remain unavailable; Windows AMD, Intel and CPU-only CosyVoice 3 are not offered.",
+            "zh-HK": "要加 CosyVoice 3，去「模型中心」或「更改模型」選 CosyVoice 3，睇清下載量同記憶體估算，再下載及切換。可以同時保留 Drama 3 同另一款已安裝語音引擎，供自動重試使用。WenetSpeech-Yue 現時提供 ZoengJyutGaai 廣東話版；舊 Base 版唔再提供新下載，已安裝檔案同舊錄音會保留。未核清來源嘅社群 MLX CosyVoice 3 轉換版仍停用；Windows AMD、Intel 同純 CPU 暫不提供 CosyVoice 3。"
           },
           {
             "en": "Other engines may support selected AMD cards through the pinned ROCm stack. That is separate from CosyVoice 3 availability and from AMD hardware video encoding. Supported GPU model, driver, runtime and a real model test all matter; no AMD voice backend is advertised as fully hardware-qualified without such a test.",

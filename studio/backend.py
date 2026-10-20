@@ -480,8 +480,9 @@ class Studio:
                 rows=catalog()
                 rows=[r for r in rows if r.get('engine') not in ('ollama',) and not str(r['id']).startswith('asr-native')]
             import re
+            from engine_policy import ACTIVE
             rows=[r for r in rows if r.get('category')!='text' or re.fullmatch(r'(?:mlx:qwen3\.5-(?:9b|35b-a3b):[^:]+|qwen3\.5:(?:9b|35b))',r['id'])]
-            return [{k:r.get(k) for k in ('id','title','category','engine','bytes','estimatedMemoryGB','license')} for r in rows if not r.get('retired') and not r.get('licenseReviewRequired') and r.get('category') in ('text','voice','speech','asr') and r.get('files') and r.get('bytes')]
+            return [{k:r.get(k) for k in ('id','title','category','engine','bytes','estimatedMemoryGB','license')} for r in rows if not r.get('retired') and not r.get('licenseReviewRequired') and r.get('category') in ('text','voice','speech','asr') and (r.get('category')!='voice' or r.get('engine') in ACTIVE) and r.get('files') and r.get('bytes')]
         if op=='maintain-model':
             from model_maintenance import model
             ident=p.get('id');mode=p.get('mode','repair')

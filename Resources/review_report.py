@@ -13,6 +13,20 @@ def read(path,default):
     except (OSError,ValueError):return default
 
 
+def archived_recordings(folder):
+    """Expose immutable rejected WAVs from this track and its retry jobs."""
+    rows=[]
+    for manifest in folder.rglob('recording-history/*/take.json'):
+        relative=manifest.relative_to(folder)
+        if relative.parts[0]=='tracks' or manifest.parent.parent.name!='recording-history':continue
+        record=read(manifest,{})
+        if type(record.get('index')) is not int or record.get('status')!='rejected':continue
+        audio=manifest.parent/'audio.wav'
+        if not audio.is_file():continue
+        rows.append(dict(index=record['index'],language=record.get('language'),action='retained-rejected-recording',status='not-verified',engine=record.get('engine'),candidateAudio=str(audio),check=record.get('generation',{}).get('speechCheck',{}),reason=record.get('reason',''),recordedAt=record.get('created',0)))
+    return rows
+
+
 def project(root,review,row):
     root=Path(root).resolve();cfg=review.get('config',{});cues=review.get('cues',[])
     active=row.get('status')=='running';items={};resolved={};contexts={}
@@ -78,7 +92,7 @@ def project(root,review,row):
         local_cues=local_review.get('cues') or cues
         cue=next((c for n,c in enumerate(local_cues) if c.get('reviewIndex',n)+1==item['index']),{})
         if folder not in facts:
-            facts[folder]=dict(placement=read(folder/'natural-placement.json',{}).get('rows',[]),checks=read(folder/'normal-checks.json',{}),director=list(read(folder/'automatic-recovery.json',{}).get('rows',{}).values()),target=list(read(folder/'target-reference-recovery.json',{}).values()),natural=read(folder/'natural-repair.json',{}).get('candidates',[]),finishing=read(folder/'natural-finishing.json',{}).get('operations',[]))
+            facts[folder]=dict(placement=read(folder/'natural-placement.json',{}).get('rows',[]),checks=read(folder/'normal-checks.json',{}),director=list(read(folder/'automatic-recovery.json',{}).get('rows',{}).values()),target=list(read(folder/'target-reference-recovery.json',{}).values()),natural=read(folder/'natural-repair.json',{}).get('candidates',[]),finishing=read(folder/'natural-finishing.json',{}).get('operations',[]),alternate=list(read(folder/'alternate-engine-recovery.json',{}).values()),archived=archived_recordings(folder))
         evidence=facts[folder]
         placement=next((p for p in evidence['placement'] if p.get('index')==item['index']),{})
         checks=evidence['checks']
@@ -88,9 +102,13 @@ def project(root,review,row):
         earlier=[]
         for record in checks.get('repairs',[]):
             if record.get('index')==item['index']:
+                if record.get('originalAudio'):
+                    earlier.append(dict(action='initial-voice-attempt',status='not-verified',candidateAudio=record['originalAudio'],check=record.get('originalCheck',{})))
                 earlier.extend(dict(a,action='retry-clauses',status='adopted' if a.get('repaired') else 'not-verified',check=a.get('candidateCheck',{})) for a in record.get('attempts',[]) if isinstance(a,dict))
         earlier.extend(dict(a,action='adapt-source',status='adopted' if a.get('adopted') else 'not-verified',candidateSeconds=a.get('seconds'),check=a.get('languageCheck',{})) for a in evidence['natural'] if a.get('index')==item['index'])
         earlier.extend(a for a in evidence['finishing'] if a.get('index')==item['index'])
+        earlier.extend(dict(a,candidateAudio=a.get('selectedAudio') or a.get('audio')) for a in evidence['alternate'] if a.get('index')==item['index'])
+        earlier.extend(a for a in evidence['archived'] if a['index']==item['index'] and a.get('language')==item['language'])
         if earlier:director=dict(director,attempts=earlier+(director.get('attempts') or []))
         enrich(item,cue,local_cfg,folder,placement,checks,director,active,phase)
     # A verified, delivered target-language fallback resolves missing language,

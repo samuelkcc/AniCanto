@@ -259,7 +259,7 @@ extension ContentView {
             }.disabled(m.busy)
             if m.ttsBackend.hasPrefix("gpt-sovits") {
             Picker(L("配音裝置"),selection:$m.gsvDevice) { Text("Apple Silicon GPU · MPS").tag("mps");Text(L("CPU · 相容模式，較慢")).tag("cpu") }.frame(width:400).disabled(m.busy)
-            } else { Text(L("CosyVoice 3 使用 Apple Silicon GPU · MLX，全本機生成。")).font(.caption).foregroundStyle(.secondary) }
+            } else if m.ttsBackend == "cosyvoice3" { Text(L("CosyVoice 3 使用官方 PyTorch 模型；Mac 以 CPU 執行，可能較慢。首次下載約 9.7 GB，請先試聽目標語言及聲線。")).font(.caption).foregroundStyle(.secondary) }
             if let a = m.comparisonGSV, let b = m.comparisonCosy {
                 HStack {
                     Text(L("同稿比較"))

@@ -8,7 +8,7 @@
     "asr-runtime": {"requirements":"asr-requirements.lock","probe":"import mlx.core, mlx_audio.stt, soundfile, scipy"},
     "separator-runtime": {"requirements":"separator-requirements.lock","probe":"import torch, torchaudio, audio_separator, sklearn, onnxruntime"},
     "gsv-runtime": {"requirements":"gsv-requirements.lock","probe":"import torch, transformers, soundfile, pyopenjtalk, ToJyutping, jieba_fast"},
-    "cosy-runtime": {"requirements":"cosy-requirements.lock","probe":"import mlx.core, mlx_audio, soundfile; import mlx_audio.tts.models.cosyvoice3"},
+    "cosy-runtime": {"requirements":"cosy-native-requirements.lock","probe":"import torch, torchaudio, transformers, onnxruntime, soundfile, hyperpyyaml, diffusers, lightning, x_transformers"},
     "local-tts-runtime": {"requirements":"local-tts-requirements.lock","probe":"import torch, torchaudio, transformers, hyperpyyaml, diffusers, whisper, conformer"},
     "qwen-runtime": {"requirements":"qwen-requirements.lock","probe":"import mlx_audio.tts.models.qwen3_tts, soundfile"}
   }

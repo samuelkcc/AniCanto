@@ -26,17 +26,17 @@ def inventory(root=ROOT):
             category=row.get('category') or 'support',engine=row.get('engine') or '',license=row.get('license') or '',availability='retired' if row.get('retired') else 'license-review' if row.get('licenseReviewRequired') else 'catalogue',files=files))
     for name,platform in [('Resources/model-options.json','Mac / Windows'),('windows/native-models.json','Windows')]:
         for row in json.loads((root/name).read_text()):
-            actual='Mac' if name.startswith('Resources/') and (row.get('repo','').startswith('mlx-community/') or row.get('engine')=='mlx') else platform
-            if row.get('engine')=='cosyvoice3' and name.startswith('windows/'):actual='Windows · NVIDIA'
+            actual='Mac' if row.get('platform')=='darwin' or name.startswith('Resources/') and (row.get('repo','').startswith('mlx-community/') or row.get('engine')=='mlx') else platform
+            if row.get('engine')=='cosyvoice3':actual='Mac · CPU / Windows · NVIDIA'
             add(row,actual,name)
     # Supplementary tokenizers and compatibility manifests can carry files not
     # present in the selectable model list. Keep their exact pinned URL/hash.
-    for name in ['Resources/asr-model.json','Resources/mlx-text-model.json','Resources/qwen-voice-model.json','Resources/cosy-models.json','windows/models.json']:
-        if name=='Resources/cosy-models.json':continue  # Mac CosyVoice is not offered in this release.
+    for name in ['Resources/asr-model.json','Resources/mlx-text-model.json','Resources/qwen-voice-model.json','Resources/cosy-models.json','Resources/cosy-native-sources.json','windows/models.json']:
+        if name=='Resources/cosy-models.json':continue  # Retired third-party MLX conversion; keep legal evidence separately.
         data=json.loads((root/name).read_text());parts={'model':data} if 'files' in data else data
         for key,row in parts.items():
             if not isinstance(row,dict):continue
-            if row.get('files'):add(row,'Windows' if name.startswith('windows/') else 'Mac',name,name+':'+key)
+            if row.get('files'):add(row,'Mac / Windows' if name=='Resources/cosy-native-sources.json' else 'Windows' if name.startswith('windows/') else 'Mac',name,name+':'+key)
             elif row.get('url'):
                 add(dict(row,id=key,title=key,files=[dict(path=key+'.tar.gz',sha256=row.get('sha256'),url=row['url'])]),'Windows',name)
     for item in json.loads((root/'licenses/auxiliary-models.json').read_text())['components']:

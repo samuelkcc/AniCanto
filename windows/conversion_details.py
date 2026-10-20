@@ -7,7 +7,7 @@ are added to the debug report.
 import json,platform,sys,time
 from pathlib import Path
 
-SETTINGS=('sourceLanguage','sourceAudioStream','speechRatePolicy','naturalTimingPolicy','subtitleSelection','automaticDurationRewrite','automaticRecovery','autoPreviewIncomplete','productionMode','translationSource','ttsBackend','selectedEngines','dubLanguages','subtitleModes','includeOriginal','model','asrModel','speechModel','referenceSpeechModel','drama3Model','drama3Backend','cosyModel','roleAnalysisMode','voiceStyleMode','visualRoleAnalysisEnabled','normalPolicyRevision','fastReferenceRevision','requireCompleteDubbing','fillMissingVoiceScripts','fallbackToRoleVoice','allowCrossEngineRepair','autoValidate','aiAutoFix','backgroundGain','backgroundDucking','separateBackground','mixOriginal','startOffset','limit')
+SETTINGS=('sourceLanguage','sourceAudioStream','speechRatePolicy','naturalTimingPolicy','subtitleSelection','automaticDurationRewrite','automaticRecovery','autoPreviewIncomplete','productionMode','translationSource','ttsBackend','selectedEngines','dubLanguages','subtitleModes','includeOriginal','model','asrModel','speechModel','referenceSpeechModel','drama3Model','drama3Backend','cosyModel','roleAnalysisMode','voiceStyleMode','visualRoleAnalysisEnabled','normalPolicyRevision','fastReferenceRevision','requireCompleteDubbing','fillMissingVoiceScripts','fallbackToRoleVoice','allowCrossEngineRepair','automaticAlternateVoice','autoValidate','aiAutoFix','backgroundGain','backgroundDucking','separateBackground','mixOriginal','startOffset','limit')
 RUNTIME=('engine','requestedEngine','backend','device','gpu','textModel','voiceModel','model','variant','speechInferencePassed','modelLoadPassed')
 
 def read(path,default=None,limit=4*1024*1024):

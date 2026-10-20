@@ -1,0 +1,322 @@
+[
+  {
+    "name": "block-buffer",
+    "version": "0.10.4",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/RustCrypto/utils",
+    "files": [
+      "Licenses/anicanto-core/block-buffer-0.10.4/LICENSE-APACHE",
+      "Licenses/anicanto-core/block-buffer-0.10.4/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "cfg-if",
+    "version": "1.0.5",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/rust-lang/cfg-if",
+    "files": [
+      "Licenses/anicanto-core/cfg-if-1.0.5/LICENSE-APACHE",
+      "Licenses/anicanto-core/cfg-if-1.0.5/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "cpufeatures",
+    "version": "0.2.17",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/RustCrypto/utils",
+    "files": [
+      "Licenses/anicanto-core/cpufeatures-0.2.17/LICENSE-APACHE",
+      "Licenses/anicanto-core/cpufeatures-0.2.17/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "crypto-common",
+    "version": "0.1.7",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/RustCrypto/traits",
+    "files": [
+      "Licenses/anicanto-core/crypto-common-0.1.7/LICENSE-APACHE",
+      "Licenses/anicanto-core/crypto-common-0.1.7/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "digest",
+    "version": "0.10.7",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/RustCrypto/traits",
+    "files": [
+      "Licenses/anicanto-core/digest-0.10.7/LICENSE-APACHE",
+      "Licenses/anicanto-core/digest-0.10.7/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "generic-array",
+    "version": "0.14.7",
+    "license": "MIT",
+    "origin": "https://github.com/fizyk20/generic-array.git",
+    "files": [
+      "Licenses/anicanto-core/generic-array-0.14.7/LICENSE"
+    ]
+  },
+  {
+    "name": "itoa",
+    "version": "1.0.18",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/dtolnay/itoa",
+    "files": [
+      "Licenses/anicanto-core/itoa-1.0.18/LICENSE-APACHE",
+      "Licenses/anicanto-core/itoa-1.0.18/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "libc",
+    "version": "0.2.190",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/rust-lang/libc",
+    "files": [
+      "Licenses/anicanto-core/libc-0.2.190/LICENSE-APACHE",
+      "Licenses/anicanto-core/libc-0.2.190/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "memchr",
+    "version": "2.8.3",
+    "license": "Unlicense OR MIT",
+    "origin": "https://github.com/BurntSushi/memchr",
+    "files": [
+      "Licenses/anicanto-core/memchr-2.8.3/COPYING",
+      "Licenses/anicanto-core/memchr-2.8.3/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "proc-macro2",
+    "version": "1.0.107",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/dtolnay/proc-macro2",
+    "files": [
+      "Licenses/anicanto-core/proc-macro2-1.0.107/LICENSE-APACHE",
+      "Licenses/anicanto-core/proc-macro2-1.0.107/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "quote",
+    "version": "1.0.47",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/dtolnay/quote",
+    "files": [
+      "Licenses/anicanto-core/quote-1.0.47/LICENSE-APACHE",
+      "Licenses/anicanto-core/quote-1.0.47/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde",
+    "version": "1.0.228",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/serde-rs/serde",
+    "files": [
+      "Licenses/anicanto-core/serde-1.0.228/LICENSE-APACHE",
+      "Licenses/anicanto-core/serde-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_core",
+    "version": "1.0.228",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/serde-rs/serde",
+    "files": [
+      "Licenses/anicanto-core/serde_core-1.0.228/LICENSE-APACHE",
+      "Licenses/anicanto-core/serde_core-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_derive",
+    "version": "1.0.228",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/serde-rs/serde",
+    "files": [
+      "Licenses/anicanto-core/serde_derive-1.0.228/LICENSE-APACHE",
+      "Licenses/anicanto-core/serde_derive-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_json",
+    "version": "1.0.150",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/serde-rs/json",
+    "files": [
+      "Licenses/anicanto-core/serde_json-1.0.150/LICENSE-APACHE",
+      "Licenses/anicanto-core/serde_json-1.0.150/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "sha2",
+    "version": "0.10.9",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/RustCrypto/hashes",
+    "files": [
+      "Licenses/anicanto-core/sha2-0.10.9/LICENSE-APACHE",
+      "Licenses/anicanto-core/sha2-0.10.9/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "syn",
+    "version": "2.0.119",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/dtolnay/syn",
+    "files": [
+      "Licenses/anicanto-core/syn-2.0.119/LICENSE-APACHE",
+      "Licenses/anicanto-core/syn-2.0.119/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "typenum",
+    "version": "1.20.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/paholg/typenum",
+    "files": [
+      "Licenses/anicanto-core/typenum-1.20.1/LICENSE-APACHE",
+      "Licenses/anicanto-core/typenum-1.20.1/LICENSE",
+      "Licenses/anicanto-core/typenum-1.20.1/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "unicode-ident",
+    "version": "1.0.27",
+    "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+    "origin": "https://github.com/dtolnay/unicode-ident",
+    "files": [
+      "Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-UNICODE",
+      "Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-APACHE",
+      "Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "version_check",
+    "version": "0.9.5",
+    "license": "MIT/Apache-2.0",
+    "origin": "https://github.com/SergioBenitez/version_check",
+    "files": [
+      "Licenses/anicanto-core/version_check-0.9.5/LICENSE-APACHE",
+      "Licenses/anicanto-core/version_check-0.9.5/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "windows",
+    "version": "0.62.2",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-0.62.2/license-apache-2.0",
+      "Licenses/anicanto-core/windows-0.62.2/license-mit"
+    ]
+  },
+  {
+    "name": "windows-collections",
+    "version": "0.3.2",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-collections-0.3.2/license-apache-2.0",
+      "Licenses/anicanto-core/windows-collections-0.3.2/license-mit"
+    ]
+  },
+  {
+    "name": "windows-core",
+    "version": "0.62.2",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-core-0.62.2/license-apache-2.0",
+      "Licenses/anicanto-core/windows-core-0.62.2/license-mit"
+    ]
+  },
+  {
+    "name": "windows-future",
+    "version": "0.3.2",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-future-0.3.2/license-apache-2.0",
+      "Licenses/anicanto-core/windows-future-0.3.2/license-mit"
+    ]
+  },
+  {
+    "name": "windows-implement",
+    "version": "0.60.2",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-implement-0.60.2/license-apache-2.0",
+      "Licenses/anicanto-core/windows-implement-0.60.2/license-mit"
+    ]
+  },
+  {
+    "name": "windows-interface",
+    "version": "0.59.3",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-interface-0.59.3/license-apache-2.0",
+      "Licenses/anicanto-core/windows-interface-0.59.3/license-mit"
+    ]
+  },
+  {
+    "name": "windows-link",
+    "version": "0.2.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-link-0.2.1/license-apache-2.0",
+      "Licenses/anicanto-core/windows-link-0.2.1/license-mit"
+    ]
+  },
+  {
+    "name": "windows-numerics",
+    "version": "0.3.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-numerics-0.3.1/license-apache-2.0",
+      "Licenses/anicanto-core/windows-numerics-0.3.1/license-mit"
+    ]
+  },
+  {
+    "name": "windows-result",
+    "version": "0.4.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-result-0.4.1/license-apache-2.0",
+      "Licenses/anicanto-core/windows-result-0.4.1/license-mit"
+    ]
+  },
+  {
+    "name": "windows-strings",
+    "version": "0.5.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-strings-0.5.1/license-apache-2.0",
+      "Licenses/anicanto-core/windows-strings-0.5.1/license-mit"
+    ]
+  },
+  {
+    "name": "windows-threading",
+    "version": "0.2.1",
+    "license": "MIT OR Apache-2.0",
+    "origin": "https://github.com/microsoft/windows-rs",
+    "files": [
+      "Licenses/anicanto-core/windows-threading-0.2.1/license-apache-2.0",
+      "Licenses/anicanto-core/windows-threading-0.2.1/license-mit"
+    ]
+  },
+  {
+    "name": "zmij",
+    "version": "1.0.23",
+    "license": "MIT",
+    "origin": "https://github.com/dtolnay/zmij",
+    "files": [
+      "Licenses/anicanto-core/zmij-1.0.23/LICENSE-MIT"
+    ]
+  }
+]

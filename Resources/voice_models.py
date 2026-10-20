@@ -1,10 +1,11 @@
 """Pinned, explicit voice-model selection. Missing selection never falls back."""
 import json,sys
 from pathlib import Path
-DEFAULTS={'qwen-tts':'qwen-0.6b-4bit','cosyvoice3':'cosy-0.5b-4bit','voxcpm2':'voxcpm2-2b-bf16','wsyue':'wsyue-cosy2-zjg','drama3':'drama3-35b-4bit'}
+DEFAULTS={'qwen-tts':'qwen-0.6b-4bit','cosyvoice3':'cosy-native-0.5b','voxcpm2':'voxcpm2-2b-bf16','wsyue':'wsyue-cosy2-zjg','drama3':'drama3-35b-4bit'}
 def catalog():
     rows=json.loads(Path(__file__).with_name('voice-models.json').read_text())
     if sys.platform=='win32':
+        rows=[r for r in rows if r.get('platform')!='darwin']
         from model_catalog import catalog as models
         rows += [r for r in models() if r.get('nativeFormat') and r.get('category')=='voice']
     return rows

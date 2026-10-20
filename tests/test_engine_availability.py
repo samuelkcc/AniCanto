@@ -4,8 +4,9 @@ from unittest.mock import patch
 ROOT=Path(__file__).parents[1];sys.path[:0]=[str(ROOT/'Resources'),str(ROOT/'windows')]
 from engine_availability import require
 class EngineAvailabilityTests(unittest.TestCase):
- def test_cosy_is_windows_cuda_only(self):
-  for platform,backend in [('darwin','metal'),('win32','rocm'),('win32','cpu'),('win32','xpu')]:
+ def test_cosy_supports_mac_and_windows_cuda_only(self):
+  require('cosyvoice3',platform='darwin',backend='metal')
+  for platform,backend in [('linux','cpu'),('win32','rocm'),('win32','cpu'),('win32','xpu')]:
    with self.subTest(platform=platform,backend=backend),self.assertRaisesRegex(ValueError,'NVIDIA'):require('cosyvoice3',platform=platform,backend=backend)
   require('cosyvoice3',platform='win32',backend='cuda')
  def test_unprobed_windows_requires_a_physical_nvidia_adapter(self):

@@ -220,6 +220,9 @@ def synthesize(cfg,job,cues,run,emit):
         paths,schedule=finish_natural(cfg,job,cues,paths,run,emit,allow_tempo=True)
         from review_retry import keep_better_baselines
         paths,schedule=keep_better_baselines(cfg,job,cues,paths,schedule,run,emit)
+        from normal_engine_fallback import repair as alternate_engine_repair
+        paths=alternate_engine_repair(dict(cfg,_sourceVoiceRepairsExhausted=True),job,cues,paths,schedule,run,emit)
+        schedule=prepare(cfg,job,cues,paths,run,emit)
         from normal_voice_fallback import repair as reference_fallback
         paths=reference_fallback(dict(cfg,_sourceVoiceRepairsExhausted=True),job,cues,paths,schedule,run,emit)
         # A new fallback take also needs bounded final timing, with the same

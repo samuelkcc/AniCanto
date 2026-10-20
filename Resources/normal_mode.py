@@ -276,7 +276,14 @@ def needs_dialect_witness(text,evidence,target='yue'):
 def language_decision(expected,heard,language,target='yue'):
     label=str(language or '').casefold().strip()
     kana=re.findall(r'[\u3041-\u3096\u30a1-\u30fa]',heard)
-    if (label in ('ja','jpn','japanese','日語','日本語') and len(re.findall(r'[\u3041-\u30fa\u3400-\u9fff]',heard))>=3) or len(kana)>=4:return 'japanese'
+    if len(kana)>=4:return 'japanese'
+    if label in ('ja','jpn','japanese','日語','日本語') and len(re.findall(r'[\u3041-\u30fa\u3400-\u9fff]',heard))>=3:
+        # Accent can make a language detector label audible Cantonese as
+        # Japanese. A close Han-only transcript is inconclusive, not proof of
+        # Japanese speech; preserve the actor take for later audition.
+        from speechcheck import similarity
+        if target=='yue' and not kana and similarity(expected,heard)>=.75:return 'unconfirmed'
+        return 'japanese'
     if target=='yue':return dialect_decision(expected,heard,language)
     if label in ('en','eng','english') and len(re.findall(r'[a-z]+',heard,re.I))>=2:return 'english'
     if label in ('mandarin','cmn','普通話','普通话') and len(heard.strip())>=5:return 'mandarin'
@@ -325,7 +332,10 @@ def inspect(cfg,job,cues,paths,emit):
                     row['independent']=second
                     other=language_decision(item['expected'],second.get('heard',''),second.get('language',''),target)
                     row['languageFailure']=row['decision'] if row['decision'] in ('japanese','mandarin') and other==row['decision'] else ''
-                    if other=='cantonese' and row['decision']=='mandarin':row['decision']='unconfirmed'
+                    if other=='cantonese' and row['decision'] in ('mandarin','japanese'):
+                        # One detector's wrong-language label is not enough to
+                        # discard an audible actor take when another hears Yue.
+                        row['decision']='unconfirmed'
                     elif other=='cantonese' and row['decision']=='unconfirmed':row['decision']='cantonese'
                     elif other=='mandarin' and row['decision']=='unconfirmed':row['decision']='mandarin'
                     omitted=major_omission(item['expected'],row.get('heard','')) and major_omission(item['expected'],second.get('heard',''))

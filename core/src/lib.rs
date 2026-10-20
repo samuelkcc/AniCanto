@@ -223,7 +223,6 @@ fn deployment_inner(req: &Value) -> Result<Value,String> {
         .or_else(||text.filter(|m|visual_fits(m)))
         .or_else(||candidates.iter().copied().find(visual_fits))};
     let engine=req["engine"].as_str().unwrap_or("drama3");
-    if engine=="cosyvoice3" {return Err("cosyvoice3-requires-windows-nvidia".into());}
     if !catalog()["engines"].as_array().unwrap().iter().any(|e|e["id"]==engine) {return Err("unknown-engine".into());}
     let voice_for=|selected:&str| models.iter().filter(|m|apple && m["category"]=="voice" && m["engine"]==selected).filter(fits)
         .min_by_key(|m|(if selected=="drama3" && m["id"]=="drama3-small-iq3" {1} else {0},m["bytes"].as_u64().unwrap_or(u64::MAX)));

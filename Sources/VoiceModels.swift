@@ -10,6 +10,7 @@ struct VoiceModelVariant: Decodable, Identifiable {
     let revision: String
     let bytes: Int64
     let legacy: String?
+    let retired: Bool?
     static let all: [Self] = {
         guard let url=Bundle.main.url(forResource:"voice-models",withExtension:"json"),let data=try? Data(contentsOf:url) else{return []}
         return (try? JSONDecoder().decode([Self].self,from:data)) ?? []
@@ -72,7 +73,7 @@ struct VoiceModelLibrary:View {
                     Button("下載／修復 "+gsvModelTitle(version)) {let e=model.engine;model.task("部署 GPT-SoVITS "+gsvModelTitle(version)) {try e.installDubbing("gsv",variant:version)}}
                 }.card()
             } else {
-                Picker(L("模型大小／精度"),selection:Binding(get:{chosen},set:{browser.id=$0})) {ForEach(VoiceModelVariant.all.filter{$0.engine==model.modelLibraryEngine}.sorted{$0.bytes<$1.bytes}) {Text($0.title).tag($0.id)}}
+                Picker(L("模型大小／精度"),selection:Binding(get:{chosen},set:{browser.id=$0})) {ForEach(VoiceModelVariant.all.filter{$0.engine==model.modelLibraryEngine && ($0.retired != true || model.voiceVariantReady($0))}.sorted{$0.bytes<$1.bytes}) {Text($0.title).tag($0.id)}}
                 ForEach(VoiceModelVariant.all.filter{$0.engine==model.modelLibraryEngine && $0.id==chosen}) {row in
                     let ready=model.voiceVariantReady(row)
                     let selected=model.voiceModelSelection(row.engine)==row.id
@@ -92,7 +93,7 @@ struct VoiceModelLibrary:View {
                     }.card()
                 }
                 if model.modelLibraryEngine=="drama3" {Text(L("Fish Audio Drama 3 · 原生 44.1 kHz · MLX 4-bit。本機生成；廣東話以語言指示引導，請自行覆聽口音與聲調。")).font(.caption).foregroundStyle(.secondary)}
-                if model.modelLibraryEngine=="cosyvoice3" {Text(L("此清單係同一個 0.5B 模型嘅不同精度；聲音編碼器另需約 1 GB，各版本共用。")).font(.caption).foregroundStyle(.secondary)}
+                if model.modelLibraryEngine=="cosyvoice3" {Text(L("CosyVoice 3 使用官方 PyTorch 模型；Mac 以 CPU 執行，可能較慢。首次下載約 9.7 GB，請先試聽目標語言及聲線。")).font(.caption).foregroundStyle(.secondary)}
 
             }
         }.onAppear {model.modelLibraryEngine=VoiceEngineChoice.active(model.modelLibraryEngine)}.onChange(of:model.modelLibraryEngine) {_ in browser.id=""}.disabled(model.busy)

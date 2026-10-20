@@ -18,9 +18,13 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [睇吓介面](#睇吓工作室) · [影片與字幕來源](#由日文對白到廣東話及英文) · [模型及硬件](#模型及硬件建議) · [處理流程](#由影片到配音) · [使用限制](#使用前要知道嘅限制) · [☕ 支持計劃](#支持更多人認識廣東話)
 
-> **公開 Beta · 0.24.36**
+> **公開 Beta · 0.24.43**
 >
-> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.36-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
+> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.43-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
+
+## 0.24.43 更新
+
+今次修正咗 macOS 版開工時核心與設定檔不一致、令影片即時停止嘅問題。校對報告會保留失敗錄音同最後選用嘅替代錄音，方便比較；如果已安裝多個相容配音模型，自動修復可以嘗試另一個模型補回對白。聲線同語言檢查仍可能出錯，重要片段請試聽。
 
 ## 本機 AI，部署後可離線使用
 
@@ -136,7 +140,7 @@ Qwen 會根據辨識對白同可用字幕，整理成**香港廣東話及英文�
 |---|---|
 | **Drama 3——建議使用** | 目前試聽測試中，較接近香港廣東話口音。 |
 | **GPT-SoVITS** | 模擬日文原聲時，廣東話可能帶有日文口音。 |
-| **CosyVoice 3** | 呢個流程亦可能帶有日文口音；只喺 Windows NVIDIA／CUDA 提供官方原生權重，Mac 不提供。 |
+| **CosyVoice 3** | 呢個流程亦可能帶有日文口音；Windows NVIDIA／CUDA 使用官方模型；Apple Silicon Mac 亦可用官方模型喺 CPU 推論，速度可能較慢。 |
 
 Qwen 負責翻譯同協助規劃修復；Drama 3 負責生成聲音。文字模型下載選項為 **Qwen 3.5 9B 及 35B**。未能確認授權證據嘅版本已從下載清單移除。
 

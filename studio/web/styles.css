@@ -129,4 +129,6 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .installation-details>.row{margin:10px 0}
 .installation-console{height:220px;max-width:100%;overflow:auto;white-space:pre;margin:0;padding:12px;border-radius:8px;background:#17202d;color:#e6edf5;font:12px/1.6 ui-monospace,SFMono-Regular,monospace;overflow-anchor:none;tab-size:2}
 #installation-badge{position:fixed;right:20px;bottom:64px;z-index:40;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 40px);background:var(--surface);border:1px solid var(--accent);box-shadow:0 4px 20px #0002;padding:12px 16px;border-radius:12px;color:var(--accent);font-size:13px}
+#installation-badge.attention{color:#a2373f;border-color:#a2373f}
+.selected-model-status p{margin:0}.selected-model-status>small{overflow-wrap:anywhere}
 .installation-badge-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

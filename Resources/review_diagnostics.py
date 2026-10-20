@@ -49,6 +49,10 @@ def enrich(item,cue,cfg,folder,placement=None,checks=None,director=None,processi
         if not path:return None
         p=Path(path).resolve()
         return str(p) if p.is_relative_to(base) and p.is_file() else None
+    attempts=[dict(a) for a in attempts if isinstance(a,dict)]
+    for attempt in attempts:
+        candidate=safe(attempt.get('candidateAudio') or attempt.get('audio') or attempt.get('originalAudio') or attempt.get('output'))
+        if candidate:attempt['audition']=dict(path=candidate,start=0,end=duration(candidate))
     index=item['index'];start=float(cue.get('speechStart',cue.get('start',0)));end=float(cue.get('speechEnd',cue.get('end',start)))
     reference=next((p for p in cfg.get('voiceProfiles',[]) if p.get('id')==cue.get('speakerId')), {})
     language=item.get('language','yue');target=cue.get('english' if language=='en' else 'cantonese','')
@@ -86,9 +90,18 @@ def enrich(item,cue,cfg,folder,placement=None,checks=None,director=None,processi
     if original:auditions['original']=dict(path=original,start=start,end=end)
     if separated:auditions['separated']=dict(path=separated,start=start,end=end)
     if generated:auditions['generated']=dict(path=generated,start=0,end=duration(generated))
+    # Keep the rejected character-voice take distinct from the selected fallback.
+    # A language detector can mistake accented Cantonese for Japanese, so the
+    # listener must be able to hear the actual rejected candidate.
+    failed_candidates=[(n,a) for n,a in enumerate(attempts) if a.get('audition') and
+                       a.get('status') in ('not-verified','timing-not-fit','generation-failed','verification-failed','timing-check-failed','meaning-not-verified') and
+                       a.get('action')!='target-language-reference']
+    failed=max(failed_candidates,key=lambda pair:(pair[1].get('recordedAt') or Path(pair[1]['audition']['path']).stat().st_mtime,pair[0]))[1] if failed_candidates else None
+    if failed:auditions['lastFailed']=failed['audition']
+    failed_check=(failed.get('check') or failed.get('candidateCheck') or {}) if failed else {}
     if processing and phase in ('prepare','recognition','translation'):next_action='Finish translation, then generate and check affected lines.'
     elif processing:next_action='Automatic repair and rechecking are still running.'
     else:next_action='Automatic attempts finished. Compare the retained recordings and saved output.'
     cause='language-drift' if proof.get('languageFailure') or proof.get('decision') in ('japanese','mandarin') else 'content-incomplete' if proof.get('contentFailure') else 'timing-overrun' if available is not None and measured is not None and measured>available+.005 else item.get('kind')
-    item.update(text=target,auditions=auditions,attempts=attempts,diagnostic=dict(cause=cause,voiceSource='target-language-fallback' if fallback else 'source-reference',voiceSimilarityCertified=False,referenceTitle=fallback.get('referenceID') if fallback else reference.get('name'),sourceText=cue.get('japanese') or cue.get('original') or cue.get('text',''),translatedText=target,heard=proof.get('heard',''),detectedLanguage=proof.get('decision') or proof.get('language',''),sourceSeconds=round(max(0,end-start),4),referenceSeconds=duration(reference.get('reference','')),recordingSeconds=measured,availableSeconds=round(available,4) if available is not None else None,overrunSeconds=round(max(0,measured-available),4) if measured is not None and available is not None else None,referenceLanguage=reference.get('language'),nextAction=next_action,phase=phase,qualityCertified=False))
+    item.update(text=target,auditions=auditions,attempts=attempts,diagnostic=dict(cause=cause,voiceSource='target-language-fallback' if fallback else 'source-reference',voiceSimilarityCertified=False,referenceTitle=fallback.get('referenceID') if fallback else reference.get('name'),sourceText=cue.get('japanese') or cue.get('original') or cue.get('text',''),translatedText=target,heard=proof.get('heard',''),detectedLanguage=proof.get('decision') or proof.get('language',''),lastFailedHeard=failed_check.get('heard',''),lastFailedDetectedLanguage=failed_check.get('decision') or failed_check.get('language',''),sourceSeconds=round(max(0,end-start),4),referenceSeconds=duration(reference.get('reference','')),recordingSeconds=measured,availableSeconds=round(available,4) if available is not None else None,overrunSeconds=round(max(0,measured-available),4) if measured is not None and available is not None else None,referenceLanguage=reference.get('language'),nextAction=next_action,phase=phase,qualityCertified=False))
     return item

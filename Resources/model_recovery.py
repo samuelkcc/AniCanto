@@ -16,7 +16,7 @@ def recover(cfg,emit):
         try:budget=int(subprocess.check_output(['/usr/sbin/sysctl','-n','hw.memsize'],text=True,stderr=subprocess.DEVNULL))/1073741824*.75
         except (OSError,ValueError,subprocess.CalledProcessError):budget=0
     engines=cfg.get('selectedEngines') or [cfg.get('ttsBackend','cosyvoice3')]
-    for role,key,default in [('cosyvoice3','cosyModel','cosy-0.5b-4bit'),('qwen-tts','qwenModel','qwen-0.6b-4bit'),('voxcpm2','voxcpmModel','voxcpm2-2b-bf16'),('wsyue','wsyueModel','wsyue-cosy2-zjg'),('drama3','drama3Model','drama3-35b-4bit')]:
+    for role,key,default in [('cosyvoice3','cosyModel','cosy-native-0.5b'),('qwen-tts','qwenModel','qwen-0.6b-4bit'),('voxcpm2','voxcpmModel','voxcpm2-2b-bf16'),('wsyue','wsyueModel','wsyue-cosy2-zjg'),('drama3','drama3Model','drama3-35b-4bit')]:
         if role not in engines and not (role=='cosyvoice3' and (cfg.get('gsvReferenceMode')=='target-bridge' or cfg.get('qwenReferenceMode')=='cantonese-bridge')):continue
         old=cfg.get(key,default)
         try:model_catalog.resolve(root,old);continue

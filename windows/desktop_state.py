@@ -31,7 +31,7 @@ def defaults(language='en'):
         subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=True,continueOnError=True,
-        fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,
+        fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
         cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,
         burnOutputCaptions=False,startOffset=0,limit=0,mixOriginal=0,subtitleOutput='none')

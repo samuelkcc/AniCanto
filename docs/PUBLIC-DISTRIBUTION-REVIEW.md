@@ -117,3 +117,9 @@ About groups the currently selectable model downloads by Qwen 3.5 4B / 9B / 35B,
 The automatic last-reference recovery uses the existing seven hash-allowlisted synthetic reference clips, with their retained generator/licence evidence; it adds no model downloads or outside voice recordings. A changed voice resemblance and any unverified content remain explicitly reported. The complete bilingual operational manual is embedded in `studio/web/help.js`.
 
 Final artifact receipts bind the actual `.app`, `.exe`, source snapshot and matching build materials. A successful component evidence review does not constitute publication authorisation or real Windows hardware acceptance.
+
+## Current optional voice-model change (2026-10-20)
+
+Apple Silicon now offers the same pinned official FunAudioLLM CosyVoice 3 PyTorch model used by the Windows adapter, via a separate CPU runtime. This does not enable the third-party MLX conversions. Model and source downloads are hash-verified, and the existing official-model Apache-2.0 evidence remains attached. Model-load and short-line speech quality on an actual Mac must still be validated after the optional download; the catalogue and package checks alone do not establish audible quality or performance.
+
+WenetSpeech-Yue Base is retired from new downloads, while existing installations and recordings are preserved. ZoengJyutGaai remains the downloadable Cantonese version.

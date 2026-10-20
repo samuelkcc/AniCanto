@@ -4,12 +4,12 @@ import warnings
 from importlib.util import find_spec
 from pathlib import Path
 from typing import Any, Callable, Dict, Tuple
+from urllib.request import urlretrieve
 
 import gdown
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import wget
 from omegaconf import DictConfig
 
 from matcha.utils import pylogger, rich_utils
@@ -216,4 +216,4 @@ def assert_model_downloaded(checkpoint_path, url, use_wget=True):
     if not use_wget:
         gdown.download(url=url, output=checkpoint_path, quiet=False, fuzzy=True)
     else:
-        wget.download(url=url, out=checkpoint_path)
+        urlretrieve(url, checkpoint_path)

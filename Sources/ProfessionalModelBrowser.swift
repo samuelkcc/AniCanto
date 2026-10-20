@@ -27,7 +27,7 @@ struct ProfessionalModelBrowser:View {
     var rows:[ModelOption] {
         let category=model.environmentCategory=="voices" ? "voice":model.environmentCategory=="text" ? "text":nil
         return ModelOption.all.filter {row in
-            (row.engine != "qwen-tts" || (selection.filter=="local" && selection.local.contains(row.id))) && (category==nil ? ["speech","asr"].contains(row.category):row.category==category) && (row.visibleForMemory(showAll:showAllSizes) || selection.local.contains(row.id)) && (!selection.installedOnly || selection.installed.contains(row.id)) && (selection.filter=="all" || (selection.filter=="local" && selection.local.contains(row.id)) || (selection.filter=="current" && selection.usedRoles[row.id] != nil)) && (selection.search.isEmpty || (row.title+row.repo).localizedCaseInsensitiveContains(selection.search))
+            (row.retired != true || selection.local.contains(row.id)) && (row.engine != "qwen-tts" || (selection.filter=="local" && selection.local.contains(row.id))) && (category==nil ? ["speech","asr"].contains(row.category):row.category==category) && (row.visibleForMemory(showAll:showAllSizes) || selection.local.contains(row.id)) && (!selection.installedOnly || selection.installed.contains(row.id)) && (selection.filter=="all" || (selection.filter=="local" && selection.local.contains(row.id)) || (selection.filter=="current" && selection.usedRoles[row.id] != nil)) && (selection.search.isEmpty || (row.title+row.repo).localizedCaseInsensitiveContains(selection.search))
         }.sorted {$0.engine==$1.engine ? $0.bytes<$1.bytes:$0.engine<$1.engine}
     }
     var selected:ModelOption? {ModelOption.all.first {$0.id==selection.selected}}

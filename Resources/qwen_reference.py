@@ -22,7 +22,7 @@ def prepare(cfg,job,profile,emit,allow_english=False):
     root=Path(cfg['storage'])
     if not (root/'cosy-ready.json').exists() or not (root/'asr-ready.json').exists():
         raise ValueError(f'{label} 跨語言參考需要已部署 CosyVoice 3 同覆聽模型；亦可為角色匯入{language}參考，或在模型頁選擇只用原聲。')
-    identity=dict(source=profile,sourceSHA=hashlib.sha256(Path(profile['reference']).read_bytes()).hexdigest(),cosyModel=cfg.get('cosyModel','cosy-0.5b-4bit'),text=text,asrModel=cfg.get('asrModel','asr-1.7b-bf16'),revision=1)
+    identity=dict(source=profile,sourceSHA=hashlib.sha256(Path(profile['reference']).read_bytes()).hexdigest(),cosyModel=cfg.get('cosyModel','cosy-native-0.5b'),text=text,asrModel=cfg.get('asrModel','asr-1.7b-bf16'),revision=1)
     key=hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:24]
     folder=root/'qwen-references'/key;folder.mkdir(parents=True,exist_ok=True)
     manifest=folder/'reference.json'

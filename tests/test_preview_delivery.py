@@ -11,6 +11,11 @@ class PreviewDeliveryTests(unittest.TestCase):
   self.assertFalse(preview.needed(dict(productionMode='fast'),coverage,{},[]))
   self.assertFalse(preview.needed(dict(productionMode='normal',editorRender=True),coverage,{},[]))
   self.assertFalse(preview.needed(dict(productionMode='normal',autoPreviewIncomplete=False),coverage,{},[]))
+ def test_complete_dubbing_stays_formal_despite_quality_warnings(self):
+  coverage=dict(status='complete',tracks=[dict(rows=[dict(index=1,available=True)])])
+  with tempfile.TemporaryDirectory() as d:
+   folder=Path(d);(folder/'normal-checks.json').write_text(json.dumps(dict(unresolved=[1])))
+   self.assertFalse(preview.needed(dict(productionMode='normal'),coverage,dict(qualityWarning=True),[dict(folder=folder)]))
  def test_delivery_evidence_exposes_missing_times_without_claiming_certification(self):
   result=preview.details(dict(tracks=[dict(engine='drama3',language='en',rows=[dict(index=7,start=12.,end=13.,reason='timing-overrun',available=False),dict(index=8,start=13.,end=14.,reason='audio-present',available=True)])]))
   self.assertEqual(result['missingDialogue'],1);self.assertEqual(result['missing'][0]['start'],12.);self.assertFalse(result['qualityCertified'])

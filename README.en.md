@@ -18,9 +18,13 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.36**
+> **Public beta · 0.24.43**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.36-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.43-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+
+## What changed in 0.24.43
+
+This update fixes a macOS package mismatch that could stop a video immediately when processing began. The review report retains both a failed take and the selected replacement for comparison. When another compatible voice model is already installed, automatic repair can try it to recover missing dialogue. Language checks and voice matching can still make mistakes, so listen to important scenes.
 
 ## Local AI, offline after setup
 
@@ -136,7 +140,7 @@ These are the video container formats accepted by the app. Actual compatibility 
 |---|---|
 | **Drama 3 — recommended** | Closest to a Hong Kong Cantonese accent in current listening tests. |
 | **GPT-SoVITS** | May retain a Japanese accent when imitating a Japanese source voice. |
-| **CosyVoice 3** | May retain a Japanese accent in this workflow. Offered only with official native weights on Windows NVIDIA/CUDA; unavailable on Mac. |
+| **CosyVoice 3** | May retain a Japanese accent in this workflow. Uses the official model on Windows NVIDIA/CUDA and can also run with the official model on Apple Silicon Mac CPUs, potentially much more slowly. |
 
 Qwen translates and helps plan repairs; Drama 3 generates speech. Download choices for text translation are **Qwen 3.5 9B and 35B**. Model versions without confirmed licence evidence have been removed from the download catalogues.
 

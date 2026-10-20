@@ -136,7 +136,7 @@ impl Host {
         let models:Vec<Value>=serde_json::from_slice(&std::fs::read(self.shared.join("model-options.json")).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
         #[cfg(windows)] {
             let native:Vec<Value>=serde_json::from_slice(&std::fs::read(self.windows.join("native-models.json")).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
-            let mut combined=models;
+            let mut combined:Vec<Value>=models.into_iter().filter(|m|m["platform"]!="darwin").collect();
             combined.extend(native);
             return Ok(json!(Self::select_cold_choices(combined)));
         }
@@ -152,11 +152,12 @@ impl Host {
                 #[cfg(not(windows))] { ["mlx:qwen3.5-9b:4bit","mlx:qwen3.5-35b-a3b:4bit"].contains(&id) }
             };
             let platform_supported={
-                #[cfg(windows)] { m["nativeFormat"].is_string() || m["engine"].as_str().is_some_and(|e|e.starts_with("gpt-") || e=="whisper") }
+                #[cfg(windows)] { m["platform"]!="darwin" && (m["nativeFormat"].is_string() || m["engine"].as_str().is_some_and(|e|e.starts_with("gpt-") || e=="whisper")) }
                 #[cfg(not(windows))] { m["engine"]!="ollama" && !id.starts_with("asr-native") }
             };
             platform_supported && text_supported && ["text","voice","speech","asr"].contains(&category)
                 && m["retired"]!=true && m["licenseReviewRequired"]!=true
+                && !(category=="voice" && ["qwen-tts","gpt-sovits-v3"].contains(&m["engine"].as_str().unwrap_or("")))
                 && m["files"].as_array().is_some_and(|f|!f.is_empty())
                 && m["bytes"].as_u64().unwrap_or(0)>0
         }).map(|m|json!({"id":m["id"],"title":m["title"],"category":m["category"],"engine":m["engine"],"bytes":m["bytes"],"estimatedMemoryGB":m["estimatedMemoryGB"],"license":m["license"]})).collect()

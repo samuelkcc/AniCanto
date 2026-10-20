@@ -41,7 +41,7 @@
     "Verified Mac native source mapping for all 21 native files / 12 components; Windows FFmpeg has 747 retained source/build materials including recursive dependencies and exact SVN snapshots. Unused SDK binaries and unrelated test media excluded.",
     "Release-only compiler paths anonymised and hardcoded checkout fallbacks omitted; diagnostic C/C++ filename normalisation preserves executable instructions.",
     "All human reference clips and full unlicensed optional converter model-card text excluded from the prepared profile; seven original synthetic references are hash allowlisted.",
-    "CosyVoice 3 is limited to official native weights on Windows NVIDIA/CUDA. Mac MLX, Windows AMD/Intel/CPU CosyVoice 3 downloads are not offered; historical recordings remain playable."
+    "CosyVoice 3 uses official pinned weights: NVIDIA/CUDA on Windows and an isolated PyTorch CPU runtime on Apple Silicon Mac. Third-party Mac MLX conversions and Windows AMD/Intel/CPU CosyVoice downloads remain excluded; historical recordings remain playable."
   ],
   "lastVerifiedLocalBuild": "0.24.32 candidates are being assembled. Final checks and real-video/redeployment acceptance have not yet completed.",
   "detailedReview": "licenses/distribution-review.json",

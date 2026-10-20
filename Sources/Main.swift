@@ -170,7 +170,7 @@ struct ScriptCue: Codable, Identifiable {
     @Published var subtitleStream = -1
     @Published var subtitle: URL?
     @Published var qwenModel = UserDefaults.standard.string(forKey:"qwenModel") ?? "qwen-0.6b-4bit" {didSet {UserDefaults.standard.set(qwenModel,forKey:"qwenModel");persistModelChoice("qwen-tts",qwenModel)}}
-    @Published var cosyModel = UserDefaults.standard.string(forKey:"cosyModel") ?? "cosy-0.5b-4bit" {didSet {UserDefaults.standard.set(cosyModel,forKey:"cosyModel");persistModelChoice("cosyvoice3",cosyModel)}}
+    @Published var cosyModel = (UserDefaults.standard.string(forKey:"cosyModel")=="cosy-0.5b-4bit" ? "cosy-native-0.5b" : UserDefaults.standard.string(forKey:"cosyModel") ?? "cosy-native-0.5b") {didSet {UserDefaults.standard.set(cosyModel,forKey:"cosyModel");persistModelChoice("cosyvoice3",cosyModel)}}
     @Published var voxcpmModel=UserDefaults.standard.string(forKey:"voxcpmModel") ?? "voxcpm2-2b-bf16" {didSet {UserDefaults.standard.set(voxcpmModel,forKey:"voxcpmModel");persistModelChoice("voxcpm2",voxcpmModel)}}
     @Published var wsyueModel=UserDefaults.standard.string(forKey:"wsyueModel") ?? "wsyue-cosy2-zjg" {didSet {UserDefaults.standard.set(wsyueModel,forKey:"wsyueModel");persistModelChoice("wsyue",wsyueModel)}}
     @Published var drama3Model=UserDefaults.standard.string(forKey:"drama3Model") ?? "drama3-35b-4bit" {didSet {UserDefaults.standard.set(drama3Model,forKey:"drama3Model");persistModelChoice("drama3",drama3Model)}}

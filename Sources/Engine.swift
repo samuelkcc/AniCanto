@@ -219,7 +219,11 @@ final class Engine: @unchecked Sendable {
         }}
     }
     var gsvReady: Bool {gsvVersionReady("v4")}
-    var cosyReady: Bool { FileManager.default.fileExists(atPath: root.appendingPathComponent("cosy-ready.json").path) && runtimeVerified("cosy-runtime") }
+    var cosyReady: Bool {
+        guard runtimeVerified("cosy-runtime"),let data=try? Data(contentsOf:root.appendingPathComponent("cosy-ready.json")),
+              let receipt=try? JSONSerialization.jsonObject(with:data) as? [String:Any] else{return false}
+        return receipt["variant"] as? String=="cosy-native-0.5b" && receipt["adapter"] as? String=="official-pytorch-cpu-1"
+    }
     private func storedFile(_ path:String,size:Int64)->Bool {((try? FileManager.default.attributesOfItem(atPath:root.appendingPathComponent(path).path)[.size]) as? NSNumber)?.int64Value==size}
     var separatorReady: Bool { FileManager.default.fileExists(atPath: root.appendingPathComponent("separator-ready.json").path) && storedFile("models/separator/MelBandRoformer.ckpt",size:913106900) && runtimeVerified("separator-runtime") }
     var speechReady: Bool {

@@ -42,7 +42,7 @@ def main():
         shutil.rmtree(cache)
     for path in (ROOT/'Resources').glob('*.py'):shutil.copy2(path,resources/path.name)
     shutil.copy2(ROOT/'Resources/drama3-small-server',resources/'bin/drama3-small-server')
-    for name in ('voice-models.json','model-options.json','MODEL-NOTICES.txt','visual-requirements.lock','local-tts-requirements.lock'):shutil.copy2(ROOT/'Resources'/name,resources/name)
+    for name in ('production-contract.json','voice-models.json','model-options.json','MODEL-NOTICES.txt','visual-requirements.lock','local-tts-requirements.lock'):shutil.copy2(ROOT/'Resources'/name,resources/name)
     shutil.copytree(ROOT/'Resources/tts-vendor',resources/'tts-vendor',dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
     shutil.copytree(ROOT/'Resources/wheels',resources/'wheels',dirs_exist_ok=True)
     if os.environ.get('CANTO_BUNDLE_RUNTIMES')=='1' and os.environ.get('CANTO_LOCAL_TTS_RUNTIME'):

@@ -56,7 +56,7 @@ def bundle():
         shutil.copy2(ROOT/'Resources'/name,resources/name)
     shutil.rmtree(resources/'welcome-art',ignore_errors=True)
     shutil.copytree(ROOT/'Resources/welcome-art',resources/'welcome-art')
-    for name in ('model-options.json','voice-models.json','cosy-models.json'):shutil.copy2(ROOT/'Resources'/name,resources/name)
+    for name in ('production-contract.json','model-options.json','voice-models.json','cosy-models.json','cosy-native-sources.json'):shutil.copy2(ROOT/'Resources'/name,resources/name)
     shutil.copy2(ROOT/'VERSION.json',resources/'VERSION.json')
     (resources/'studio').mkdir(exist_ok=True);shutil.copy2(ROOT/'studio/backend.py',resources/'studio/backend.py')
     (resources/'windows').mkdir(exist_ok=True)
@@ -81,6 +81,14 @@ def bundle():
     shutil.copy2(ROOT/'Resources/AniCanto.icns',resources/'AniCanto.icns')
     from resource_assets import prune
     prune(resources)
+    # The Rust helper embeds production-contract.json at compile time. Verify
+    # the final staged payload after pruning, before signing or distribution.
+    import os
+    smoke_env=os.environ.copy()
+    smoke_env['PYTHONDONTWRITEBYTECODE']='1'
+    subprocess.run([sys.executable,'-B','-c',
+                    'import sys; sys.path.insert(0, sys.argv[1]); import studio_core; studio_core.verify()',
+                    str(resources)],env=smoke_env,check=True)
     subprocess.run(['/usr/bin/codesign','--force','--deep','--sign','-',str(target)],check=True)
     subprocess.run(['/usr/bin/codesign','--verify','--deep','--strict',str(target)],check=True)
     files={str(p.relative_to(ROOT/'studio/web')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'studio/web').rglob('*') if p.is_file()}

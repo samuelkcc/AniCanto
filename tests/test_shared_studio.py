@@ -43,7 +43,10 @@ class SharedStudioTests(unittest.TestCase):
         with patch('backend.job_snapshot',return_value=dict(issues=[])),self.assertRaisesRegex(ValueError,'already has an output'):
             self.app.dispatch('start',dict(id=ident))
     def test_retired_voice_not_in_new_model_choices(self):
-        self.assertNotIn('drama3-small-iq3',{r['id'] for r in self.app.dispatch('model-choices',{})})
+        choices=self.app.dispatch('model-choices',{})
+        self.assertNotIn('drama3-small-iq3',{r['id'] for r in choices})
+        self.assertFalse(any(r['engine']=='qwen-tts' for r in choices))
+        self.assertTrue(any(r['engine']=='wsyue' for r in choices))
     def test_both_views_share_one_setting_and_request(self):
         ident=self.add();self.app.dispatch('configure',dict(mode='expert',settings={'ttsBackend':'gpt-sovits-v2'}))
         other=Studio(self.root,ROOT/'Resources',helper=self.helper)

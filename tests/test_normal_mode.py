@@ -36,6 +36,24 @@ class NormalModeTests(unittest.TestCase):
         self.assertEqual(normal_mode.dialect_decision('我哋一齊出發啦','我们一起出发吧','Mandarin'),'mandarin')
         self.assertEqual(normal_mode.dialect_decision('我哋一齊出發啦','我地一齊出發啦','Cantonese'),'cantonese')
 
+    def test_japanese_label_disputed_by_cantonese_witness_keeps_actor_take(self):
+        from worker import atomic_json
+        with tempfile.TemporaryDirectory() as d:
+            job=Path(d);take=audio(job/'actor.wav');cue=dict(start=0,end=2,cantonese='我定要做海賊王！')
+            cfg=dict(storage=d,ffmpeg='ffmpeg',asrModel='chosen-asr',targetLanguage='yue')
+            def first(c,action,request,emit):
+                atomic_json(request['cache'],{item['key']:dict(heard='我定要做海賊王',language='Japanese') for item in request['items']})
+            with patch('dubbing.model_job',side_effect=first),patch('runtime_paths.python_for',return_value=Path(sys.executable)),patch('secondary_speech.transcribe_batch',return_value=[dict(heard='我定要做海賊王',language='Cantonese')]):
+                result=normal_mode.inspect(cfg,job,[cue],[take],Mock())
+            self.assertEqual(result[1]['decision'],'unconfirmed')
+            self.assertFalse(result[1].get('languageFailure'))
+
+    def test_japanese_accent_label_cannot_override_matching_cantonese_words(self):
+        expected='我定要做海賊王！'
+        self.assertEqual(normal_mode.language_decision(expected,'我定要做海賊王','Japanese'),'unconfirmed')
+        self.assertEqual(normal_mode.language_decision(expected,'我定要做海賊王呀','Japanese'),'unconfirmed')
+        self.assertEqual(normal_mode.language_decision(expected,'海賊王になるぞ','Japanese'),'japanese')
+
     def test_unconfirmed_name_lists_stay_uncertain_and_trigger_bounded_repair(self):
         text='烏索普、山治、喬巴、羅賓'
         self.assertTrue(normal_mode.needs_dialect_confirmation(text,dict(decision='unconfirmed')))

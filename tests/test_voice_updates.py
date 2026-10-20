@@ -68,7 +68,10 @@ class ModelOptionsTests(unittest.TestCase):
   self.assertTrue({.8,2,9,27,35,122,397}<={r['parameterB'] for r in rows if r['category']=='text'})
   self.assertFalse(any(r.get('licenseReviewRequired') for r in rows))
   self.assertFalse(any(r['category']=='text' and r['parameterB']==4 for r in rows))
-  self.assertFalse(any(r['engine']=='cosyvoice3' for r in rows))
+  cosy=[r for r in rows if r['engine']=='cosyvoice3']
+  self.assertEqual([r['id'] for r in cosy],['cosy-native-0.5b'])
+  self.assertEqual(cosy[0]['repo'],'FunAudioLLM/Fun-CosyVoice3-0.5B-2512')
+  self.assertTrue(next(r for r in rows if r['id']=='wsyue-cosy2-base')['retired'])
   for row in rows:
    self.assertEqual(len(row['revision']),40)
    self.assertEqual(row['bytes'],sum(f['size'] for f in row['files']))

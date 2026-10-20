@@ -286,8 +286,8 @@ def render(w, request):
         if engine=='qwen-tts':
             render_cfg['qwenModel']=cfg.get('qwenModel','qwen-0.6b-4bit')
             render_cfg['qwenReferenceMode']=cfg.get('qwenReferenceMode','original')
-            if language=='yue' and render_cfg['qwenReferenceMode']=='cantonese-bridge':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-0.5b-4bit')
-        if engine=='cosyvoice3':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-0.5b-4bit')
+            if language=='yue' and render_cfg['qwenReferenceMode']=='cantonese-bridge':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-native-0.5b')
+        if engine=='cosyvoice3':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-native-0.5b')
         if engine in ('voxcpm2','wsyue','drama3'):
             from local_tts import ENGINES as local_engines,selection
             render_cfg[local_engines[engine]['key']]=selection(cfg,engine)
@@ -299,7 +299,7 @@ def render(w, request):
             render_cfg['gsvVersion']=__import__('gsv_versions').version(dict(ttsBackend=engine))
             identity['enginePolicy']='gsv-versions-native-prompt-1'
             render_cfg['gsvReferenceMode']=cfg.get('gsvReferenceMode','original')
-            if render_cfg['gsvReferenceMode']=='target-bridge':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-0.5b-4bit')
+            if render_cfg['gsvReferenceMode']=='target-bridge':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-native-0.5b')
         for p in cfg.get('voiceProfiles', []):
             if Path(p.get('reference','')).is_file():
                 identity.setdefault('references', {})[p['id']] = hashlib.sha256(Path(p['reference']).read_bytes()).hexdigest()
