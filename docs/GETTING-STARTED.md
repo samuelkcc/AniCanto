@@ -6,7 +6,7 @@ This guide describes the current development workflow. Public downloads are not 
 
 ## Interface language
 
-AniCanto is designed primarily in Hong Kong Traditional Chinese. An English interface is included to help English speakers interested in Cantonese use the app and compare languages. Choose either interface language on the Welcome screen or in Preferences; this is separate from the dubbing and subtitle languages.
+AniCanto is designed primarily in Hong Kong Traditional Chinese. An English interface is included to help English speakers interested in Cantonese use the app and compare languages. First launch follows your system language; later manual choices are remembered. Choose either interface language on the Welcome screen or in Preferences; this is separate from the dubbing and subtitle languages.
 
 ## Video, dialogue and subtitle sources
 
@@ -26,6 +26,8 @@ For the closest Hong Kong Cantonese accent heard in current developer tests, cho
 
 Read the model terms, then use **Download & prepare**. First setup needs the internet. The app keeps model downloads separate from projects and lets you inspect expected sources and SHA-256 checksums in About. These catalogue hashes are not a fresh verification of installed files; repair performs that separately.
 
+You can browse the studio during setup. A bottom-right notification shows download progress and opens detailed installation output. Conversion becomes available after the selected models and required runtimes are ready. Missing compatible voice engines are marked **Automatic download**; selecting one starts background preparation. WenetSpeech-Yue supports Cantonese only and is unavailable for English or bilingual dubbing.
+
 ![English model setup](images/models-setup-en.png)
 
 ## 3 · Try one short original clip
@@ -43,6 +45,8 @@ High-speed mode deliberately omits quality review and quality-driven retakes. Ch
 ## 5 · Check the report and export
 
 The review report distinguishes unfinished work from verified results. When available, compare the original mix, separated speech and generated take. Expert mode lets you edit the script, inspect the timeline, audition or retake a line, and export a new version while retaining earlier recordings and exports.
+
+After original-voice repair attempts, the same engine may try a bundled target-language reference. This can change the voice; the report identifies it and does not call it verified character imitation.
 
 A labelled incomplete preview can contain original Japanese speech for unresolved lines. Do not mistake it for a fully verified Cantonese export. Hardware or model failures can still prevent an export.
 
