@@ -8,7 +8,7 @@
 
 **Your anime. A Cantonese voice.**
 
-Local AI dubbing for Japanese animation — **Hong Kong Cantonese, English, or both in the same video.**
+An AI dubbing studio built for Japanese animation: turn Japanese dialogue into **Hong Kong Cantonese or English**, with both languages available in the same video. **Once the models are downloaded, recognition, translation, dubbing and export run on your computer—no cloud service required.**
 
 ## Why this little project exists
 
@@ -24,7 +24,7 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 ## Local AI, offline after setup
 
-AniCanto uses local language and voice models. Once the required models and runtimes are downloaded and ready, Japanese speech recognition, translation, dubbing and movie export run on your computer **without an internet connection**. First-time setup, additional models, download repair and updates require internet access.
+AniCanto uses local language and voice models. Once the required models and runtimes are ready, Japanese speech recognition, translation, dubbing and video export run on your computer. **Your video and audio do not need to be uploaded to the cloud, and no cloud translation or dubbing service is required.** Internet access is needed for first-time setup, additional models, download repair and updates.
 
 ## With respect to voice performers
 
