@@ -1,0 +1,76 @@
+{
+  "repo": "mlx-community/Qwen3.5-35B-A3B-4bit",
+  "revision": "1e20fd8d42056f870933bf98ca6211024744f7ec",
+  "files": [
+    {
+      "path": "chat_template.jinja",
+      "sha": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+      "size": 7756
+    },
+    {
+      "path": "config.json",
+      "sha": "c0cf317cba802cfb1d2984d4b4afc98ceb3d86450ed757e028383bfb03643964",
+      "size": 3809
+    },
+    {
+      "path": "generation_config.json",
+      "sha": "4f25002776b741773666203dcea8f54619f177ace3ae483d311102092a4658e0",
+      "size": 244
+    },
+    {
+      "path": "model-00001-of-00004.safetensors",
+      "sha": "0952c2fd5ec5f6163a045003eb0e60465290ac0ebedbe2cecde35dd95abed345",
+      "size": 5285828971
+    },
+    {
+      "path": "model-00002-of-00004.safetensors",
+      "sha": "ddf163fcbaa7fc1ff2e93ee2e3306b1c31c4fe3c7dd46990cd2737d0cc30197f",
+      "size": 5366101807
+    },
+    {
+      "path": "model-00003-of-00004.safetensors",
+      "sha": "5e7d8deca9240eec828c9a451fbd8a95389a7cc18494f400c330d0717c41f6e1",
+      "size": 5364643286
+    },
+    {
+      "path": "model-00004-of-00004.safetensors",
+      "sha": "b540bac1ef081d7011e32428e0c2da77f00699db2f4f1508da73ee3b8de40551",
+      "size": 4375105375
+    },
+    {
+      "path": "model.safetensors.index.json",
+      "sha": "56f02123353b7fe444b287a46a779a836cb939860502908da4a79e3b43931cdb",
+      "size": 215755
+    },
+    {
+      "path": "preprocessor_config.json",
+      "sha": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+      "size": 390
+    },
+    {
+      "path": "processor_config.json",
+      "sha": "14932921ca485d458a04dafd8069fbb0a4505622a48208d19ed247115801385b",
+      "size": 1300
+    },
+    {
+      "path": "tokenizer.json",
+      "sha": "87a7830d63fcf43bf241c3c5242e96e62dd3fdc29224ca26fed8ea333db72de4",
+      "size": 19989343
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha": "e98f1901ac6f0adff67b1d540bfa0c36ac1a0cf59eb72ed78146ef89aafa1182",
+      "size": 1139
+    },
+    {
+      "path": "video_preprocessor_config.json",
+      "sha": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+      "size": 385
+    },
+    {
+      "path": "vocab.json",
+      "sha": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+      "size": 6722759
+    }
+  ]
+}

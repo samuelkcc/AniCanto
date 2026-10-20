@@ -1,0 +1,1 @@
+{"name":"anicanto-shared-studio","private":true,"type":"module","license":"MIT","scripts":{"test:model":"node ../tests/shared_studio_model.mjs"}}

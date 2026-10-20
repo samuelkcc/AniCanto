@@ -1,0 +1,14 @@
+AniCanto interface icons
+
+Several shared stroke-icon geometries in studio/web/icons.js match or adapt
+Feather's icon set. Preserve licenses/common/Feather-MIT.txt when distributing
+the interface. This acknowledgement conservatively covers the corresponding
+geometry; it does not claim that every AniCanto icon is an upstream icon.
+
+Source: https://github.com/feathericons/feather/tree/v4.29.2
+Changes: combined path data into the shared icon renderer; adjusted geometry
+and names for AniCanto's controls. No endorsement is implied.
+
+The bundled Noto CJK font retains its own SIL OFL terms and copyright under
+Resources/fonts/ and the generated shared frontend asset directory. AniCanto's
+MIT application notice does not replace the font or upstream icon notices.

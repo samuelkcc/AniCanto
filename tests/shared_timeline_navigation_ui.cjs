@@ -1,0 +1,22 @@
+const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve('.build/shared-studio-qa'),job=path.join(root,'SamCantoSync/jobs/fixture');
+const reviewFile=path.join(job,'review.json'),before=fs.readFileSync(reviewFile);
+const review=JSON.parse(before);review.config.duration=600;review.cues=Array.from({length:100},(_,i)=>({start:2+i*5,end:4+i*5,japanese:'テスト',text:'テスト',cantonese:'測試對白 '+i,english:'Test line '+i,speakerId:'R01'}));fs.writeFileSync(reviewFile,JSON.stringify(review));
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.CANTOSYNC_QA_BROWSER});let results=[];
+try{for(const lang of ['en','zh-HK']){const page=await browser.newPage({viewport:{width:1500,height:960},reducedMotion:'reduce'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>{window.__TAURI__={core:{convertFileSrc:p=>'/media?path='+encodeURIComponent(p),invoke:async(name,args={})=>{const r=await fetch('/api',{method:'POST',body:JSON.stringify({name,args})});const d=await r.json();if(d.error)throw Error(d.error);return d.result;}},event:{listen:async()=>()=>{}}};});
+ await page.goto('http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');await page.selectOption('#welcome-language',lang);await page.locator('[data-action=mode][data-value=expert]').click();await page.locator('[data-action=enter]').click();await page.waitForSelector('#timeline-pan');
+ await page.locator('.timeline-scroll').evaluate(e=>{e.scrollLeft=3500;});
+ let left=await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft);assert(left>2500);
+ const index=await page.locator('.timeline-scroll').evaluate(e=>Math.floor((e.scrollLeft+(e.clientWidth-155)/2)/12/5));
+ await page.locator(`[data-action=cue][data-index="${index}"]`).first().click();
+ await page.waitForTimeout(2200);assert(Math.abs(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)-left)<2,'Selecting a cue or polling reset the timeline');
+ const time=await page.locator('#play-time').innerText();assert(!time.startsWith('00:00:00'),'Preview-off cue seek reset to zero');
+ await page.locator('[data-action=timeline-right]').click();assert(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)>left);await page.locator('[data-action=timeline-left]').click();
+ await page.locator('#timeline-pan').evaluate(e=>{e.value='150';e.dispatchEvent(new Event('input',{bubbles:true}));});
+ assert(Math.abs(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)-1800)<2);
+ const ruler=page.locator('.timeline-ruler'),box=await page.locator('.timeline-scroll').boundingBox();await page.mouse.move(box.x+500,box.y+10);await page.mouse.down();await page.mouse.move(box.x+300,box.y+10,{steps:10});await page.mouse.up();assert(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)>1950,'Ruler drag did not pan');
+ left=await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft);await page.locator('#zoom').evaluate(e=>{e.value='24';e.dispatchEvent(new Event('input',{bubbles:true}));});assert(Math.abs(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)-left*2)<3,'Zoom lost visible time');
+ await page.locator('[data-action=timeline-playhead]').click();assert(await page.locator('.timeline-scroll').evaluate(e=>e.scrollLeft)>0);
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.deepEqual(errors,[]);await page.screenshot({path:path.join(root,`timeline-${lang}.png`)});results.push({language:lang,selectionPreserved:true,pollPreserved:true,previewOffSeek:true,arrows:true,browseSlider:true,rulerDrag:true,zoomPreserved:true,playhead:true});await page.close();}
+console.log(JSON.stringify(results));fs.writeFileSync(path.join(root,'timeline-navigation-audit.json'),JSON.stringify(results,null,2));}finally{fs.writeFileSync(reviewFile,before);await browser.close();}})().catch(e=>{fs.writeFileSync(reviewFile,before);console.error(e);process.exit(1)});

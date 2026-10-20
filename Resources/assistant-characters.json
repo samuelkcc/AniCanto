@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "characters": [
+    {
+      "id": "assistant-studio",
+      "theme": "studio",
+      "gender": "female",
+      "atlas": "pet-studio.png",
+      "retainedOriginal": true,
+      "identityReference": "Welcome short lavender bob, cream cardigan, navy dress, teal headphones",
+      "sha256": "ac17376fe7ee1d5c1369f7e3c94ddea280003a12435e80bdd1aecff58d3fde93",
+      "artStyle": "original-lavender-anime",
+      "canonicalCoverTheme": "studio",
+      "canonicalCovers": [
+        {
+          "file": "welcome-studio-1.png",
+          "sha256": "4ba51fe27008ee88cfd2f56b5c721a3b8c3d4dbac63f2cd5ba5c7f92bdaccd1d"
+        },
+        {
+          "file": "welcome-studio-2.png",
+          "sha256": "721e95ed8c7dac880849ece12d3a6d8208dcdddef71275d8ff6cc04dfdef08c7"
+        },
+        {
+          "file": "welcome-studio-3.png",
+          "sha256": "4e61cb318f53bb0e5139dfd5aca5974eccd3ef30b8e6babec6410c2d592ae894"
+        },
+        {
+          "file": "welcome-studio-4.png",
+          "sha256": "205fae1c41cb859e710e8ab1cf2cb357c40f73f4fd6aff2b35e10846a21522ad"
+        }
+      ]
+    },
+    {
+      "id": "assistant-energy",
+      "theme": "energy",
+      "gender": "female",
+      "atlas": "pet-energy.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female sound technician, close-cropped copper curls with shaved sides, dark brown skin, amber eyes, rust orange asymmetric work overshirt, petrol-blue trousers, cream sneakers, orange headphones; no spiky hair, no martial arts costume",
+      "sha256": "4f117544b17bfa661be1cae99eb733271dfb64f6cdeab74e9080525c0fc36b3c",
+      "artStyle": "angular-athletic-cel",
+      "canonicalCoverTheme": "energy",
+      "canonicalCovers": [
+        {
+          "file": "welcome-energy-1.png",
+          "sha256": "b3259db6a87785baa25e0b376fd4fca57b073b7f3224c9e8cf334a1273346139"
+        },
+        {
+          "file": "welcome-energy-2.png",
+          "sha256": "8e689da2c2a086b408f64023b096f155038f7b11de1fe25455247b421bea48d2"
+        },
+        {
+          "file": "welcome-energy-3.png",
+          "sha256": "c1b511bfd9bc3fd92bd09964634f143cb6b52eed9e012c8fc211242430abc9e0"
+        },
+        {
+          "file": "welcome-energy-4.png",
+          "sha256": "cd01bc74ab4c253ee7909019e2958ace2ff521ca125d49cd8a653e6477d93891"
+        }
+      ]
+    },
+    {
+      "id": "assistant-ocean",
+      "theme": "ocean",
+      "gender": "female",
+      "atlas": "pet-ocean.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female location recorder, short indigo pixie hair, tan skin, hazel eyes, teal long utility coat, cream jumpsuit, slate boots, coral headphones; no sailor uniform, no pirate hat or scarf",
+      "sha256": "109f6adc48fc3f50349c4ab8a1ecaf23b732d785bb4c5d929dbca0adc95d6efa",
+      "artStyle": "elastic-adventure-comic",
+      "canonicalCoverTheme": "ocean",
+      "canonicalCovers": [
+        {
+          "file": "welcome-ocean-1.png",
+          "sha256": "436cd58ba90b5489e37a82cda4e19b83d2fd13cd743e8205cc3abaae01ae85ca"
+        },
+        {
+          "file": "welcome-ocean-2.png",
+          "sha256": "1c7b975372f2131607180dcca4cf0e97c6264b4bf635e74ee0c9fffa57a492ae"
+        },
+        {
+          "file": "welcome-ocean-3.png",
+          "sha256": "55ec2af3f17ef9e027510bb679f1a35c0c6016376c1d1fd3c57ea26aa3ff48e7"
+        },
+        {
+          "file": "welcome-ocean-4.png",
+          "sha256": "4e7324409050687094675b3843792d5cace334fd034f27212ea5b078d721dfd3"
+        }
+      ]
+    },
+    {
+      "id": "assistant-ninja",
+      "theme": "ninja",
+      "gender": "female",
+      "atlas": "pet-ninja.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female night editor, straight charcoal undercut hair, round glasses, sage cropped technical jacket with asymmetric pockets, black tapered trousers, mint trainers, olive headphones; no ninja costume, no headband, no cape",
+      "sha256": "b50c5541f37f619635695a7c9e77a6c4be0d5b22d1ecd637b5e54ef41184857b",
+      "artStyle": "sharp-brush-ink-action",
+      "canonicalCoverTheme": "ninja",
+      "canonicalCovers": [
+        {
+          "file": "welcome-ninja-1.png",
+          "sha256": "dd6d49efaddabb7b9f3ee18053428114e56d8a302ce32b4863153cc2e7a292f0"
+        },
+        {
+          "file": "welcome-ninja-2.png",
+          "sha256": "16aaa9d66ae198f8e24cdc5441e1bc66638e6a2deabf2219bee6b925c4d83948"
+        },
+        {
+          "file": "welcome-ninja-3.png",
+          "sha256": "20bc20cd667783951d9a221d3d814010eaed835690d688ec5d4a6f690d5fbe55"
+        },
+        {
+          "file": "welcome-ninja-4.png",
+          "sha256": "f7282143bd053c8fe9c0290e326d0e957eabca1a623208f24aac4fb98074dc32"
+        }
+      ]
+    },
+    {
+      "id": "assistant-retro",
+      "theme": "retro",
+      "gender": "female",
+      "atlas": "pet-retro.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female radio presenter, burgundy shoulder-length loose curls, freckles, coral short-sleeve bowling shirt, cream high-waist flared trousers, brown loafers, wine-red vintage headphones; no schoolgirl costume",
+      "sha256": "97acbf40ce6f0993e7a92e762bc987ba8dfec3b261f92d4b8c3c02cfa0b28f07",
+      "artStyle": "flat-geometric-tv-cartoon",
+      "canonicalCoverTheme": "retro",
+      "canonicalCovers": [
+        {
+          "file": "welcome-retro-1.png",
+          "sha256": "657ffc0c874b665b188b08c583f953317967f6458b17389ffa8ad2039f459c87"
+        },
+        {
+          "file": "welcome-retro-2.png",
+          "sha256": "e7d5be0c0c17d730c9011fb0da6d2233d84b6f5c5d9cb7adbad0c9c558e9c79e"
+        },
+        {
+          "file": "welcome-retro-3.png",
+          "sha256": "786b30ca101051d139d324a8bf04dc0f0d4baa50984e9bc3723c86c36930bd68"
+        },
+        {
+          "file": "welcome-retro-4.png",
+          "sha256": "0f0e9adc11a838889febf240fdf494c46b1ff774508a3fcb509ddb1181042292"
+        }
+      ]
+    },
+    {
+      "id": "assistant-forest",
+      "theme": "forest",
+      "gender": "female",
+      "atlas": "pet-forest.png",
+      "retainedOriginal": false,
+      "identityReference": "Female sound archivist with soft brown bob, mustard shirt, olive dungarees, copper boots and jade headphones; natural human face with small eyes and pencil/gouache rendering.",
+      "sha256": "778afa90c685d7ec8086504aaf54b8e295b622ddb2522cdad92f7a88a4f8797f",
+      "artStyle": "pastoral-gouache",
+      "canonicalCoverTheme": "forest",
+      "canonicalCovers": [
+        {
+          "file": "welcome-forest-1.png",
+          "sha256": "88e9a0057155d873f0ad36b41b4eff3404313fc143d709a78e21ca0df262b059"
+        },
+        {
+          "file": "welcome-forest-2.png",
+          "sha256": "65b0e5c7b89dbd1ea8aeb66e59375ea3a6501f2b6db09bb3a9b0517224684eb6"
+        },
+        {
+          "file": "welcome-forest-3.png",
+          "sha256": "9f94be23f126eed3a34573bd1943823063ac1ccda6aba0e8d201ea322c29c054"
+        },
+        {
+          "file": "welcome-forest-4.png",
+          "sha256": "5617d209e28ce3ffcf273ab671385226f7359018e09c3d0c8e25413d290f3d24"
+        }
+      ]
+    },
+    {
+      "id": "assistant-future",
+      "theme": "future",
+      "gender": "female",
+      "atlas": "pet-future.png",
+      "retainedOriginal": false,
+      "identityReference": "Female blue-haired recording assistant with round blue glasses, oval eyes, fluffy blue waves, blue/ivory bomber, charcoal trousers and blue/white sneakers; squat three-head-tall flat cartoon with simple round hands.",
+      "sha256": "8c64c0ef17dab4bdaed7891882aed0030459f2223f34f5e14c841e50ef695822",
+      "artStyle": "round-three-head-cartoon",
+      "canonicalCoverTheme": "future",
+      "canonicalCovers": [
+        {
+          "file": "welcome-future-1.png",
+          "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440"
+        },
+        {
+          "file": "welcome-future-2.png",
+          "sha256": "741b7d89c58f9c825f9a68f8a0808af24da0a5705089ea18f06d1f8e3a64725d"
+        },
+        {
+          "file": "welcome-future-3.png",
+          "sha256": "6a449a0a852625293ec5fe0b1e0d21923f93a2ce5e1b07bec51505905c067c6e"
+        },
+        {
+          "file": "welcome-future-4.png",
+          "sha256": "a903af3f504d602a99e4dcbf2d57badcb208ca351a3a7aab40b629707bb0b91e"
+        }
+      ]
+    },
+    {
+      "id": "assistant-mint",
+      "theme": "mint",
+      "gender": "female",
+      "atlas": "pet-mint.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female rhythm producer, dark teal short curly bob with mint tips, brown eyes, mint cropped utility vest over ivory long sleeve, charcoal straight trousers, coral boots, geometric mint headphones; no idol uniform, no twin tails",
+      "sha256": "4b6d9f8fc91e30309eaad9df6691b332e7ab15dc1888783e969466bc3251b372",
+      "artStyle": "glossy-3d-toon",
+      "canonicalCoverTheme": "mint",
+      "canonicalCovers": [
+        {
+          "file": "welcome-mint-1.png",
+          "sha256": "265a589c02ac6ec384f243ea0bdc5bdda1865c6a336ff3b49f785c06bcc1ea1b"
+        },
+        {
+          "file": "welcome-mint-2.png",
+          "sha256": "8e1740357878ce4342690f82af5c7e36336c726a073d0583050093e498615aea"
+        },
+        {
+          "file": "welcome-mint-3.png",
+          "sha256": "44da085fa704084e61a7894dc0279a9a061c1a91aea0ea12738d519e49a84e72"
+        },
+        {
+          "file": "welcome-mint-4.png",
+          "sha256": "41d387f3e8fa306e44bafc1623257d05843c20b90738c19a44f1d1c277e920d2"
+        }
+      ]
+    },
+    {
+      "id": "assistant-moonflower",
+      "theme": "moonflower",
+      "gender": "female",
+      "atlas": "pet-moonflower.png",
+      "retainedOriginal": false,
+      "identityReference": "adult female voice storyteller, silver-lilac low side braid, warm amber eyes, plum wrap jacket with tiny abstract moon embroidery, dusty rose full-length skirt with practical boots, brass headphones; no witch hat, no franchise costume",
+      "sha256": "ae83065d76863b4e5df89e6e71e8a15349c3f8b76d8e5f6f10cc4a3b9cf56de4",
+      "artStyle": "decorative-shojo-watercolor",
+      "canonicalCoverTheme": "moonflower",
+      "canonicalCovers": [
+        {
+          "file": "welcome-moonflower-1.png",
+          "sha256": "98facd8e359c55e6f53c28c27c42f2c288eaa1d39498665b291e747f7489d74a"
+        },
+        {
+          "file": "welcome-moonflower-2.png",
+          "sha256": "a2238c3df2301db567ae584e7f4a2e965dd39aa5e01b72e6b3098924d3b50aac"
+        },
+        {
+          "file": "welcome-moonflower-3.png",
+          "sha256": "5d92c5b6a9b76f758afb3dcd83377bcc31e743c0e97aceacd91e329bf4836afb"
+        },
+        {
+          "file": "welcome-moonflower-4.png",
+          "sha256": "12cf1264fb2a80bc2d9be5734f4ecb6ce31aa2aa7b381c98f8172c6758ec93c0"
+        }
+      ]
+    }
+  ],
+  "allFemale": true,
+  "coverVariants": 4,
+  "sessionSelection": "one random composition per launch",
+  "identityPolicy": "The same original female character and art medium must be used by all four theme covers, preview animation, walking strip and desktop assistant."
+}

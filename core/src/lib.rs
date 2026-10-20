@@ -1,0 +1,375 @@
+//! Deterministic cross-platform policy. No UI, inference, network or shell execution.
+use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
+pub mod cleanup;
+
+pub const CATALOG: &str = include_str!("../../Resources/production-contract.json");
+pub fn digest(bytes: &[u8]) -> String { format!("{:x}", Sha256::digest(bytes)) }
+pub fn catalog() -> Value { serde_json::from_str(CATALOG).expect("build-time catalog") }
+
+pub fn verify_package(folder:&std::path::Path,manifest:&str)->Result<(),String> {
+    verify_package_with_progress(folder,manifest,|_,_|Ok(()))
+}
+
+/// Preserve full integrity checks while reporting work and allowing cancellation.
+pub fn verify_package_with_progress<F>(folder:&std::path::Path,manifest:&str,mut progress:F)->Result<(),String>
+where F:FnMut(usize,usize)->Result<(),String> {
+    use std::path::Component;
+    if std::fs::symlink_metadata(folder).map_err(|e|e.to_string())?.file_type().is_symlink() {return Err("package-root-symlink".into());}
+    let entries:Value=serde_json::from_str(manifest).map_err(|e|e.to_string())?;
+    let entries=entries.as_object().ok_or("invalid-package-manifest")?;
+    if entries.is_empty() {return Err("empty-package-manifest".into());}
+    progress(0,entries.len())?;
+    for (index,(name,record)) in entries.iter().enumerate() {
+        let relative=std::path::Path::new(name);
+        if name.contains('\\') || name.contains(':') || relative.components().any(|c|!matches!(c,Component::Normal(_))) {
+            return Err("invalid-package-path".into());
+        }
+        let mut path=folder.to_path_buf();
+        for component in relative.components() {
+            path.push(component);
+            if std::fs::symlink_metadata(&path).map_err(|e|e.to_string())?.file_type().is_symlink() {return Err("package-symlink".into());}
+        }
+        let bytes=std::fs::read(&path).map_err(|e|e.to_string())?;
+        if record["size"].as_u64()!=Some(bytes.len() as u64) || record["sha256"]!=digest(&bytes) {
+            return Err(format!("package-file-changed:{name}"));
+        }
+        progress(index+1,entries.len())?;
+    }
+    Ok(())
+}
+
+fn strings(value: Option<&Value>, default: &[&str]) -> Result<Vec<String>, String> {
+    let mut result = Vec::new();
+    match value {
+        None => result.extend(default.iter().map(|s| s.to_string())),
+        Some(Value::Array(rows)) => for row in rows {
+            let s = row.as_str().ok_or("expected-string-list")?.to_string();
+            if !result.contains(&s) { result.push(s); }
+        },
+        _ => return Err("expected-list".into()),
+    }
+    Ok(result)
+}
+
+/// Projects retain all existing inference settings; this is the portable production projection.
+/// UI mode is deliberately absent from the identity: switching views cannot change a job.
+pub fn plan(cfg: &Value) -> Result<Value, String> {
+    if !cfg.is_object() { return Err("expected-settings-object".into()); }
+    let c = catalog();
+    let default = cfg["ttsBackend"].as_str().unwrap_or("drama3");
+    let mut engines = strings(cfg.get("selectedEngines"), &[default])?;
+    let retired=c["retiredEngines"].as_object().unwrap();
+    if engines.iter().any(|id|retired.contains_key(id)) {
+        let old=engines.clone();engines.retain(|id|!retired.contains_key(id));
+        if engines.is_empty() {engines.push(if old.iter().any(|s|s=="gpt-sovits-v3") {"gpt-sovits"} else {"cosyvoice3"}.into());}
+    }
+    let languages = strings(cfg.get("dubLanguages"), &["yue"])?;
+    if engines.is_empty() || languages.is_empty() { return Err("empty-voice-selection".into()); }
+    if cfg["interfaceMode"] == "simple" && engines.len() != 1 { return Err("basic-mode-requires-one-engine".into()); }
+    let known = c["engines"].as_array().unwrap();
+    for engine in &engines {
+        if !known.iter().any(|e| e["id"] == *engine) { return Err(format!("unknown-engine:{engine}")); }
+    }
+    for lang in &languages {
+        if !["yue", "en"].contains(&lang.as_str()) { return Err(format!("unknown-language:{lang}")); }
+        if !known.iter().any(|e| engines.iter().any(|id| e["id"] == *id) && e["languages"].as_array().unwrap().contains(&json!(lang))) {
+            return Err(format!("unsupported-language:{lang}"));
+        }
+    }
+    // Catalog order is stable; default audio is independent of presentation order.
+    let ordered: Vec<String> = known.iter().filter_map(|e| {
+        let id=e["id"].as_str().unwrap(); engines.iter().any(|v| v==id).then(|| id.to_string())
+    }).collect();
+    let primary = cfg["defaultAudioEngine"].as_str().unwrap_or(default);
+    let primary = if engines.iter().any(|v| v==primary) {primary} else {&engines[0]};
+    let ordered_languages: Vec<&str> = ["yue", "en"].into_iter().filter(|l| languages.iter().any(|v| v==l)).collect();
+    let mut tracks = Vec::new();
+    for language in &ordered_languages { for engine in known {
+        let id=engine["id"].as_str().unwrap();
+        if ordered.iter().any(|v| v==id) && engine["languages"].as_array().unwrap().contains(&json!(language)) {
+            tracks.push(json!({"id":format!("{language}:{id}"),"engine":id,"language":language}));
+        }
+    }}
+    let mut subs = strings(cfg.get("subtitleModes"), match cfg["subtitleOutput"].as_str().unwrap_or("yue") {
+        "none" => &[], "english" => &["english"], "both"|"dual"|"separate" => &["yue","english"],
+        "all"|"complete" => &["original","yue","english"], "original-yue"=> &["original","yue"],
+        "original-english"=> &["original","english"], "original" => &["original"], _ => &["yue"],
+    })?;
+    if cfg["subtitleSelection"].as_str()==Some("automatic") {
+        subs=ordered_languages.iter().map(|l| if *l=="en" {"english".to_string()} else {"yue".to_string()}).collect();
+        if ordered_languages.len()==2 {subs.push("dual".to_string());}
+        subs.push("original".to_string());
+    }
+    if subs.iter().any(|v| !["original","yue","english","dual"].contains(&v.as_str())) {return Err("unknown-subtitle-mode".into());}
+    let subtitles: Vec<&str> = ["yue","english","dual","original"].into_iter().filter(|v| subs.iter().any(|s| s==v)).collect();
+    let mut streams=Vec::new();
+    if subtitles.contains(&"original") {
+        if let Some(value)=cfg.get("originalSubtitleStreams") {
+            for n in value.as_array().ok_or("invalid-subtitle-streams")? {
+                streams.push(n.as_u64().ok_or("invalid-subtitle-stream-index")?);
+            }
+        }
+    }
+    streams.sort_unstable(); streams.dedup();
+    let original=cfg["includeOriginal"].as_bool().unwrap_or(true);
+    let mut result=json!({"schemaVersion":1,"policyRevision":c["policyRevision"],
+        "engines":ordered,"primaryEngine":primary,"languages":ordered_languages,
+        "tracks":tracks,"dubbedTrackCount":tracks.len(),"includeOriginal":original,
+        "maximumAudioTrackCount":tracks.len()+usize::from(original),
+        "subtitles":subtitles,"originalSubtitleStreams":streams,
+        "legacySubtitleLayout":cfg["subtitleOutput"].as_str().unwrap_or("yue"),
+        "burnSubtitles":cfg["burnOutputCaptions"].as_bool().unwrap_or(false),
+        "cantoneseLocale":"yue-HK","autoRepair":cfg["aiAutoFix"].as_bool().unwrap_or(true),
+        "translateOPED":cfg["translateOPED"].as_bool().unwrap_or(false),
+        "detectOPED":cfg["autoSkipOP"].as_bool().unwrap_or(true),
+        "allowCrossEngineRepair":cfg["allowCrossEngineRepair"].as_bool().unwrap_or(false)});
+    result["identity"]=json!(digest(serde_json::to_string(&result).unwrap().as_bytes()));
+    Ok(result)
+}
+
+/// Evaluate only registered adapters. GPU advertising is not evidence of successful model inference.
+fn windows_deployment(req:&Value)->Result<Value,String> {
+    let h=&req["hardware"];
+    let ram=h["memoryGB"].as_f64().filter(|x|x.is_finite() && *x>0.).ok_or("memory-undetected")?;
+    let reserve=(ram*0.15).max(8.);let host_budget=(ram-reserve).max(0.);
+    let backend=h["backend"].as_str().unwrap_or("cpu");
+    let budget=if ["cuda","rocm"].contains(&backend) {host_budget.min(h["acceleratorMemoryGB"].as_f64().unwrap_or(0.)*0.8)} else {host_budget};
+    let models=req["models"].as_array().ok_or("missing-model-catalog")?;
+    let installed=strings(req.get("installedModels"),&[])?;
+    let valid=|m:&&Value| m["retired"]!=true && m["licenseReviewRequired"]!=true && m["nativeFormat"].is_string() && m["bytes"].as_u64().unwrap_or(0)>0 && m["files"].as_array().is_some_and(|f|!f.is_empty());
+    let fits=|m:&&Value| valid(m) && m["estimatedMemoryGB"].as_f64().is_some_and(|n|n>0. && n<=budget);
+    let is_installed=|m:&Value|installed.iter().any(|id|m["id"]==*id);
+    let manual=|role:&str,category:&str,engine:Option<&str>|->Result<Option<&Value>,String>{
+        let Some(id)=req["requestedModels"][role].as_str() else{return Ok(None)};
+        models.iter().find(|m|m["id"]==id && m["category"]==category && engine.is_none_or(|e|m["engine"]==e) && fits(m)).map(Some).ok_or_else(||format!("incompatible-requested-model:{role}:{id}"))
+    };
+    let existing=|role:&str,category:&str,engine:Option<&str>| models.iter().filter(|m|m["category"]==category && engine.is_none_or(|e|m["engine"]==e)).filter(fits).filter(|m|is_installed(m)).min_by(|a,b|{
+        let priority=|m:&Value|if req["selectedModels"][role]==m["id"] {0u8} else {1};
+        priority(a).cmp(&priority(b)).then_with(||b["parameterB"].as_f64().unwrap_or(0.).total_cmp(&a["parameterB"].as_f64().unwrap_or(0.)))
+    });
+    // 35B is explicit/installed only. The default tier is 4B or 9B.
+    let text=manual("text","text",Some("ollama"))?.or_else(||existing("text","text",Some("ollama"))).or_else(||models.iter().filter(|m|m["engine"]=="ollama" && ["qwen3.5:9b"].contains(&m["id"].as_str().unwrap_or(""))).filter(fits).max_by(|a,b|a["parameterB"].as_f64().unwrap_or(0.).total_cmp(&b["parameterB"].as_f64().unwrap_or(0.))));
+    let requested=req["engine"].as_str().unwrap_or("drama3");
+    if requested=="cosyvoice3" && backend!="cuda" {return Err("cosyvoice3-requires-windows-nvidia".into());}
+    if !catalog()["engines"].as_array().unwrap().iter().any(|e|e["id"]==requested) {return Err("unknown-engine".into());}
+    let slow_drama=req["allowDramaCPU"].as_bool().unwrap_or(false);
+    let small=models.iter().find(|m|(h["nativeDramaSmallCPU"]==true || h["nativeDramaSmallCUDA"]==true) && m["id"]=="drama3-small-iq3" && valid(m) && m["estimatedMemoryGB"].as_f64().is_some_and(|n|n<=host_budget));
+    let small_cuda=backend=="cuda" && h["nativeDramaSmallCUDA"]==true && small.is_some_and(|m|fits(&m));
+    let small_fallback=requested=="drama3" && !slow_drama && small.is_some();
+    let engine=if requested=="drama3" && !slow_drama && !small_fallback {"gpt-sovits-v2"} else {requested};
+    let voice=manual("voice","voice",Some(engine))?.or_else(||if small_fallback {small} else {existing(engine,"voice",Some(engine)).or_else(||models.iter().filter(|m|m["category"]=="voice" && m["engine"]==engine).filter(|m|if engine=="drama3" && slow_drama {valid(m) && m["estimatedMemoryGB"].as_f64().is_some_and(|n|n<=host_budget)} else {fits(m)}).min_by_key(|m|m["bytes"].as_u64().unwrap_or(u64::MAX)))});
+    let choose=|role:&str,category:&str,engine:Option<&str>|existing(role,category,engine).or_else(||models.iter().filter(|m|m["category"]==category && engine.is_none_or(|e|m["engine"]==e)).filter(fits).max_by(|a,b|a["parameterB"].as_f64().unwrap_or(0.).total_cmp(&b["parameterB"].as_f64().unwrap_or(0.))));
+    let speech=manual("speech","speech",Some("whisper"))?.or_else(||choose("speech","speech",Some("whisper")));let asr=manual("asr","asr",Some("qwen3-asr"))?.or_else(||choose("asr","asr",Some("qwen3-asr")));
+    let reference=if !req["requestedModels"]["referenceSpeech"].is_string() && (req["singleModelPerCategory"]==true || req["requestedModels"]["speech"].is_string()){speech}else{manual("referenceSpeech","speech",Some("whisper"))?.or_else(||existing("referenceSpeech","speech",Some("whisper"))).or_else(||models.iter().filter(|m|m["id"]=="whisper-small").filter(fits).next())};
+    let mut blockers=Vec::new();let mut warnings=Vec::new();
+    if text.is_none(){blockers.push("no-compatible-text-model");}
+    if voice.is_none(){blockers.push("no-compatible-voice-model");}
+    if speech.is_none() || asr.is_none() || reference.is_none(){blockers.push("no-compatible-speech-analysis-models");}
+    if requested!=engine{warnings.push("native-drama-cuda-unavailable-fallback-gpt-v2-pro-plus");}
+    if small_fallback {warnings.push(if small_cuda {"native-drama-small-cuda-planned"} else {"native-drama-small-cpu-fallback"});}
+    else if engine=="drama3"{warnings.push("native-drama-cpu-explicit-slow-path");}
+    let visual=text.filter(|m|m["estimatedMemoryGB"].as_f64().unwrap_or(0.)+3.<=budget);
+    if visual.is_none(){warnings.push("visual-analysis-unavailable-use-audio-roles");}
+    let summarize=|m:&Value|json!({"id":m["id"],"title":m["title"],"repo":m["repo"],"revision":m["revision"],"bytes":m["bytes"],"estimatedMemoryGB":m["estimatedMemoryGB"],"nativeFormat":m["nativeFormat"],"installed":is_installed(m)});
+    let mut downloads=Vec::new();
+    for m in [text,visual,voice,speech,asr,reference].into_iter().flatten(){if !downloads.iter().any(|r:&Value|r["id"]==m["id"]){downloads.push(summarize(m));}}
+    for m in models.iter().filter(|m|m["category"]=="classifier").filter(fits){downloads.push(summarize(m));}
+    let bytes=downloads.iter().filter(|m|m["installed"]!=true).map(|m|m["bytes"].as_u64().unwrap_or(0)).sum::<u64>();
+    let roles=json!({"text":text.map(|m|&m["id"]),"visual":visual.map(|m|&m["id"]),"voice":voice.map(|m|&m["id"]),"speech":speech.map(|m|&m["id"]),"asr":asr.map(|m|&m["id"]),"referenceSpeech":reference.map(|m|&m["id"])});
+    Ok(json!({"schemaVersion":1,"hardware":h,"requestedEngine":requested,"engine":engine,"voiceBackend":if small_fallback && small_cuda {"cuda"} else if engine=="drama3" {"cpu"} else {backend},"warnings":warnings,"blockers":blockers,"roles":roles,"downloads":downloads,"text":text.map(summarize),"voice":voice.map(summarize),"memoryBudgetGB":budget,"systemReserveGB":reserve,"modelDownloadBytes":bytes,"runtimeDownloadBytes":null,"canDeployModels":blockers.is_empty(),"fullWorkflowReady":false,"roleAnalysisMode":if visual.is_some(){"audiovisual"}else{"audio"},"stagesRunSerially":true,"requiresRuntimeAndAuxiliaryModels":true,"additionalComponents":["native-worker","native-asr","native-separator","ffmpeg","ollama"]}))
+}
+
+fn deployment_inner(req: &Value) -> Result<Value,String> {
+    if req["hardware"]["platform"]=="windows" && req["hardware"]["architecture"]=="x86_64" && req["hardware"]["nativeWorkflowVersion"]==1 {return windows_deployment(req);}
+    let h=&req["hardware"];
+    let ram=h["memoryGB"].as_f64().filter(|n| n.is_finite() && *n>0.).ok_or("memory-undetected")?;
+    let platform=h["platform"].as_str().ok_or("platform-undetected")?;
+    let arch=h["architecture"].as_str().ok_or("architecture-undetected")?;
+    let backend=h["backend"].as_str().unwrap_or("cpu");
+    let reserve=(ram*0.15).max(8.);
+    let mut budget=(ram-reserve).max(0.);
+    if backend=="metal" { budget=budget.min(h["acceleratorBudgetGB"].as_f64().unwrap_or(0.)); }
+    if ["cuda","rocm","xpu"].contains(&backend) {budget=budget.min(h["acceleratorMemoryGB"].as_f64().unwrap_or(0.)*0.8);}
+    let models=req["models"].as_array().ok_or("missing-model-catalog")?;
+    let fits=|m:&&Value| m["retired"]!=true && m["licenseReviewRequired"]!=true && m["estimatedMemoryGB"].as_f64().is_some_and(|n| n>0. && n<=if m["id"]=="drama3-small-iq3" {(ram-reserve).max(0.)} else {budget})
+        && m["bytes"].as_u64().unwrap_or(0)>0
+        && m["files"].as_array().is_some_and(|files| !files.is_empty())
+        && m["revision"].as_str().is_some_and(|r| r.len()==40 && r.bytes().all(|c| c.is_ascii_hexdigit()));
+    let apple=platform=="macos" && arch=="aarch64" && backend=="metal";
+    let mut candidates:Vec<&Value>=models.iter().filter(|m| apple && m["category"]=="text" && m["engine"]=="mlx-text"
+        && ["mlx:qwen3.5-9b:4bit","mlx:qwen3.5-35b-a3b:4bit"].contains(&m["id"].as_str().unwrap_or(""))).filter(fits).collect();
+    candidates.sort_by(|a,b| b["parameterB"].as_f64().unwrap_or(0.).total_cmp(&a["parameterB"].as_f64().unwrap_or(0.)));
+    // Installation inventory is supplied by the host after checking local files.
+    // Preserve a usable installed selection; hardware advice is for missing roles.
+    let installed=strings(req.get("installedModels"), &[])?;
+    let is_installed=|m:&Value| installed.iter().any(|id|m["id"]==*id);
+    let manual=|role:&str,category:&str,engine:Option<&str>|->Result<Option<&Value>,String>{
+        let Some(id)=req["requestedModels"][role].as_str() else{return Ok(None)};
+        models.iter().find(|m|apple && m["id"]==id && m["category"]==category && engine.is_none_or(|e|m["engine"]==e) && fits(m)).map(Some).ok_or_else(||format!("incompatible-requested-model:{role}:{id}"))
+    };
+    let existing=|role:&str,category:&str,engine:Option<&str>| models.iter().filter(|m|apple && m["category"]==category
+        && engine.is_none_or(|e|m["engine"]==e)).filter(fits).filter(|m|is_installed(m))
+        .min_by(|a,b| {
+            let priority=|m:&Value|if req["selectedModels"][role]==m["id"] {0u8} else {1};
+            priority(a).cmp(&priority(b))
+                .then_with(||b["parameterB"].as_f64().unwrap_or(0.).total_cmp(&a["parameterB"].as_f64().unwrap_or(0.)))
+                .then_with(||b["bytes"].as_u64().unwrap_or(0).cmp(&a["bytes"].as_u64().unwrap_or(0)))
+        });
+    let text=manual("text","text",Some("mlx-text"))?.or_else(||existing("text","text",Some("mlx-text"))).or_else(||candidates.first().copied());
+    // Match the visual worker's additional frame/vision-encoder allowance.
+    let visual_fits=|m:&&Value|m["estimatedMemoryGB"].as_f64().unwrap_or(f64::INFINITY)+4.<=budget.min(ram*0.8);
+    let visual=if req["singleModelPerCategory"]==true || req["requestedModels"]["text"].is_string(){text.filter(|m|visual_fits(m))}else{existing("visual","text",Some("mlx-text")).filter(|m|req["selectedModels"]["visual"]==m["id"] && visual_fits(m))
+        .or_else(||text.filter(|m|visual_fits(m)))
+        .or_else(||candidates.iter().copied().find(visual_fits))};
+    let engine=req["engine"].as_str().unwrap_or("drama3");
+    if engine=="cosyvoice3" {return Err("cosyvoice3-requires-windows-nvidia".into());}
+    if !catalog()["engines"].as_array().unwrap().iter().any(|e|e["id"]==engine) {return Err("unknown-engine".into());}
+    let voice_for=|selected:&str| models.iter().filter(|m|apple && m["category"]=="voice" && m["engine"]==selected).filter(fits)
+        .min_by_key(|m|(if selected=="drama3" && m["id"]=="drama3-small-iq3" {1} else {0},m["bytes"].as_u64().unwrap_or(u64::MAX)));
+    let mut voice=manual("voice","voice",Some(engine))?.or_else(||existing(engine,"voice",Some(engine))).or_else(||voice_for(engine));
+    let mut effective_engine=engine;
+    let mut warnings=Vec::new();
+    if engine=="drama3" && voice.is_some_and(|m|m["id"]=="drama3-small-iq3") {warnings.push("drama3-small-cpu-fallback");}
+    if apple && engine=="drama3" && voice.is_none() {
+        if let Some(fallback)=voice_for("gpt-sovits-v2") {
+            voice=Some(fallback);effective_engine="gpt-sovits-v2";
+            warnings.push("drama3-memory-budget-fallback-gpt-v2-pro-plus");
+        }
+    }
+    let auxiliary=|category:&str| models.iter().filter(|m|apple && m["category"]==category && (m["precision"]=="4bit" || m["engine"]=="whisper"))
+        .filter(fits).max_by(|a,b|a["parameterB"].as_f64().unwrap_or(0.).total_cmp(&b["parameterB"].as_f64().unwrap_or(0.)));
+    let speech=manual("speech","speech",Some("whisper"))?.or_else(||existing("speech","speech",Some("whisper"))).or_else(||auxiliary("speech"));
+    let asr=manual("asr","asr",None)?.or_else(||existing("asr","asr",None)).or_else(||auxiliary("asr"));
+    let reference=if !req["requestedModels"]["referenceSpeech"].is_string() && (req["singleModelPerCategory"]==true || req["requestedModels"]["speech"].is_string()){speech}else{manual("referenceSpeech","speech",Some("whisper"))?.or_else(||existing("referenceSpeech","speech",Some("whisper"))).or_else(||models.iter().filter(|m|apple && m["id"]=="whisper-small").filter(fits).next())};
+    let summarize=|m:&Value| json!({"id":m["id"],"title":m["title"],"repo":m["repo"],"revision":m["revision"],"bytes":m["bytes"],"estimatedMemoryGB":m["estimatedMemoryGB"],"installed":is_installed(m)});
+    let mut blockers=Vec::new();
+    if !apple {blockers.push("automatic-platform-adapter-not-integrated");}
+    if text.is_none() {blockers.push("no-compatible-text-model");}
+    if visual.is_none() {warnings.push("visual-analysis-unavailable-use-audio-roles");}
+    if voice.is_none() {blockers.push("no-compatible-voice-model");}
+    if speech.is_none() || asr.is_none() || reference.is_none() {blockers.push("no-compatible-speech-analysis-models");}
+    let mut downloads=Vec::new();
+    for model in [text,visual,voice,speech,asr,reference].into_iter().flatten() {
+        if !downloads.iter().any(|m:&Value|m["id"]==model["id"]) {downloads.push(summarize(model));}
+    }
+    let bytes=downloads.iter().filter(|m|m["installed"]!=true).map(|m|m["bytes"].as_u64().unwrap_or(0)).sum::<u64>();
+    let mut roles=json!({"text":text.map(|m|&m["id"]),"voice":voice.map(|m|&m["id"]),
+        "speech":speech.map(|m|&m["id"]),"referenceSpeech":reference.map(|m|&m["id"]),"asr":asr.map(|m|&m["id"])});
+    if let Some(model)=visual {roles["visual"]=model["id"].clone();}
+    Ok(json!({"schemaVersion":1,"hardware":h,"engine":effective_engine,"requestedEngine":engine,"warnings":warnings,
+        "roleAnalysisMode":if visual.is_some() {"audiovisual"} else {"audio"},"memoryBudgetGB":budget,
+        "systemReserveGB":reserve,"text":text.map(summarize),"voice":voice.map(summarize),
+        "roles":roles,"downloads":downloads,"additionalComponents":["base-runtime","text-visual-runtime","separator","speakers"],
+        "modelDownloadBytes":bytes,"runtimeDownloadBytes":null,"blockers":blockers,
+        "canDeployModels":blockers.is_empty(),"fullWorkflowReady":false,
+        "stagesRunSerially":true,"requiresRuntimeAndAuxiliaryModels":true}))
+}
+
+/// Quality choices use the SAME real hardware and feasibility policy as installation.
+/// Unavailable templates never borrow a different engine or relax the memory guard.
+pub fn deployment(req:&Value)->Result<Value,String> {
+    let mut result=deployment_inner(req)?;
+    let h=&req["hardware"];let apple=h["platform"]=="macos" && h["architecture"]=="aarch64";
+    let windows=h["platform"]=="windows" && h["architecture"]=="x86_64";
+    let backend=h["backend"].as_str().unwrap_or("unprobed");
+    let ram=h["memoryGB"].as_f64().unwrap_or(0.);
+    let budget=result["memoryBudgetGB"].as_f64().unwrap_or(0.);
+    let models=req["models"].as_array().ok_or("missing-model-catalog")?;
+    let mut presets=Vec::new();
+    for (id,title,size,voice,engine,min_ram,description) in [
+        ("quality","Highest quality","35b",if apple {"drama3-35b-4bit"} else {"drama3-native-q2"},"drama3",64.,"Best Cantonese results in project listening tests so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results."),
+        ("balanced","Balanced","9b","v2ProPlus","gpt-sovits-v2",16.,"GPT-SoVITS V2 Pro Plus + Qwen 9B. A lower-memory alternative; voice expression, pronunciation and translation detail may differ from the highest-quality setup.")
+    ] {
+        let text=if apple {format!("mlx:qwen3.5-{}:4bit",if size=="35b" {"35b-a3b"} else {size})} else {format!("qwen3.5:{size}")};
+        let asr=if apple {match id {"quality"=>"asr-1.7b-bf16","balanced"=>"asr-1.7b-8bit",_=>"asr-0.6b-4bit"}} else {"asr-native-1.7b"};
+        let speech=if id=="compact" {"whisper-small"} else {"whisper-large-v3"};
+        let requested=json!({"text":text,"voice":voice,"asr":asr,"speech":speech,"referenceSpeech":speech});
+        let mut proposal=req.clone();proposal["engine"]=json!(engine);proposal["requestedModels"]=requested.clone();
+        proposal["singleModelPerCategory"]=json!(true);proposal["allowDramaCPU"]=json!(false);
+        let mut blockers=Vec::<String>::new();
+        if !apple && !windows {blockers.push("platform-not-supported".into());}
+        if ram<min_ram {blockers.push("insufficient-system-memory".into());}
+        // The shipped full-model Windows adapter is CPU-only. A small-model
+        // CUDA plug-in is not proof that full Drama can run on that backend.
+        if windows && engine=="drama3" {blockers.push("full-drama-gpu-adapter-unavailable".into());}
+        let mut peak=0f64;
+        for ident in [text.as_str(),voice,asr,speech] {
+            if let Some(model)=models.iter().find(|m|m["id"]==ident && m["retired"]!=true){
+                peak=peak.max(model["estimatedMemoryGB"].as_f64().unwrap_or(f64::INFINITY));
+                if model["licenseReviewRequired"]==true {blockers.push("model-license-review-required".into());}
+            } else {blockers.push("model-package-unavailable".into());}
+        }
+        if peak>budget || (windows && ["cuda","rocm","xpu"].contains(&backend) && h["acceleratorMemoryGB"].as_f64().unwrap_or(0.)<12.) {blockers.push(if windows && ["cuda","rocm","xpu"].contains(&backend){"insufficient-gpu-memory"}else{"insufficient-model-memory"}.into());}
+        let planned=deployment_inner(&proposal);
+        let mut plan=match planned {Ok(p)=>p,Err(_)=>{blockers.push("requested-model-plan-unavailable".into());json!({})}};
+        if let Some(list)=plan["blockers"].as_array(){for b in list {if let Some(b)=b.as_str(){blockers.push(b.into());}}}
+        if !plan.is_null() && plan["roles"]["voice"].is_string() && plan["roles"]["voice"]!=voice {blockers.push("requested-quality-not-supported".into());}
+        blockers.sort();blockers.dedup();
+        plan["canDeployModels"]=json!(blockers.is_empty());plan["blockers"]=json!(blockers);
+        presets.push(json!({"id":id,"title":title,"description":description,"engine":engine,"requestedModels":requested,
+            "modelSummary":format!("{} + Qwen {}",if id=="quality" {"Drama 3"}else{"GPT-SoVITS V2 Pro Plus"},size.to_uppercase()),"minimumSystemMemoryGB":min_ram,"estimatedPeakModelGB":peak,"availableModelBudgetGB":budget,
+            "minimumDedicatedVRAMGB":if windows && ["cuda","rocm","xpu"].contains(&backend){Some((peak/0.8).ceil().max(12.))}else{None},
+            "available":blockers.is_empty(),"blockers":blockers,"plan":plan}));
+    }
+    result["recommendedPreset"]=presets.iter().find(|p|p["available"]==true).map(|p|p["id"].clone()).unwrap_or(Value::Null);
+    result["qualityPresets"]=json!(presets);
+    result["hardwarePolicy"]=json!({"supportedPlatforms":["Apple Silicon","Windows x64"],"intelMacSupported":false,
+        "gpuInferenceVerified":h["inferenceVerified"].as_bool().unwrap_or(false),"memoryIsEstimate":true,"stagesRunSerially":true});
+    Ok(result)
+}
+
+pub fn hardware() -> Value {
+    #[cfg(target_os="macos")]
+    fn memory() -> Option<u64> {
+        use std::ffi::c_void;
+        extern "C" { fn sysctlbyname(name:*const i8, old:*mut c_void, len:*mut usize, new:*mut c_void, newlen:usize)->i32; }
+        let mut size=0u64; let mut len=8usize;
+        let ok=unsafe {sysctlbyname(b"hw.memsize\0".as_ptr().cast(),(&mut size as *mut u64).cast(),&mut len,std::ptr::null_mut(),0)};
+        (ok==0).then_some(size)
+    }
+    #[cfg(target_os="windows")]
+    fn memory() -> Option<u64> {
+        #[repr(C)] struct Status {length:u32,load:u32,total:u64,available:u64,page_total:u64,page_available:u64,virtual_total:u64,virtual_available:u64,extended:u64}
+        #[link(name="kernel32")] extern "system" {fn GlobalMemoryStatusEx(status:*mut Status)->i32;}
+        let mut s=Status{length:std::mem::size_of::<Status>() as u32,load:0,total:0,available:0,page_total:0,page_available:0,virtual_total:0,virtual_available:0,extended:0};
+        (unsafe{GlobalMemoryStatusEx(&mut s)}!=0).then_some(s.total)
+    }
+    #[cfg(not(any(target_os="windows",target_os="macos")))]
+    fn memory()->Option<u64>{None}
+    let result=json!({"platform":std::env::consts::OS,"architecture":std::env::consts::ARCH,
+        "memoryGB":memory().map(|n|n as f64/1073741824.),"backend":"unprobed", "inferenceVerified":false});
+    #[cfg(target_os="windows")]
+    {
+        let mut result=result;
+        use windows::Win32::Graphics::Dxgi::{CreateDXGIFactory1,IDXGIFactory1};
+        let mut adapters=Vec::new();
+        if let Ok(factory)=unsafe{CreateDXGIFactory1::<IDXGIFactory1>()} {
+            for index in 0..32 {
+                let Ok(adapter)=(unsafe{factory.EnumAdapters1(index)}) else {break};
+                let Ok(desc)=(unsafe{adapter.GetDesc1()}) else {continue};
+                if ![0x10de,0x1002,0x8086].contains(&desc.VendorId){continue;}
+                let end=desc.Description.iter().position(|c|*c==0).unwrap_or(desc.Description.len());
+                adapters.push(json!({"name":String::from_utf16_lossy(&desc.Description[..end]),
+                    "vendorId":desc.VendorId,"dedicatedMemoryGB":desc.DedicatedVideoMemory as f64/1073741824.,
+                    "sharedMemoryGB":desc.SharedSystemMemory as f64/1073741824.}));
+            }
+        }
+        result["displayAdapters"]=json!(adapters);
+        result
+    }
+    #[cfg(not(target_os="windows"))]
+    {result}
+}
+
+pub fn dispatch(req:Value)->Result<Value,String> {
+    match req["operation"].as_str() {
+        Some("catalog")=>Ok(json!({"catalog":catalog(),"sha256":digest(CATALOG.as_bytes())})),
+        Some("plan")=>plan(&req["settings"]),
+        Some("deployment")=>deployment(&req),
+        Some("hardware")=>Ok(hardware()),
+        Some("cleanup-plan")=>cleanup::plan(&req),
+        Some("cleanup-downloads")=>cleanup::execute(&req),
+        _=>Err("unknown-operation".into()),
+    }
+}

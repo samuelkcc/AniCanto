@@ -1,0 +1,312 @@
+"""One-click native Windows deployment, pinned models, isolated tools and reuse."""
+import argparse,hashlib,json,os,shutil,subprocess,sys,time,zipfile
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+SHARED=HERE/'shared' if (HERE/'shared').is_dir() else HERE.parent/'Resources'
+sys.path.insert(0,str(SHARED))
+from gpu import data_root,hardware_snapshot,recommended,adapters,amd_supported,vendor
+from install import env_python,install_torch,extract_source
+from downloads import download,sha256
+from runtime_installer import ensure_env,pip_command,repair_command,clean_environment
+
+def emit(message,**extra):print(json.dumps(dict(stage='Windows setup',message=message,**extra),ensure_ascii=False),flush=True)
+def call(args):subprocess.run(list(map(str,args)),check=True,env=clean_environment(data_root()))
+def catalog():
+ from model_catalog import catalog as common
+ rows=common()
+ native=json.loads((HERE/'native-models.json').read_text())
+ by_id={r['id']:r for r in rows};by_id.update({r['id']:r for r in native})
+ for r in by_id.values():
+  if r.get('engine','').startswith('gpt-'):r=dict(r,nativeFormat='pytorch');by_id[r['id']]=r
+  if r.get('engine')=='whisper':r=dict(r,nativeFormat='ctranslate2');by_id[r['id']]=r
+  if r.get('engine') in ('voxcpm2','wsyue'):
+   r=dict(r,nativeFormat='pytorch',legacy=r.get('legacy') or 'models/voice-variants/'+r['id']);by_id[r['id']]=r
+ return list(by_id.values())
+def folder(root,row):return root/row.get('legacy','models/variants/'+row['id'])
+def complete(root,row):
+ return all((folder(root,row)/f['path']).is_file() and (folder(root,row)/f['path']).stat().st_size==f['size'] for f in row['files'])
+def reuse_roots(row):
+ if row.get('engine')!='ollama':return []
+ roots=[Path.home()/'.ollama/models']
+ if os.environ.get('OLLAMA_MODELS'):roots.insert(0,Path(os.environ['OLLAMA_MODELS']))
+ return roots
+
+def available(root,row):return complete(root,row) or any(complete(base.parent.parent,dict(row,legacy=str(base))) for base in reuse_roots(row))
+
+def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requested=None):
+ from studio_core import call as core
+ root=data_root();rows=catalog();installed=[r['id'] for r in rows if r.get('nativeFormat') and available(root,r)]
+ from gpu import planning_hardware
+ from drama_cuda import capable,plan_components
+ h=hardware or planning_hardware();h=dict(h,nativeWorkflowVersion=1,nativeDramaSmallCPU=(HERE/'tools/audiocpp_small_server.exe').is_file(),nativeDramaSmallCUDA=capable())
+ if hardware is None and backend!='auto':h['backend']=dict(nvidia='cuda',amd='rocm').get(backend,'cpu')
+ if h.get('backend') in ('unprobed',None):h['backend']='cpu'
+ try:selected=json.loads((root/'model-selections.json').read_text())
+ except (OSError,ValueError):selected={}
+ result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama)
+ # Keep the preview identical to installation, including non-role components.
+ classifier=next(r for r in rows if r['id']=='audio-classifier-native')
+ if not any(r['id']==classifier['id'] for r in result['downloads']):
+  result['downloads'].append(dict(id=classifier['id'],title=classifier['title'],bytes=classifier['bytes'],installed=available(root,classifier),purposeKey='audio-classification'))
+ result['modelDownloadBytes']=sum(r.get('bytes',0) for r in result['downloads'] if not r.get('installed'))
+ from setup_inventory import inventory
+ result['inventory']=inventory(root,rows,result['downloads'])
+ result['storage']=str(root);result['requestedModels']=requested or {}
+ ready_file=root/'native-ready.json'
+ try:ready=json.loads(ready_file.read_text())
+ except (OSError,ValueError):ready={}
+ result['setupReady']=ready.get('engine')==result['engine'] and ready.get('speechInferencePassed') is True and ready.get('modelLoadPassed') is True and all(ready.get('roles',{}).get(k)==v for k,v in result['roles'].items()) and not (root/'setup-invalidated.json').exists() and all(r.get('installed') for r in result['downloads'])
+ result['tools']=plan_components(root) if result.get('engine')=='drama3' and result.get('voiceBackend')=='cuda' else []
+ result['inventory']+=result['tools']
+ try:
+  verified=json.loads((root/'drama3-windows-ready.json').read_text())
+  if result.get('engine')=='drama3' and verified.get('variant')==result['roles'].get('voice') and verified.get('speechInferencePassed'):
+   result['verifiedVoiceBackend']=verified.get('backend','cpu')
+   result['warnings']=[w for w in result['warnings'] if w!='native-drama-small-cuda-planned']
+ except (OSError,ValueError):pass
+ return result
+def environment(name,backend=None):
+ emit('Checking / installing '+name+' runtime',setupStep='runtime')
+ python=env_python(name)
+ requirements=HERE/f'requirements-{name}.lock'
+ if not python.is_file():ensure_env(data_root(),python.parent.parent)
+ identity=hashlib.sha256(requirements.read_bytes()+str(backend).encode()).hexdigest()
+ stamp=data_root()/f'{name}-runtime-ready.json'
+ try:previous=json.loads(stamp.read_text()) if stamp.is_file() else {}
+ except ValueError:previous={}
+ from runtime_health import missing,probe as imports,damaged,state
+ stamp.unlink(missing_ok=True)
+ try:absent=missing(python,requirements)
+ except (OSError,subprocess.CalledProcessError):
+  ensure_env(data_root(),python.parent.parent,recreate=True)
+  absent=missing(python,requirements)
+ backend_missing=backend and (previous.get('identity')!=identity or any(n not in state(python)['packages'] for n in ('torch','torchaudio')))
+ if backend_missing:
+  install_torch(python,backend)
+ if backend:
+  versions=json.loads(subprocess.check_output([str(python),'-c','import importlib.metadata as m,json; print(json.dumps([m.version("torch"),m.version("torchaudio")]))'],text=True))
+  constraints=data_root()/f'{name}-torch-constraints.txt';constraints.write_text('torch=='+versions[0]+'\ntorchaudio=='+versions[1]+'\n')
+ command=pip_command(python,data_root(),'install','--only-binary',':all:','--find-links',SHARED/'wheels','--find-links',HERE/'wheels')
+ if backend:command+=['-c',constraints]
+ # The complete analysis lock intentionally excludes unused Demucs quantization.
+ if name in ('analysis','gpt'):command+=['--no-deps']
+ command+=['-r',requirements]
+ if absent or backend_missing:call(command)
+ try:imports(python,name)
+ except subprocess.CalledProcessError:
+  broken=damaged(python,requirements,backend)
+  if not broken:raise RuntimeError(name+' import check failed but package files are intact. No healthy packages were reinstalled.')
+  if backend and any(p in ('torch','torchaudio') for p in broken):install_torch(python,backend,repair=True,packages=[p for p in broken if p in ('torch','torchaudio')])
+  from mac_runtime import requirements as pins
+  expected=pins(requirements);broken=[p for p in broken if p not in ('torch','torchaudio')] if backend else broken
+  if broken:call(repair_command(python,data_root(),broken,expected,links=[SHARED/'wheels',HERE/'wheels'],constraints=constraints if backend else None))
+  imports(python,name)
+ if missing(python,requirements):raise ValueError(name+' runtime packages remain incomplete.')
+ if name in ('analysis','gpt'):
+  from runtime_exclusions import cleanup_command
+  cleanup=cleanup_command(data_root(),python,name,state(python)['packages'])
+  if cleanup:call(cleanup)
+ stamp.write_text(json.dumps(dict(identity=identity,backend=backend,python=str(python))))
+ return python
+
+def extract_zip(archive,target,suffix=None):
+ target.mkdir(parents=True,exist_ok=True)
+ with zipfile.ZipFile(archive) as z:
+  for f in z.infolist():
+   destination=(target/f.filename).resolve()
+   if not destination.is_relative_to(target.resolve()) or (f.external_attr>>16)&0o170000==0o120000:raise ValueError('Unsafe tool archive path.')
+  for f in z.infolist():
+   legal=Path(f.filename).name.upper().startswith(('LICENSE','LICENCE','COPYING','NOTICE','EULA','AUTHORS','COPYRIGHT'))
+   if suffix is None or f.filename.endswith(suffix) or legal:z.extract(f,target)
+
+def tool(name):
+ root=data_root();row=json.loads((HERE/'native-tools.json').read_text())[name]
+ target=root/'tools'/name;marker=target/'verified.json'
+ if marker.is_file():
+  receipt=json.loads(marker.read_text());files=receipt.get('files',{})
+  if receipt.get('sha256')==row['sha256'] and (all((target/n).is_file() and (target/n).stat().st_size==v['bytes'] for n,v in files.items()) and files if row.get('requiredFiles') else list(target.rglob(name+'.exe'))):return target
+ archive=root/'downloads'/(name+'-'+row['sha256'][:12]+'.zip')
+ emit('Download / verify '+name,downloadBytes=row['size']);download(row['url'],archive,row['sha256'],row['size'])
+ extract_zip(archive,target,row.get('extractSuffix'))
+ if row.get('requiredFiles') and not all((target/n).is_file() for n in row['requiredFiles']):raise ValueError('Tool archive is incomplete: '+name)
+ receipt=dict(row,files={p.relative_to(target).as_posix():dict(bytes=p.stat().st_size) for p in target.rglob('*.dll')})
+ marker.write_text(json.dumps(receipt));return target
+
+def install_model(row):
+ if row.get('retired'):raise ValueError('This model is retired and cannot be downloaded.')
+ if row.get('licenseReviewRequired'):raise ValueError('This model conversion has no confirmed license. Choose a reviewed variant.')
+ emit('Checking model: '+row['title'],setupStep='models')
+ root=data_root();target=folder(root,row)
+ from model_licenses import install_notices
+ install_notices(row,target)
+ for i,f in enumerate(row['files']):
+  emit(f"{row['title']} · {i+1}/{len(row['files'])} · {f['path']}")
+  p=target/f['path']
+  if not p.exists() and row.get('engine')=='ollama' and 'content' not in f:
+   for cache in reuse_roots(row):
+    old=cache/f['path']
+    if old.is_file() and old.stat().st_size==f['size'] and sha256(old)==f['sha']:
+     p.parent.mkdir(parents=True,exist_ok=True)
+     try:os.link(old,p)
+     except OSError:shutil.copy2(old,p)
+     emit('Reused verified local model: '+f['path']);break
+  if 'content' in f:
+   raw=f['content'].encode();assert hashlib.sha256(raw).hexdigest()==f['sha'];p.parent.mkdir(parents=True,exist_ok=True)
+   temp=p.with_suffix('.partial');temp.write_bytes(raw);temp.replace(p)
+  else:
+   url=f.get('url') or f"https://huggingface.co/{row['repo']}/resolve/{row['revision']}/{f['path']}"
+   download(url,p,f['sha'],f['size'])
+ ready=root/'model-ready';ready.mkdir(exist_ok=True)
+ (ready/(row['id'].replace(':','-')+'.json')).write_text(json.dumps(dict(id=row['id'],revision=row['revision'],nativeFormat=row.get('nativeFormat'))))
+ from model_ownership import mark_available
+ mark_available(root,row)
+ emit('Model files verified: '+row['title'],modelComplete=row['id'])
+
+def probe_runtime(python,backend):
+ device='cuda' if backend in ('nvidia','amd') else 'cpu'
+ result=subprocess.check_output([str(python),str(HERE/'gpu.py'),'--probe','gpt','--device',device],text=True,env=dict(os.environ,PYTHONUTF8='1'))
+ return json.loads(result.strip().splitlines()[-1])
+
+def setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
+ root=data_root();names=['model-selections.json','native-ready.json','setup-invalidated.json']
+ prior={name:(root/name).read_bytes() if (root/name).is_file() else None for name in names}
+ try:return _setup(engine,backend,allow_cpu_drama,requested)
+ except BaseException:
+  for name,data in prior.items():
+   path=root/name
+   if data is None:path.unlink(missing_ok=True)
+   else:
+    temp=path.with_suffix('.restore');temp.write_bytes(data);temp.replace(path)
+  raise
+
+def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
+ emit('Checking hardware and existing installation',setupStep='check')
+ if sys.platform!='win32':raise RuntimeError('Run native setup on Windows 11 x64.')
+ root=data_root();root.mkdir(parents=True,exist_ok=True)
+ (root/'native-ready.json').unlink(missing_ok=True)
+ (root/'setup-invalidated.json').write_text(json.dumps(dict(reason='setup-in-progress')))
+ if backend=='auto':backend=recommended(adapters())
+ if engine=='cosyvoice3':
+  from engine_availability import require
+  require(engine,root,sys.platform,backend)
+ if backend=='intel':backend='cpu';emit('This native voice stack uses CPU on Intel; hardware video export remains available.')
+ if backend=='amd' and not any(vendor(r)=='amd' and amd_supported(r.get('Name','')) for r in adapters()):raise ValueError('Use CPU for this Radeon; the selected native ROCm build does not support this model.')
+ worker=environment('worker');analysis=environment('analysis',backend)
+ probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],nativeWorkflowVersion=1)
+ deployment=plan(engine,h,allow_cpu_drama,requested=requested)
+ if deployment['blockers']:raise ValueError('; '.join(deployment['blockers']))
+ emit('Deployment plan',deployment=deployment)
+ ffdir=tool('ffmpeg');tool('ollama')
+ ffmpeg=next(ffdir.rglob('ffmpeg.exe'));ffprobe=next(ffdir.rglob('ffprobe.exe'))
+ os.environ['PATH']=str(ffmpeg.parent)+os.pathsep+os.environ.get('PATH','')
+ all_rows={r['id']:r for r in catalog()}
+ required=[all_rows[r['id']] for r in deployment['downloads']]
+ # Audio classification is independent of transcription and always included.
+ classifier=all_rows['audio-classifier-native']
+ if classifier not in required:required.append(classifier)
+ space=sum(r['bytes'] for r in required if not complete(root,r))
+ if shutil.disk_usage(root).free<space+8_000_000_000:raise ValueError('Not enough disk space for models plus runtime workspace (8 GB reserve).')
+ for index,row in enumerate(required):
+  emit('Model '+str(index+1)+' / '+str(len(required))+' · '+row['title'],setupStep='models',modelProgress=dict(index=index+1,total=len(required),title=row['title']))
+  install_model(row)
+ asr=environment('asr',backend)
+ selected=deployment['roles'];selected['asr']='asr-native-1.7b'
+ selected[deployment['engine']]=selected['voice']
+ text_row=all_rows[selected['text']]
+ text_alias=selected['text']+'-canto-'+text_row['manifestSHA256'][:12]
+ original=root/'models/ollama/manifests/registry.ollama.ai/library/qwen3.5'/selected['text'].split(':',1)[1]
+ shutil.copy2(original,original.with_name(text_alias.split(':',1)[1]))
+ (root/'model-selections.json').write_text(json.dumps(selected))
+ emit('Loading and verifying installed models. First load can take longer.',setupStep='verify')
+ call([analysis,HERE/'setup_checks.py','analysis',root])
+ (root/'separator-windows-ready.json').write_text(json.dumps(dict(backend=backend,modelLoadPassed=True)))
+ (root/'separator-ready.json').write_text(json.dumps(dict(nativeFormat='pytorch',backend=backend)))
+ call([asr,HERE/'setup_checks.py','asr',root])
+ (root/'asr-windows-ready.json').write_text(json.dumps(dict(backend=backend,modelLoadPassed=True)))
+ (root/'asr-ready.json').write_text(json.dumps(dict(variant='asr-native-1.7b',nativeFormat='pytorch')))
+ (root/'speech-ready.json').write_text(json.dumps(dict(variant=selected['speech'],nativeFormat='ctranslate2')))
+ chosen=deployment['engine']
+ if chosen.startswith('gpt-sovits'):
+  gpt=environment('gpt',backend)
+  from dubbing_setup import REV,SOURCE_SHA
+  extract_source(dict(revision=REV,sha256=SOURCE_SHA,url=f'https://codeload.github.com/RVC-Boss/GPT-SoVITS/tar.gz/{REV}'),root/'gpt-sovits'/REV)
+  version='v2ProPlus' if chosen=='gpt-sovits-v2' else 'v4'
+  call([gpt,HERE/'native_tts.py','--prepare-gpt',root,'--gsv-version',version])
+  call([gpt,HERE/'native_tts.py','--load-check','gpt','--root',root,'--gsv-version',version])
+  marker=root/'gpt-windows-ready.json';previous=json.loads(marker.read_text()) if marker.is_file() else {}
+  versions=list(dict.fromkeys(previous.get('modelVersions',[])+[version]))
+  marker.write_text(json.dumps(dict(engine='gpt',backend=backend,modelVersion=version,modelVersions=versions,speechVersions=previous.get('speechVersions',[]),modelLoadPassed=True,speechInferencePassed=False)))
+ elif chosen=='cosyvoice3':
+  cosy=environment('cosy',backend)
+  sources=json.loads((HERE/'models.json').read_text())
+  extract_source(sources['cosy-source'],root/'sources/cosy')
+  extract_source(sources['matcha-source'],root/'sources/cosy/third_party/Matcha-TTS')
+  call([cosy,HERE/'native_tts.py','--load-check','cosy','--root',root])
+  (root/'cosy-windows-ready.json').write_text(json.dumps(dict(backend=backend,modelLoadPassed=True,speechInferencePassed=False)))
+ elif chosen in ('voxcpm2','wsyue'):
+  local=environment('local',backend)
+  call([local,HERE/'setup_checks.py',chosen,root])
+  marker=root/'local-windows-ready.json';previous=json.loads(marker.read_text()) if marker.is_file() else {}
+  if previous.get('backend')!=backend:previous={} # A different Torch/device runtime needs its own probes.
+  (root/'local-windows-ready.json').write_text(json.dumps(dict(backend=backend,engines=list(dict.fromkeys(previous.get('engines',[])+[chosen])),verifiedEngines=[e for e in previous.get('verifiedEngines',[]) if e!=chosen],variants=dict(previous.get('variants',{}),**{chosen:selected['voice']}),modelLoadPassed=True,speechInferencePassed=False)))
+ elif chosen=='drama3':
+  voice_backend=deployment.get('voiceBackend','cpu');fallback_reason=None
+  if voice_backend=='cuda':
+   try:
+    from drama_cuda import prepare
+    prepare(root,emit)
+    call([worker,HERE/'setup_checks.py','drama3',root,'cuda'])
+   except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
+    fallback_reason=str(error);voice_backend='cpu'
+    emit('Drama3-small CUDA verification failed; using the same model on CPU. '+fallback_reason,voiceBackend='cpu',cudaFailure=fallback_reason)
+  if voice_backend=='cpu':call([worker,HERE/'setup_checks.py','drama3',root,'cpu'])
+  (root/'drama3-windows-ready.json').write_text(json.dumps(dict(backend=voice_backend,modelLoadPassed=True,nativeFormat='gguf',variant=selected['voice'],cudaFailure=fallback_reason)))
+ from native_service import service,request as model_request
+ with service(root):
+  test=model_request(11445,'/api/generate',dict(model=text_alias,prompt='Reply with OK.',stream=False,think=False,keep_alive=0,options=dict(num_predict=8)),1200)
+  if not test.get('response','').strip():raise ValueError('Native text model did not return a test response.')
+ # Probe the exact speech adapter used by production, not just its imports.
+ engine_runtime=gpt if chosen.startswith('gpt-sovits') else env_python('cosy') if chosen=='cosyvoice3' else env_python('local') if chosen in ('voxcpm2','wsyue') else worker
+ from natural_voices import catalog as voices
+ voice=next(v for v in voices() if v['language']=='yue')
+ checks=root/'checks';checks.mkdir(exist_ok=True)
+ probe_cfg=dict(storage=str(root),job=str(checks),device='cuda' if backend in ('nvidia','amd') else 'cpu',drama3Backend=voice_backend if chosen=='drama3' else None,targetLanguage='yue',gsvVersion='v2ProPlus' if chosen=='gpt-sovits-v2' else 'v4',cosyModel='cosy-native-0.5b',drama3Model=selected['voice'] if chosen=='drama3' else 'drama3-native-q2',items=[dict(profile=dict(voice,name='Native probe'),text='今日一齊出發啦。',output=str(checks/'native-voice-probe.wav'),reviewIndex=0,seed=42,targetSeconds=4)])
+ if chosen=='voxcpm2':probe_cfg['voxcpmModel']=selected['voice']
+ if chosen=='wsyue':probe_cfg.update(wsyueModel=selected['voice'],device='cpu')
+ (checks/'native-voice-probe.wav').unlink(missing_ok=True)
+ file=checks/'native-voice-probe.json';file.write_text(json.dumps(probe_cfg,ensure_ascii=False))
+ call([engine_runtime,HERE/'shared_inference.py','tts' if chosen.startswith('gpt-sovits') else 'cosy' if chosen=='cosyvoice3' else chosen,file])
+ import soundfile as sf
+ if sf.info(checks/'native-voice-probe.wav').frames<2400:raise ValueError('Native speech probe was not completed.')
+ kind='gpt' if chosen.startswith('gpt-sovits') else 'cosy' if chosen=='cosyvoice3' else 'local' if chosen in ('voxcpm2','wsyue') else 'drama3'
+ marker=root/(kind+'-windows-ready.json');verified=json.loads(marker.read_text());verified['speechInferencePassed']=True
+ if kind=='gpt':verified['speechVersions']=list(dict.fromkeys(verified.get('speechVersions',[])+[version]))
+ if kind=='local':verified['verifiedEngines']=list(dict.fromkeys(verified.get('verifiedEngines',[])+[chosen]))
+ marker.write_text(json.dumps(verified))
+ receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=allow_cpu_drama,modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
+ (root/'native-ready.json').write_text(json.dumps(receipt,indent=2))
+ (root/'setup-invalidated.json').unlink(missing_ok=True)
+ emit('Native setup completed. The first conversion will validate speech and output on this PC.',ready=receipt,setupStep='ready')
+
+if __name__=='__main__':
+ from process_job import install as own_processes
+ own_processes()
+ parser=argparse.ArgumentParser();parser.add_argument('--models-json',default='{}');parser.add_argument('--engine',default='drama3');parser.add_argument('--backend',default='auto');parser.add_argument('--allow-cpu-drama',action='store_true');parser.add_argument('--plan',action='store_true');parser.add_argument('--manage',choices=['repair','redownload','remove']);parser.add_argument('--package');parser.add_argument('--kind',choices=['model','runtime','tool']);args=parser.parse_args()
+ try:
+  if args.manage:
+   from setup_inventory import remove,RUNTIMES
+   rows=catalog()
+   if args.manage!='repair':remove(data_root(),args.kind,args.package,rows)
+   if args.manage!='remove':
+    if args.kind=='runtime':
+     if args.package not in RUNTIMES:raise ValueError('Unknown runtime')
+     environment(args.package,None if args.package=='worker' else (recommended(adapters()) if args.backend=='auto' else args.backend))
+    elif args.kind=='tool':
+     if args.package not in ('drama-cuda','drama-cudart'):raise ValueError('Unknown managed tool')
+     tool(args.package)
+    else:install_model(next(r for r in rows if r['id']==args.package and r.get('nativeFormat')))
+   emit('Component updated. Review the plan before conversion.',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend))
+  elif args.plan:emit('Deployment plan',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend))
+  else:setup(args.engine,args.backend,args.allow_cpu_drama,json.loads(args.models_json))
+ except Exception as error:
+  import traceback;traceback.print_exc(file=sys.stderr);emit(str(error),error=True);sys.exit(1)

@@ -1,0 +1,31 @@
+.build/
+dist/
+__pycache__/
+.DS_Store
+outputs/
+
+# Regenerable compiler output and local editor metadata
+**/target/
+studio/src-tauri/gen/
+*.pyc
+*.pyo
+:memory:.ses
+
+# Compiled/downloaded tools and media are not the public source repository.
+*.exe
+*.dll
+*.dylib
+*.so
+*.whl
+*.mp4
+*.mkv
+*.mov
+*.wav
+*.mp3
+*.ckpt
+*.safetensors
+*.gguf
+*.pth
+/Resources/drama3-small-server
+/docs/archive/
+/studio/web/assets/

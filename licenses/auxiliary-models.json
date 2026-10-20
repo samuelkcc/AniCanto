@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-18",
+  "scope": "Exact auxiliary downloads; no inference that a code license covers model weights.",
+  "components": [
+    {
+      "repo": "Wespeaker/wespeaker-voxceleb-resnet34-LM",
+      "revision": "f0c48c298fd835726c27956a5d617bad7115627e",
+      "declaredLicense": "cc-by-4.0",
+      "documents": [
+        {
+          "path": "licenses/auxiliary/Wespeaker--wespeaker-voxceleb-resnet34-LM/README.md",
+          "sha256": "af2f6592a73d1333b872f75c6047f24bd1bb53346c0597edc1544140aa9c7e73",
+          "url": "https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet34-LM/resolve/f0c48c298fd835726c27956a5d617bad7115627e/README.md"
+        }
+      ],
+      "weightsBundled": false,
+      "status": "pinned-weight-and-attribution-reviewed",
+      "effectiveLicense": "CC-BY-4.0",
+      "installedFile": "voxceleb_resnet34_LM.onnx",
+      "weightSHA256": "7bb2f06e9df17cdf1ef14ee8a15ab08ed28e8d0ef5054ee135741560df2ec068",
+      "attribution": "WeSpeaker project: ResNet34 large-margin speaker-embedding model; trained on VoxCeleb2. Unmodified ONNX weights downloaded from the pinned official model repository. No endorsement implied.",
+      "licenseURL": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "repo": "KimberleyJSN/melbandroformer",
+      "revision": "ac9b0614ab3cd7f77219e18ba494dfd93956c348",
+      "declaredLicense": "mit",
+      "documents": [
+        {
+          "path": "licenses/auxiliary/KimberleyJSN--melbandroformer/README.md",
+          "sha256": "5c1b3fd193f37b9dcdd947a12e566189f1c9d2664f4e5e95548e6a4b9fc7adab",
+          "url": "https://huggingface.co/KimberleyJSN/melbandroformer/resolve/ac9b0614ab3cd7f77219e18ba494dfd93956c348/README.md"
+        },
+        {
+          "path": "licenses/common/Publisher-declared-MIT-terms.txt",
+          "sha256": "93929716768af155deb548e39aab9c30af38f1b5daa03f03ced6f67f8df3c1ab",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/MIT.txt",
+          "evidenceType": "standard-terms-reference; publisher README supplies the licence selection"
+        }
+      ],
+      "weightsBundled": false,
+      "status": "pinned-publisher-license-and-weight-provenance-reviewed",
+      "effectiveLicense": "MIT",
+      "weightSHA256": "87201f4d31afb5bc79993230fc49446918425574db48c01c405e44f365c7559e",
+      "licenseBasis": "Identified model publisher explicitly selects MIT in the pinned Hugging Face model card; the exact declaration and standard terms are supplied. Hub documentation permits standard licences to be specified in card metadata. No absent copyright year/holder is invented.",
+      "licenseURL": "https://spdx.org/licenses/MIT.html",
+      "attribution": "Kimberley Jensen (KimberleyJSN), Mel-Band RoFormer / Kim Vocal 2. Unmodified checkpoint; no endorsement implied.",
+      "licenseHistory": {
+        "previous": "GPL-3.0",
+        "current": "MIT",
+        "authorRelicenseCommit": "ac9b0614ab3cd7f77219e18ba494dfd93956c348",
+        "reference": "https://huggingface.co/KimberleyJSN/melbandroformer/commit/ac9b0614ab3cd7f77219e18ba494dfd93956c348"
+      }
+    },
+    {
+      "repo": "TencentGameMate/chinese-hubert-base",
+      "revision": "fce0375452b1dd6c080ac3248d423d4d037bc831",
+      "declaredLicense": "mit",
+      "documents": [
+        {
+          "path": "licenses/auxiliary/TencentGameMate--chinese-hubert-base/README.md",
+          "sha256": "971ccb8e419d76ee1facfaefe55e1a112ec3c5cd5a1d4aa192debe51f2ec24f8",
+          "url": "https://huggingface.co/TencentGameMate/chinese-hubert-base/resolve/fce0375452b1dd6c080ac3248d423d4d037bc831/README.md"
+        },
+        {
+          "path": "licenses/common/Publisher-declared-MIT-terms.txt",
+          "sha256": "93929716768af155deb548e39aab9c30af38f1b5daa03f03ced6f67f8df3c1ab",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/MIT.txt",
+          "evidenceType": "standard-terms-reference; publisher README supplies the licence selection"
+        },
+        {
+          "path": "licenses/auxiliary/TencentGameMate--chinese-hubert-base/conversion-evidence.json",
+          "sha256": "e68ea976261d3dc15738fd805ff2a9e5767fefecc3ee65fef1fbda43e2ad5404",
+          "evidenceType": "AniCanto exhaustive tensor/configuration comparison; no user media or paths"
+        }
+      ],
+      "weightsBundled": false,
+      "status": "pinned-publisher-license-and-weight-provenance-reviewed",
+      "effectiveLicense": "MIT",
+      "licenseBasis": "Identified model publisher explicitly selects MIT in the pinned Hugging Face model card; the exact declaration and standard terms are supplied. Hub documentation permits standard licences to be specified in card metadata. No absent copyright year/holder is invented.",
+      "licenseURL": "https://spdx.org/licenses/MIT.html",
+      "attribution": "TencentGameMate, Chinese HuBERT Base. GPT-SoVITS fp16 repackaging of the pinned official checkpoint; all 211 tensors verified as exact float32-to-float16 casts. No endorsement implied.",
+      "weightSHA256": "24164f129c66499d1346e2aa55f183250c223161ec2770c0da3d3b08cf432d3c",
+      "upstreamWeightSHA256": "2fefccd26c2794a583b80f6f7210c721873cb7ebae2c1cde3baf9b27855e24d8",
+      "installedFile": "pytorch_model.bin",
+      "conversionVerified": true
+    },
+    {
+      "repo": "hfl/chinese-roberta-wwm-ext-large",
+      "revision": "a25cc9e05974bd9687e528edd516f2cfdb3f5db9",
+      "declaredLicense": "apache-2.0",
+      "documents": [
+        {
+          "path": "licenses/auxiliary/hfl--chinese-roberta-wwm-ext-large/README.md",
+          "sha256": "37e3c3d8d583fa43b699166ecc69944f1c0508290d47dc54bb640425b5900531",
+          "url": "https://huggingface.co/hfl/chinese-roberta-wwm-ext-large/resolve/a25cc9e05974bd9687e528edd516f2cfdb3f5db9/README.md"
+        },
+        {
+          "path": "licenses/auxiliary/hfl--chinese-roberta-wwm-ext-large/conversion-evidence.json",
+          "sha256": "dbd942b13141d2dcfdfba89a516ad3b93dffd0c5d904a737b2230445b8226289",
+          "evidenceType": "AniCanto exhaustive tensor/configuration comparison; no user media or paths"
+        },
+        {
+          "path": "licenses/auxiliary/hfl--chinese-roberta-wwm-ext-large/LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/ymcui/Chinese-BERT-wwm/4c256d460f30cf899f42a16f4125be205e9ea270/LICENSE"
+        }
+      ],
+      "weightsBundled": false,
+      "status": "pinned-publisher-license-and-weight-provenance-reviewed",
+      "effectiveLicense": "Apache-2.0",
+      "weightSHA256": "e53a693acc59ace251d143d068096ae0d7b79e4b1b503fa84c9dcf576448c1d8",
+      "upstreamWeightSHA256": "4ac62d49144d770c5ca9a5d1d3039c4995665a080febe63198189857c6bd11cd",
+      "installedFile": "pytorch_model.bin",
+      "conversionVerified": true,
+      "attribution": "HFL / Chinese-BERT-wwm authors. GPT-SoVITS fp16 BertForMaskedLM repackaging: 395 shared tensors exactly match official fp32 tensors cast to fp16; unused pretraining heads omitted; position IDs and decoder-bias alias verified. No fine-tuning asserted and no inference weights changed by AniCanto.",
+      "licenseBasis": "Pinned official model card declares Apache-2.0 and links the Chinese-BERT-wwm project; exact upstream terms and verified conversion changes are retained."
+    },
+    {
+      "repo": "nvidia/bigvgan_v2_24khz_100band_256x",
+      "revision": "c329ede9e9bbc100ddf5c91e2330a61921262370",
+      "declaredLicense": "mit",
+      "documents": [
+        {
+          "path": "licenses/auxiliary/nvidia--bigvgan_v2_24khz_100band_256x/README.md",
+          "sha256": "1ab4fe827dc65913b6745cb0fa7a96fb0a4a89ff32ec143a0eecfac079e03d1e",
+          "url": "https://huggingface.co/nvidia/bigvgan_v2_24khz_100band_256x/resolve/c329ede9e9bbc100ddf5c91e2330a61921262370/README.md"
+        },
+        {
+          "path": "licenses/auxiliary/nvidia--bigvgan_v2_24khz_100band_256x/LICENSE",
+          "url": "https://raw.githubusercontent.com/RVC-Boss/GPT-SoVITS/48b1a0169a28582a8984402f82cf438d3bfa6aca/GPT_SoVITS/BigVGAN/LICENSE",
+          "sha256": "5c7f573db5f807a9adc2a755c4901e203ea067f73c7a20fa6b703da7e77d7b35"
+        }
+      ],
+      "weightsBundled": false,
+      "status": "pinned-model-card-and-bundled-upstream-license-reviewed",
+      "effectiveLicense": "MIT",
+      "licenseBasis": "The pinned weight card explicitly links the BigVGAN MIT licence; identical upstream licence retained by the pinned GPT source.",
+      "weightSHA256": "6f9c5715550c9d0f11159ceb8935638da5aeb19e27d1e63677632df095e376f5",
+      "installedFile": "bigvgan_generator.pt"
+    }
+  ]
+}

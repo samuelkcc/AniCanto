@@ -1,0 +1,6 @@
+AniCanto original brand artwork
+Copyright (c) 2026 SCKC
+
+The app-icon.svg speech/play/wave mark and its PNG, ICO and ICNS derivatives are original project artwork, licensed under the MIT License supplied at the root of this distribution. The name change does not alter any third-party licence, attribution or model term.
+
+Previous application name: CantoSync. Historical notices retain that name as evidence. Internal storage directories, environment hooks and bundle identity remain compatible with earlier installations. No permission in another party's trade name or trademark is granted or implied.

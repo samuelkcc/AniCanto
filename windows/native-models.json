@@ -1,0 +1,478 @@
+[
+  {
+    "id": "asr-native-1.7b",
+    "category": "asr",
+    "engine": "qwen3-asr",
+    "title": "Qwen3-ASR 1.7B · native PyTorch",
+    "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "legacy": "models/native-asr",
+    "bytes": 4087628216,
+    "estimatedMemoryGB": 5,
+    "parameterB": 1.7,
+    "precision": "bf16/fp32",
+    "files": [
+      {
+        "path": "chat_template.jinja",
+        "size": 1434,
+        "sha": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2"
+      },
+      {
+        "path": "config.json",
+        "size": 2399,
+        "sha": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 165,
+        "sha": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c"
+      },
+      {
+        "path": "model.safetensors",
+        "size": 4076193080,
+        "sha": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+      },
+      {
+        "path": "processor_config.json",
+        "size": 487,
+        "sha": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 11429653,
+        "sha": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 998,
+        "sha": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+      }
+    ],
+    "nativeFormat": "pytorch",
+    "license": "Apache-2.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "cosy-native-0.5b",
+    "category": "voice",
+    "engine": "cosyvoice3",
+    "title": "CosyVoice 3 · native PyTorch",
+    "repo": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+    "revision": "29e01c4e8d000f4bcd70751be16fa94bf3d85a18",
+    "legacy": "models/cosy",
+    "bytes": 9747515171,
+    "estimatedMemoryGB": 7,
+    "parameterB": 0.5,
+    "precision": "fp16/fp32",
+    "nativeFormat": "pytorch",
+    "files": [
+      {
+        "path": "CosyVoice-BlankEN/config.json",
+        "size": 659,
+        "sha": "168aa1bd401abc3bc262ba15ba4e499627a8b4e006e9d050b47c22de20660185"
+      },
+      {
+        "path": "CosyVoice-BlankEN/generation_config.json",
+        "size": 242,
+        "sha": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6"
+      },
+      {
+        "path": "CosyVoice-BlankEN/merges.txt",
+        "size": 1402109,
+        "sha": "ac8ff86a72bee70828fbc1119bc4398c6f3a9a6e490d7b0dbe917be025478bd0"
+      },
+      {
+        "path": "CosyVoice-BlankEN/model.safetensors",
+        "size": 988097824,
+        "sha": "130282af0dfa9fe5840737cc49a0d339d06075f83c5a315c3372c9a0740d0b96"
+      },
+      {
+        "path": "CosyVoice-BlankEN/tokenizer_config.json",
+        "size": 1287,
+        "sha": "482bd979881423375ca5414e4e0d94cd7c5349dbb17fffd46b4d36d71e62a1bc"
+      },
+      {
+        "path": "CosyVoice-BlankEN/vocab.json",
+        "size": 2776833,
+        "sha": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      {
+        "path": "README.md",
+        "size": 11982,
+        "sha": "d4ec0fe1342b60a424ce1cd8971c670d26be38068a96148bcb6a1b8a334c3088"
+      },
+      {
+        "path": "asset/dingding.png",
+        "size": 122824,
+        "sha": "7f04815e2e676d31b089af6fa270135f3214f2193d5e0ad98b491d007d48f1c6"
+      },
+      {
+        "path": "campplus.onnx",
+        "size": 28303423,
+        "sha": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73"
+      },
+      {
+        "path": "config.json",
+        "size": 2,
+        "sha": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      {
+        "path": "configuration.json",
+        "size": 47,
+        "sha": "c502b6328c67638b401df8dd05de89e9e8d1cff9cd0ada10dfbdbe13556c20de"
+      },
+      {
+        "path": "cosyvoice3.yaml",
+        "size": 6934,
+        "sha": "f5a6b2c6f05139d0f18861a1fe506f751e787026b77c05f7e8fef9f8a4405965"
+      },
+      {
+        "path": "flow.decoder.estimator.fp32.onnx",
+        "size": 1326216933,
+        "sha": "9b51b9533a55937762b262bf2cf9c6220ce40760f76d6532cb16a6a6d84059a8"
+      },
+      {
+        "path": "flow.pt",
+        "size": 1329116148,
+        "sha": "a6fab32a7825e5b0bc855ddd948f8db9370b0a786fbc249caa4595e95b608e4b"
+      },
+      {
+        "path": "hift.pt",
+        "size": 83202622,
+        "sha": "b279d7641eb97ae55b3b540cfba4f953c26492a2df758328a89a4d007ab87a65"
+      },
+      {
+        "path": "llm.pt",
+        "size": 2024669519,
+        "sha": "69f43bd545131c30e98947fb360ea8b4dc9916d8e83dded7757c7ea4f5a24970"
+      },
+      {
+        "path": "llm.rl.pt",
+        "size": 2024682701,
+        "sha": "74d34b01a80c7154670ae75ac372d1b1712c78bceae9f467eb9f1f6f61ec764f"
+      },
+      {
+        "path": "speech_tokenizer_v3.batch.onnx",
+        "size": 969451579,
+        "sha": "b156b8a7bbff436585e153f4637b9a368009005ac66efa108a6c8bfb34e5ee43"
+      },
+      {
+        "path": "speech_tokenizer_v3.onnx",
+        "size": 969451503,
+        "sha": "23236a74175dbdda47afc66dbadd5bcb41303c467a57c261cb8539ad9db9208d"
+      }
+    ],
+    "license": "Apache-2.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "audio-classifier-native",
+    "category": "classifier",
+    "engine": "ast",
+    "title": "AudioSet music / speech classifier",
+    "repo": "MIT/ast-finetuned-audioset-10-10-0.4593",
+    "revision": "f826b80d28226b62986cc218e5cec390b1096902",
+    "legacy": "models/audio-classifier",
+    "bytes": 346432008,
+    "estimatedMemoryGB": 1,
+    "parameterB": 0.09,
+    "precision": "fp32",
+    "nativeFormat": "pytorch",
+    "files": [
+      {
+        "path": "config.json",
+        "size": 26763,
+        "sha": "a93d525511d77e8ecc933d09674b85099815bbbb417c228a4edd655e252fb9ff"
+      },
+      {
+        "path": "model.safetensors",
+        "size": 346404948,
+        "sha": "ae0c1e2ad4e1381d851fa9bf298ba13ebc9c5a914cdee2dbe427a6583869924d"
+      },
+      {
+        "path": "preprocessor_config.json",
+        "size": 297,
+        "sha": "8d04ba5a9c6fca5d39d0de2b1fd05ecf79deb589fbba279728bbebac39934231"
+      }
+    ],
+    "license": "BSD-3-Clause",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "drama3-native-q2",
+    "category": "voice",
+    "engine": "drama3",
+    "title": "Drama 3 GGUF Q2 · native CPU",
+    "repo": "Jmica/Drama-3-GGUF",
+    "revision": "17a5b40c5dc2c2be986f5371a7e650108b828e29",
+    "legacy": "models/native-drama",
+    "bytes": 17053660659,
+    "estimatedMemoryGB": 22,
+    "parameterB": 35,
+    "precision": "Q2 / Q8",
+    "nativeFormat": "gguf",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 19685,
+        "sha": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e"
+      },
+      {
+        "path": "NOTICE",
+        "size": 1102,
+        "sha": "54f9c1b54ce61fdffabaaff0f450996f5f3e8a2326377bda2c59901c5cfd1e62"
+      },
+      {
+        "path": "drama-3-backbone-8bit-experts-Q2_K.gguf",
+        "size": 17053639872,
+        "sha": "041be86fbb53bf4002d59bf7d5f0c99c321e0b21f5aa3b53fec380eec6f892d3"
+      }
+    ],
+    "license": "Fish Audio Community License v1.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "qwen3.5:4b",
+    "category": "text",
+    "engine": "ollama",
+    "title": "Qwen3.5 4B · GGUF",
+    "repo": "registry.ollama.ai/library/qwen3.5",
+    "revision": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "manifestSHA256": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+    "legacy": "models/ollama",
+    "bytes": 3324175022,
+    "estimatedMemoryGB": 5,
+    "parameterB": 4,
+    "precision": "GGUF",
+    "nativeFormat": "ollama-gguf",
+    "files": [
+      {
+        "path": "blobs/sha256-788a4d94bc3f431ac0cd067005be4b838a09330427962952420b05d10ecf84db",
+        "size": 177,
+        "sha": "788a4d94bc3f431ac0cd067005be4b838a09330427962952420b05d10ecf84db",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:788a4d94bc3f431ac0cd067005be4b838a09330427962952420b05d10ecf84db"
+      },
+      {
+        "path": "blobs/sha256-e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60",
+        "size": 675569120,
+        "sha": "e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60"
+      },
+      {
+        "path": "blobs/sha256-a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50",
+        "size": 2648593216,
+        "sha": "a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50"
+      },
+      {
+        "path": "blobs/sha256-b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "size": 13,
+        "sha": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+      },
+      {
+        "path": "blobs/sha256-50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "size": 11343,
+        "sha": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+      },
+      {
+        "path": "blobs/sha256-9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "size": 65,
+        "sha": "9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff"
+      },
+      {
+        "path": "manifests/registry.ollama.ai/library/qwen3.5/4b",
+        "size": 1088,
+        "sha": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+        "content": "{\"schemaVersion\":2,\"mediaType\":\"application/vnd.docker.distribution.manifest.v2+json\",\"config\":{\"mediaType\":\"application/vnd.docker.container.image.v1+json\",\"digest\":\"sha256:788a4d94bc3f431ac0cd067005be4b838a09330427962952420b05d10ecf84db\",\"size\":177},\"layers\":[{\"mediaType\":\"application/vnd.ollama.image.projector\",\"digest\":\"sha256:e56a899b1540860385465756dd308c84417410b94dbc1c380adffd20a921ca60\",\"size\":675569120,\"from\":\"mmproj.gguf\"},{\"mediaType\":\"application/vnd.ollama.image.model\",\"digest\":\"sha256:a9d0a3e1d8c91732a3812becd31f8d4a8ff57414903f226306069f0437e2ac50\",\"size\":2648593216,\"from\":\"model.gguf\"},{\"mediaType\":\"application/vnd.ollama.image.template\",\"digest\":\"sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315\",\"size\":13},{\"mediaType\":\"application/vnd.ollama.image.license\",\"digest\":\"sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32\",\"size\":11343},{\"mediaType\":\"application/vnd.ollama.image.params\",\"digest\":\"sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff\",\"size\":65}],\"runner\":\"llamacpp\",\"format\":\"gguf\"}"
+      }
+    ],
+    "license": "Apache-2.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json",
+    "retired": true,
+    "retiredReason": "Qwen 4B removed from new download choices on both platforms."
+  },
+  {
+    "id": "qwen3.5:9b",
+    "category": "text",
+    "engine": "ollama",
+    "title": "Qwen3.5 9B · GGUF",
+    "repo": "registry.ollama.ai/library/qwen3.5",
+    "revision": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+    "manifestSHA256": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+    "legacy": "models/ollama",
+    "bytes": 6550826638,
+    "estimatedMemoryGB": 9,
+    "parameterB": 9,
+    "precision": "GGUF",
+    "nativeFormat": "ollama-gguf",
+    "files": [
+      {
+        "path": "blobs/sha256-08f9698c1116d2ba3d2c1751f6e98919823e13bb28ff5eb7451c7bc9b40907c5",
+        "size": 177,
+        "sha": "08f9698c1116d2ba3d2c1751f6e98919823e13bb28ff5eb7451c7bc9b40907c5",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:08f9698c1116d2ba3d2c1751f6e98919823e13bb28ff5eb7451c7bc9b40907c5"
+      },
+      {
+        "path": "blobs/sha256-f836f08f921193f4d6b6a6952dba0a6fb116759d26a757bcb395d570d73976ca",
+        "size": 921704832,
+        "sha": "f836f08f921193f4d6b6a6952dba0a6fb116759d26a757bcb395d570d73976ca",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:f836f08f921193f4d6b6a6952dba0a6fb116759d26a757bcb395d570d73976ca"
+      },
+      {
+        "path": "blobs/sha256-02d45dc1cf451ba2475ac33b301c2dd8f985abe4c182ce04a1f2f5bf0260278d",
+        "size": 5629109120,
+        "sha": "02d45dc1cf451ba2475ac33b301c2dd8f985abe4c182ce04a1f2f5bf0260278d",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:02d45dc1cf451ba2475ac33b301c2dd8f985abe4c182ce04a1f2f5bf0260278d"
+      },
+      {
+        "path": "blobs/sha256-b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "size": 13,
+        "sha": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+      },
+      {
+        "path": "blobs/sha256-50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "size": 11343,
+        "sha": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+      },
+      {
+        "path": "blobs/sha256-9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "size": 65,
+        "sha": "9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff"
+      },
+      {
+        "path": "manifests/registry.ollama.ai/library/qwen3.5/9b",
+        "size": 1088,
+        "sha": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+        "content": "{\"schemaVersion\":2,\"mediaType\":\"application/vnd.docker.distribution.manifest.v2+json\",\"config\":{\"mediaType\":\"application/vnd.docker.container.image.v1+json\",\"digest\":\"sha256:08f9698c1116d2ba3d2c1751f6e98919823e13bb28ff5eb7451c7bc9b40907c5\",\"size\":177},\"layers\":[{\"mediaType\":\"application/vnd.ollama.image.projector\",\"digest\":\"sha256:f836f08f921193f4d6b6a6952dba0a6fb116759d26a757bcb395d570d73976ca\",\"size\":921704832,\"from\":\"mmproj.gguf\"},{\"mediaType\":\"application/vnd.ollama.image.model\",\"digest\":\"sha256:02d45dc1cf451ba2475ac33b301c2dd8f985abe4c182ce04a1f2f5bf0260278d\",\"size\":5629109120,\"from\":\"model.gguf\"},{\"mediaType\":\"application/vnd.ollama.image.template\",\"digest\":\"sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315\",\"size\":13},{\"mediaType\":\"application/vnd.ollama.image.license\",\"digest\":\"sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32\",\"size\":11343},{\"mediaType\":\"application/vnd.ollama.image.params\",\"digest\":\"sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff\",\"size\":65}],\"runner\":\"llamacpp\",\"format\":\"gguf\"}"
+      }
+    ],
+    "license": "Apache-2.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "qwen3.5:35b",
+    "category": "text",
+    "engine": "ollama",
+    "title": "Qwen3.5 35B · GGUF",
+    "repo": "registry.ollama.ai/library/qwen3.5",
+    "revision": "72aac7c28be8ff9b81c2a270eb489c88e6d822a76ec0cb7bf34d965768848567",
+    "manifestSHA256": "72aac7c28be8ff9b81c2a270eb489c88e6d822a76ec0cb7bf34d965768848567",
+    "legacy": "models/ollama",
+    "bytes": 22069593464,
+    "estimatedMemoryGB": 28,
+    "parameterB": 35,
+    "precision": "GGUF",
+    "nativeFormat": "ollama-gguf",
+    "files": [
+      {
+        "path": "blobs/sha256-6d2a5ac892aa03a9a4a0f40866af3bd2cf0e7c6e624a52e49509ad1903a65df4",
+        "size": 184,
+        "sha": "6d2a5ac892aa03a9a4a0f40866af3bd2cf0e7c6e624a52e49509ad1903a65df4",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:6d2a5ac892aa03a9a4a0f40866af3bd2cf0e7c6e624a52e49509ad1903a65df4"
+      },
+      {
+        "path": "blobs/sha256-79104874d7ab7b680e6e6abe48b03a040abc63cd73d0e778ea01759118d74f2e",
+        "size": 902822400,
+        "sha": "79104874d7ab7b680e6e6abe48b03a040abc63cd73d0e778ea01759118d74f2e",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:79104874d7ab7b680e6e6abe48b03a040abc63cd73d0e778ea01759118d74f2e"
+      },
+      {
+        "path": "blobs/sha256-82cfd9a4c8343580c87b2557b3b5de744f171d4f077c61f0e519cf0a92a8500b",
+        "size": 21166758176,
+        "sha": "82cfd9a4c8343580c87b2557b3b5de744f171d4f077c61f0e519cf0a92a8500b",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:82cfd9a4c8343580c87b2557b3b5de744f171d4f077c61f0e519cf0a92a8500b"
+      },
+      {
+        "path": "blobs/sha256-b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "size": 13,
+        "sha": "b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315"
+      },
+      {
+        "path": "blobs/sha256-50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "size": 11343,
+        "sha": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+      },
+      {
+        "path": "blobs/sha256-9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "size": 65,
+        "sha": "9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff"
+      },
+      {
+        "path": "manifests/registry.ollama.ai/library/qwen3.5/35b",
+        "size": 1283,
+        "sha": "72aac7c28be8ff9b81c2a270eb489c88e6d822a76ec0cb7bf34d965768848567",
+        "content": "{\"schemaVersion\":2,\"mediaType\":\"application/vnd.docker.distribution.manifest.v2+json\",\"config\":{\"mediaType\":\"application/vnd.docker.container.image.v1+json\",\"digest\":\"sha256:6d2a5ac892aa03a9a4a0f40866af3bd2cf0e7c6e624a52e49509ad1903a65df4\",\"size\":184},\"layers\":[{\"mediaType\":\"application/vnd.ollama.image.projector\",\"digest\":\"sha256:79104874d7ab7b680e6e6abe48b03a040abc63cd73d0e778ea01759118d74f2e\",\"size\":902822400,\"from\":\"qwen35-validation-20261004:35b-a3b-q4\"},{\"mediaType\":\"application/vnd.ollama.image.model\",\"digest\":\"sha256:82cfd9a4c8343580c87b2557b3b5de744f171d4f077c61f0e519cf0a92a8500b\",\"size\":21166758176,\"from\":\"qwen35-validation-20261004:35b-a3b-q4\"},{\"mediaType\":\"application/vnd.ollama.image.template\",\"digest\":\"sha256:b507b9c2f6ca642bffcd06665ea7c91f235fd32daeefdf875a0f938db05fb315\",\"size\":13,\"from\":\"qwen35-validation-20261004:35b-a3b-q4\"},{\"mediaType\":\"application/vnd.ollama.image.license\",\"digest\":\"sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32\",\"size\":11343,\"from\":\"qwen35-validation-20261004:35b-a3b-q4\"},{\"mediaType\":\"application/vnd.ollama.image.params\",\"digest\":\"sha256:9371364b27a52acac9d87f88bd93c9db1174d8d6ec57f6888925cdc1788871ff\",\"size\":65,\"from\":\"qwen35-validation-20261004:35b-a3b-q4\"}],\"runner\":\"llamacpp\",\"format\":\"gguf\"}"
+      }
+    ],
+    "license": "Apache-2.0",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  },
+  {
+    "id": "drama3-small-iq3",
+    "title": "Drama3-small · IQ3 · CUDA / CPU",
+    "category": "voice",
+    "engine": "drama3",
+    "repo": "pentacoxian-dev/drama3-small-GGUF",
+    "revision": "4a3078e885344bb9b24d511cec389d2726854d15",
+    "precision": "IQ3_XXS",
+    "parameterB": 0.0,
+    "estimatedMemoryGB": 12.5,
+    "bytes": 10460782815,
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 19685,
+        "sha": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e"
+      },
+      {
+        "path": "NOTICE",
+        "size": 1601,
+        "sha": "080fd69d078ccd97c6890852390413a81dfe0d9fe770eabf9a1980b73e4b982d"
+      },
+      {
+        "path": "README.md",
+        "size": 12140,
+        "sha": "fc66500c3d6cf985574fec68f2dd539a83e47fb81798da3d80a6d4aea478ac56"
+      },
+      {
+        "path": "silence_codes.json",
+        "size": 813,
+        "sha": "1e5a21fbf687a2373b2a7510059a52839a975e5c9ca7d6d12ba820e603d15c4f"
+      },
+      {
+        "path": "drama3-small-IQ3_XXS.gguf",
+        "size": 10460748576,
+        "sha": "97d773973d756141a65432b08de76fd4bedbb44e8b98805755130e02d7fe2561"
+      }
+    ],
+    "legacy": "models/drama3-small",
+    "languages": [
+      "yue",
+      "en"
+    ],
+    "license": "Fish Audio Community License v1.0",
+    "device": "CUDA / CPU",
+    "notes": "Experimental pruned Drama 3 model. Tuned for Japanese / English; Cantonese is experimental. NVIDIA CUDA is used only after real on-device speech verification. Compatible patched runtime required.",
+    "nativeFormat": "gguf-small",
+    "retired": true,
+    "retiredReason": "Cantonese quality did not meet the application default; retained only to identify and remove existing downloads.",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
+  }
+]

@@ -1,0 +1,15 @@
+WenetSpeech-Yue / CosyVoice / Matcha integration
+
+Pinned repository and local modifications are recorded in ../provenance.json.
+The upstream Apache-2.0 and Matcha/HiFi-GAN MIT notices remain with this source.
+
+The tokenizer imports OpenAI Whisper and tiktoken and includes Whisper-style
+tokenizer code/data adapted upstream for Chinese, Japanese and Cantonese.
+Retain the OpenAI Whisper MIT notice in
+licenses/python-wheels/openai-whisper-20250625/LICENSE in addition to the
+WenetSpeech-Yue and Matcha notices when distributing this integration.
+The installed tiktoken distribution retains its own MIT notice.
+
+CantoSync changes defer optional text normalization and heavyweight training
+imports for local inference; see ../provenance.json. This notice does not grant
+rights in model weights, third-party media, or a speaker's identity.

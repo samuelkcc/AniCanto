@@ -1,0 +1,9 @@
+numpy==1.26.4
+scipy==1.15.3
+soundfile==0.13.1
+faster-whisper==1.2.1
+pillow==12.3.0
+opencc-python-reimplemented==0.1.7
+rapidocr-onnxruntime==1.4.4
+PyYAML==6.0.2
+httpx==0.28.1

@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "description": "Selected public build/licence metadata. The original upstream PYTHON.json is preserved in private audit staging; runner SDK/build paths are omitted from this public projection.",
+  "originalMetadataSHA256": "cd7b30ecf46203194b0c2669bbd1748a86a9286d27979ae4b3da7b8273f5938f",
+  "pythonVersion": "3.12.15",
+  "target": "x86_64-pc-windows-msvc",
+  "licenses": [
+    "Python-2.0",
+    "CNRI-Python"
+  ],
+  "licensePath": "licenses/LICENSE.cpython.txt",
+  "extensions": {
+    "_abc": [
+      {}
+    ],
+    "_ast": [
+      {}
+    ],
+    "_asyncio": [
+      {}
+    ],
+    "_bisect": [
+      {}
+    ],
+    "_blake2": [
+      {}
+    ],
+    "_bz2": [
+      {
+        "licenses": [
+          "bzip2-1.0.6"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.bzip2.txt"
+        ]
+      }
+    ],
+    "_codecs": [
+      {}
+    ],
+    "_codecs_cn": [
+      {}
+    ],
+    "_codecs_hk": [
+      {}
+    ],
+    "_codecs_iso2022": [
+      {}
+    ],
+    "_codecs_jp": [
+      {}
+    ],
+    "_codecs_kr": [
+      {}
+    ],
+    "_codecs_tw": [
+      {}
+    ],
+    "_collections": [
+      {}
+    ],
+    "_contextvars": [
+      {}
+    ],
+    "_csv": [
+      {}
+    ],
+    "_ctypes": [
+      {
+        "licenses": [
+          "MIT"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.libffi.txt"
+        ]
+      }
+    ],
+    "_datetime": [
+      {}
+    ],
+    "_decimal": [
+      {}
+    ],
+    "_elementtree": [
+      {}
+    ],
+    "_functools": [
+      {}
+    ],
+    "_hashlib": [
+      {
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.openssl-3.txt"
+        ]
+      }
+    ],
+    "_heapq": [
+      {}
+    ],
+    "_imp": [
+      {}
+    ],
+    "_io": [
+      {}
+    ],
+    "_json": [
+      {}
+    ],
+    "_locale": [
+      {}
+    ],
+    "_lsprof": [
+      {}
+    ],
+    "_lzma": [
+      {
+        "licenses": [
+          "0BSD"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.liblzma.txt"
+        ]
+      }
+    ],
+    "_md5": [
+      {}
+    ],
+    "_msi": [
+      {}
+    ],
+    "_multibytecodec": [
+      {}
+    ],
+    "_multiprocessing": [
+      {}
+    ],
+    "_opcode": [
+      {}
+    ],
+    "_operator": [
+      {}
+    ],
+    "_overlapped": [
+      {}
+    ],
+    "_pickle": [
+      {}
+    ],
+    "_queue": [
+      {}
+    ],
+    "_random": [
+      {}
+    ],
+    "_sha1": [
+      {}
+    ],
+    "_sha2": [
+      {}
+    ],
+    "_sha3": [
+      {}
+    ],
+    "_signal": [
+      {}
+    ],
+    "_socket": [
+      {}
+    ],
+    "_sqlite3": [
+      {
+        "licenses": [],
+        "license_paths": [
+          "licenses/LICENSE.sqlite.txt"
+        ]
+      }
+    ],
+    "_sre": [
+      {}
+    ],
+    "_ssl": [
+      {
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.openssl-3.txt"
+        ]
+      }
+    ],
+    "_stat": [
+      {}
+    ],
+    "_statistics": [
+      {}
+    ],
+    "_string": [
+      {}
+    ],
+    "_struct": [
+      {}
+    ],
+    "_symtable": [
+      {}
+    ],
+    "_thread": [
+      {}
+    ],
+    "_tkinter": [
+      {
+        "licenses": [
+          "TCL"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.tcl.txt",
+          "licenses/LICENSE.tix.txt"
+        ]
+      }
+    ],
+    "_tokenize": [
+      {}
+    ],
+    "_tracemalloc": [
+      {}
+    ],
+    "_typing": [
+      {}
+    ],
+    "_uuid": [
+      {
+        "licenses": [
+          "BSD-3-Clause"
+        ],
+        "license_paths": [
+          "licenses/LICENSE.libuuid.txt"
+        ]
+      }
+    ],
+    "_warnings": [
+      {}
+    ],
+    "_weakref": [
+      {}
+    ],
+    "_winapi": [
+      {}
+    ],
+    "_wmi": [
+      {}
+    ],
+    "_xxinterpchannels": [
+      {}
+    ],
+    "_xxsubinterpreters": [
+      {}
+    ],
+    "_zoneinfo": [
+      {}
+    ],
+    "array": [
+      {}
+    ],
+    "atexit": [
+      {}
+    ],
+    "audioop": [
+      {}
+    ],
+    "binascii": [
+      {}
+    ],
+    "builtins": [
+      {}
+    ],
+    "cmath": [
+      {}
+    ],
+    "errno": [
+      {}
+    ],
+    "faulthandler": [
+      {}
+    ],
+    "gc": [
+      {}
+    ],
+    "itertools": [
+      {}
+    ],
+    "marshal": [
+      {}
+    ],
+    "math": [
+      {}
+    ],
+    "mmap": [
+      {}
+    ],
+    "msvcrt": [
+      {}
+    ],
+    "nt": [
+      {}
+    ],
+    "pyexpat": [
+      {}
+    ],
+    "select": [
+      {}
+    ],
+    "sys": [
+      {}
+    ],
+    "time": [
+      {}
+    ],
+    "unicodedata": [
+      {}
+    ],
+    "winreg": [
+      {}
+    ],
+    "winsound": [
+      {}
+    ],
+    "xxsubtype": [
+      {}
+    ],
+    "zlib": [
+      {}
+    ]
+  }
+}

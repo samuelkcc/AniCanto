@@ -1,0 +1,27 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -333,6 +333,11 @@
+     # Ensure libraries in the same directory as the binary are found at runtime
+     set(CMAKE_INSTALL_RPATH "\$ORIGIN")
+     set(CMAKE_BUILD_WITH_INSTALL_RPATH ON)
++elseif (AUDIOCPP_EXTERNAL_BACKENDS)
++    set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries" FORCE)
++    set(GGML_BACKEND_DL ON CACHE BOOL "Build backends as dynamic libraries" FORCE)
++    set(GGML_CPU_ALL_VARIANTS OFF CACHE BOOL "Build all CPU backend variants" FORCE)
++    set(GGML_NATIVE OFF CACHE BOOL "Portable backend host" FORCE)
+ else()
+     set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
+     set(GGML_BACKEND_DL OFF CACHE BOOL "Build backends as dynamic libraries" FORCE)
+@@ -4620,3 +4625,12 @@
+         target_link_libraries(model_spec_download_demo PRIVATE OpenMP::OpenMP_CXX)
+     endif()
+ endif()
++
++if(WIN32)
++ target_link_libraries(audiocpp_cli PRIVATE advapi32)
++ target_link_libraries(audiocpp_server PRIVATE advapi32)
++endif()
++
++if(WIN32 AND TARGET ggml-cpu)
++    target_link_libraries(ggml-cpu PRIVATE advapi32)
++endif()

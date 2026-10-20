@@ -1,0 +1,12 @@
+{
+ "schemaVersion":1,
+ "baseline":"macOS 0.22.12",
+ "metrics":{"appBar":58,"navigation":94,"browser":220,"basicBrowser":252,"inspector":350,"basicInspector":340,"workspaceBar":30,"panelHeader":36,"statusBar":28,"timeline":280,"transcript":240,"controlHeight":34,"font":15},
+ "themes":{"ocean":"#007E91","energy":"#B84D18","ninja":"#426D61","retro":"#B34372","forest":"#47773E","future":"#3268BC","studio":"#7050B9","mint":"#23796A","moonflower":"#8051AA","ensemble":"#A64A51"},
+ "navigation":[["edit","Edit","剪輯","edit"],["roles","Roles","角色","roles"],["review","Review report","校對報告","review"],["produce","Produce","製作匯出","export"],["queue","Work queue","工作佇列","queue"],["terminal","Terminal","終端機","terminal"],["defaults","Production defaults","製作預設","sliders"],["models","Model centre","模型中心","model"],["preferences","Preferences","偏好設定","settings"],["projects","Projects and exports","專案／成品管理","folder"]],
+ "toolbar":["undo","redo","save","navigation","browser","inspector","layout","mode","guide","about","welcome","pause","export"],
+ "inspector":[["production","Production","製作"],["dialogue","Dialogue","對白"],["picture","Picture","畫面"],["sound","Mix","混音"]],
+ "dialogue":[["listen","Listen","試聽"],["record","Retake","重錄"],["adjust","Adjust","調整"]],
+ "defaults":[["general","Start and range","開始與範圍"],["voices","Voice tracks","配音音軌"],["models","Active models","模型選用"],["subtitles","Subtitles and translation","字幕與翻譯"],["roles","Roles and background audio","角色與背景聲"],["output","Export and approval","輸出與批核"]],
+ "modelCategories":[["presets","Deployment plans","部署方案"],["voices","Voice models","配音模型"],["text","Text translation","文字翻譯"],["speech","Speech recognition","語音辨識"],["audio","Audio processing","音訊處理"],["runtime","Runtimes","執行環境"]]
+}

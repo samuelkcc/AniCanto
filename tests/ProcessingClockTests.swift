@@ -1,0 +1,88 @@
+import Foundation
+let t=Date(timeIntervalSince1970:0)
+func date(_ n:Double)->Date {t.addingTimeInterval(n)}
+var c=ProcessingClock();c.start(at:t)
+c.observe(stage:"配音",message:"準備",passID:"one",workID:"tts",completed:0,units:10,at:t)
+c.observe(stage:"配音",message:"載入模型",passID:"one",at:date(2))
+assert(c.remaining(at:date(2))==nil)
+c.observe(stage:"配音",message:"第 1/10 句",passID:"one",workID:"tts",completed:1,units:10,at:date(10))
+assert(c.remaining(at:date(10))==90)
+c.observe(stage:"參考錄音檢查",message:"載入下一角色",passID:"one",at:date(11))
+c.observe(stage:"配音重試",message:"嘗試 1/2",passID:"one",at:date(12))
+assert(c.passLabel=="1 / 10" && c.phaseElapsed(at:date(12))==12)
+c.observe(stage:"配音",message:"第 2/10 句",passID:"one",workID:"tts",completed:2,units:10,at:date(20))
+assert(c.remaining(at:date(20))==80)
+assert(c.remaining(at:date(200))==0 && c.estimateDelayed(at:date(200)),"Waiting must not inflate throughput or show an overdue countdown as reliable")
+c.observe(stage:"配音",message:"載入第二音軌",passID:"two",workID:"tts",completed:0,units:10,at:date(201))
+assert(c.remaining(at:date(201))==nil && c.phaseElapsed(at:date(201))==0)
+c.observe(stage:"配音",message:"沿用（1/10）",passID:"two",workID:"tts",completed:1,units:10,at:date(202))
+assert(c.remaining(at:date(202))==nil)
+c.observe(stage:"配音",message:"已完成",passID:"two",workID:"tts",completed:2,units:10,at:date(212))
+assert(c.remaining(at:date(212))==80)
+c.observe(stage:"配音",message:"已完成",passID:"two",workID:"tts",completed:10,units:10,at:date(292))
+assert(c.remaining(at:date(292))==nil && c.waitingReason=="本階段已完成，準備下一步")
+c.stop(at:date(300));assert(c.elapsed(at:date(400))==300)
+var scene=ProcessingClock();scene.start(at:t)
+scene.observe(stage:"場景改編",message:"第 1 至 4 句一併改寫",workID:"scene-script",completed:0,units:69,at:t)
+scene.observe(stage:"場景補稿",message:"嘗試 1/2",at:date(30))
+scene.observe(stage:"場景改編",message:"已保存4句",workID:"scene-script",completed:4,units:69,at:date(60))
+assert(scene.remaining(at:date(60))==975)
+scene.observe(stage:"場景改編",message:"第5至8句",workID:"scene-script",completed:4,units:69,at:date(61))
+assert(scene.phaseElapsed(at:date(61))==61 && scene.remaining(at:date(61))==974,"Repeated counters must not restart the countdown")
+var speech=ProcessingClock();speech.start(at:t)
+for n in 0...4 {speech.observe(stage:"日語原聲",message:"已辨識 \(Double(n)*10.5) / 180.0 秒",at:date(Double(n)*10))}
+assert(abs(speech.remaining(at:date(40))!-131.428571)<0.001)
+speech.observe(stage:"翻譯",message:"載入",at:date(41));assert(speech.passProgress==nil)
+assert(JourneyStep.matching("合成") == .export)
+assert(WorkProgress(pass:nil,count:"",backend:0.5).label=="流程位置（估算）")
+print("PASS: ETA from first completed unit, real scene-rewrite counters, retries/reference noise, model loading, slow batches, independent tracks, cached work, completion, fractional speech progress and stopped elapsed time")
+
+// Replay the screenshot: 258.4 / 1420.2 seconds after 240 seconds,
+// including a burst ending in a tiny 0.1-second recognizer segment.
+var burst=ProcessingClock();burst.start(at:t)
+burst.observe(stage:"日語原聲",message:"開始",workID:"japanese-transcription",completed:0,units:1420.2,at:t)
+for (n,time) in [(100.0,90.0),(200.0,185.0),(258.3,239.8),(258.4,240.0)] {
+ burst.observe(stage:"日語原聲",message:"完成",workID:"japanese-transcription",completed:n,units:1420.2,at:date(time))
+}
+let eta=burst.remaining(at:date(262))!
+assert(eta>900 && eta<1200,"The reported 5–9 hours must become roughly 18 minutes")
+assert(burst.remaining(at:date(300))!<eta,"No work completed: estimate must not increase")
+burst.observe(stage:"日語原聲",message:"下一批",workID:"japanese-transcription",completed:258.4,units:1420.2,at:date(300))
+assert(burst.remaining(at:date(300))!<eta,"Unchanged progress must not postpone the estimate")
+// Persist completed pass rates even when the overall job subsequently pauses.
+let dir=FileManager.default.temporaryDirectory.appendingPathComponent("clock-"+UUID().uuidString)
+defer {try? FileManager.default.removeItem(at:dir)}
+var measured=ProcessingClock();measured.start(at:t);measured.configure(profile:"8bit-mac",seconds:60,directory:dir)
+measured.observe(stage:"配音",message:"開始",passID:"random-run-1",workID:"tts",historyID:"gpt|yue",completed:0,units:10,at:t)
+measured.observe(stage:"配音",message:"完成",passID:"random-run-1",workID:"tts",historyID:"gpt|yue",completed:10,units:10,at:date(100))
+measured.stop(at:date(101));measured.save(to:dir)
+var historical=ProcessingClock();historical.start(at:t);historical.configure(profile:"8bit-mac",seconds:60,directory:dir)
+historical.observe(stage:"配音",message:"開始",passID:"random-run-2",workID:"tts",historyID:"gpt|yue",completed:0,units:20,at:t)
+assert(historical.remaining(at:t)==200,"Random task IDs must not prevent historical comparison")
+assert(historical.estimateBasis(at:t)=="按相同設定嘅歷史步驟估算")
+historical.observe(stage:"配音",message:"開始",passID:"other-language",workID:"tts",historyID:"gpt|en",completed:0,units:20,at:date(1))
+assert(historical.remaining(at:date(1))==nil,"Different languages require independent rates")
+var changed=ProcessingClock();changed.start(at:t);changed.configure(profile:"4bit-mac",seconds:60,directory:dir)
+changed.observe(stage:"配音",message:"開始",workID:"tts",historyID:"gpt|yue",completed:0,units:20,at:t)
+assert(changed.remaining(at:t)==nil,"Different model/hardware profiles must not mix")
+var resumed=ProcessingClock();resumed.start(at:t);resumed.configure(profile:"8bit-mac",seconds:60,directory:dir)
+resumed.observe(stage:"配音",message:"沿用",passID:"resumed",workID:"tts",historyID:"gpt|yue",completed:10,units:20,at:t)
+resumed.observe(stage:"配音",message:"完成",passID:"resumed",workID:"tts",historyID:"gpt|yue",completed:20,units:20,at:date(20))
+resumed.stop(at:date(20));resumed.save(to:dir)
+var clean=ProcessingClock();clean.start(at:t);clean.configure(profile:"8bit-mac",seconds:60,directory:dir)
+clean.observe(stage:"配音",message:"開始",workID:"tts",historyID:"gpt|yue",completed:0,units:20,at:t)
+assert(clean.remaining(at:t)==200,"Reused/partial passes must not poison historical rates")
+print("PASS: screenshot burst replay, countdown without progress, historical completed passes, frozen model profile isolation, language isolation and cache/resume exclusions")
+
+var cachedScene=ProcessingClock();cachedScene.start(at:t)
+cachedScene.observe(stage:"場景理解",message:"開始",workID:"scene-context",completed:0,units:1,at:t)
+cachedScene.observe(stage:"場景快取",message:"沿用已保存場景。",cached:true,at:date(1))
+cachedScene.observe(stage:"場景理解",message:"完成",workID:"scene-context",completed:1,units:1,at:date(2))
+cachedScene.stop(at:date(3));cachedScene.save(to:dir)
+let reports=try! FileManager.default.contentsOfDirectory(at:dir,includingPropertiesForKeys:nil)
+for file in reports {
+ let report=try! JSONSerialization.jsonObject(with:Data(contentsOf:file)) as! [String:Any]
+ let rates=report["workRates"] as! [String:Any]
+ assert(rates["場景理解|scene-context"]==nil,"Scene cache reuse must not become a measured model rate")
+}
+print("PASS: explicit scene-cache timing exclusion")

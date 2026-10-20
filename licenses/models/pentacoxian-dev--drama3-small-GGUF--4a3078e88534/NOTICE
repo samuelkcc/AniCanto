@@ -1,0 +1,20 @@
+These Fish Audio Materials are licensed under the Fish Audio Community License, Version 1.0. Copyright © 39 AI, INC. All Rights Reserved.
+
+drama3-small is a Derivative Work of Fish Audio Drama 3 (https://huggingface.co/fishaudio/drama-3).
+The attribution above applies to the Fish Audio Materials. The changes listed below were made by
+pentacoxian-dev; Fish Audio does not sponsor or endorse this Derivative Work.
+
+How the Fish Audio Materials were modified:
+- Routed experts were pruned per layer using speech-calibrated routing statistics. Layers 0, 1, 2
+  and 36 keep all 256 experts; every other layer keeps 100 of 256 (4,640 of 10,240 expert slots).
+  Routers were cut to the kept rows.
+- The kept experts were quantized to IQ3_XXS using an importance matrix from speech calibration
+  data. The dense backbone (attention / Gated DeltaNet), the embeddings and the multi-token audio
+  tower were quantized to Q8_0. The codec weights are unchanged (F16).
+- The output head was reduced to the EOS row plus the 4,096 semantic-token rows (speech only).
+- Routers and shared experts were refit layer by layer against the original model's activations.
+- The result was distilled from the original model for 100 optimizer steps on Japanese and English
+  speech (knowledge distillation on the semantic and audio-tower distributions). Rank-64 LoRA
+  updates of the attention and Gated DeltaNet projections were merged into the weights; routers,
+  shared experts, norms and the speech head were updated directly.
+- The package is a GGUF for audio.cpp and requires the included drama3-small audio.cpp patch.

@@ -1,0 +1,332 @@
+{
+  "exact": {
+    "準備": "Preparation",
+    "日語原聲": "Japanese speech",
+    "轉錄": "Speech recognition",
+    "辨識": "Speech recognition",
+    "分析": "Analysis",
+    "範圍": "Processing range",
+    "字幕": "Subtitles",
+    "字幕範圍預覽": "Subtitle range preview",
+    "結果摘要": "Result summary",
+    "批量": "Batch",
+    "批量進度": "Batch progress",
+    "批量完成": "Batch complete",
+    "批量錯誤": "Batch error",
+    "完成": "Complete",
+    "校稿": "Script review",
+    "翻譯": "Translation",
+    "配音": "Dubbing",
+    "合成": "Export",
+    "錯誤": "Error",
+    "時長調整": "Duration adjustment",
+    "引擎設定更新": "Engine settings updated",
+    "場景詞彙": "Scene vocabulary",
+    "場景理解": "Scene analysis",
+    "口語覆核": "Colloquial review",
+    "口語用字": "Colloquial wording",
+    "意思覆核": "Meaning review",
+    "續做": "Resume",
+    "對白覆蓋需覆核": "Dialogue coverage review",
+    "等待批准": "Awaiting approval",
+    "配音改稿": "Dubbing script revision",
+    "重試": "Retry",
+    "改稿覆核": "Revision review",
+    "修正摘要": "Correction summary",
+    "配音編排": "Dubbing arrangement",
+    "原意保護": "Meaning preservation",
+    "資源自動恢復": "Automatic resource recovery",
+    "台詞需覆核": "Script needs review",
+    "混音自動修復": "Automatic mix repair",
+    "跳過待修正": "Skipped pending correction",
+    "OP 檢查": "OP check",
+    "OP／ED 已找到": "OP / ED found",
+    "改稿建議": "Revision suggestion",
+    "參考已準備": "Reference ready",
+    "試聽完成": "Audition ready",
+    "下載": "Download",
+    "補聲摘要": "Supplementary speech summary",
+    "補聲失敗": "Supplementary speech failed",
+    "補聲需覆核": "Supplementary speech review",
+    "原聲節奏": "Source rhythm",
+    "自然語速": "Natural speech rate",
+    "停頓對齊": "Pause alignment",
+    "聲線一致性": "Voice consistency",
+    "配音修正": "Dubbing correction",
+    "停頓編排": "Pause arrangement",
+    "核對待修正": "Review pending correction",
+    "廣東話核對": "Cantonese review",
+    "模型載入": "Model loading",
+    "影片加速": "Video acceleration",
+    "逐句聲音配對": "Per-line voice matching",
+    "字幕分配": "Subtitle allocation",
+    "混音修復": "Mix repair",
+    "配音前核對": "Pre-dubbing review",
+    "原意覆核": "Source meaning review",
+    "錄音沿用": "Reusing recordings",
+    "參考錄音已更換": "Reference recording changed",
+    "參考錄音提示": "Reference recording notice",
+    "OP／ED 分析": "OP / ED analysis",
+    "OP／ED 檢查": "OP / ED check",
+    "試片範圍": "Preview range",
+    "OP／ED 提示": "OP / ED notice",
+    "配音核對": "Dubbing review",
+    "配音需修正": "Dubbing needs correction",
+    "日語局部重聽": "Targeted Japanese listening check",
+    "原聲表演": "Source performance",
+    "原聲音效": "Source sound effects",
+    "部署配音": "Voice setup",
+    "配音重試": "Dubbing retry",
+    "背景已就緒": "Background ready",
+    "時間對齊": "Time alignment",
+    "分離": "Separation",
+    "音量摘要": "Volume summary",
+    "分離修正": "Separation correction",
+    "聲音修正": "Audio correction",
+    "配音時段已對齊": "Dubbing window aligned",
+    "試片時間": "Preview duration",
+    "語速調整": "Speech rate adjustment",
+    "保留完整台詞": "Preserving complete dialogue",
+    "配音重錄": "Dubbing retake",
+    "時長對齊": "Duration alignment",
+    "參考錄音檢查": "Reference recording check",
+    "模型自動修復": "Automatic model repair",
+    "模型需修正": "Model needs repair",
+    "角色參考核對": "Role reference review",
+    "角色參考待覆核": "Role reference needs review",
+    "音軌狀態": "Audio track status",
+    "音軌失敗": "Audio track failed",
+    "配音自動重試": "Automatic dubbing retry",
+    "錄音歷史": "Recording history",
+    "語言核對": "Language review",
+    "自動修復": "Automatic repair",
+    "自動配角色": "Automatic voice assignment",
+    "角色歸類": "Role grouping",
+    "角色參考": "Voice reference",
+    "逐句參考待覆核": "Per-line reference review",
+    "版本完成": "Version complete",
+    "字幕草稿完成": "Subtitle draft complete",
+    "試音組完成": "Audition set complete",
+    "試音完成": "Audition complete",
+    "英文稿完成": "English script complete",
+    "表演實驗已保存": "Performance experiment saved",
+    "試音待覆核": "Audition needs review",
+    "一般語言檢查": "Normal mode language check",
+    "一般局部補聲": "Normal mode targeted speech repair",
+    "一般模式提示": "Normal mode notice",
+    "一般局部覆聽": "Normal mode targeted listening check",
+    "畫面角色分析": "Visual role analysis",
+    "畫面分析改用聲音": "Visual analysis using audio fallback",
+    "輸出驗證": "Output validation",
+    "成品覆聽": "Final output listening check",
+    "角色卡後備配音": "Role reference voice fallback",
+    "精簡重配": "Concise dialogue retake",
+    "配音語言": "Dubbing language",
+    "正在準備本次製作。": "Preparing this conversion.",
+    "按原裝中文字幕時段辨識日語同逐字時間。": "Recognising Japanese speech and word timings within the original Chinese subtitle intervals.",
+    "可獨立試聽背景軌，檢查音效同日語殘留。": "The background track can be auditioned separately to check effects and residual Japanese speech.",
+    "一般模式：已作局部完整性及語言檢查，並非逐字、口音或角色身分認證。": "Normal mode uses targeted integrity and language checks; it does not certify every word, accent or speaker identity.",
+    "全部片段已有完成錄音，跳過模型載入。": "All segments already have recordings; model loading is skipped.",
+    "載入 Mel-Band RoFormer；分離日語對白同背景音樂／音效。": "Loading Mel-Band RoFormer to separate Japanese dialogue from music and sound effects.",
+    "檢查音軌、字幕同影片長度。": "Checking audio tracks, subtitles and video duration.",
+    "檢查每句可聽見人聲、音軌、字幕同整條影片解碼；未通過唔標記完成。": "Checking audible speech, audio tracks, subtitles and full video decoding before marking complete.",
+    "背景分離模型已下載並通過 SHA-256 校驗。": "The separation model was downloaded and passed SHA-256 verification.",
+    "所選日語辨識模型已部署。": "The selected Japanese recognition model is ready.",
+    "所選後備辨識模型已下載。": "The selected fallback recognition model was downloaded.",
+    "呢集冇可用文字字幕，改由日語原聲辨識；字幕只作輔助。": "No usable text subtitles were found; Japanese speech recognition is the primary source.",
+    "先核對人物、地方同物件譯名，避免逐句串錯意思。": "Checking character, place and object names before translating dialogue.",
+    "覆核原聲遺漏片段。": "Reviewing possible missing source speech.",
+    "準備生成音軌。": "Preparing audio track generation.",
+    "沿用已生成音檔。": "Reusing generated audio.",
+    "全部台詞已自動配對聲線，可以直接批准配音。": "All dialogue has voice references and is ready for dubbing approval.",
+    "音軌已寫入，正在完成程序檢查。": "Audio tracks have been written; final process checks are running.",
+    "使用 Apple 硬件編碼；保留音軌同字幕設定。": "Using Apple hardware encoding with the selected audio and subtitle settings.",
+    "偵測叫聲、笑聲、呼吸同哭聲；只補回有把握嘅非語言片段。": "Detecting shouts, laughter, breathing and crying; recovering only confident non-verbal segments.",
+    "未找到可安全獨立補回嘅非語言片段；冇混回整條日語人聲。": "No isolated non-verbal segment could be safely recovered; the full Japanese vocal track is not mixed back in.",
+    "已載入上次保存嘅字幕。": "Loaded the previously saved subtitles.",
+    "呢批翻譯未完成，改用較細批次續做。": "This translation batch was incomplete; continuing with smaller batches.",
+    "呢句翻譯格式無效，重新取得一次完整廣東話台詞。": "This translated line had an invalid format; retrying the full Cantonese line once.",
+    "本機模型未有提出更短嘅有效譯文；原稿保持不變，需要核對超時句。": "The local model did not return a valid shorter translation; retaining the script and flagging the overlong line.",
+    "已保存精簡稿同原稿，重新生成有修改嘅台詞。": "Saved both the concise and original scripts; regenerating changed dialogue.",
+    "抽取所選片段，準備分離日語對白。": "Extracting the selected segment for Japanese dialogue separation.",
+    "偵測到細聲配音被背景掩蓋；說話期間有限降低背景，保留原裝日文音軌。": "Quiet dubbing is masked by the background; reducing background level during speech while retaining the original Japanese track.",
+    "根據分離後日語發聲範圍，收窄字幕內嘅配音時段。": "Narrowing dubbing windows to the separated Japanese speech intervals.",
+    "模型未交回完整分析，改用直接結構化分析重試；已保存嘅進度保留。": "The model returned incomplete analysis; retrying structured analysis while keeping saved progress.",
+    "人物分析未能完成；沿用角色卡後備聲線繼續翻譯及配音，原有台詞同時間保留。": "Role analysis did not finish; continuing with reference voices while preserving dialogue and timing.",
+    "未有足夠明確嘅 OP 證據；唔會自動跳過正文。": "No sufficiently clear OP evidence was found; main dialogue will not be skipped automatically.",
+    "未確認片頭／片尾歌曲；未確認區域仍會按正文處理。": "Opening and ending songs were not confirmed; unconfirmed sections are treated as main dialogue.",
+    "試片由 OP 後開始；完整影片輸出會保留 OP。": "The test segment starts after the opening; full exports retain the opening.",
+    "重錄或覆聽未完成，保留已生成錄音同完整字句，時間差會列入報告。": "Retaking or listening checks did not finish; keeping generated recordings and complete dialogue, with timing differences in the report.",
+    "修正舊版字幕顯示遮罩；保護完整日文發聲時段內嘅廣東話，保留原始錄音及舊影片。": "Updating the legacy subtitle mask to preserve Cantonese throughout the source speech intervals; original recordings and previous exports are kept.",
+    "請預覽同修改所選語言嘅配音稿，再按「批准並開始配音」。": "Review and edit the selected-language script, then approve dubbing.",
+    "用所選本機 Whisper 模型辨識日語（CPU）；長片需要時間。": "Recognising Japanese with the selected local Whisper model on CPU; long videos take time.",
+    "自然語速編排": "Natural-speed placement",
+    "有完整錄音超時；一次輕量檢查畫面切換邊界，避免微調跨場景。唔載入視覺 AI 模型。": "Complete recordings exceed their time slots. Checking visual cut boundaries once to constrain small timing shifts; no vision AI model is loaded.",
+    "畫面切換邊界未能確認；保留原本配音時間，唔盲目移動台詞。": "Visual cut boundaries could not be confirmed. Keeping the original speech timing instead of guessing where to move dialogue.",
+    "翻譯精簡核對": "Translation brevity review",
+    "自動修復調度": "Automatic recovery planning",
+    "已保存未完整配音預覽；自動修復紀錄及缺聲位置已保留。": "Saved a labelled incomplete-dubbing preview, including automatic recovery records and missing-dialogue positions.",
+    "香港廣東話": "Hong Kong Cantonese",
+    "英文": "English",
+    "高速配音": "Per-line dubbing",
+    "後備聲線修復": "Target-language voice recovery",
+    "自動修復後仍未有可交付翻譯錄音；預覽保留本句原聲，未標為翻譯完成。": "Automatic recovery could not deliver a translated recording. The labelled preview retains the original speech for this line; translation remains incomplete.",
+    "完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。": "The complete recording still exceeds its safe window after bounded timing and small tempo adjustments. Script and audio were retained without truncation or large acceleration.",
+    "數數對白修正": "Spoken counting repair",
+    "有完整錄音超時；一次輕量檢查畫面切換邊界，作診斷參考；實際微調以對白及保留原聲範圍為準。唔載入視覺 AI 模型。": "Complete recordings exceed their time slots. Visual cuts are diagnostic only; timing follows dialogue and preserved source ranges. No vision AI model is loaded."
+  },
+  "patterns": [
+    [
+      "^已修正 (\\d+) 句連續數字被同一句字幕重複覆蓋嘅譯稿。$",
+      "Repaired $1 consecutive spoken numbers that had incorrectly reused the same caption translation."
+    ],
+    [
+      "^原裝聲線修復後仍有 (\\d+) 句未能交付；使用同一配音引擎同內置目標語言參考試讀，聲線可能有差異，仍須核對完整性同時長。$",
+      "After source-voice repairs, $1 lines remain incomplete. Trying the same engine with bundled target-language references; voice resemblance may differ. Content and timing checks still apply."
+    ],
+    [
+      "^第 (\\d+)/(\\d+) 句$",
+      "Line $1/$2"
+    ],
+    [
+      "^Drama 3 · 第 (\\d+)/(\\d+) 句$",
+      "Drama 3 · Line $1/$2"
+    ],
+    [
+      "^載入 (.*)；Apple Silicon 本機生成。$",
+      "Loading $1; generating locally on Apple Silicon."
+    ],
+    [
+      "^只處理 (\\d+) 句未完成對白（(\\d+)/2）；由所選文字模型選擇已有修復方法，唔重跑整集。$",
+      "Recovering only $1 unfinished lines (pass $2/2); the selected text model chooses existing repair mechanisms without restarting the episode."
+    ],
+    [
+      "^(yue|en) · 只核對 (\\d+) 句疑似冗長／重複譯稿；字幕長度只供參考，保留原聲意思。$",
+      "$1: checking only $2 potentially verbose or repetitive drafts; caption length is a guide and source meaning is preserved."
+    ],
+    [
+      "^只重配 (\\d+) 句偏長台詞（(\\d+)/2），保持自然語速同本句原聲參考。$",
+      "Regenerating only $1 overlong lines (pass $2/2), keeping natural speed and each line’s own source reference."
+    ],
+    [
+      "^已微調 (\\d+) 句配音起點（每句最多 ([\\d.]+) 秒）；保留完整錄音、自然語速同原本字幕時間。$",
+      "Adjusted the start of $1 lines by at most $2 seconds per line, preserving full recordings, natural speed and source subtitle timing."
+    ],
+    [
+      "^第 (\\d+)/(\\d+) 集：(.*)$",
+      "Video $1/$2: $3"
+    ],
+    [
+      "^本集自動字幕來源：(.*)$",
+      "Automatic subtitle source for this video: $1"
+    ],
+    [
+      "^自動選擇本集字幕軌 (\\d+)（(.*)）。$",
+      "Selected subtitle track $1 ($2)."
+    ],
+    [
+      "^已辨識 ([\\d.]+) 秒日語$",
+      "Recognised $1 seconds of Japanese speech."
+    ],
+    [
+      "^已辨識 ([\\d.]+) / ([\\d.]+) 秒日語。$",
+      "Transcribed $1 / $2 seconds of Japanese speech."
+    ],
+    [
+      "^(OP|ED): ([\\d.]+)–([\\d.]+) 秒；保留完整日文原聲，唔翻譯或配音。$",
+      "$1: $2–$3 seconds; retaining the full original Japanese audio without translation or dubbing."
+    ],
+    [
+      "^(\\d+)/(\\d+) 句(.*)$",
+      "Dialogue $1/$2: $3"
+    ],
+    [
+      "^([^：]+)：完成 (\\d+)/(\\d+) 句。$",
+      "$1: completed $2/$3 lines."
+    ],
+    [
+      "^第 (\\d+) 段(.*)重試仍失敗；留空台詞並繼續其他對白。$",
+      "Line $1: retries failed; leaving the script empty and continuing with other dialogue."
+    ],
+    [
+      "^(yue|en) · (\\d+)–(\\d+)/(\\d+)；直接翻譯，跳過二次校稿。$",
+      "$1 · $2–$3/$4: translating directly; editorial review skipped."
+    ],
+    [
+      "^(\\d+)–(\\d+)/(\\d+)；直接翻譯，跳過二次校稿。$",
+      "$1–$2/$3: translating directly; editorial review skipped."
+    ],
+    [
+      "^已生成 (\\d+)/(\\d+) 段.*配音。?$",
+      "Generated $1/$2 dialogue takes."
+    ],
+    [
+      "^(\\d+) 段按原字幕時段或非對白尾音排除；冇中文字幕嘅全片使用日語辨識。$",
+      "Excluded $1 segments outside source captions or non-dialogue tails. Films without Chinese captions use Japanese recognition."
+    ],
+    [
+      "^硬件編碼未能使用，改用軟件編碼一次：(.*)$",
+      "Hardware encoding unavailable; retrying once with software: $1"
+    ],
+    [
+      "^([^·]+) · (yue|en)：(\\d+) 段已補償細聲；(\\d+) 段達到增益上限或有訊號提示。.*$",
+      "$1 · $2: boosted $3 quiet takes; $4 gain-limit or signal warnings. Language and content are checked separately."
+    ],
+    [
+      "^([^·]+) · (.*)：音量補償 ([+\\-\\d.]+) dB；有效聲音 ([\\d.]+) 秒。.*$",
+      "$1 · $2: reference gain $3 dB; $4 seconds of active audio. Background and speaker purity require audition."
+    ],
+    [
+      "^建立角色畫面：([\\d]+)/([\\d]+) 段。$",
+      "Collecting character frames: $1/$2 intervals."
+    ],
+    [
+      "^全片角色相片比對：([\\d]+)/([\\d]+) 組；結果已保存。$",
+      "Comparing episode portraits: $1/$2 pairs; results saved."
+    ],
+    [
+      "^頭像品質核對：已檢查 ([\\d]+) 張；只保留獨立、可辨識頭像。$",
+      "Portrait quality: inspected $1 crops; retaining recognizable single heads."
+    ],
+    [
+      "^畫面核對 (\\d+)/(\\d+) 段；已保存進度。$",
+      "Visual review $1/$2 segments; progress saved."
+    ],
+    [
+      "^已核對 (\\d+)/(\\d+) 段畫面；(\\d+) 段角色配對有聲音與畫面共同支持。$",
+      "Reviewed $1/$2 visual segments; $3 role assignments supported by audio and video."
+    ],
+    [
+      "^已覆核 (\\d+)/(\\d+) 段遺漏候選。$",
+      "Reviewed $1/$2 possible missing passages."
+    ],
+    [
+      "^覆核原聲遺漏片段 ([\\d.]+)–([\\d.]+) 秒。$",
+      "Checking possible missing source speech at $1–$2 seconds."
+    ],
+    [
+      "^已辨識 ([\\d.]+) / ([\\d.]+) 秒日語。$",
+      "Transcribed $1 / $2 seconds of Japanese speech."
+    ],
+    [
+      "^已辨識 ([\\d.]+) / ([\\d.]+) 秒。$",
+      "Transcribed $1 / $2 seconds."
+    ],
+    [
+      "^音軌\\s*(\\d+)\\s*/\\s*(\\d+)(.*)$",
+      "Audio track $1 / $2$3"
+    ],
+    [
+      "^分析原聲聲紋：第 (\\d+)/(\\d+) 句。$",
+      "Analyzing source voices: line $1/$2."
+    ],
+    [
+      "^.*第 (\\d+) 至 (\\d+) 句.*$",
+      "Processing dialogue lines $1–$2."
+    ],
+    [
+      "^.*校稿第 (\\d+) 句（(\\d+)/(\\d+)）$",
+      "Synthesizing dialogue line $1 ($2/$3)."
+    ]
+  ]
+}

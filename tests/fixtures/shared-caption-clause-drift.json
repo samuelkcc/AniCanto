@@ -1,0 +1,91 @@
+[
+  {
+    "start": 403.95,
+    "end": 404.93,
+    "text": "じゃ一プロ",
+    "japanese": "じゃ一プロ",
+    "japaneseAlt": "じゃ、一歩。",
+    "asrConfidence": 0.582,
+    "captionRecords": [
+      {
+        "id": "caption_116",
+        "start": 404.24,
+        "end": 405.74,
+        "text": "好嘞！洗澡去！"
+      }
+    ],
+    "captionAllocation": {
+      "content": "好嘞！洗澡去！",
+      "caption_ids": [
+        "caption_116"
+      ],
+      "uncertain": false
+    },
+    "cantonese": "好嘞！洗澡去！",
+    "speakerId": "auto-80233846076651f4-6"
+  },
+  {
+    "start": 404.93,
+    "end": 406.85,
+    "text": "明日は頑張りましょう",
+    "japanese": "明日は頑張りましょう",
+    "japaneseAlt": "明日は頑張ります。",
+    "asrConfidence": 0.945,
+    "captionRecords": [
+      {
+        "id": "caption_116",
+        "start": 404.24,
+        "end": 405.74,
+        "text": "好嘞！洗澡去！"
+      },
+      {
+        "id": "caption_117",
+        "start": 405.82,
+        "end": 407.45,
+        "text": "明天也继续加油吧！"
+      }
+    ],
+    "captionAllocation": {
+      "content": "好嘞！洗澡去！ 明天也继续加油吧！",
+      "caption_ids": [
+        "caption_116",
+        "caption_117"
+      ],
+      "uncertain": false
+    },
+    "cantonese": "好嘞！洗澡去！ 明天也繼續加油吧！",
+    "speakerId": "auto-80233846076651f4-11"
+  },
+  {
+    "start": 406.85,
+    "end": 407.71,
+    "text": "ああ",
+    "japanese": "ああ",
+    "japaneseAlt": "あ。",
+    "asrConfidence": 0.579,
+    "captionRecords": [
+      {
+        "id": "caption_117",
+        "start": 405.82,
+        "end": 407.45,
+        "text": "明天也继续加油吧！"
+      },
+      {
+        "id": "caption_118",
+        "start": 407.53,
+        "end": 408.37,
+        "text": "嗯！当然！"
+      }
+    ],
+    "captionAllocation": {
+      "content": "明天也继续加油吧！ 嗯！当然！",
+      "caption_ids": [
+        "caption_117",
+        "caption_118"
+      ],
+      "uncertain": false
+    },
+    "cantonese": "明天也繼續加油吧！ 嗯！當然！",
+    "speakerId": "auto-80233846076651f4-6"
+  }
+]

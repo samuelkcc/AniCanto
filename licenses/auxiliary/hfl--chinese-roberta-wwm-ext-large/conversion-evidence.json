@@ -1,0 +1,49 @@
+{
+  "component": "roberta",
+  "officialKeys": 399,
+  "convertedKeys": 397,
+  "officialOnly": [
+    "bert.pooler.dense.bias",
+    "bert.pooler.dense.weight",
+    "cls.seq_relationship.bias",
+    "cls.seq_relationship.weight"
+  ],
+  "convertedOnly": [
+    "bert.embeddings.position_ids",
+    "cls.predictions.decoder.bias"
+  ],
+  "mismatches": [],
+  "transforms": {
+    "torch.float32 -> torch.float16": 395
+  },
+  "tensorsCompared": 395,
+  "originalSHA256": "4ac62d49144d770c5ca9a5d1d3039c4995665a080febe63198189857c6bd11cd",
+  "convertedSHA256": "e53a693acc59ace251d143d068096ae0d7b79e4b1b503fa84c9dcf576448c1d8",
+  "addedBuffersVerified": {
+    "cls.predictions.decoder.bias": "Exact fp16 alias of official cls.predictions.bias",
+    "bert.embeddings.position_ids": "Exact arange(512) expanded to (1,512)"
+  },
+  "removedUnusedHeads": {
+    "bert.pooler.dense.bias": "BertForPreTraining pooler omitted by BertForMaskedLM",
+    "bert.pooler.dense.weight": "BertForPreTraining pooler omitted by BertForMaskedLM",
+    "cls.seq_relationship.bias": "Next-sentence head omitted by BertForMaskedLM",
+    "cls.seq_relationship.weight": "Next-sentence head omitted by BertForMaskedLM"
+  },
+  "repo": "hfl/chinese-roberta-wwm-ext-large",
+  "upstreamRevision": "a25cc9e05974bd9687e528edd516f2cfdb3f5db9",
+  "upstreamFile": "pytorch_model.bin",
+  "convertedPath": "chinese-roberta-wwm-ext-large/pytorch_model.bin",
+  "configurationMatches": {
+    "hidden_size": 1024,
+    "intermediate_size": 4096,
+    "num_attention_heads": 16,
+    "num_hidden_layers": 24,
+    "vocab_size": 21128,
+    "max_position_embeddings": 512,
+    "model_type": "bert"
+  },
+  "officialConfigSHA256": "53d086daf0ccdddbeb78f8798f34c685a3c48089fa21ec61300527f083fa2563",
+  "convertedConfigSHA256": "3d57de2fd7e80d0e5c8ff194f0bbb6baa10df7e43fc262a0cc71298a78b0a3e5",
+  "inferenceWeightsChanged": false,
+  "allConvertedTensorsAccountedFor": true
+}

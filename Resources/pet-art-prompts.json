@@ -1,0 +1,195 @@
+[
+  {
+    "key": "studio",
+    "destination": "pet-studio.png",
+    "method": "built-in image_gen",
+    "prompt": "Use case: identity-preserve. Input image role: identity reference ONLY for the short lavender bob-haired assistant in the CENTER, cream cardigan, navy dress, coral bow, teal headphones. Ignore and DO NOT reproduce any other character in the reference. Create a transparent 12-pose production animation sprite atlas of ONLY this one existing original AniCanto assistant. Preserve her recognizable face, hair, clothes and headphones consistently across all twelve poses; no redesign, no long hair, no new different purple character. Refined 2D hand-drawn anime cel illustration. EXACT 4 columns x 3 rows equal square cells on landscape 4:3 canvas, with large transparent gutters. Full bodies 60 percent of cell height, SAME SCALE and feet baseline, complete head, hair, hands and shoes inside each cell. Row1: neutral standing; eyes closed blink; BUSY reading a dark script tablet in left hand with right hand writing at chest height; speaking into handheld microphone. Row2: friendly wave; puzzled; relaxed seated; cheerful gesture. Row3: FOUR consecutive right-facing walk poses with alternating arms/legs. All figures have normal adult six-head-tall proportions, no chibi. Genuine transparent background, no text, no grid, no environment, no ground, no logos. User explicitly selected this original short purple-haired character to remain and be matched across Welcome and preview.",
+    "spacingPrompt": "Edit ONLY the spacing and canvas framing of this existing 4-column x 3-row animation sprite atlas. Preserve this SAME original female assistant exactly, all twelve poses and order. Keep the 4:3 canvas. REDUCE EACH OF THE TWELVE FIGURES to only 58 PERCENT OF ITS CELL HEIGHT and center it inside its own equal cell. There must be ENORMOUS completely empty TRANSPARENT GAPS between rows: at least 20 PERCENT CELL HEIGHT blank ABOVE and BELOW every complete figure; 15 percent cell width blank LEFT and RIGHT. All hair, head, hands, microphone, tablet, shoes and loose clothes completely inside each cell. All standing figures SAME BODY SCALE and aligned sole baseline. In pose row1 column3 preserve her busy script-tablet-and-writing pose, full feet. No figure, shoe or hair may touch any grid cell boundary. Entire outer border same generous transparent margins. Keep character face, hair, colors, clothing, headphones, exact identities unchanged. Do not add or remove poses. No text, guides, grid, ground, shadows, background. True alpha transparency. This is mechanically sliced into twelve app animation frames: clear EMPTY GUTTERS matter more than filling the image.",
+    "sourceFile": "exec-283d8a2f-be21-43d5-9c6c-18101584fd97.png",
+    "gender": "female"
+  },
+  {
+    "key": "energy",
+    "destination": "pet-energy.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The copper-curly-haired DARK-SKINNED FEMALE in orange work shirt, black tank, blue cargo trousers, cream trainers and orange headphones. Style: powerful angular martial-arts adventure animation, ATHLETIC adult silhouette, angular jaw and eyes, heavy confident black ink, sharply separated solid black and flat saturated cel shadows. Exactly the strong angular woman at upper right of image 1, not soft glossy cute anime. She is a recording sound technician, no martial arts costume.",
+    "spacingPrompt": "Edit ONLY canvas framing and spacing of this exact twelve-pose character atlas. Keep the SAME female assistant, her distinctive existing drawing style, face, anatomy, outfit, colours and ALL 12 poses in the exact same 4-column 3-row order. Keep landscape 4:3. SHRINK EVERY COMPLETE FIGURE to ONLY 58 PERCENT OF ITS EQUAL CELL HEIGHT. Enormous totally transparent gutters must separate rows, at least 18 percent cell-height empty above/below every figure and 15 percent cell-width left/right. All standing shoes on same baseline and body/head scale identical across poses. No shoe, hand, hair or prop touches the cell boundary. Preserve busy-tablet writing pose at row1 column3, preserve four distinct right-facing walk phases in row3. Remove isolated specks outside the twelve figures. Actual alpha transparency, no background, text, ground, grid or shadows. Do not redraw her into another art style. Precision cell isolation is essential.",
+    "sourceFile": "exec-89719d7f-c3d6-4209-bd43-b43b63bf23d1.png",
+    "gender": "female",
+    "artStyle": "angular-athletic-cel",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "8559bbe8cf07b0958e6916eb496ec8506c75eac238cc5faf4be1ca5bace28f81",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-energy-1.png"
+  },
+  {
+    "key": "ocean",
+    "destination": "pet-ocean.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The short INDIGO-PIXIE-HAIRED TAN-SKINNED FEMALE in long teal coat, cream jumpsuit, dark boots, coral headphones, upper center of image 1. Style: rubbery long-limbed ADVENTURE COMIC, huge exuberant toothy grin, very bold black outlines, elastic arms/legs, flat vivid cel colors, exaggerated facial construction. Preserve obviously female design. Not a generic delicate anime girl.",
+    "spacingPrompt": "Not required: the generated atlas passed native crop-safety checks.",
+    "sourceFile": "exec-a31bac10-d9ff-4c6d-b4b7-ac995c82233a.png",
+    "gender": "female",
+    "artStyle": "elastic-adventure-comic",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "ae03519e24ec19f0d788a9a7387aa246d4c3d4a36d91fdd6f989dca5a6d33283",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-ocean-1.png"
+  },
+  {
+    "key": "ninja",
+    "destination": "pet-ninja.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The long CHARCOAL BLACK-HAIRED GLASSES FEMALE in olive technical jacket, black fitted trousers, mint trainers, olive headphones, left middle of image 1. Style: sharp ninja-action MANGA, narrow intense eyes, lean sharp angular adult silhouette, scratchy brush ink and dramatic solid black shadow masses, confident alert expression. Not soft glossy cute anime. Recording editor, no ninja outfit, forehead emblem or franchise costume.",
+    "spacingPrompt": "Spacing-only edit of this exact transparent twelve-pose atlas. Preserve the exact female assistant, face, clothing, render medium and all 12 existing poses, 4 columns x 3 rows landscape 4:3. Make EACH COMPLETE FIGURE substantially smaller: only 58 PERCENT OF ITS CELL HEIGHT, CENTERED, SAME SCALE and sole baseline. Increase transparent padding on EVERY side. At least 18 percent cell height MUST be completely empty alpha above and below each full figure, with large entirely empty horizontal bands across the full canvas between the three rows. Keep all walking feet and waving hands fully inside each cell. Preserve row1 column3 busy tablet writing, four walking-right phases in bottom row. Remove stray fragments/specks. Do not alter her art style or identity. No background, text, grid, ground or shadows; genuine transparency.",
+    "sourceFile": "exec-752d1fb5-38b2-4ba8-907b-7f296f6a9609.png",
+    "gender": "female",
+    "artStyle": "sharp-brush-ink-action",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "4937105d8660b312f517306bc9fcc6a81fd497362ae8a946fd841d643c679f0d",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-ninja-1.png"
+  },
+  {
+    "key": "retro",
+    "destination": "pet-retro.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The BURGUNDY RED CURLY-HAIRED FEMALE radio presenter in coral short sleeve bowling shirt, cream high-waisted flared trousers, brown loafers and red headphones, middle right of image 1. Style: completely FLAT 1960s TV CARTOON, simplified geometric human face, simple black oval eyes, expressive large red curls, thick uniform clean outlines, minimal detail and limited flat coral/cream colors. Do NOT draw modern detailed anime eyes, gradients, glossy realistic anatomy or shading.",
+    "spacingPrompt": "Edit ONLY canvas framing and spacing of this exact twelve-pose character atlas. Keep the SAME female assistant, her distinctive existing drawing style, face, anatomy, outfit, colours and ALL 12 poses in the exact same 4-column 3-row order. Keep landscape 4:3. SHRINK EVERY COMPLETE FIGURE to ONLY 58 PERCENT OF ITS EQUAL CELL HEIGHT. Enormous totally transparent gutters must separate rows, at least 18 percent cell-height empty above/below every figure and 15 percent cell-width left/right. All standing shoes on same baseline and body/head scale identical across poses. No shoe, hand, hair or prop touches the cell boundary. Preserve busy-tablet writing pose at row1 column3, preserve four distinct right-facing walk phases in row3. Remove isolated specks outside the twelve figures. Actual alpha transparency, no background, text, ground, grid or shadows. Do not redraw her into another art style. Precision cell isolation is essential.",
+    "sourceFile": "exec-7df0e9a8-e32f-404b-8d14-b7171e06c8a4.png",
+    "gender": "female",
+    "artStyle": "flat-geometric-tv-cartoon",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "4bc4b6240e8d09b78070b3bbc00f6330a7b82faef0d898e82c97d5eeaa5bd268",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-retro-1.png"
+  },
+  {
+    "key": "forest",
+    "destination": "pet-forest.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The BROWN BOB-HAIRED FEMALE sound archivist in mustard shirt, olive dungarees, brown/copper ankle boots and jade headphones on right side of image 1. Style: HAND-PAINTED PASTORAL feature animation, rounded natural human face, SMALL natural brown eyes and nose, pencil contours and visible gouache/watercolor textures, soft muted earthy color, almost no glossy highlights. Hair is the soft brown bob seen in Welcome, not a braided crown. No generic large-eyed glossy anime style.",
+    "spacingPrompt": "Not required: the generated atlas passed native crop-safety checks.",
+    "sourceFile": "exec-db617348-28c2-4d10-8731-57f73be49193.png",
+    "gender": "female",
+    "artStyle": "pastoral-gouache",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "c4c7cd18e7e36ea46cb36a88b8eff3f2e3c2955c4e5b1b3f0e83fd24044040c8",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-forest-1.png"
+  },
+  {
+    "key": "future",
+    "destination": "pet-future.png",
+    "method": "built-in image_gen",
+    "prompt": "Match the blue round-glasses, three-head-tall flat cartoon assistant in welcome-future-1.png; 4x3 transparent twelve-pose atlas; second pass preserved all identity/style/poses and reduced each figure to 58 percent of cell height with large transparent gutters.",
+    "spacingPrompt": "Not required: the generated atlas passed native crop-safety checks.",
+    "sourceFile": "exec-ec926375-1b8b-4b8e-8c6d-fed5f918c6fb.png",
+    "gender": "female",
+    "artStyle": "round-three-head-cartoon",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "ec6908b7f5773b057a6148a46735529f56a9e4f3045b38af4dce7530698f639c",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-future-1.png"
+  },
+  {
+    "key": "mint",
+    "destination": "pet-mint.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The dark GREEN SHORT-BOB FEMALE in mint cropped vest over ivory long sleeve crop top, loose charcoal trousers, coral lace-up boots and mint headphones, front lower left of image 1. Style: unmistakably glossy THREE-DIMENSIONAL virtual-idol TOON RENDER, rounded dimensional facial forms, glossy dark green sculpted hair locks with mint tips, soft studio light, clean digital specular highlights, rendered doll-like finish. NO inked 2D line art, NOT generic hand-drawn anime. Keep adult female proportions and warm brown eyes. Transparent background.",
+    "spacingPrompt": "Spacing-only edit of this exact transparent twelve-pose atlas. Preserve the exact female assistant, face, clothing, render medium and all 12 existing poses, 4 columns x 3 rows landscape 4:3. Make EACH COMPLETE FIGURE substantially smaller: only 58 PERCENT OF ITS CELL HEIGHT, CENTERED, SAME SCALE and sole baseline. Increase transparent padding on EVERY side. At least 18 percent cell height MUST be completely empty alpha above and below each full figure, with large entirely empty horizontal bands across the full canvas between the three rows. Keep all walking feet and waving hands fully inside each cell. Preserve row1 column3 busy tablet writing, four walking-right phases in bottom row. Remove stray fragments/specks. Do not alter her art style or identity. No background, text, grid, ground or shadows; genuine transparency.",
+    "sourceFile": "exec-d5eddb7d-3af4-4ce9-b0b4-01359520e897.png",
+    "gender": "female",
+    "artStyle": "glossy-3d-toon",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "f3f2fa3f767d8d3edcd59d406d104e6b3b5d6f7b17d7d8f78ea2f60f453d30dd",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-mint-1.png"
+  },
+  {
+    "key": "moonflower",
+    "destination": "pet-moonflower.png",
+    "method": "built-in image_gen",
+    "prompt": "Asset: AniCanto original female assistant replacement animation sprite atlas. Use case: identity-preserve. Input image 1 is canonical character/style reference; reproduce ONLY the specified woman from that ensemble. Input image 2 is old atlas for pose order ONLY; do NOT copy its generic anime rendering. Keep EXACT four columns x three rows on landscape 4:3 canvas. IMPORTANT deliberately tiny complete figures, ONLY 58 PERCENT of each cell height with enormous transparent gutters: 18 percent cell height clear above/below, 15 percent width clear left/right; never fill the cells. SAME face/body/outfit and same body scale, shoes sole baseline across poses. Row1 neutral stand, eyes closed blink, BUSY reading dark script tablet at stomach height in left hand and writing with right hand (both shoes visible), speak into microphone. Row2 wave, thinking/puzzled, relaxed seated, celebrate. Row3 FOUR different successive WALKING RIGHT frames with alternating feet and opposite arm swings (right stride, passing, left stride, opposite passing). Keep this one female character only. No ensemble, no text, no grid or floor, no isolated coloured specks, no shadows outside character. Genuine alpha transparent background. All head/hair/hands/props/shoes inside each cell. No known franchise character, insignia or logo.\nTARGET IDENTITY AND MANDATORY DRAWING STYLE: The SILVER LILAC SIDE-BRAID FEMALE in burgundy wrap blouse, flowing dusty-rose long skirt, brown boots and brass headphones, lower right of image 1. Style: elongated romantic SHOJO WATERCOLOR MANGA, tall slender decorative silhouette, long delicate face, fine exquisite decorative linework and visible airy watercolor shading, subtle gold floral details on her clothes. No surrounding flowers or sparkles outside each figure. NOT generic bold flat anime cel style.",
+    "spacingPrompt": "Edit ONLY canvas framing and spacing of this exact twelve-pose character atlas. Keep the SAME female assistant, her distinctive existing drawing style, face, anatomy, outfit, colours and ALL 12 poses in the exact same 4-column 3-row order. Keep landscape 4:3. SHRINK EVERY COMPLETE FIGURE to ONLY 58 PERCENT OF ITS EQUAL CELL HEIGHT. Enormous totally transparent gutters must separate rows, at least 18 percent cell-height empty above/below every figure and 15 percent cell-width left/right. All standing shoes on same baseline and body/head scale identical across poses. No shoe, hand, hair or prop touches the cell boundary. Preserve busy-tablet writing pose at row1 column3, preserve four distinct right-facing walk phases in row3. Remove isolated specks outside the twelve figures. Actual alpha transparency, no background, text, ground, grid or shadows. Do not redraw her into another art style. Precision cell isolation is essential.",
+    "sourceFile": "exec-b7075860-8476-4cf1-b8b7-4a39858b29ae.png",
+    "gender": "female",
+    "artStyle": "decorative-shojo-watercolor",
+    "date": "2026-10-19",
+    "inputReferences": [
+      {
+        "file": "welcome-art/welcome-future-1.png",
+        "sha256": "f3d96f43a071f2a61cc695ce64f9a2296f04f3b3e42464f607f8446e6cf02440",
+        "role": "Canonical mixed-style character ensemble; selected female only."
+      },
+      {
+        "sha256": "5bd69c022cf9ae000d2b7a35677adb322199a9e30167567c4e3e011d2542dbc8",
+        "role": "Previous atlas for pose order only; character rendering replaced."
+      }
+    ],
+    "canonicalThemeReference": "welcome-art/welcome-moonflower-1.png"
+  }
+]

@@ -1,0 +1,6 @@
+Original synthetic reference recordings — bank revision 3
+
+All seven supplied reference clips are synthetic. No Common Voice participant recording, macOS system voice, user episode audio or requested imitation of an identifiable person is included.
+English: original mixtures of Kokoro v1.0 stock voice embeddings (Apache-2.0 model). Cantonese: GPT-SoVITS V2 Pro Plus (MIT model) conditioned only on these original English mixtures. Revisions, mixture coefficients, reference hashes, seeds, prompts and validation results are preserved in english-generation.json, cantonese-generation.json and catalog.json. Upstream model notices remain separate.
+
+SCKC dedicates any copyright and related rights it holds in the generated recordings and original prompts to CC0-1.0. See licenses/common/CC0-1.0.txt. This does not relicense upstream models, assert exclusive copyright in AI output, or grant another person's personality/publicity rights. No identity-clearance guarantee is made. Do not use reference material to impersonate an identifiable natural person without consent or another applicable legal right. The selected model's use terms continue to apply.

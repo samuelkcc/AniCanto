@@ -1,0 +1,45 @@
+AniCanto Windows native test build
+
+Original application code: Copyright (c) 2026 SCKC. MIT; see LICENSE.
+This notice does not change the terms of dependencies or model weights.
+
+Bundled native tools:
+- uv 0.12.23, https://github.com/astral-sh/uv/tree/0.12.23
+  MIT OR Apache-2.0. Original notices: tools/notices/uv/.
+- audio.cpp Drama 3 CPU tools, https://github.com/JarodMica/audio.cpp
+  Branch drama-3-native, commit 48e7e708259dce828b9ce4e669dbf5629d4fda73.
+  Apache-2.0. Original notice: tools/notices/audio.cpp-LICENSE.txt.
+  These binaries are CPU builds; they do not provide Drama 3 CUDA inference.
+- anicanto-core and AniCanto-helper are built from the accompanying source.
+  Pinned Rust dependency notices are under shared/Licenses/anicanto-core/;
+  the versioned inventory is shared/core-dependencies.json.
+
+Desktop/runtime dependencies are downloaded separately. About reads their
+installed distribution metadata and original notices, grouping equal name /
+version entries across isolated environments without discarding notices.
+Qt/PySide6, PyAV/FFmpeg, Torch and voice-engine dependencies retain their own
+terms. Exact pinned environments are recorded in requirements-*.lock.
+
+Separately downloaded Windows tools are pinned in native-tools.json, including
+FFmpeg and Ollama. Their extracted distributions retain their original files
+and notices. Native model formats, repository revisions, filenames, sizes and
+SHA-256 values are recorded in native-models.json and shared model catalogs.
+Source revisions for optional GPT/Cosy engines are pinned in shared sources
+and models.json. Fonts and local reference recordings retain the notices in
+shared/fonts/ and shared/natural-voices/.
+
+This local test build has not completed the public binary redistribution and
+corresponding-source review. No GitHub release is performed by packaging it.
+
+Drama3-small native adapter
+The patched host is built from JarodMica/audio.cpp revision 9277495a with the
+pinned model-author patch and AniCanto's dynamic-backend build patch.
+See shared/tts-vendor/drama3-small/ for model notices and build provenance.
+The GGML CUDA plug-in is downloaded from 0xShug0/audio.cpp v0.9.2; audio.cpp
+and GGML retain their Apache-2.0 / MIT licences respectively.
+NVIDIA CUDA 12.4 runtime / cuBLAS components and Microsoft Visual C++ runtime
+DLLs are separately downloaded upstream redistributables, not MIT-licensed
+AniCanto code. Their terms remain applicable:
+https://docs.nvidia.com/cuda/archive/12.4.1/eula/index.html
+https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution
+AniCanto does not bundle NVIDIA model/runtime DLLs inside its EXE.

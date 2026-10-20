@@ -1,0 +1,28 @@
+{
+  "kind": "continuous-joint-skinning",
+  "durationSeconds": 12,
+  "themes": [
+    "studio",
+    "energy",
+    "ocean",
+    "ninja",
+    "retro",
+    "forest",
+    "future",
+    "mint",
+    "moonflower"
+  ],
+  "source": "Canonical Welcome-matched female pet-<theme>.png working pose; assistant-rigs.json records exact bounds, safe row cuts and proportion-specific skinning.",
+  "alignment": "One fixed body scale, sole baseline and hip anchor; no pose swaps or mirroring",
+  "joints": [
+    "neck",
+    "left-shoulder",
+    "right-shoulder",
+    "wrist",
+    "right-ankle"
+  ],
+  "implementation": "Low-power WebGL mesh, Canvas 2D fallback, shared 24 fps scheduler, visibility/reduced-motion suspension",
+  "background": "transparent",
+  "reducedMotion": "One static aligned pose",
+  "identities": "assistant-characters.json"
+}

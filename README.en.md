@@ -18,9 +18,9 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Development preview**
+> **Public beta · 0.24.36**
 >
-> This repository currently introduces the project. Public app downloads and the complete source release are being prepared; they are not available here yet.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.36-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
 ## Local AI, offline after setup
 
@@ -151,7 +151,7 @@ Qwen translates and helps plan repairs; Drama 3 generates speech. Download choic
 | Storage | Plan for **100 GB or more free space** for models, environments and working files; long videos need additional room. |
 | First setup | Internet access for model and runtime downloads; inference runs locally afterwards. |
 
-Lower-memory presets can differ in accent, voice expression and translation detail. Windows candidates still need real-device startup and GPU testing. Intel Macs are not supported by this Apple Silicon setup.
+Lower-memory presets can differ in accent, voice expression and translation detail. The developer completed one video conversion on a Windows NVIDIA RTX 4090 machine; other Windows hardware, videos and model combinations remain unverified. Intel Macs are not supported by this Apple Silicon setup.
 
 ### Conversion time reference
 

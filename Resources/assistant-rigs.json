@@ -1,0 +1,255 @@
+{
+  "studio": {
+    "image": "pet-studio.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      839,
+      93,
+      134,
+      269
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      402,
+      750,
+      1086
+    ],
+    "sha256": "ac17376fe7ee1d5c1369f7e3c94ddea280003a12435e80bdd1aecff58d3fde93",
+    "characterId": "assistant-studio",
+    "gender": "female",
+    "artStyle": "original-lavender-anime",
+    "canonicalCoverTheme": "studio"
+  },
+  "energy": {
+    "image": "pet-energy.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      833,
+      73,
+      158,
+      308
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      415,
+      768,
+      1086
+    ],
+    "sha256": "4f117544b17bfa661be1cae99eb733271dfb64f6cdeab74e9080525c0fc36b3c",
+    "characterId": "assistant-energy",
+    "gender": "female",
+    "artStyle": "angular-athletic-cel",
+    "canonicalCoverTheme": "energy"
+  },
+  "ocean": {
+    "image": "pet-ocean.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      806,
+      55,
+      197,
+      332
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      397,
+      744,
+      1086
+    ],
+    "sha256": "109f6adc48fc3f50349c4ab8a1ecaf23b732d785bb4c5d929dbca0adc95d6efa",
+    "characterId": "assistant-ocean",
+    "gender": "female",
+    "artStyle": "elastic-adventure-comic",
+    "canonicalCoverTheme": "ocean"
+  },
+  "ninja": {
+    "image": "pet-ninja.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      854,
+      97,
+      132,
+      244
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      395,
+      754,
+      1086
+    ],
+    "sha256": "b50c5541f37f619635695a7c9e77a6c4be0d5b22d1ecd637b5e54ef41184857b",
+    "characterId": "assistant-ninja",
+    "gender": "female",
+    "artStyle": "sharp-brush-ink-action",
+    "canonicalCoverTheme": "ninja"
+  },
+  "retro": {
+    "image": "pet-retro.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      827,
+      80,
+      159,
+      306
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      413,
+      772,
+      1086
+    ],
+    "sha256": "97acbf40ce6f0993e7a92e762bc987ba8dfec3b261f92d4b8c3c02cfa0b28f07",
+    "characterId": "assistant-retro",
+    "gender": "female",
+    "artStyle": "flat-geometric-tv-cartoon",
+    "canonicalCoverTheme": "retro"
+  },
+  "forest": {
+    "image": "pet-forest.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      834,
+      68,
+      143,
+      333
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      414,
+      770,
+      1086
+    ],
+    "sha256": "778afa90c685d7ec8086504aaf54b8e295b622ddb2522cdad92f7a88a4f8797f",
+    "characterId": "assistant-forest",
+    "gender": "female",
+    "artStyle": "pastoral-gouache",
+    "canonicalCoverTheme": "forest"
+  },
+  "future": {
+    "image": "pet-future.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      822,
+      118,
+      161,
+      232
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      406,
+      758,
+      1086
+    ],
+    "sha256": "8c64c0ef17dab4bdaed7891882aed0030459f2223f34f5e14c841e50ef695822",
+    "characterId": "assistant-future",
+    "gender": "female",
+    "artStyle": "round-three-head-cartoon",
+    "canonicalCoverTheme": "future",
+    "skin": {
+      "neckY": 0.41,
+      "shoulderY": 0.46,
+      "headBand": [
+        0.34,
+        0.44
+      ],
+      "armBand": [
+        0.39,
+        0.45,
+        0.57,
+        0.64
+      ],
+      "wristBand": [
+        0.43,
+        0.49,
+        0.56,
+        0.62
+      ],
+      "breathBand": [
+        0.4,
+        0.48,
+        0.57,
+        0.64
+      ],
+      "wristGain": 0.25,
+      "armGain": 1.5
+    }
+  },
+  "mint": {
+    "image": "pet-mint.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      858,
+      111,
+      126,
+      247
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      416,
+      770,
+      1086
+    ],
+    "sha256": "4b6d9f8fc91e30309eaad9df6691b332e7ab15dc1888783e969466bc3251b372",
+    "characterId": "assistant-mint",
+    "gender": "female",
+    "artStyle": "glossy-3d-toon",
+    "canonicalCoverTheme": "mint"
+  },
+  "moonflower": {
+    "image": "pet-moonflower.png",
+    "imageSize": [
+      1448,
+      1086
+    ],
+    "rect": [
+      854,
+      59,
+      137,
+      281
+    ],
+    "anchorX": 0.5,
+    "rowCuts": [
+      0,
+      384,
+      745,
+      1086
+    ],
+    "sha256": "ae83065d76863b4e5df89e6e71e8a15349c3f8b76d8e5f6f10cc4a3b9cf56de4",
+    "characterId": "assistant-moonflower",
+    "gender": "female",
+    "artStyle": "decorative-shojo-watercolor",
+    "canonicalCoverTheme": "moonflower"
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "defaultEngine": "drama3",
+  "engines": [
+    {
+      "id": "drama3",
+      "title": "Fish Audio Drama 3",
+      "shortTitle": "Drama 3",
+      "kind": "drama3",
+      "memory": "48 GB+",
+      "download": "23.8 GB",
+      "languages": [
+        "yue",
+        "en"
+      ]
+    },
+    {
+      "id": "gpt-sovits-v2",
+      "title": "GPT-SoVITS V2 Pro Plus",
+      "shortTitle": "V2 Pro+",
+      "kind": "gsv",
+      "memory": "16 GB+",
+      "download": "1.4 GB",
+      "languages": [
+        "yue",
+        "en"
+      ]
+    },
+    {
+      "id": "gpt-sovits",
+      "title": "GPT-SoVITS V4",
+      "shortTitle": "GPT V4",
+      "kind": "gsv",
+      "memory": "16 GB+",
+      "download": "1.82 GB",
+      "languages": [
+        "yue",
+        "en"
+      ]
+    },
+    {
+      "id": "cosyvoice3",
+      "title": "CosyVoice 3",
+      "shortTitle": "Cosy 3",
+      "kind": "cosy",
+      "memory": "16 GB+",
+      "download": "2.2 GB",
+      "languages": [
+        "yue",
+        "en"
+      ]
+    },
+    {
+      "id": "voxcpm2",
+      "title": "VoxCPM2",
+      "shortTitle": "VoxCPM2",
+      "kind": "voxcpm2",
+      "memory": "24 GB+",
+      "download": "5 GB",
+      "languages": [
+        "yue",
+        "en"
+      ]
+    },
+    {
+      "id": "wsyue",
+      "title": "WenetSpeech-Yue",
+      "shortTitle": "WS-Yue",
+      "kind": "wsyue",
+      "memory": "16 GB+",
+      "download": "4.1 GB",
+      "languages": [
+        "yue"
+      ]
+    }
+  ],
+  "languages": [
+    "yue",
+    "en"
+  ],
+  "subtitleModes": [
+    "original",
+    "yue",
+    "english"
+  ],
+  "retiredEngines": {
+    "qwen-tts": "cosyvoice3",
+    "gpt-sovits-v3": "gpt-sovits"
+  },
+  "policyRevision": "2026-10-shared-1"
+}

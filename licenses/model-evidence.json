@@ -1,0 +1,1533 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-18",
+  "models": [
+    {
+      "repo": "mlx-community/Qwen3.5-397B-A17B-4bit",
+      "revision": "39159bd8aa74f5c8446d2b2dc584f62bb51cb0d3",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-397B-A17B-4bit--39159bd8aa74/README.md",
+          "sha256": "e80411cc5f0c2638fd6f3c4e8cf3cda5f85f9ab6d7d945710557483a546928c5",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-397B-A17B-4bit/resolve/39159bd8aa74f5c8446d2b2dc584f62bb51cb0d3/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-397B-A17B-8bit",
+      "revision": "ab5601e0191bf1f625b48453a90b73bef66482a6",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": "Qwen/Qwen3.5-397B-A17B",
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-397B-A17B-8bit--ab5601e0191b/README.md",
+          "sha256": "637919fbd22abc90eb9b20eebcdfb84d6785432f325fe3fd5e5d61c380cd572a",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-397B-A17B-8bit/resolve/ab5601e0191bf1f625b48453a90b73bef66482a6/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-397B-A17B-6bit",
+      "revision": "dddd2d6c757e057c1ed21164d92f8eddfe5e39f0",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-397B-A17B-6bit--dddd2d6c757e/README.md",
+          "sha256": "285b11c80ec0443509cc82b3049bfc28e9c2a4aa9ab7a9dcfce7d39dd82537b8",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-397B-A17B-6bit/resolve/dddd2d6c757e057c1ed21164d92f8eddfe5e39f0/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-397B-A17B-5bit",
+      "revision": "936dbc0dfd7feb412692db9cca05e8184e6bab68",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-397B-A17B-5bit--936dbc0dfd7f/README.md",
+          "sha256": "8077dbf6688d546f9c0a11dcf1f8870bc266180e9586f6ed47a18447583f5b34",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-397B-A17B-5bit/resolve/936dbc0dfd7feb412692db9cca05e8184e6bab68/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-27B-4bit",
+      "revision": "45797d2985a12c55e6473686e9ea91b95e959553",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-27B-4bit--45797d2985a1/README.md",
+          "sha256": "23abe01dca235f88c72de4bb3c863fa87793133916bdabf7f6b3d9dd53702ef2",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-27B-4bit/resolve/45797d2985a12c55e6473686e9ea91b95e959553/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-35B-A3B-4bit",
+      "revision": "1e20fd8d42056f870933bf98ca6211024744f7ec",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-35B-A3B-4bit--1e20fd8d4205/README.md",
+          "sha256": "d47c29c5c073e4b458357a65b942b99065bad85bdda50d3847e40a32ea58c474",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-4bit/resolve/1e20fd8d42056f870933bf98ca6211024744f7ec/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-122B-A10B-4bit",
+      "revision": "e9c67b08899964be5fdd069bb1b4bc8907fe68f5",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-122B-A10B-4bit--e9c67b088999/README.md",
+          "sha256": "3053f2ebb1ed0ddbd9657425b96686dacd6c67fdf354681e27a54a14698ba25c",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-122B-A10B-4bit/resolve/e9c67b08899964be5fdd069bb1b4bc8907fe68f5/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-27B-5bit",
+      "revision": "8ec999add47e5a5bbc1a6f2c4e2b0497b81a461d",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-27B-5bit--8ec999add47e/README.md",
+          "sha256": "bd7c5b96ed2bfabdec863c6742b7a8dae54d134382b129fab93547ddd36f6c00",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-27B-5bit/resolve/8ec999add47e5a5bbc1a6f2c4e2b0497b81a461d/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-27B-6bit",
+      "revision": "028f9c54715600471948584b40cc77ea104386fd",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-27B-6bit--028f9c547156/README.md",
+          "sha256": "efce2d81bd90ba2b2285cc44b3fedbb7a4f60b06f8fe4bc65f3404c9a3fc1d55",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-27B-6bit/resolve/028f9c54715600471948584b40cc77ea104386fd/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-35B-A3B-5bit",
+      "revision": "1a726c05352541ad22d86457c7bf82e795bf58dd",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-35B-A3B-5bit--1a726c053525/README.md",
+          "sha256": "3ea3b9d81af2e9d775938ca69e50e8fcd39c587dacf4887ca8efbb3de8eb2a6f",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-5bit/resolve/1a726c05352541ad22d86457c7bf82e795bf58dd/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-27B-8bit",
+      "revision": "d49462a9487464de69e2240d2bd65e50bb7d1cbc",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-27B-8bit--d49462a94874/README.md",
+          "sha256": "597951cce21306b13742a4ef7511ef329f49dfa24791c90d6b50e4bfb33c3fa4",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-27B-8bit/resolve/d49462a9487464de69e2240d2bd65e50bb7d1cbc/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-35B-A3B-6bit",
+      "revision": "b729d115bb2cfea696e390dd6bb898528c66b6e9",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-35B-A3B-6bit--b729d115bb2c/README.md",
+          "sha256": "37b7033b40ecda9f3ab7ac0b5843ebf65a305c49368c5d666a78c55946ba45a6",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-6bit/resolve/b729d115bb2cfea696e390dd6bb898528c66b6e9/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-27B-bf16",
+      "revision": "5ad6b65ac842d2d023621f1e892c49df478f2dce",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-27B-bf16--5ad6b65ac842/README.md",
+          "sha256": "bd7efc94ced382daacb8fba470f1dd6fe81fb5641c3d8a228cc4337cb44fa2db",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-27B-bf16/resolve/5ad6b65ac842d2d023621f1e892c49df478f2dce/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-35B-A3B-8bit",
+      "revision": "690e046ad0a71d206b054bb63b154e5106a91132",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-35B-A3B-8bit--690e046ad0a7/README.md",
+          "sha256": "91fd95ae4edd03b32784399ee9dbc2ea5487024724cecfed1498c90e813a92c6",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-8bit/resolve/690e046ad0a71d206b054bb63b154e5106a91132/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-122B-A10B-5bit",
+      "revision": "958b33bf6418f8c462a5cbec59366ef763cc3069",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-122B-A10B-5bit--958b33bf6418/README.md",
+          "sha256": "400fe8cc787a8f448cf49601f215a434dc0282da9c26b58e8f83e4ebd2e86ec0",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-122B-A10B-5bit/resolve/958b33bf6418f8c462a5cbec59366ef763cc3069/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-35B-A3B-bf16",
+      "revision": "731d09ba3597261e84c28881116558364bb8b97c",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-35B-A3B-bf16--731d09ba3597/README.md",
+          "sha256": "7d7c00ebc1ff260ccbcf18d19fd11bdfa1782257b928b7b1e9b45b23cc067370",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-bf16/resolve/731d09ba3597261e84c28881116558364bb8b97c/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-122B-A10B-6bit",
+      "revision": "1a4943cb97f1d3ec701c3c98c7b067f71888dd71",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-122B-A10B-6bit--1a4943cb97f1/README.md",
+          "sha256": "032363b7123dd9f9303d06d61889d68985f22e939961090b312b2ee9f2c48fce",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-122B-A10B-6bit/resolve/1a4943cb97f1d3ec701c3c98c7b067f71888dd71/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-122B-A10B-8bit",
+      "revision": "2a6260e0a7c3e80a1acc401999372aadeb870cff",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-122B-A10B-8bit--2a6260e0a7c3/README.md",
+          "sha256": "54462a0c9898744afad645b8ac24d7b334e7040f11f0b9f1e35db1375e35d2c0",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-122B-A10B-8bit/resolve/2a6260e0a7c3e80a1acc401999372aadeb870cff/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-122B-A10B-bf16",
+      "revision": "88247879c511c13bc07889931cd242d7f783069e",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-122B-A10B-bf16--88247879c511/README.md",
+          "sha256": "5676ae396775c33cadba5d2370312ab5f144615335d10a730df698f200218c7e",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-122B-A10B-bf16/resolve/88247879c511c13bc07889931cd242d7f783069e/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-3bit",
+      "revision": "63755e255fea6273fd31ec1e2a27accb81d95c2d",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-4bit",
+      "revision": "da28692b5f139cb0ec58a356b437486b7dac7462",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-0.8B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-0.8B-4bit--da28692b5f13/README.md",
+          "sha256": "5614ff1cdf39fd970ade36d9499d99024c089e7add90931e018b8cd8de6dd265",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-0.8B-4bit/resolve/da28692b5f139cb0ec58a356b437486b7dac7462/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-6bit",
+      "revision": "779b383518183ae3af13b26a5cdc829a26f7c937",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-0.8B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-0.8B-6bit--779b38351818/README.md",
+          "sha256": "ae755d4de1d2d0d89d2a9c72283f1bdbab9e74d85352fe2e306703770421fb54",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-0.8B-6bit/resolve/779b383518183ae3af13b26a5cdc829a26f7c937/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-8bit",
+      "revision": "87e768fbfa03994095f3d14527c80c5ae70c5758",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-0.8B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-0.8B-8bit--87e768fbfa03/README.md",
+          "sha256": "ad2a2bab342cc667e1ac3b795e075b4dbb72c1c9a4fdb7c3db7b7d03adba4409",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-0.8B-8bit/resolve/87e768fbfa03994095f3d14527c80c5ae70c5758/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-bf16",
+      "revision": "3067585164dbcc505eec73d554349de6a27571a4",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-0.8B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-0.8B-bf16--3067585164db/README.md",
+          "sha256": "c3dc1100fb0631f3553fb42d4ed6e22f5893db007e7d7082cfea48c8b62724cd",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-0.8B-bf16/resolve/3067585164dbcc505eec73d554349de6a27571a4/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-4bit",
+      "revision": "8b2b98c00a6b4d291155e4890773ca8f769aee53",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-9B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-9B-4bit--8b2b98c00a6b/README.md",
+          "sha256": "1407e3e3337063c280b2fe1a63724908a5051cfbf26cd8b98f247432b0382537",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-9B-4bit/resolve/8b2b98c00a6b4d291155e4890773ca8f769aee53/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-3bit",
+      "revision": "d86313135359a5b828cc54059e3e7f7883edeafc",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-6bit",
+      "revision": "76fe4065e622cf34990d3c13ef80ec8531c9a0f7",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-9B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-9B-6bit--76fe4065e622/README.md",
+          "sha256": "363bdcf275a674aee3e2a44684480351cf43ca8a05c3cf7aa63af4e0251a9524",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-9B-6bit/resolve/76fe4065e622cf34990d3c13ef80ec8531c9a0f7/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-8bit",
+      "revision": "16daa4818c54ce5f5436f929d52542eb65bbed9d",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-9B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-9B-8bit--16daa4818c54/README.md",
+          "sha256": "771b58cca5f45b018360375843eb55fa6991534ed20c78c5b18b5c39a16a492b",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-9B-8bit/resolve/16daa4818c54ce5f5436f929d52542eb65bbed9d/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-bf16",
+      "revision": "27cdb77d9381d508abfe5d4e06bcb95471e312ac",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-9B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-9B-bf16--27cdb77d9381/README.md",
+          "sha256": "3d99e1c9eb3761c3f398c786e609edd2c98c4bbc86a4e54b03e389365c056f49",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-9B-bf16/resolve/27cdb77d9381d508abfe5d4e06bcb95471e312ac/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-3bit",
+      "revision": "cd6449f29a68b9da56ca2236f3c4439785879416",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-4bit",
+      "revision": "674aaa7240b91e8012fcad5d791b7dfe5ba90207",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-2B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-2B-4bit--674aaa7240b9/README.md",
+          "sha256": "25ccef130ebab05aed7798f4aee3b829a80e6c67c0f20b7d68dea8a4a103a071",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-2B-4bit/resolve/674aaa7240b91e8012fcad5d791b7dfe5ba90207/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-6bit",
+      "revision": "ba2bcf03dd5b502646de7e32b003cf538f2ca4d6",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-2B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-2B-6bit--ba2bcf03dd5b/README.md",
+          "sha256": "c795deb6cffef9428198cc1d01aab11097ce3fe375b224163f382701173dd462",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-2B-6bit/resolve/ba2bcf03dd5b502646de7e32b003cf538f2ca4d6/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-8bit",
+      "revision": "562fb8ea19bbe7565a3ddf5b7d49899ea2c88d2b",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-2B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-2B-8bit--562fb8ea19bb/README.md",
+          "sha256": "bdf31396f6aa7d5ecbef9b7107c4c13428b01738317e941096b507672bf81e74",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-2B-8bit/resolve/562fb8ea19bbe7565a3ddf5b7d49899ea2c88d2b/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-bf16",
+      "revision": "fb270110eb5a9af244937040c9c3e57addab8ee9",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-2B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-2B-bf16--fb270110eb5a/README.md",
+          "sha256": "8f3f724a614ce1847cbfd45f8c58afb31bf24703884179226fd59c377fba0423",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-2B-bf16/resolve/fb270110eb5a9af244937040c9c3e57addab8ee9/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-4B-3bit",
+      "revision": "6a87bc4e52f513d6d68397b844db31a255f3fb19",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-4B-4bit",
+      "revision": "0e7ffd5c629ef7719d4cbc04069232580bfa9d9c",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-4B-6bit",
+      "revision": "fbb1092aa9daef007603ea9273cd24c225a409f1",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-4B-8bit",
+      "revision": "1704583a86670ba531b7f2c92530a2f725cfd45b",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-4B-bf16",
+      "revision": "491fdc7c087ba7fb48adcb1253f8e76d011db783",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-0.8B-5bit",
+      "revision": "6ffd71035cb52da29986dfc85ef4473cc13fd22b",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-0.8B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-0.8B-5bit--6ffd71035cb5/README.md",
+          "sha256": "470e9543d1e9d63c6b9caf8423af12d17ff157eab2b34dc0031d058bb8b07813",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-0.8B-5bit/resolve/6ffd71035cb52da29986dfc85ef4473cc13fd22b/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-2B-5bit",
+      "revision": "0934527791eb8008cd84b66550b8ab3eefd15b85",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-2B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-2B-5bit--0934527791eb/README.md",
+          "sha256": "bf87fb28ac6b7122181e796e4fda79518b76a8c899f44f4f0e06684a07fe1de0",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-2B-5bit/resolve/0934527791eb8008cd84b66550b8ab3eefd15b85/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3.5-9B-5bit",
+      "revision": "64b670725ad59d26c7b77430a3a4ae671afb776a",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": [
+        "Qwen/Qwen3.5-9B-Base"
+      ],
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3.5-9B-5bit--64b670725ad5/README.md",
+          "sha256": "6a049e1f6708ec79346e75b8555e501c7538cee1ffa17d0d167680c3d2431220",
+          "url": "https://huggingface.co/mlx-community/Qwen3.5-9B-5bit/resolve/64b670725ad59d26c7b77430a3a4ae671afb776a/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-1.7B-8bit",
+      "revision": "a8379a2e2f9e313c9292cdf1af4055ab56d50d55",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-1.7B-8bit--a8379a2e2f9e/README.md",
+          "sha256": "b356d4bdfbe7287b06b9b5ad084d9557a24ca98ca277a839beb2e682037b08f6",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-1.7B-8bit/resolve/a8379a2e2f9e313c9292cdf1af4055ab56d50d55/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-1.7B-4bit",
+      "revision": "78a389c776a5483b2d0d4ea5494e11012e0d6159",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-1.7B-4bit--78a389c776a5/README.md",
+          "sha256": "4d7f16d0a01cd626a3d5291b77249f135eeedd9b1b259d17716cc6b3ef7365cb",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-1.7B-4bit/resolve/78a389c776a5483b2d0d4ea5494e11012e0d6159/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-1.7B-5bit",
+      "revision": "af6ce82200cac21fecc1b8f9e4e5184bde2e1fab",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-1.7B-5bit--af6ce82200ca/README.md",
+          "sha256": "49a7601497300457e62f0760c955f14cc452adbf324eaee734a3c868639ed78c",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-1.7B-5bit/resolve/af6ce82200cac21fecc1b8f9e4e5184bde2e1fab/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-1.7B-6bit",
+      "revision": "edd077a475c4da058e25b6e6ec1199115ca1be2b",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-1.7B-6bit--edd077a475c4/README.md",
+          "sha256": "389d0d93d8b8e3e3fa671afe5940fa9400a4d5ff7f56d77a8936d9fc2354a6ba",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-1.7B-6bit/resolve/edd077a475c4da058e25b6e6ec1199115ca1be2b/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-1.7B-bf16",
+      "revision": "e1f6c266914abc5a46e8756e02580f834a6cf8a7",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-1.7B-bf16--e1f6c266914a/README.md",
+          "sha256": "e8dbd283372fe894c095d08ec505c5bff21803db116622b7eb642a349879a18b",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-1.7B-bf16/resolve/e1f6c266914abc5a46e8756e02580f834a6cf8a7/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-0.6B-bf16",
+      "revision": "eae2b51f96265328f1e7beced788adb0e4536f92",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-0.6B-bf16--eae2b51f9626/README.md",
+          "sha256": "653c4a6795f1e059c7f904a2989bc0e1a2227ec3856880e4d2e6af5a86e0e991",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-0.6B-bf16/resolve/eae2b51f96265328f1e7beced788adb0e4536f92/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-0.6B-4bit",
+      "revision": "313d850181767edf09f00a9c289becca70e58cd0",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-0.6B-4bit--313d85018176/README.md",
+          "sha256": "4d54132d09a2d3d12410ef13c94d7afcfc936bdca8239a3e6cd0797d6a28dd1c",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-0.6B-4bit/resolve/313d850181767edf09f00a9c289becca70e58cd0/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-0.6B-5bit",
+      "revision": "782e765bd462bbe565586d6e55588a3bf0e3750a",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-0.6B-5bit--782e765bd462/README.md",
+          "sha256": "5d2e9de51c3962b23700ca4269e9813dedfc98b8d8e3318e821038cf76443805",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-0.6B-5bit/resolve/782e765bd462bbe565586d6e55588a3bf0e3750a/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-0.6B-6bit",
+      "revision": "468b9b6d692d3397d5d17b84a1166876a00c9bfa",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-0.6B-6bit--468b9b6d692d/README.md",
+          "sha256": "a22bcdce9becc54953639e85959ec8ab70de498b55de1523701e918740059966",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-0.6B-6bit/resolve/468b9b6d692d3397d5d17b84a1166876a00c9bfa/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-ASR-0.6B-8bit",
+      "revision": "89e96d92ba34aca20b3e29fb10cc284097d1219f",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-ASR-0.6B-8bit--89e96d92ba34/README.md",
+          "sha256": "404c9125240861c9c8c23f2452e7140a9664d8393900b42bb0a411dc15abf79c",
+          "url": "https://huggingface.co/mlx-community/Qwen3-ASR-0.6B-8bit/resolve/89e96d92ba34aca20b3e29fb10cc284097d1219f/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit",
+      "revision": "e7dd0585652209fa0d7783659aad4e8a324de11c",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-1.7B-Base-8bit--e7dd05856522/README.md",
+          "sha256": "7e03a5e92d1cd6208630c228e0b2fbf9b5de2035ebe189a7fc812a3453422c8c",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-8bit/resolve/e7dd0585652209fa0d7783659aad4e8a324de11c/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16",
+      "revision": "1eccf1cb2519b5a4e8a95b5f0544f3303568164f",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-0.6B-Base-bf16--1eccf1cb2519/README.md",
+          "sha256": "d0c0b25c2cc544e864cafccee9d2447a04d1fba561060c0d88bd5c2bc1e5ea86",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-bf16/resolve/1eccf1cb2519b5a4e8a95b5f0544f3303568164f/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit",
+      "revision": "0d6bb6fe33f92d47a507e23b9148940e8366ab5b",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-0.6B-Base-4bit--0d6bb6fe33f9/README.md",
+          "sha256": "a07a52fb57724ce19ec9e89be3a8f58b1edd8211c1330e6fd97b253686c25223",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit/resolve/0d6bb6fe33f92d47a507e23b9148940e8366ab5b/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-5bit",
+      "revision": "440299a22d5150c6027574742ad413c1182a7f70",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-0.6B-Base-5bit--440299a22d51/README.md",
+          "sha256": "4dedef3e54f096a513a51176a1c7f61ede70d872ca8824db764b2d16895c83dd",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-5bit/resolve/440299a22d5150c6027574742ad413c1182a7f70/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-6bit",
+      "revision": "4e44ed4bcee28a0f89a493e07bde16e6dccd43eb",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-0.6B-Base-6bit--4e44ed4bcee2/README.md",
+          "sha256": "879de26159692338331da655588f1b13eeb088db35a39905863f346fcf316892",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-6bit/resolve/4e44ed4bcee28a0f89a493e07bde16e6dccd43eb/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit",
+      "revision": "50f45ef0047cde7e84c2ef04326acb8ada2436a7",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-0.6B-Base-8bit--50f45ef0047c/README.md",
+          "sha256": "29acd85b1992a608daab6cf532606aef3f28cf6ee836eb039b47a918eed93b37",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-8bit/resolve/50f45ef0047cde7e84c2ef04326acb8ada2436a7/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-4bit",
+      "revision": "37e955a1deb861c088ae5f3a67043185f3d1a60c",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-1.7B-Base-4bit--37e955a1deb8/README.md",
+          "sha256": "21e7151db9b6316009265b788411a3e57d83651c40c653213b98f28a36a75bb8",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-4bit/resolve/37e955a1deb861c088ae5f3a67043185f3d1a60c/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-5bit",
+      "revision": "18103d58b04c292bfd53c4d65013b38487efa411",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-1.7B-Base-5bit--18103d58b04c/README.md",
+          "sha256": "b37a97512c28f7b45dfc3e5654b6b59c607ec2e86c82eca0d85e5e1111a4eae9",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-5bit/resolve/18103d58b04c292bfd53c4d65013b38487efa411/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-6bit",
+      "revision": "34ff5318365b59cba9c03ff729f2eee0814caf72",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-1.7B-Base-6bit--34ff5318365b/README.md",
+          "sha256": "96aaa7ab7902b63bf1c36ca5752d8b7fc2a861f742aa670bda9240f6e3773a9a",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-6bit/resolve/34ff5318365b59cba9c03ff729f2eee0814caf72/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16",
+      "revision": "a6eb4f68e4b056f1215157bb696209bc82a6db48",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--Qwen3-TTS-12Hz-1.7B-Base-bf16--a6eb4f68e4b0/README.md",
+          "sha256": "cf921813a02b37002f73b636991a52d9385bb4a81a9ff2dc61a178d1f6e27587",
+          "url": "https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-1.7B-Base-bf16/resolve/a6eb4f68e4b056f1215157bb696209bc82a6db48/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/Fun-CosyVoice3-0.5B-2512-fp16",
+      "revision": "18ccb7fbd7246e8cd3420d02f5dd28595cc0fcd9",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": [
+        "FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+      ],
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified",
+      "privateEvidenceSummary": [
+        {
+          "sha256": "22e413195f28693f119c4c4d7b58e4682bf91d657adf67c3664afeeedac78aba",
+          "url": "https://huggingface.co/mlx-community/Fun-CosyVoice3-0.5B-2512-fp16/resolve/18ccb7fbd7246e8cd3420d02f5dd28595cc0fcd9/README.md",
+          "reason": "Full unlicensed model-card text excluded from public sources and packages."
+        }
+      ]
+    },
+    {
+      "repo": "mlx-community/Fun-CosyVoice3-0.5B-2512-8bit",
+      "revision": "177baf277ac75e04e810f7db7f0d9c0ce5a17854",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": [
+        "FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+      ],
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified",
+      "privateEvidenceSummary": [
+        {
+          "sha256": "add0e80566de516be80e3e346b48f4a383de3e2e7decdd46a309a3100a5d159e",
+          "url": "https://huggingface.co/mlx-community/Fun-CosyVoice3-0.5B-2512-8bit/resolve/177baf277ac75e04e810f7db7f0d9c0ce5a17854/README.md",
+          "reason": "Full unlicensed model-card text excluded from public sources and packages."
+        }
+      ]
+    },
+    {
+      "repo": "mlx-community/Fun-CosyVoice3-0.5B-2512-4bit",
+      "revision": "55a6713d54751f1ec2645aa11294676f2067202a",
+      "declaredLicense": "",
+      "licenseName": null,
+      "baseModel": [
+        "FunAudioLLM/Fun-CosyVoice3-0.5B-2512"
+      ],
+      "documents": [],
+      "errors": [],
+      "retired": false,
+      "status": "blocked-missing-license",
+      "effectiveLicense": "Unverified",
+      "privateEvidenceSummary": [
+        {
+          "sha256": "aaba87943c99522e1400c50b04f55609fb4ff4005257cd3286e0ee691a1ee7e4",
+          "url": "https://huggingface.co/mlx-community/Fun-CosyVoice3-0.5B-2512-4bit/resolve/55a6713d54751f1ec2645aa11294676f2067202a/README.md",
+          "reason": "Full unlicensed model-card text excluded from public sources and packages."
+        }
+      ]
+    },
+    {
+      "repo": "Systran/faster-whisper-tiny",
+      "revision": "d90ca5fe260221311c53c58e660288d3deb8d356",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-tiny--d90ca5fe2602/README.md",
+          "sha256": "29fb8444a02c1f133ab7e538525aa478ff68845964f21cf42500842b0e4a7b20",
+          "url": "https://huggingface.co/Systran/faster-whisper-tiny/resolve/d90ca5fe260221311c53c58e660288d3deb8d356/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "Systran/faster-whisper-base",
+      "revision": "ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-base--ebe41f70d5b6/README.md",
+          "sha256": "b922acef3616e27b1d416260b63ba7114c732f0315012006781af2da69cd1ebf",
+          "url": "https://huggingface.co/Systran/faster-whisper-base/resolve/ebe41f70d5b6dfa9166e2c581c45c9c0cfc57b66/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "Systran/faster-whisper-small",
+      "revision": "536b0662742c02347bc0e980a01041f333bce120",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-small--536b0662742c/README.md",
+          "sha256": "329373481008c7c38654aff8ecdcf0163c211557cc7ba8e2ef6f2f84b4f75ec8",
+          "url": "https://huggingface.co/Systran/faster-whisper-small/resolve/536b0662742c02347bc0e980a01041f333bce120/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "Systran/faster-whisper-medium",
+      "revision": "08e178d48790749d25932bbc082711ddcfdfbc4f",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-medium--08e178d48790/README.md",
+          "sha256": "a30144a6232423e5e4e9e17952b5a543a506dc0cb9de02fd9d875d7ec40fef83",
+          "url": "https://huggingface.co/Systran/faster-whisper-medium/resolve/08e178d48790749d25932bbc082711ddcfdfbc4f/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "Systran/faster-whisper-large-v2",
+      "revision": "f0fe81560cb8b68660e564f55dd99207059c092e",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-large-v2--f0fe81560cb8/README.md",
+          "sha256": "2a1db0072e26cbc23591f790ebf021b524bc35913e973795cf6818dcdd3b0866",
+          "url": "https://huggingface.co/Systran/faster-whisper-large-v2/resolve/f0fe81560cb8b68660e564f55dd99207059c092e/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "Systran/faster-whisper-large-v3",
+      "revision": "edaa852ec7e145841d8ffdb056a99866b5f0a478",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Systran--faster-whisper-large-v3--edaa852ec7e1/README.md",
+          "sha256": "39e96252229f5a3d0141dc81afb65a36fd205461ac21e5b70f2cd1248ef0082c",
+          "url": "https://huggingface.co/Systran/faster-whisper-large-v3/resolve/edaa852ec7e145841d8ffdb056a99866b5f0a478/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "openbmb/VoxCPM2",
+      "revision": "32279effe8c19989596f05d353d1447f51d9e915",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/openbmb--VoxCPM2--32279effe8c1/README.md",
+          "sha256": "c18d2ffbfb2f0aec770481c967842aee6c200cde65f6b033efd892a849986fda",
+          "url": "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "ASLP-lab/Cosyvoice2-Yue",
+      "revision": "b6d0eb0b4b594c67100e8786fe97227042d451a9",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/ASLP-lab--Cosyvoice2-Yue--b6d0eb0b4b59/README.md",
+          "sha256": "d81429cd8af46415ddd554b16f17b65dd8b9d5f4088294a14920385ffcb7a5c1",
+          "url": "https://huggingface.co/ASLP-lab/Cosyvoice2-Yue/resolve/b6d0eb0b4b594c67100e8786fe97227042d451a9/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "ASLP-lab/Cosyvoice2-Yue-ZoengJyutGaai",
+      "revision": "473f50149e783a63527ffdb4ba3aca26a8841465",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/ASLP-lab--Cosyvoice2-Yue-ZoengJyutGaai--473f50149e78/README.md",
+          "sha256": "a6e8bb669525f804618f4177b56d22367c4d0b89fdcf9051bebaf4fd59e82ee5",
+          "url": "https://huggingface.co/ASLP-lab/Cosyvoice2-Yue-ZoengJyutGaai/resolve/473f50149e783a63527ffdb4ba3aca26a8841465/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/fish-audio-drama-3-4bit",
+      "revision": "cc639e27aba7edb73429d3e3806f471dcd79d316",
+      "declaredLicense": "other",
+      "licenseName": "fish-audio-community-license",
+      "baseModel": "fishaudio/drama-3",
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--fish-audio-drama-3-4bit--cc639e27aba7/LICENSE",
+          "sha256": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
+          "url": "https://huggingface.co/mlx-community/fish-audio-drama-3-4bit/resolve/cc639e27aba7edb73429d3e3806f471dcd79d316/LICENSE"
+        },
+        {
+          "path": "licenses/models/mlx-community--fish-audio-drama-3-4bit--cc639e27aba7/NOTICE",
+          "sha256": "d2dc9c9fd71c2faf01b825f69797b20e1eca961505aa9ba2a3c5004b99262d73",
+          "url": "https://huggingface.co/mlx-community/fish-audio-drama-3-4bit/resolve/cc639e27aba7edb73429d3e3806f471dcd79d316/NOTICE"
+        },
+        {
+          "path": "licenses/models/mlx-community--fish-audio-drama-3-4bit--cc639e27aba7/README.md",
+          "sha256": "af607281a653a93bb9db84b04e898d5c757d7b72379ce2233645c1fe814e22e6",
+          "url": "https://huggingface.co/mlx-community/fish-audio-drama-3-4bit/resolve/cc639e27aba7edb73429d3e3806f471dcd79d316/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "reviewed-conditional",
+      "effectiveLicense": "Fish Audio Community License v1.0"
+    },
+    {
+      "repo": "lj1995/GPT-SoVITS",
+      "revision": "1cdb10a4f2b13b3e8103b873c4c70c9d54d92c85",
+      "declaredLicense": "mit",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/lj1995--GPT-SoVITS--1cdb10a4f2b1/README.md",
+          "sha256": "343d9f4c4a52dcbb3f47b16ec9086bca7d18c2281480eeccfc1285061663482d",
+          "url": "https://huggingface.co/lj1995/GPT-SoVITS/resolve/1cdb10a4f2b13b3e8103b873c4c70c9d54d92c85/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "MIT"
+    },
+    {
+      "repo": "pentacoxian-dev/drama3-small-GGUF",
+      "revision": "4a3078e885344bb9b24d511cec389d2726854d15",
+      "declaredLicense": "other",
+      "licenseName": "fish-audio-community-license-v1.0",
+      "baseModel": "fishaudio/drama-3",
+      "documents": [
+        {
+          "path": "licenses/models/pentacoxian-dev--drama3-small-GGUF--4a3078e88534/LICENSE",
+          "sha256": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
+          "url": "https://huggingface.co/pentacoxian-dev/drama3-small-GGUF/resolve/4a3078e885344bb9b24d511cec389d2726854d15/LICENSE"
+        },
+        {
+          "path": "licenses/models/pentacoxian-dev--drama3-small-GGUF--4a3078e88534/NOTICE",
+          "sha256": "080fd69d078ccd97c6890852390413a81dfe0d9fe770eabf9a1980b73e4b982d",
+          "url": "https://huggingface.co/pentacoxian-dev/drama3-small-GGUF/resolve/4a3078e885344bb9b24d511cec389d2726854d15/NOTICE"
+        },
+        {
+          "path": "licenses/models/pentacoxian-dev--drama3-small-GGUF--4a3078e88534/README.md",
+          "sha256": "fc66500c3d6cf985574fec68f2dd539a83e47fb81798da3d80a6d4aea478ac56",
+          "url": "https://huggingface.co/pentacoxian-dev/drama3-small-GGUF/resolve/4a3078e885344bb9b24d511cec389d2726854d15/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": true,
+      "status": "retired",
+      "effectiveLicense": "Fish Audio Community License v1.0"
+    },
+    {
+      "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+      "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/Qwen--Qwen3-ASR-1.7B-hf--bcd2b5b7f32b/README.md",
+          "sha256": "427b9a6a4a32477e9df8790ef92f5cbcde790ee148ee5dd8c36f77d9556998a2",
+          "url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf/resolve/bcd2b5b7f32b480ab5790554cfa8347f246a14f3/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "revision": "29e01c4e8d000f4bcd70751be16fa94bf3d85a18",
+      "declaredLicense": "apache-2.0",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/FunAudioLLM--Fun-CosyVoice3-0.5B-2512--29e01c4e8d00/README.md",
+          "sha256": "d4ec0fe1342b60a424ce1cd8971c670d26be38068a96148bcb6a1b8a334c3088",
+          "url": "https://huggingface.co/FunAudioLLM/Fun-CosyVoice3-0.5B-2512/resolve/29e01c4e8d000f4bcd70751be16fa94bf3d85a18/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "MIT/ast-finetuned-audioset-10-10-0.4593",
+      "revision": "f826b80d28226b62986cc218e5cec390b1096902",
+      "declaredLicense": "bsd-3-clause",
+      "licenseName": null,
+      "baseModel": null,
+      "documents": [
+        {
+          "path": "licenses/models/MIT--ast-finetuned-audioset-10-10-0.4593--f826b80d2822/README.md",
+          "sha256": "dbc8ce1fc5abd1635d073640d8cb032901bfe264a5e06507f363f10a6112cfc8",
+          "url": "https://huggingface.co/MIT/ast-finetuned-audioset-10-10-0.4593/resolve/f826b80d28226b62986cc218e5cec390b1096902/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive",
+      "effectiveLicense": "BSD-3-Clause"
+    },
+    {
+      "repo": "Jmica/Drama-3-GGUF",
+      "revision": "17a5b40c5dc2c2be986f5371a7e650108b828e29",
+      "declaredLicense": "other",
+      "licenseName": "fish-audio-community-license-v1.0",
+      "baseModel": "fishaudio/drama-3",
+      "documents": [
+        {
+          "path": "licenses/models/Jmica--Drama-3-GGUF--17a5b40c5dc2/LICENSE",
+          "sha256": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
+          "url": "https://huggingface.co/Jmica/Drama-3-GGUF/resolve/17a5b40c5dc2c2be986f5371a7e650108b828e29/LICENSE"
+        },
+        {
+          "path": "licenses/models/Jmica--Drama-3-GGUF--17a5b40c5dc2/NOTICE",
+          "sha256": "54f9c1b54ce61fdffabaaff0f450996f5f3e8a2326377bda2c59901c5cfd1e62",
+          "url": "https://huggingface.co/Jmica/Drama-3-GGUF/resolve/17a5b40c5dc2c2be986f5371a7e650108b828e29/NOTICE"
+        },
+        {
+          "path": "licenses/models/Jmica--Drama-3-GGUF--17a5b40c5dc2/README.md",
+          "sha256": "b51aa8e1ba645d2d9ba40d68c814e49bc3ac782c43a1805255a1b30983b71476",
+          "url": "https://huggingface.co/Jmica/Drama-3-GGUF/resolve/17a5b40c5dc2c2be986f5371a7e650108b828e29/README.md"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "reviewed-conditional",
+      "effectiveLicense": "Fish Audio Community License v1.0"
+    },
+    {
+      "repo": "registry.ollama.ai/library/qwen3.5",
+      "revision": "d8b0f5e9760cd1682034f292d7ef72ec46f432149be0df7574bf2d6e92e38c04",
+      "errors": [],
+      "documents": [
+        {
+          "path": "licenses/common/Ollama-Qwen-Apache-2.0.txt",
+          "sha256": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+          "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+        }
+      ],
+      "declaredLicense": "apache-2.0",
+      "evidenceKind": "license layer from pinned Ollama model manifests",
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "registry.ollama.ai/library/qwen3.5",
+      "revision": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+      "errors": [],
+      "documents": [
+        {
+          "path": "licenses/common/Ollama-Qwen-Apache-2.0.txt",
+          "sha256": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+          "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+        }
+      ],
+      "declaredLicense": "apache-2.0",
+      "evidenceKind": "license layer from pinned Ollama model manifests",
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "registry.ollama.ai/library/qwen3.5",
+      "revision": "72aac7c28be8ff9b81c2a270eb489c88e6d822a76ec0cb7bf34d965768848567",
+      "errors": [],
+      "documents": [
+        {
+          "path": "licenses/common/Ollama-Qwen-Apache-2.0.txt",
+          "sha256": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+          "url": "https://registry.ollama.ai/v2/library/qwen3.5/blobs/sha256:50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+        }
+      ],
+      "declaredLicense": "apache-2.0",
+      "evidenceKind": "license layer from pinned Ollama model manifests",
+      "status": "declared-permissive",
+      "effectiveLicense": "Apache-2.0"
+    }
+  ]
+}

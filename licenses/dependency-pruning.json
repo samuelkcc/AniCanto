@@ -1,0 +1,48 @@
+{
+  "scope": "Pinned runtime dependencies and shared desktop package; no publication or installed-app replacement",
+  "applicationLicense": "MIT",
+  "removedFromNewDeployment": [
+    {
+      "name": "diffq / diffq-fixed",
+      "reason": "Only unused Demucs quantization paths depend on it; selected Mel-Band RoFormer uses MDXC.",
+      "verification": "Actual six-second CPU model separation with DiffQ import blocked; both decoded stereo WAV outputs sample-identical to baseline.",
+      "macLock": "Resources/separator-requirements.lock",
+      "windowsLock": "windows/requirements-analysis.lock"
+    },
+    {
+      "name": "Distance",
+      "reason": "Unused declared dependency of g2p_en in the pinned GPT setup.",
+      "verification": "GPT-SoVITS v2ProPlus/v4 inference imports plus Cantonese/Japanese/English phonemization with Distance blocked; all six outputs identical to baseline. Full Windows speech generation remains a separate acceptance step.",
+      "macLock": "Resources/gsv-requirements.lock",
+      "windowsLock": "windows/requirements-gpt.lock"
+    },
+    {
+      "name": "Legacy VLC stack",
+      "reason": "Shared desktop uses browser-compatible preview; unused VLC binaries and their bundle-only notices removed during staging.",
+      "verification": "Source route inspection; package pruning. Older Swift implementation retained as development source."
+    }
+  ],
+  "notRemoved": [
+    "FFmpeg and codec dependencies used by processing/export",
+    "PyTorch/MLX/ONNX and CUDA dependencies selected by their runtime",
+    "Current engine adapters and model-specific licences",
+    "Noto font licence",
+    "Legal evidence and notices for still-installed old runtimes"
+  ],
+  "notes": [
+    "No licence notice was removed from a component still being shipped. Retired package legal evidence remains explicitly marked not bundled.",
+    "New installers use complete pinned subsets without resolving unused upstream dependencies back in, and remove only named obsolete packages from their app-owned runtime after successful checks.",
+    "Source manifests, matching-source archive assembly, auxiliary download audit and public-source export audit remain required before GitHub binary publication."
+  ],
+  "otherEngineChecks": {
+    "verification": "Inference-class imports only, with DiffQ and Distance blocked and network disabled. No model loading or GPU generation claimed.",
+    "engines": [
+      "Drama 3 (MLX)",
+      "CosyVoice 3",
+      "VoxCPM 2",
+      "WenetSpeech-Yue"
+    ],
+    "result": "All four import probes passed without attempting to import removed packages.",
+    "runtimeScope": "Only the separator and GPT runtime exclusions apply; text, CosyVoice and local-TTS environments are preserved."
+  }
+}

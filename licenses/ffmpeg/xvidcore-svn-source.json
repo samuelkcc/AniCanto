@@ -1,0 +1,1344 @@
+{
+  "name": "xvidcore",
+  "revision": "2204",
+  "upstreamURL": "https://svn.xvid.org/!svn/rvr/2204/trunk/xvidcore/",
+  "transport": "Immutable SVN revision resource GET, directory indexes and per-file hashes retained; no upstream mutation",
+  "file": "xvidcore-r2204.tar.gz",
+  "sha256": "200e4789b9beb85088a846819276a86613bcea0f5fb6580b5d1151974e9b93fa",
+  "bytes": 726806,
+  "files": [
+    {
+      "path": "AUTHORS",
+      "bytes": 1233,
+      "sha256": "c6fc2bbc06918472097224a9d7096cf47d8337643afd3b9b9b281cb17711b29e"
+    },
+    {
+      "path": "ChangeLog",
+      "bytes": 190758,
+      "sha256": "e49087c234ddfb0745c0097e9b21adffcef67dd9bbcf9ce12065169c2f616b34"
+    },
+    {
+      "path": "ChangeLog-1.0",
+      "bytes": 218499,
+      "sha256": "03cdeec719977c3c0426ec48890b92b42ffbbf9abee56fd7a4b9cb0e081d3de9"
+    },
+    {
+      "path": "CodingStyle",
+      "bytes": 11037,
+      "sha256": "2d5d86a4ef75f0222664f3fd11df2250aa11e2a55ea369aa323a057a14ab672a"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 17987,
+      "sha256": "2ab06d2335f9781f1a485c78a557e6c61b6c24e118caad4d4210c46426bbce95"
+    },
+    {
+      "path": "README",
+      "bytes": 808,
+      "sha256": "0626f974135059d4dd987f669aa7b50086b9e9311903661b3c88eb2c56f490ca"
+    },
+    {
+      "path": "TODO",
+      "bytes": 2245,
+      "sha256": "94c59676133fb25e764a5729a3fcf936745fedbda351e8d5e9cd9857580b5110"
+    },
+    {
+      "path": "debian/README.Debian",
+      "bytes": 613,
+      "sha256": "8245f0d962480257de40db1064c796b7b99ba8066eba1d675c72a34ce5f5e78d"
+    },
+    {
+      "path": "debian/changelog",
+      "bytes": 2834,
+      "sha256": "f2b567869c9cda802ebde8c54ca6d63e795746cdf5a3700e3abe3f9fcd3211a0"
+    },
+    {
+      "path": "debian/compat",
+      "bytes": 2,
+      "sha256": "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06"
+    },
+    {
+      "path": "debian/control",
+      "bytes": 849,
+      "sha256": "0ea8fa0cb14f41c0fed2ace36bab7ed639d2d70768848a277861490d4afd4dd3"
+    },
+    {
+      "path": "debian/copyright",
+      "bytes": 343,
+      "sha256": "61b32852428c4b514744bc5390133913d905d91b27d0c0f6dedf4b08130170ff"
+    },
+    {
+      "path": "debian/libxvidcore4-dev.dirs",
+      "bytes": 20,
+      "sha256": "6be516da01978b9a3466ac594b8ca436ca14374f6f30d9bcb24136814274ad8e"
+    },
+    {
+      "path": "debian/libxvidcore4-dev.docs",
+      "bytes": 8,
+      "sha256": "c204035e80121f128691d26025e7952f12cacdf1f14386c7a4faf9f51e433399"
+    },
+    {
+      "path": "debian/libxvidcore4-dev.install",
+      "bytes": 53,
+      "sha256": "8a085f536d08223efeea3fb6e7a1d3f096146fe04e0c0110e43fa92df99f8ab2"
+    },
+    {
+      "path": "debian/libxvidcore4.dirs",
+      "bytes": 8,
+      "sha256": "0bb13c291b79916c16ba0cb8da8d0daa0d0034da2c05616e71c6d6a7660bbdb4"
+    },
+    {
+      "path": "debian/libxvidcore4.docs",
+      "bytes": 8,
+      "sha256": "c204035e80121f128691d26025e7952f12cacdf1f14386c7a4faf9f51e433399"
+    },
+    {
+      "path": "debian/libxvidcore4.install",
+      "bytes": 29,
+      "sha256": "56bc89fc0d7dd3400d2efea1ba41a7112026ea145af1776d76415f5b64820456"
+    },
+    {
+      "path": "debian/rules",
+      "bytes": 2508,
+      "sha256": "c50022628dea517fa0640ee27cecf8e93510d7bf94e973d9fb4e3e6453ee5bb2"
+    },
+    {
+      "path": "doc/INSTALL",
+      "bytes": 7448,
+      "sha256": "af4eb6248c6ecafebdbe799a0bc83155c9eac959ebbd1c884be361e7d9f512f7"
+    },
+    {
+      "path": "doc/README",
+      "bytes": 518,
+      "sha256": "fcd308be864c9f850c563812ef26c5122f2d31524d3decbe8ba6e5eafc575175"
+    },
+    {
+      "path": "dshow/Makefile",
+      "bytes": 3473,
+      "sha256": "02918afbce5c992614e92172f794328ac904c07d95331ac39c0e9df91bc8cf46"
+    },
+    {
+      "path": "dshow/authors.txt",
+      "bytes": 37,
+      "sha256": "a9818b7ab3c79f3250da933369ab71b806410cf5c683b2ef78a6517001e8e224"
+    },
+    {
+      "path": "dshow/dshow.dsp",
+      "bytes": 4832,
+      "sha256": "d8c82124b6be003e5a8b869e3b1e4ccfa97ff49f32c2b843c20c9e8f9f80ae01"
+    },
+    {
+      "path": "dshow/dshow.vcproj",
+      "bytes": 26642,
+      "sha256": "9608ec3bd78fde10f077da5792295ac5b06aca03adbecb00c2f465eda77ce3bb"
+    },
+    {
+      "path": "dshow/sources.inc",
+      "bytes": 153,
+      "sha256": "48cf6f52faaa2b16b5c7adbe640e1ae91df36d5dc2f703455d631365979843ed"
+    },
+    {
+      "path": "examples/Makefile",
+      "bytes": 1073,
+      "sha256": "307b8dd3325ccfb52e9b5528ac6d8cd88c53046c66157827981feba8bbbaced6"
+    },
+    {
+      "path": "examples/README",
+      "bytes": 2626,
+      "sha256": "3e31377d0453ee21c945a237dd75f2649bbb326f33432297bb44ecd05c58865a"
+    },
+    {
+      "path": "examples/bench.pl",
+      "bytes": 7298,
+      "sha256": "4e81e19fa60e33e719027faa5b84108a28df67041d9f1393722256cf72bf0c62"
+    },
+    {
+      "path": "examples/bench_list.pl",
+      "bytes": 991,
+      "sha256": "d300b2779ed9ea678c5b2ec1deb4c3d21a34b26416d5f93e7cce4965d35600bc"
+    },
+    {
+      "path": "examples/cactus.pgm.bz2",
+      "bytes": 79737,
+      "sha256": "ed4864dd38422e3c60ca529bb561f64c4d087bc88acaf495537be5f70b9e0d01"
+    },
+    {
+      "path": "examples/xvid_bench.c",
+      "bytes": 66627,
+      "sha256": "3a005d75193c5d807c719bb86f53a45e74208a045a8225eea8fcb677429e4100"
+    },
+    {
+      "path": "examples/xvid_decraw.c",
+      "bytes": 23359,
+      "sha256": "0dcfee6c72a991537834d3a9eae7ab376b279cebcdb1b0ae486147dcfc1a3265"
+    },
+    {
+      "path": "examples/xvid_encraw.c",
+      "bytes": 88158,
+      "sha256": "1f2153b033c446197a97d9458010e045dd5c8c67f1e9c9bcd29013dc134e145a"
+    },
+    {
+      "path": "src/decoder.c",
+      "bytes": 56882,
+      "sha256": "df23be5e0471c525cd529324ed6580b1541cad43979230182357a95c3d6d4f4e"
+    },
+    {
+      "path": "src/decoder.h",
+      "bytes": 4551,
+      "sha256": "67841a6bbff0009647a30b0397a2fb7bb1aaed1b64661a32d558dfb81d195aed"
+    },
+    {
+      "path": "src/encoder.c",
+      "bytes": 75779,
+      "sha256": "a2515d93f6f4208d7ffdc1999f8ba4f08ba942bbc08202011f2fabb204267b1a"
+    },
+    {
+      "path": "src/encoder.h",
+      "bytes": 5959,
+      "sha256": "c8eea956a884ad6d6e47d2c0f36fc25a3ad52754ccfaa6559dc0e48a898f010f"
+    },
+    {
+      "path": "src/global.h",
+      "bytes": 5846,
+      "sha256": "7a0c134762d3e9bf7a4918ce8de70a2459291fd6f66e979b5b7ada18a8d35930"
+    },
+    {
+      "path": "src/nasm.inc",
+      "bytes": 4412,
+      "sha256": "dee1171033db358ab7cecce0916cabbe8c99930c57778e46f0155a8171ad5caa"
+    },
+    {
+      "path": "src/portab.h",
+      "bytes": 15655,
+      "sha256": "d3269d962415ee296bfc34e10259f7911f2edd23161e3cb6d8a86d5beb755ef3"
+    },
+    {
+      "path": "src/xvid.c",
+      "bytes": 26471,
+      "sha256": "e3e96cc411d888085eb58b5f48c46cde3d4d0f2acdd285fb83250f02784b9162"
+    },
+    {
+      "path": "src/xvid.h",
+      "bytes": 34802,
+      "sha256": "cbfad29cfa33225a8c89536eac715f1cad157e3ee19c248ad51970cd82c89ba7"
+    },
+    {
+      "path": "vfw/LICENSE",
+      "bytes": 18327,
+      "sha256": "40a8c1ea469c6813413443df59115ecc781421cc7d184839ccc7c9f54057a283"
+    },
+    {
+      "path": "vfw/vfw.dsp",
+      "bytes": 5056,
+      "sha256": "2b233cc8ad477352d303f798bd5e8d837780f511e14e661c5dd2be8da88e9739"
+    },
+    {
+      "path": "vfw/vfw.vcproj",
+      "bytes": 15005,
+      "sha256": "882fc8c8e51f64703d478301188cab21186fd0a233cea71558e5e3ea1567a1cd"
+    },
+    {
+      "path": "build/generic/Makefile",
+      "bytes": 8471,
+      "sha256": "72659733690e32ef535e309f5f796d1ea658912c84a9f936e9060cf1fba570ac"
+    },
+    {
+      "path": "build/generic/bootstrap.sh",
+      "bytes": 2088,
+      "sha256": "79dbbd62e3d508e929719b9c29e0324dac3734bb3bcb5a745ba0a83074710ab1"
+    },
+    {
+      "path": "build/generic/configure.in",
+      "bytes": 23667,
+      "sha256": "6b3d22df51ec336da7c8a7309d5397ddf77365bac4c8c0eb7066692c34f19aff"
+    },
+    {
+      "path": "build/generic/libxvidcore.def",
+      "bytes": 225,
+      "sha256": "ab35a3432f8e5972a31146350b7c5a56ff3c9e76672aea216737814b4e45b776"
+    },
+    {
+      "path": "build/generic/libxvidcore.ld",
+      "bytes": 252,
+      "sha256": "e5fec81c15a91c5e4c1f669619326f800c14632f8480bd10222582f4538f9b7d"
+    },
+    {
+      "path": "build/generic/platform.inc.in",
+      "bytes": 2754,
+      "sha256": "544547a45b5e0e4e522df41009c0173a4b54839b2781434586cef505402b3e5c"
+    },
+    {
+      "path": "build/generic/sources.inc",
+      "bytes": 2965,
+      "sha256": "8e63c5b2411d3409d6223f3d10c1b5564f4cb92c4c6c45ec9ae5bdd582396ad1"
+    },
+    {
+      "path": "build/win32/libxvidcore.dsp",
+      "bytes": 40732,
+      "sha256": "196103a76ad647756bd553b006d0c4cd23d2042d993437d9e637a42a56e64231"
+    },
+    {
+      "path": "build/win32/libxvidcore.sln",
+      "bytes": 2767,
+      "sha256": "ed0508b267d8bb450002b1026fb81537d2d9145389e78b55a6d6d1634dc153d9"
+    },
+    {
+      "path": "build/win32/libxvidcore.vcproj",
+      "bytes": 100458,
+      "sha256": "6fe8147ac359666100515561eb0daab06315741b16264d42199e2de764c61cb2"
+    },
+    {
+      "path": "build/win32/libxvidcore_static.dsp",
+      "bytes": 40281,
+      "sha256": "e48652acc86ce9528405d5efd4dc22787f36879a1e0621cffdd50730aada5d54"
+    },
+    {
+      "path": "build/win32/xvid_bench.dsp",
+      "bytes": 4471,
+      "sha256": "d306823b295b120b241ccd90ea39c431b0f65a02cd6ca447a6abd8fa25352b08"
+    },
+    {
+      "path": "build/win32/xvid_decraw.dsp",
+      "bytes": 4023,
+      "sha256": "00da5d30f15f9de20557bf151aca7ed7f00e923a0d8c913149988cee25e0995e"
+    },
+    {
+      "path": "build/win32/xvid_decraw.vcproj",
+      "bytes": 10076,
+      "sha256": "d7b8c27255a7d8b56975a89560043d65d2d392fe31d86769fb57d1204fd8854d"
+    },
+    {
+      "path": "build/win32/xvid_decraw_static.dsp",
+      "bytes": 4636,
+      "sha256": "5c57d9385e5e77bd10651095484dd17a78f18313a09ca47374bfc73db7cb3a43"
+    },
+    {
+      "path": "build/win32/xvid_encraw.dsp",
+      "bytes": 4043,
+      "sha256": "4a9105bdf471c6916074b2b8bb0a96c368f85b07b84746f9d43f94ebbd352e83"
+    },
+    {
+      "path": "build/win32/xvid_encraw.vcproj",
+      "bytes": 10228,
+      "sha256": "0d0fedfdfd5e0cbd0e1bc40ad024d76241f54d6e7ca4aa2fe1c7f9f307309e35"
+    },
+    {
+      "path": "build/win32/xvid_encraw_static.dsp",
+      "bytes": 4422,
+      "sha256": "1eb99de9fd11cbed3e3ad7d32e91baf1eec64fb5922d4a2f634ea7b090fd93d4"
+    },
+    {
+      "path": "build/win32/xvidcore.dsw",
+      "bytes": 2146,
+      "sha256": "f6b84dee03171409250e45accf7e73d387afb202a88b6c659e06dcc17a104a27"
+    },
+    {
+      "path": "dshow/dxpatch/dx90sdk-update-gcc.patch",
+      "bytes": 10742,
+      "sha256": "572162181f35abc515404c1a05a1577fca0a9ff9b5771d0fb68f7c75bfc02e3e"
+    },
+    {
+      "path": "dshow/dxpatch/dx90sdk-update-gcc.txt",
+      "bytes": 3817,
+      "sha256": "1bfcc6c8cdc31700088c2c02c9e4edf5b5774645439814623d347847ff393d61"
+    },
+    {
+      "path": "dshow/src/CAbout.cpp",
+      "bytes": 2236,
+      "sha256": "6b758523b6ed2d1738d9fff86d8cdc0c020f5da5ba741bab1a88a80fc1ca96cc"
+    },
+    {
+      "path": "dshow/src/CAbout.h",
+      "bytes": 1498,
+      "sha256": "a2924599ae6e14583b8f2c9313635e5d833e5d7e9576be0efed4e86930055c25"
+    },
+    {
+      "path": "dshow/src/CXvidDecoder.cpp",
+      "bytes": 62115,
+      "sha256": "92269bbfc122842a0c59e71e9625070646e9e7f192b941592acc77cf7d6649b4"
+    },
+    {
+      "path": "dshow/src/CXvidDecoder.h",
+      "bytes": 9926,
+      "sha256": "719c3fa49036262fddc45229c53b6eef7dc5addd92462a52ac291da4d12649e0"
+    },
+    {
+      "path": "dshow/src/Configure.cpp",
+      "bytes": 2494,
+      "sha256": "c863929120aed714dca2e9be85b58ae5bd31d13e32fc86385c1b8589fae1fc82"
+    },
+    {
+      "path": "dshow/src/IXvidDecoder.h",
+      "bytes": 1329,
+      "sha256": "6c0f839c393c36582c212096e636e34fca34d53cf32316c460fee54253fdcd43"
+    },
+    {
+      "path": "dshow/src/XviD_logo.bmp",
+      "bytes": 4870,
+      "sha256": "b61bf31d2becbcc58da82d2f1b7affa52e0a5861c90254cbace7d25994e14af8"
+    },
+    {
+      "path": "dshow/src/config.c",
+      "bytes": 10708,
+      "sha256": "5f04663dfde215e51126e49be4d267120911c4b178b488c5bb06029d976de64e"
+    },
+    {
+      "path": "dshow/src/config.h",
+      "bytes": 2456,
+      "sha256": "d5afad7126ecf42b7f1c43eb8c25782b4689f8740aca0302679dafc6a62749f8"
+    },
+    {
+      "path": "dshow/src/debug.c",
+      "bytes": 308,
+      "sha256": "00caedc693ea5968b3c562cbc3516a324b201b0b4a4b4351d3386c0172cdb892"
+    },
+    {
+      "path": "dshow/src/debug.h",
+      "bytes": 315,
+      "sha256": "69c60bd7f5cb550a5c2277d2868db200ae83eae188b0d3e653c887e2e56277a8"
+    },
+    {
+      "path": "dshow/src/resource.h",
+      "bytes": 1674,
+      "sha256": "5b7a23ac1d02f3243bcdd2bb1e6652ad782513bb3941b616d1e8459a252d706f"
+    },
+    {
+      "path": "dshow/src/xvid.ax.def",
+      "bytes": 127,
+      "sha256": "74125e80c7e8e7fd5c80cf6eacbb2f3ec63472dc4b00b90a9629f362945b9bd2"
+    },
+    {
+      "path": "dshow/src/xvid.ax.rc",
+      "bytes": 4883,
+      "sha256": "ee29654d069ac5c89460fd2ce28988ed2f9d2ea9ca4b2d49f80c86cbccc7fd8a"
+    },
+    {
+      "path": "dshow/src/xvid.ico",
+      "bytes": 9662,
+      "sha256": "fa17b5b66de1899ec9c926ec8b6ef7bfc2fa2711bb19ee5f12cf30276fe74a16"
+    },
+    {
+      "path": "src/bitstream/bitstream.c",
+      "bytes": 44607,
+      "sha256": "ae4a1f4a395eb55e64ddb79768f5eb997321d90e854b5cb0fde84371b41c06a4"
+    },
+    {
+      "path": "src/bitstream/bitstream.h",
+      "bytes": 11765,
+      "sha256": "d8a1db9075d736455f106109953626db42cc0103ee15ac62e9717b6d50e7ab4d"
+    },
+    {
+      "path": "src/bitstream/cbp.c",
+      "bytes": 2759,
+      "sha256": "8fe01629e8d5cf6a9d809554f8b04183d6d425bd7dce0da302c176a00a9c0c9f"
+    },
+    {
+      "path": "src/bitstream/cbp.h",
+      "bytes": 1477,
+      "sha256": "e6b8645e19fb23cbe2dc02e18ced08cccd5ad306f6160f93fa99ab35cd12526a"
+    },
+    {
+      "path": "src/bitstream/mbcoding.c",
+      "bytes": 57035,
+      "sha256": "37c9c6fb78c8a5fdf5ceae197193599652f6f4e06cd3b0483bccf30e59755c75"
+    },
+    {
+      "path": "src/bitstream/mbcoding.h",
+      "bytes": 2507,
+      "sha256": "5ee1439e48b7b61e0826f0c5506cbb93c1a875abf9727a92fa9f9f302d7ea913"
+    },
+    {
+      "path": "src/bitstream/vlc_codes.h",
+      "bytes": 2351,
+      "sha256": "8517b84e163a9740cb48c9610b965198394c566b6a81dea80b7010606838dfd9"
+    },
+    {
+      "path": "src/bitstream/zigzag.h",
+      "bytes": 2033,
+      "sha256": "4146049a25901d7280214c1bd5e227eecdc85258ae2a6e902e3ab74f380e23f4"
+    },
+    {
+      "path": "src/dct/fdct.c",
+      "bytes": 8781,
+      "sha256": "6b52c8600775c920c8b7ab6edbd82e7c83b0726ce5d1834b7784c0ed01ab1bcc"
+    },
+    {
+      "path": "src/dct/fdct.h",
+      "bytes": 1525,
+      "sha256": "ac1a435a269aaa407d6a099575f46f8449d01f75bddbd3be97b9a55c368b23f8"
+    },
+    {
+      "path": "src/dct/idct.c",
+      "bytes": 9209,
+      "sha256": "8d3cabaf45835588cd542919f4d90927c0927096c1b2f7a8e1a9f9eb62ded33e"
+    },
+    {
+      "path": "src/dct/idct.h",
+      "bytes": 1894,
+      "sha256": "ed9211b3fa4b0910e96788a09278e879a4ea5fa8ae923491bac8be8fe1e3bc1c"
+    },
+    {
+      "path": "src/dct/simple_idct.c",
+      "bytes": 6952,
+      "sha256": "1fdf162f8f59b52566b6d5887e0bebd51cde92f89ff8cc181c1e4fa513e894aa"
+    },
+    {
+      "path": "src/image/colorspace.c",
+      "bytes": 18538,
+      "sha256": "8977673f514fdcf0c84787004911adec505578304611fc1fd808ee3c598fd364"
+    },
+    {
+      "path": "src/image/colorspace.h",
+      "bytes": 5664,
+      "sha256": "5d62e3f77ef63da403024f42b2c72a09a9d58ca2135c120d7f318099ac943062"
+    },
+    {
+      "path": "src/image/font.c",
+      "bytes": 7491,
+      "sha256": "a6c2bf4b46d291c9fb613fcdccc0a4f6ebd53125b0695ffa2a3ce7ed564cdd8a"
+    },
+    {
+      "path": "src/image/font.h",
+      "bytes": 1227,
+      "sha256": "fa05c0b85d123f4161ee1cc148c8de0d5eb4df897992821dff0a87bf8c7d2f52"
+    },
+    {
+      "path": "src/image/image.c",
+      "bytes": 32989,
+      "sha256": "495e0b8793699313762c83de7846eae6aebe3c668b00c7fd758831b3b5725c76"
+    },
+    {
+      "path": "src/image/image.h",
+      "bytes": 3882,
+      "sha256": "83e829e17a51020739bef8e4287410db07e9d1657be217abc2ca1bf8959e889d"
+    },
+    {
+      "path": "src/image/interpolate8x8.c",
+      "bytes": 34340,
+      "sha256": "04ea5503f6060879d9725a2923bb72affcd7013223a9c45fe8d5c7ea3f869646"
+    },
+    {
+      "path": "src/image/interpolate8x8.h",
+      "bytes": 13151,
+      "sha256": "8180e28eb15850802d41b9c49a5778d954998d52b0a34c6600da2a95ffbabbaf"
+    },
+    {
+      "path": "src/image/postprocessing.c",
+      "bytes": 14779,
+      "sha256": "7d10df01c8743e2d59071c6e2d07d4e3b240af0e0931315c8d065dd70ba06dc5"
+    },
+    {
+      "path": "src/image/postprocessing.h",
+      "bytes": 2763,
+      "sha256": "820a596c754e7bff91d221af4b894cd35792fd7eb3bff485cbe3903552cce88a"
+    },
+    {
+      "path": "src/image/qpel.c",
+      "bytes": 40798,
+      "sha256": "a2851ebee8cd98f920b15d61f04428d216f63cb78b1ec0d6f44cb6d0bbaabc95"
+    },
+    {
+      "path": "src/image/qpel.h",
+      "bytes": 16486,
+      "sha256": "48bb03a04473400adc24e9b33beb1e497c1db924bf69a48241dc740ef8684fb4"
+    },
+    {
+      "path": "src/image/reduced.c",
+      "bytes": 6653,
+      "sha256": "eb50a1dc941757b22c4652714efc39369e7ea59c5b6f2296b5c8d276026fb73f"
+    },
+    {
+      "path": "src/image/reduced.h",
+      "bytes": 3382,
+      "sha256": "42ffc306dc599a8f082f34ef88a75b3f08ff0fc237e3501759e2e1cbef5ebbe3"
+    },
+    {
+      "path": "src/motion/estimation.h",
+      "bytes": 7322,
+      "sha256": "48fa6e67ac82b4b0bf19c4e60f002904976b32565b0ca6212769b2f5b778f49d"
+    },
+    {
+      "path": "src/motion/estimation_bvop.c",
+      "bytes": 44069,
+      "sha256": "055179407cc5c1a9edbf4f56c0019867f5f25a811a2d2f9623ab14fd0abfc1f7"
+    },
+    {
+      "path": "src/motion/estimation_common.c",
+      "bytes": 18974,
+      "sha256": "3586955ae04e706795635c614dc752ec8505bea909b2041ab23e4872f2f882f4"
+    },
+    {
+      "path": "src/motion/estimation_gmc.c",
+      "bytes": 16991,
+      "sha256": "93fcd679156046330f7221079a7acb5fb52c6efcaef1900390ecb52c18e32379"
+    },
+    {
+      "path": "src/motion/estimation_pvop.c",
+      "bytes": 37359,
+      "sha256": "86b3d783f6ac50687261b36996fb83d43b30aea93d59242c453093549ab0761a"
+    },
+    {
+      "path": "src/motion/estimation_rd_based.c",
+      "bytes": 34417,
+      "sha256": "54a45f2be0db2be4f1657ec249f173fcf5fd0bdf07ab1289bc15a8dcfb442900"
+    },
+    {
+      "path": "src/motion/estimation_rd_based_bvop.c",
+      "bytes": 23012,
+      "sha256": "641de810cb3be74d586278643ccc48e1cae5271df34964f8a858a353987d65c1"
+    },
+    {
+      "path": "src/motion/gmc.c",
+      "bytes": 21743,
+      "sha256": "fc94fb45f3101e6a45093b07a5c00fdb4b1480860b044c00647795c5aa7b0fc5"
+    },
+    {
+      "path": "src/motion/gmc.h",
+      "bytes": 2677,
+      "sha256": "33c86c4253e42756b695985d9ff638fdf5bee983554ba64eba940e389ec74295"
+    },
+    {
+      "path": "src/motion/motion.h",
+      "bytes": 4885,
+      "sha256": "41f12693968b393b8b7172324210e9ee9e32df53de52b202a6ddfe419f3ce11f"
+    },
+    {
+      "path": "src/motion/motion_comp.c",
+      "bytes": 13977,
+      "sha256": "9ffda9967d10b853b134595ca41a0f7ca1577d810b0996dabfce0f6e53d5bdc3"
+    },
+    {
+      "path": "src/motion/motion_inlines.h",
+      "bytes": 4720,
+      "sha256": "d720c4bb7b7f848484ac4031c473e8615a14de8e564b6e041501d8fd90031ed8"
+    },
+    {
+      "path": "src/motion/motion_smp.h",
+      "bytes": 1673,
+      "sha256": "cda426904b883a4aea72f70225132b95cd698a690325dcfabe3f96f260bfd058"
+    },
+    {
+      "path": "src/motion/sad.c",
+      "bytes": 9469,
+      "sha256": "5d40c1b002b38e9e81f59be1b5c63275199e9e57af6f1819f80ea5bb8089ca81"
+    },
+    {
+      "path": "src/motion/sad.h",
+      "bytes": 6938,
+      "sha256": "46ec888cc65f03be49e46d9d499189cdf814df61ee60978ed81b946a174bb0e2"
+    },
+    {
+      "path": "src/motion/vop_type_decision.c",
+      "bytes": 8026,
+      "sha256": "0b86c31efc916d5414145062e8b7f45bec011cb95874736f0fec50d3172f638a"
+    },
+    {
+      "path": "src/plugins/plugin_2pass1.c",
+      "bytes": 7385,
+      "sha256": "4d6511bc542776559710dcc37a68f00159de43605d7d6892dd31905f590c7e3c"
+    },
+    {
+      "path": "src/plugins/plugin_2pass2.c",
+      "bytes": 57716,
+      "sha256": "46264f79ed03028dc8b960b6782bffef0fd1ee4bbc41d6047d65150b3eba7ce9"
+    },
+    {
+      "path": "src/plugins/plugin_dump.c",
+      "bytes": 2206,
+      "sha256": "cec0fb43c993f2f6277b2a3e3de26d6944c112266ea20d8c34e4f4b72f4ec10f"
+    },
+    {
+      "path": "src/plugins/plugin_lumimasking.c",
+      "bytes": 10017,
+      "sha256": "625d6aed9073c5057d06d99c69f212f4fa78c23133e2ccd04f6bf4c2ce205367"
+    },
+    {
+      "path": "src/plugins/plugin_psnr.c",
+      "bytes": 1902,
+      "sha256": "eb97b4d79bfb88246d8b4835608c8a5fb8fc144ceb7e477f1548128b48ff8c8a"
+    },
+    {
+      "path": "src/plugins/plugin_psnrhvsm.c",
+      "bytes": 11516,
+      "sha256": "321baae5d99c04523310a4cf2f2cd699dd8bf56b23dcb76392fffffce65614ca"
+    },
+    {
+      "path": "src/plugins/plugin_single.c",
+      "bytes": 8632,
+      "sha256": "2f7d444e707a4751c0641534bdb1eab53623af93e234c73a1b8dd04e1782a96e"
+    },
+    {
+      "path": "src/plugins/plugin_ssim.c",
+      "bytes": 14573,
+      "sha256": "d99b4291dcbb8ebd5e04060017041b2469f15d6aa0667d22762dcf444c5b3129"
+    },
+    {
+      "path": "src/plugins/plugin_ssim.h",
+      "bytes": 1727,
+      "sha256": "69bbedd8870e9dcabfa39bf463e4ad5d7784f0ba5fe45dddba5d2ba8fbf5ec84"
+    },
+    {
+      "path": "src/prediction/mbprediction.c",
+      "bytes": 15357,
+      "sha256": "893d3c5a480d14bc907d80f0acfd79b054f94e37e9e7eca5b6a9094debbd83f2"
+    },
+    {
+      "path": "src/prediction/mbprediction.h",
+      "bytes": 2570,
+      "sha256": "ad42df04da97d5970b5a2704bdd34a684ed549116b1612593fce41062cd5b361"
+    },
+    {
+      "path": "src/quant/quant.h",
+      "bytes": 4903,
+      "sha256": "32d845544448cf0692c0df4e03b26b137063fcd19e242b31d2df2d12e5945047"
+    },
+    {
+      "path": "src/quant/quant_h263.c",
+      "bytes": 5381,
+      "sha256": "4af62ac4ff902448fd526f2079dd39cc8790843bb1ff566379a9db8b908a895d"
+    },
+    {
+      "path": "src/quant/quant_matrix.c",
+      "bytes": 4448,
+      "sha256": "1a2f13fdd0ff5ebe33c097e47c2922d3aa99d1cc55a0bed94b9cbfd0e9f6043c"
+    },
+    {
+      "path": "src/quant/quant_matrix.h",
+      "bytes": 1882,
+      "sha256": "a0b3740cc4048430e76c2c36ba1de7f24cb11792ec7b5b88999a09b9ca32562f"
+    },
+    {
+      "path": "src/quant/quant_mpeg.c",
+      "bytes": 5554,
+      "sha256": "fe580361e993b4d383e34f143c1fb597693e4da8376e465c9e23e5a3dbafe35f"
+    },
+    {
+      "path": "src/utils/emms.c",
+      "bytes": 1650,
+      "sha256": "02ce217da5174065889f9e7e2e8c2c35419743de90c02d283ed118d81dda349f"
+    },
+    {
+      "path": "src/utils/emms.h",
+      "bytes": 2081,
+      "sha256": "db794c36ab06893b8dcee2818fb5f517c14807265aba1eab595e8e832dc3fa5b"
+    },
+    {
+      "path": "src/utils/mbfunctions.h",
+      "bytes": 2860,
+      "sha256": "29a998f6661fc26f547b098899d3d2c0ace186d62bd671f7e6827b81f70279b5"
+    },
+    {
+      "path": "src/utils/mbtransquant.c",
+      "bytes": 42077,
+      "sha256": "0fee480d23e651b4c16913b0481287e4fe6bc9330f2f063177724a71c85a270a"
+    },
+    {
+      "path": "src/utils/mem_align.c",
+      "bytes": 3683,
+      "sha256": "8c707961c607db095c3b3c61adbff960183e51ae1787e156e4ddfe733aee5cee"
+    },
+    {
+      "path": "src/utils/mem_align.h",
+      "bytes": 1229,
+      "sha256": "91e3af31f4364e028144af2ac39b665072a5debb1c342f64f6bbc44f81899891"
+    },
+    {
+      "path": "src/utils/mem_transfer.c",
+      "bytes": 7163,
+      "sha256": "4b83d8de9a9f8c29e45aac37f472eb1769557c9bd1a038b3bed3523e0b819edc"
+    },
+    {
+      "path": "src/utils/mem_transfer.h",
+      "bytes": 10068,
+      "sha256": "bbacaa0cd41850e988bbd7b8c6c03b321fb59d9ac860e9632cedc9a3ab116f53"
+    },
+    {
+      "path": "src/utils/timer.c",
+      "bytes": 6939,
+      "sha256": "2445758d6482f8fe82e50d6d848d52535222ea9188a814f90f6e863f6def4b8d"
+    },
+    {
+      "path": "src/utils/timer.h",
+      "bytes": 2734,
+      "sha256": "cce4c3ab1c3c8337e9a8e8e0c9d5d910982c092a76d41b677cc4ec1ebeb9a650"
+    },
+    {
+      "path": "vfw/bin/Makefile",
+      "bytes": 2757,
+      "sha256": "e0ebf084824fe69da080562e602d563a51640b886b5d93993675584ee58248d4"
+    },
+    {
+      "path": "vfw/bin/sources.inc",
+      "bytes": 125,
+      "sha256": "4797f9c2261d6780de2a6782ab0af8887091495c99e8ef09cfb7d23dc354c827"
+    },
+    {
+      "path": "vfw/bin/xvid.inf",
+      "bytes": 2864,
+      "sha256": "017f52c58689615d512ad1b811290ce62e36a59fe69d4c691a1b66930bbc8919"
+    },
+    {
+      "path": "vfw/src/XviD_logo.bmp",
+      "bytes": 4870,
+      "sha256": "b61bf31d2becbcc58da82d2f1b7affa52e0a5861c90254cbace7d25994e14af8"
+    },
+    {
+      "path": "vfw/src/codec.c",
+      "bytes": 33903,
+      "sha256": "3fc73564373428261bb4d8d67ed227d03af0820d25660198849acc2dd8fcafb5"
+    },
+    {
+      "path": "vfw/src/codec.h",
+      "bytes": 3562,
+      "sha256": "3fd36a07d63609c9c4b157b5cb900a63f01455cb2e9ab3946f4a31046c2b28cb"
+    },
+    {
+      "path": "vfw/src/config.c",
+      "bytes": 90630,
+      "sha256": "694690dc8f35088046386d72ad0e98c0e0e248f5627cc52e19d9f0e3ec98cc62"
+    },
+    {
+      "path": "vfw/src/config.h",
+      "bytes": 6958,
+      "sha256": "f52f044de46c8e345fca629238d2d666c7990a2974ff068c527b027d6ff8099d"
+    },
+    {
+      "path": "vfw/src/debug.h",
+      "bytes": 1376,
+      "sha256": "169a87bdcbcab03cc3dcab03031e7f32fb67077be808f427addf8729db7e3a0b"
+    },
+    {
+      "path": "vfw/src/driverproc.c",
+      "bytes": 8385,
+      "sha256": "97772208e6fa1703c629c172ee04312c7a641a5675ca514623e5fb3a651ab66f"
+    },
+    {
+      "path": "vfw/src/driverproc.def",
+      "bytes": 31,
+      "sha256": "0ee28909e8f6caf18959a11ddb4a5c59b034745c4685d698be08d0f76ceaeccd"
+    },
+    {
+      "path": "vfw/src/hd1080_40.ico",
+      "bytes": 12062,
+      "sha256": "96eef4ae1f5334425e3b9ff12c892764ad28f5b2c4032314ee4ec5f384e35ec9"
+    },
+    {
+      "path": "vfw/src/hd720_40.ico",
+      "bytes": 12062,
+      "sha256": "a6b7b0519084a344f922cc17ef5d8b16a2f96919623eb92a75a2bc7ef72e90ad"
+    },
+    {
+      "path": "vfw/src/home_40.ico",
+      "bytes": 12062,
+      "sha256": "8baecc6d1d56f60153dfade19f1f0783cf35ca1bdb93f1843bb707c92ba9fba2"
+    },
+    {
+      "path": "vfw/src/mobile_40.ico",
+      "bytes": 12062,
+      "sha256": "650e74918d5ae00cff8dc5e5091747835853062f6266fc1581697fee9f937ce9"
+    },
+    {
+      "path": "vfw/src/resource.h",
+      "bytes": 19833,
+      "sha256": "bad411935954f8cf466ab4dfb74590dc0d831c5d9dc9c7480e738a150a223fb6"
+    },
+    {
+      "path": "vfw/src/resource.rc",
+      "bytes": 53642,
+      "sha256": "9c17c2b088db225715a16c5c0b6c9174b72a70675dd4dc93fc6823701376fa7d"
+    },
+    {
+      "path": "vfw/src/status.c",
+      "bytes": 11800,
+      "sha256": "6d819e79b76f9b270cacaf8e494db28a9142055c72d928f405f366111160a4b2"
+    },
+    {
+      "path": "vfw/src/status.h",
+      "bytes": 1871,
+      "sha256": "3e8f0276a8390781d04481ee3c09e78d70d3d5914c8999f805db989b47a30692"
+    },
+    {
+      "path": "vfw/src/vfwext.h",
+      "bytes": 1549,
+      "sha256": "564364305c376e8bd5f24fc028c47e1282347869c23e0087ee2ed7acb0596be4"
+    },
+    {
+      "path": "vfw/src/xvid.ico",
+      "bytes": 9662,
+      "sha256": "658e8363da41e1dddc5f9fc7a3dc40444ab8384be5586d5274135db45db37f02"
+    },
+    {
+      "path": "src/bitstream/x86_asm/cbp_mmx.asm",
+      "bytes": 3440,
+      "sha256": "4f4bb26b5fcc27f996e24dcc2bbf2547005b30ce5821d89ea41498e7733a6d86"
+    },
+    {
+      "path": "src/bitstream/x86_asm/cbp_sse2.asm",
+      "bytes": 3171,
+      "sha256": "93e3cc75c2f1e31744617449deb412c13751136c97dcc4327b835f2d6701fbe0"
+    },
+    {
+      "path": "src/dct/ia64_asm/fdct_ia64.s",
+      "bytes": 41115,
+      "sha256": "9eb69cf43ca92a61fa59ca7837b0bdf55ec7b3c68a7bfb602fd90797ea350709"
+    },
+    {
+      "path": "src/dct/ia64_asm/genidct.py",
+      "bytes": 8532,
+      "sha256": "9e1df25ed028970fdb2850d58442e965de82bd60897f64b023660ac96bbcdc0a"
+    },
+    {
+      "path": "src/dct/ia64_asm/idct_fini.s",
+      "bytes": 1834,
+      "sha256": "9c3d4aad524a4e653c33b57baaa13cfaee20040c2eb47922ccb99580fd74a00f"
+    },
+    {
+      "path": "src/dct/ia64_asm/idct_ia64_ecc.s",
+      "bytes": 35292,
+      "sha256": "622b3742f6608ecf320eefde7d30ab0915f1f2a2f840100b820cbb03bb1f7888"
+    },
+    {
+      "path": "src/dct/ia64_asm/idct_ia64_gcc.s",
+      "bytes": 35324,
+      "sha256": "3831d53e50589dbabd568754852bdd874cd4b7a52cf6d9c05380099591c09810"
+    },
+    {
+      "path": "src/dct/ia64_asm/idct_init.s",
+      "bytes": 2459,
+      "sha256": "6a3ba0a1a5dd6b07c192205bfd3068887993d7f97f89872ab2e5e40db6d3adfd"
+    },
+    {
+      "path": "src/dct/ppc_asm/idct_altivec.c",
+      "bytes": 6767,
+      "sha256": "ce3431f65cbae0c33ba04074ce9a5f662fb9df5c1b793e5615a5d3f2f40ac427"
+    },
+    {
+      "path": "src/dct/x86_asm/fdct_mmx_ffmpeg.asm",
+      "bytes": 11812,
+      "sha256": "e928e640caac9f1085b2430ac1662becb607cd195154e16218799435c25cec7a"
+    },
+    {
+      "path": "src/dct/x86_asm/fdct_mmx_skal.asm",
+      "bytes": 16430,
+      "sha256": "36dd319920ae916d95f79fa1a3e1c6d542cb5a4d01941344bf5baeee7b8f05a0"
+    },
+    {
+      "path": "src/dct/x86_asm/fdct_sse2_skal.asm",
+      "bytes": 18378,
+      "sha256": "c7779ef71fe2e748d8a29c8df7ac3030fe7fb94761563b7d8d2c69d617dc9499"
+    },
+    {
+      "path": "src/dct/x86_asm/idct_3dne.asm",
+      "bytes": 31563,
+      "sha256": "08efab204f48fbda724564ec4dd7d24c3157f5688daa7a32f2a069bca27517e3"
+    },
+    {
+      "path": "src/dct/x86_asm/idct_mmx.asm",
+      "bytes": 23458,
+      "sha256": "adb6f3dde1ad164f80183be9ffbd19a7e63891a85ec4256340c04d3441acb4fa"
+    },
+    {
+      "path": "src/dct/x86_asm/idct_sse2_dmitry.asm",
+      "bytes": 11296,
+      "sha256": "b55fc836807d011bb15c7e059c5c5099f33ff5dc5eef6a144db4bd99dabe1511"
+    },
+    {
+      "path": "src/image/ia64_asm/README",
+      "bytes": 278,
+      "sha256": "082083505f7159a97e4a1e2426732c247009499d12b9250515d94fa6fc7249c6"
+    },
+    {
+      "path": "src/image/ia64_asm/interpolate8x8_ia64.s",
+      "bytes": 6969,
+      "sha256": "47e79fd1cf35edad16890f2ac36e585f6007fc7a6cadd0ab54fb04c3d99db07f"
+    },
+    {
+      "path": "src/image/ia64_asm/interpolate8x8_ia64_exact.s",
+      "bytes": 10134,
+      "sha256": "b7fb0882788302877fc5655f099a4c187915fa0b36c0a21297dd73e40300aa70"
+    },
+    {
+      "path": "src/image/ppc_asm/colorspace_altivec.c",
+      "bytes": 22346,
+      "sha256": "64a352ac19ded4b2a10d601b960cf1ec052fdc2f096902c9ce615419808991dc"
+    },
+    {
+      "path": "src/image/ppc_asm/interpolate8x8_altivec.c",
+      "bytes": 22521,
+      "sha256": "b37067fcd98619d18cf8b199a59f5bd41da2eb9c5cef569182c1bfca17498984"
+    },
+    {
+      "path": "src/image/ppc_asm/qpel_altivec.c",
+      "bytes": 13331,
+      "sha256": "0d06e5983de9bf2efd68e037c0ad4f4e7911b3e0ec4adcd55d088ce8340360de"
+    },
+    {
+      "path": "src/image/x86_asm/colorspace_mmx.inc",
+      "bytes": 8499,
+      "sha256": "be3d5cd03444815bbad8b82a50ee926e50cab13db416c6f6b6879e6a8f63d9c6"
+    },
+    {
+      "path": "src/image/x86_asm/colorspace_rgb_mmx.asm",
+      "bytes": 17094,
+      "sha256": "a802bde47f40b9789d6cde83a237a77e30cb0ccf2465f2f66da48c804fb1c7c0"
+    },
+    {
+      "path": "src/image/x86_asm/colorspace_yuv_mmx.asm",
+      "bytes": 11253,
+      "sha256": "74a11d9ee2f28be9d751b11e93a4c1722b83b028b41186a3354022496891485a"
+    },
+    {
+      "path": "src/image/x86_asm/colorspace_yuyv_mmx.asm",
+      "bytes": 10910,
+      "sha256": "55c777b294fe5be4e2edd25e11bb1e8a32cec4838204a028c399fbf51c39e177"
+    },
+    {
+      "path": "src/image/x86_asm/deintl_sse.asm",
+      "bytes": 3068,
+      "sha256": "4f06fe497cfa3afded0808b8720c4463622cbb2942883cdf50c04b0ce44bae1e"
+    },
+    {
+      "path": "src/image/x86_asm/gmc_mmx.asm",
+      "bytes": 5471,
+      "sha256": "3e01e11a89db4ec80a78ad0a6b8d87c69623a856b022a5029f4aa9bf23b4cab0"
+    },
+    {
+      "path": "src/image/x86_asm/interpolate8x8_3dn.asm",
+      "bytes": 11232,
+      "sha256": "2fd1c339676cefa684c5db9428f424bc79d6719de96005f901c388b5568a5f30"
+    },
+    {
+      "path": "src/image/x86_asm/interpolate8x8_3dne.asm",
+      "bytes": 13389,
+      "sha256": "8a3526040cd33ee49cdf499f6c6faa7893ec686016998039cbff6585e414b429"
+    },
+    {
+      "path": "src/image/x86_asm/interpolate8x8_mmx.asm",
+      "bytes": 27290,
+      "sha256": "9ce6963c565a63560348ecf1e89f55c00140946b80a286e2a912aabd464979f1"
+    },
+    {
+      "path": "src/image/x86_asm/interpolate8x8_xmm.asm",
+      "bytes": 19010,
+      "sha256": "4b26622d78775bf0e1dfb7fcf125deb04c4bc5b4183a4ad284584c114e7a1cd9"
+    },
+    {
+      "path": "src/image/x86_asm/postprocessing_mmx.asm",
+      "bytes": 2854,
+      "sha256": "28acf4689b22d0e8fa54a01ce8075195e24aae03477af6bbbf5330f54c9e7e48"
+    },
+    {
+      "path": "src/image/x86_asm/postprocessing_sse2.asm",
+      "bytes": 3479,
+      "sha256": "f114c35f771f97a69bc41f3f24b07b64a84bce6bc303864251b3a5eaa18a3807"
+    },
+    {
+      "path": "src/image/x86_asm/qpel_mmx.asm",
+      "bytes": 25324,
+      "sha256": "9cc6562e33bb7c8d0ef25c4401d5584a86fc305fcd6b6c82e09f16f87f0e4819"
+    },
+    {
+      "path": "src/image/x86_asm/reduced_mmx.asm",
+      "bytes": 22488,
+      "sha256": "826a51057a1b828628d8ee5fd79b7b7d2aa27d208347aba8d6fc31fa82c49934"
+    },
+    {
+      "path": "src/motion/ia64_asm/calc_delta_1.s",
+      "bytes": 2370,
+      "sha256": "903900cd32c2647c577f7a8f782d110ae36a0b5f73c8b5174cf53f1614dca0e3"
+    },
+    {
+      "path": "src/motion/ia64_asm/calc_delta_2.s",
+      "bytes": 4352,
+      "sha256": "aa9db4d7a978fe8e9d21c8515fdcc950b65806fa74a19847fdb20368a2470b15"
+    },
+    {
+      "path": "src/motion/ia64_asm/calc_delta_3.s",
+      "bytes": 2059,
+      "sha256": "394af702d996ac747d21cd368ef095ae6afb6abf7e023f826a372f874a7c74c9"
+    },
+    {
+      "path": "src/motion/ia64_asm/halfpel8_refine_ia64.s",
+      "bytes": 20541,
+      "sha256": "e72ba9a28c5d4d2b06dc420207ec8c8531485e34cd11467806794bd0c6e033dc"
+    },
+    {
+      "path": "src/motion/ia64_asm/sad_ia64.s",
+      "bytes": 26780,
+      "sha256": "4190a74fafc83ab1587cbeaf072621533abfcfc6166c6b4cc3050639d8f37077"
+    },
+    {
+      "path": "src/motion/ppc_asm/sad_altivec.c",
+      "bytes": 8592,
+      "sha256": "bdca6ee5200ba5eb0eb151c4693eb3ff044ce20765acb3065d7d67d4f76ae004"
+    },
+    {
+      "path": "src/motion/x86_asm/sad_3dn.asm",
+      "bytes": 4647,
+      "sha256": "8f9ca3cadcf99400d2b22c938b9023bd9220ca920051d49fb686fec2d69c0d9f"
+    },
+    {
+      "path": "src/motion/x86_asm/sad_3dne.asm",
+      "bytes": 10031,
+      "sha256": "1a577b7b53da4528b2eb5a4fe9d81ecef13bcd1da007de037d433360262b33d1"
+    },
+    {
+      "path": "src/motion/x86_asm/sad_mmx.asm",
+      "bytes": 14101,
+      "sha256": "6d181d212d46db205e9279c78b921bbd1a05b3972b683314249361ddd07e8a11"
+    },
+    {
+      "path": "src/motion/x86_asm/sad_sse2.asm",
+      "bytes": 12019,
+      "sha256": "ef603c36b597dd88734c619b54f849e1327946870130400a94d55c6d59bbbf60"
+    },
+    {
+      "path": "src/motion/x86_asm/sad_xmm.asm",
+      "bytes": 8679,
+      "sha256": "07abf39a11c2a4cccbc71228a22016ac21e1a2efe8a33e4f2f70553198acf730"
+    },
+    {
+      "path": "src/plugins/x86_asm/plugin_ssim-a.asm",
+      "bytes": 4637,
+      "sha256": "7ea432c64d29e3e1da61e30117014e75b1d1951776bb374473e529681dfd90e0"
+    },
+    {
+      "path": "src/quant/ia64_asm/quant_h263_ia64.s",
+      "bytes": 13440,
+      "sha256": "310bb1ed43f188bd5fc5dcb975b683767699493f0149d57e136a27c442cfc56b"
+    },
+    {
+      "path": "src/quant/ppc_asm/quant_h263_altivec.c",
+      "bytes": 14531,
+      "sha256": "12937f0160ebedc6450d1c163f3153f2433499d00254c7f3d57dae77855f175e"
+    },
+    {
+      "path": "src/quant/ppc_asm/quant_mpeg_altivec.c",
+      "bytes": 8698,
+      "sha256": "0da52fcf88a453ce1afa07065fd15e5c57efb5fdcc491cde8285dac968c4acbe"
+    },
+    {
+      "path": "src/quant/x86_asm/quantize_h263_3dne.asm",
+      "bytes": 23822,
+      "sha256": "77bd91e66d68e08dd4398554468099cd76e390236b2c16c5d1e43c3022c0ebe3"
+    },
+    {
+      "path": "src/quant/x86_asm/quantize_h263_mmx.asm",
+      "bytes": 24609,
+      "sha256": "e6d60f76be38a7912e76fa76f2088ee7b630b813b6eead2527f6c1658981cd79"
+    },
+    {
+      "path": "src/quant/x86_asm/quantize_mpeg_mmx.asm",
+      "bytes": 17571,
+      "sha256": "747dba13305acb6ceafe19701413946305e91dc3ec15b874478e023794d1e374"
+    },
+    {
+      "path": "src/quant/x86_asm/quantize_mpeg_xmm.asm",
+      "bytes": 16695,
+      "sha256": "786914ad21dc5bac4ef2ada191fc0fbbae82cf3e6f2e814f97da5fc66119d84b"
+    },
+    {
+      "path": "src/utils/ia64_asm/mem_transfer_ia64.s",
+      "bytes": 23828,
+      "sha256": "22cfcdf77582df5a6b8f7e850d51368a1e27c992d68799d5cbc0569848412026"
+    },
+    {
+      "path": "src/utils/ppc_asm/altivec_trigger.c",
+      "bytes": 1340,
+      "sha256": "c899b087485c1102609f4c8a43152a165b66dcc02c5099e1df463b10ac19b7a9"
+    },
+    {
+      "path": "src/utils/ppc_asm/mem_transfer_altivec.c",
+      "bytes": 10222,
+      "sha256": "39e75f672827f8be3653eb4af7d08c0e4ba691f85ae36c7c5bf2677bfd146818"
+    },
+    {
+      "path": "src/utils/x86_asm/cpuid.asm",
+      "bytes": 5305,
+      "sha256": "f0bdeb10ac59a0c933b4702862ae991534c67778c65884bd66c1c491369aa459"
+    },
+    {
+      "path": "src/utils/x86_asm/interlacing_mmx.asm",
+      "bytes": 5499,
+      "sha256": "7770cef0afeb86ed02fe7d2f043a4e8a5f55c7fc10ca7772620cba37466bbee4"
+    },
+    {
+      "path": "src/utils/x86_asm/mem_transfer_3dne.asm",
+      "bytes": 10904,
+      "sha256": "5b21c919a5f2b97aa1b1d4598b7e951256e0bb783353b525c040340860eec3d9"
+    },
+    {
+      "path": "src/utils/x86_asm/mem_transfer_mmx.asm",
+      "bytes": 12706,
+      "sha256": "a9c5a77d4c4c66c4eee698b8518cff79d095fe3f75a55ba7ccf226227ba68662"
+    },
+    {
+      "path": "vfw/src/w32api/vfw.h",
+      "bytes": 5553,
+      "sha256": "89b9cee4b93e51b49f86a6e52073ebe65112841146ebabf188ea4bc4bd6c8a88"
+    }
+  ],
+  "directoryIndexes": [
+    {
+      "path": "",
+      "sha256": "24302380c4c6e54a9feac704182e1bd0e296f170eda8f9fa8abd746b4ef59047"
+    },
+    {
+      "path": "build/",
+      "sha256": "42d0c533be9307ee6c61ea7c5df497f1901957978813f078797b2684e5b537c2"
+    },
+    {
+      "path": "debian/",
+      "sha256": "89830e47f27245ebd8135137c382ea512bd5a0f2230f080e956f56e505d24ee1"
+    },
+    {
+      "path": "doc/",
+      "sha256": "6ac23ed7aa607063e65b23ed4bcaa87351ac5c554d89201891bee5b4e312a7a1"
+    },
+    {
+      "path": "dshow/",
+      "sha256": "c9bdd0a56f1023edee9d857d398d2f2652a6ec305c8a1330bf8fe6bd05ea3a11"
+    },
+    {
+      "path": "examples/",
+      "sha256": "4bdf50969be6fcba11ca67fd2ea611911c1a33f6994d58d00612dd91fdce7cf9"
+    },
+    {
+      "path": "src/",
+      "sha256": "91d58360158f6bded4b4db014f3a5f3818b9eddcb36d46a4a533919825be7d8b"
+    },
+    {
+      "path": "vfw/",
+      "sha256": "f237492183c468446450f434fd0f817589399a4b88d121ae5316c4db55984712"
+    },
+    {
+      "path": "build/generic/",
+      "sha256": "8be77698a6a992252d31219968572a024fb9c89d9f6095f3a826ec30b1bb75cc"
+    },
+    {
+      "path": "build/win32/",
+      "sha256": "5e5a34e6325c4ae0538a357d844df3063b0c98fb5b41a0889203205a90489560"
+    },
+    {
+      "path": "dshow/dxpatch/",
+      "sha256": "df42792e2eaaf50c3bc2e9b0cb5dc113ee307c0649a369959dc023a06864170a"
+    },
+    {
+      "path": "dshow/src/",
+      "sha256": "1ab1699c5b94e9e2804e234b61efed5222469c3c16bc4f41c72d98a76ecf8d7b"
+    },
+    {
+      "path": "src/bitstream/",
+      "sha256": "4f7002b55a7b6446a840ea4582efdaa85185d0ed163c8352b5bf3df9fa98bcb8"
+    },
+    {
+      "path": "src/dct/",
+      "sha256": "c528748bc08c2fa2b074d45a2de682e6a5e8b72294c0ad4b370c80a9041c9246"
+    },
+    {
+      "path": "src/image/",
+      "sha256": "c0c29d3c3ab3d5b529af297c8b17422332fe8ff1dde755d2864df87b8eb9567c"
+    },
+    {
+      "path": "src/motion/",
+      "sha256": "df6e727fd8ae948b84e0f00b22716e7ddcac287eba9fee8d8fa558842b3e6386"
+    },
+    {
+      "path": "src/plugins/",
+      "sha256": "35c8ca9f81e7e9e6324a98f56a2fa4adfc6fb61de6a739a3f9f0b47be3b6021c"
+    },
+    {
+      "path": "src/prediction/",
+      "sha256": "a8de1dec5a9d3143584d5cedf5b2f189e7d8ecd3dd147cb7ead90a3e8584c7b4"
+    },
+    {
+      "path": "src/quant/",
+      "sha256": "56e10883d6b687f48eec5e4654313e67c4f150cd91dda8ebee0eb1b82ad572df"
+    },
+    {
+      "path": "src/utils/",
+      "sha256": "7025cd001732c9710b5b7898c92855751e36e77353daa88772869b4e3febf371"
+    },
+    {
+      "path": "vfw/bin/",
+      "sha256": "7e77bb7cfa1b14f67014d1021c613398a2788fd526a01e0c38fe862a4c432544"
+    },
+    {
+      "path": "vfw/src/",
+      "sha256": "07cc7ff2acf626a5cfa54e699229c095bd86dd0b1d9f53d720afc5239e11e3f0"
+    },
+    {
+      "path": "src/bitstream/x86_asm/",
+      "sha256": "b4ea937d14ce5070258bce8515cbbaebe9c6809e39174a7bf493bc286de706ff"
+    },
+    {
+      "path": "src/dct/ia64_asm/",
+      "sha256": "4e6514ea69b48f34aef1c07a0f50617380767220cb896d6ca0edc44036ebe4ee"
+    },
+    {
+      "path": "src/dct/ppc_asm/",
+      "sha256": "e17ef2821a501b0bc5b5fd9e4aa2bae347ee55cb85069ea038137e621dbc4d6d"
+    },
+    {
+      "path": "src/dct/x86_asm/",
+      "sha256": "c41796ce151d9ea68b49c1862af0f913af4ccc3ae76a12715e68ad5a2c782ae3"
+    },
+    {
+      "path": "src/image/ia64_asm/",
+      "sha256": "ca1f3d6de62e2c599c4d828425b2c71564efeb43ae368e6d09eb01943727de25"
+    },
+    {
+      "path": "src/image/ppc_asm/",
+      "sha256": "6f39603e2e7376058f394df2bd450ccfba00d7bf6d17d6f91a1a898d850c85ad"
+    },
+    {
+      "path": "src/image/x86_asm/",
+      "sha256": "3851eec4edd3d4c7f152f5a44e4d5e3d0553669561456a67b58273a8860fd7b6"
+    },
+    {
+      "path": "src/motion/ia64_asm/",
+      "sha256": "551180e58d0aaf8c1ef637168c0c462f346d520d1cd1a736575ec615a191a8da"
+    },
+    {
+      "path": "src/motion/ppc_asm/",
+      "sha256": "5b6ef8962cc85bcd3df8b3c783234df8ad6089b71d54c57e145875b47c175b67"
+    },
+    {
+      "path": "src/motion/x86_asm/",
+      "sha256": "5871bcf2237f62b19466ba5024e5f4035af8cb2a412f4fb957b195c3947e732a"
+    },
+    {
+      "path": "src/plugins/x86_asm/",
+      "sha256": "6eb1d2edd4ef8524c02eba7d23b53d0f1e4d4ea902b950418141b15406d61d60"
+    },
+    {
+      "path": "src/quant/ia64_asm/",
+      "sha256": "5b71938151d56ab833db3b203e7885c44435952345eb328f85392fd86e8beaed"
+    },
+    {
+      "path": "src/quant/ppc_asm/",
+      "sha256": "a2aad41fc898cde8f9fbd05b2f6ae7d39df5b2dd521213f958b828a1a51488c0"
+    },
+    {
+      "path": "src/quant/x86_asm/",
+      "sha256": "3525d2aeb4eb088372239890a2590058ada4df673a16997ad7c0b804d5c53b1c"
+    },
+    {
+      "path": "src/utils/ia64_asm/",
+      "sha256": "d11bf60f78b42c880bd200bf14af4ac4790431dfa74e8044a3de2d76a55acbfd"
+    },
+    {
+      "path": "src/utils/ppc_asm/",
+      "sha256": "b98cb8a15c8e77846a7597ddd9009eb31a13fb5808896e66ba65200eea6dd1fa"
+    },
+    {
+      "path": "src/utils/x86_asm/",
+      "sha256": "9bd64d31610bbac06bee7bf589b076a8cb84dec392ff819da01106ddefef0cac"
+    },
+    {
+      "path": "vfw/src/w32api/",
+      "sha256": "5d83bfccdba46ddc9e0faab50089ca6292f014c9f9359605e6eb09082f728ed8"
+    }
+  ],
+  "sourcePermissions": "Common build scripts marked executable; svn property metadata is not represented."
+}

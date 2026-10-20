@@ -1,0 +1,890 @@
+[
+  {
+    "index": 27,
+    "cue": {
+      "start": 247.4,
+      "end": 249.76,
+      "text": "なにする気なのね",
+      "japanese": "なにする気なのね",
+      "subtitleHint": "你...你要干什么",
+      "asrConfidence": 0.853,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "入咗就出唔到嘅誘惑森林",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 248.2,
+      "speechEnd": 249.8,
+      "deliveryEnd": 250.11,
+      "sourceStart": 247.4,
+      "sourceEnd": 249.76,
+      "japaneseAlt": "な何する気なのね。",
+      "asrAgreement": 0.875,
+      "speakerId": "auto-c67ad0335d802f90-9",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.4077824354171753,
+      "sourceParts": [
+        {
+          "start": 247.4,
+          "end": 249.76,
+          "japanese": "なにする気なのね",
+          "japaneseAlt": "な何する気なのね。"
+        }
+      ],
+      "acousticStart": 248.24,
+      "acousticEnd": 249.76,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 248.2,
+          "end": 249.8,
+          "japanese": "なにする気なのね",
+          "japaneseAlt": "な何する気なのね。",
+          "speechStart": 248.2,
+          "speechEnd": 249.8,
+          "deliveryEnd": 250.11,
+          "acousticStart": 248.24,
+          "acousticEnd": 249.76,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_30",
+          "start": 247.37,
+          "end": 250.15,
+          "text": "你...你要干什么"
+        }
+      ],
+      "captionAllocation": {
+        "content": "在一旦进入就无法走出的诱惑森林中",
+        "caption_ids": [
+          "caption_24"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "入咗就出唔到嘅誘惑森林",
+        "evidence_id": "caption_24",
+        "quote": "在一旦进入就无法走出的诱惑森林中",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 28,
+    "cue": {
+      "start": 250.38,
+      "end": 253.52,
+      "text": "お前のことはママに言われている",
+      "japanese": "お前のことはママに言われている",
+      "subtitleHint": "妈妈之前还说起过你",
+      "asrConfidence": 0.996,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "路飛佢哋知邦德係大媽前夫嗰陣",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 251.06,
+      "speechEnd": 253.74,
+      "deliveryEnd": 254.05,
+      "sourceStart": 250.38,
+      "sourceEnd": 253.52,
+      "japaneseAlt": "お前のことはママに言われている。",
+      "asrAgreement": 1.0,
+      "speakerId": "auto-c67ad0335d802f90-11",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.11177465319633484,
+      "sourceParts": [
+        {
+          "start": 250.38,
+          "end": 253.52,
+          "japanese": "お前のことはママに言われている",
+          "japaneseAlt": "お前のことはママに言われている。"
+        }
+      ],
+      "acousticStart": 251.1,
+      "acousticEnd": 253.7,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 251.06,
+          "end": 253.74,
+          "japanese": "お前のことはママに言われている",
+          "japaneseAlt": "お前のことはママに言われている。",
+          "speechStart": 251.06,
+          "speechEnd": 253.74,
+          "deliveryEnd": 254.05,
+          "acousticStart": 251.1,
+          "acousticEnd": 253.7,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_31",
+          "start": 250.79,
+          "end": 253.62,
+          "text": "妈妈之前还说起过你"
+        }
+      ],
+      "captionAllocation": {
+        "content": "当路飞他们听到邦德是大妈前夫这件事的时候",
+        "caption_ids": [
+          "caption_25"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "路飛佢哋知邦德係大媽前夫嗰陣",
+        "evidence_id": "caption_25",
+        "quote": "当路飞他们听到邦德是大妈前夫这件事的时候",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 29,
+    "cue": {
+      "start": 254.5,
+      "end": 256.08,
+      "text": "リンリンが",
+      "japanese": "リンリンが",
+      "subtitleHint": "玲玲吗",
+      "asrConfidence": 0.871,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "甜點三將星克力架出現",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 254.57,
+      "speechEnd": 256.4,
+      "deliveryEnd": 256.71,
+      "sourceStart": 254.5,
+      "sourceEnd": 256.08,
+      "japaneseAlt": "リンリンが。",
+      "asrAgreement": 1.0,
+      "speakerId": "auto-c67ad0335d802f90-12",
+      "speakerNote": "短句／相近聲線，已自動配對；有疑問可試聽再改。",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.07131383568048477,
+      "sourceParts": [
+        {
+          "start": 254.5,
+          "end": 256.08,
+          "japanese": "リンリンが",
+          "japaneseAlt": "リンリンが。"
+        }
+      ],
+      "acousticStart": 254.61,
+      "acousticEnd": 256.36,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 254.57,
+          "end": 256.4,
+          "japanese": "リンリンが",
+          "japaneseAlt": "リンリンが。",
+          "speechStart": 254.57,
+          "speechEnd": 256.4,
+          "deliveryEnd": 256.71,
+          "acousticStart": 254.61,
+          "acousticEnd": 256.36,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_32",
+          "start": 255.06,
+          "end": 256.11,
+          "text": "玲玲吗"
+        }
+      ],
+      "captionAllocation": {
+        "content": "甜点三将星的克力架出现了",
+        "caption_ids": [
+          "caption_26"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "甜點三將星克力架出現",
+        "evidence_id": "caption_26",
+        "quote": "甜点三将星的克力架出现了",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 30,
+    "cue": {
+      "start": 256.5,
+      "end": 258.52,
+      "text": "決して構わんと",
+      "japanese": "決して構わんと",
+      "subtitleHint": "她说就算把你杀掉也无所谓",
+      "asrConfidence": 0.905,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "克力架，快放開俺",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 257.17,
+      "speechEnd": 258.45,
+      "deliveryEnd": 258.76,
+      "sourceStart": 256.5,
+      "sourceEnd": 258.52,
+      "japaneseAlt": "決して構わん。",
+      "asrAgreement": 0.923,
+      "speakerId": "auto-c67ad0335d802f90-6",
+      "speakerNote": "呢個角色參考對白較短，聲線相似度可能較低。",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.42014241218566895,
+      "sourceParts": [
+        {
+          "start": 256.5,
+          "end": 258.52,
+          "japanese": "決して構わんと",
+          "japaneseAlt": "決して構わん。"
+        }
+      ],
+      "acousticStart": 257.21,
+      "acousticEnd": 258.41,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 257.17,
+          "end": 258.45,
+          "japanese": "決して構わんと",
+          "japaneseAlt": "決して構わん。",
+          "speechStart": 257.17,
+          "speechEnd": 258.45,
+          "deliveryEnd": 258.76,
+          "acousticStart": 257.21,
+          "acousticEnd": 258.41,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_33",
+          "start": 256.97,
+          "end": 258.63,
+          "text": "她说就算把你杀掉也无所谓"
+        }
+      ],
+      "captionAllocation": {
+        "content": "克力架 快放开俺",
+        "caption_ids": [
+          "caption_27"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "克力架，快放開俺",
+        "evidence_id": "caption_27",
+        "quote": "克力架 快放开俺",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 31,
+    "cue": {
+      "start": 258.86,
+      "end": 260.92,
+      "text": "ええええええええええ",
+      "japanese": "ええええええええええ",
+      "subtitleHint": "",
+      "asrConfidence": 0.842,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "俺只想同羅拉同希鳳，同女兒們見個面咋",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 258.78,
+      "speechEnd": 260.96,
+      "deliveryEnd": 261.27,
+      "sourceStart": 258.86,
+      "sourceEnd": 260.92,
+      "japaneseAlt": "うーん。",
+      "asrAgreement": 0.0,
+      "speakerId": "auto-c67ad0335d802f90-9",
+      "speakerNote": "短句／相近聲線，已自動配對；有疑問可試聽再改。",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.24680431187152863,
+      "sourceParts": [
+        {
+          "start": 258.86,
+          "end": 260.92,
+          "japanese": "ええええええええええ",
+          "japaneseAlt": "うーん。"
+        }
+      ],
+      "acousticStart": 258.82,
+      "acousticEnd": 260.92,
+      "acousticAdjusted": false,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 258.78,
+          "end": 260.96,
+          "japanese": "ええええええええええ",
+          "japaneseAlt": "うーん。",
+          "speechStart": 258.78,
+          "speechEnd": 260.96,
+          "deliveryEnd": 261.27,
+          "acousticStart": 258.82,
+          "acousticEnd": 260.92,
+          "acousticAdjusted": false
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [],
+      "contextHearing": {
+        "start": 257.36,
+        "end": 262.42,
+        "text": "決して構わんと。"
+      },
+      "captionAllocation": {
+        "content": "俺只是想和罗拉...还有希凤...只是想和女儿们见个面而已啊",
+        "caption_ids": [
+          "caption_28",
+          "caption_29"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "俺只想同羅拉同希鳳，同女兒們見個面咋",
+        "evidence_id": "caption_29",
+        "quote": "只是想和女儿们见个面而已啊",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 32,
+    "cue": {
+      "start": 265.36,
+      "end": 272.0,
+      "text": "コラッカ君の父親に当たる存在よね",
+      "japanese": "コラッカ君の父親に当たる存在よね",
+      "subtitleHint": "你...你要好好想想啊 ／ 俺好歹也算是你的父亲啊",
+      "asrConfidence": 0.714,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "玲玲？",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 265.58,
+      "speechEnd": 272.04,
+      "deliveryEnd": 272.35,
+      "sourceStart": 265.36,
+      "sourceEnd": 272.0,
+      "japaneseAlt": "考えてよね。カリにもウルはクラカ君の父親にあたる存在よ。",
+      "asrAgreement": 0.571,
+      "speakerId": "auto-c67ad0335d802f90-13",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.29188767075538635,
+      "sourceParts": [
+        {
+          "start": 265.36,
+          "end": 272.0,
+          "japanese": "コラッカ君の父親に当たる存在よね",
+          "japaneseAlt": "考えてよね。カリにもウルはクラカ君の父親にあたる存在よ。"
+        }
+      ],
+      "acousticStart": 265.62,
+      "acousticEnd": 272.0,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 265.58,
+          "end": 272.04,
+          "japanese": "コラッカ君の父親に当たる存在よね",
+          "japaneseAlt": "考えてよね。カリにもウルはクラカ君の父親にあたる存在よ。",
+          "speechStart": 265.58,
+          "speechEnd": 272.04,
+          "deliveryEnd": 272.35,
+          "acousticStart": 265.62,
+          "acousticEnd": 272.0,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_34",
+          "start": 265.17,
+          "end": 267.27,
+          "text": "你...你要好好想想啊"
+        },
+        {
+          "id": "caption_35",
+          "start": 267.56,
+          "end": 272.46,
+          "text": "俺好歹也算是你的父亲啊"
+        }
+      ],
+      "captionAllocation": {
+        "content": "玲玲吗",
+        "caption_ids": [
+          "caption_32"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "玲玲？",
+        "evidence_id": "caption_32",
+        "quote": "玲玲吗",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 33,
+    "cue": {
+      "start": 272.68,
+      "end": 275.4,
+      "text": "元だ 今は違う",
+      "japanese": "元だ 今は違う",
+      "subtitleHint": "只是前任而已 现在已经不同了",
+      "asrConfidence": 0.822,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "佢話就算殺咗你都冇所謂",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 272.96,
+      "speechEnd": 275.62,
+      "deliveryEnd": 275.7,
+      "sourceStart": 272.68,
+      "sourceEnd": 275.4,
+      "japaneseAlt": "元だ。今は違う。",
+      "asrAgreement": 1.0,
+      "speakerId": "auto-c67ad0335d802f90-14",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.24917340278625488,
+      "sourceParts": [
+        {
+          "start": 272.68,
+          "end": 275.4,
+          "japanese": "元だ 今は違う",
+          "japaneseAlt": "元だ。今は違う。"
+        }
+      ],
+      "acousticStart": 273.0,
+      "acousticEnd": 275.58,
+      "acousticAdjusted": true,
+      "speechRegions": [
+        {
+          "start": 273.0,
+          "end": 273.91
+        },
+        {
+          "start": 274.47,
+          "end": 275.58
+        }
+      ],
+      "acousticParts": [
+        {
+          "start": 272.96,
+          "end": 275.62,
+          "japanese": "元だ 今は違う",
+          "japaneseAlt": "元だ。今は違う。",
+          "speechStart": 272.96,
+          "speechEnd": 275.62,
+          "deliveryEnd": 275.93,
+          "acousticStart": 273.0,
+          "acousticEnd": 275.58,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_36",
+          "start": 272.73,
+          "end": 275.42,
+          "text": "只是前任而已 现在已经不同了"
+        }
+      ],
+      "captionAllocation": {
+        "content": "她说就算把你杀掉也无所谓",
+        "caption_ids": [
+          "caption_33"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "佢話就算殺咗你都冇所謂",
+        "evidence_id": "caption_33",
+        "quote": "她说就算把你杀掉也无所谓",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 34,
+    "cue": {
+      "start": 276.04,
+      "end": 280.94,
+      "text": "ママに言わせりゃ 過去43年の夫たちなどは",
+      "japanese": "ママに言わせりゃ 過去43年の夫たちなどは",
+      "subtitleHint": "按照妈妈的说法 那所谓的43任前夫",
+      "asrConfidence": 0.914,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "你...你要好好諗下",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 275.7,
+      "speechEnd": 280.96,
+      "deliveryEnd": 281.27,
+      "sourceStart": 276.04,
+      "sourceEnd": 280.94,
+      "japaneseAlt": "ママに言わせりゃ、過去四十三人の夫たちなど。",
+      "asrAgreement": 0.8,
+      "speakerId": "auto-c67ad0335d802f90-11",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.491945743560791,
+      "sourceParts": [
+        {
+          "start": 276.04,
+          "end": 280.94,
+          "japanese": "ママに言わせりゃ 過去43年の夫たちなどは",
+          "japaneseAlt": "ママに言わせりゃ、過去四十三人の夫たちなど。"
+        }
+      ],
+      "acousticStart": 275.74,
+      "acousticEnd": 280.92,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 275.7,
+          "end": 280.96,
+          "japanese": "ママに言わせりゃ 過去43年の夫たちなどは",
+          "japaneseAlt": "ママに言わせりゃ、過去四十三人の夫たちなど。",
+          "speechStart": 275.7,
+          "speechEnd": 280.96,
+          "deliveryEnd": 281.27,
+          "acousticStart": 275.74,
+          "acousticEnd": 280.92,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_37",
+          "start": 276.29,
+          "end": 280.78,
+          "text": "按照妈妈的说法 那所谓的43任前夫"
+        }
+      ],
+      "captionAllocation": {
+        "content": "你...你要好好想想啊",
+        "caption_ids": [
+          "caption_34"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "你...你要好好諗下",
+        "evidence_id": "caption_34",
+        "quote": "你...你要好好想想啊",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 35,
+    "cue": {
+      "start": 281.4,
+      "end": 283.9,
+      "text": "血の繋がりのない他人だ",
+      "japanese": "血の繋がりのない他人だ",
+      "subtitleHint": "都已经是没有任何血缘关系的外人了",
+      "asrConfidence": 0.863,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "我點都算係你個爹",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 281.67,
+      "speechEnd": 283.93,
+      "deliveryEnd": 284.24,
+      "sourceStart": 281.4,
+      "sourceEnd": 283.9,
+      "japaneseAlt": "血のつながりのない他人だ。",
+      "asrAgreement": 0.87,
+      "speakerId": "auto-c67ad0335d802f90-15",
+      "speakerNote": "呢個角色參考對白較短，聲線相似度可能較低。",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.5559202432632446,
+      "sourceParts": [
+        {
+          "start": 281.4,
+          "end": 283.9,
+          "japanese": "血の繋がりのない他人だ",
+          "japaneseAlt": "血のつながりのない他人だ。"
+        }
+      ],
+      "acousticStart": 281.71,
+      "acousticEnd": 283.89,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 281.67,
+          "end": 283.93,
+          "japanese": "血の繋がりのない他人だ",
+          "japaneseAlt": "血のつながりのない他人だ。",
+          "speechStart": 281.67,
+          "speechEnd": 283.93,
+          "deliveryEnd": 284.24,
+          "acousticStart": 281.71,
+          "acousticEnd": 283.89,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_38",
+          "start": 281.44,
+          "end": 283.85,
+          "text": "都已经是没有任何血缘关系的外人了"
+        }
+      ],
+      "captionAllocation": {
+        "content": "俺好歹也算是你的父亲啊",
+        "caption_ids": [
+          "caption_35"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "我點都算係你個爹",
+        "evidence_id": "caption_35",
+        "quote": "俺好歹也算是你的父亲啊",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 36,
+    "cue": {
+      "start": 284.84,
+      "end": 285.48,
+      "text": "そうだ!",
+      "japanese": "そうだ!",
+      "subtitleHint": "太绝情了吧",
+      "asrConfidence": 0.551,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "只係前任啫，而家唔同曬",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 284.66,
+      "speechEnd": 285.52,
+      "deliveryEnd": 285.83,
+      "sourceStart": 284.84,
+      "sourceEnd": 285.48,
+      "japaneseAlt": "出。",
+      "asrAgreement": 0.0,
+      "speakerId": "auto-c67ad0335d802f90-13",
+      "speakerNote": "短句／相近聲線，已自動配對；有疑問可試聽再改。",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.10380319505929947,
+      "sourceParts": [
+        {
+          "start": 284.84,
+          "end": 285.48,
+          "japanese": "そうだ!",
+          "japaneseAlt": "出。"
+        }
+      ],
+      "acousticStart": 284.7,
+      "acousticEnd": 285.48,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 284.66,
+          "end": 285.52,
+          "japanese": "そうだ!",
+          "japaneseAlt": "出。",
+          "speechStart": 284.66,
+          "speechEnd": 285.52,
+          "deliveryEnd": 285.83,
+          "acousticStart": 284.7,
+          "acousticEnd": 285.48,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_39",
+          "start": 284.73,
+          "end": 285.77,
+          "text": "太绝情了吧"
+        }
+      ],
+      "contextHearing": {
+        "start": 283.34,
+        "end": 286.98,
+        "text": "死んだ。そんなだが。"
+      },
+      "captionAllocation": {
+        "content": "只是前任而已 现在已经不同了",
+        "caption_ids": [
+          "caption_36"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "只係前任啫，而家唔同晒",
+        "evidence_id": "caption_36",
+        "quote": "只是前任而已 现在已经不同了",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  },
+  {
+    "index": 37,
+    "cue": {
+      "start": 285.98,
+      "end": 289.96,
+      "text": "だが娘たちとは確かに血は繋がっているのよね",
+      "japanese": "だが娘たちとは確かに血は繋がっているのよね",
+      "subtitleHint": "但女儿们身上确实是流着俺的血脉啊",
+      "asrConfidence": 0.931,
+      "reviewNote": "",
+      "timingSource": "japanese-audio",
+      "cantonese": "按媽媽嘅講法，嗰啲43任前夫",
+      "enabled": true,
+      "sourceReviewReasons": [],
+      "speechStart": 286.14,
+      "speechEnd": 289.92,
+      "deliveryEnd": 289.92,
+      "sourceStart": 285.98,
+      "sourceEnd": 289.96,
+      "japaneseAlt": "だが娘たちと私が日中はつながっているのよ。",
+      "asrAgreement": 0.683,
+      "speakerId": "auto-c67ad0335d802f90-13",
+      "speakerNote": "",
+      "mixedVoices": false,
+      "previousSpeakerSimilarity": 0.4242466390132904,
+      "sourceParts": [
+        {
+          "start": 285.98,
+          "end": 289.96,
+          "japanese": "だが娘たちとは確かに血は繋がっているのよね",
+          "japaneseAlt": "だが娘たちと私が日中はつながっているのよ。"
+        }
+      ],
+      "acousticStart": 286.18,
+      "acousticEnd": 289.92,
+      "acousticAdjusted": true,
+      "speechRegions": [],
+      "acousticParts": [
+        {
+          "start": 286.14,
+          "end": 290.0,
+          "japanese": "だが娘たちとは確かに血は繋がっているのよね",
+          "japaneseAlt": "だが娘たちと私が日中はつながっているのよ。",
+          "speechStart": 286.14,
+          "speechEnd": 290.0,
+          "deliveryEnd": 290.31,
+          "acousticStart": 286.18,
+          "acousticEnd": 289.96,
+          "acousticAdjusted": true
+        }
+      ],
+      "nonlexicalTail": false,
+      "captionRecords": [
+        {
+          "id": "caption_40",
+          "start": 286.06,
+          "end": 290.31,
+          "text": "但女儿们身上确实是流着俺的血脉啊"
+        }
+      ],
+      "captionAllocation": {
+        "content": "按照妈妈的说法 那所谓的43任前夫",
+        "caption_ids": [
+          "caption_37"
+        ],
+        "uncertain": false
+      },
+      "hybridRevision": "hybrid-scenes-3",
+      "hybridEvidence": {
+        "cantonese": "按媽媽嘅講法，嗰啲43任前夫",
+        "evidence_id": "caption_37",
+        "quote": "按照妈妈的说法 那所谓的43任前夫",
+        "uncertain": false
+      },
+      "intent": "",
+      "requiredNames": [],
+      "hybridNeedsReview": false
+    }
+  }
+]

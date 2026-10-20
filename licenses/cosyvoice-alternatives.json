@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-19",
+  "enabledByThisReview": false,
+  "candidates": [
+    {
+      "repo": "aufklarer/CosyVoice3-0.5B-MLX-4bit",
+      "modelCard": "https://huggingface.co/aufklarer/CosyVoice3-0.5B-MLX-4bit",
+      "declaredLicense": "Apache-2.0",
+      "declaredBaseModel": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "runtime": "soniqo/speech-swift",
+      "status": "publisher-declared-licence; not integrated or inference-tested in AniCanto",
+      "limitation": "Separate LLM/flow/vocoder/tokenizer safetensors. Existing mlx-audio-plus adapter expects a consolidated model.safetensors; no direct download substitution is approved."
+    },
+    {
+      "repo": "aufklarer/CosyVoice3-0.5B-MLX-8bit",
+      "modelCard": "https://huggingface.co/aufklarer/CosyVoice3-0.5B-MLX-8bit",
+      "declaredLicense": "Apache-2.0",
+      "declaredBaseModel": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512",
+      "runtime": "soniqo/speech-swift",
+      "status": "publisher-declared-licence; not integrated or inference-tested in AniCanto",
+      "limitation": "Separate LLM/flow/vocoder/tokenizer safetensors. Existing mlx-audio-plus adapter expects a consolidated model.safetensors; no direct download substitution is approved."
+    }
+  ]
+}

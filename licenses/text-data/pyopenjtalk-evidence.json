@@ -1,0 +1,60 @@
+[
+  {
+    "component": "pyopenjtalk-plus",
+    "version": "0.4.1.post9",
+    "platform": "macos",
+    "wheel": "pyopenjtalk_plus-0.4.1.post9-cp311-cp311-macosx_10_9_universal2.whl",
+    "url": "https://files.pythonhosted.org/packages/02/2c/8dacb54db5148d65802d2932fae702227e7ebbc4e8578ba417da872cc61d/pyopenjtalk_plus-0.4.1.post9-cp311-cp311-macosx_10_9_universal2.whl",
+    "wheelSHA256": "5e91f4d43740e550bc8a1fb8923fd5a490f06f5fbcac0fba9280e3b7d7b954e9",
+    "dictionarySHA256": "0328ca62355100aba6df13af56912ad88cf10246e2a286005b89cb8ce2cef652",
+    "documents": [
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-macos/LICENSE.md",
+        "sha256": "c38083a4d51c1ea86e08b3303a984d0c23718c5ac214058af705814d30f4bb5b",
+        "wheelPath": "pyopenjtalk_plus-0.4.1.post9.dist-info/licenses/LICENSE.md"
+      },
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-macos/LICENSE_mei_normal.htsvoice",
+        "sha256": "af8a05b6ce28e513658fdf0480f36dbf49cbe878d2571d97dd017e8052c71391",
+        "wheelPath": "pyopenjtalk/htsvoice/LICENSE_mei_normal.htsvoice"
+      },
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-macos/COPYING",
+        "sha256": "f4eca42ebd930e2c6e57fca58319d989bebcd1510cb7714b149c50f5425135ea",
+        "wheelPath": "pyopenjtalk/dictionary/COPYING"
+      }
+    ],
+    "status": "exact-wheel-dictionary-and-voice-notices-retained",
+    "dictionaryAutomaticDownload": false,
+    "voiceUse": "Bundled upstream HMM voice is not used for AniCanto voice generation; its own notice remains retained."
+  },
+  {
+    "component": "pyopenjtalk-plus",
+    "version": "0.4.1.post9",
+    "platform": "windows",
+    "wheel": "pyopenjtalk_plus-0.4.1.post9-cp311-cp311-win_amd64.whl",
+    "url": "https://files.pythonhosted.org/packages/18/df/50e8185a5a5d441e404af7c0407491bc92ca76d44ceaf8cd086066365184/pyopenjtalk_plus-0.4.1.post9-cp311-cp311-win_amd64.whl",
+    "wheelSHA256": "58cda3998e1c8f4d820e07757803e8cd9ad324c359af59f398c30ba38fb88865",
+    "dictionarySHA256": "0328ca62355100aba6df13af56912ad88cf10246e2a286005b89cb8ce2cef652",
+    "documents": [
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-windows/COPYING",
+        "sha256": "59099a8c7c2acb68ef9945e9e80f352b1583c62b2023ac47d8f33bd371f5b1b6",
+        "wheelPath": "pyopenjtalk/dictionary/COPYING"
+      },
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-windows/LICENSE_mei_normal.htsvoice",
+        "sha256": "06fc42611289ac1224c64f765521e121b63a0d2b52cf1b04b0b33b20ea7bd6f2",
+        "wheelPath": "pyopenjtalk/htsvoice/LICENSE_mei_normal.htsvoice"
+      },
+      {
+        "path": "licenses/text-data/pyopenjtalk-plus-windows/LICENSE.md",
+        "sha256": "4a54754f4d103278133acb1086457257345e18706b1efef47d13e450ba77871c",
+        "wheelPath": "pyopenjtalk_plus-0.4.1.post9.dist-info/licenses/LICENSE.md"
+      }
+    ],
+    "status": "exact-wheel-dictionary-and-voice-notices-retained",
+    "dictionaryAutomaticDownload": false,
+    "voiceUse": "Bundled upstream HMM voice is not used for AniCanto voice generation; its own notice remains retained."
+  }
+]

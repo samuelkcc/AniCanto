@@ -1,0 +1,62 @@
+{
+  "status": "0.24.34-auto-repair-candidate-publication-held",
+  "scope": "Version 0.24.34 local candidate: review outcome and bounded retry improvements. Publication remains withheld pending full-film acoustic verification and Windows on-device acceptance.",
+  "desktopArtwork": {
+    "themes": [
+      "studio",
+      "energy",
+      "ocean",
+      "ninja",
+      "retro",
+      "forest",
+      "future",
+      "mint",
+      "moonflower"
+    ],
+    "provenance": "pet-art-prompts.json",
+    "policy": "Nine original female assistants, including the retained original short purple-haired Welcome identity; all single-character atlases, continuous rigs, progress sprites and thirty-six Welcome covers share these identities. Broad animation genre aesthetics; no official franchise attribution. Generated artwork is not a legal clearance certificate.",
+    "excludedDesigns": "Retired and unused male concepts are excluded from active Resources and new packages; private generation archives are not public source."
+  },
+  "outstanding": [
+    "Verify and retain the exact matching source attachment and notices beside the new binary pair.",
+    "Confirm removed unreviewed variants are absent from both download catalogues.",
+    "Complete real-video and clean redeployment QA. Windows real-device execution remains unverified on this Mac host.",
+    "Keep the repository private unless all authorisation conditions are satisfied."
+  ],
+  "applicationLicense": "MIT",
+  "publicationAuthorized": true,
+  "completedInSource": [
+    "Original application code remains MIT; third-party licences and corresponding-source obligations are separately retained. The GPL trial was not packaged or publicly released.",
+    "Pinned model licence evidence collected; reviewed catalogs block new downloads for conversions lacking sufficient licence evidence.",
+    "Mac native source archives, build recipes and checksums collected in private staging; legal evidence and manifests retained in licenses/.",
+    "Unused legacy VLC stack removed by shared-app staging; private historical project notes excluded from the source docs.",
+    "DiffQ omitted from new Mac/Windows Mel-Band RoFormer runtime locks and bundled wheels; six-second real model outputs had identical decoded audio samples with DiffQ unavailable.",
+    "Unused Distance omitted from new GPT runtime locks and bundled wheels after v2ProPlus/v4 Cantonese, Japanese and English preprocessing/import probes. Full TTS and real Windows GPU acceptance remain separate checks.",
+    "Supplemented missing ANTLR/jieba/jieba_fast upstream notices; added Feather geometry acknowledgement and actual Noto font attribution.",
+    "Collected exact auxiliary-model cards, corrected WeSpeaker weights to CC-BY-4.0, and added setup-side evidence preservation.",
+    "Added an allowlisted public-source candidate exporter and checksum-verified available source-material assembly; neither grants publication approval.",
+    "uv / SeaHash removed from new installer and packaging paths; private CPython + venv/pip implemented. Mac native cold start and selective repair passed; Windows on-device and final artifact checks remain pending. See licenses/python-installer and distribution-review B01.",
+    "B02 exact auxiliary model/data/OCR provenance resolved: retained publisher terms, official tensor comparisons and installed notice delivery.",
+    "Reference bank revision 3 contains seven original synthetic clips only; four human Common Voice clips retired privately. Generator licences and exact generation evidence retained.",
+    "Verified Mac native source mapping for all 21 native files / 12 components; Windows FFmpeg has 747 retained source/build materials including recursive dependencies and exact SVN snapshots. Unused SDK binaries and unrelated test media excluded.",
+    "Release-only compiler paths anonymised and hardcoded checkout fallbacks omitted; diagnostic C/C++ filename normalisation preserves executable instructions.",
+    "All human reference clips and full unlicensed optional converter model-card text excluded from the prepared profile; seven original synthetic references are hash allowlisted.",
+    "CosyVoice 3 is limited to official native weights on Windows NVIDIA/CUDA. Mac MLX, Windows AMD/Intel/CPU CosyVoice 3 downloads are not offered; historical recordings remain playable."
+  ],
+  "lastVerifiedLocalBuild": "0.24.32 candidates are being assembled. Final checks and real-video/redeployment acceptance have not yet completed.",
+  "detailedReview": "licenses/distribution-review.json",
+  "functionalTesting": "Windows GPU acceptance is a functional concern, separate from this licence review. Publication remains on hold.",
+  "productName": "AniCanto",
+  "previousProductName": "CantoSync",
+  "repository": {
+    "url": "https://github.com/samuelkcc/AniCanto",
+    "visibility": "private",
+    "contentUploadAuthorized": true,
+    "createdEmpty": false
+  },
+  "authorizationConditions": [
+    "Known enabled-component licence evidence and matching source/notices are verified for this exact binary pair.",
+    "Real video conversion and redeployment acceptance pass.",
+    "Any unresolved issue keeps the repository private for developer discussion."
+  ]
+}

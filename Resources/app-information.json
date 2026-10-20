@@ -1,0 +1,10 @@
+{
+  "name": "AniCanto",
+  "developer": "SCKC",
+  "copyright": "Copyright (c) 2026 SCKC",
+  "originalCodeLicense": "MIT",
+  "introduction": {
+    "zh-HK": "AniCanto 由 SCKC 獨立開發，是一個結合動畫、配音與語言文化的興趣項目。透過香港廣東話及英文配音，為熟悉的動畫帶來嶄新的觀賞體驗；同時以輕鬆有趣的方式，讓世界各地的動畫愛好者感受香港日常口語的生動表達與獨特韻味。\n\n使用英文介面開始設定時，預設提供香港廣東話及英文配音、保留日文原聲，並加入可開關及切換的廣東話與英文字幕，方便聆聽、閱讀與比較。\n\n本項目以個人興趣、創作探索及推廣香港廣東話文化為出發點。AI 輔助翻譯與配音未必完全準確，但不同語言帶來的親切感與意外趣味，正是這段探索的一部分。",
+    "en": "AniCanto is an independent hobby project by SCKC, bringing together anime, dubbing and language culture. Through Hong Kong Cantonese and English dubbing, it offers a fresh way to experience familiar anime while introducing fans around the world to the lively expression and distinctive character of everyday Hong Kong Cantonese.\n\nWhen you begin setup in English, the default selection includes Hong Kong Cantonese and English dubbing, the original Japanese audio, and Cantonese and English subtitle tracks that can be switched or turned off, making it easy to listen, read and compare.\n\nCreated for personal enjoyment, creative exploration and the sharing of Hong Kong Cantonese culture, AniCanto uses AI-assisted translation and dubbing. Results may not always be accurate; the sense of familiarity and unexpected moments that another language brings are part of the experience."
+  }
+}

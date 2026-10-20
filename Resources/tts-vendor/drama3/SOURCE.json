@@ -1,0 +1,22 @@
+{
+  "repo": "https://github.com/Blaizzy/mlx-audio",
+  "revision": "dad2087f790dfe96b07d5aac1405db4b578b411f",
+  "files": {
+    "mlx_audio/tts/models/fish_drama3/chunking.py": "65c9924a5ec7ac79dad77c0ae642d44fb7c2ac9fa069573b557b8be514b408c0",
+    "mlx_audio/tts/models/fish_drama3/config.py": "343f94c9abf9a8da973bfb2058fd4fb28c8d8277b84cf88d04e2ce0156f31b98",
+    "mlx_audio/tts/models/fish_drama3/backbone.py": "7ba175d817d3a984c2ef061fe02491dfc9a0078ef1fe87d26d021c9044ff0e7d",
+    "mlx_audio/tts/models/fish_drama3/__init__.py": "eebf614917c9cb0d87c28e9cdcd561406554b8c1a07de5cce6fb3c8843d62a10",
+    "mlx_audio/tts/models/fish_drama3/tower.py": "2b05e74ef1b63a0acda681ba0a00329eccb0e4f1e6c4d6e9258ee5a92aede6d5",
+    "mlx_audio/tts/models/fish_drama3/drama3.py": "74696d1fe35a301cc6e59316a78e179f2c3c47f52787099311f5d93719f62b99",
+    "mlx_audio/codec/models/fish_s1_dac/__init__.py": "6c300565667e68002a2555d39e644edd03c7708806facd43aa4f60778ab6c2db",
+    "mlx_audio/codec/models/fish_s1_dac/fish_s1_dac.py": "e0045f6df7fb8945f348f31d05071785e0930ed4a44af417364ec7778f42e260",
+    "mlx_audio/lm/models/qwen3_5.py": "0ade32c93c3165f2cc82c851248b9c44d74c2a3b1d5cc8960a92ec3dc5b51aab",
+    "mlx_audio/lm/models/qwen3_next.py": "57502b0bc872f83a4c6b813485a79531f8e87c84be0f12a8489cd0002d9b670a",
+    "mlx_audio/lm/models/gated_delta.py": "f69cab3c4a94431832e418c46bebd59c95a3ab35c182e482ad38f974c3999aa8"
+  },
+  "changes": [
+    "Only the Drama 3 architecture, its required Qwen3.5 backbone modules and Fish S1 DAC codec are vendored.",
+    "Codec package exports DAC only; converter/training utilities are excluded.",
+    "Runtime extensions are registered only inside the Drama 3 child process; shared installed mlx-audio packages remain unchanged."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "modelRevision": "4a3078e885344bb9b24d511cec389d2726854d15",
+  "runtimeRevision": "9277495a",
+  "runtimeSource": "https://github.com/JarodMica/audio.cpp",
+  "patchSHA256": "cb71f86c81158db43e29a93626ae383c1b2f1d957304e700d7e0a174f6334119",
+  "backends": [
+    "macOS CPU",
+    "Windows CPU",
+    "Windows CUDA (on-device verification required)"
+  ],
+  "GPUValidated": false,
+  "cudaPluginRelease": "v0.9.2",
+  "cudaRuntime": "12.4",
+  "loaderPatchSHA256": "6001d44e515cdc918eb925cae00db7e73f44efa34da9bfff137ebcb4e3e3ab7c",
+  "runtimeSourceArchiveSHA256": "d171152f5b9db528f4784e139f8693327cb6b94b69f23f104eed1ac802366797"
+}

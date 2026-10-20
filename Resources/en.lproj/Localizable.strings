@@ -1,0 +1,2252 @@
+"01  影片" = "01  Video";
+"02  字幕與翻譯" = "02  Subtitles & translation";
+"03  配音與輸出" = "03  Dubbing & export";
+"04  音軌、字幕與輸出" = "04  Audio tracks, subtitles & export";
+"80 年代動畫" = "1980s animation";
+"AI 改短建議" = "Suggest a shorter line";
+"ANIME DUBBING STUDIO · 日本動畫，講返廣東話。" = "ANIME DUBBING STUDIO · Give your anime a Cantonese voice.";
+"CPU · 相容模式，較慢" = "CPU · Compatibility mode, slower";
+"AniCanto 係 SCKC 因為興趣而整嘅小作品：想試吓，如果日本動畫角色講起廣東話，會係點？用本機 AI 將對白改編成廣東話，享受配音同學語言嘅樂趣。AI 唔係句句都譯得準，有時會講出意想不到嘅版本——呢份驚喜亦係玩味之一。歡迎試玩、比較同自己執稿；唔保證專業配音品質。" = "A hobby project by SCKC: discover what Japanese anime might sound like in Cantonese. Experiment, compare and enjoy the unexpected interpretations. Professional quality is not guaranteed.";
+"CosyVoice 3 · MLX 廣東話" = "CosyVoice 3 · MLX Cantonese";
+"CosyVoice 3 使用 Apple Silicon GPU · MLX，全本機生成。" = "CosyVoice 3 runs locally on the Apple Silicon GPU using MLX.";
+"GPT-SoVITS · 角色廣東話" = "GPT-SoVITS · Cantonese voice cloning";
+"OCR 實際輸入預覽" = "Actual OCR input";
+"Ollama 模型名稱，例如 qwen3:4b" = "Ollama model tag, e.g. qwen3:4b";
+"Qwen 3.5／其他版本可以輸入 Ollama tag 下載，但需由伺服器支援；未驗證嘅版本唔會標成推薦。Qwen 文字模型同 Qwen3-TTS 語音模型係分開嘅。" = "Enter a supported Ollama tag for other Qwen versions. Untested versions are not recommendations. Qwen text models and Qwen3-TTS are separate downloads.";
+"Qwen3 14B · 建議" = "Qwen3 14B · Recommended";
+"Qwen3 4B · 輕量試用" = "Qwen3 4B · Lightweight";
+"Qwen3-TTS 目前屬實驗：Base 聲線複製冇獨立香港粵語控制碼，口音同跨語言聲線未通過真人聽感驗收。請先試聽；CosyVoice 3 保持推薦。" = "Qwen3-TTS is experimental. Base voice cloning has no dedicated Hong Kong Cantonese control token. Accent and cross-language voice quality need listening tests. CosyVoice 3 remains recommended.";
+"一次加入多集，逐集喺本機處理" = "Add multiple episodes, process locally one at a time";
+"三款字幕分開揀" = "All three subtitle options";
+"下一場，\n輪到你配音。" = "Your next scene,\nyour voice.";
+"下載" = "Download";
+"下載模型" = "Download model";
+"下載／修復" = "Download / repair";
+"中文字幕參考（唔係配音時段）" = "Chinese subtitle reference (not dubbing timing)";
+"主引擎會成為預設音軌。可加入其他引擎比較；共用譯稿同背景，逐個生成，時間會隨引擎數目增加。" = "The primary engine is the default audio track. Add engines for comparison; analysis, script and background are shared. Engines run sequentially and each adds processing time.";
+"主題喺啟動時揀一次，轉換途中唔會跳換。人物係原創，唔係官方動漫角色。" = "A theme is chosen once at launch. Characters are original designs, not official anime characters.";
+"介面與主題" = "Interface & themes";
+"仲未有輸出。匯入影片後，可以先試一段 3 分鐘片段。" = "No exports yet. Import a video and try a three-minute segment.";
+"保留原色（預設）" = "Original colors (default)";
+"停止" = "Stop";
+"停止試聽" = "Stop listening";
+"儲存草稿" = "Save draft";
+"先試分離所選片段" = "Test separation on this segment";
+"內置 VLC" = "Built-in VLC";
+"內置字幕軌 · MKV / MP4" = "Embedded subtitles · MKV / MP4";
+"全片完成時間未定；估算唔包括之後嘅改稿、重錄、覆聽同影片合成。" = "Overall completion time is unknown. This estimate excludes later rewriting, retakes, checks and muxing.";
+"兩個引擎同稿比較" = "Compare both engines with the same script";
+"冇字幕 · 日語語音辨識" = "No subtitles · Japanese speech recognition";
+"分析影片時會自動分辨聲線、抽取原聲參考，再配對每句對白。呢頁只係查看同試聽結果，正常轉換毋須手動設定。" = "Voices are grouped and references extracted automatically during analysis. This page lets you inspect and audition the results; manual setup is optional.";
+"分析頭 5 分鐘 OP" = "Analyze OP in first 5 minutes";
+"分離日語對白，保留音樂／音效" = "Separate Japanese dialogue; keep music / effects";
+"分離背景再混入廣東話；自動補回有把握、冇對白重疊嘅笑聲／呼吸。重疊或唔確定嘅非語言聲音未必保留，分離亦可能有殘留。" = "Mix Cantonese with the separated background and recover confident, isolated laughter or breaths. Overlapping or uncertain sounds may remain missing; separation may leave artifacts.";
+"到環境頁下載模型" = "Open model downloads";
+"加入 MP4／MKV，或者將多條影片拖入呢度。" = "Add MP4 / MKV files, or drop multiple videos here.";
+"加入多條影片" = "Add videos";
+"加入字幕" = "Add subtitles";
+"加入日語原聲音軌" = "Include original Japanese audio track";
+"加入角色" = "Add character";
+"動畫氣氛" = "Anime theme";
+"匯入 MP4 / MKV" = "Import MP4 / MKV";
+"匯入乾淨 WAV" = "Import clean WAV";
+"匯入影片…" = "Import video…";
+"原型功能邊界" = "Prototype limitations";
+"原片" = "Source";
+"原片即時預覽 · 拖時間軸檢查畫面，或按下方「播放呢句」；影片會固定喺上方。" = "Live source preview. Scrub the timeline or play a line below; the player stays above the script.";
+"去工作區調整設定" = "Adjust workspace settings";
+"去轉換工作區" = "Open conversion workspace";
+"參考日語原文唔係中文字幕翻譯。抽取時如已部署 Whisper，會自動填入辨識草稿，仍要核對。聲線相似度、情緒同廣東話發音需要試聽確認。" = "Enter the words actually spoken in the reference, not a Chinese translation. Automatic transcription still needs checking. Audition voice similarity, expression and Cantonese pronunciation.";
+"參考錄音實際講嘅原文" = "Actual words spoken in the reference";
+"參考錄音語言" = "Reference language";
+"參考開始時間（分:秒）" = "Reference start (min:sec)";
+"取消" = "Cancel";
+"只喺你部 Mac 處理" = "Processed on your Mac";
+"只喺要換聲線、修正配錯或比較引擎時使用。儲存過嘅其他聲線唔會自動套落目前影片。" = "Use this only to replace a voice, correct an assignment or compare engines. Other saved voices are not automatically applied to this video.";
+"台詞需核對：口語用字、字數密度或疑似鄰句重複。" = "Review colloquial wording, speaking density or possible repeated content.";
+"各階段已用時間" = "Time spent by stage";
+"同稿比較" = "Compare script";
+"同角色聲線有差異，請比較前後句。" = "This voice differs from other lines by the same character. Compare adjacent lines.";
+"呢次未執行本機廣東話覆聽。" = "Local Cantonese listening checks were not run this time.";
+"呢段影片冇內置字幕軌。" = "This video has no embedded subtitle tracks.";
+"喺工作區匯入影片並開始翻譯，角色會自動出現。已有草稿可以喺「輸出與紀錄」繼續校稿。" = "Import a video and start translation to create automatic voices. Resume existing drafts from Exports & history.";
+"執行環境同程式庫內置於 App；模型由 App 下載到專用資料夾。首次部署需要網絡，完成後轉換只用本機。" = "Runtimes and libraries are bundled. Models download into app storage. Setup needs internet; conversion runs locally afterwards.";
+"外掛字幕 · SRT / ASS / VTT" = "External subtitles · SRT / ASS / VTT";
+"外觀" = "Appearance";
+"夜行忍者" = "Night ninja";
+"大預覽" = "Large preview";
+"字幕來源" = "Subtitle source";
+"字幕字色" = "Subtitle color";
+"字幕燒入畫面（相容模式）" = "Burn subtitles into video (compatibility)";
+"完成並試讀" = "Finish & test OCR";
+"完成嘅影片" = "Completed videos";
+"容量參考：8 GB 建議先試短片及 4B 文字模型；16 GB 以 4B 開始；32 GB+ 可試 14B。模型逐個載入，仍要預留系統、影片及背景分離用量；唔係速度或記憶體保證。" = "Memory guide: on 8 GB, start with short clips and 4B text models; on 16 GB, start with 4B; on 32 GB+, try 14B. Allow room for macOS, video and separation. These are guides, not memory or speed guarantees.";
+"工作紀錄" = "Activity log";
+"左邊係辨識原文，右邊可修改廣東話台詞。取消「配音呢句」可略過水印、片頭字或誤讀；按時間可定位畫面，或者播放呢句片段。配音會使用呢份稿建立時嘅影片及設定。" = "Source text is on the left; edit Cantonese on the right. Disable a line to skip false detections. Click its time or play it to check. Rendering uses the video and settings saved with this draft.";
+"已保存嘅校稿" = "Saved drafts";
+"已保留句內停頓" = "Internal pauses preserved";
+"已檢查整條影片解碼同每句人聲。時間檢查根據聲音活動；AI 聽寫亦可能讀錯人名，唔代表已通過母語聽感或口形驗收。" = "Video decoding and each voice segment were checked. Timing uses acoustic activity; AI transcription may misread names. These checks do not certify native pronunciation or lip sync.";
+"已用時間：" = "Elapsed: ";
+"已配對角色（可修正）" = "Assigned character (editable)";
+"廣東話" = "Hong Kong Cantonese";
+"廣東話 + English 雙行" = "Cantonese + English, two lines";
+"廣東話台詞" = "Cantonese dialogue";
+"廣東話稿校對" = "Script review";
+"廣東話試聽台詞" = "Cantonese audition text";
+"應用程式原創程式碼：MIT。第三方程式、模型權重及字型各自保留原授權；模型可下載唔代表可以任意重新分發。公開發佈前仍需完成相應源碼及依賴授權整理。" = "Original app code: MIT. Third-party code, models and fonts retain their licenses. Download availability does not imply redistribution rights. Public release still requires corresponding-source and dependency license preparation.";
+"戴耳機嘅動畫配音員" = "Anime voice actor with headphones";
+"所有已保存聲線（包括其他影片／測試）" = "All saved voices (including other videos / tests)";
+"批准配音後可喺度試聽結果" = "Approve dubbing to audition the result here";
+"批量匯入" = "Batch import";
+"拖入動畫，開始你嘅廣東話配音。\nMP4 / MKV / MOV · 全程本機處理" = "Drop an anime video to begin.\nMP4 / MKV / MOV · Local processing";
+"按上方自動配對" = "Use automatic assignment above";
+"按原片時間補回；同新配音重疊時會降低音量。原本同日語對白混埋或未能可靠辨識嘅聲音，仍可能缺少。" = "Restore at source timing, ducked under new dialogue. Sounds mixed with Japanese speech or detected uncertainly may remain missing.";
+"按原聲時長重錄及調整語速" = "Retake and adjust pace to source duration";
+"按實測時長調整語速（保留完整台詞）" = "Adjust pace using measured duration (keep all words)";
+"按日語原聲重建稿" = "Rebuild script from Japanese speech";
+"按章節或持續歌唱偵測，單有背景音樂唔會跳過正文。完整輸出保留 OP；由零開始嘅 60 秒試片會移到片頭歌曲之後。" = "Detect chapters or sustained singing, not background music alone. Full exports retain the OP; a 60-second trial from zero starts after the opening song.";
+"授權檔案" = "License files";
+"授權與鳴謝" = "Licenses & credits";
+"播放" = "Play";
+"播放呢句" = "Play this line";
+"播放呢段" = "Play segment";
+"播放字幕" = "Playback subtitles";
+"播放成品" = "Play export";
+"播放音軌" = "Playback audio track";
+"播放／暫停" = "Play / pause";
+"故事由你揀，聲音由呢度開始。" = "Your story. Your voice.";
+"文字模型" = "Text model";
+"文字模型 · 用戶自行選擇下載" = "Text models · Download only when selected";
+"新稿同舊稿分開保存；可繼續校稿，或者用日語原聲重新分句。" = "New drafts are saved separately. Resume editing or rebuild segmentation from Japanese speech.";
+"新轉換根據原聲自動配對全部角色" = "Automatically assign voices for new conversions";
+"日語" = "Japanese";
+"日語聽寫有分歧：原意未能確認。" = "Japanese transcriptions disagree; the original meaning is uncertain.";
+"暫停只出現一個取樣畫面嘅字" = "Hold text seen in only one sampled frame";
+"未有目前影片嘅配對結果" = "No voice assignments for this video yet";
+"本階段剩餘時間：估算中…" = "Stage time remaining: estimating…";
+"查看自動配對／試聽" = "View assignments / audition";
+"校稿影片時間軸" = "Script video timeline";
+"校稿角色選單顯示其他已保存聲線（手動換聲用）" = "Show other saved voices in script selectors";
+"校稿／修正配對" = "Review / correct assignments";
+"根據原聲自動配對全部角色" = "Automatically match all character voices";
+"框選字幕範圍" = "Draw subtitle region";
+"檔名：原檔名-AniCanto.mp4；同名自動加編號。工作副本保留，方便續做或加入另一條音軌。" = "Filename: source-name-AniCanto.mp4. Existing names receive a number. A working copy stays in app storage for resuming or adding audio tracks.";
+"檔案" = "Reveal file";
+"每句共用一次自動修正額度，避免重複改稿或重錄；未能改善就保留較好版本並標示。手動校稿鎖定字句，唔截尾、唔用日語替代。" = "Each line shares one automatic repair allowance. Keep the better take and flag unresolved issues. Manual approval locks the words; no cut-off endings or Japanese dialogue fallback.";
+"每次啟動隨機主題" = "Random theme at launch";
+"沿用工作區嘅字幕來源、字幕方框、起點、處理範圍同配音設定。先用第一集檢查設定；完整處理要將範圍改成「由起點到片尾」。外掛字幕會自動搵每條影片同名嘅 SRT／ASS／VTT。" = "Use workspace subtitle, region, start and dubbing settings. Check the first episode before batching. Choose “From start to end” for full videos. Sidecar subtitles are matched by filename.";
+"海上旅程" = "Ocean journey";
+"深色" = "Dark";
+"混入低音量原聲（包括日語對白）" = "Mix quiet original audio (includes Japanese dialogue)";
+"淺色" = "Light";
+"清除…" = "Clear…";
+"清除全部校稿…" = "Clear all drafts…";
+"準備影片預覽" = "Preparing preview";
+"無字幕" = "No subtitles";
+"熱血冒險" = "Energetic adventure";
+"生成呢個角色嘅廣東話試聽" = "Generate Cantonese audition";
+"用原片目前位置" = "Use current playback position";
+"用呢集檢查設定" = "Check settings with this episode";
+"用影片下方「框選字幕範圍」，直接拖拉方框。只辨識框內畫面，黑邊唔會計入範圍。" = "Draw a rectangle under the player. Only that region is recognized; video letterboxing is excluded.";
+"用本機 AI 改成香港口語" = "Adapt to spoken Hong Kong Cantonese with local AI";
+"用目前畫面預覽 OCR" = "Preview OCR at current frame";
+"由影片抽取並分離" = "Extract and separate from video";
+"由起點到片尾" = "From start to end";
+"由起點試 3 分鐘" = "3 minutes from start";
+"由起點試 60 秒" = "60 seconds from start";
+"畫面燒入字幕 · OCR" = "Burned-in subtitles · OCR";
+"白色／淺灰" = "White / light gray";
+"睇對應片段" = "View matching segment";
+"移出清單" = "Remove from queue";
+"移到垃圾桶" = "Move to Trash";
+"移到垃圾桶只會移走生成嘅 MP4；原片、字幕同校稿會保留。可以喺 Finder 垃圾桶還原。" = "Only generated MP4 files are trashed. Source videos, subtitles and drafts are retained. Restore videos from Finder Trash if needed.";
+"移除…" = "Remove…";
+"第三方授權" = "Third-party notices";
+"精簡前：" = "Before shortening: ";
+"繼續校稿" = "Resume draft";
+"聲演你嘅動畫世界" = "Give your anime a voice";
+"聲紋自動配對、角色參考聲線、背景分離同批量處理全部喺本機進行。自動角色係聲音分組；尖叫、重疊對白可能配錯。OP 按章節及歌唱偵測，保留原聲；嘴形重繪未實作。" = "Local voice grouping, reference cloning, separation and batching. Shouts and overlapping speech may be misassigned. OP detection uses chapters and singing. Mouth animation is not implemented.";
+"聽 CosyVoice 3" = "Listen to CosyVoice 3";
+"聽 GPT-SoVITS" = "Listen to GPT-SoVITS";
+"聽上次配音" = "Listen to previous take";
+"聽分離對白" = "Listen to separated dialogue";
+"聽參考原聲" = "Listen to reference";
+"聽已生成配音" = "Listen to generated audio";
+"聽背景" = "Listen to background";
+"聽角色原聲" = "Listen to character reference";
+"背景音量" = "Background volume";
+"自動分析聲紋、建立角色參考同配對台詞，唔使逐句揀配音員。手動修正仍然保留。" = "Automatically group voices, extract references and assign dialogue. Manual corrections remain available.";
+"自動批准廣東話稿" = "Automatically approve script";
+"自動角色配對" = "Automatic voice assignment";
+"自動辨識 OP，保留原聲並略過配音" = "Detect OP; keep original audio and skip dubbing";
+"自動配對全部角色" = "Automatically assign all characters";
+"自動配對呢份稿" = "Auto-assign this draft";
+"自己嘅環境，自己嘅模型。" = "Your environment. Your models.";
+"英文按最終廣東話稿翻譯，需要已下載嘅文字模型。每個配音引擎有自己嘅字幕時間；播放器唔一定會自動跟音軌換字幕。" = "English follows the final Cantonese script and requires a downloaded text model. Subtitles are timed per voice engine; players may not switch captions automatically with audio tracks.";
+"處理範圍" = "Processing range";
+"複製錯誤詳情" = "Copy error details";
+"配音音軌 · 可多選" = "Voice tracks · Select multiple";
+"準備影片" = "Prepare";
+"字幕辨識" = "Subtitles";
+"廣東話翻譯" = "Translate";
+"角色配音" = "Dub voices";
+"影片輸出" = "Export";
+"製作路線" = "Production quest";
+"流程位置（估算）" = "Workflow position (approx.)";
+"多個配音引擎會逐個生成；日語原聲直接保留。" = "Voice engines run one at a time; Japanese audio is retained directly.";
+"覆聽同台詞有差異：請核對有冇漏字或讀錯。" = "Listening check differs from the script. Check for missing or mispronounced words.";
+"角色名稱" = "Character name";
+"角色名稱只係聲音分組標籤。短答、重疊講話或角色變聲可能配錯；有需要先展開「進階修正」。" = "Names are labels for voice groups. Short replies, overlaps or changed voices can be misassigned. Expand advanced corrections only when needed.";
+"角色身份未確定或參考原聲較短，請試聽聲線。" = "Uncertain identity or a short voice reference. Audition to confirm.";
+"角色配音 · 背景分離" = "Character dubbing · Background separation";
+"設為預設" = "Set as default";
+"試聽" = "Listen";
+"跟隨系統" = "System";
+"跳到起點" = "Jump to start";
+"跳到首句字幕" = "Jump to first subtitle";
+"跳過 OP · 自訂開始位置" = "Skip OP · Custom start";
+"輸入廣東話台詞" = "Enter Cantonese dialogue";
+"輸出字幕" = "Export subtitles";
+"辨識結果：" = "Recognition result: ";
+"返回校稿" = "Back to script";
+"逐集自動選字幕（同名外掛 → 內置字幕 → 畫面 OCR）" = "Auto-select subtitles per episode (sidecar → embedded → OCR)";
+"進階修正" = "Advanced corrections";
+"進階設定：手動聲線及引擎比較" = "Advanced: manual voices & engine comparisons";
+"選擇字幕軌" = "Select subtitle track";
+"選擇影片" = "Choose video";
+"選擇輸出資料夾" = "Choose export folder";
+"配音呢句" = "Dub this line";
+"配音工作室" = "Voice studio";
+"配音引擎" = "Voice engine";
+"配音結果" = "Dubbing results";
+"配音裝置" = "Dubbing device";
+"重新排隊" = "Queue again";
+"重新整理" = "Refresh";
+"重新自動配對目前稿件" = "Reassign current draft automatically";
+"重疊部分已降低音量" = "Overlap volume reduced";
+"重設" = "Reset";
+"重設方框" = "Reset rectangle";
+"開啟已有草稿" = "Open saved draft";
+"開啟後，中文字型隨畫面輸出，毋須播放器安裝字型；字幕不能關閉。原片已有燒入字幕時可能重疊。" = "Baked captions need no player fonts but cannot be disabled. They may overlap subtitles already burned into the source.";
+"開啟紀錄資料夾" = "Open logs folder";
+"開啟資料夾" = "Open folder";
+"開啟輸出位置" = "Open export location";
+"開始批量處理" = "Start batch";
+"開始時間" = "Start time";
+"開始時間（分:秒，例如 01:30）" = "Start time (min:sec, e.g. 01:30)";
+"關閉" = "Off";
+"電腦容量與模型管理" = "Hardware & model manager";
+"需要先下載日語辨識模型。開啟 AI 翻譯先會轉成廣東話。" = "Download Japanese recognition models first. Enable AI translation to produce Cantonese.";
+"預覽廣東話稿" = "Preview Cantonese script";
+"預設保留原色，避免細字被過濾。白字／黃字可選；快速字幕可能被暫停，可喺校稿頁恢復。" = "Original colors preserve fine text. White / yellow filters are optional. Fast captions may be held for script review.";
+"預設文字模型" = "Default text model";
+"預設音軌" = "Default audio track";
+"首次讀取雲端檔案可能需要等候下載。" = "Cloud files may need downloading before the first preview.";
+"首次開始會下載 App 專用 Python 環境。AI 翻譯及無字幕辨識，請先到「環境與模型」部署。" = "Use Models & environment to set up AI translation and speech recognition before converting.";
+"香港繁體中文" = "Traditional Chinese (Hong Kong)";
+"黃色" = "Yellow";
+"轉換工作區" = "Workspace";
+"批量影片" = "Batch videos";
+"角色與聲線" = "Characters & voices";
+"環境與模型" = "Models & environment";
+"輸出與紀錄" = "Exports & history";
+"設定與關於" = "Settings & About";
+"按本機相同設定嘅已完成工作估算；對白密度同修正次數會影響時間。" = "Based on completed jobs with the same settings. Dialogue density and repairs affect the estimate.";
+"未有相同設定嘅完整時間紀錄，暫時只估本輪；重用快取時唔套用全片估算。" = "No matching full-job timing record yet. Only the current pass is estimated; cached jobs do not use full-job estimates.";
+"未部署" = "Not installed";
+"已就緒" = "Ready";
+"未選擇影片" = "No video selected";
+"App 工作資料夾（預設）" = "App working folder (default)";
+"執行環境" = "Runtime";
+"本機 AI 引擎" = "Local AI engine";
+"檢查" = "Check";
+"啟動／檢查" = "Start / check";
+"下載／檢查" = "Download / check";
+"測試" = "Test";
+"內置 Python 3.11 · 獨立環境 · 毋須系統 Python" = "Bundled Python 3.11 · Isolated environment · No system Python required";
+"Ollama v0.35.1 · SHA-256 驗證 · 只監聽本機" = "Ollama v0.35.1 · SHA-256 verified · Local connections only";
+"香港口語翻譯 / 改編台詞 · 4-bit · 約 9.3 GB" = "Hong Kong Cantonese script adaptation · 4-bit · About 9.3 GB";
+"較快、較省記憶體 · 約 2.5 GB" = "Faster, lower memory · About 2.5 GB";
+"日語原聲時間辨識" = "Japanese speech timing";
+"日語語音辨識" = "Japanese speech recognition";
+"背景音樂／音效分離" = "Music / effects separation";
+"原片日語辨識" = "Japanese speech recognition";
+"可用儲存空間：%@" = "Available disk space: %@";
+"%lld GB 統一記憶體" = "%lld GB unified memory";
+"請填有效嘅開始時間。" = "Enter a valid start time.";
+"按原片日語聲音分句同定時；中文字幕只作意思／人名參考。首次會部署日語原聲辨識模型。" = "Japanese speech determines segmentation and timing. Chinese subtitles help with meaning and names. Recognition models need first-time setup.";
+"直接朗讀字幕；請使用已校對嘅廣東話字幕。日文唔會自動翻譯。" = "Read the subtitles directly. Use a reviewed Cantonese script; Japanese is not translated automatically.";
+"翻譯完成會直接配音；完成後仍可查看同修改台詞。" = "Dubbing starts after translation. You can review and edit the script afterwards.";
+"翻譯後會停喺校稿頁，等你批准先開始配音。" = "Pause after translation for script approval before dubbing.";
+"先暫停喺有字幕嘅畫面，再框選字幕範圍。" = "Pause on a frame with subtitles, then draw the subtitle region.";
+"拖拉重畫方框，只包住完整字幕，唔好包住水印。" = "Drag a rectangle around the complete subtitle, excluding watermarks.";
+"完整原聲會低音量混入，仍然有日語對白。" = "The full original audio is mixed quietly, including Japanese dialogue.";
+"只有新配音，冇背景音樂／音效。" = "New dialogue only, without background music or effects.";
+"未有工作紀錄。" = "No activity yet.";
+"辨識原文" = "Recognized text";
+"日語原聲辨識 · 聲音時間" = "Japanese transcription · Speech timing";
+"準備開始" = "Ready";
+"分析" = "Analysis";
+"配音" = "Dubbing";
+"合成" = "Muxing";
+"完成" = "Complete";
+"需要處理" = "Needs attention";
+"等待批准" = "Awaiting approval";
+"英文字幕" = "English subtitles";
+"成品覆聽" = "Final listening check";
+"輸出驗證" = "Export validation";
+"翻譯" = "Translation";
+"隨機主題範圍" = "Include in random themes";
+"請至少保留一款主題。" = "Keep at least one theme selected.";
+"模型預設建議" = "Model preset guide";
+"8 GB · 4B 文字、短片試用" = "8 GB · 4B text, short clips";
+"16 GB · 4B 文字、單引擎" = "16 GB · 4B text, one engine";
+"32 GB+ · 14B 文字、多音軌" = "32 GB+ · 14B text, multiple tracks";
+"套用文字模型建議（唔會自動下載）" = "Apply text model suggestion (no automatic download)";
+"配音音軌報告" = "Audio track reports";
+"原始技術紀錄保留原文，方便排查。" = "Raw technical logs retain their original language for troubleshooting.";
+"英文字幕係 AI 意譯，口語或人名可能譯錯；學習或分享前請覆核。" = "English subtitles are AI adaptations. Idioms and names may be wrong; review them before studying or sharing.";
+
+"保留 OP／ED · 自訂開始位置" = "Keep OP / ED · Custom start";
+"自動辨識 OP／ED，保留完整日文原聲" = "Detect OP / ED and retain full Japanese audio";
+"分析片頭 OP／片尾 ED" = "Analyze opening / ending songs";
+"分析頭尾各 5 分鐘及章節，保留歌曲嘅日文歌聲、音樂同畫面。偵測可能漏判，請先檢查結果；自訂起點之前嘅內容唔會輸出。" = "Analyze chapters and the first / last 5 minutes. Retain Japanese vocals, music and video for detected songs. Check results for missed detections. Content before your custom start is excluded.";
+
+"轉換設定" = "Conversion settings";
+"進階設定 · 翻譯、OCR、聲線及音效" = "Advanced · Translation, OCR, voices & sound";
+"多音軌、雙語字幕及相容性" = "Multiple tracks, bilingual subtitles & compatibility";
+"App 工作資料夾" = "App working folder";
+"輸出位置" = "Export folder";
+"選擇…" = "Choose…";
+"開始時間" = "Start time";
+
+"第三方程式庫與授權" = "Third-party libraries & licences";
+"搜尋名稱、版本或授權" = "Search name, version or licence";
+"清單由呢個版本實際打包嘅程式庫產生。展開可閱讀 App 內嘅授權文件；不同執行環境可能使用不同版本。" = "Generated from the libraries bundled in this build. Expand a component to read its local licence. Different runtimes may contain different versions.";
+"套件未附獨立授權文件；請核對上游授權，未視為已完成發佈審核。" = "No separate licence file was included in this package. Check upstream terms; redistribution review remains incomplete.";
+"應用程式授權" = "Application licence";
+"閱讀 AniCanto MIT 授權" = "Read the AniCanto MIT licence";
+"模型與本機處理" = "Models & local processing";
+"About AniCanto · 授權與程式庫" = "About AniCanto · Licences & libraries";
+"第三方程式、模型權重同字型各自保留原授權。呢個 Beta 版本唔代表已完成對外重新分發嘅源碼及授權審核。" = "Third-party software, model weights and fonts retain their own licences. This Beta has not completed source and licence review for external redistribution.";
+"下載 MLX 模型" = "Download MLX model";
+"重新下載／修復" = "Download / repair";
+"文字翻譯及改稿；唔係配音引擎。首次下載後請測試，未驗證香港口語優於 14B。Windows GGUF 稍後支援。" = "For text translation and script editing. Test after downloading; better Hong Kong Cantonese than 14B is not yet verified. Windows GGUF support comes later.";
+
+"字幕編輯" = "Subtitle editor";
+"輸出管理" = "Exports";
+"60 秒" = "60 sec";
+"3 分鐘" = "3 min";
+"全片" = "Full video";
+"字幕來源與翻譯" = "Subtitles & translation";
+"角色聲線與背景聲" = "Voices & background audio";
+"音軌、字幕與輸出選項" = "Tracks, subtitles & export options";
+"輸出前手動校對" = "Review manually before dubbing";
+"預設自動完成；只有啟用手動校對先會喺配音前停低。" = "Automatic by default. Enable manual review to pause before dubbing.";
+"自動翻譯 → 配音 → 輸出" = "Auto translate → dub → export";
+"手動校對模式：配音前會暫停" = "Manual review: pauses before dubbing";
+"全局設定套用到今次清單內每集影片，亦同單片工作區同步。預設自動完成並輸出；需要時先開啟手動校對。" = "Global settings apply to every queued video and are shared with the single-video workspace. Conversion and export are automatic unless manual review is enabled.";
+"轉換佇列" = "Conversion queue";
+"字幕方框同起點會套用到每集；不同片源可以先用個別影片檢查設定。" = "The subtitle crop and start time apply to every episode. Check an individual video first when sources differ.";
+"工作資料與手動校對" = "Saved work & manual review";
+"儲存修改" = "Save changes";
+"顯示全部台詞" = "Show all dialogue";
+"拖動時間軸或點選字幕片段；修改台詞會即時疊加喺影片上，重新配音後先更新成品聲音。" = "Scrub the timeline or select a caption. Text edits appear over the preview immediately; re-dub to update exported audio.";
+"複製全部" = "Copy all";
+"紀錄資料夾" = "Log folder";
+"搜尋紀錄" = "Search logs";
+"只睇錯誤" = "Errors only";
+"跟隨最新" = "Follow latest";
+"Qwen3-TTS：Base 聲線複製冇獨立香港粵語控制碼，跨語言口音同聲線效果因素材而異；可先試聽再選用。" = "Qwen3-TTS Base cloning has no dedicated Hong Kong Cantonese control token. Accent and cross-language voice results vary by source; audition before choosing.";
+
+"編輯工具" = "Editing tools";
+"關閉紀錄" = "Close console";
+
+"進階設定" = "Advanced settings";
+"套用" = "Apply";
+"套用並執行" = "Apply and run";
+"有未套用嘅改動" = "Unsaved changes";
+"修改後按「套用」先會生效" = "Changes take effect only after Apply";
+"先聽清楚，再講得自然。" = "Listen closely. Make it sound natural.";
+"聲線、節奏，同背景一齊夾好。" = "Bring voices, rhythm and ambience together.";
+"揀好音軌，準備你嘅成品。" = "Choose your tracks. Prepare your premiere.";
+"逐句微調，保留你想講嘅意思。" = "Refine each line. Keep the meaning.";
+"畫面字幕辨識" = "On-screen subtitle recognition";
+"套用後預覽 OCR" = "Preview OCR after applying";
+"套用後動作" = "After applying";
+"只儲存設定" = "Save settings only";
+"關閉並管理模型" = "Close and manage models";
+"離開設定會放棄未套用嘅改動。" = "Leaving settings discards unapplied changes.";
+"修改台詞會即時更新預覽；成品聲音需要重新配音。" = "Text edits update the preview immediately. Re-dub to update exported audio.";
+"你嘅動畫，\n你嘅廣東話。" = "Your anime.\nYour Cantonese.";
+"配音準備室" = "Ready to record";
+"拖入動畫，開始你嘅廣東話配音。" = "Drop in an anime video. Give it a Cantonese voice.";
+"MP4 / MKV / MOV\n全程本機處理" = "MP4 / MKV / MOV\nEntirely on your Mac";
+
+"更多轉換設定" = "More conversion settings";
+"全局轉換設定" = "Global conversion settings";
+"條輸出音軌" = "output tracks";
+"開始製作" = "CREATE";
+"後期工作室" = "REFINE";
+"資源與收藏" = "LIBRARY";
+"揀一集動畫，開展你嘅廣東話聲演。" = "Choose an episode. Give it a Cantonese voice.";
+"排好每一集，共用設定，自動完成。" = "One queue. Shared settings. Automatic export.";
+"原聲自動配對；想微調先入嚟試聽。" = "Voices match automatically. Fine-tune them here.";
+"睇住畫面，逐句打磨對白同節奏。" = "Shape each line and its rhythm alongside the picture.";
+"為你嘅工作室裝備合適嘅本機模型。" = "Equip your studio with the right local models.";
+"你嘅配音成品，隨時重溫同分享。" = "Your dubbed episodes, ready to replay and share.";
+"佈置你嘅工作室，了解幕後製作。" = "Make the studio yours. Meet the project behind it.";
+"角色動態效果" = "Animate companion";
+"角色會跟工作狀態轉換表情；關閉動態或啟用系統「減少動態效果」會停止呼吸同擺動。背景視窗會暫停動畫。" = "Expressions follow the job. Turn motion off, or enable system Reduce Motion, to stop movement. Animation pauses in the background.";
+"同角色打個招呼" = "Say hello to your companion";
+"準備好，一齊開工。" = "Ready when you are.";
+"模型下載中，陪你等。" = "Keeping you company while downloading.";
+"等我睇清楚啲對白…" = "Reading the dialogue…";
+"努力製作中…" = "Working on your episode…";
+"投入配音中…" = "Giving it a voice…";
+"完成喇，辛苦晒！" = "All done. Nice work!";
+"有啲嘢需要你睇睇。" = "Something needs your attention.";
+"休息一陣…叫我就得。" = "A little nap… tap to wake me.";
+"份稿等緊你過目。" = "The script is ready for your review.";
+"下一場，輪到你配音。" = "Your next episode. Your voice.";
+"匯入" = "Import";
+"輸出" = "Export";
+
+"流程進度" = "Workflow progress";
+
+"處理中，等待進度回報…" = "Processing; waiting for a progress update…";
+
+"森林手繪" = "Woodland watercolor";
+
+"未來日常" = "Future everyday";
+
+"輸出進階設定" = "Advanced export settings";
+
+"配音音軌、日語原聲、字幕語言同輸出位置，請喺主畫面設定。" = "Choose voice tracks, original Japanese audio, subtitle language and export folder in the main workspace.";
+
+"開發者終端機" = "Developer terminal";
+
+"紀錄來源" = "Log source";
+
+"流程摘要" = "Workflow summary";
+
+"程序原始輸出 · stdout / stderr" = "Raw process output · stdout / stderr";
+
+"MLX 文字服務" = "MLX text service";
+
+"Ollama 服務" = "Ollama service";
+
+"最近 256 KB · 每 2 秒更新" = "Latest 256 KB · refreshes every 2 seconds";
+
+"$ 等待所選程序輸出…" = "$ Waiting for selected process output…";
+
+"終端機" = "Terminal";
+
+"整個工作預計剩餘：" = "Estimated total remaining: ";
+
+"本輪 %@ 預計剩餘：%@ – %@" = "Estimated remaining for %@: %@ – %@";
+
+"香港口語翻譯／改短台詞 · 4-bit · 約 9.3 GB" = "Hong Kong Cantonese adaptation / dialogue shortening · 4-bit · Approx. 9.3 GB";
+
+"輕量試用 · 4-bit · 約 2.5 GB · 翻譯效果需校對" = "Lightweight option · 4-bit · Approx. 2.5 GB · Review translations";
+
+"Whisper large-v3 ＋ Qwen3-ASR 1.7B · 模型共約 7.2 GB · 雙聽寫核對" = "Whisper large-v3 + Qwen3-ASR 1.7B · Approx. 7.2 GB of models · Cross-checks two transcripts";
+
+"Whisper small · 約 500 MB 模型及額外依賴 · CPU 原型" = "Whisper small · Approx. 500 MB model plus dependencies · CPU prototype";
+
+
+"Fun-CosyVoice3 0.5B · 4-bit · 約 2.2 GB 模型＋獨立環境 · Apple Silicon" = "Fun-CosyVoice3 0.5B · 4-bit · Approx. 2.2 GB model plus isolated environment · Apple Silicon";
+
+"Mel-Band RoFormer · 約 913 MB 模型＋獨立環境" = "Mel-Band RoFormer · Approx. 913 MB model plus isolated environment";
+
+"WeSpeaker 聲紋 · 約 27 MB · 全本機 CPU · 自動抽取參考" = "WeSpeaker voice embeddings · Approx. 27 MB · Local CPU · Automatic reference extraction";
+
+"字幕片段時間軸" = "Subtitle timeline";
+
+"未能讀取授權文件。" = "Unable to read the license file.";
+
+"© 2026 SCKC · Developer / 開發者：SCKC" = "© 2026 SCKC · Developer: SCKC";
+
+"日語原聲" = "Japanese speech";
+
+"配音編排" = "Dialogue arrangement";
+
+"場景詞彙" = "Scene glossary";
+
+"場景理解" = "Scene context";
+
+"原聲分句" = "Speech segmentation";
+
+"自動配角色" = "Automatic voice assignment";
+
+"配音改稿" = "Dialogue adaptation";
+
+"時長調整" = "Duration adjustment";
+
+"保留 OP／ED" = "Preserve OP / ED";
+
+"試片範圍" = "Preview range";
+
+"背景已就緒" = "Background ready";
+
+"解碼驗證" = "Decode validation";
+
+"沿用音軌" = "Reuse audio track";
+
+"工具" = "Tool output";
+
+"範圍" = "Processing range";
+
+"讀取失敗" = "Loading failed";
+
+"原意核對" = "Meaning review";
+
+"口語核對" = "Cantonese review";
+
+"Qwen3 / Qwen3.5 文字模型、CosyVoice、GPT-SoVITS、Qwen3-TTS、Whisper 同分離模型係獨立組件。部分權重由你選擇下載，唔包含喺 App；實際版本見模型清單及下載 manifest。Qwen3.5 MLX 目前只用文字分析，未加入影片視覺理解。轉換喺本機執行，首次部署及下載需要網絡。" = "Qwen3 / Qwen3.5 text models, CosyVoice, GPT-SoVITS, Qwen3-TTS, Whisper and separation models are separate components. Some weights are optional downloads and are not bundled. See the model list and download manifest for versions. Qwen3.5 MLX currently handles text analysis only, without video vision. Conversion runs locally; initial setup and downloads require internet access.";
+
+"可切換字幕軌" = "Selectable subtitle tracks";
+
+"另外燒入固定字幕" = "Also burn in fixed subtitles";
+
+"固定字幕內容" = "Fixed subtitle content";
+
+"固定字幕不能關閉；跟預設配音音軌時間。可切換字幕預設關閉，避免疊字。" = "Fixed subtitles cannot be turned off and follow the default voice track. Selectable subtitles start disabled to avoid overlap.";
+
+"原片字幕已印喺畫面，無法關閉。OCR 只讀字；新增字幕唔會移除或自動遮蓋原字。" = "Source captions are already part of the picture and cannot be turned off. OCR reads text; new captions do not remove or automatically cover it.";
+
+"原裝字幕文字" = "Source subtitle text";
+
+"原裝 + 廣東話" = "Source + Cantonese";
+
+"原裝 + English" = "Source + English";
+
+"全部獨立及雙語組合" = "All separate and bilingual tracks";
+
+"讀音字典（每行：原字 = 讀法）" = "Pronunciation dictionary (one per line: text = spoken form)";
+
+"只改配音讀法，字幕保留原字。留空就用引擎原本讀音；讀法請先試聽。" = "Changes speech only; subtitles keep the original spelling. Leave blank for engine defaults. Preview pronunciation before use.";
+
+"部署方案" = "Deployment presets";
+"配音模型" = "Voice models";
+"文字翻譯" = "Text & translation";
+"語音辨識" = "Speech recognition";
+"音訊處理" = "Audio processing";
+"按電腦容量建立部署方案" = "Build a deployment plan for this Mac";
+"節省記憶體" = "Save memory";
+"平衡" = "Balanced";
+"最高容量" = "Maximum capacity";
+"下載並部署此方案" = "Download & deploy this plan";
+"版本／大小／精度" = "Version / size / precision";
+"模型大小／精度" = "Model size / precision";
+"只顯示已下載版本" = "Show downloaded versions only";
+"下載此版本" = "Download this version";
+"使用此版本" = "Use this version";
+"目前選用" = "Selected";
+"使用此模型" = "Use this model";
+"已選用" = "Selected";
+"未安裝" = "Not installed";
+"已安裝" = "Installed";
+"配音語言" = "Dubbing languages";
+"廣東話＋English" = "Cantonese + English";
+"試音／改稿語言" = "Audition / script language";
+"試音引擎" = "Audition engine";
+"所選語言嘅台詞不可空白。" = "Enter dialogue for the selected language.";
+"日語主辨識" = "Primary Japanese recognition";
+"獨立覆聽 · Qwen ASR" = "Independent listening check · Qwen ASR";
+"角色參考／字幕後備辨識" = "Reference / fallback recognition";
+"新增漏配對白" = "Add missing dialogue";
+"先建立廣東話參考" = "Create a Cantonese reference first";
+"只用原聲" = "Original reference only";
+"試聽語言" = "Audition language";
+"試聽台詞" = "Audition dialogue";
+"生成呢個角色嘅試聽" = "Generate this character's audition";
+
+"影片工作區" = "Video workspace";
+"加入影片…" = "Add videos…";
+"佇列／個別設定" = "Queue / per-video settings";
+"全局設定" = "Global settings";
+"開始處理" = "Start processing";
+"字幕／成品編輯" = "Captions / outputs";
+"即時預覽" = "Live preview";
+"全螢幕" = "Full screen";
+"無聲預覽" = "Muted preview";
+"跟隨處理位置" = "Follow processing position";
+"搜尋對白／原文" = "Search dialogue / original";
+"▶ 原聲" = "▶ Original";
+"採用所選 take" = "Use selected take";
+"上一段" = "Previous cue";
+"下一段" = "Next cue";
+"原文校正／顯示字幕" = "Original / display captions";
+"進階：時間、語速、裁切及其他 take" = "Advanced: timing, speed, trims and takes";
+"時間軸／字幕位置與配音時段" = "Timeline / caption and voice timing";
+"待修正片段及處理紀錄" = "Repair list and processing records";
+"檢查／修正" = "Inspect / fix";
+"重試未完成配音" = "Retry incomplete voice segments";
+"有配音需要修正" = "Voice segments need repair";
+"逐軌覆核報告" = "Per-track review reports";
+"有語言／對白覆核警告" = "Language / dialogue review warnings";
+"重設為全局設定" = "Reset to global settings";
+"自動修復；仍失敗就留空該段並繼續" = "Auto repair; leave failed segments empty and continue";
+"原文" = "Original text";
+
+"每個引擎獨立語言參考（可選）" = "Independent language reference per engine (optional)";
+"匯入 3–10 秒 WAV" = "Import a 3–10 second WAV";
+"聽參考" = "Play reference";
+"未設定；使用原裝角色錄音" = "Not set; use original character recording";
+"錄音逐字原文（必須同所選語言一致）" = "Exact recording transcript (must match selected language)";
+"使用呢個引擎嘅獨立語言參考" = "Use this engine's independent language reference";
+"顯示字幕（留空跟配音台詞）" = "Display caption (leave empty to use script)";
+"處理步驟" = "Processing steps";
+"對白" = "Dialogue";
+"循環片段" = "Loop segment";
+"工作內容" = "Task details";
+"刪除全部專案，保留成品…" = "Delete all projects, keep exports…";
+"自動批核字幕並配音" = "Automatically approve subtitles and dub";
+"篩選" = "Filter";
+"呢段有覆核警告；可以試聽或打開處理步驟。" = "This cue has review flags; audition it or open processing records.";
+" 項已移到垃圾桶；可以加入新影片開始。" = " items moved to Trash. Add a video to start again.";
+"原聲" = "Original audio";
+"儲存" = "Save";
+"角色" = "Roles";
+"雙語" = "Both";
+"重做" = "Redo";
+"影片編輯" = "Video editing";
+"控制面板" = "Control panel";
+"成品版本" = "Export version";
+"英文" = "English";
+"角色／混音" = "Roles / mix";
+"專案係字幕、配音同編輯資料；成品係已生成 MP4。" = "Projects contain scripts, voices and editing data; exports are generated MP4s.";
+"成品／版本" = "Exports / versions";
+"對白進階編輯" = "Advanced cue editing";
+"刪除專案，保留成品" = "Delete project, keep exports";
+"未指定" = "Unassigned";
+"逐段試聽" = "Audition cue";
+"全部設定…" = "All settings…";
+"播放／配音" = "Playback / dubbing";
+"影片剪接" = "Video cuts";
+"草稿已修改" = "Draft changed";
+"處理快取" = "Processing caches";
+"清理完成" = "Cleanup complete";
+"啟用" = "Enabled";
+"時間軸" = "Timeline";
+"移出佇列" = "Remove from queue";
+"進階…" = "Advanced…";
+"專案包含字幕、配音及編輯草稿；MP4 喺成品管理。" = "Projects contain scripts, voices and drafts; MP4s are in export management.";
+"管理專案及成品" = "Manage projects and exports";
+"原片、下載模型及全局設定會保留。" = "Source videos, downloaded models and global settings are preserved.";
+"採用引擎" = "Engine to use";
+"原始成品" = "Original export";
+"全部清理並重新開始…" = "Clear everything and start fresh…";
+"字幕／配音" = "Subtitles / dubbing";
+"專案／成品管理" = "Projects and exports";
+"輸出位置…" = "Output folder…";
+"成品 MP4" = "Exported MP4s";
+"刪除全部成品…" = "Delete all exports…";
+"配音台詞" = "Dubbing script";
+"撤銷" = "Undo";
+"採用錄音" = "Use take";
+"全局設定用於新轉換；專案修改按批准並生成。" = "Global settings apply to new conversions; approve and generate to apply project edits.";
+"日文原文" = "Japanese original";
+"原片＋編輯字幕" = "Source + editing captions";
+"專案" = "Projects";
+"管理內容" = "Manage";
+"揀一段對白開始編輯" = "Select a cue to edit";
+"進階全局設定" = "Advanced global settings";
+"全部清理並重新開始？" = "Clear everything and start fresh?";
+"刪除專案？" = "Delete projects?";
+"刪除成品？" = "Delete exports?";
+"字幕" = "Subtitles";
+"專案字幕、配音及草稿會移到垃圾桶；外部 MP4 保留。" = "Project scripts, voices and drafts move to Trash; external MP4s are kept.";
+"所選內容會移到垃圾桶，可以由 Finder 還原。" = "Selected items move to Trash and can be restored in Finder.";
+"播放呢段配音" = "Play this cue";
+"未有編輯排程" = "No editing tasks";
+"查看排程" = "View queue";
+"生成並播放呢段" = "Generate and play this cue";
+"編輯排程" = "Editing queue";
+"繼續排程" = "Resume queue";
+
+"用播放器開啟" = "Open in video player";
+
+"配音與處理範圍" = "Voices and processing range";
+"字幕、輸出與批核" = "Subtitles, export and approval";
+"進階設定分類" = "Advanced settings";
+"翻譯、角色聲線與背景聲、輸出選項分開設定。" = "Configure translation, character voices and background audio, and export options separately.";
+"新增影片預設沿用以下設定；個別影片可喺佇列覆寫。" = "New videos use these defaults. Override individual videos in the queue.";
+"廣東話＋英文" = "Cantonese + English";
+"廣東話＋英文雙行" = "Cantonese + English, two lines";
+"原裝＋英文" = "Source + English";
+"ANICANTO / SETUP" = "ANICANTO / SETUP";
+"CANTO / DIRECTOR" = "CANTO / DIRECTOR";
+
+"影片佇列" = "Video queue";
+"生成故障會列入待修正清單；內容與語言警告保留供覆核。" = "Generation failures are listed for repair. Content and language warnings remain available for review.";
+"請加入字幕檔" = "Choose a subtitle file";
+"內置字幕" = "Embedded subtitles";
+"外掛字幕" = "External subtitles";
+"套用工作區目前 OCR 範圍" = "Use the current workspace OCR region";
+"未有可用文字字幕軌" = "No supported text subtitle track";
+"本片字幕軌" = "Subtitle track for this video";
+"本片設定（未開始前套用）" = "Video settings (applied before processing)";
+"本片需要手動批核" = "Require manual approval for this video";
+"畫面 OCR" = "On-screen OCR";
+"編輯／批核／成品" = "Edit / approve / exports";
+"繼承自動／全局" = "Inherit automatic / global settings";
+"讀取本片字幕軌" = "Read this video’s subtitle tracks";
+"選擇本片字幕" = "Choose subtitles for this video";
+"長度" = "Length";
+"長度（0＝全片）" = "Length (0 = full video)";
+"開始" = "Start";
+"開始（秒）" = "Start (seconds)";
+"清除未開始排程" = "Clear pending jobs";
+"畫面" = "View";
+"繼續" = "Continue";
+
+"4K／Retina 以系統縮放保持字體大小。可拖動面板分隔線，或喺工作區隱藏側欄。" = "4K and Retina use system scaling to retain readable controls. Drag panel dividers or hide side panels in the workspace.";
+"下載其他大小或精度，請到模型中心。大模型唔代表口語一定更準確。" = "Download other sizes or precisions in Model center. Larger models do not guarantee more accurate speech.";
+"介面與操作" = "Interface and controls";
+"介面語言" = "Interface language";
+"佇列已啟用自動選字幕；上方來源只喺關閉自動選擇或個別片設定時使用。" = "The queue selects subtitles automatically. This source applies when automatic selection is off or an individual video overrides it.";
+"佇列設定" = "Queue settings";
+"使用本機 AI 翻譯" = "Translate with local AI";
+"保留原文" = "Keep original text";
+"個別影片可喺佇列覆寫。已開始嘅工作使用開始時設定。" = "Override individual videos in the queue. Running jobs keep their starting settings.";
+"個專案" = "projects";
+"偏好設定" = "Preferences";
+"先將播放頭移到分割時間，再選文字分界；重新配音會保留字句完整。" = "Position the playhead at the split time and choose a text boundary. Regeneration keeps speech intact.";
+"先找同名外掛字幕，再找內置字幕，最後用畫面 OCR。個別片源可以覆寫。" = "Find matching external subtitles, then embedded tracks, then use on-screen OCR. Override individual videos as needed.";
+"全部配音軌" = "All dub tracks";
+"分割台詞" = "Split dialogue";
+"分割影片" = "Blade video";
+"分割現有聲音 take" = "Split existing audio take";
+"分類" = "Category";
+"剪接" = "Cuts";
+"剪接設定" = "Cut settings";
+"剪輯工作區" = "Editing workspace";
+"加入多選" = "Add to selection";
+"匯入 → 辨識 → 翻譯 → 批核 → 配音 → 輸出。處理中可預覽字幕，完成後可繼續修改及生成版本。" = "Import → recognize → translate → approve → dub → export. Preview captions during processing and edit new versions after completion.";
+"匯入影片" = "Import videos";
+"匯入影片開始製作" = "Import videos to start";
+"取代全部同角色對白" = "Replace all dialogue for this role";
+"取代本片角色" = "Replace a role in this video";
+"另一個 take" = "Another take";
+"台詞分割" = "Split dialogue";
+"合併下一段" = "Merge next cue";
+"呢段需要覆核" = "Review needed";
+"問題與紀錄" = "Issues and logs";
+"啟用對白" = "Enable dialogue";
+"單條或多條影片，共用同一個工作區。" = "One video or a batch, in the same workspace.";
+"單片與批量共用" = "Shared by single videos and batches";
+"喺字幕清單或時間軸選擇對白。" = "Select dialogue in the cue list or timeline.";
+"喺影片預覽按「框選字幕」，選取要辨識嘅畫面位置。" = "Use Select subtitle region in the video monitor to mark the OCR area.";
+"在 Finder 顯示" = "Show in Finder";
+"套用聲線到所選對白" = "Apply voice to selected dialogue";
+"字幕、草稿及配音資料存入 app 專案庫。輸出位置只保留成品 MP4。" = "Subtitles, drafts and dubbing data stay in the app project library. The export folder contains finished MP4 files.";
+"字幕結束" = "Subtitle end";
+"字幕與台詞" = "Subtitles and script";
+"字幕與翻譯" = "Subtitles and translation";
+"字幕開始" = "Subtitle start";
+"完成框選" = "Finish selection";
+"完整製作預設" = "Full production defaults";
+"專案庫" = "Project browser";
+"專案資料" = "Project data";
+"對白詳細設定" = "Dialogue details";
+"就緒" = "Ready";
+"工作區" = "Workspace";
+"已下載模型版本" = "Downloaded model versions";
+"廣東話配音台詞" = "Cantonese dubbing script";
+"影片" = "Video";
+"影片、字幕及配音時間軸。拖動字幕或配音時段邊界可以裁切。" = "Video, subtitle and dubbing timeline. Drag subtitle or dubbing timing edges to trim.";
+"影片完成辨識後，會喺呢度顯示對白、角色同成品。" = "Dialogue, roles and exports appear here after recognition.";
+"影片資訊" = "Video information";
+"影片預覽" = "Video preview";
+"待批核建議" = "Suggestion for review";
+"循環" = "Loop";
+"成品" = "Exports";
+"批核與修復" = "Approval and recovery";
+"批量套用角色" = "Apply roles to multiple cues";
+"拖入影片開始製作" = "Drop videos to start";
+"拖動時間軸邊界可 trim。裁頭／裁尾只處理配音 take；影片剪接喺時間軸及剪接檢查器設定。" = "Drag timeline edges to trim. Head/tail trim affects the audio take. Video cuts are controlled in the timeline and Cuts inspector.";
+"採用建議" = "Apply suggestion";
+"控制項大小" = "Control size";
+"揀原角色" = "Choose original role";
+"改動會套用至之後開始嘅影片。" = "Changes apply to videos started afterwards.";
+"改稿與試音" = "Rewrite and audition";
+"文字分界" = "Text boundary";
+"新增對白" = "Add dialogue";
+"時段與裁切" = "Timing and trim";
+"時段與語速" = "Timing and speed";
+"有現成配音就直接播放；未生成會先製作呢段。" = "Existing takes play immediately. Missing takes are generated first.";
+"未下載" = "Not downloaded";
+"未有分離音軌" = "No separated audio";
+"未生成" = "Not generated";
+"本機模型預算" = "Local model budget";
+"框選字幕" = "Select subtitle region";
+"模型中心" = "Model center";
+"模型逐個運行；容量估計已預留系統用量。" = "Models run one at a time. The estimate reserves memory for the system.";
+"檢查器" = "Inspector";
+"每個引擎使用各自嘅參考設定。個別角色及引擎參考可喺工作區「角色」修改。" = "Each engine uses its own reference settings. Edit character and engine references under Roles in the workspace.";
+"片段" = "Clip";
+"版本" = "Versions";
+"生成修改版本" = "Generate edited version";
+"生成呢段試音" = "Generate audition";
+"第幾段對白" = "Dialogue";
+"聲線資料庫" = "Voice library";
+"聽原聲" = "Listen to original";
+"背景音樂／音效" = "Music / effects";
+"自訂" = "Custom";
+"舒適 · 15 pt" = "Comfortable · 15 pt";
+"英文配音台詞" = "English dubbing script";
+"製作設定" = "Production settings";
+"製作預設" = "Production defaults";
+"角色與背景聲" = "Roles and background audio";
+"詳細裁切、改稿與其他 take" = "Trim, rewrite and alternate takes";
+"語言" = "Language";
+"語速" = "Speed";
+"起點" = "Start";
+"跟隨處理" = "Follow progress";
+"較大 · 17 pt" = "Larger · 17 pt";
+"輸出與批核" = "Export and approval";
+"轉換" = "Convert";
+"逐片自動選字幕" = "Select subtitles automatically per video";
+"選擇輸出位置" = "Choose export folder";
+"配音時段 · 可 trim" = "Dub timing · trim";
+"配音結束" = "Dub end";
+"配音開始" = "Dub start";
+"配音音軌" = "Voice tracks";
+"重設面板配置" = "Reset panel layout";
+"重譯原文建議" = "Retranslate original";
+"開啟模型中心" = "Open model center";
+"開始佇列" = "Start queue";
+"開始流程" = "Workflow";
+"開始與範圍" = "Start and range";
+"關於 AniCanto" = "About AniCanto";
+"顯示全片" = "Fit full video";
+"顯示字幕分界" = "Caption boundary";
+"顯示／隱藏專案庫" = "Show / hide project browser";
+"顯示／隱藏檢查器" = "Show / hide inspector";
+
+"放大預覽" = "Expand video monitor";
+"調整台詞面板高度" = "Resize script panel";
+"調整專案庫寬度" = "Resize project browser";
+"調整時間軸高度" = "Resize timeline";
+"調整檢查器寬度" = "Resize inspector";
+"返回剪輯配置" = "Return to editing layout";
+
+"下載大小" = "Download size";
+"下載後再按「使用此版本」，已下載嘅其他大小會保留。" = "After downloading, choose Use this version. Other downloaded sizes are retained.";
+"下載文字模型" = "Download text model";
+"估計高峰記憶體 %.1f GB" = "Estimated peak memory %.1f GB";
+"使用用途" = "Use for";
+"其他文字模型" = "Other text models";
+"只顯示已下載" = "Downloaded only";
+"搜尋模型" = "Search models";
+"方案下載量另計共用聲音編碼器及未部署嘅 GPT／背景處理元件。所有選擇可先修改；已下載版本會保留。" = "Plan download size excludes shared audio encoders and undeployed GPT/background components. Review choices before deploying. Downloaded versions are retained.";
+"模型下載量" = "Model download size";
+"模型名稱格式無效。" = "Invalid model name.";
+"模型版本" = "Model version";
+"模型／版本" = "Model / version";
+"狀態" = "Status";
+"目前已整合架構" = "Integrated architecture";
+"精度" = "Precision";
+"角色參考辨識" = "Character reference recognition";
+"運行記憶體" = "Runtime memory";
+"選擇模型以查看容量、系統要求及部署操作。" = "Select a model to see memory, system requirements and deployment actions.";
+"部署模型" = "Deploy model";
+
+"方案包含超出本機建議記憶體嘅模型，下載前請核對上方警告。" = "This plan exceeds the recommended memory budget. Review the warnings before downloading.";
+"移除模型" = "Remove model";
+"背景分離 · Mel-Band RoFormer（約 913 MB）" = "Background separation · Mel-Band RoFormer (about 913 MB)";
+"角色配對 · WeSpeaker（約 27 MB）" = "Speaker matching · WeSpeaker (about 27 MB)";
+"部署 Qwen 配音" = "Deploy Qwen TTS";
+
+"下載量" = "Download size";
+
+"估計模型運行 %.1f GB；連系統預留約 %.1f GB" = "Estimated runtime %.1f GB; approximately %.1f GB including system reserve";
+
+"本機建議模型預算約 %.1f GB（綜合 RAM、系統預留同 Metal 建議上限）。" = "Recommended model budget: %.1f GB (RAM, system reserve and Metal limit).";
+
+"超出本機建議記憶體：可能大量使用 swap、變慢或無法載入。可改揀較小模型。" = "Exceeds the recommended memory budget. Heavy swapping, slow processing or loading failure may occur. Choose a smaller model.";
+
+"低容量文字模型較容易漏意或誤譯，建議逐段批核台詞。" = "Small text models may omit or mistranslate meaning. Review each line.";
+
+"Apple Silicon · macOS 14+ · 首次下載需要網絡。記憶體係估算，會受片長、上下文同其他程式影響。" = "Apple Silicon · macOS 14+ · Internet required for initial download. Memory estimates depend on duration, context and other apps.";
+
+"Ollama 模型標籤" = "Ollama model tag";
+
+"第 %d 段對白" = "Dialogue %d";
+
+"未提供" = "Unavailable";
+
+"未接通" = "Not integrated";
+
+"此版本未有已驗證下載檔案，暫時無法部署。請選擇其他版本。" = "This version has no verified download files and cannot be deployed yet. Choose another version.";
+
+"搜尋角色" = "Search characters";
+
+"聲線資料庫保留角色參考；影片內嘅角色配對及獨立引擎參考，喺工作區「角色」修改。" = "The voice library stores character references. Edit video assignments and per-engine references under Roles in the workspace.";
+
+"選擇角色或加入新聲線" = "Select a character or add a voice";
+
+"處理影片後嘅自動角色會保存喺呢度。可匯入乾淨 WAV，核對錄音原文，再逐個引擎試聽。" = "Characters detected in videos are saved here. Import clean WAV audio, check its transcript and audition each engine.";
+
+"試聽設定" = "Audition settings";
+
+"影片參考取樣" = "Video reference sampling";
+
+"取樣秒數" = "Sample length in seconds";
+
+"返回剪輯工作區" = "Return to editing workspace";
+
+"紫色工作室 · 預設" = "Purple studio · Default";
+
+"動漫主題" = "Anime theme";
+
+"顯示動畫助手" = "Show animated companion";
+
+"動畫助手" = "Animated companion";
+
+"收起動畫助手" = "Hide companion";
+
+"還原紫色主題" = "Restore purple theme";
+
+"切換動漫主題及動畫助手" = "Choose theme and animated companion";
+
+"主題" = "Theme";
+
+"助手會眨眼、呼吸、擺動，並按製作狀態轉換表情；視窗喺背景或開啟減少動態效果時會暫停。" = "The companion blinks, breathes, sways and reacts to production. Animation pauses in the background or with Reduce Motion.";
+
+"常用聲線" = "Saved voices";
+
+"歷史參考" = "Past references";
+
+"聲線分類" = "Voice category";
+
+"參考錄音已備妥" = "Reference recording available";
+
+"移回歷史參考" = "Move to past references";
+
+"保存為常用聲線" = "Save voice for reuse";
+
+"建立你嘅常用聲線" = "Build your saved voice library";
+
+"選擇歷史參考" = "Choose a past reference";
+
+"瀏覽歷史參考" = "Browse past references";
+
+"返回工作區修改本片角色" = "Edit this video’s roles in the workspace";
+
+"只顯示你主動保存嘅聲線；每條片仍需分析對白同角色。" = "Only voices you explicitly save appear here. Each video still needs dialogue and role analysis.";
+
+"歷史參考可能來自唔同影片或重試；同名角色唔代表同一人。" = "Past references may come from different videos or retries. Matching names do not identify the same person.";
+
+"錄音同原文齊備，只代表可以試聽；角色身份、聲線同口音仍需你核對。" = "A recording and transcript make audition possible. You still need to check the identity, voice and accent.";
+
+"每條片會自行分析角色。呢度只用嚟保存你想跨影片重用嘅參考錄音，例如同一角色下一集沿用同一把聲。" = "Each video analyses its own roles. Save references here when you want to reuse a voice across videos, such as the same character in another episode.";
+
+"已暫停" = "Paused";
+
+"正在暫停…" = "Pausing…";
+
+"暫停並保存" = "Pause and save";
+
+"繼續處理" = "Resume processing";
+
+"保留完成進度及設定；未完成步驟可能需要重做。" = "Keep completed progress and settings; the unfinished step may need to run again.";
+
+"有已保存工作，按繼續處理接續。" = "Saved work is available. Resume processing to continue.";
+
+"正在暫停；完成嘅進度會保留。" = "Pausing; completed progress will be retained.";
+
+"已保存工作設定及完成進度；下次開啟可繼續。" = "Settings and completed progress saved. You can resume next time.";
+
+"助手大小" = "Companion size";
+
+"細" = "Small";
+
+"標準" = "Medium";
+
+"大" = "Large";
+
+"放大助手視窗" = "Open larger companion window";
+
+"顯示全部大小" = "Show all sizes";
+
+"本機模型預算 %.1f GB" = "Model memory budget %.1f GB";
+
+"星夜聲演 · 預設" = "Starry Night · Default";
+
+"還原預設主題" = "Restore default theme";
+
+"連接下載伺服器" = "Connecting to download server";
+"下載中" = "Downloading";
+"等候資料" = "Waiting for data";
+"連線中斷，自動續傳" = "Connection interrupted; resuming automatically";
+"校驗模型" = "Verifying model";
+"下載完成" = "Download complete";
+"下載未完成" = "Download incomplete";
+"估算中" = "Estimating";
+"下載速度" = "Download speed";
+"目前檔案剩餘時間" = "Time left for this file";
+"連線嘗試" = "Connection attempt";
+
+"軌" = "Track";
+"（圖片字幕暫未支援）" = " (Image subtitles are not supported yet)";
+
+"儲存製作預設" = "Save production preset";
+"預設已儲存" = "Preset saved";
+"模型選用" = "Active models";
+"未能儲存模型選擇" = "Could not save model selection";
+"未能儲存製作預設" = "Could not save production preset";
+"未能載入製作預設" = "Could not load production preset";
+"製作預設版本未支援" = "Unsupported production preset version";
+"未選用" = "None selected";
+"只列出已下載版本；選擇會立即儲存。未下載或已移除的版本會清楚標示。" = "Only downloaded versions are available to select. Choices are saved immediately; missing versions are marked.";
+"請先下載並選用所需版本。" = "Download and select the required version first.";
+"本機未有此模型檔案" = "There are no local files for this model.";
+"處理期間暫時不能移除模型" = "Models cannot be removed while processing.";
+"可以重新下載；影片、字幕及其他模型會保留。" = "You can download it again. Videos, scripts and other models are retained.";
+"此模型正在選用。移除後需要重新選擇模型，程式不會自動改用其他版本。" = "This model is selected. After removal, choose another model explicitly; the app will not switch versions automatically.";
+"模型路徑無效" = "Invalid model folder";
+"全部模型" = "All models";
+"本機檔案（包括未完成）" = "Local files, including incomplete downloads";
+"顯示模型" = "Show models";
+"下載未完成；按續傳可沿用已下載內容。" = "Download incomplete. Resume to keep the existing downloaded bytes.";
+"使用中" = "In use";
+"未完成下載" = "Incomplete";
+"繼續下載" = "Resume download";
+"已下載" = "Downloaded";
+
+"此 GPT 模型隨 App 提供，不能在模型中心獨立移除；可取消選用此引擎。" = "This GPT model is bundled with the app and cannot be removed independently. You can deselect the engine.";
+
+"獨立覆聽" = "Independent listening check";
+"校驗／修復" = "Verify / repair";
+
+"生成中" = "Generating";
+
+"準備／生成中" = "Preparing / generating";
+
+"已生成" = "Generated";
+
+"生成失敗" = "Generation failed";
+
+"已跳過餘下生成" = "Remaining generation skipped";
+
+"等待生成" = "Waiting to generate";
+
+"段錄音" = "takes";
+
+"跳過音軌" = "Skip track";
+
+"完成目前一句後跳過餘下生成；已完成錄音保留。" = "Skip remaining generation after the current take; completed takes are retained.";
+
+"等待目前一句完成…" = "Finishing current take…";
+
+"跳過本音軌餘下生成" = "Skip remaining generation on this track";
+
+"總生成時間" = "Total processing time";
+
+"可試聽" = "Ready to listen";
+
+"補聲可試聽" = "Fallback ready";
+
+"補聲來源" = "Fallback source";
+
+"試聽補聲" = "Listen to fallback";
+
+"本次生成時間" = "Processing time for this version";
+
+"未有可用錄音" = "No usable recordings";
+
+"自動修復並補聲" = "Automatically repair and fill missing speech";
+
+"重新檢查已選模型、重試缺聲片段，仍失敗就用同語言其他引擎或日文補聲；台詞及角色問題仍需試聽。" = "Check selected models and retry missing speech. Use another engine in the same language or Japanese if needed. Script and role issues still need listening review.";
+
+"下載大小係模型檔案，唔等於運行時記憶體。大模型／高精度通常需要更多記憶體同時間。所選版本會保存；處理時如需要替代版本，結果會列明。" = "Download size is the model files, not runtime memory. Larger or higher-precision models usually need more memory and time. Select a model after downloading; missing models may use a compatible installed alternative during processing.";
+
+
+"Apple Silicon · macOS 14+ · 建議至少 16 GB 系統記憶體；運行估計約 4–6 GB，另預留系統用量。" = "Apple Silicon · macOS 14+ · At least 16 GB system memory recommended; estimated runtime memory 4–6 GB, plus space for the system.";
+
+"目前整合 v2 官方預訓練權重；v3／v4 係不同架構，未整合，唔會列成可以下載嘅大小選项。" = "Official v2 pretrained weights are integrated. v3/v4 use different architectures and are not integrated or offered as download variants.";
+
+"超出本機建議記憶體：可能變慢或無法載入。" = "Exceeds the recommended memory budget: may run slowly or fail to load.";
+
+"跨語言角色參考" = "Cross-language character reference";
+
+"進階：使用 CosyVoice 語言參考" = "Advanced: use a CosyVoice language reference";
+
+"預設由 GPT-SoVITS 獨立讀取原裝角色錄音。進階模式先用 CosyVoice 建立語言參考；跨語言效果仍需試聽覆核。" = "GPT-SoVITS reads the original character recording independently by default. Advanced mode uses CosyVoice to create a language reference; cross-language results still need listening review.";
+
+"下載／修復 v2" = "Download / repair v2";
+
+"此清單係同一個 0.5B 模型嘅不同精度；聲音編碼器另需約 1 GB，各版本共用。" = "These are different precisions of the same 0.5B model. The shared audio codec needs about 1 GB more.";
+
+"日文參考 → 廣東話" = "Japanese reference → Cantonese";
+
+"進階：使用 CosyVoice 廣東話參考" = "Advanced: use a CosyVoice Cantonese reference";
+
+"預設由 Qwen 獨立讀取原裝角色錄音。進階模式可使用 CosyVoice 廣東話參考；亦可匯入自己的乾淨廣東話錄音。" = "Qwen reads the original character recording independently by default. Advanced mode can use a CosyVoice Cantonese reference, or you can import a clean Cantonese recording.";
+
+"原聲模式只喺同一引擎內重試；仍失敗會標記該段並繼續。只有明確選用進階語言參考模式，先會用 CosyVoice 參考修復。" = "Original-reference mode retries within the same engine and continues after recording failures. CosyVoice reference recovery is used only when advanced language-reference mode is explicitly selected.";
+
+"Base 用於角色聲線複製。廣東話效果需用實際角色參考試聽；官方系列能力與個別大小、量化、跨語言接駁效果要分開驗證。" = "Base supports character voice cloning. Test Cantonese with your actual character references; model size, quantization and cross-language integration require separate verification.";
+
+"目前使用：" = "Currently using:";
+
+"繼續已保存排程" = "Resume saved queue";
+
+"全局設定作為新工作預設；字幕準備好後可隨時進入影片編輯，逐集批准或提交修改。" = "Global settings are defaults for new jobs. Once subtitles are ready, edit, approve or submit changes for each episode.";
+
+"影片編輯／批核" = "Video editing / approval";
+
+"程式庫內置於 App；模型下載到專用資料夾。首次部署需要網絡，完成後推理使用本機。" = "Libraries are bundled with the app; models are downloaded to dedicated storage. Initial deployment needs the internet; inference runs locally afterwards.";
+
+"開啟模型資料夾" = "Open model folder";
+
+"取消／暫停排程" = "Cancel / pause queue";
+
+"呢次未執行本機配音覆聽。" = "Local listening verification did not run for this output.";
+
+"偵測語言與所選配音語言有差異，請試聽核對。" = "Detected language differs from the selected dubbing language. Listen to verify.";
+
+"輸出配音" = "Dubbing language";
+
+"對白篩選" = "Dialogue filter";
+
+"全部" = "All";
+
+"需覆核" = "Needs review";
+
+"已停用" = "Disabled";
+
+"停用" = "Disable";
+
+"時間／重疊需覆核" = "Check timing / overlap";
+
+"採用呢段聲音：" = "Use this recording:";
+
+"引擎" = "Engine";
+
+"套用到本片同角色" = "Apply to this character in this video";
+
+"套用聲線" = "Apply voice";
+
+"將呢個角色全部改成上方聲線" = "Replace this character’s voice with the voice above";
+
+"拖字幕軌左右邊界做 trim；拖配音軌邊界調整目標時段。語速 1× 使用自動時長配合；手動語速及裁切會覆寫自動配合。" = "Drag subtitle edges to trim; drag speech edges to change the target duration. At 1×, timing adjusts automatically. Manual speed and trimming override automatic fitting.";
+
+"待批核建議：" = "Suggestion awaiting approval:";
+
+"將播放頭移到分割時間，再揀文字分界；左右兩段會重新配音，唔會按比例切斷字音。" = "Move the playhead to the split point, then choose the text boundary. Both parts are regenerated without cutting speech proportionally.";
+
+"分割並重新配音" = "Split and regenerate speech";
+
+"Blade：切開已選聲音 take" = "Blade: split the selected audio take";
+
+"剪接以原片工作範圍嘅秒數記錄；輸出按下列次序串接，影片、全部聲音及字幕一齊連動。原片保留。" = "Edits use seconds within the original working range. Video, all audio and subtitles follow the sequence below; the source is preserved.";
+
+"Blade：喺播放頭分割影片" = "Blade: split video at the playhead";
+
+"預覽" = "Preview";
+
+"保留" = "Keep";
+
+"後面前移" = "Ripple subsequent clips";
+
+"取消保留並關閉「後面前移」會輸出同長度黑畫面及靜音。成品頁籤可以檢查剪輯後結果。" = "Disabling both Keep and Ripple outputs a black frame and silence of the same length. Check the edited result in Outputs.";
+
+"重新連結原片" = "Relink source video";
+
+"字幕位置及大小套用到固定燒入字幕；可切換字幕嘅樣式由播放器控制。" = "Subtitle position and size affect burned-in captions; selectable subtitle styling is controlled by the player.";
+
+"參考聲音原文" = "Reference recording transcript";
+
+"更換 WAV" = "Replace WAV";
+
+"原裝參考保留，獨立引擎參考只套用到上方所選引擎及語言。" = "The original reference is retained. Independent engine references apply only to the engine and language selected above.";
+
+"新版本完成前保留舊成品；刪除成品只移走嗰個 MP4，草稿同配音仍保留。" = "The previous output is retained until the new version finishes. Deleting an output removes only that MP4; drafts and speech takes remain.";
+
+"自動覆聽只提供核對線索；語言、名稱同短句可能有辨識誤差。請逐段比較原聲及所選配音。" = "Automatic listening provides evidence. Language, names and short lines can be misrecognized; compare the original and dubbed speech.";
+
+"原聲有人聲活動，但未對應台詞：需要試聽分辨對白、歌聲或音效。" = "Source vocal activity has no matching dialogue. Listen to distinguish speech, singing and effects.";
+
+"檢視資料" = "View data";
+
+"台詞／角色修改會更新相關配音，再混音合片；影片剪輯會同步重排全部軌道。原始辨識保留作追溯。" = "Script or character changes regenerate affected speech and remix the video. Video edits reorder all tracks together; original recognition remains traceable.";
+
+"重試" = "Retry";
+
+"取消排隊" = "Cancel queued job";
+
+"可用自己準備嘅乾淨廣東話／英文錄音改善跨語言效果。唔會自動由其他 TTS 引擎生成；聲線身份同口音仍需試聽。" = "A clean Cantonese or English recording can improve cross-language results. It is not automatically synthesized by another engine; voice identity and accent still need listening review.";
+
+"問題篩選" = "Issue filter";
+
+"待覆核" = "Needs review";
+
+"已補聲" = "Fallback applied";
+
+"%d 項待覆核 · %d 項已補聲" = "%d need review · %d use fallback";
+
+"第 %d 段 · %@ · %@" = "Line %d · %@ · %@";
+
+"語言待覆核" = "Check language";
+
+"內容待覆核" = "Check content";
+
+"時間待覆核" = "Check timing";
+
+"角色待覆核" = "Check character";
+
+"多人原聲保留" = "Mixed voices: original speech retained";
+
+"已用日文補聲" = "Japanese fallback applied";
+
+"已用其他引擎補聲" = "Alternative engine applied";
+
+"原生成問題保留供追溯" = "Original generation issue retained for traceability";
+
+"編輯" = "Edit";
+
+"重錄此段" = "Regenerate line";
+
+"顯示更多" = "Show more";
+
+"此段保留日文原聲" = "Keep Japanese speech for this line";
+
+"多人聲線未能分辨時會保留原聲；可新增同時段對白，分別指定角色後關閉此選項。" = "Unresolved mixed voices retain the original. Add overlapping dialogue, assign each character, then disable this option.";
+
+"原聲對白覆蓋／漏段" = "Source dialogue coverage";
+
+"原始辨識" = "Original recognition";
+
+"翻譯／角色配對" = "Translation / character assignment";
+
+"配音時間檢查" = "Speech timing checks";
+
+"輸出品質檢查" = "Output quality checks";
+
+"資源自動恢復" = "Resource recovery";
+
+"核對待修正" = "Verification incomplete";
+
+"第 %d 段 · %.2f–%.2f 秒" = "Line %d · %.2f–%.2f s";
+
+"將此聲線套用到所選 %d 段" = "Apply voice to %d selected lines";
+
+"片段 %d" = "Clip %d";
+
+"版本 %@ · %@" = "Version %@ · %@";
+
+"可用儲存空間" = "Free storage";
+
+"已輸出，待覆核" = "Exported · review needed";
+
+"比較原引擎錄音（未修復）" = "Compare native recording (before repair)";
+
+"聲線待覆核" = "Voice needs review";
+"原字幕與日文核對" = "Source subtitle / Japanese review";
+"翻譯台詞" = "Translated script";
+"音軌品質摘要" = "Audio channel quality summary";
+"%d 段生成失敗 · %d 段需試聽 · %d 段已補聲" = "%d failed lines · %d to audition · %d repaired lines";
+"共用字幕及角色提示" = "Shared subtitle and role checks";
+"共用提示不代表每條配音軌生成失敗。" = "Shared checks do not mean every audio channel failed.";
+"智能補聲此音軌" = "Repair this channel";
+"重試選中對白" = "Retry selected line";
+"智能補聲沿用已批核台詞，優先用合格同語言音軌，最後用日文；重試會使用所選原引擎。共同字幕或角色問題需另外核對。" = "Repair uses the approved script and verified same-language donor tracks, then Japanese. Retry uses the selected original engine. Shared script or role checks remain separate.";
+"只顯示所選音軌提示" = "Checks for the selected channel only";
+"所選音軌需要覆核" = "Selected channel needs review";
+"此音軌已替代補聲" = "This channel uses replacement audio";
+
+"重試並修復所有音軌" = "Retry and repair all channels";
+
+"角色分析方式" = "Role analysis";
+
+"聲音＋畫面" = "Audio + video";
+
+"只用聲音" = "Audio only";
+
+"抽樣畫面輔助聲紋配對；重複畫面與聲音共同支持先合併角色。不確定時保留聲音判斷。" = "Sampled visual evidence assists voice matching. Merge roles only with repeated visual and acoustic support; retain audio assignments when uncertain.";
+
+"選擇畫面分析模型" = "Choose visual analysis model";
+
+"可重用已下載 Qwen3.5；不會同配音模型一齊載入。尚未下載或分析失敗時改用聲音，並保存原因。" = "Reuse downloaded Qwen3.5 weights, loaded separately from TTS. If unavailable or analysis fails, use audio and record the reason.";
+
+"較快；按原聲聲紋配對角色，沒有畫面核對。" = "Faster. Match original voices without visual verification.";
+
+"本片角色分析結果" = "Role analysis for this video";
+
+"有共同證據而重新配對" = "Assignments updated with combined evidence";
+
+"畫面屬抽樣輔助，並非完整嘴形追蹤或身份認證。" = "Visual sampling assists matching; it does not certify identity or track every lip movement.";
+
+"已改用聲音分析" = "Using audio analysis instead";
+
+"畫面角色分析" = "Visual role analysis";
+
+"畫面輔助分析 · 實驗功能" = "Visual assistance · experimental";
+
+"畫面分析改用聲音" = "Visual analysis unavailable; using audio";
+
+"未有完整並適合本機記憶體的 Qwen 視覺模型；請在模型中心選擇較小 Qwen3.5。" = "No complete Qwen vision model fits the memory budget. Choose a smaller Qwen3.5 in Model Center.";
+
+"畫面分析執行環境未部署。" = "The visual analysis runtime is not deployed.";
+
+"未有原聲聲紋證據，保留原配對。" = "No source voice embeddings are available; keeping the original assignments.";
+
+"畫面模型分析失敗，詳見 visual-analysis.log。" = "Visual inference failed; see visual-analysis.log.";
+
+"抽樣連續畫面，核對角色外觀、嘴部變化及原聲配對；模型逐個載入。" = "Sampling chronological frames to check appearance, mouth changes and source voice matching. Models load one at a time.";
+
+"待處理" = "Pending";
+"處理中" = "Processing";
+"待批核" = "Awaiting approval";
+"需修正" = "Needs review";
+"已完成" = "Completed";
+"已輸出" = "Exported";
+"排隊生成" = "Queued for generation";
+"原片音軌" = "Original mix";
+"分離對白" = "Isolated dialogue";
+"分離對白未準備好，請先完成背景分離。" = "Isolated dialogue is not ready. Complete audio separation first.";
+"程序運行中" = "Process active";
+"閒置" = "Idle";
+"%d 行 · 只喺本機" = "%d lines · local only";
+"段" = "segment";
+"旁白測試" = "Narrator test";
+"街販測試" = "Vendor test";
+"自動角色 %d" = "Auto role %d";
+"正在播放：" = "Playing: ";
+"已採用並播放：" = "Selected and playing: ";
+"音量摘要" = "Speech level summary";
+"參考錄音檢查" = "Reference audio check";
+"Qwen 廣東話適配" = "Qwen Cantonese adaptation";
+"目前係 Base 聲線克隆；廣東話會獨立覆聽，錯誤語言會重試或用其他引擎補聲。LoRA 訓練程式唔等於可下載模型，未有已驗證 Mac 權重，暫時不能啟用。" = "This is Base voice cloning. Cantonese is checked independently; wrong-language takes are retried or replaced by another engine. The LoRA repository supplies training code, not a verified Mac checkpoint. Adaptation is not yet available.";
+"查看廣東話 LoRA 訓練項目" = "Cantonese LoRA training project";
+
+"配音時自動降低背景聲" = "Lower background audio during speech";
+"減少音樂遮蓋對白；只影響配音混音，日文原聲音軌保持完整。" = "Reduces music masking dialogue in dubbed mixes. The original Japanese track stays intact.";
+"音量待覆核" = "Speech level needs review";
+
+"Qwen TTS 已停用；只保留本機檔案管理，不再用於新配音。" = "Qwen TTS is retired. Stored files can be managed here; new dubbing uses the remaining engines.";
+
+"Qwen TTS 已停用；請選擇 CosyVoice 或 GPT-SoVITS。" = "Qwen TTS is retired. Choose CosyVoice or GPT-SoVITS.";
+
+"對白清單" = "Dialogue list";
+
+"批准並排隊" = "Approve and queue";
+
+"批准並生成" = "Approve and generate";
+
+"修改後重新排程" = "Edit and reschedule";
+
+"未設定參考聲音" = "No reference recording";
+
+"舊音軌" = "Legacy track";
+
+"引擎設定更新" = "Engine selection updated";
+
+"跟隨播放字幕" = "Follow playback subtitles";
+"此位置暫未有字幕" = "No subtitle at this position yet";
+"點字幕跳轉；點已生成配音試聽" = "Click subtitles to seek; click generated dubs to audition";
+"本階段已用時間：" = "Stage elapsed: ";
+"本階段进度：" = "Stage progress: ";
+"本階段進度：" = "Stage progress: ";
+"本階段預計剩餘：" = "Estimated stage remaining: ";
+"已保存生成時間：" = "Saved generation time: ";
+
+"本階段已完成，準備下一步" = "Stage complete; preparing the next step";
+"等待首個完成項目以估算時間" = "Waiting for the first completed item to estimate time";
+"載入或準備中，尚未有可量度進度" = "Loading or preparing; measurable progress is not available yet";
+"原片字幕" = "Original subtitles";
+"日文辨識" = "Japanese transcription";
+"日文辨識文字" = "Japanese transcription text";
+"翻譯字幕" = "Translated subtitles";
+"預覽字幕" = "Preview subtitles";
+"可同時顯示多種字幕；只影響預覽" = "Show multiple subtitle sources; preview only";
+"畫面燒入字幕會保留，無法關閉" = "Burned-in subtitles remain visible and cannot be hidden";
+"載入原片字幕…" = "Loading original subtitles…";
+"未有可選文字字幕軌；畫面原有字幕會保留" = "No selectable text subtitle tracks; original picture subtitles remain visible";
+"原片字幕載入失敗" = "Could not load original subtitles";
+"開啟原聲" = "Enable original audio";
+"靜音預覽" = "Mute preview";
+"字幕對齊修正" = "Subtitle alignment repair";
+
+"此批次較慢，完成後更新估算" = "This batch is taking longer; the estimate updates when it finishes";
+
+"按已完成同類步驟估算" = "Based on completed batches in this step";
+
+"按相同設定嘅歷史步驟估算" = "Based on previous steps with the same settings";
+
+"覆核原聲遺漏片段。" = "Checking possible missing source speech.";
+
+"場景快取" = "Saved scene";
+
+"沿用已保存場景。" = "Reusing a saved scene.";
+
+"已從保存紀錄恢復可核對台詞。" = "Recovered verifiable dialogue from saved responses.";
+
+"未能生成配音稿；保留此段日文原聲，繼續其餘對白。" = "The script could not be generated; retain Japanese speech here and continue other dialogue.";
+
+"配音待修正" = "Dubbing needs repair";
+"分離修正" = "Separation repair";
+"已核對原音訊，自動對齊片尾長度；保留已完成嘅背景及對白音軌。" = "Verified the decoded source and aligned the audio tail; completed stems are retained.";
+"%d 條影片未完成；其他影片已繼續處理。" = "%d videos could not finish; processing continued for the other videos.";
+"查看錯誤摘要" = "View error summary";
+
+"允許已選引擎互相補聲" = "Allow repairs using other selected engines";
+
+"只用已選、同角色同語言嘅錄音補缺；唔會自動用日文或未選引擎。" = "Use only selected engines with the same role and language. Never automatically substitute Japanese or an unselected engine.";
+
+"智能修復沿用已批核台詞，有限次重試原引擎；啟用互相補聲先會採用已選同語言引擎。未完成片段分音軌列出，不自動用日文補聲。" = "Smart repair keeps approved scripts and retries the original engine within a saved limit. Other selected engines are used only when enabled. Unresolved segments are listed per track; Japanese is never substituted automatically.";
+
+"重新檢查已選模型並有限次重試缺聲片段；保留成功錄音，按已授權補聲設定繼續。" = "Check selected models and retry missing takes within a saved limit. Keep successful recordings and apply the authorized repair settings.";
+
+"%d 段對白" = "%d dialogue segments";
+
+"未有可靠角色畫面；沿用聲音配對" = "No reliable character image; retain acoustic assignment";
+
+"已保存角色畫面參考" = "Character image reference saved";
+
+"拖角色卡到時間軸對白，或者按「套用到目前對白」。可撤銷，並只重新生成受影響對白。" = "Drag a role card onto a dialogue block or apply it to the current dialogue. Assignments support undo; regenerate affected dialogue when ready.";
+
+"套用到目前對白" = "Apply to current dialogue";
+
+"角色名稱與引擎參考" = "Role name and engine references";
+
+"原裝中文字幕" = "Original Chinese subtitles";
+"本時段冇原裝字幕" = "No original subtitle at this time";
+"原片字幕軌" = "Original subtitle track";
+
+"原字幕配音範圍" = "Source caption windows";
+"影片加速" = "Video acceleration";
+"耗時摘要" = "Processing time summary";
+"使用 Apple 硬件編碼；保留音軌同字幕設定。" = "Using Apple hardware encoding with the selected audio and subtitle tracks.";
+"按原裝中文字幕時段辨識日語同逐字時間。" = "Transcribing Japanese with word timing within original Chinese caption windows.";
+"未有中文字幕；按原片音軌辨識日語同逐字時間。" = "No Chinese captions; transcribing the original Japanese audio with word timing.";
+"處理時間少於 1 秒。" = "Processing took less than one second.";
+
+"角色管理" = "Role manager";
+"開啟角色管理" = "Open role manager";
+"%d 個角色" = "%d roles";
+"未有角色" = "No roles yet";
+"角色卡" = "Role cards";
+"顯示未使用角色" = "Show unused roles";
+"更換大頭相" = "Change portrait";
+"重新配對呢段" = "Reassign this line";
+"合併到其他角色" = "Merge into another role";
+"原片畫面" = "Original video frame";
+"未有角色畫面" = "No character image yet";
+"相應配音" = "Voice auditions";
+"聽角色參考" = "Play voice reference";
+"參考錄音設定" = "Voice reference settings";
+"角色對白" = "Character lines";
+"框選角色大頭相" = "Crop character portrait";
+"使用呢張大頭相" = "Use this portrait";
+
+"角色相簿" = "Character album";
+"逐段配對" = "Dialogue matching";
+"本片角色" = "Characters in this project";
+"相片大小" = "Photo size";
+"有相片" = "With photos";
+"待補相" = "Needs a photo";
+"已存入常用聲線" = "Saved to favorite voices";
+"目前封面" = "Current cover";
+"設為封面" = "Set as cover";
+
+"移除封面" = "Remove cover";
+
+"開啟角色相簿" = "Open character album";
+
+"刪除 %d 個聲線？" = "Delete %d voices?";
+
+"只清理聲線資料庫；影片專案嘅角色、配音同原片會保留。" = "Only library entries are removed. Project roles, recordings and source videos are retained.";
+
+"刪除選中聲線" = "Delete selected voice";
+
+"清空歷史參考" = "Clear historical references";
+
+"清空全部聲線" = "Clear all library voices";
+
+"清理聲線" = "Clean up voices";
+
+"已分析角色預覽 · 完成校稿後可修改配對" = "Prepared role preview · Edit assignments after the review draft is ready";
+
+"角色分析尚未完成" = "Role analysis is not ready yet";
+"角色與聲線配對" = "Character and voice matches";
+"聲音與畫面支持" = "Audio and visual support";
+"只按聲音配對" = "Audio matches";
+"待確認聲線" = "Unconfirmed voices";
+"身份未確認" = "Identity unconfirmed";
+
+"全片頭像" = "Episode portraits";
+"尚未有可辨識頭像" = "No recognizable portraits yet";
+
+"對白已修改，請取消待提交修改後重新配對。" = "Dialogue changed. Cancel pending changes and assign it again.";
+"角色配對已再次修改，請先撤銷較新修改。" = "Roles changed again. Undo newer changes first.";
+"仍有未提交角色修改" = "Role changes have not been committed";
+"返回檢視修改，或放棄待提交修改。影片配音尚未改動。" = "Return to review, or discard pending changes. Video dubbing has not changed.";
+"返回" = "Return";
+"放棄修改" = "Discard changes";
+"復原上次角色修改" = "Restore last role change";
+"取消待提交修改" = "Discard pending changes";
+"檢視修改（%d）" = "Review changes (%d)";
+"候選畫面" = "Source frame · unconfirmed";
+"待提交配對" = "Pending assignment";
+"加入待提交修改" = "Add to pending changes";
+"提交角色修改" = "Commit role changes";
+"返回編輯" = "Back to editing";
+"提交後重新配音並輸出影片" = "Regenerate dubbing and export after committing";
+"確認提交" = "Confirm and commit";
+
+"聽本段原聲" = "Play original audio for this line";
+"試聽配音" = "Play dubbing";
+
+"自然語速" = "Natural speech timing";
+"保留台詞同角色，最多重錄一次，覆聽後先採用。" = "Keep the same script and role; retry once and verify the full speech before adopting it.";
+"重錄或覆聽未完成，保留已生成錄音同完整字句，時間差會列入報告。" = "Retry or verification unavailable; retain the complete recording and report timing differences.";
+
+"保留台詞同角色，最多重錄兩次，覆聽後先採用。" = "Keep the same script and role; retry at most twice and verify the full speech before adopting it.";
+
+"重新配音／新增音軌" = "Redub / add audio tracks";
+"所選音軌全部重新配音" = "Regenerate all selected tracks";
+"建立新版本並排隊" = "Queue new version";
+"建立配音版本" = "Create dubbed version";
+"角色總覽" = "Cast overview";
+"配對與修改" = "Assign and edit";
+"畫面素材庫" = "Scene gallery";
+"返回總覽" = "Back to overview";
+"參考" = "Reference";
+"角色原聲參考" = "Character reference recording";
+"用這句分離原聲作角色參考" = "Use this isolated line as the character reference";
+"拖時間尺移動；點字幕跳轉；點配音試聽" = "Drag the time ruler to pan; click subtitles to seek or audio to audition";
+"%d 個聲線角色 · %d 段對白" = "%d voice roles · %d dialogue lines";
+"待提交修改 %d" = "Pending changes: %d";
+"先選角色檢視對白。拖對白到角色卡：改配對；拖角色卡到對白：指定角色；拖角色到另一角色：合併。修改先加入草稿，再檢視及提交。" = "Select a character to inspect dialogue. Drop a line onto a card to reassign it; drop a card onto a line to assign it; drop one character onto another to merge. Review the draft before committing.";
+"畫面素材庫只用來選封面，圖片不代表聲線身份。" = "The scene gallery supplies cover images. Pictures do not establish voice identity.";
+"沿用已保存台詞、字幕時間、角色卡及原聲參考，建立新版本。舊成品保留。" = "Create a new version from saved scripts, subtitle timing, character cards and original references. Keep earlier exports.";
+"已有英文台詞直接使用；欠缺英文稿時只補英文稿，廣東話稿保留。" = "Reuse existing English dialogue. Draft only missing English lines and preserve the Cantonese script.";
+"即使已有符合台詞的音檔，也建立新的錄音版本。" = "Create new recordings even when matching takes already exist.";
+"沿用符合目前台詞、角色及引擎版本的音檔；只生成欠缺音檔。" = "Reuse takes matching the current script, character and engine version; generate missing takes.";
+"GPT 新配音使用 V4，原生 48 kHz；舊 V2 錄音只保留作比較。" = "New GPT dubbing uses V4 at native 48 kHz. Earlier V2 recordings remain available for comparison.";
+"請先在模型中心部署所選引擎。" = "Install the selected engine in the model center first.";
+"先聽分離對白，選同角色 3–10 秒單人清晰句子。音效殘留仍需覆聽；圖片不能產生聲線。" = "Audition isolated dialogue and choose a clear 3–10 second single-speaker line from this character. Check for residual effects; pictures do not produce a voice.";
+"已選角色分離原聲；請覆聽音效殘留及逐字原文，純度未認證。" = "Selected isolated character audio. Check residual effects and the exact transcript; purity is not certified.";
+"新配音只使用 V4；已生成 V2 音軌保留作比較。參考錄音品質仍然影響結果。" = "New dubbing uses V4. Existing V2 tracks remain available for comparison. Reference quality still affects the result.";
+
+"生成／重配音" = "Generate / redub";
+"音量" = "Audio";
+"音量與混音" = "Volume and mix";
+"試聽音量" = "Preview volume";
+"只調整播放器與逐句試聽音量，不影響成品。" = "Adjust the player and line audition volume only; exports are unchanged.";
+"成品背景音" = "Export background audio";
+"有人講嘢時降低背景音" = "Lower the background during speech";
+"配音保持已檢查的音量；背景修改會套用到下一個生成版本。" = "Dubbing keeps its checked level. Background changes apply to the next generated version.";
+"原裝中文字幕跟影片原時間，配音語速與音量不會改動原字幕。" = "Original Chinese subtitles follow source time. Dub speed and volume do not change them.";
+"原裝中文字幕 · 原時間" = "Original Chinese subtitles · source time";
+"角色聲音設定" = "Character voice settings";
+"逐句試聽在右側對白清單；此區只設定角色參考聲音。" = "Audition each line in the dialogue list on the right. Set the character reference here.";
+"分離" = "Isolated";
+"成品字幕排版" = "Export subtitle layout";
+"字幕底部位置" = "Subtitle bottom position";
+"字幕字體大小" = "Subtitle size";
+"只調整生成字幕的排版；原裝中文字幕的時間保持不變。" = "Adjust generated subtitle layout only. Original Chinese subtitle timing stays unchanged.";
+"配音製作模式" = "Voice rendering mode";
+"精細（預設）" = "Detailed (default)";
+"均衡（較快）" = "Balanced (faster)";
+"均衡減少 V4 聲音運算及時間重錄；兩種模式都保留完整台詞、48 kHz 及覆聽。清晰度仍需比較。" = "Balanced reduces V4 processing and timing retries. Both modes retain the complete script, 48 kHz and verification. Compare voice clarity.";
+"各階段耗時" = "Time by stage";
+"翻譯與稿件" = "Translation and script";
+"聲音辨識" = "Speech recognition";
+"角色與畫面" = "Cast and visuals";
+"聲音覆核" = "Voice verification";
+"配音生成" = "Voice generation";
+"準備" = "Preparation";
+"錄音逐字原文（按錄音實際語言）" = "Exact recording transcript (in the recording language)";
+
+"全片播放位置" = "Whole-film playback position";
+
+// GPT deployment status uses the same version metadata as the voice library.
+"部署 %@（模型約 %@；原生 48 kHz）" = "Deploy %@ (about %@ of models; native 48 kHz)";
+"V4 模型已就緒；新配音使用 V4。" = "V4 models are ready. New dubbing uses V4.";
+"V4 未就緒；請下載並部署。" = "V4 is not ready. Download and deploy the models.";
+"V4 原生輸出 48 kHz。\nGPT、SoVITS、聲碼器及 BERT／HuBERT 元件約 1.82 GB。" = "V4 produces native 48 kHz audio.\nGPT, SoVITS, the vocoder, BERT and HuBERT components total about 1.82 GB.";
+"V4 會為自動拼接參考選取同角色連續原聲並核對原文。字詞／語言通過，仍需試聽廣東話聲調。" = "V4 prepares continuous originals from automatically joined references and transcribes the actual excerpt. A text/language check still requires Cantonese tone audition.";
+
+"GPT V4 粵拼修正（每個字一個音節，聲調 1–6）" = "GPT V4 Jyutping overrides (one syllable per character, tones 1–6)";
+"全部重新翻譯" = "Retranslate all";
+"只補缺少字幕" = "Fill missing subtitles";
+"只改新生成 GPT 廣東話的音素輸入；字幕原文保持不變。其他引擎沿用自己的讀音方式。" = "Controls phoneme input for new GPT Cantonese recordings. Displayed text stays intact. Other engines use their own pronunciation.";
+"可在角色卡匯入經試聽確認的 3–10 秒廣東話參考。音素正確或覆聽文字一致，仍不代表聲調自然。" = "Import an auditioned 3–10 second Cantonese reference in the role card. Correct phonemes or matching transcripts do not certify natural tones.";
+"台詞已修改，請重新建立草稿，避免覆蓋新修改。" = "The script changed. Create a new proposal to keep your latest edits.";
+"套用所選語言草稿" = "Apply selected language scripts";
+"字幕檔案" = "Subtitle files";
+"字幕草稿不屬於目前專案。" = "This subtitle proposal belongs to another project.";
+"字幕草稿來源遺失。" = "The subtitle proposal source is missing.";
+"字幕草稿待核對" = "Subtitle proposal ready for review";
+"字幕草稿未完成" = "Subtitle proposal incomplete";
+"字幕處理" = "Subtitle action";
+"字幕語言" = "Subtitle languages";
+"音軌語言" = "Audio languages";
+"將製作 %d 條音軌" = "Generate %d audio tracks";
+"對白結構已修改，請重新建立字幕草稿。" = "The dialogue structure changed. Create a new subtitle proposal.";
+"左邊目前台詞，右邊新草稿。套用只更新所選語言，保留時間與角色；可以撤銷。" = "Current text is on the left, proposed text on the right. Applying updates only the selected languages and keeps timings and roles. You can undo.";
+"廣東話字幕" = "Cantonese subtitles";
+"廣東話試音組" = "Cantonese audition set";
+"廣東話讀音與參考" = "Cantonese pronunciation and references";
+"廣東話＋英文（獨立字幕軌）" = "Cantonese + English (separate subtitle tracks)";
+"抽取最多 20 句、跨角色的廣東話試音，逐句覆聽；不合片、不替換成品。" = "Audition up to 20 Cantonese lines across roles, with transcript checks. No movie encoding or automatic replacement.";
+"新專案預設粵拼修正（GPT V4）" = "Default Jyutping overrides for new projects (GPT V4)";
+"新版字幕軌" = "New version subtitle tracks";
+"新版本會出現在成品頁；舊成品保留。" = "New versions appear in Exports. Previous exports are kept.";
+"未完成" = "Incomplete";
+"欠缺英文台詞時先補英文稿；如要核對翻譯，請先使用字幕頁。" = "Missing English scripts are generated first. Use Subtitles to review the translation before dubbing.";
+"每行：台詞字詞 = 粵拼。例：銀行 = ngan4 hong4。每個字一個音節，聲調 1–6。現有專案在製作頁修改。" = "One rule per line: phrase = Jyutping, e.g. 銀行 = ngan4 hong4. One syllable per character, tones 1–6. Edit existing projects in Build.";
+"比較字幕草稿" = "Compare subtitle proposal";
+"比較字幕" = "Compare subtitles";
+"沿用字幕輸出設定" = "Keep subtitle export settings";
+"沿用已保存原文、角色卡及時間；字幕與配音可分開更新。" = "Reuse saved source text, role cards and timings. Update subtitles and dubbing independently.";
+"由已保存原文重新翻譯；原裝中文字幕、字幕時間及角色配對保留。先比較新草稿，再套用。" = "Translate saved source text again, keeping original Chinese subtitles, timings and roles. Compare the proposal before applying it.";
+"製作項目" = "Build task";
+"覆聽" = "Transcript check";
+"覆聽文字只供核對；請聽字詞、聲調與角色聲線。試音不會自動套用到成品。" = "Transcripts are review evidence. Listen for words, tones and character identity. Auditions are not automatically applied to exports.";
+"角色參考與試聽" = "Role references and auditions";
+"試音" = "Audition";
+"重新製作" = "Rebuild";
+"製作" = "Build";
+"需要試聽覆核" = "Listening review required";
+"保存並排隊" = "Save and queue";
+"建立字幕草稿" = "Create subtitle proposal";
+"建立廣東話試音組" = "Create Cantonese audition set";
+"建立新錄音版本，所選音軌不沿用已有 take。" = "Create fresh recordings for the selected tracks.";
+
+"部分字幕未完成；可重試" = "Some subtitles are incomplete; retry available";
+
+"字幕草稿已套用" = "Subtitle proposal applied";
+
+"角色卡分析（預設）" = "Character card analysis (default)";
+"逐句聲音配對" = "Per-line voice mapping";
+"聲紋分組＋角色畫面分析，建立角色卡並共用角色參考；整集聲線較容易保持一致。" = "Group original voices and analyse character images to build cards with shared references. This helps keep character voices consistent.";
+"每句只用自己的原聲參考；不做聲紋分組、角色畫面分析或相簿截圖。" = "Each line uses only its own original reference. No speaker clustering, character image analysis or album screenshots.";
+"省略角色分析工序；逐句準備參考仍需時間。短句參考較少，同一角色前後聲線可能不同。" = "Skips character analysis; preparing per-line references still takes time. Short lines have less reference speech, and recurring characters may sound different.";
+"沒有共用聲線分組；逐句參考需要試聽。" = "No shared voice groups. Per-line references need auditioning.";
+"逐句配音參考" = "Per-line voice references";
+"搜尋逐句參考" = "Search per-line references";
+"本句參考設定" = "Reference settings for this line";
+"本句獨立原聲參考" = "Independent original reference for this line";
+"短句參考，需試聽" = "Short reference; audition required";
+"參考未完成" = "Reference incomplete";
+"只補靜音達到引擎所需錄音長度，未借用相鄰對白；有效語音太短時需重新試聽或換參考。" = "Silence padding meets the engine duration requirement. No neighbouring dialogue is borrowed. Audition or replace references with too little speech.";
+"第 %d 句原聲" = "Original voice for line %d";
+"選擇一句檢視原聲參考。" = "Select a line to inspect its original reference.";
+"%d 個逐句參考 · %d 段對白" = "%d per-line references · %d dialogue lines";
+"每句只用自己的原聲參考，沒有共用角色卡；選一句試聽或修改參考原文。" = "Each line uses its own source reference with no shared character card. Select a line to audition or edit its reference transcript.";
+"配音參考" = "Voice reference";
+"檢視" = "View";
+
+"自動準備逐句原聲參考" = "Prepare an original reference for each line automatically";
+
+"每句可更換自己的參考聲或修改原文；短句參考同聲調需要試聽。" = "Replace an individual reference or edit its transcript. Short references and tones need auditioning.";
+
+"配音聲線方式" = "Voice style";
+
+"自然配音／角色感（預設）" = "Natural voice / character feel (default)";
+
+"原角色聲線模仿" = "Original character voice cloning";
+
+"廣東話及英文各用對應語言的固定聲線；按角色音域選近似音色，可逐角色改選。優先自然口音，不複製日語語調。" = "Use a fixed voice in each target language. Match approximate vocal range and adjust each role. Prioritize native delivery over Japanese prosody.";
+
+"使用完整、清晰、原文已核對的角色原聲；跨語言仍可能帶入原聲口音。碎片拼接不會當作合格參考。" = "Use clear continuous originals with a checked transcript. Cross-language cloning may retain the source accent. Stitched fragments are not accepted.";
+
+"自然聲線" = "Natural voice";
+
+"自動按角色音域選擇" = "Auto: match vocal range";
+
+"同一角色、同一語言固定使用所選聲線；只改新生成配音。自動選擇係音域近似，並非性別或身份辨識。" = "Keep the same voice per role and language for new recordings. Automatic casting estimates vocal range, not gender or identity.";
+
+"可在參考錄音設定匯入自己的同語言 WAV，取代內置聲線。" = "Import your own reference WAV in the target language to replace the built-in voice.";
+
+"自動自然聲線未配對；先生成試音，或選擇一條自然聲線試聽。" = "Automatic voice casting is not ready. Generate an audition or select a voice to hear its reference.";
+
+"自然聲線參考" = "Natural voice reference";
+
+"原聲（含前後）" = "Original + context";
+
+"分離（含前後）" = "Isolated + context";
+
+"台詞或時間已改，需重新配音" = "Script or timing changed; regenerate this line";
+
+"廣東話・低沉" = "Cantonese · low";
+
+"廣東話・中音" = "Cantonese · medium";
+
+"廣東話・明亮" = "Cantonese · bright";
+
+"廣東話・柔和" = "Cantonese · soft";
+
+"英文・低沉" = "English · low";
+
+"英文・中音" = "English · medium";
+
+"英文・明亮" = "English · bright";
+
+"每句獨立配對自然聲線，沒有共用角色分組；選一句試聽或調整聲線。" = "Each line has its own natural voice mapping with no shared character grouping. Select a line to audition or adjust its voice.";
+
+"本句獨立自然聲線" = "Independent natural voice for this line";
+
+"每句獨立配對自然聲線；不做聲紋分組、角色畫面分析或相簿截圖。" = "Map natural voices independently per line, without speaker grouping, visual analysis or album screenshots.";
+
+"保留原聲（未經聲線模仿）" = "Original preserved (no voice cloning)";
+
+"剪輯" = "Edit";
+
+"校對報告" = "Review report";
+
+"製作匯出" = "Produce";
+
+"製作與匯出" = "Produce and export";
+
+"轉換校對報告" = "Conversion review report";
+
+"重新生成並試聽" = "Regenerate and audition";
+
+"補回此音軌缺少配音" = "Regenerate missing speech on this track";
+"生成失敗表示缺少有效配音；其餘項目是自動檢查提示，需要試聽確認。字幕識別差異不一定代表讀錯。點選編輯可返回時間軸比較原聲、字幕及配音。" = "Generation failures mean valid speech is missing. Other flags are automated checks that need listening; transcription differences do not always mean incorrect speech. Choose Edit to compare source audio, subtitles and dubbing on the timeline.";
+"建議：重錄此段；仍失敗時，在角色頁更換同一角色的乾淨參考，或比較另一引擎。" = "Try regenerating this line. If it still fails, choose a clean reference for the same role on the Roles page, or compare another engine.";
+"建議：比較配音結尾與下一句，調整時間或語速。" = "Compare the end of this take with the next line, then adjust timing or speaking rate.";
+"建議：比較同角色前後句，確認是否變聲；需要時重新生成。" = "Compare adjacent lines from the same role for voice consistency; regenerate if needed.";
+"建議：先比較原聲及配音；讀字正確可以保留，需要時改稿或重錄。" = "Compare the source and dubbed audio first. Keep correctly spoken takes; edit the script or regenerate where needed.";
+
+"檢查詳情" = "Check details";
+
+"全部所選配音重新生成並合片" = "Regenerate all selected voices and export";
+
+"補回缺少配音並合片" = "Generate missing speech and export";
+
+"桌面夥伴" = "Desktop companion";
+"桌面自由走動" = "Roam on desktop";
+"薄荷節拍" = "Mint rhythm";
+"月下花語" = "Moonflower";
+"移回螢幕角落" = "Return to screen corner";
+"拖曳移動，按右鍵設定" = "Drag to move. Right-click for settings.";
+"返回剪輯器" = "Return to editor";
+"開啟／暫停走動" = "Toggle roaming";
+"開啟／暫停動畫" = "Toggle animation";
+"隱藏桌面夥伴" = "Hide desktop companion";
+
+"顯示／隱藏選單" = "Show / hide menu";
+"專案工作區" = "Project workspace";
+"工作佇列" = "Work queue";
+"面板配置" = "Panel layout";
+"查看此音軌校對報告" = "Review this audio track";
+
+"修改聲線風格" = "Change voice style";
+
+"本次試音風格" = "Audition voice style";
+"自然聲" = "Natural voice";
+"模仿聲音" = "Original cloning";
+"只用於本次試音；整集聲線方式在製作匯出設定。" = "Applies to this audition. Set the whole-project voice style in Produce.";
+
+"處理詳情" = "Processing details";
+"本次試音" = "Audition";
+
+"自然配音／角色感" = "Natural voice / character feel";
+"原角色聲線模仿（預設）" = "Original character cloning (default)";
+"配音生成參數" = "Generation parameters";
+"情緒表演" = "Expression";
+"沿用參考" = "Reference style";
+"有表情" = "Expressive";
+"緊張／堅定" = "Urgent / determined";
+"平靜／溫柔" = "Calm / gentle";
+"GPT V4 未提供獨立情緒或去口音控制；參考錄音仍會影響語調。" = "GPT V4 has no independent emotion or accent-removal control here; references still influence delivery.";
+"重設生成參數" = "Reset parameters";
+"隨機種子" = "Seed";
+"參數只用於新試音；不能保證消除口音。更換參考錄音請到角色頁。" = "Settings apply to new auditions and do not guarantee accent removal. Change references on the Roles page.";
+"比較四種廣東話配音" = "Compare four Cantonese takes";
+"英文稿已生成" = "English script generated";
+
+"角色聲線模仿" = "Original character voice cloning";
+"比較 GPT／CosyVoice" = "Compare GPT / CosyVoice";
+
+"選擇助手" = "Choose companion";
+"還原預設助手" = "Reset companion";
+"桌面助手" = "Desktop companion";
+"桌面角色" = "Companion character";
+"每次啟動隨機助手" = "Random companion at startup";
+"紫髮音控" = "Violet sound engineer";
+"橙髮音控" = "Amber sound engineer";
+"海軍音控" = "Sailor sound engineer";
+"夜行斥候" = "Night scout";
+"復古主播" = "Retro host";
+"森林錄音師" = "Forest recordist";
+"未來發明家" = "Friendly inventor";
+"介面與助手" = "Interface and companion";
+"隨機助手範圍" = "Random companion selection";
+"助手喺啟動時揀一次，轉換途中唔會跳換。人物係原創。" = "A companion is selected at startup and stays during conversion. Characters are original.";
+
+"A／B 試音比較" = "A/B audition";
+"保存目前參數" = "Save current parameters";
+"使用目前參數" = "Use current parameters";
+"生成 A＋B 並比較" = "Generate A + B";
+"已保存參數" = "Parameters saved";
+"同一句、同一語言、同一角色參考。可選不同模型，亦可用同一模型比較參數；不合片、不自動採用。" = "Same line, language and character reference. Compare models or parameters; no movie render or automatic adoption.";
+"保留原裝日文音軌" = "Keep original Japanese audio";
+"四款引擎 × 兩種語言＝最多八條配音；另加原裝日文為九條音軌。" = "Four engines × two languages: up to eight dub tracks, plus original Japanese.";
+"將製作 %d 條配音軌" = "Generate %d dub tracks";
+
+"聽未通過檢查嘅試音" = "Listen to rejected audition";
+
+"生成本段配音" = "Generate this dialogue";
+"已保存試音" = "Saved auditions";
+"生成並保存" = "Generate and save";
+"重新生成並保存" = "Regenerate and save";
+"GPT V4：粵語讀音＋日文表演（實驗）" = "GPT V4: Cantonese + Japanese performance (experiment)";
+"粵語基準" = "Cantonese baseline";
+"日文表演" = "Japanese performance";
+"日文表演實驗已保存" = "Performance experiment saved";
+"基準覆聽：" = "Baseline transcript: ";
+"表演覆聽：" = "Processed transcript: ";
+"未辨認到對白" = "No speech recognized";
+"每段獨立保存八款錄音；生成後在字幕面板播放。橙色錄音需要覆核，唔會自動採用。" = "Eight independent recordings per dialogue, played from the transcript panel. Orange recordings require review and are not adopted automatically.";
+"只加入受限句級起伏、節奏及音量；字音聲調未認證，可能變聲或拉音。兩版保存供比較，唔會自動採用。" = "Adds bounded phrase pitch, pace and loudness. Tones are unverified; voice distortion or stretching may occur. Both versions are saved for comparison and are not adopted automatically.";
+
+"處理進度" = "Processing progress";
+"處理中…" = "Processing\u2026";
+
+"V2／V3／V4 獨立生成及保留音軌；V3 與 V4 共用 GPT 語義模型，但聲碼器不同。參考錄音品質仍影響結果。" = "V2 Pro Plus / V3 / V4 generate independent tracks. They share the GPT semantic model but use different synthesis models. Reference quality still affects results.";
+
+"V2 Pro Plus／V3／V4 獨立生成及保留音軌；三款共用 GPT 語義模型，聲音合成模型不同。參考錄音品質仍影響結果。" = "V2 Pro Plus / V3 / V4 generate independent tracks. They share the GPT semantic model but use different synthesis models. Reference quality still affects results.";
+
+"每段獨立保存六款錄音；生成後在字幕面板播放。橙色錄音需要覆核，唔會自動採用。" = "Six independent recordings per dialogue. Play them from the transcript panel. Orange recordings require review and are not adopted automatically.";
+"V2 Pro Plus／V4 獨立生成及保留音軌；兩款共用 GPT 語義模型，聲音合成模型不同。參考錄音品質仍影響結果。" = "V2 Pro Plus and V4 generate independent tracks. They share the GPT semantic model but use different synthesis models. Reference quality still affects results.";
+"兩種獨立版本" = "Two independent versions";
+
+"AI 自動修復所選音軌（Qwen 35B）" = "Automatically repair selected tracks (Qwen 35B)";
+
+"生成後讀取紀錄，決定同稿重錄或使用合格同語言補聲，再驗證並顯示摘要；未解決項目保留於摘要。" = "After generation, read diagnostics, decide whether to retry the same script or use verified same-language speech, validate, and show a summary with unresolved items.";
+
+"AI 自動修復摘要" = "Automatic AI repair summary";
+
+"詳細紀錄" = "Detailed diagnostics";
+
+"三款引擎 × 兩種語言＝最多六條配音；另加原裝日文為七條音軌。" = "Three engines × two languages = up to six dub tracks, plus original Japanese for seven audio tracks.";
+
+"WenetSpeech-Yue 只提供廣東話；CPU 離線推論。" = "WenetSpeech-Yue supports Cantonese only; offline CPU inference.";
+
+"按每個引擎支援的所選語言生成；WenetSpeech-Yue 不會建立英文音軌。" = "Generate selected languages supported by each engine; WenetSpeech-Yue does not create an English track.";
+
+"VoxCPM2 運行裝置" = "VoxCPM2 device";
+
+"Apple GPU（MPS）" = "Apple GPU (MPS)";
+
+"CPU（較慢）" = "CPU (slower)";
+
+"每段按引擎及語言獨立保存錄音；生成後在字幕面板播放。橙色錄音需要覆核，唔會自動採用。" = "Recordings are saved independently by engine and language, then played in the subtitle panel. Orange takes require review and are not adopted automatically.";
+"工作佇列已暫停；提交後按右上角「繼續處理」啟動。" = "The queue is paused. After submitting, use Continue processing at the top right.";
+"目前工作正在處理；新增工作會排在其後。" = "Processing the current job. New submissions will run after it.";
+
+"匯出前重新分析人物（Qwen 35B）" = "Reanalyze characters before export (Qwen 35B)";
+
+"先按原聲及連續畫面重新整理人物卡，再由 Qwen 覆核疑難配對與參考；保留字幕、時間及手動角色設定。結果存成新版本，完成後顯示摘要。" = "Rebuild character groups from source voices and consecutive frames, then let Qwen review uncertain assignments and references. Captions, timing and manual role settings are preserved. Save a new version and show a summary.";
+
+"重新分析人物並製作新版" = "Reanalyze characters and produce new version";
+
+"AI 處理摘要" = "AI processing summary";
+
+"提交時會取代本片尚未執行的整片配音匯出，保留舊提交與音檔。" = "Submitting replaces pending whole-film voice exports for this project. Previous submissions and recordings are preserved.";
+
+"新版人物卡" = "New character cards";
+
+"Drama 3 本機 MLX 模型；廣東話音質請先逐句試聽。" = "Drama 3 runs locally with MLX; audition Cantonese lines before rendering.";
+"Fish Audio Drama 3 · 原生 44.1 kHz · MLX 4-bit。本機生成；廣東話以語言指示引導，請自行覆聽口音與聲調。" = "Fish Audio Drama 3 · Native 44.1 kHz · MLX 4-bit. Local generation; Cantonese uses a language instruction. Audition the accent and tones.";
+
+"%d 段配音可試聽" = "%d recordings ready to listen";
+"介面模式" = "Interface mode";
+"你嘅配音小劇場" = "Your dubbing theatre";
+"保留日文原聲音軌" = "Keep the original Japanese audio";
+"前往模型中心" = "Open Model Center";
+"字幕可以喺播放器開關及切換，唔會燒入畫面。" = "Subtitles remain separate, switchable tracks in the video player.";
+"字幕跟隨試聽語言" = "Match subtitles to the audio preview";
+"完成嘅配音會即時出現，可以邊轉換邊試聽。" = "Completed recordings appear here while conversion continues.";
+"專業" = "Pro";
+"已保存工作會沿用提交時設定；切換介面唔會改動排程。" = "Saved jobs keep their submitted settings when you switch interfaces.";
+"已完成嘅錄音可以即時試聽；最終修復及合片會繼續。" = "Listen to completed recordings while repair and export continue.";
+"影片位置" = "Video position";
+"成品已保存" = "Video saved";
+"所選引擎不支援呢個配音語言。" = "This voice engine does not support the selected language.";
+"拖動影片，揀想聽嘅位置" = "Scrub to the line you want to hear";
+"揀一條影片" = "Choose a video";
+"播放已完成配音；轉換會繼續" = "Play a completed recording while conversion continues";
+"播放／暫停原片" = "Play or pause source video";
+"放入影片，交畀 AniCanto" = "Add a video. AniCanto takes it from here.";
+"日文原聲" = "Original Japanese";
+"本段試聽" = "Listen to this line";
+"簡單製作設定" = "Simple production settings";
+"自動翻譯、配音、修復同匯出" = "Automatic translation, dubbing, repair and export";
+"角色正在準備上場" = "Getting the cast ready";
+"角色配對、字幕批核、Qwen 修復及合片自動處理。" = "Character matching, script approval, Qwen repair and export run automatically.";
+"讓角色講你嘅語言" = "Let the cast speak your language";
+"超簡單" = "Simple";
+"輸出字幕 · 可多選" = "Subtitle tracks · select several";
+"輸出資料夾唔存在或冇寫入權限，請重新選擇。" = "Choose an existing, writable export folder.";
+"進度已保存，隨時繼續" = "Progress saved. Continue whenever you like.";
+"配音一完成，就可以喺下面試聽。" = "Completed voices will be ready to play below.";
+"關閉預覽字幕" = "Hide preview subtitles";
+"預覽字幕 · 可多選" = "Preview subtitles · select several";
+"顯示檔案" = "Show file";
+
+"試聽最近完成" = "Play the latest recording";
+
+"試聽新版人物配音（未採用）：" = "Previewing the new character take (not adopted): ";
+"新版人物配音，只作試聽；原稿角色設定保留" = "Listen to the new character take; original role assignments are preserved";
+"缺聲" = "Missing voice";
+"缺聲原因：" = "Missing voice: ";
+"錄音缺失或無有效聲音；請查看生成紀錄。" = "The recording is absent or contains no usable audio. See the generation log.";
+
+"OP／ED 處理" = "OP / ED treatment";
+
+"保留日文原聲" = "Keep original Japanese";
+
+"亦翻譯配音" = "Translate and dub too";
+
+"不偵測，全部照常處理" = "Do not detect; process everything";
+
+"OP／ED 範圍內對白亦會翻譯配音；不會因偵測結果跳過片頭對白。歌詞以配音朗讀。" = "Dialogue inside OP / ED ranges is also translated and dubbed. Detection will not skip opening dialogue. Lyrics are spoken.";
+
+"設定套用至之後開始嘅轉換；已提交工作沿用原有設定。" = "Applies to conversions started next. Submitted jobs keep their saved settings.";
+
+"切換超簡單／專業模式" = "Switch Simple / Pro workspace";
+
+"已暫停並保存" = "Paused and saved";
+
+"製作未完成" = "Production incomplete";
+
+"成品已輸出" = "Video exported";
+
+"準備好，開始你嘅配音" = "Ready to create your dub";
+
+"正在準備影片" = "Preparing your video";
+
+"正在檢查最終影片同音軌" = "Checking the exported video and audio tracks";
+
+"正在合成影片同可切換音軌" = "Combining video and switchable audio tracks";
+
+"正在用角色卡後備聲線補配音" = "Filling dialogue with the character fallback voice";
+
+"正在檢查配音內容同完整度" = "Checking dubbed words and missing speech";
+
+"正在調整配音同背景音量" = "Balancing dialogue and background audio";
+
+"正在分離日文人聲同背景音樂" = "Separating Japanese dialogue and background audio";
+
+"正在整理角色同參考聲線" = "Preparing characters and voice references";
+
+"正在辨識日文對白同原片字幕" = "Recognizing Japanese dialogue and source subtitles";
+
+"正在翻譯及整理%@台詞" = "Translating and writing the %@ dialogue";
+
+"正在生成%@配音" = "Generating the %@ dub";
+
+"香港廣東話同英文" = "Hong Kong Cantonese and English";
+
+"影片清單" = "Video list";
+"開始全部待處理" = "Start all waiting videos";
+"正在準備…" = "Preparing…";
+"等候" = "Waiting";
+"全部使用同一配音設定；已完成影片唔會重做。" = "All use the same voice settings. Completed videos are kept.";
+"其他影片會自動保留可用原片字幕軌。" = "Other videos keep their available original subtitle tracks.";
+"作者與授權資訊" = "Author and license information";
+
+"移除影片，保留成品？" = "Remove video and keep finished exports?";
+"移除並清理" = "Remove and clean up";
+"移除" = "Remove";
+"會移除呢條影片嘅排程、字幕、配音、角色分析同處理快取。已輸出成品會保留；原片、模型同其他影片唔受影響。" = "Removes this video’s queue entries, subtitles, generated speech, character analysis and processing cache. Finished exports are kept. Source videos, models and other videos stay in place.";
+"正在移除影片" = "Removing video";
+"正在保留成品及清理專案資料…" = "Keeping finished exports and cleaning project data…";
+"移除完成" = "Removal complete";
+"影片處理資料已移除，輸出成品已保留。" = "Video processing data removed. Finished exports kept.";
+"移除影片同處理資料，保留輸出成品" = "Remove this video and its processing data; keep finished exports";
+"移除會清理該片處理資料，保留成品同原片。" = "Removal clears this video’s work data and keeps exports and source files.";
+"專案儲存位置無效，未有移除任何檔案。" = "Invalid project storage path. No files have been removed.";
+"原片存放喺專案內，請先移走原片再移除專案。" = "A source video is stored inside the project. Move the source out before removing the project.";
+"成品保留驗證失敗，未有移除專案。" = "Could not verify the saved export copy. The project has not been removed.";
+
+"其他專案仍然使用此資料夾，未有移除專案。" = "Another project still uses this folder. The project has not been removed.";
+"共用聲音保留驗證失敗，未有移除專案。" = "Could not verify a shared recording copy. The project has not been removed.";
+
+"基本模式" = "Basic mode";
+"專家模式" = "Expert mode";
+"使用教學" = "Quick guide";
+"你嘅動畫，另一把聲音。" = "Your anime. A whole new voice.";
+"揀一段對白" = "Choose a line";
+"喺時間線點選對白，預覽畫面、原文及翻譯會同步。先揀需要處理嘅配音語言。" = "Select a line on the timeline to sync the picture, original dialogue and translation. Choose the dubbing language you want to work on.";
+"先聽，再重錄" = "Listen, then record again";
+"試聽已完成錄音；需要另一個版本時，展開重錄選項，選引擎及生成。原錄音會保留。" = "Audition completed recordings. For another take, expand Record again, choose an engine and generate. Your earlier recording is kept.";
+"採用你鍾意嘅錄音" = "Use your favourite take";
+"比較不同版本後按採用；角色參考、語速及字幕時間放喺進階設定。最後到製作匯出輸出新版。" = "Compare takes and choose Use recording. Character references, speech rate and subtitle timing are in the advanced controls. Export a new version from Production.";
+"加入一集，或者成季" = "Add an episode — or a season";
+"匯入一條或多條影片。影片清單可以切換預覽、移除項目，亦可以開始全部待處理影片。" = "Import one or more videos. Use the video list to switch previews, remove items or start all waiting episodes.";
+"揀聲音同字幕" = "Choose a voice and subtitles";
+"只揀一個配音引擎，再選香港廣東話、英文或雙語。字幕可多選，輸出後可以開關及切換。" = "Choose one voice engine, then Hong Kong Cantonese, English or both. Select multiple subtitle tracks and switch them on or off in your player.";
+"開始，交畀工作室" = "Start, and let the studio work";
+"自動辨識、翻譯、配音、檢查、修復及匯出。完成嘅對白可以即時試聽；暫停並保存後可繼續。" = "Recognition, translation, dubbing, checks, repairs and export run automatically. Audition finished lines while processing, or pause and save to resume later.";
+"搵返成品" = "Find your finished video";
+"完成後按顯示檔案，或者到專案／成品管理。首次使用先下載所需模型；速度視乎電腦、引擎及影片長度。" = "Choose Show file when finished, or open Projects & outputs. Download the required models before your first conversion. Processing time depends on your computer, engine and video length.";
+"翻譯以香港常用廣東話為目標。AI 仍可能譯錯或讀錯；自動修復會保留記錄，無法完成時會保存進度及說明原因。" = "Translation aims for everyday Hong Kong Cantonese. AI can still mistranslate or mispronounce words. Automatic repairs are logged; if processing cannot finish, your progress and the reason are saved.";
+"香港廣東話 · English · Just for fun" = "Hong Kong Cantonese · English · Just for fun";
+"配音助手大合照" = "The dubbing crew";
+"歡迎返到聲演工作室" = "Welcome to your dubbing studio";
+"放入動畫，揀把聲，睇角色講你嘅語言。" = "Bring an episode. Pick a voice. Hear your characters in a new language.";
+"揀引擎同字幕，一按自動製作。" = "Choose an engine and subtitles. Start automatic production.";
+"時間線、逐句試聽、重錄與精細編輯。" = "A timeline, line-by-line auditions, retakes and detailed editing.";
+"進入工作室" = "Enter the studio";
+"關於與授權" = "About & licences";
+"由 SCKC 為興趣而製作，分享配音樂趣，同時探索香港廣東話文化。" = "A hobby project by SCKC. Share the fun of dubbing and explore Hong Kong Cantonese culture.";
+"聲音與字幕" = "Voice & subtitles";
+"自動翻譯 · 修復 · 匯出" = "Automatic translation · Repair · Export";
+"預計剩餘：" = "Estimated remaining: ";
+"正在收集時間估算…" = "Learning how long this takes…";
+"1 · 試聽與採用" = "1 · Listen & use";
+"2 · 重新生成配音" = "2 · Record again";
+"3 · 角色與時間設定" = "3 · Character & timing";
+"試聽所選錄音" = "Play selected recording";
+
+"配音同樂會" = "The dubbing party";
+
+"AI 自動修復所選音軌（跟隨文字模型）" = "Automatically repair selected audio tracks (selected text model)";
+
+"本機模型與首次部署" = "Local models & first-time setup";
+"Qwen3.5、Drama 3、GPT-SoVITS、CosyVoice 3、VoxCPM2、WenetSpeech-Yue、Whisper 同分離模型係獨立組件。部分權重由你選擇下載，唔包含喺 App；實際版本見模型清單及下載 manifest。Qwen 可用於翻譯、角色分析及修復建議。轉換喺本機執行，首次部署及下載需要網絡。" = "Qwen3.5, Drama 3, GPT-SoVITS, CosyVoice 3, VoxCPM2, WenetSpeech-Yue, Whisper and separation models are independent components. Model weights may download separately; see the model inventory and download manifests for exact versions. Qwen supports translation, character analysis and repair suggestions. Conversion runs locally; initial setup and downloads require internet access.";
+
+"開始自動製作" = "Start automatic production";
+"匯入影片，再揀字幕來源同翻譯設定。" = "Import videos, then choose your voice and subtitle settings.";
+
+"本機模型與部署" = "Local models & setup";
+
+"關閉面板" = "Close panel";
+"配音聲音" = "Voice";
+"只揀一個引擎，其他交畀工作室。" = "Choose one engine. We’ll handle the rest.";
+"可多選，播放時隨時切換。" = "Choose any combination. Switch tracks in your player.";
+"選擇原片字幕軌" = "Choose original tracks";
+"片頭、片尾及更多設定" = "Opening & ending options";
+"預覽與試聽" = "Preview & listen";
+"加入影片" = "Add videos";
+"一集，或者成季。" = "One episode. Or a whole season.";
+"加入多條影片，共用設定自動製作。" = "Add videos and produce them automatically with the same settings.";
+"對白工作台" = "Dialogue studio";
+"混音" = "Mix";
+"對白工具" = "Dialogue tools";
+"重錄" = "Record";
+"調整" = "Adjust";
+"先試聽，再採用。重錄會保留之前嘅錄音。" = "Listen first, then use your favourite take. Earlier recordings are kept.";
+"重新生成配音" = "Record another take";
+"只重錄所選對白，其他錄音保留。" = "Regenerate this line. Keep the other recordings.";
+"生成新錄音" = "Generate new take";
+"製作繼續進行，已完成錄音仍可試聽。" = "Production is running. Completed takes are still available to play.";
+"聲線生成參數" = "Voice generation settings";
+"本段診斷記錄" = "Diagnostics for this line";
+"角色與時間" = "Character & timing";
+"微調所選對白嘅參考聲線同節奏。" = "Adjust the reference voice and timing for this line.";
+"字幕選項" = "Script options";
+"聲演剪輯室" = "Dubbing editor";
+"佈局" = "Layout";
+"匯出" = "Export";
+"本段錄音" = "Takes for this line";
+"有錄音即可試聽，毋須等待整集完成。" = "Play completed takes while the rest of the episode is being made.";
+"未有錄音" = "No take yet";
+
+"製作新版" = "Create new version";
+"等待校稿" = "Ready for review";
+"製作設定頁" = "Setup";
+"來源文字" = "Source text";
+"配音製作未完成；成功錄音及處理進度已保存。" = "Production is incomplete. Finished takes and progress have been saved.";
+"資源與設定" = "Resources & settings";
+"桌面夥伴會按製作狀態轉換動作；可以拖曳及按右鍵設定。減少動態效果會停止動畫與走動。" = "The desktop companion reacts to production progress. Drag it to move, or right-click for settings. Reduce Motion stops animation and roaming.";
+
+"右邊「試聽」列出本段錄音。要另一個版本，就去「重錄」揀引擎，再按生成新錄音。原錄音會保留。" = "The Listen tab on the right lists this line’s takes. For another version, open Record, choose an engine and select Generate new take. Earlier recordings are kept.";
+"比較錄音後按採用。角色參考同語速喺「調整」頁；字幕可以直接改。最後按右上角匯出，製作新版。" = "Compare takes, then choose Use recording. Find character references and timing in Adjust; edit the script directly. Choose Export at the top right to produce a new version.";
+
+"保留原聲" = "Keep original audio";
+
+"已由新人物分析匯出取代；舊提交及已生成檔案保留。" = "Replaced by a new role-analysis export. Earlier submissions and generated files are preserved.";
+
+"刪除" = "Delete";
+
+"GPT 粵拼修正（每個字一個音節，聲調 1–6）" = "GPT Jyutping corrections (one syllable per character, tones 1–6)";
+
+"返回工作區" = "Back to workspace";
+
+"更多選項" = "More options";
+
+"返回歡迎畫面" = "Welcome screen";
+
+"已保存嘅製作工作" = "Saved production jobs";
+
+"影片轉換同單句重錄會喺同一個排程依次執行。" = "Video conversions and line retakes run in order in the same queue.";
+
+"未有待處理工作" = "No queued jobs";
+
+"加入影片並開始製作後，工作會顯示喺呢度。" = "Add videos and start production to see your jobs here.";
+
+"影片轉換" = "Video conversions";
+
+"清理選項" = "Cleanup options";
+
+"未有輸出成品" = "No exported videos yet";
+
+"完成製作後，成品會顯示喺呢度。" = "Your finished videos will appear here.";
+
+"未有專案" = "No projects yet";
+
+"加入影片開始第一個專案。" = "Add a video to start your first project.";
+
+"詳細記錄" = "Detailed log";
+
+"Apple Silicon · macOS 14+ · 建議至少 16 GB 系統記憶體；實際用量視句長及裝置而定。" = "Apple Silicon · macOS 14+ · At least 16 GB of system memory recommended; usage depends on sentence length and hardware.";
+
+"GPT-SoVITS 獨立讀取角色原聲及逐字原文；參考音效殘留同跨語言效果需要覆聽。" = "GPT-SoVITS reads the original character voice and verbatim reference separately. Listen for residual effects and cross-language differences.";
+
+"自動拼接參考會改用同角色連續原聲並核對原文。字詞／語言通過，仍需試聽廣東話聲調。" = "Automatically joined references use continuous audio from the same character and verify the reference text. Passing word and language checks does not guarantee Cantonese tones.";
+
+"試音待覆核：" = "Take needs review: ";
+
+"正在生成：粵語讀音＋日文表演（實驗）" = "Generating: Cantonese pronunciation + Japanese performance (experimental)";
+
+"正在生成並保存：" = "Generating and saving: ";
+
+"模型" = "Model";
+
+"製作模式" = "Production mode";
+
+"標準模式" = "Standard";
+
+"高速模式" = "Fast";
+
+"跳過所有品質檢查；生成影片可能存在配音缺陷。" = "Skips all quality checks. The generated video may contain dubbing defects.";
+
+"Qwen 翻譯 → 逐句模仿分離原聲 → 時長對齊 → 合成。不建立角色卡、不覆聽或品質重錄；仍檢查檔案有效性。失敗句會列於摘要，可能留空。" = "Qwen translation → clone each isolated source line → fit timing → export. No character cards, listening checks or quality retakes. File validity is still checked. Failed lines are listed in the summary and may be silent.";
+
+"包含角色配對、品質檢查及自動修復。" = "Includes voice matching, quality checks and automatic repair.";
+
+"已提交工作沿用開始時嘅模式。" = "Submitted jobs keep the mode selected when they started.";
+
+"高速翻譯" = "Fast translation";
+
+"高速配音" = "Fast dubbing";
+
+"高速合成" = "Fast export";
+
+"高速模式記錄" = "Fast mode log";
+
+"逐句模仿原聲，直接生成配音。" = "Cloning each source line and generating speech directly.";
+
+"高速模式：已跳過所有品質檢查及品質重錄，生成影片可能存在配音缺陷。" = "Fast mode: all quality checks and quality retakes were skipped. The generated video may contain dubbing defects.";
+
+"高速模式成品已保存；品質未檢查。" = "Fast export saved. Quality was not checked.";
+
+"工作選單" = "Workspace navigation";
+
+"顯示" = "Shown";
+
+"隱藏" = "Hidden";
+
+"總轉換時間：" = "Total conversion time: ";
+
+"此成品未有時間紀錄" = "No timing record for this export";
+"切換至基本模式" = "Switch to Basic mode";
+"切換至專家模式" = "Switch to Expert mode";
+
+"原始生成錄音未通過檢查" = "The generated recording did not pass automatic checks.";
+
+"失敗錄音已保留，未自動採用" = "Rejected recordings are kept for comparison and are not adopted automatically.";
+
+"先前失敗版本" = "Earlier rejected takes";
+
+"重新整理錄音歷史" = "Refresh recording history";
+
+"最近未採用錄音" = "Latest rejected take";
+
+"未採用錄音" = "Rejected take";
+
+"試聽失敗錄音" = "Listen to rejected take";
+
+"接受並採用此版本" = "Accept this take";
+
+"錄音較原時段長，匯出時仍須按原時限調整。請先聽完整段。" = "This recording exceeds the original slot and must still be fitted during export. Listen to the whole take first.";
+
+"台詞已改動；此版本只供比較，未套用至新台詞。" = "The script has changed. This take is available for comparison and will not be used for the new words.";
+
+"正在播放未採用錄音" = "Playing rejected take";
+
+"已由用戶接受此錄音；原失敗原因仍保留" = "Take accepted by the user; the original rejection reason is retained.";
+
+"已接受錄音，待輸出" = "Take accepted; awaiting export";
+
+"未能讀取錄音。" = "Could not read the recording.";
+
+"翻譯來源" = "Translation source";
+
+"日文原聲＋中文字幕輔助" = "Japanese audio with Chinese subtitle assistance";
+
+"只聽日文原聲" = "Japanese audio only";
+
+"直接由日語辨識翻譯香港廣東話及／或英文；翻譯及修復不使用 OCR、內置或外掛中文字幕。品質檢查維持原設定。" = "Translate Japanese speech directly into Hong Kong Cantonese and/or English. Translation and repair do not use OCR, embedded or external Chinese subtitles. Quality checks keep their current settings.";
+
+"日語辨識" = "Japanese ASR";
+
+"角色分析" = "Voices";
+
+"修復／核對" = "Repair / review";
+
+"已略過" = "Skipped";
+
+"已有資料" = "Prepared";
+
+"累計處理：" = "Total processing: ";
+
+"本次：" = "This run: ";
+
+"包括模型載入、等待及重試；累計包含之前續跑，暫停後程序結束至下次續跑之間不計時。" = "Includes loading, waiting and retries across resumed runs. Time between stopping the worker and resuming is excluded.";
+
+"此成品未有階段耗時紀錄" = "No milestone timing record for this export";
+
+"目前：%@" = "Current: %@";
+
+"基本模式（目前）" = "Basic mode (current)";
+
+"專家模式（目前）" = "Expert mode (current)";
+
+"選擇介面模式；已提交工作不變。" = "Choose an interface mode. Submitted jobs keep their settings.";
+
+"開啟選單以切換模式" = "Open the menu to switch modes";
+
+"匯出影片" = "Export video";
+
+"已有錄音" = "Saved recordings";
+
+"少於 1 秒" = "Under 1 sec";
+
+"修復／核對（關卡）" = "Repair";
+
+"分段試音，並非完整對白" = "Phrase sample, not the full line";
+
+"模型載入" = "Loading model";
+
+"部署配音" = "Setting up voices";
+
+"執行環境" = "Runtime setup";
+"下載 App 專用 Python 3.11，儲存於 Application Support。" = "Preparing private Python 3.11 in Application Support.";
+
+"已安裝 · 沿用" = "Installed · reuse";
+
+"聲音分組（預設）" = "Audio grouping (default)";
+"影像輔助角色分析（較慢，預設關閉）" = "Visual role analysis (slow, off by default)";
+"逐段抽取畫面、辨識頭像及比對角色，可能顯著增加處理時間；自動配音不需要啟用。" = "Analysing frames and portraits for each dialogue can substantially increase processing time. Automatic dubbing does not require it.";
+"按原聲聲紋分組，共用同角色參考錄音；預設不做逐段影像分析。" = "Group by the original voices and share references within each role. Per-dialogue visual analysis is off by default.";
+"保留逐句翻譯、配音、時長對齊及標準模式自動修復。" = "Keep per-line translation, dubbing, duration alignment and standard-mode automatic repair.";
+
+"一般模式" = "Normal mode";
+
+"完整 AI 覆核" = "Full AI review";
+
+"逐句模仿原聲；局部處理 OP／ED、人名、普通話及缺聲，不用通用角色卡。" = "Use each original utterance as its voice reference; repair OP / ED, names, Mandarin and missing speech locally, without generic character voices.";

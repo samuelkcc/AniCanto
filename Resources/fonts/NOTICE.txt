@@ -1,0 +1,8 @@
+Noto Sans CJK TC Regular, version 2.004
+Copyright © 2014–2021 Adobe (http://www.adobe.com/).
+
+The copyright and version above are preserved from the bundled font's name
+table. This font is unmodified and licensed under SIL Open Font License 1.1;
+see LICENSE in this folder. The shared desktop copies the same font bytes as
+studio-cjk.otf; that filename change does not change the font's internal name.
+Upstream: https://github.com/notofonts/noto-cjk

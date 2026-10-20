@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "component": "RapidOCR bundled model weights",
+  "version": "1.4.4",
+  "license": "Apache-2.0",
+  "status": "exact-weight-hashes-and-publisher-upstream-terms-reviewed",
+  "wheelSHA256": "971d7d5f223a7a808662229df1ef69893809d8457d834e6373d3854bc1782cbf",
+  "registryRevision": "7cfd3d9ef786a2e538ca30df700325e72e85b5f5",
+  "attribution": "Original PaddleOCR weights: Baidu and applicable PaddleOCR rights holders. ONNX conversion/packaging: RapidOCR Authors. No endorsement implied.",
+  "documents": [
+    {
+      "path": "licenses/ocr/RapidAI-Apache-2.0.txt",
+      "sha256": "3e0af25fdd06aa9586ae97adb00ea927ebe5a3805ac77d2d3a81ce5f55693333",
+      "url": "https://raw.githubusercontent.com/RapidAI/RapidOCR/7cfd3d9ef786a2e538ca30df700325e72e85b5f5/LICENSE"
+    },
+    {
+      "path": "licenses/ocr/RapidAI-README.md",
+      "sha256": "7bc89a454369b04f055731f1a66266de1ba1c6627af372884f37e4bccb84e90b",
+      "url": "https://raw.githubusercontent.com/RapidAI/RapidOCR/7cfd3d9ef786a2e538ca30df700325e72e85b5f5/README.md"
+    },
+    {
+      "path": "licenses/ocr/RapidAI-MODEL-LICENSES.md",
+      "sha256": "c5fd0e8603d3df743355b546121e6fe0f4ef8ff455c5a85c1681fd3ae520e153",
+      "url": "https://raw.githubusercontent.com/RapidAI/RapidOCR/7cfd3d9ef786a2e538ca30df700325e72e85b5f5/python/MODEL_LICENSES.md"
+    },
+    {
+      "path": "licenses/ocr/RapidAI-model-registry.yaml",
+      "sha256": "90e0159dead16c21adbf000014a46043c981ae097f041d92d8b19a52c2f2ed9a",
+      "url": "https://raw.githubusercontent.com/RapidAI/RapidOCR/7cfd3d9ef786a2e538ca30df700325e72e85b5f5/python/rapidocr/default_models.yaml"
+    },
+    {
+      "path": "licenses/ocr/PaddleOCR-Apache-2.0.txt",
+      "sha256": "ff6311c56c1b22c9209c96cc8afc16da91c24ee55a15e14ebc46fe1960dbd856",
+      "url": "https://raw.githubusercontent.com/PaddlePaddle/PaddleOCR/v2.7.0/LICENSE"
+    },
+    {
+      "path": "licenses/ocr/paddle-v4-det-card.md",
+      "sha256": "40c91d634a544ebf2cb59c2ffab5fdc540a82e0ce611496d363da289e7151204",
+      "url": "https://huggingface.co/PaddlePaddle/PP-OCRv4_mobile_det/resolve/3cc09f3a5b424e8e010abc7a4271aea12999c2f7/README.md"
+    },
+    {
+      "path": "licenses/ocr/paddle-v4-rec-card.md",
+      "sha256": "32ed8e4453fbf39ef330df5535c5a8bcb0d738f164ac26ef9c4e1a4b85d60a23",
+      "url": "https://huggingface.co/PaddlePaddle/PP-OCRv4_mobile_rec/resolve/a2deb05cb05813be2da3365672881aa496d1452b/README.md"
+    }
+  ],
+  "models": [
+    {
+      "path": "models/ch_PP-OCRv4_det_infer.onnx",
+      "sha256": "d2a7720d45a54257208b1e13e36a8479894cb74155a5efe29462512d42f49da9",
+      "bytes": 4745517,
+      "modifiedByAniCanto": false
+    },
+    {
+      "path": "models/ch_PP-OCRv4_rec_infer.onnx",
+      "sha256": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+      "bytes": 10857958,
+      "modifiedByAniCanto": false
+    },
+    {
+      "path": "models/ch_ppocr_mobile_v2.0_cls_infer.onnx",
+      "sha256": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c",
+      "bytes": 585532,
+      "modifiedByAniCanto": false
+    }
+  ]
+}

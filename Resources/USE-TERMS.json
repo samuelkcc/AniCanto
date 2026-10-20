@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "revision": "2026-10-18.3",
+  "title": {
+    "en": "Media, voices and model terms",
+    "zh-HK": "影片、聲音及模型使用條款"
+  },
+  "paragraphs": {
+    "en": [
+      "AniCanto is a local learning and creative tool. Use only media, subtitles and voice recordings that you own, have permission to use, or may lawfully use under an applicable exception. A learning purpose alone does not establish permission to copy, adapt or publish a work.",
+      "Before imitating the voice of an identifiable natural person, obtain their prior consent or another legal right permitting that use. For a minor, obtain permission from their parent or legal guardian; for a deceased person, obtain permission from the relevant rights holder or another legal right. Rights in a recording do not necessarily include rights to imitate the performer’s identity.",
+      "Do not use Fish Audio models or their outputs to deceive, defraud, harass, make unlawful calls, create sexual content involving minors or voices presented as minors, or create sexual content using a real person’s voice without consent. Do not intentionally remove or obscure model watermarks or provenance signals; ordinary editing without that intent is permitted under the upstream terms.",
+      "Do not use Fish Audio materials or their outputs to create, train, distill or improve foundational generative AI or speech/audio/voice-generation models, except the Fish models and permitted derivatives. The upstream exception for synthetic-audio detection, watermark verification and spoofing prevention remains applicable.",
+      "Drama 3 uses the Fish Audio Community License v1.0, under its own model licence, separate from the MIT application licence. Its commercial-revenue and hosted-service conditions, notices and attribution requirements apply. A separate Fish Audio agreement may be required for commercial or hosted use. AniCanto provides no hosted inference service and grants no additional model, media, trademark or performer rights. Read the full supplied model license before use.",
+      "By selecting “I agree”, you agree to comply with these third-party model conditions when using those models, including restrictions at least as protective as Fish Audio License section IV(b). MIT governs AniCanto’s original code; these third-party model conditions do not impose additional restrictions on that code. This acknowledgement does not certify that a particular video or voice use is lawful."
+    ],
+    "zh-HK": [
+      "AniCanto 是本機學習及創作工具。請只使用你擁有、已獲許可，或依適用法律例外可合法使用的影片、字幕及錄音。學習用途本身不代表已獲複製、改編或公開作品的許可。",
+      "模仿可識別自然人的聲音前，必須取得本人事先同意，或具有容許該用途的其他法律權利。未成年人須由父母或法定監護人同意；已故人士須由相關權利持有人同意，或有其他合法依據。持有錄音的使用權，不一定包含模仿表演者身分的權利。",
+      "不得使用 Fish Audio 模型或輸出作欺騙、詐騙、騷擾、違法通話、涉及未成年人或被呈現為未成年人的聲音之色情內容，或未經同意以真人聲音製作色情內容。不得刻意移除或遮蔽模型水印及來源訊號；沒有該意圖的一般剪輯仍依上游條款處理。",
+      "不得使用 Fish Audio 素材或輸出建立、訓練、蒸餾或改良其他基礎生成式 AI 或語音／音訊／聲音生成模型，Fish 模型及獲准衍生版本除外。上游對合成音訊偵測、水印驗證及防冒用模型的例外仍然適用。",
+      "Drama 3 採用 Fish Audio Community License v1.0，與本程式的 MIT 授權分開適用。其商業營收、託管服務、授權通知及來源標示條件均適用；部分商業或託管用途可能需要另取 Fish Audio 授權。AniCanto 不提供託管推理服務，亦不額外授予模型、影片、商標或表演者權利。使用前請閱讀隨附的完整模型授權。",
+      "按「我同意」代表你同意使用相關模型時遵守以上第三方條件，包括不低於 Fish Audio 授權第 IV(b) 條的保護限制。AniCanto 原創程式碼依 MIT 授權使用；以上第三方模型條件不對該程式碼附加額外限制。本確認不代表任何特定影片或聲音用途已被認證為合法。"
+    ]
+  },
+  "links": [
+    {
+      "title": "Fish Audio Community License v1.0",
+      "url": "https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE"
+    }
+  ]
+}

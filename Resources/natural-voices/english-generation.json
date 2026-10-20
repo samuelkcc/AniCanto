@@ -1,0 +1,72 @@
+{
+  "rows": [
+    {
+      "id": "en-low",
+      "file": "en-low.wav",
+      "language": "en",
+      "promptText": "We have time to make a careful plan. Let us work together and explain it clearly.",
+      "source": "Original synthetic mixture of Kokoro v1.0 stock voice embeddings; not a macOS system voice or a requested real-person imitation",
+      "generator": "hexgrad/Kokoro-82M",
+      "modelRevision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "embeddingMix": {
+        "am_fenrir": 0.4,
+        "am_michael": 0.35,
+        "am_adam": 0.25
+      },
+      "license": "CC0-1.0",
+      "sha256": "59a003dc1b8023c3c9beb38c741ee842798d415ef71c605d523f962354ede1c9",
+      "seconds": 5.5
+    },
+    {
+      "id": "en-mid",
+      "file": "en-mid.wav",
+      "language": "en",
+      "promptText": "We have time to make a careful plan. Let us work together and explain it clearly.",
+      "source": "Original synthetic mixture of Kokoro v1.0 stock voice embeddings; not a macOS system voice or a requested real-person imitation",
+      "generator": "hexgrad/Kokoro-82M",
+      "modelRevision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "embeddingMix": {
+        "am_puck": 0.4,
+        "am_echo": 0.35,
+        "am_michael": 0.25
+      },
+      "license": "CC0-1.0",
+      "sha256": "9d8bc5e25f7923f7526195dc7c3bdde44e3cc38dc942548ea0f0863845339f8e",
+      "seconds": 5.4
+    },
+    {
+      "id": "en-bright",
+      "file": "en-bright.wav",
+      "language": "en",
+      "promptText": "We have time to make a careful plan. Let us work together and explain it clearly.",
+      "source": "Original synthetic mixture of Kokoro v1.0 stock voice embeddings; not a macOS system voice or a requested real-person imitation",
+      "generator": "hexgrad/Kokoro-82M",
+      "modelRevision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "embeddingMix": {
+        "af_heart": 0.4,
+        "af_bella": 0.35,
+        "af_nova": 0.25
+      },
+      "license": "CC0-1.0",
+      "sha256": "331056d0a2d2c95fca1a1ccb2519be655e496af77d609e63cb836510f163798d",
+      "seconds": 5.35
+    }
+  ],
+  "upstreamModelLicense": "Apache-2.0",
+  "phonemes": "wi h\u00e6v t\u02c8a\u026am t\u0259 m\u02c8e\u026ak \u0259 k\u02c8\u025b\u0279f\u0259l pl\u02c8\u00e6n. l\u025bt \u028cs w\u02c8\u025c\u0279k t\u0259\u0261\u02c8\u025b\u00f0\u0259\u0279 \u00e6nd \u026akspl\u02c8e\u026an \u026at kl\u02c8\u026a\u0279li.",
+  "upstreamFiles": {
+    "config.json": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+    "kokoro-v1_0.pth": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+    "voices/am_fenrir.pt": "98e507eca1db08230ae3b6232d59c10aec9630022d19accac4f5d12fcec3c37a",
+    "voices/am_michael.pt": "9a443b79a4b22489a5b0ab7c651a0bcd1a30bef675c28333f06971abbd47bd37",
+    "voices/am_adam.pt": "ced7e284aba12472891be1da3ab34db84cc05cc02b5889535796dbf2d8b0cb34",
+    "voices/am_puck.pt": "dd1d8973f4ce4b7d8ae407c77a435f485dabc052081b80ea75c4f30b84f36223",
+    "voices/am_echo.pt": "8bcfdc852bc985fb45c396c561e571ffb9183930071f962f1b50df5c97b161e8",
+    "voices/af_heart.pt": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+    "voices/af_bella.pt": "8cb64e02fcc8de0327a8e13817e49c76c945ecf0052ceac97d3081480e8e48d6",
+    "voices/af_nova.pt": "e0233676ddc21908c37a1f102f6b88a59e4e5c1bd764983616eb9eda629dbcd2"
+  },
+  "repository": "hexgrad/Kokoro-82M",
+  "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+  "synthetic": true
+}

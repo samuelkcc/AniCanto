@@ -1,0 +1,5 @@
+AniCanto original vector app icon, 2026-10-18.
+Designed in SVG for this project; no external icon geometry, stock art, franchise character or generated-image service is used in the brand mark.
+Concept: a white speech bubble containing sound bars and a play triangle, on a light lavender tile with a deep purple symbol and one warm animation sparkle.
+Canonical source: app-icon.svg; raster platform icons are derived from this source.
+Copyright (c) 2026 SCKC. MIT License (see root LICENSE).

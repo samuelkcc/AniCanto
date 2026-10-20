@@ -1,0 +1,37 @@
+{
+  "ffmpeg": {
+    "url": "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-10-16-13-04/ffmpeg-n8.1.3-18-g46d899d7a0-win64-gpl-8.1.zip",
+    "sha256": "fedb8b9219cbab9dd46035067f8a85645520e7be7d919389856206e7d0c28f4a",
+    "size": 193040991
+  },
+  "ollama": {
+    "url": "https://github.com/ollama/ollama/releases/download/v0.40.6/ollama-windows-amd64.zip",
+    "sha256": "e359637575302f288d76c0007c408a4be9c7376d59c4f28684d63b232a44b427",
+    "size": 1471164488,
+    "version": "v0.40.6"
+  },
+  "drama-cuda": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2/audio-v0.9.2-bin-windows-x64-cuda12.4.zip",
+    "sha256": "099bd43b74a5175fd9e03ac95c9fabe8b97718826d547890a03950483e81b168",
+    "size": 463532839,
+    "version": "v0.9.2",
+    "requiredFiles": [
+      "ggml-cuda.dll",
+      "vcruntime140.dll",
+      "msvcp140.dll"
+    ],
+    "extractSuffix": ".dll"
+  },
+  "drama-cudart": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2/audio-v0.9.2-cudart-windows-x64-cuda12.4.zip",
+    "sha256": "50e278d213daa38e782a10b501b764c5c0738381898dacee7243101b890eeb0d",
+    "size": 607273675,
+    "version": "v0.9.2",
+    "requiredFiles": [
+      "cudart64_12.dll",
+      "cublas64_12.dll",
+      "cublasLt64_12.dll"
+    ],
+    "extractSuffix": ".dll"
+  }
+}

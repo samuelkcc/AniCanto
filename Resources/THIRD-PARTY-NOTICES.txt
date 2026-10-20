@@ -1,0 +1,13 @@
+
+AniCanto 0.12 additions:
+Original AniCanto application code: Copyright SCKC, MIT. See Licenses/AniCanto-MIT.txt. This does not relicense third-party models or dependencies.
+Qwen3-TTS: https://github.com/QwenLM/Qwen3-TTS ; optional MLX Base 0.6B 4-bit weights https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit ; Apache-2.0 model card; pinned revision in qwen-voice-model.json.
+MLX Audio 0.5.8: https://github.com/Blaizzy/mlx-audio ; MIT. Bundled qwen-runtime package distributions retain upstream license metadata.
+Original theme artwork generated for this project using OpenAI image generation; these are not official franchise characters.
+Public redistribution still requires completing corresponding-source and third-party license obligations; this development bundle is not a completed redistribution audit.
+
+AniCanto 0.13.0 Beta:
+MLX-LM 0.32.0 (MIT): https://github.com/ml-explore/mlx-lm
+Optional Qwen3.5-35B-A3B 4-bit MLX model (Apache-2.0 model card): see MODEL-NOTICES.txt and mlx-text-model.json. No large weights included in the bundle.
+Searchable versioned inventory: license-inventory.json, generated from this bundle's native licences and Python package metadata. Full package notices remain alongside the corresponding distributions and can be read in About AniCanto.
+FFmpeg includes GPL codec libraries; native notices are under Licenses/. The shared desktop no longer bundles the unused legacy VLC stack. Noto CJK font notices are retained with fonts/. Source/build-material obligations remain to be reviewed before external redistribution.

@@ -1,0 +1,15 @@
+{
+  "VoxCPM2": {
+    "repo": "OpenBMB/VoxCPM",
+    "revision": "cce58a5b59303c9bd63d12f23afe6a49a4a80c59"
+  },
+  "WenetSpeech-Yue": {
+    "repo": "ASLP-lab/WenetSpeech-Yue",
+    "revision": "bea884c67f03f73f2d2d94557457a5849dd61090"
+  },
+  "patches": [
+    "VoxCPM2 MiniCPM4 attention explicitly expands grouped KV heads on MPS, matching documented PyTorch GQA math; avoids PyTorch 2.6 MPS incompatible-shape process abort. CPU/CUDA paths unchanged.",
+    "Wenet frontend: defer optional text normalization; approved scripts use text_frontend=False, inference stays offline.",
+    "Matcha logging uses lightweight rank-zero utility; training utility exports are lazy so inference does not import Lightning."
+  ]
+}

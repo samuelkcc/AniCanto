@@ -1,0 +1,22 @@
+[
+  {
+    "path": "licenses/python-wheels/jieba-0.42.1/UPSTREAM-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/fxsjy/jieba/v0.42.1/LICENSE",
+    "sha256": "18ba0984839f85853b29fadaf992f7dba8fd0ca0fbeae34de2b8735222dc7a37"
+  },
+  {
+    "path": "licenses/python-wheels/jieba_fast-0.53/UPSTREAM-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/deepcs233/jieba_fast/master/LICENSE",
+    "sha256": "18ba0984839f85853b29fadaf992f7dba8fd0ca0fbeae34de2b8735222dc7a37"
+  },
+  {
+    "path": "licenses/python-wheels/antlr4-python3-runtime-4.9.3/UPSTREAM-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/antlr/antlr4/4.9.3/LICENSE.txt",
+    "sha256": "b1b379fcaf3219593a4c433feb1b35c780bed23fafaae440b1ae2771a9521e3a"
+  },
+  {
+    "path": "licenses/python-wheels/OpenAI-Whisper-MIT/UPSTREAM-LICENSE.txt",
+    "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/LICENSE",
+    "sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d"
+  }
+]

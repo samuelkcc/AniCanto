@@ -1,0 +1,33 @@
+{
+  "generator": "built-in image_gen",
+  "date": "2026-10-19",
+  "characters": "assistant-characters.json",
+  "animation": "assistant-animation.json",
+  "atlases": "pet-art-prompts.json",
+  "covers": "welcome-art/provenance.json",
+  "policy": "Broad animation genre aesthetics; independent original designs, no franchise attribution or endorsement. Generated art is not a legal clearance certificate.",
+  "brandIcon": {
+    "source": "app-icon.svg",
+    "method": "Original project vector design; separate from generated character illustrations",
+    "copyright": "2026 SCKC",
+    "license": "MIT",
+    "notice": "licenses/BRANDING-NOTICE.txt"
+  },
+  "identityAlignment": {
+    "reviewedThemes": 9,
+    "retainedOriginal": "studio",
+    "replacedAtlases": [
+      "energy",
+      "ocean",
+      "ninja",
+      "retro",
+      "forest",
+      "mint",
+      "moonflower",
+      "future"
+    ],
+    "reference": "Each character record retains its four exact canonical Welcome-cover hashes and distinct artStyle.",
+    "generator": "built-in image_gen",
+    "scope": "Preview, progress walking and desktop assistant share one atlas per theme."
+  }
+}

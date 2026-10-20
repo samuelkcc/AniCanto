@@ -1,0 +1,65 @@
+Optional Qwen3.5-35B-A3B MLX 4-bit text model
+Upstream: https://huggingface.co/Qwen/Qwen3.5-35B-A3B
+Quantization: https://huggingface.co/mlx-community/Qwen3.5-35B-A3B-4bit
+Model card: Apache-2.0. Exact revision and SHA-256 files: mlx-text-model.json.
+Weights are downloaded only when the user selects Download. MLX-LM is MIT; its installed notice appears in the library inventory.
+
+Qwen3 text: https://huggingface.co/Qwen/Qwen3-14B
+CosyVoice: https://github.com/FunAudioLLM/CosyVoice
+GPT-SoVITS: https://github.com/RVC-Boss/GPT-SoVITS
+Qwen3-TTS: https://github.com/QwenLM/Qwen3-TTS
+Whisper: https://github.com/openai/whisper
+WeSpeaker: https://github.com/wenet-e2e/wespeaker
+Mel-Band RoFormer separation: see downloaded checkpoint metadata and upstream model card.
+Model weights, source code and training data may have different terms. The links above identify the upstream projects; they do not relicense weights or grant rights to source videos or voices.
+
+This inventory describes this local Beta build. Corresponding-source and redistribution obligations require a separate release review. It is not an unconditional redistribution clearance.
+
+Selectable model catalog (2026-10): model-options.json and voice-models.json
+list the exact upstream repository, pinned revision, file size and SHA-256
+for each supported variant. These optional weights are downloaded separately.
+Sources: mlx-community conversions of Qwen3.5, Qwen3-TTS Base, Qwen3-ASR
+and Fun-CosyVoice3; Systran faster-whisper multilingual conversions.
+Variants and precision change memory use, not the upstream licensing terms.
+Read the specific repository's model card for its license and provenance.
+The catalog is a compatibility menu, not a certification of every variant's
+translation quality, Cantonese pronunciation, or speaker identity.
+
+Experimental storyboard analysis runtime: MLX-VLM 0.7.6
+Upstream: https://github.com/Blaizzy/mlx-vlm
+Additional runtime dependencies and versions: visual-requirements.lock.
+Upstream distribution metadata and license files remain in the bundled Python
+site-packages. Reuses separately downloaded Qwen3.5 vision/text weights; sampled
+visual observations do not certify speaker identity or lip-reading accuracy.
+
+GPT-SoVITS selectable V2 / V3 / V4: model hashes and native sample rates
+are pinned in gsv_versions.py. Source revision: 48b1a0169a28582a8984402f82cf438d3bfa6aca.
+GPT weight repository revision: lj1995/GPT-SoVITS at 1cdb10a4f2b13b3e8103b873c4c70c9d54d92c85.
+V3 BigVGAN vocoder: nvidia/bigvgan_v2_24khz_100band_256x at
+c329ede9e9bbc100ddf5c91e2330a61921262370; upstream BigVGAN source LICENSE is
+retained under gpt-sovits/<revision>/GPT_SoVITS/BigVGAN/LICENSE.
+Reference/audio quality and speech correctness require listening; model
+selection and the WAV sample-rate label do not certify either.
+
+GPT-SoVITS V2 Pro Plus: pinned lj1995/GPT-SoVITS weights v2Pro/s2Gv2ProPlus.pth and speaker encoder sv/pretrained_eres2netv2w24s4ep4.ckpt. Inference uses s1v3.ckpt. Native output 32 kHz. https://github.com/RVC-Boss/GPT-SoVITS
+
+VoxCPM2: https://github.com/OpenBMB/VoxCPM and https://huggingface.co/openbmb/VoxCPM2
+Native 48 kHz, Cantonese/English adapter. Pinned Apache-2.0 source and optional
+weights. WenetSpeech-Yue: https://github.com/ASLP-lab/WenetSpeech-Yue and
+https://huggingface.co/ASLP-lab/WSYue-TTS ; CosyVoice2-Yue Base and
+ZoengJyutGaai weights, Apache-2.0, native 24 kHz, Cantonese only.
+Exact source revisions and inference adaptations: tts-vendor/provenance.json.
+Original notices remain in tts-vendor; Matcha is MIT. Runtime packages retain
+distribution notices. Optional weights are downloaded and SHA-256 verified
+through voice-models.json; model readiness does not certify speech quality.
+
+Fish Audio Drama 3: https://huggingface.co/fishaudio/drama-3
+Optional 4-bit MLX conversion: https://huggingface.co/mlx-community/fish-audio-drama-3-4bit
+Pinned weight revision, size and SHA-256: voice-models.json. Weights use Fish
+Audio Community License 1.0; upstream LICENSE.md remains beside downloaded weights.
+Native 44.1 kHz. Chinese is listed upstream; Cantonese in this adapter uses a
+language instruction and requires listening. It is not separately certified.
+Pinned MLX Audio inference: https://github.com/Blaizzy/mlx-audio
+Revision dad2087f790dfe96b07d5aac1405db4b578b411f, MIT. The isolated source
+subset and its license/provenance are under tts-vendor/drama3. No shared
+MLX runtime packages are replaced.

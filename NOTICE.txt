@@ -1,0 +1,67 @@
+AniCanto — Copyright (C) 2026 SCKC
+
+APPLICATION CODE
+AniCanto original application code is licensed under the MIT License.
+SPDX-License-Identifier: MIT. See LICENSE for the full grant, copyright notice,
+conditions and warranty disclaimer. Permission includes commercial use.
+
+This notice covers SCKC's original application code. It does not replace the
+licences or copyright notices attached to third-party code, model weights,
+fonts, recordings or other assets. Preserve those notices when redistributing.
+Third-party GPL code and covered combined works do not become MIT through this
+notice; their applicable source and distribution obligations remain in force.
+
+MODELS AND RECORDINGS
+Built with Fish Audio.
+Optional Drama 3 model weights use Fish Audio Community License v1.0. Their
+licence, NOTICE, attribution, voice-use, commercial and hosted-service conditions
+are separate from the application MIT licence. See licenses/model-evidence.json and the
+full pinned notices under licenses/models/. A code licence does not grant media,
+performer, trademark or personality rights. Other model weights retain their
+individual licences. Entries without sufficient licence evidence cannot be
+newly downloaded through the reviewed model catalog.
+
+The supplied reference-recording provenance and terms are in
+natural-voices/NOTICE.txt (Resources/natural-voices/ in the source tree).
+Fonts retain their supplied SIL Open Font License. Original generated artwork
+does not constitute clearance for third-party characters or trademarks.
+Shared stroke icon geometry acknowledgements and upstream notices are in
+licenses/INTERFACE-NOTICE.txt and licenses/common/Feather-MIT.txt. The font's
+actual embedded copyright is also preserved in Resources/fonts/NOTICE.txt.
+WeSpeaker speaker-embedding weights are CC-BY-4.0, separately from their code;
+see licenses/auxiliary-models.json for pinned evidence and attribution.
+
+BUILD PATH NORMALISATION
+New release Rust helpers are compiled with anonymous build paths. Retained
+native C/C++ tools have only diagnostic source-file strings normalised in
+read-only data; executable instruction sections are verified unchanged.
+Original notices are retained. See licenses/build-path-remapping.json and
+scripts/sanitize_build_paths.py for the transformation and provenance.
+
+NATIVE TOOLS AND PYTHON DEPENDENCIES
+FFmpeg with GPL codecs and GPL/LGPL/MPL dependencies require their respective
+notices and, where applicable, matching corresponding source/build materials.
+The source manifests identify exact versions; a manifest alone does not replace
+the obligation to supply the required source when distributing covered binaries.
+DiffQ and Distance were unused declared dependencies of the selected audio
+separation and GPT phonemization paths. New runtime locks and bundled wheels
+omit them. Their upstream legal audit evidence is retained, explicitly marked
+not bundled; this does not erase notices for an older installed runtime that
+still contains those packages. No third-party licence is waived or replaced.
+CUDA and Microsoft redistributables retain
+their respective vendor terms. Refer to the packaged component inventory and
+licenses/ for full third-party notices.
+
+RELEASE STATUS
+GitHub publication is on hold at the developer's request. Changing the original
+code licence is not certification that every combined binary may be published.
+Resources/PUBLIC-DISTRIBUTION.json records remaining distribution work.
+The itemised review is licenses/distribution-review.json; source candidates
+and complete binary releases are assessed separately.
+
+繁體中文摘要
+AniCanto 原創程式碼由 SCKC 以 MIT 授權，不提供任何保證。MIT 容許商業使用。
+第三方模型、程式庫、字型、錄音及素材仍依各自授權；MIT 不會將其重新授權。
+已確認目前流程不使用的 DiffQ 及 Distance 從新部署清單和附帶套件移除。
+仍有安裝的第三方元件須保留通知；GPL／LGPL／MPL 元件的相應源碼義務仍適用。
+公開發佈仍須完成第三方相容性、相應源碼、實際封裝及私人檔案排除審核。

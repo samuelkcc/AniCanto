@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-19",
+  "reviewedApplicationVersion": "0.24.27",
+  "applicationCodeLicense": "MIT",
+  "publicReleaseApproved": false,
+  "publicationAuthorized": true,
+  "reviewType": "Engineering evidence review, not a legal opinion or rights-holder approval",
+  "resolved": [
+    "Pinned antlr4-python3-runtime 4.9.3 and jieba 0.42.1 upstream notices supplemented; jieba_fast 0.53 base MIT notice pinned to upstream commit.",
+    "Feather icon geometry acknowledgement and upstream MIT notice added; Noto font copyright preserved from the actual bundled font name table.",
+    "WeSpeaker weight evidence correctly identified as CC-BY-4.0 and attributed separately from the adapter code; new setup preserves exact evidence beside the weights.",
+    "Auxiliary model-card evidence is preserved with hashes and unresolved statuses rather than inferred from code licences.",
+    "New public-source exporter excludes installed releases, executable tools, wheels, user media, voice samples, build caches and historical/private records; rejects symlinks, private paths and credentials.",
+    "Available matching source-material assembler verifies archive checksums and exact locked dependencies; explicitly does not claim complete corresponding-source coverage.",
+    "BigVGAN pinned weight SHA-256 matches the upstream model metadata; model-card licence link and the exact GPT-vendored NVIDIA MIT notice are retained together.",
+    "AniCanto name and original vector brand mark documented; historical CantoSync notices and upstream notices retained. Active application grant remains MIT.",
+    "Replacement installer source uses private pinned CPython + standard venv/pip instead of uv; real Mac fresh install, reuse, selective repair and native entry-point checks passed. Exact Python build/install archive byte identity and complete referenced notices retained; Windows execution and final artifact verification remain pending.",
+    "B02 auxiliary model/data/OCR evidence completed in source: publisher declarations and standard terms, exact converted tensor provenance, RapidOCR/Paddle model hashes, and runtime sidecar delivery. No quality-changing model replacement required.",
+    "Release build privacy: Rust compiler paths remapped; production checkout fallbacks removed. C/C++ UTF-8 and UTF-16 diagnostic literals normalised with machine-instruction hashes unchanged and original inputs retained privately."
+  ],
+  "blockers": [
+    {
+      "id": "B05",
+      "scope": "final-release",
+      "component": "Final source/binary artifacts",
+      "finding": "The 0.24.27 selected dependency profile has no unresolved component licence-evidence entry; eleven unreviewed optional conversions stay unavailable. Final binary/notices/source identities are recorded in the external release receipt. Windows device execution/GPU acceptance remains a separate functional check. GitHub publication is explicitly on hold.",
+      "required": "Retain matching verified source attachments, build materials and all notices with the exact binary pair. Obtain publication authorisation after testing. Preserve user projects and recordings during the authorised app replacement.",
+      "status": "publication-held-final-receipt"
+    }
+  ],
+  "primaryReferences": [
+    "https://ffmpeg.org/legal.html",
+    "https://www.mozilla.org/en-US/MPL/2.0/FAQ/",
+    "https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE",
+    "https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet34-LM/blob/f0c48c298fd835726c27956a5d617bad7115627e/README.md",
+    "https://creativecommons.org/licenses/by/4.0/"
+  ],
+  "productName": "AniCanto",
+  "localArtifactStatus": {
+    "mac": "0.24.27 shared-interface candidate; install only after verification",
+    "windows": "0.24.27 shared-interface candidate; real Windows device acceptance remains pending",
+    "scope": "Enabled component evidence retained; eleven unreviewed conversions unavailable; official CosyVoice 3 limited to Windows NVIDIA. Exact binary and source identities belong to the external receipt."
+  },
+  "latestStatusCheckpoint": {
+    "date": "2026-10-20",
+    "preparedVersion": "0.24.32",
+    "published": false,
+    "publicationAuthorized": true,
+    "conditionalAuthorization": "Only after licence/artifact review, real-video conversion and redeployment QA pass; otherwise keep private.",
+    "windowsOnDeviceExecuted": false,
+    "scope": "Engineering verification; no legal opinion or media/identity rights grant."
+  },
+  "resolvedIssues": [
+    {
+      "id": "B02",
+      "scope": "downloaded-models-and-data",
+      "status": "resolved-in-source-not-yet-shipped",
+      "component": "KimberleyJSN Mel-Band RoFormer, converted GPT auxiliary models, NLTK/OpenJTalk and Windows OCR data",
+      "evidence": [
+        "licenses/auxiliary-models.json",
+        "licenses/ocr-models.json",
+        "licenses/text-data.json",
+        "licenses/text-data/pyopenjtalk-evidence.json"
+      ],
+      "finding": "Exact publisher licence declarations and complete standard terms retained. RoFormer weight pinned to publisher MIT revision. Converted HuBERT and RoBERTa tensors compared with pinned official weights; every converted tensor accounted for. RapidOCR wheel weights match publisher registry hashes and Paddle model licences. NLTK archives and Open JTalk dictionary/voice terms pinned. New model-loading/OCR paths preserve verified sidecar notices. No inference weights or OCR engine changed.",
+      "validation": "22 provenance, data, notice-delivery and distribution regression tests passed."
+    },
+    {
+      "id": "B01",
+      "scope": "binary",
+      "component": "uv / SeaHash 4.1.0",
+      "required": "Keep the verified replacement installer in the final candidates; real Windows cold-start and GPU acceptance remain separately documented.",
+      "alternativeReview": {
+        "date": "2026-10-19",
+        "status": "investigated-not-implemented",
+        "findings": [
+          "The exact uv 0.12.23 source uses SeaHasher in uv-cache-key/cache_key.rs and digest.rs; it cannot be labelled unused.",
+          "Pinned GitLab notice remains inaccessible. The older tfs root MIT notice does not establish coverage for the exact 4.1.0 source."
+        ],
+        "options": [
+          {
+            "name": "Python venv and pip",
+            "tradeoff": "Avoids shipping uv and its SeaHash dependency, but Python acquisition and all current setup/install/repair flows must be replaced and tested on Mac and Windows. Python/pip and their vendored components still require their own notices.",
+            "reference": "https://pip.pypa.io/en/stable/installation/"
+          },
+          {
+            "name": "Rebuild uv with a reviewed deterministic cache hasher",
+            "tradeoff": "Requires a maintained upstream patch, separate cache namespace, exact dependency graph proving SeaHash absent, new Mac/Windows binaries and fresh-install/repair tests. std DefaultHasher is not a promised stable cross-version replacement."
+          }
+        ]
+      },
+      "replacementImplementation": {
+        "status": "implemented-in-source-mac-native-tested-windows-execution-pending",
+        "installer": "venv+pip",
+        "manifest": "Resources/python-installer.json",
+        "pipVersion": "26.2.1",
+        "pythonRelease": "20261013",
+        "macPython": "3.11.17",
+        "windowsPython": "3.12.15",
+        "tests": {
+          "installer": "venv+pip",
+          "macOSExecuted": true,
+          "windowsExecuted": false,
+          "installedAppModified": false,
+          "freshPinnedPackageCount": 35,
+          "repeatSetupReused": true,
+          "damagedPackagesRepaired": [
+            "pillow"
+          ],
+          "healthyPackageUnchanged": true,
+          "postRepairReused": true,
+          "basePythonProtected": true,
+          "pipNotInstalledIntoProductionEnv": true,
+          "nativeHelperCompiled": true,
+          "signedComponentTestApp": true,
+          "nativeColdStartPassed": true,
+          "uvFilesInComponentApp": 0,
+          "uvLicenseRows": 0,
+          "privatePythonBuildFilesMatched": {
+            "macos-arm64": 2026,
+            "windows-x64": 3384
+          },
+          "regressionTestsPassed": 178,
+          "windowsGPUCommandSelectionTested": true,
+          "windowsBootstrapExecuted": false,
+          "releaseBinariesReplaced": false,
+          "legacyWindowsInstallerQuarantined": true
+        },
+        "noticeEvidence": "licenses/python-installer",
+        "scope": "New candidates only; installed/test binaries were not replaced. Other distribution conditions remain open."
+      },
+      "status": "resolved-for-prepared-profile-final-receipt-required",
+      "previousFinding": "uv / SeaHash is removed from current installer source and new packaging paths. The compiled signed Mac component-test app contains no uv and passed a real native cold start. Previously delivered Mac 0.24.20 and Windows 0.24.17 still contain the old installer; final replacement Windows payload and on-device setup tests remain pending.",
+      "finding": "New v0.24.22 candidates use standard private CPython/venv/pip. Both package paths exclude uv/SeaHash, retain exact notices, and the Mac native setup component passed fresh install, reuse and selective repair. Windows on-device execution remains functional acceptance, not a missing SeaHash licence."
+    },
+    {
+      "id": "B03",
+      "scope": "binary-and-runtime",
+      "component": "GPL/LGPL/MPL binaries, including FFmpeg and embedded/runtime libraries",
+      "required": "Provide the exact verified matching-source attachment beside the corresponding binary downloads with equivalent access; retain original licences and source/build mapping.",
+      "alternativeReview": {
+        "date": "2026-10-19",
+        "status": "architecture-retained",
+        "decision": "Keep current FFmpeg architecture as requested and complete matching source/build material delivery. Downloading the same executable at first launch is not treated as a licence workaround.",
+        "alternative": "A reproducibly built LGPL-only FFmpeg without GPL codecs is technically possible, but requires codec/export compatibility tests and still carries LGPL/source obligations; not selected for this release.",
+        "reference": "https://ffmpeg.org/legal.html"
+      },
+      "status": "resolved-for-prepared-profile-final-receipt-required",
+      "previousFinding": "Available verified source archives are not proof of a complete buildable source delivery. Windows FFmpeg's precise matching build/dependency materials and runtime coverage still need verification.",
+      "finding": "Exact Mac native dependency mapping and Windows FFmpeg version/configuration/source closure checked. Matching source delivery includes original recipes, 747 Windows input archives, recursive submodules, exact SVN snapshots, source-form pip and locked desktop crate sources. Original dependency notices and publisher package declarations are preserved. Source attachment readback is required in the external release receipt."
+    },
+    {
+      "id": "B04",
+      "scope": "assets-and-documentation",
+      "component": "Reference voice use and public screenshots",
+      "required": "Use only original/generated or separately authorised public demos. User media and identifiable-person voice rights are not granted by the application.",
+      "alternativeReview": {
+        "date": "2026-10-19",
+        "status": "public-demo-restriction",
+        "decision": "Use only original/generated scenes and synthetic or appropriately consented speech for public screenshots/demos. Do not publish private episode evidence. No user files were changed."
+      },
+      "referenceBankStatus": "resolved-in-source-final-artifact-pending",
+      "evidence": [
+        "Resources/natural-voices/catalog.json",
+        "Resources/natural-voices/NOTICE.txt",
+        "Resources/natural-voices/cantonese-generation.json",
+        "Resources/natural-voices/english-generation.json"
+      ],
+      "status": "resolved-for-prepared-profile-final-receipt-required",
+      "previousFinding": "Source reference bank revision 3 now contains only original synthetic mixtures and Cantonese generated from those mixtures. Four human dataset reference clips were retired privately. Independent ASR rejected Mandarin-drift candidates before selection; hashes, generator revisions, prompts and seeds are retained. Previously installed test apps still contain bank revision 2; private episode material remains excluded from public candidates.",
+      "finding": "Original synthetic bank revision 3 replaces all human reference clips in both candidate payloads. Hash allowlists protect public source exports. Only approved original assistant artwork and generated neutral test media are used; private episode evidence stays excluded."
+    }
+  ],
+  "preparedProfileLicenseReview": "Engineering evidence and known source-input coverage completed; final attachment and candidate receipt required; not legal advice or approval.",
+  "remainingUnresolvedComponentLicencesInPreparedProfile": [],
+  "excludedOptionalConversions": "11 model conversions without confirmed licence evidence remain unavailable for new downloads. Their full unlicensed model-card text is not redistributed; reviewed alternatives remain available.",
+  "retainedOptionalVoices": {
+    "models": [
+      "voxcpm2-2b-bf16",
+      "wsyue-cosy2-base",
+      "wsyue-cosy2-zjg"
+    ],
+    "licenseEvidence": "licenses/model-evidence.json",
+    "effectiveLicense": "Apache-2.0",
+    "change": "Windows native registration, aligned install paths and per-engine variant/load/speech probe enforcement; no weights added",
+    "windowsOnDeviceExecuted": false
+  },
+  "timingWorkflowCheckpoint": {
+    "version": "0.24.33",
+    "checkedDate": "2026-10-20",
+    "newModelWeights": false,
+    "newDependencies": false,
+    "sourceAndNoticesPairingRequired": true,
+    "publicReleaseApproved": false,
+    "publicationHold": "One short-line acoustic check and Windows device acceptance remain unresolved."
+  }
+}

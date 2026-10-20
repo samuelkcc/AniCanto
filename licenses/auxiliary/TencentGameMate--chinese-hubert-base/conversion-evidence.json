@@ -1,0 +1,57 @@
+{
+  "component": "hubert",
+  "officialKeys": 211,
+  "convertedKeys": 211,
+  "officialOnly": [],
+  "convertedOnly": [],
+  "mismatches": [],
+  "transforms": {
+    "torch.float32 -> torch.float16": 211
+  },
+  "tensorsCompared": 211,
+  "originalSHA256": "2fefccd26c2794a583b80f6f7210c721873cb7ebae2c1cde3baf9b27855e24d8",
+  "convertedSHA256": "24164f129c66499d1346e2aa55f183250c223161ec2770c0da3d3b08cf432d3c",
+  "repo": "TencentGameMate/chinese-hubert-base",
+  "upstreamRevision": "fce0375452b1dd6c080ac3248d423d4d037bc831",
+  "upstreamFile": "pytorch_model.bin",
+  "convertedPath": "chinese-hubert-base/pytorch_model.bin",
+  "configurationMatches": {
+    "hidden_size": 768,
+    "intermediate_size": 3072,
+    "num_attention_heads": 12,
+    "num_hidden_layers": 12,
+    "vocab_size": 32,
+    "model_type": "hubert",
+    "conv_dim": [
+      512,
+      512,
+      512,
+      512,
+      512,
+      512,
+      512
+    ],
+    "conv_stride": [
+      5,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "conv_kernel": [
+      10,
+      3,
+      3,
+      3,
+      3,
+      2,
+      2
+    ]
+  },
+  "officialConfigSHA256": "f6bd1bdef239518d022edcef31243acf344a2afa33d5428e16f221cac09cbcd0",
+  "convertedConfigSHA256": "c3e5060a1277e0f078cc6be9da4528a605dba6ece93018981fe2c820e5c7b103",
+  "inferenceWeightsChanged": false,
+  "allConvertedTensorsAccountedFor": true
+}

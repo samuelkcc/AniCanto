@@ -1,0 +1,7 @@
+faster-whisper==1.2.1
+numpy==2.4.6
+scipy==1.17.1
+soundfile==0.14.0
+pillow==12.3.0
+PyYAML==6.0.3
+httpx==0.28.1

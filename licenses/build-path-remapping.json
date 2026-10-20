@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 1,
+  "scope": "Only diagnostic source-location text normalised in C/C++ tool data. Rust binaries use compiler path remapping. No model or machine instruction is changed.",
+  "files": [
+    {
+      "format": "macho",
+      "replacedSourceLocations": 17,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 4547209,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4548041,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4549544,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4550151,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4551360,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4551718,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4552056,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4553092,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4557610,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4557858,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4558945,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4573155,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4575774,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4576677,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4579826,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4583058,
+          "section": "__cstring",
+          "bytes": 18
+        },
+        {
+          "offset": 4585137,
+          "section": "__cstring",
+          "bytes": 18
+        }
+      ],
+      "path": "Resources/drama3-small-server",
+      "inputSHA256": "55836d53c58566b0ac66901e5a8261bc3571886aa6ddf52342cf7c3a2b937eed",
+      "outputSHA256": "eafef7bf20728b1372c025b7ed3b1852b2116b4228006faf5edf5c936f1d9684",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 15,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 12671249,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671360,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671466,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671578,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671691,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671800,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12671910,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12672008,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12672114,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12686219,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12686320,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12710849,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12710958,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12711061,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 12711157,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/audiocpp_small_server.exe",
+      "inputSHA256": "7aefd09a808a3ad0e669c03ab45d377634429ae67115d13ba0e8e0629021a58f",
+      "outputSHA256": "d0d14267937ec7a5a00bb668fb6a0040724a236ba6fb825fde005fedd47f5150",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 15,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 4552013,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552123,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552228,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552339,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552451,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552559,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552668,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552765,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4552870,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4561859,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4561959,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4575544,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4575652,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4575754,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 4575849,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/audiocpp_cli.exe",
+      "inputSHA256": "6cd4a86b191859c18cd2db5544f4ef82fc03603debc2bcdc44ab1e2326830265",
+      "outputSHA256": "c091e48349cac236b7d91e1fdd2db6d0072e844ce2405e18f1be63de82a0aa9b",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 15,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 6715220,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715330,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715435,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715546,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715658,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715766,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715875,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6715972,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6716077,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6725466,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6725566,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6740490,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6740598,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6740700,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 6740795,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/audiocpp_server.exe",
+      "inputSHA256": "ab168552bd280e6c196bd55dd954357d74950b4dd8179c46009809fa8ba4f280",
+      "outputSHA256": "9d175b04c59fc0ed54266d4d8e5eb5ee4251502db890e143ca4c3d2463ffa8c0",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 1,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 141837,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/drama-small-cuda/ggml.dll",
+      "inputSHA256": "09c8ce57dee0013f0e5bafc88bcac3a9bda4a1f864986c1028dac461f034d3e7",
+      "outputSHA256": "ddf38f362886ae5268b6be4a11c06bf81c9be96a1b6c23e6154892a4a088e2d3",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 9,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 805524,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 805626,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 805724,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 805822,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 805928,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 806369,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 808625,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 808728,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 808824,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/drama-small-cuda/ggml-base.dll",
+      "inputSHA256": "a74521ebf5a9a6db3271cf2e24035a0b809b409448e652f467b06bacc6c2fb43",
+      "outputSHA256": "17a61f7206909b6ec21d974e425ef01a64858f8418d7b488d114f6bbf03c117a",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 7,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 971775,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 971886,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 971992,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 972104,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 972217,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 972550,
+          "section": ".rdata",
+          "bytes": 18
+        },
+        {
+          "offset": 973289,
+          "section": ".rdata",
+          "bytes": 18
+        }
+      ],
+      "path": "windows/tools/drama-small-cuda/ggml-cpu.dll",
+      "inputSHA256": "2750e8ceb45ee1ed53a4897c199079b4e9138b8989464c2b18d4c4986422dcc3",
+      "outputSHA256": "912072a1fc1c0e8bf6afbc0191ee524d51f4e1900abdbcee4392fb8ecb75ca6b",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    },
+    {
+      "format": "pe",
+      "replacedSourceLocations": 21,
+      "codeSectionsUnchanged": true,
+      "sameLengthPathSubstitutions": true,
+      "changes": [
+        {
+          "offset": 13615382,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13615594,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13615830,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13616048,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13616284,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13616500,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13616712,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13616924,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13617980,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13618182,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13618752,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13618970,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13619184,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13619416,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13619622,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13619824,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13620028,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13620230,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13620432,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13620624,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        },
+        {
+          "offset": 13620820,
+          "section": ".rdata",
+          "bytes": 36,
+          "encoding": "utf-16-le"
+        }
+      ],
+      "path": "windows/tools/audiocpp_small_server.exe",
+      "inputSHA256": "d0d14267937ec7a5a00bb668fb6a0040724a236ba6fb825fde005fedd47f5150",
+      "outputSHA256": "d98d4ad5c4ea4883147d0a7c571d2fb1b5d77232c4267350d63022e755816a8b",
+      "privateOriginalRetained": true,
+      "codeSectionsUnchangedAfterSigning": true
+    }
+  ]
+}

@@ -1,0 +1,747 @@
+{
+  "schemaVersion": 1,
+  "gitTrees": [
+    {
+      "component": "freetype-d333439633039de426f943f28a2926c7f97b5ae5",
+      "repo": "https://gitlab.freedesktop.org/freetype/freetype.git",
+      "commit": "d333439633039de426f943f28a2926c7f97b5ae5",
+      "gitlinks": {
+        "subprojects/dlg": "395ccad2c1e0daae535c4d20bb0a3f2424648e17"
+      }
+    },
+    {
+      "component": "pcre2-09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "repo": "https://github.com/PCRE2Project/pcre2.git",
+      "commit": "09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "gitlinks": {
+        "deps/sljit": "3908d4c1d46764b7f86e172411e28cec3d0d601c"
+      }
+    },
+    {
+      "component": "Vulkan-Shim-Loader-65b3936528cd92eb4ea3de485d03f858a3850484",
+      "repo": "https://github.com/BtbN/Vulkan-Shim-Loader.git",
+      "commit": "65b3936528cd92eb4ea3de485d03f858a3850484",
+      "gitlinks": {
+        "Vulkan-Headers": "b5c8f996196ba4aa6d8f97e52b5d3b6e70f7e4e2"
+      }
+    },
+    {
+      "component": "AviSynthPlus-5c82777b374bdef16e13007a11e77d735ac1e4eb",
+      "repo": "https://github.com/AviSynth/AviSynthPlus.git",
+      "commit": "5c82777b374bdef16e13007a11e77d735ac1e4eb",
+      "gitlinks": {
+        "filesystem": "3f1c185ab414e764c694b8171d1c4d8c5c437517"
+      }
+    },
+    {
+      "component": "kvazaar-2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "repo": "https://github.com/ultravideo/kvazaar.git",
+      "commit": "2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "gitlinks": {
+        "greatest": "60e25ce7658ced49f03b52ac14c553cf6ea33de4"
+      }
+    },
+    {
+      "component": "libbluray-a24f4fad4d62893de647abc8671397747b2359dd",
+      "repo": "https://code.videolan.org/videolan/libbluray.git",
+      "commit": "a24f4fad4d62893de647abc8671397747b2359dd",
+      "gitlinks": {
+        "contrib/libudfread": "139a2194525f2745b98a98e4d8fa627d07440176"
+      }
+    },
+    {
+      "component": "libpsl-a629c831d09011f76974d931be7f6167be90673e",
+      "repo": "https://github.com/rockdaboot/libpsl.git",
+      "commit": "a629c831d09011f76974d931be7f6167be90673e",
+      "gitlinks": {
+        "list": "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20"
+      }
+    },
+    {
+      "component": "nghttp2-19d06e62185d93d2398d85241cdbb460349bfe44",
+      "repo": "https://github.com/nghttp2/nghttp2.git",
+      "commit": "19d06e62185d93d2398d85241cdbb460349bfe44",
+      "gitlinks": {
+        "tests/munit": "cb04288a5225645be005a521c537b83c51934ef6",
+        "third-party/mruby": "831da26b9021de0369d17b71b5667e2941a1a32d",
+        "third-party/neverbleed": "c9515906909cbc33251d3fc2a140d43feae89680",
+        "third-party/urlparse": "59b068a7618a256c6823b0b9801b61d1d04677a3"
+      }
+    },
+    {
+      "component": "nghttp3-2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "repo": "https://github.com/ngtcp2/nghttp3.git",
+      "commit": "2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "gitlinks": {
+        "lib/sfparse": "4b313cfd2e1b389ae632b36dcd50402307289af2",
+        "tests/munit": "11e8e3466b2d6a8bdfd4b05a3d1ee7805c5d3442"
+      }
+    },
+    {
+      "component": "ngtcp2-a4925d70647b75286b28c37be260de3729c2de3d",
+      "repo": "https://github.com/ngtcp2/ngtcp2.git",
+      "commit": "a4925d70647b75286b28c37be260de3729c2de3d",
+      "gitlinks": {
+        "tests/munit": "cb04288a5225645be005a521c537b83c51934ef6",
+        "third-party/urlparse": "c8168839c89fc5c5917c375e1bd6ffeddf3f7f88"
+      }
+    },
+    {
+      "component": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "repo": "https://github.com/libjxl/libjxl.git",
+      "commit": "b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "gitlinks": {
+        "testdata": "73695d303670c90e4d506ea89d9901b081385089",
+        "third_party/brotli": "028fb5a23661f123017c060daa546b55cf4bde29",
+        "third_party/googletest": "6910c9d9165801d8827d628cb72eb7ea9dd538c5",
+        "third_party/highway": "457c891775a7397bdb0376bb1031e6e027af1c48",
+        "third_party/lcms": "5176347635785e53ee5cee92328f76fda766ecc6",
+        "third_party/libjpeg-turbo": "8ecba3647edb6dd940463fedf38ca33a8e2a73d1",
+        "third_party/libpng": "872555f4ba910252783af1507f9e7fe1653be252",
+        "third_party/sjpeg": "94e0df6d0f8b44228de5be0ff35efb9f946a13c9",
+        "third_party/skcms": "96d9171c94b937a1b5f0293de7309ac16311b722",
+        "third_party/zlib": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
+      }
+    },
+    {
+      "component": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "repo": "https://code.videolan.org/videolan/libplacebo.git",
+      "commit": "1937beef3a2f508266c68efea1491e3fc4600e04",
+      "gitlinks": {
+        "3rdparty/Vulkan-Headers": "74d8a6cb930c68ef617b202c3ff3c59d919e086b",
+        "3rdparty/fast_float": "97b54ca9e75f5303507699d27c6b4f4efe4641a1",
+        "3rdparty/glad": "73db193f853e2ee079bf3ca8a64aa2eaf6459043",
+        "3rdparty/jinja": "15206881c006c79667fe5154fe80c01c65410679",
+        "3rdparty/markupsafe": "297fc8e356e6836a62087949245d09a28e9f1b13",
+        "demos/3rdparty/nuklear": "242f35efa067a46c595645eeda7b1771ea1f83b1"
+      }
+    },
+    {
+      "component": "mbedtls-v4.2.0",
+      "repo": "https://github.com/ARMmbed/mbedtls.git",
+      "commit": "v4.2.0",
+      "gitlinks": {
+        "framework": "dde0c4a0e448a0552f18817dcea633bb851fd288",
+        "tf-psa-crypto": "73c5da561c8e5253db7b1fb440eda86fde8d8024"
+      }
+    },
+    {
+      "component": "glib-5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "repo": "https://github.com/GNOME/glib.git",
+      "commit": "5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "gitlinks": {
+        "subprojects/gvdb": "2b42fc75f09dbe1cd1057580b5782b08f2dcb400"
+      }
+    },
+    {
+      "component": "librsvg-7612431eb02dc009319094f8513d63c1faaecfb4",
+      "repo": "https://github.com/GNOME/librsvg.git",
+      "commit": "7612431eb02dc009319094f8513d63c1faaecfb4",
+      "gitlinks": {
+        "librsvg-rebind/gir": "88f37d4165a8ec4a85c219bb3de247f285594b67",
+        "librsvg-rebind/gir-files": "6cef10cd64dfe5839e6693676852479fe7c9aac8"
+      }
+    },
+    {
+      "component": "snappy-9c28114a38866f6deeaa826db918293bc28ae410",
+      "repo": "https://github.com/google/snappy.git",
+      "commit": "9c28114a38866f6deeaa826db918293bc28ae410",
+      "gitlinks": {
+        "third_party/benchmark": "b20cea674170b2ba45da0dfaf03953cdea473d0d",
+        "third_party/googletest": "b796f7d44681514f58a683a3a71ff17c94edb0c1"
+      }
+    },
+    {
+      "component": "srt-ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "repo": "https://github.com/Haivision/srt.git",
+      "commit": "ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "gitlinks": {
+        "submodules/abi-compliance-checker": "7c175c45a8ba9ac41b8e47d8ebbab557b623b18e"
+      }
+    },
+    {
+      "component": "zimg-67e0603271c080e22c8429856dd4a8a56587e61e",
+      "repo": "https://github.com/sekrit-twc/zimg.git",
+      "commit": "67e0603271c080e22c8429856dd4a8a56587e61e",
+      "gitlinks": {
+        "graphengine": "cb5b2ce13384ec2491f0c37256ea210034799f69",
+        "test/extra/googletest": "6910c9d9165801d8827d628cb72eb7ea9dd538c5"
+      }
+    }
+  ],
+  "submodules": [
+    {
+      "parent": "freetype-d333439633039de426f943f28a2926c7f97b5ae5",
+      "path": "subprojects/dlg",
+      "repo": "https://github.com/nyorain/dlg.git",
+      "commit": "395ccad2c1e0daae535c4d20bb0a3f2424648e17",
+      "file": "nyorain--dlg-395ccad2c1e0daae535c4d20bb0a3f2424648e17.tar.gz",
+      "url": "https://codeload.github.com/nyorain/dlg/tar.gz/395ccad2c1e0daae535c4d20bb0a3f2424648e17",
+      "status": "retained-review-recursion",
+      "sha256": "263a4a3777d9839e34cd41db988310659e0c00eab37beb7aedd30511a460133b",
+      "bytes": 837072
+    },
+    {
+      "parent": "pcre2-09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "path": "deps/sljit",
+      "repo": "https://github.com/zherczeg/sljit.git",
+      "commit": "3908d4c1d46764b7f86e172411e28cec3d0d601c",
+      "file": "zherczeg--sljit-3908d4c1d46764b7f86e172411e28cec3d0d601c.tar.gz",
+      "url": "https://codeload.github.com/zherczeg/sljit/tar.gz/3908d4c1d46764b7f86e172411e28cec3d0d601c",
+      "status": "retained-review-recursion",
+      "sha256": "5a3daa03200bca099509d706964e258036c9081bae0226fc953943f130e42d4a",
+      "bytes": 1466906
+    },
+    {
+      "parent": "Vulkan-Shim-Loader-65b3936528cd92eb4ea3de485d03f858a3850484",
+      "path": "Vulkan-Headers",
+      "repo": "https://github.com/KhronosGroup/Vulkan-Headers.git",
+      "commit": "b5c8f996196ba4aa6d8f97e52b5d3b6e70f7e4e2",
+      "file": "KhronosGroup--Vulkan-Headers-b5c8f996196ba4aa6d8f97e52b5d3b6e70f7e4e2.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/Vulkan-Headers/tar.gz/b5c8f996196ba4aa6d8f97e52b5d3b6e70f7e4e2",
+      "status": "retained-review-recursion",
+      "sha256": "7937d8ec21785736436d9ff52564db7d55992070b5ac98324472cce6e425a7ba",
+      "bytes": 3059121
+    },
+    {
+      "parent": "AviSynthPlus-5c82777b374bdef16e13007a11e77d735ac1e4eb",
+      "path": "filesystem",
+      "repo": "https://github.com/gulrak/filesystem",
+      "commit": "3f1c185ab414e764c694b8171d1c4d8c5c437517",
+      "file": "gulrak--filesystem-3f1c185ab414e764c694b8171d1c4d8c5c437517.tar.gz",
+      "url": "https://codeload.github.com/gulrak/filesystem/tar.gz/3f1c185ab414e764c694b8171d1c4d8c5c437517",
+      "status": "retained-review-recursion",
+      "sha256": "cc1c5439d29031477868bdea25b68b4210dc8ed018bb63a65e708afe405db4e1",
+      "bytes": 163474
+    },
+    {
+      "parent": "kvazaar-2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "path": "greatest",
+      "repo": "https://github.com/ultravideo/greatest.git",
+      "commit": "60e25ce7658ced49f03b52ac14c553cf6ea33de4",
+      "file": "ultravideo--greatest-60e25ce7658ced49f03b52ac14c553cf6ea33de4.tar.gz",
+      "url": "https://codeload.github.com/ultravideo/greatest/tar.gz/60e25ce7658ced49f03b52ac14c553cf6ea33de4",
+      "status": "retained-review-recursion",
+      "sha256": "3914a24a613e2eefae0076d059d963ccfeea661ce9f249770ca61a78d4d326d7",
+      "bytes": 12001
+    },
+    {
+      "parent": "libbluray-a24f4fad4d62893de647abc8671397747b2359dd",
+      "path": "contrib/libudfread",
+      "repo": "https://code.videolan.org/videolan/libudfread.git",
+      "commit": "139a2194525f2745b98a98e4d8fa627d07440176",
+      "file": "https:----code.videolan.org--videolan--libudfread-139a2194525f2745b98a98e4d8fa627d07440176.tar.gz",
+      "url": "https://code.videolan.org/videolan/libudfread/-/archive/139a2194525f2745b98a98e4d8fa627d07440176/libudfread-139a2194525f2745b98a98e4d8fa627d07440176.tar.gz",
+      "status": "retained-review-recursion",
+      "sha256": "aaccb7877139abe3c47a6bdb142dc3b1f1ab885a0e4b4e956e631d7a0445f960",
+      "bytes": 32910
+    },
+    {
+      "parent": "libpsl-a629c831d09011f76974d931be7f6167be90673e",
+      "path": "list",
+      "repo": "https://github.com/publicsuffix/list",
+      "commit": "e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20",
+      "file": "publicsuffix--list-e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20.tar.gz",
+      "url": "https://codeload.github.com/publicsuffix/list/tar.gz/e1b8015c3b2f0f4f8c18659c2480fc1a22c07b20",
+      "status": "retained-review-recursion",
+      "sha256": "8e8e3324565a15dc1705cffae420d4aeb6f0af9afcaae490691138b1d748905d",
+      "bytes": 306146
+    },
+    {
+      "parent": "nghttp2-19d06e62185d93d2398d85241cdbb460349bfe44",
+      "path": "third-party/mruby",
+      "repo": "https://github.com/mruby/mruby",
+      "commit": "831da26b9021de0369d17b71b5667e2941a1a32d",
+      "file": "mruby--mruby-831da26b9021de0369d17b71b5667e2941a1a32d.tar.gz",
+      "url": "https://codeload.github.com/mruby/mruby/tar.gz/831da26b9021de0369d17b71b5667e2941a1a32d",
+      "status": "retained-review-recursion",
+      "sha256": "e4fb1bbad8276878e84e3c3b6161ac35a4216853de404f8463675aa2d1920b4f",
+      "bytes": 1349520
+    },
+    {
+      "parent": "nghttp2-19d06e62185d93d2398d85241cdbb460349bfe44",
+      "path": "third-party/neverbleed",
+      "repo": "https://github.com/tatsuhiro-t/neverbleed.git",
+      "commit": "c9515906909cbc33251d3fc2a140d43feae89680",
+      "file": "tatsuhiro-t--neverbleed-c9515906909cbc33251d3fc2a140d43feae89680.tar.gz",
+      "url": "https://codeload.github.com/tatsuhiro-t/neverbleed/tar.gz/c9515906909cbc33251d3fc2a140d43feae89680",
+      "status": "retained-review-recursion",
+      "sha256": "c9e7b46a7e80fe6ff36b56f66ed7ccf6a25f936e084965e82d19b734ec8935ee",
+      "bytes": 25165
+    },
+    {
+      "parent": "nghttp2-19d06e62185d93d2398d85241cdbb460349bfe44",
+      "path": "tests/munit",
+      "repo": "https://github.com/ngtcp2/munit",
+      "commit": "cb04288a5225645be005a521c537b83c51934ef6",
+      "file": "ngtcp2--munit-cb04288a5225645be005a521c537b83c51934ef6.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/munit/tar.gz/cb04288a5225645be005a521c537b83c51934ef6",
+      "alsoUsedBy": [
+        {
+          "parent": "ngtcp2-a4925d70647b75286b28c37be260de3729c2de3d",
+          "path": "tests/munit"
+        }
+      ],
+      "status": "retained-review-recursion",
+      "sha256": "9268af820439cdd54d4ee5c6043fe235e94686d1eb7e3564a1549edfd40d2662",
+      "bytes": 34009
+    },
+    {
+      "parent": "nghttp2-19d06e62185d93d2398d85241cdbb460349bfe44",
+      "path": "third-party/urlparse",
+      "repo": "https://github.com/ngtcp2/urlparse",
+      "commit": "59b068a7618a256c6823b0b9801b61d1d04677a3",
+      "file": "ngtcp2--urlparse-59b068a7618a256c6823b0b9801b61d1d04677a3.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/urlparse/tar.gz/59b068a7618a256c6823b0b9801b61d1d04677a3",
+      "status": "retained-review-recursion",
+      "sha256": "22af85926429ecda2cb30543a6b207a6550dd6bc8dcdfa35fe9b0c75be42735b",
+      "bytes": 22946
+    },
+    {
+      "parent": "nghttp3-2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "path": "tests/munit",
+      "repo": "https://github.com/ngtcp2/munit",
+      "commit": "11e8e3466b2d6a8bdfd4b05a3d1ee7805c5d3442",
+      "file": "ngtcp2--munit-11e8e3466b2d6a8bdfd4b05a3d1ee7805c5d3442.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/munit/tar.gz/11e8e3466b2d6a8bdfd4b05a3d1ee7805c5d3442",
+      "status": "retained-review-recursion",
+      "sha256": "19b7d4291a92ea0d94bed710362163adeb6f5affa031068e05573a34c4583c97",
+      "bytes": 32578
+    },
+    {
+      "parent": "nghttp3-2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "path": "lib/sfparse",
+      "repo": "https://github.com/ngtcp2/sfparse",
+      "commit": "4b313cfd2e1b389ae632b36dcd50402307289af2",
+      "file": "ngtcp2--sfparse-4b313cfd2e1b389ae632b36dcd50402307289af2.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/sfparse/tar.gz/4b313cfd2e1b389ae632b36dcd50402307289af2",
+      "status": "retained-review-recursion",
+      "sha256": "cc8256a65a03577654941839e100b3d61fe7f7d69f2a08f9b2f17a123b580b4c",
+      "bytes": 36580
+    },
+    {
+      "parent": "ngtcp2-a4925d70647b75286b28c37be260de3729c2de3d",
+      "path": "third-party/urlparse",
+      "repo": "https://github.com/ngtcp2/urlparse",
+      "commit": "c8168839c89fc5c5917c375e1bd6ffeddf3f7f88",
+      "file": "ngtcp2--urlparse-c8168839c89fc5c5917c375e1bd6ffeddf3f7f88.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/urlparse/tar.gz/c8168839c89fc5c5917c375e1bd6ffeddf3f7f88",
+      "status": "retained-review-recursion",
+      "sha256": "8b638ee2fd2bd4d1633a8ed10bc090101ccb8050a9ff22444b7404fe21d8e8f1",
+      "bytes": 22853
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/brotli",
+      "repo": "https://github.com/google/brotli",
+      "commit": "028fb5a23661f123017c060daa546b55cf4bde29",
+      "file": "google--brotli-028fb5a23661f123017c060daa546b55cf4bde29.tar.gz",
+      "url": "https://codeload.github.com/google/brotli/tar.gz/028fb5a23661f123017c060daa546b55cf4bde29",
+      "status": "retained-review-recursion",
+      "sha256": "0afe09a53c8bad9861c8dd1fc1284308d54f19d2979ba3541cfdcc9b05fe360f",
+      "bytes": 646475
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/lcms",
+      "repo": "https://github.com/mm2/Little-CMS",
+      "commit": "5176347635785e53ee5cee92328f76fda766ecc6",
+      "file": "mm2--Little-CMS-5176347635785e53ee5cee92328f76fda766ecc6.tar.gz",
+      "url": "https://codeload.github.com/mm2/Little-CMS/tar.gz/5176347635785e53ee5cee92328f76fda766ecc6",
+      "status": "retained-review-recursion",
+      "sha256": "55c92b24f939a8493b07f076bee849af656a13cc69f330816e6936e95b312396",
+      "bytes": 5257749
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/googletest",
+      "repo": "https://github.com/google/googletest",
+      "commit": "6910c9d9165801d8827d628cb72eb7ea9dd538c5",
+      "file": "google--googletest-6910c9d9165801d8827d628cb72eb7ea9dd538c5.tar.gz",
+      "url": "https://codeload.github.com/google/googletest/tar.gz/6910c9d9165801d8827d628cb72eb7ea9dd538c5",
+      "alsoUsedBy": [
+        {
+          "parent": "zimg-67e0603271c080e22c8429856dd4a8a56587e61e",
+          "path": "test/extra/googletest"
+        }
+      ],
+      "status": "retained-review-recursion",
+      "sha256": "bde221be7f3841fcbc3971665d77d717116394a42155d988ee6407dfc39f1f09",
+      "bytes": 877456
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/sjpeg",
+      "repo": "https://github.com/webmproject/sjpeg.git",
+      "commit": "94e0df6d0f8b44228de5be0ff35efb9f946a13c9",
+      "file": "webmproject--sjpeg-94e0df6d0f8b44228de5be0ff35efb9f946a13c9.tar.gz",
+      "url": "https://codeload.github.com/webmproject/sjpeg/tar.gz/94e0df6d0f8b44228de5be0ff35efb9f946a13c9",
+      "status": "retained-review-recursion",
+      "sha256": "ac94917fe745a674eabf1e044f23ec55cd5a548c9869c06ec4b19da14ee0227d",
+      "bytes": 2481405
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/skcms",
+      "repo": "https://github.com/google/skcms",
+      "commit": "96d9171c94b937a1b5f0293de7309ac16311b722",
+      "file": "google--skcms-96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz",
+      "url": "https://codeload.github.com/google/skcms/tar.gz/96d9171c94b937a1b5f0293de7309ac16311b722",
+      "status": "retained-review-recursion",
+      "sha256": "9bb4b5bba0b7c04f6c2bce9ff713d61e23c9a20c4945161ae16290498ad74627",
+      "bytes": 10061812
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/highway",
+      "repo": "https://github.com/google/highway",
+      "commit": "457c891775a7397bdb0376bb1031e6e027af1c48",
+      "file": "google--highway-457c891775a7397bdb0376bb1031e6e027af1c48.tar.gz",
+      "url": "https://codeload.github.com/google/highway/tar.gz/457c891775a7397bdb0376bb1031e6e027af1c48",
+      "status": "retained-review-recursion",
+      "sha256": "5124b0501c98d9930dbb065bfa1a5bbbd59ce0f12facb7e1e33aaef01a5f1f1a",
+      "bytes": 2235690
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/libpng",
+      "repo": "https://github.com/pnggroup/libpng.git",
+      "commit": "872555f4ba910252783af1507f9e7fe1653be252",
+      "file": "pnggroup--libpng-872555f4ba910252783af1507f9e7fe1653be252.tar.gz",
+      "url": "https://codeload.github.com/pnggroup/libpng/tar.gz/872555f4ba910252783af1507f9e7fe1653be252",
+      "status": "retained-review-recursion",
+      "sha256": "f7ebcdc408a26d45244d9ef3d35d732a5482a77c55d1d40bf1eb748030691097",
+      "bytes": 1573542
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/zlib",
+      "repo": "https://github.com/madler/zlib.git",
+      "commit": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf",
+      "file": "madler--zlib-51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf.tar.gz",
+      "url": "https://codeload.github.com/madler/zlib/tar.gz/51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf",
+      "status": "retained-review-recursion",
+      "sha256": "d9e270d46252734aa49770fbc544125391617956266f220bd63216c834f3a522",
+      "bytes": 1572004
+    },
+    {
+      "parent": "libjxl-b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "path": "third_party/libjpeg-turbo",
+      "repo": "https://github.com/libjpeg-turbo/libjpeg-turbo.git",
+      "commit": "8ecba3647edb6dd940463fedf38ca33a8e2a73d1",
+      "file": "libjpeg-turbo--libjpeg-turbo-8ecba3647edb6dd940463fedf38ca33a8e2a73d1.tar.gz",
+      "url": "https://codeload.github.com/libjpeg-turbo/libjpeg-turbo/tar.gz/8ecba3647edb6dd940463fedf38ca33a8e2a73d1",
+      "status": "retained-review-recursion",
+      "sha256": "ed729127097af5000bfeddc6b3e679c4363bb1618ebfc07efb6b47f576471b4b",
+      "bytes": 2266254
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "demos/3rdparty/nuklear",
+      "repo": "https://github.com/Immediate-Mode-UI/Nuklear.git",
+      "commit": "242f35efa067a46c595645eeda7b1771ea1f83b1",
+      "file": "Immediate-Mode-UI--Nuklear-242f35efa067a46c595645eeda7b1771ea1f83b1.tar.gz",
+      "url": "https://codeload.github.com/Immediate-Mode-UI/Nuklear/tar.gz/242f35efa067a46c595645eeda7b1771ea1f83b1",
+      "status": "retained-review-recursion",
+      "sha256": "ac567995f917c10a722409e0141d226e737d06488b0a31166f6e4925da8e58f0",
+      "bytes": 2339403
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "3rdparty/glad",
+      "repo": "https://github.com/Dav1dde/glad",
+      "commit": "73db193f853e2ee079bf3ca8a64aa2eaf6459043",
+      "file": "Dav1dde--glad-73db193f853e2ee079bf3ca8a64aa2eaf6459043.tar.gz",
+      "url": "https://codeload.github.com/Dav1dde/glad/tar.gz/73db193f853e2ee079bf3ca8a64aa2eaf6459043",
+      "status": "retained-review-recursion",
+      "sha256": "33dbeae44d8315ece57e14eba4b1b4a02ac5406d1c4f49cd20048c91522a6b9a",
+      "bytes": 645779
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "3rdparty/jinja",
+      "repo": "https://github.com/pallets/jinja",
+      "commit": "15206881c006c79667fe5154fe80c01c65410679",
+      "file": "pallets--jinja-15206881c006c79667fe5154fe80c01c65410679.tar.gz",
+      "url": "https://codeload.github.com/pallets/jinja/tar.gz/15206881c006c79667fe5154fe80c01c65410679",
+      "status": "retained-review-recursion",
+      "sha256": "b88a20dcc2e34072fcf4159325bc6c34cd4b29a81a8b83d15d2f28ba561da296",
+      "bytes": 276954
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "3rdparty/markupsafe",
+      "repo": "https://github.com/pallets/markupsafe",
+      "commit": "297fc8e356e6836a62087949245d09a28e9f1b13",
+      "file": "pallets--markupsafe-297fc8e356e6836a62087949245d09a28e9f1b13.tar.gz",
+      "url": "https://codeload.github.com/pallets/markupsafe/tar.gz/297fc8e356e6836a62087949245d09a28e9f1b13",
+      "status": "retained-review-recursion",
+      "sha256": "da7c010c9c81a66ac73036558c1fcb6212b50482f43211cd1254035b94f82414",
+      "bytes": 83817
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "3rdparty/Vulkan-Headers",
+      "repo": "https://github.com/KhronosGroup/Vulkan-Headers",
+      "commit": "74d8a6cb930c68ef617b202c3ff3c59d919e086b",
+      "file": "KhronosGroup--Vulkan-Headers-74d8a6cb930c68ef617b202c3ff3c59d919e086b.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/Vulkan-Headers/tar.gz/74d8a6cb930c68ef617b202c3ff3c59d919e086b",
+      "status": "retained-review-recursion",
+      "sha256": "75967a8288ff16044a86d1af462b96d2e75c435937efb75f2bb4102ab0382f29",
+      "bytes": 3029927
+    },
+    {
+      "parent": "libplacebo-1937beef3a2f508266c68efea1491e3fc4600e04",
+      "path": "3rdparty/fast_float",
+      "repo": "https://github.com/fastfloat/fast_float.git",
+      "commit": "97b54ca9e75f5303507699d27c6b4f4efe4641a1",
+      "file": "fastfloat--fast_float-97b54ca9e75f5303507699d27c6b4f4efe4641a1.tar.gz",
+      "url": "https://codeload.github.com/fastfloat/fast_float/tar.gz/97b54ca9e75f5303507699d27c6b4f4efe4641a1",
+      "status": "retained-review-recursion",
+      "sha256": "2b132274539286e41f37857cac22aa8441d21bd86d55de825a3342b149f66801",
+      "bytes": 120200
+    },
+    {
+      "parent": "mbedtls-v4.2.0",
+      "path": "framework",
+      "repo": "https://github.com/Mbed-TLS/mbedtls-framework",
+      "commit": "dde0c4a0e448a0552f18817dcea633bb851fd288",
+      "file": "Mbed-TLS--mbedtls-framework-dde0c4a0e448a0552f18817dcea633bb851fd288.tar.gz",
+      "url": "https://codeload.github.com/Mbed-TLS/mbedtls-framework/tar.gz/dde0c4a0e448a0552f18817dcea633bb851fd288",
+      "status": "retained-review-recursion",
+      "sha256": "3b0d4864fa877dc9165b90ff3d5b68505c6176c0b22d317d99fe8c89a993e9fd",
+      "bytes": 1045083
+    },
+    {
+      "parent": "mbedtls-v4.2.0",
+      "path": "tf-psa-crypto",
+      "repo": "https://github.com/Mbed-TLS/TF-PSA-Crypto.git",
+      "commit": "73c5da561c8e5253db7b1fb440eda86fde8d8024",
+      "file": "Mbed-TLS--TF-PSA-Crypto-73c5da561c8e5253db7b1fb440eda86fde8d8024.tar.gz",
+      "url": "https://codeload.github.com/Mbed-TLS/TF-PSA-Crypto/tar.gz/73c5da561c8e5253db7b1fb440eda86fde8d8024",
+      "status": "retained-review-recursion",
+      "sha256": "de7221c6653c60d9f5fab87c73092259d94c975a3da9ebddbaef7d3c1408df09",
+      "bytes": 4136613
+    },
+    {
+      "parent": "glib-5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "path": "subprojects/gvdb",
+      "repo": "https://github.com/GNOME/gvdb.git",
+      "commit": "2b42fc75f09dbe1cd1057580b5782b08f2dcb400",
+      "file": "GNOME--gvdb-2b42fc75f09dbe1cd1057580b5782b08f2dcb400.tar.gz",
+      "url": "https://codeload.github.com/GNOME/gvdb/tar.gz/2b42fc75f09dbe1cd1057580b5782b08f2dcb400",
+      "status": "retained-review-recursion",
+      "sha256": "069a00aa1fc893f18423602f4e095583be5a220429f6e8a58d70511490b4b019",
+      "bytes": 24716
+    },
+    {
+      "parent": "librsvg-7612431eb02dc009319094f8513d63c1faaecfb4",
+      "path": "librsvg-rebind/gir",
+      "repo": "https://github.com/gtk-rs/gir.git",
+      "commit": "88f37d4165a8ec4a85c219bb3de247f285594b67",
+      "file": "gtk-rs--gir-88f37d4165a8ec4a85c219bb3de247f285594b67.tar.gz",
+      "url": "https://codeload.github.com/gtk-rs/gir/tar.gz/88f37d4165a8ec4a85c219bb3de247f285594b67",
+      "status": "retained-review-recursion",
+      "sha256": "e355c1bd0c5cd96d24e627797ae95a2990fc075648a92fd2dc9ff2059dc4a1d0",
+      "bytes": 214751
+    },
+    {
+      "parent": "librsvg-7612431eb02dc009319094f8513d63c1faaecfb4",
+      "path": "librsvg-rebind/gir-files",
+      "repo": "https://github.com/gtk-rs/gir-files.git",
+      "commit": "6cef10cd64dfe5839e6693676852479fe7c9aac8",
+      "file": "gtk-rs--gir-files-6cef10cd64dfe5839e6693676852479fe7c9aac8.tar.gz",
+      "url": "https://codeload.github.com/gtk-rs/gir-files/tar.gz/6cef10cd64dfe5839e6693676852479fe7c9aac8",
+      "status": "retained-review-recursion",
+      "sha256": "6c5f07a526a8dbcd2a4679ea6e9e393192aea1d91c81ce7d7c52deaa97a50fc0",
+      "bytes": 3471729
+    },
+    {
+      "parent": "snappy-9c28114a38866f6deeaa826db918293bc28ae410",
+      "path": "third_party/benchmark",
+      "repo": "https://github.com/google/benchmark.git",
+      "commit": "b20cea674170b2ba45da0dfaf03953cdea473d0d",
+      "file": "google--benchmark-b20cea674170b2ba45da0dfaf03953cdea473d0d.tar.gz",
+      "url": "https://codeload.github.com/google/benchmark/tar.gz/b20cea674170b2ba45da0dfaf03953cdea473d0d",
+      "status": "retained-review-recursion",
+      "sha256": "faa9a8d386240cbd0615d7a2e8d6682dd30492c14dd11b185d7495ec9502f166",
+      "bytes": 263140
+    },
+    {
+      "parent": "snappy-9c28114a38866f6deeaa826db918293bc28ae410",
+      "path": "third_party/googletest",
+      "repo": "https://github.com/google/googletest.git",
+      "commit": "b796f7d44681514f58a683a3a71ff17c94edb0c1",
+      "file": "google--googletest-b796f7d44681514f58a683a3a71ff17c94edb0c1.tar.gz",
+      "url": "https://codeload.github.com/google/googletest/tar.gz/b796f7d44681514f58a683a3a71ff17c94edb0c1",
+      "status": "retained-review-recursion",
+      "sha256": "2681de8c0930b0610dc52a2602fad41d0dafa3d7ff1030da6575d56fc1f4ca46",
+      "bytes": 864010
+    },
+    {
+      "parent": "srt-ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "path": "submodules/abi-compliance-checker",
+      "repo": "https://github.com/lvc/abi-compliance-checker.git",
+      "commit": "7c175c45a8ba9ac41b8e47d8ebbab557b623b18e",
+      "file": "lvc--abi-compliance-checker-7c175c45a8ba9ac41b8e47d8ebbab557b623b18e.tar.gz",
+      "url": "https://codeload.github.com/lvc/abi-compliance-checker/tar.gz/7c175c45a8ba9ac41b8e47d8ebbab557b623b18e",
+      "status": "retained-review-recursion",
+      "sha256": "aed60ecfe51a207f8dd9d09a7446b424d58e0076a163342ae9016d145db223b7",
+      "bytes": 229469
+    },
+    {
+      "parent": "zimg-67e0603271c080e22c8429856dd4a8a56587e61e",
+      "path": "graphengine",
+      "repo": "https://github.com/sekrit-twc/graphengine.git",
+      "commit": "cb5b2ce13384ec2491f0c37256ea210034799f69",
+      "file": "sekrit-twc--graphengine-cb5b2ce13384ec2491f0c37256ea210034799f69.tar.gz",
+      "url": "https://codeload.github.com/sekrit-twc/graphengine/tar.gz/cb5b2ce13384ec2491f0c37256ea210034799f69",
+      "status": "retained-review-recursion",
+      "sha256": "663bc958094280e3dabfa76a408296a51f5222f56115fd7782eae737edeaa179",
+      "bytes": 59543
+    },
+    {
+      "parent": "ngtcp2--urlparse-59b068a7618a256c6823b0b9801b61d1d04677a3.tar.gz",
+      "path": "munit",
+      "repo": "https://github.com/ngtcp2/munit",
+      "commit": "3cf9c79f3a76f313d560dedd5b47c0416a0fbb6e",
+      "file": "ngtcp2--munit-3cf9c79f3a76f313d560dedd5b47c0416a0fbb6e.tar.gz",
+      "url": "https://codeload.github.com/ngtcp2/munit/tar.gz/3cf9c79f3a76f313d560dedd5b47c0416a0fbb6e",
+      "status": "retained-review-recursion",
+      "sha256": "9baefc03ae1f51afcd3ab0230b14a023c12320bb78c67d316afba5324a080ba4",
+      "bytes": 32631
+    },
+    {
+      "parent": "ngtcp2--urlparse-59b068a7618a256c6823b0b9801b61d1d04677a3.tar.gz",
+      "path": "http-parser",
+      "repo": "https://github.com/nodejs/http-parser",
+      "commit": "ec8b5ee63f0e51191ea43bb0c6eac7bfbff3141d",
+      "file": "nodejs--http-parser-ec8b5ee63f0e51191ea43bb0c6eac7bfbff3141d.tar.gz",
+      "url": "https://codeload.github.com/nodejs/http-parser/tar.gz/ec8b5ee63f0e51191ea43bb0c6eac7bfbff3141d",
+      "status": "retained-review-recursion",
+      "sha256": "765a21444322ea2476ca1e3cfeb74d280eeb37f4713cf52d2bf398dabf6e4128",
+      "bytes": 53003
+    },
+    {
+      "parent": "Mbed-TLS--TF-PSA-Crypto-73c5da561c8e5253db7b1fb440eda86fde8d8024.tar.gz",
+      "path": "drivers/pqcp/mldsa-native",
+      "repo": "https://github.com/Mbed-TLS/mldsa-native",
+      "commit": "5772b4f4a0105694b1203abb582273f78fa951b7",
+      "file": "Mbed-TLS--mldsa-native-5772b4f4a0105694b1203abb582273f78fa951b7.tar.gz",
+      "url": "https://codeload.github.com/Mbed-TLS/mldsa-native/tar.gz/5772b4f4a0105694b1203abb582273f78fa951b7",
+      "status": "retained-review-recursion",
+      "sha256": "b1a88d6928ec3ee870f64bb18027ecf92cee055b4d3fec78690792dc04e2af62",
+      "bytes": 698648
+    },
+    {
+      "parent": "sekrit-twc--graphengine-cb5b2ce13384ec2491f0c37256ea210034799f69.tar.gz",
+      "path": "test/googletest",
+      "repo": "https://github.com/google/googletest.git",
+      "commit": "e2239ee6043f73722e7aa812a459f54a28552929",
+      "file": "google--googletest-e2239ee6043f73722e7aa812a459f54a28552929.tar.gz",
+      "url": "https://codeload.github.com/google/googletest/tar.gz/e2239ee6043f73722e7aa812a459f54a28552929",
+      "status": "retained-review-recursion",
+      "sha256": "2765fbfaa978e90d1c8477bc2f2b9705be65b1b562bb215dbfaa76567d508fe1",
+      "bytes": 887296
+    }
+  ],
+  "errors": [],
+  "completeRecursiveClosure": true,
+  "excluded": [
+    {
+      "component": "libjxl",
+      "path": "testdata",
+      "reason": "Build explicitly disables tests; testdata is not linked or needed for these library build options."
+    }
+  ],
+  "additionalBuildSources": [
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/abseil_cpp",
+      "repo": "https://github.com/abseil/abseil-cpp.git",
+      "commit": "dbf88f932096c7f7714356e919f04749eb87c3e9",
+      "file": "abseil--abseil-cpp-dbf88f932096c7f7714356e919f04749eb87c3e9.tar.gz",
+      "url": "https://codeload.github.com/abseil/abseil-cpp/tar.gz/dbf88f932096c7f7714356e919f04749eb87c3e9",
+      "status": "retained-review-recursion",
+      "sha256": "e82365b76d28bdb105593f5ffdc8efe8b00625951d168e00d12df35b0f3ce98c",
+      "bytes": 2399609
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/effcee",
+      "repo": "https://github.com/google/effcee.git",
+      "commit": "f8e8a164822d4f65e757bff66bc00e1567959aa0",
+      "file": "google--effcee-f8e8a164822d4f65e757bff66bc00e1567959aa0.tar.gz",
+      "url": "https://codeload.github.com/google/effcee/tar.gz/f8e8a164822d4f65e757bff66bc00e1567959aa0",
+      "status": "retained-review-recursion",
+      "sha256": "7c3f76f36d591578db29f0fa9abf16826a091b6da654a2797a84b88bf264cf52",
+      "bytes": 41518
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/googletest",
+      "repo": "https://github.com/google/googletest.git",
+      "commit": "52eb8108c5bdec04579160ae17225d66034bd723",
+      "file": "google--googletest-52eb8108c5bdec04579160ae17225d66034bd723.tar.gz",
+      "url": "https://codeload.github.com/google/googletest/tar.gz/52eb8108c5bdec04579160ae17225d66034bd723",
+      "status": "retained-review-recursion",
+      "sha256": "745c55415660044610f7fcd3af7a6420d5de16a7dbb9ebfe2e131275676232be",
+      "bytes": 886690
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/glslang",
+      "repo": "https://github.com/KhronosGroup/glslang.git",
+      "commit": "e1b562a8bed273a02f30b59b66a5d499793cede5",
+      "file": "KhronosGroup--glslang-e1b562a8bed273a02f30b59b66a5d499793cede5.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/glslang/tar.gz/e1b562a8bed273a02f30b59b66a5d499793cede5",
+      "status": "retained-review-recursion",
+      "sha256": "907174a24713c6202c146f164bf81783f1fbc79c8cb821a30f18f159eb980312",
+      "bytes": 4641535
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/re2",
+      "repo": "https://github.com/google/re2.git",
+      "commit": "972a15cedd008d846f1a39b2e88ce48d7f166cbd",
+      "file": "google--re2-972a15cedd008d846f1a39b2e88ce48d7f166cbd.tar.gz",
+      "url": "https://codeload.github.com/google/re2/tar.gz/972a15cedd008d846f1a39b2e88ce48d7f166cbd",
+      "status": "retained-review-recursion",
+      "sha256": "cd4a75bdc0ec2e2506026ea4ccc9f0c429aceab8b6305b2cd30a1f4cc67644bc",
+      "bytes": 398012
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/spirv-headers",
+      "repo": "https://github.com/KhronosGroup/SPIRV-Headers.git",
+      "commit": "04fd3caa1e8267e4d95c806cad901181728e1006",
+      "file": "KhronosGroup--SPIRV-Headers-04fd3caa1e8267e4d95c806cad901181728e1006.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Headers/tar.gz/04fd3caa1e8267e4d95c806cad901181728e1006",
+      "status": "retained-review-recursion",
+      "sha256": "392f4801409aad9c4f1b77745f179952fd6264e4c8bd0fc1bc45dfa6807bf6d0",
+      "bytes": 594644
+    },
+    {
+      "parent": "shaderc-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "path": "third_party/spirv-tools",
+      "repo": "https://github.com/KhronosGroup/SPIRV-Tools.git",
+      "commit": "ef96ed763b43b59b33b31b362f09a02b729fa1c9",
+      "file": "KhronosGroup--SPIRV-Tools-ef96ed763b43b59b33b31b362f09a02b729fa1c9.tar.gz",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Tools/tar.gz/ef96ed763b43b59b33b31b362f09a02b729fa1c9",
+      "status": "retained-review-recursion",
+      "sha256": "82c62146083fd558735a3171cf97cfc47903ca7d368482e87f94bd44883c0f00",
+      "bytes": 3559528
+    },
+    {
+      "parent": "glib-5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "path": "subprojects/proxy-libintl",
+      "repo": "https://github.com/frida/proxy-libintl",
+      "commit": "tag:0.5",
+      "file": "proxy-libintl-0.5.tar.gz",
+      "url": "https://github.com/frida/proxy-libintl/archive/refs/tags/0.5.tar.gz",
+      "status": "retained-review-recursion",
+      "sha256": "f7a1cbd7579baaf575c66f9d99fb6295e9b0684a28b095967cfda17857595303",
+      "bytes": 13056
+    }
+  ]
+}
