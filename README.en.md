@@ -22,6 +22,10 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 >
 > This repository currently introduces the project. Public app downloads and the complete source release are being prepared; they are not available here yet.
 
+## Local AI, offline after setup
+
+AniCanto uses local language and voice models. Once the required models and runtimes are downloaded and ready, Japanese speech recognition, translation, dubbing and movie export run on your computer **without an internet connection**. First-time setup, additional models, download repair and updates require internet access.
+
 ## With respect to voice performers
 
 Dubbing is a craft. Character interpretation, emotion, timing, pronunciation and dramatic intent come from people’s training, creativity and dedication.
