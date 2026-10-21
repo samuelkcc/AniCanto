@@ -18,15 +18,17 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.45**
+> **Public beta · 0.24.46**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.45-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.46-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
-## What changed in 0.24.45
+## In this beta
+
+The lighter lavender app icon now appears in both desktop builds and throughout the English and Traditional Chinese interface gallery.
 
 Model choices now show **system RAM and dedicated GPU VRAM separately**, assigning each model to the pool it actually uses and reserving at least 8 GB of system memory. On a Windows PC with 32 GB RAM and an NVIDIA GPU with 16 GB VRAM, the full Drama 3 CPU model can be selected alongside Qwen 9B on the GPU; CPU dubbing may be substantially slower. Models run in sequence, so each bar estimates the largest model in its pool rather than summing every download. Actual use may vary with hardware and content.
 
-Download progress and errors remain visible, with verification, resume and retry controls. This beta also fixes a macOS CosyVoice 3 installation dependency that could stop preparation after downloading. Wait until a new model is verified before using it. The new icon appears in the desktop builds and interface.
+Download progress and errors remain visible, with verification, resume and retry controls. The macOS CosyVoice 3 installation dependency fix remains included. Wait until a new model is verified before using it.
 
 ## Local AI, offline after setup
 

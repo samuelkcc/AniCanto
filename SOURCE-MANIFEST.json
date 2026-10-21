@@ -21,18 +21,18 @@
     },
     {
       "path": "README.md",
-      "sha256": "37ed73ff18f67871689d68a4bf939cf1a282397566a21198beb79332b6535eda",
-      "bytes": 6168
+      "sha256": "9a98b184670a853231284d8f7dfc62a906af7fdd5a7a03a08d268bef020eb9bf",
+      "bytes": 6159
     },
     {
       "path": "Resources/AniCanto-icon.png",
-      "sha256": "e12435b6022b36b4c713b855cfe27bfe3d5ff1a36a0c651fb54423834e2b9410",
-      "bytes": 1536903
+      "sha256": "511efd2e3e82ac140756bc4e3a08ae3ae4b1e9f74caac6f39e2c6fe08ade199f",
+      "bytes": 1480150
     },
     {
       "path": "Resources/AniCanto.icns",
-      "sha256": "32d70a31c0def31aa01a0d6633e4c8a24867fcf3a03d59b2c443094cad93fc41",
-      "bytes": 3213601
+      "sha256": "2d21c8540c251d1206d77c78c32556f0cc031354384b4d88266ccdc45306c896",
+      "bytes": 3056894
     },
     {
       "path": "Resources/Licenses/anicanto-core/block-buffer-0.10.4/LICENSE-APACHE",
@@ -386,13 +386,13 @@
     },
     {
       "path": "Resources/app-icon-art.png",
-      "sha256": "b4d1a4846c8d698b7935702052c1acd27bc474892ee70f62097e7e712c88ffd0",
-      "bytes": 1986907
+      "sha256": "f0df7a3e55e623ac9232b05296740e0375b028040834847f287033050c3ded35",
+      "bytes": 1950289
     },
     {
       "path": "Resources/app-icon-prompt.txt",
-      "sha256": "8dfe8c04ade8a552cf7427671c336f991f328f9ae0790388d9b9663f21a8768a",
-      "bytes": 495
+      "sha256": "f7715fa19c5bac67d4f8ad4bf300860a05cde108a42ba60fc71f28e39651fb69",
+      "bytes": 598
     },
     {
       "path": "Resources/app-icon.svg",
@@ -411,8 +411,8 @@
     },
     {
       "path": "Resources/artwork-provenance.json",
-      "sha256": "02f7a0ac24332f99c01b275f6d8805f2a3b40a1c84d553b79ec71d6576b8dd40",
-      "bytes": 1178
+      "sha256": "97b2b356a04b98b979f31632bd5150cacf3bd98c9662b327a90dea148a323205",
+      "bytes": 1195
     },
     {
       "path": "Resources/asr-model.json",
@@ -2901,7 +2901,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "8f88099977a79d63dafa1aaadf4824852fdaa23e0759279dbf2274a394656ae6",
+      "sha256": "b7097285b122d08f5e36ffe48ec647c4b1e060f154326a16812267245d47b37d",
       "bytes": 66
     },
     {
@@ -2941,8 +2941,8 @@
     },
     {
       "path": "docs/ANICANTO-REBRAND.md",
-      "sha256": "848197c495a5d2636abb869185e14c15ba8a550380532db20ce35847a10a13d9",
-      "bytes": 1967
+      "sha256": "68c04e9f838d36cead97fa963df5f15b70873700818b04231d0a905735269122",
+      "bytes": 1934
     },
     {
       "path": "docs/MAC-LIGHTWEIGHT-DEPLOYMENT.md",
@@ -12856,12 +12856,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "bc86622cc6632b4e2314fd7515d6a90c983fdff2b73e99c6e970c11fdeaf27fb",
+      "sha256": "1ce86ca53b95304bf28f31bfd4d0bcf08eda76ee955af040b255cfc397e0b64f",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "5d70c1e31a5b44298c1c4c02a74bcf10594190b601aa55c4995fc895e429749a",
+      "sha256": "de4a32ae6037debab53067678e832c08cf798c1ad46f084db3e3a8a5124de701",
       "bytes": 543
     },
     {
@@ -12876,13 +12876,13 @@
     },
     {
       "path": "studio/src-tauri/icons/icon.ico",
-      "sha256": "1edb3b3fc8117483e0d932e1118aeddec7f9fff47ced3b0ff082ee5aa7c438a3",
+      "sha256": "d03a56c2a1288674443ed26e26417a348695e6c88f99de4fb0e4c10425b447b2",
       "bytes": 372526
     },
     {
       "path": "studio/src-tauri/icons/icon.png",
-      "sha256": "e12435b6022b36b4c713b855cfe27bfe3d5ff1a36a0c651fb54423834e2b9410",
-      "bytes": 1536903
+      "sha256": "511efd2e3e82ac140756bc4e3a08ae3ae4b1e9f74caac6f39e2c6fe08ade199f",
+      "bytes": 1480150
     },
     {
       "path": "studio/src-tauri/src/main.rs",
@@ -12891,7 +12891,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "fb846676b4e705b0b690e6dc58f49db1fd31c78863c1ad34db8b8c01bf4a9de9",
+      "sha256": "4d93465edc75d0551aa40608ed019dd4a6956fef8836bf4e7b09d3ef6f8d74cc",
       "bytes": 956
     },
     {

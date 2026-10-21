@@ -17,7 +17,7 @@ The product is AniCanto, formerly CantoSync. Display names, future output names,
 
 ## Original icon / 原創圖示
 
-`Resources/app-icon.svg` is the editable original source. Speech bubble + waveform + play triangle represent dubbing and animation. The teal/indigo tile and warm sparkle are project artwork, not a franchise logo or third-party icon. Platform PNG/ICNS/ICO files derive from this source. Small interface marks use the same original silhouette and follow the selected theme colour.
+`Resources/app-icon-art.png` is the current original source: a Japanese-inspired singer's silhouette sends a voice toward the brush-style 「廣」 character. The lavender palette matches the shared interface. Platform PNG/ICNS/ICO files derive from this artwork. `Resources/app-icon.svg` is retained as historical artwork from the earlier icon.
 
 ## Publication / 公開發佈
 
