@@ -498,7 +498,7 @@ Object.assign(zh,{"Download only":"只下載","Download":"下載","estimated mem
 Object.assign(zh,{"CosyVoice 3 needs an NVIDIA GPU on Windows. Download only is still available.":"Windows 使用 CosyVoice 3 需要 NVIDIA GPU；仍可只下載，唔會切換目前模型。","The selected model may exceed this computer’s memory or is unavailable for use here. Download only is still available.":"所選模型可能超出本機記憶體，或者喺呢部電腦未能使用；仍可只下載。"});
 Object.assign(zh,{"Target language restored; character voice differs":"已補回目標語言；角色聲線不同","Using a fallback voice":"使用後備聲線","Name pronunciation needs checking":"人名讀音需要核對","Pronunciation not confirmed":"讀音未確認"});
 
-Object.assign(zh,{"Retry AI repair":"再次 AI 修復","Repair reported lines only. Keep successful recordings and earlier exports.":"只修復有問題嘅對白，保留成功錄音同舊成品。","Save or export your edits before retrying automatic review.":"請先保存或匯出編輯，再重新進行自動修復。"});
+Object.assign(zh,{"Retry AI repair":"再次 AI 修復","Export a new version":"匯出新版影片","Repair reported lines only. Keep successful recordings and earlier exports.":"只修復有問題嘅對白，保留成功錄音同舊成品。","Save or export your edits before retrying automatic review.":"請先保存或匯出編輯，再重新進行自動修復。"});
 Object.assign(zh,{"Starting AI repair…":"正在啟動 AI 修復…","Another task is finishing. Please try again in a moment.":"另一項工作仲喺度完成收尾，請稍後再試。"});
 
 Object.assign(zh,{"Download only; deploy this voice engine before it can join automatic repair.":"只下載模型檔；完成配音引擎部署後先會參與自動補聲。"});

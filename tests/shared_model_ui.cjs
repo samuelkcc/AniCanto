@@ -41,6 +41,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
  await p.evaluate(()=>{window.qa.hardware={platform:'windows',memoryGB:64,backend:'cuda',acceleratorMemoryGB:24};window.qa.memoryBudget=19.2;});
  await p.selectOption('#switch-engine','gpt-sovits-v2');await p.waitForTimeout(70);
  const discrete=await p.locator('.model-memory').innerText();assert(discrete.includes('24.0 GB')&&discrete.includes('64.0 GB'),discrete);
+ await p.screenshot({path:path.resolve(`.build/shared-studio-qa/${lang}-model-memory.png`)});
  await p.evaluate(()=>{window.qa.hardware={platform:'windows',memoryGB:64,backend:'rocm',acceleratorMemoryGB:16};window.qa.memoryBudget=12.8;});
  await p.selectOption('#switch-engine','drama3');await p.waitForTimeout(70);
  const amd=await p.locator('.model-memory').innerText();assert(amd.includes('16.0 GB')&&amd.includes('64.0 GB'),amd);

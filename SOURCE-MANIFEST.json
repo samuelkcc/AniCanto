@@ -616,8 +616,8 @@
     },
     {
       "path": "Resources/dubbing.py",
-      "sha256": "63180a93c2d05110bd93fed843d7d89076db258fcaa13c9604db0a92409f0099",
-      "bytes": 49809
+      "sha256": "0a1e8d38cf1a7f1ddc0baa9f34178fc8af72765c2e648adedb6adb9a8a6e569a",
+      "bytes": 49836
     },
     {
       "path": "Resources/dubbing_runner.py",
@@ -1126,8 +1126,8 @@
     },
     {
       "path": "Resources/review_choices.py",
-      "sha256": "5f917f0095c3d4bbe9dfaba6a9ae06f90534dbc11527af76a7274776ada87981",
-      "bytes": 5444
+      "sha256": "bdcf5c6cd5932028952048cca90649d27627a175e8f0c3545ac84c2bd0a82f00",
+      "bytes": 5473
     },
     {
       "path": "Resources/review_diagnostics.py",
@@ -1141,8 +1141,8 @@
     },
     {
       "path": "Resources/review_retry.py",
-      "sha256": "7db0e8de401ab94f5c2ea9a3daca1da95339dc2e27999536054cf376efb89788",
-      "bytes": 8676
+      "sha256": "7ce6381e79331bf35db7f901523daaad5839426f03ea46db9079665eea43113d",
+      "bytes": 10340
     },
     {
       "path": "Resources/role_reanalysis.py",
@@ -2901,7 +2901,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "00372b168ebac8ca648930a9e3a13f0dde84e78bd8d99a2431ee7bbaee7ef1cc",
+      "sha256": "b65fea8f394624a7287fad45af6029cd157518278645c1ce28544979bc5e5fb3",
       "bytes": 66
     },
     {
@@ -12671,8 +12671,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "1982eb97ae6cae3b941776269e6528d56b2a70fb8f08b4a318337774f4a645dd",
-      "bytes": 40681
+      "sha256": "4941a73b9bbb35a928ad4baeb82c908a807de964bc3666823e6aa8164f159589",
+      "bytes": 41728
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -12856,12 +12856,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "85e44ea2eef6957af8fd4fec571fb49e360bdf158b8d7f1e03ad6ff50a83f490",
+      "sha256": "2cc3ad478d5848440baf7f5610339a4a263f6369e3c9041aac6b268978a827ba",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "7e5c63b3cc05b542823a5f3526cb07088d54145e262b5e3e05b3e54e74b1d25e",
+      "sha256": "48da940542c67ed9b577f771de913ad652f2b6fb461c35446e0a2c1f2752939f",
       "bytes": 543
     },
     {
@@ -12891,7 +12891,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "254feefaa4c5c782e1884b47bd3890c53fff8facf79057127005dc1744ea5f41",
+      "sha256": "25f59e9e688404ccbaf404c152adb549beb5a5a6eb16438b82970804dd5c8f83",
       "bytes": 956
     },
     {
@@ -12901,8 +12901,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "431064c1e8ab3d52aeff0162cb2dc36325e22010ebcdefb90da3fee000f99529",
-      "bytes": 154696
+      "sha256": "4fff0aff853879225be0ece6f9fd04268ca6e99048927527d658c1ecb9ae9bd3",
+      "bytes": 155297
     },
     {
       "path": "studio/web/assistant-motion.js",
@@ -12926,13 +12926,13 @@
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "291105bc0377c2b9e873348e6586d159e6fad316d31f048bb1dfc31234d37851",
-      "bytes": 61369
+      "sha256": "eb6e2851c60c658473eec67a262ea05a887a24325e4b290d19c74793636bb703",
+      "bytes": 61413
     },
     {
       "path": "studio/web/icons.js",
-      "sha256": "ff63c918faa23bf4be0854b04d0807b4d6ff156d2898e4efbdde790b3c84f642",
-      "bytes": 2436
+      "sha256": "66e817c84aaeadfecfae358c06f879dccc559af38db1b9aef5aa68b07c80bad9",
+      "bytes": 2788
     },
     {
       "path": "studio/web/index.html",
@@ -12986,8 +12986,8 @@
     },
     {
       "path": "studio/web/styles.css",
-      "sha256": "69b872a8cf4c87f9834299f99a518b7f7fe8a93e19bac87021f6059e3be152a1",
-      "bytes": 45224
+      "sha256": "d993683af7fc4de931474517d27cd2e1a1a5ad56ef9791312a2dc42d1e8fea34",
+      "bytes": 45368
     },
     {
       "path": "studio/web/workflow-text.js",
@@ -13211,8 +13211,8 @@
     },
     {
       "path": "tests/shared_model_ui.cjs",
-      "sha256": "c6728a7b34db1dd9fdbdc3926f6010f339afb9bae658aad41b0560313187b06f",
-      "bytes": 11816
+      "sha256": "c410864c5a767d3774f8112a9fa1b7fb7e9c522636ec8b8b6cce399fb3544eaa",
+      "bytes": 11910
     },
     {
       "path": "tests/shared_output_delivery_ui.cjs",
@@ -13241,8 +13241,8 @@
     },
     {
       "path": "tests/shared_queue_ui.cjs",
-      "sha256": "ed269b98346ba6cd4ddec02e1b71d9dc86b7621f1fb4e750cbaf03a9ace40f98",
-      "bytes": 18653
+      "sha256": "c27322ed5c12185bc4339e5df95e2379519e7b000ce04763a18ca3873ba181da",
+      "bytes": 20830
     },
     {
       "path": "tests/shared_review_diagnostics_ui.cjs",
@@ -13251,8 +13251,8 @@
     },
     {
       "path": "tests/shared_review_retry_ui.cjs",
-      "sha256": "8f637dc04a7beadacee052ec08bab23df9780530a4aabf53ffad983fae42cbac",
-      "bytes": 2457
+      "sha256": "0804062068c09ae938ae40798c78ce29b353091d22affb3700f4388c7b395222",
+      "bytes": 5647
     },
     {
       "path": "tests/shared_review_scroll_ui.cjs",
@@ -13281,8 +13281,8 @@
     },
     {
       "path": "tests/shared_studio_ui.cjs",
-      "sha256": "1c465e8d8943515b336709566d4da400c0fa657e1c2f060433b03b549d07697d",
-      "bytes": 15518
+      "sha256": "dc60307c65acb08e700b8e62115ea01fea0fda12e1b987de5b7d0d706b4394ec",
+      "bytes": 15890
     },
     {
       "path": "tests/shared_theme_ui.cjs",
@@ -13818,6 +13818,11 @@
       "path": "tests/test_review_decisions.py",
       "sha256": "a808e6f6383c938dc86ff55397bf1fc304cba93da78f891516c842218928ef5b",
       "bytes": 13117
+    },
+    {
+      "path": "tests/test_review_retry_draft.py",
+      "sha256": "ed2010697f56f8bde1e3726a95a2718800b1207b11d1504143dfbab5e0fb3560",
+      "bytes": 5891
     },
     {
       "path": "tests/test_role_commit_render.py",

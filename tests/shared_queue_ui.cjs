@@ -21,6 +21,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
    };
    window.__TAURI__={core:{convertFileSrc:p=>p,invoke:async(name,args={})=>{
     if(name==='studio_status')return {runtimeReady:true,running:structuredClone(f.running)};
+    if(name==='studio_pick')return ['/fixtures/episode-c.mkv'];
     if(name==='studio_pause'){f.pauses=(f.pauses||0)+1;setTimeout(()=>f.finish({paused:true}),0);return;}
     if(name==='studio_media'){f.media++;throw Error('Preview must stay off');}
     if(name==='studio_start'){
@@ -45,10 +46,14 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
       f.state.queue.splice(index,0,row);f.moves=(f.moves||0)+1;return structuredClone(f.state);
      }
      if(args.op==='state')return structuredClone(f.state);
+     if(args.op==='add'){
+      for(const video of p.paths||[])if(!f.state.queue.some(r=>r.video===video))f.state.queue.push({id:'c',video,status:'waiting',progress:0});
+      return structuredClone(f.state);
+     }
      if(args.op==='select'){f.state.selected=p.id;return structuredClone(f.state);}
      if(args.op==='snapshot'){
       if(options.badSnapshot===p.id)throw Error('Fixture snapshot unavailable');
-      return {root:'/jobs/'+p.id,takes:[],review:{config:{duration:6}}};
+      return {root:'/jobs/'+p.id,takes:[],review:{config:{duration:6}},issues:p.id==='a'?(options.reviewIssues||[]):[],reviewState:{pending:p.id==='a'?(options.reviewIssues||[]).length:0}};
      }
      if(args.op==='models'||args.op==='model-choices'||args.op==='licenses')return [];
      if(args.op==='plan')return {setupReady:true,downloads:[],roles:{}};
@@ -69,13 +74,37 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   await finish();await count(2);assert.equal(await page.evaluate(()=>window.queueFixture.state.selected),'b');
   assert((await page.locator('.workspace-title .filename').innerText()).includes('episode-b'));
   await finish({duplicate:true});assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),2);
-  await finish();await page.waitForSelector('[data-action=start]');assert.equal(await page.locator('[data-action=start]').innerText(),'Produce a new version');
+  await finish();await page.waitForSelector('[data-action=start]');assert.equal(await page.locator('[data-action=start]').innerText(),'Done');
+  assert(await page.locator('[data-action=start]').isDisabled());
   assert.equal(await page.evaluate(()=>window.queueFixture.state.ui.autoQueue),false);await page.screenshot({path:path.join(out,'two-videos-complete.png')});await end('Basic Start, queue order, double click, duplicate finish and selected item');
+ }
+ {
+  const {page,count,finish,end}=await fixture({rows:[['a','waiting']]});
+  await page.locator('[data-action=start]').click();await count(1);
+  await page.locator('[data-action=add]').click();
+  await page.waitForFunction(()=>window.queueFixture.state.queue.some(r=>r.id==='c'));
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.queue.find(r=>r.id==='c').status),'waiting');
+  await finish();await count(2);
+  assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a','c']);
+  await finish();await end('Basic queue includes video imported during active conversion');
  }
  for(const language of ['en','zh-HK']){
   const {page,count,finish,end}=await fixture({language,rows:[['a','complete'],['b','waiting']]});
   assert.equal(await page.locator('[data-action=start]').innerText(),language==='en'?'Start remaining videos':'開始餘下影片');
   await page.locator('[data-action=start]').click();await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['b']);await finish();await end('Completed first skipped: '+language);
+ }
+ for(const language of ['en','zh-HK']){
+  const reviewIssues=[{index:1,status:'unresolved',kind:'automatic-recovery',language:'yue',engine:'drama3'}];
+  const {page,count,finish,end}=await fixture({language,rows:[['a','complete'],['b','waiting']],reviewIssues});
+  assert.equal(await page.locator('[data-action=start]').innerText(),language==='en'?'Start remaining videos':'開始餘下影片');
+  await page.locator('[data-action=open-review]').click();
+  assert.equal(await page.locator('[data-action=retry-review]').count(),1,'Optional report repair must remain reachable from Basic mode');
+  await page.locator('[data-action=back]').click();
+  await page.locator('[data-action=start]').click();await count(1);await finish();
+  await page.locator('[data-action=select][data-value=a]').click();
+  await page.waitForFunction(()=>document.querySelector('[data-action=start]')?.textContent.includes(document.documentElement.lang==='en'?'Done':'完成'));
+  assert(await page.locator('[data-action=start]').isDisabled());
+  await end('Completed export with optional report does not mask next video or completion: '+language);
  }
  {
   const {page,count,finish,end}=await fixture();await page.locator('[data-action=start]').click();await count(1);

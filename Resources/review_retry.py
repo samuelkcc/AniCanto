@@ -15,7 +15,7 @@ def read(path,default):
 
 def fingerprint(review):return hashlib.sha256(json.dumps(review,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
-def submission(root,review_path,snapshot,mode='pending'):
+def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
  root=Path(root).resolve();path=Path(review_path).resolve()
  if not path.is_relative_to(root/'jobs') or not path.is_file():raise ValueError('The saved review is unavailable.')
  review=read(path,{})
@@ -25,7 +25,6 @@ def submission(root,review_path,snapshot,mode='pending'):
  for issue in snapshot.get('issues',[]):
   if issue.get('status')=='user-choice-saved':continue
   if type(issue.get('index')) is int:targets.setdefault(issue.get('language','yue')+':'+issue.get('engine',''),[]).append(issue['index'])
- if mode=='pending' and not targets:raise ValueError('There are no reported lines to repair.')
  from multitrack import saved_track_reports
  donors={}
  for row in saved_track_reports(path):
@@ -34,7 +33,28 @@ def submission(root,review_path,snapshot,mode='pending'):
  if not donors:raise ValueError('Saved recordings are missing; run conversion first.')
  if mode=='all':targets={key:list(range(1,len(review['cues'])+1)) for key in donors}
  if set(targets)-set(donors):raise ValueError('A reported track has no saved recordings.')
- return dict(id=uuid.uuid4().hex,review=str(path),settings=copy.deepcopy(review['config']),automaticReviewRetry=dict(revision=REVISION,mode=mode,fingerprint=fingerprint(review),targets={k:sorted(set(v)) for k,v in targets.items()},donors=donors))
+ cues=copy.deepcopy(review['cues'])
+ if saved_draft:
+  from project_edit import materialize
+  from desktop_state import review_fingerprint
+  if Path(saved_draft.get('review','/nonexistent')).resolve()!=path or saved_draft.get('baseFingerprint')!=review_fingerprint(review):raise ValueError('Saved edits are out of date. Refresh the review before repairing.')
+  edited=materialize(review,saved_draft)
+  # Donor recordings are indexed against the original dialogue. Splits, merges
+  # and reordered lines need the full editorial render, not a targeted retry.
+  if len(edited)!=len(cues) or any(c.get('editorSources')!=[i] for i,c in enumerate(edited)):
+   raise ValueError('Split, merged or reordered dialogue needs Produce a new version.')
+  fields=('start','end','cantonese','english','speakerId','enabled','subtitleStart','subtitleEnd','captionText','preserveOriginalSpeech')
+  for i,(old,new) in enumerate(zip(cues,edited),1):
+   decisions=new.get('editorDecisions',{})
+   defaults=dict(english='',speakerId='',enabled=True,subtitleStart=old['start'],subtitleEnd=old['end'],captionText=old.get('cantonese',''),preserveOriginalSpeech=False)
+   changed=any(new.get(k,defaults.get(k))!=old.get(k,defaults.get(k)) for k in fields)
+   if changed:
+    for key in donors:targets.setdefault(key,[]).append(i)
+   for key in decisions:
+    if key in donors:targets[key]=[n for n in targets.get(key,[]) if n!=i]
+  cues=edited
+ if mode=='pending' and not any(targets.values()) and not any(c.get('editorDecisions') for c in cues):raise ValueError('There are no reported lines or saved changes to repair.')
+ return dict(id=uuid.uuid4().hex,review=str(path),settings=copy.deepcopy(review['config']),automaticReviewRetry=dict(revision=REVISION,mode=mode,fingerprint=fingerprint(review),targets={k:sorted(set(v)) for k,v in targets.items()},donors=donors,submittedCues=cues))
 
 def render(w,request,draft):
  source=Path(draft['review']).resolve();base=source.parent;review=read(source,{})
@@ -50,7 +70,9 @@ def render(w,request,draft):
  for name in ('cues.json','japanese-analysis.json','japanese-original.wav','source.srt','subtitle-context.json','subtitle-context-meta.json','natural-scene-boundaries.json','nonverbal-classification-v2.json'):
   p=base/name
   if p.is_file():shutil.copy2(p,folder/name)
- w.atomic_json(folder/'cues.json',review['cues']);w.atomic_json(folder/'review.json',dict(review,config=cfg,status='pending'))
+ cfg['_editorSourceRoot']=str(base)
+ submitted=copy.deepcopy(spec.get('submittedCues',review['cues']))
+ w.atomic_json(folder/'cues.json',submitted);w.atomic_json(folder/'review.json',dict(review,config=cfg,cues=submitted,status='pending'))
  version=dict(id=ident,created=time.time(),status='running',sourceReview=str(source),automaticReviewRetry=spec)
  w.atomic_json(folder/'version.json',version)
  original=w.emit
@@ -58,7 +80,7 @@ def render(w,request,draft):
  w.emit=relay
  try:
   relay('再次 AI 修復','只重新生成同核對已報告嘅對白；沿用原聲辨識、翻譯稿及成功錄音，舊成品保留。',.55)
-  w.render_review(dict(review=str(folder/'review.json'),fastPrepared=True,lockScript=True))
+  w.render_review(dict(review=str(folder/'review.json'),cues=submitted,fastPrepared=True,lockScript=True))
   report=read(folder/'report.json',{});version.update(status='complete',output=report.get('exportedOutput') or report.get('output'),report=str(folder/'report.json'))
   w.atomic_json(folder/'version.json',version)
  finally:w.emit=original

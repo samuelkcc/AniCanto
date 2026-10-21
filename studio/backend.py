@@ -333,7 +333,19 @@ class Studio:
             if isinstance(seconds,(float,int)) and seconds!=row.get('processingSeconds'):
                 row['processingSeconds']=seconds;self.store.save()
             if row.get('review') and snapshot.get('review') and Path(row['review']).parent==Path(snapshot['root']):
-                try:snapshot['draft']=self.draft(row)
+                try:
+                    snapshot['draft']=self.draft(row)
+                    choices=[(index,key,value) for index,segment in enumerate(snapshot['draft'].get('segments',[])) for key,value in segment.get('reviewDecisions',{}).items()]
+                    applied=False
+                    if choices and row.get('output'):
+                        output=Path(row['output']).resolve()
+                        for version_path in Path(row['review']).parent.glob('versions/*/version.json'):
+                            version=read(version_path,{})
+                            if version.get('status')!='complete' or Path(version.get('output') or '/nonexistent').resolve()!=output:continue
+                            rendered=read(version_path.parent/'review.json',{}).get('cues',[])
+                            applied=all(index<len(rendered) and rendered[index].get('editorDecisions',{}).get(key)==value for index,key,value in choices)
+                            if applied:break
+                    snapshot.setdefault('reviewState',{})['userChoicesApplied']=applied
                 except ValueError:pass
             snapshot['rowID']=row['id'];return snapshot
         if op=='review-resolution':
@@ -400,7 +412,7 @@ class Studio:
             row=self.row(p.get('id'))
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before retrying review.')
             from review_retry import submission
-            draft=submission(self.root,self.review_path(row),job_snapshot(row),p.get('mode','pending'))
+            draft=submission(self.root,self.review_path(row),job_snapshot(row),p.get('mode','pending'),self.draft(row))
             requests=self.root/'requests';requests.mkdir(exist_ok=True)
             path=requests/('review-retry-'+draft['id']+'.json');write(path,draft)
             cfg=dict(draft['settings'],storage=str(self.root),submission=str(path),**self.tools())

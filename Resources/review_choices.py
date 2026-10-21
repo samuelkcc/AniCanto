@@ -48,7 +48,7 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
 
 
 def apply(cues,cfg,engine,language):
-    if not cfg.get('editorRender'):return cues
+    if not (cfg.get('editorRender') or cfg.get('_reviewRetry')):return cues
     root=Path(cfg.get('_editorSourceRoot','/nonexistent')).resolve();result=copy.deepcopy(cues)
     for cue in result:
         decision=cue.get('editorDecisions',{}).get(language+':'+engine)

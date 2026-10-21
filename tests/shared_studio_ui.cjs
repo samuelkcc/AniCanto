@@ -7,7 +7,7 @@ async function uniqueCommands(page,expert){
  for(const action of ['pause','start','change-models'])assert((await page.locator(`[data-action=${action}]`).count())<=1,`Duplicate ${action}`);
  assert((await page.locator('[data-action=projects], [data-action=page][data-value=projects]').count())<=1,'Duplicate project management navigation');
  assert(await page.locator('[data-action=add]').isVisible(),'Import is not accessible');
- const add=await page.locator('[data-action=add]').boundingBox();assert(add.x<400,'Import should be on the left');
+ const add=await page.evaluate(()=>[...document.querySelectorAll('[data-action=add]')].filter(el=>el.getClientRects().length).map(el=>el.getBoundingClientRect().x)[0]);assert(Number.isFinite(add)&&add<400,'Import should be on the left');
 }
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CANTOSYNC_QA_BROWSER?{executablePath:process.env.CANTOSYNC_QA_BROWSER}:{})});const results=[];
@@ -41,7 +41,7 @@ async function uniqueCommands(page,expert){
   await page.locator('#follow').check();await page.waitForTimeout(100);assert(await page.locator('#follow').isChecked());
   const playback=await page.evaluate(()=>{const v=document.querySelector('#video'),before=window.studioFixture.rpc,start=performance.now();for(let i=0;i<2000;i++)v.dispatchEvent(new Event('timeupdate'));return {sameNode:document.querySelector('#video')===v,rpc:window.studioFixture.rpc-before,ms:performance.now()-start}});assert(playback.sameNode);assert.equal(playback.rpc,0,'Playback callbacks performed RPC');assert(playback.ms<2000,'Playback callbacks are unexpectedly slow');
   await page.locator('[data-action=projects]').click();await page.waitForSelector('[data-action=back]');assert(await page.locator('[data-action=back]').isVisible());assert(await page.locator('[data-action=back]').evaluate(el=>el.classList.contains('back-prominent')&&getComputedStyle(el).color==='rgb(255, 255, 255)'));assert((await page.locator('[data-action=back]').boundingBox()).x<(await page.locator('[data-action=add]').boundingBox()).x);await page.locator('[data-action=back]').click();await page.waitForSelector('#video');
-  await page.screenshot({path:path.join(out,`${lang}-basic.png`)});
+  await page.waitForFunction(()=>document.querySelector('#toast')?.hidden);await page.screenshot({path:path.join(out,`${lang}-basic.png`)});
   await page.locator('[data-action=switch-mode]').click();await page.waitForSelector('.studio.expert');assert.equal(await page.locator('.mode-switch').count(),1);
   await uniqueCommands(page,true);
   for(const panel of ['nav','browser','inspector']){await page.locator(`[data-action=toggle-${panel}]`).click();await uniqueCommands(page,true);}
@@ -51,14 +51,14 @@ async function uniqueCommands(page,expert){
   await page.locator('[data-action=inspector][data-value=production]').click();assert.equal(await page.locator('[data-setting=ttsBackend]').inputValue(),'gpt-sovits-v2');
   assert(await page.locator('[data-setting=visualRoleAnalysisEnabled]').isVisible());await page.locator('[data-action=inspector][data-value=dialogue]').click();
   const ep=await page.locator('#expert-progress').boundingBox();assert(ep.height<120,`Expert progress too tall: ${ep.height}`);
-  await page.screenshot({path:path.join(out,`${lang}-expert.png`)});
+  await page.waitForFunction(()=>document.querySelector('#toast')?.hidden);await page.screenshot({path:path.join(out,`${lang}-expert.png`)});
   for(const key of ['roles','review','produce','queue','terminal','defaults','models','preferences','projects']){
-   await page.locator(`[data-action=page][data-value=${key}]`).click();await page.waitForTimeout(150);await page.screenshot({path:path.join(out,`${lang}-${key}.png`)});
+   await page.locator(`[data-action=page][data-value=${key}]`).click();await page.waitForTimeout(150);await page.waitForFunction(()=>document.querySelector('#toast')?.hidden);await page.screenshot({path:path.join(out,`${lang}-${key}.png`)});
    await uniqueCommands(page,true);
    assert(await page.locator(key==='terminal'?'.terminal-tools':'.page-inner > *').count()>0,`${key}: page content is missing`);
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${key}: horizontal window overflow`);
   }
-  await page.evaluate(movie=>window.studioFixture.pickPaths=[movie],path.resolve('.build/windows/desktop-qa/日本語 episode 01.mp4'));await page.locator('[data-action=add]').click();await page.waitForSelector('#video');assert.equal(await page.locator('.studio.expert [data-cue-field=text]').count(),1,'Import from another page did not return to the editor');
+  await page.evaluate(movie=>window.studioFixture.pickPaths=[movie],path.resolve('.build/windows/desktop-qa/日本語 episode 01.mp4'));await page.locator('[data-action=add]').click();await page.waitForSelector('.studio.expert [data-cue-field=text]');assert.equal(await page.locator('.studio.expert [data-cue-field=text]').count(),1,'Import from another page did not return to the editor');
   await page.locator('[data-action=page][data-value=edit]').click();await page.waitForSelector('[data-cue-field=text]');
   await page.locator('[data-cue-field=text]').fill(lang==='en'?'你好呀，再見啦。':'你好呀，香港。');await page.locator('[data-cue-field=text]').blur();
   await page.locator('[data-action=save]').click();await page.waitForTimeout(100);

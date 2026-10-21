@@ -262,7 +262,7 @@ def gsv_audio(cfg,job,cues,run,emit):
   try:
    if cue.get('missingScript') or (not cue.get('cantonese','').strip() and cue.get('originalSpeechReason')=='missing-script'):
     raise ValueError('未有有效翻譯稿；未交畀配音引擎，禁止日文補聲。')
-   if (cfg.get("editorRender") or cue.get('_retryRetained')) and cue.get("editorAudio"):
+   if (cfg.get("editorRender") or cfg.get('_reviewRetry') or cue.get('_retryRetained')) and cue.get("editorAudio"):
     paths.append(Path(cue["editorAudio"]));continue
    stem=Path(cfg.get('dialoguePath',''))
    from workflow_policy import original_allowed
