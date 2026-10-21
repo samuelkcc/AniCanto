@@ -65,7 +65,7 @@ class FastModeTests(unittest.TestCase):
     def test_normal_missing_script_is_rescued_before_tts_and_final_movie_is_complete(self):
         self.check_one_pass_mux('normal',missing_script=True)
 
-    def test_exhausted_normal_repair_exports_labelled_preview_with_original_audio(self):
+    def test_exhausted_normal_repair_exports_final_with_original_audio_and_review_warning(self):
         self.check_one_pass_mux('normal',preview=True)
 
     def check_one_pass_mux(self, mode,missing_script=False,preview=False):
@@ -106,15 +106,15 @@ class FastModeTests(unittest.TestCase):
             worker.render_review(dict(review=str(job/'review.json')))
             report=json.loads((job/'report.json').read_text())
             output=Path(report['exportedOutput']);self.assertTrue(output.is_file())
-            self.assertEqual(report['qualityStatus'],'incomplete-preview' if preview else 'targeted-checks-only' if mode=='normal' else 'not-checked-fast-mode')
-            self.assertEqual(json.loads((job/'review.json').read_text())['status'],'partial' if mode=='fast' or preview else 'complete')
+            self.assertEqual(report['qualityStatus'],'needs-review' if preview else 'targeted-checks-only' if mode=='normal' else 'not-checked-fast-mode')
+            self.assertEqual(json.loads((job/'review.json').read_text())['status'],'complete')
             result=json.loads(worker.run([PROBE,'-v','error','-show_streams','-of','json',output]))
             self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='audio']),3)
             self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='subtitle']),2)
             for track in report['tracks']:
                 rows=json.loads((Path(track['report']).parent/'timing.json').read_text())
-                self.assertEqual(rows[1]['skipped'],mode=='fast' or preview)
                 if preview:continue
+                self.assertEqual(rows[1]['skipped'],mode=='fast')
                 for row,cue in zip(rows,original):
                     self.assertLessEqual(row['renderedEnd'],cue.get('speechEnd',cue['end']))
                 self.assertGreater(rows[0]['hardSlotCompression'],2)
@@ -124,11 +124,14 @@ class FastModeTests(unittest.TestCase):
                 self.assertEqual(len(report['normalScriptRescue']['recovered']),1)
                 self.assertEqual(report['dialogueDelivery']['status'],'audio-present')
             if preview:
-                self.assertTrue(str(output).endswith('-AniCanto-Preview.mp4'));self.assertEqual(report['deliveryKind'],'preview')
-                self.assertTrue(report['previewDelivery']['missingDialogue']>0)
-                self.assertEqual([s for s in result['streams'] if s['codec_type']=='audio'][-1]['disposition']['default'],1)
+                self.assertTrue(str(output).endswith('-AniCanto.mp4'));self.assertEqual(report['deliveryKind'],'complete')
+                self.assertTrue(report['incompleteDelivery']['missingDialogue']>0)
+                self.assertTrue(report['qualityDefects'])
+                audio_streams=[s for s in result['streams'] if s['codec_type']=='audio']
+                self.assertEqual(audio_streams[0]['disposition']['default'],1)
+                self.assertEqual(audio_streams[-1]['disposition']['default'],0)
             else:self.assertIn(fast_mode.warning(cfg),(job/'result-summary.txt').read_text())
-            self.assertTrue(any(args[0][0]=='完成' and args[1].get('partial') is (mode=='fast' or preview) for args in emit.call_args_list))
+            self.assertTrue(any(args[0][0]=='完成' and args[1].get('partial') is False for args in emit.call_args_list))
 
     def test_structural_errors_still_fail(self):
         with tempfile.TemporaryDirectory() as folder:

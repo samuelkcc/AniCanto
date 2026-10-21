@@ -362,15 +362,16 @@ def render(w, request):
             w.save_srt(output.with_suffix('.srt'),map_captions(w.parse_srt((folder/'cantonese.srt').read_text()),spans))
         report['userReviewChoices']=[dict(index=i+1,choices=c.get('editorDecisions')) for i,c in enumerate(cues) if c.get('editorDecisions')]
         if report['userReviewChoices']:report.update(qualityStatus='user-reviewed-with-explicit-choices',qualityCertified=False)
+        from dialogue_delivery import incomplete
+        quality_defects=False if __import__("fast_mode").enabled(cfg) else incomplete(report)
+        report['qualityDefects']=bool(report.get('qualityDefects') or quality_defects)
         report.update(editSpans=spans,sourceReview=str(root/'review.json'),editorVersion=draft['id'],duration=sum(s['end']-s['start'] for s in spans))
         w.atomic_json(folder/'report.json',report)
         from multitrack import export_copy
         destination=export_copy(output,dict(cfg,exportFolder=draft.get('settings',{}).get('exportFolder',source_review['config'].get('exportFolder',''))),[(folder/'report.json','.report.json'),(folder/'validation.json','.validation.json'),(folder/'nonverbal-report.json','.nonverbal-report.json'),(output.with_suffix('.srt'),'.srt')])
         report['exportedOutput']=str(destination);w.atomic_json(folder/'report.json',report)
         ai_result=report.get('aiAutoFix')
-        from dialogue_delivery import incomplete
-        partial=False if __import__("fast_mode").enabled(cfg) else incomplete(report)
-        record.update(status='partial' if partial else 'complete',output=str(destination),report=str(folder/'report.json'))
+        record.update(status='complete',output=str(destination),report=str(folder/'report.json'))
         w.atomic_json(state,record)
         from project_store import sync
         sync(cfg['storage'],root/'review.json',destination,record['status'])
@@ -381,11 +382,11 @@ def render(w, request):
             from role_reanalysis import summary_text as role_summary
             text=('人物分析：\n'+role_summary(role_result)+'\n\n' if role_result else '')+(ai_summary(ai_result) if ai_result else '')+f'\n配音音軌：{len(report.get("tracks", []))}；字幕軌：{len(report.get("subtitleTracks", []))}。\n成品：{destination}'
             (folder/'result-summary.txt').write_text(text)
-            original_emit('結果摘要',text,1,job=str(folder),partial=partial,autoRepair=True)
+            original_emit('結果摘要',text,1,job=str(folder),partial=False,autoRepair=True)
         if __import__('fast_mode').enabled(cfg):
             from fast_mode import warning
             original_emit('結果摘要',warning(cfg)+'\n成品：'+str(destination),1,job=str(folder),partial=False)
-        original_emit('版本完成',('一般模式成品已保存；局部檢查紀錄及原錄音保留。' if cfg.get('productionMode')=='normal' else '高速模式成品已保存；品質未檢查。' if cfg.get('productionMode')=='fast' else '部分音軌未完成；已保存可用成品，可以重試。' if partial else '新版已驗證並保存；舊成品保留。'),1,job=str(folder),partial=partial,autoRepair=bool(ai_result or role_result))
+        original_emit('版本完成',('一般模式成品已保存；局部檢查紀錄及原錄音保留。' if cfg.get('productionMode')=='normal' else '高速模式成品已保存；品質未檢查。' if cfg.get('productionMode')=='fast' else '新版已保存；瑕疵已記入校對報告，舊成品保留。' if quality_defects else '新版已驗證並保存；舊成品保留。'),1,job=str(folder),output=str(destination),artifactRole='published',deliveryKind='complete',partial=False,autoRepair=bool(ai_result or role_result))
     except Exception as error:
         record.update(status='failed',error=str(error));w.atomic_json(state,record);raise
     finally:w.emit=original_emit

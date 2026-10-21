@@ -44,6 +44,16 @@ class ReviewDecisionTests(unittest.TestCase):
    review_choices.select(r,review,draft,snap,0,'drama3','yue','recording',str(p),True)
    cue=dict(cantonese='完整台詞',editorDecisions=draft['segments'][0]['reviewDecisions'])
    self.assertEqual(review_choices.apply([cue],dict(editorRender=True,_editorSourceRoot=str(r)),'drama3','yue')[0]['manualReviewChoice'],'accepted-defect-recording')
+ def test_take_from_another_engine_can_replace_one_line_without_switching_tracks(self):
+  with tempfile.TemporaryDirectory() as d:
+   r=Path(d);review,draft=self.fixture(r);p=r/'tracks/gpt-sovits/alternate.wav';p.parent.mkdir(parents=True)
+   with wave.open(str(p),'wb') as f:f.setparams((1,2,16000,0,'NONE','not compressed'));f.writeframes(b'\x10\x00'*16000)
+   snap=dict(takes=[dict(index=1,engine='gpt-sovits',language='yue',audio=str(p),text='完整台詞')])
+   review_choices.select(r,review,draft,snap,0,'drama3','yue','recording',str(p),True)
+   decision=draft['segments'][0]['reviewDecisions']['yue:drama3']
+   self.assertEqual(decision['sourceEngine'],'gpt-sovits')
+   cue=dict(cantonese='完整台詞',editorDecisions=draft['segments'][0]['reviewDecisions'])
+   self.assertEqual(review_choices.apply([cue],dict(editorRender=True,_editorSourceRoot=str(r)),'drama3','yue')[0]['manualReviewChoice'],'accepted-defect-recording')
  def test_changed_words_and_split_lines_cannot_reuse_an_old_acceptance(self):
   with tempfile.TemporaryDirectory() as d:
    r=Path(d);review,draft=self.fixture(r);draft['segments'][0]['sources']=[0,1]

@@ -83,6 +83,7 @@ class Store:
     def submit(self,row):
         if row.get('request') and row['status']=='paused':return Path(row['request'])
         settings=validated(self.settings)
+        if self.mode=='basic':settings['preferFirstAudibleTake']=True
         if 'en' in settings.get('dubLanguages',[]) and 'wsyue' in settings.get('selectedEngines',[settings.get('ttsBackend')]):
             raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
         from subtitle_policy import configure
@@ -105,7 +106,9 @@ class Store:
         if event.get('deliveryKind'):
             row['deliveryKind']=event['deliveryKind']
             if event.get('output') and event.get('artifactRole') in ('published','labelled-preview'):row.pop('lastError',None)
-            if event['deliveryKind']=='complete':row.pop('previewOutput',None);row.pop('missingDialogue',None);row.pop('incompleteDialogue',None)
+            if event['deliveryKind']=='complete':
+                row.pop('previewOutput',None);row.pop('missingDialogue',None);row.pop('incompleteDialogue',None)
+                if event.get('artifactRole')=='published':row['partial']=False
         for key in ('previewOutput','missingDialogue','incompleteDialogue'):
             if key in event:row[key]=event[key]
         if event.get('stage')=='結果摘要':row['resultSummary']=event.get('message','')
@@ -157,19 +160,31 @@ def job_snapshot(row):
         # Fitted timing takes precedence over earlier model outputs.
         rows=read(folder/'timing.json',[]) or manifest.get('rows',[])
         version=read(folder/'version.json',{})
+        if not version and folder.parent.name=='tracks' and folder.parent.parent.parent.name=='versions':
+            version=read(folder.parent.parent/'version.json',{})
         engine=engine or version.get('engine');language=version.get('language',language)
         for index,take in enumerate(rows):
             audio=take.get('renderedAudio') or take.get('audio')
             if audio and not take.get('skipped') and Path(audio).is_file():
                 cue_id=version.get('segment')
                 cue_index=next((n+1 for n,c in enumerate(review.get('cues',[])) if c.get('editorID',f'cue-{n}')==cue_id),None)
-                result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1)))
+                result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1),versionOutput=version.get('output'),versionStatus=version.get('status')))
         for path in sorted((folder/'recording-history').glob('*/take.json')):
             history=read(path,{})
             if history:
                 history['path']=str(path.parent/history.get('audio','audio.wav'));result['history'].append(history)
     from review_report import project
     result.update(project(root,review,row))
+    result['currentOutput']=row.get('output')
+    # One source pair serves every dialogue row, including lines without a
+    # quality warning. Only advertise audio that is actually present.
+    from review_diagnostics import managed_separated
+    config=review.get('config',{})
+    original=root/'japanese-original.wav'
+    separated=managed_separated(config,root) if config.get('dialoguePath') else None
+    result['reviewSources']={}
+    if original.is_file():result['reviewSources']['original']=str(original)
+    if separated:result['reviewSources']['separated']=separated
     return result
 
 def review_fingerprint(review):

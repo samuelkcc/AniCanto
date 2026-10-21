@@ -426,8 +426,8 @@ def render(w, request):
         if (row['language'],row['engine']) in delivered:failures.pop(row['id'],None)
     w.atomic_json(job/'track-recovery.json',dict(unresolved=failures,recovered={k:v for k,v in original_failures.items() if k not in failures}))
     from preview_delivery import needed as needs_preview,details as preview_details
-    incomplete_preview=needs_preview(cfg,delivery_coverage,failures,successes)
-    if cfg.get('requireCompleteDubbing') and delivery_coverage['status']=='missing-dialogue' and not incomplete_preview:
+    incomplete_delivery=needs_preview(cfg,delivery_coverage,failures,successes)
+    if cfg.get('requireCompleteDubbing') and delivery_coverage['status']=='missing-dialogue' and not incomplete_delivery:
         from dialogue_delivery import summary as delivery_summary
         message='自動修復及角色卡後備配音後仍有缺聲；未交付不完整成品。\n'+delivery_summary(delivery_coverage)
         (job/'result-summary.txt').write_text(message)
@@ -440,8 +440,8 @@ def render(w, request):
         saved=json.loads((row['folder']/'review.json').read_text()) if (row['folder']/'review.json').is_file() else review
         count=dubbing.generated_dialogue(saved.get('config',cfg),row['folder'],saved.get('cues',submitted),row['report'])
         if count is not None:spoken_counts.append(count)
-    original_only_preview=bool(incomplete_preview and spoken_counts and not any(spoken_counts) and cfg.get('includeOriginal',True) and any(s.get('codec_type')=='audio' for s in review['meta'].get('streams',[])))
-    if spoken_counts and not any(spoken_counts) and not original_only_preview:
+    original_only_fallback=bool(incomplete_delivery and spoken_counts and not any(spoken_counts) and cfg.get('includeOriginal',True) and any(s.get('codec_type')=='audio' for s in review['meta'].get('streams',[])))
+    if spoken_counts and not any(spoken_counts) and not original_only_fallback:
         message='全部所選音軌成功配音 0 段；未輸出只有背景／空白配音的成品。角色參考或生成失敗紀錄已保留。'
         (job/'result-summary.txt').write_text(message)
         w.emit('結果摘要',message,1,partial=True,autoRepair=bool(ai_result))
@@ -510,9 +510,9 @@ def render(w, request):
     for track in tracks: cmd += ['-i', track['path']]
     cmd += ['-map','0:v:0']
     for i,row in enumerate(successes):
-        cmd += ['-map', f'{inputs.index(row)}:a:0', f'-metadata:s:a:{i}', 'language='+dub_languages.LANGUAGES[row['language']][2], f'-metadata:s:a:{i}', f'title={dub_languages.LANGUAGES[row["language"]][0]} · {ENGINES[row["engine"]]}', f'-disposition:a:{i}', 'default' if i == 0 and not original_only_preview else '0']
+        cmd += ['-map', f'{inputs.index(row)}:a:0', f'-metadata:s:a:{i}', 'language='+dub_languages.LANGUAGES[row['language']][2], f'-metadata:s:a:{i}', f'title={dub_languages.LANGUAGES[row["language"]][0]} · {ENGINES[row["engine"]]}', f'-disposition:a:{i}', 'default' if i == 0 and not original_only_fallback else '0']
     if cfg.get('includeOriginal', True):
-        cmd += ['-map','0:a:1?', f'-disposition:a:{len(successes)}','default' if original_only_preview else '0', f'-metadata:s:a:{len(successes)}','title='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original', f'-metadata:s:a:{len(successes)}','language='+__import__('source_language').iso_code(cfg.get('sourceLanguage','ja'))]
+        cmd += ['-map','0:a:1?', f'-disposition:a:{len(successes)}','default' if original_only_fallback else '0', f'-metadata:s:a:{len(successes)}','title='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original', f'-metadata:s:a:{len(successes)}','language='+__import__('source_language').iso_code(cfg.get('sourceLanguage','ja'))]
     # Soft captions remain independently selectable, disabled by default if baked.
     for i,track in enumerate(tracks):
         lang,title=labels(track)
@@ -524,7 +524,7 @@ def render(w, request):
         cmd += ['-c:v','libx264','-preset','veryfast','-crf','20','-pix_fmt','yuv420p','-metadata','comment=CantoSync:burned-captions']
     else: cmd += ['-c:v','copy']
     cmd += ['-c:a','copy','-c:s','mov_text','-t',str(duration),'-movflags','+faststart']
-    target = job / (Path(cfg['video']).stem + ('-AniCanto-Preview.mp4' if incomplete_preview else '-AniCanto.mp4'))
+    target = job / (Path(cfg['video']).stem + '-AniCanto.mp4')
     # MP4 players display handler_name; title alone is discarded by this muxer.
     for i,row in enumerate(successes):
         cmd += [f'-metadata:s:a:{i}', f'handler_name={dub_languages.LANGUAGES[row["language"]][1]} · {ENGINES[row["engine"]]}'+(' (mixed fallback)' if row['report'].get('audioFallbacks') or row['report'].get('originalSpeechIndices') else '')]
@@ -532,7 +532,7 @@ def render(w, request):
         cmd += [f'-metadata:s:a:{len(successes)}', 'handler_name='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original']
     for i,track in enumerate(tracks):
         cmd += [f'-metadata:s:s:{i}', 'handler_name='+labels(track)[1],f'-metadata:s:s:{i}','name='+labels(track)[1]]
-    if incomplete_preview:cmd += ['-metadata','title=AniCanto — Incomplete dubbing preview','-metadata','comment=Automatic recovery exhausted; incomplete dubbing preview, not a complete or certified dub.']
+    if incomplete_delivery:cmd += ['-metadata','comment=AniCanto final export; some dialogue needs review. See the accompanying report.']
     temp = job/'multitrack.partial.mp4' 
     w.emit('合成',f'封裝 {len(successes)} 條配音音軌、{len(tracks)} 條字幕。',.96)
     from video_acceleration import encode
@@ -554,8 +554,8 @@ def render(w, request):
     report['scriptGapRecovery']=dict(recovered=len(recovered_scripts),captionTextFallbacks=sum(r.get('method')=='caption-text-fallback' for r in recovered_scripts),log=str(job/'script-gap-recovery.json'))
     rescue=read_json(job/'normal-script-rescue.json',{})
     report['normalScriptRescue']=dict(recovered=[r for r in rescue.get('rows',[]) if r.get('text')],unresolved=[r for r in rescue.get('rows',[]) if r.get('method')=='unresolved'],log=str(job/'normal-script-rescue.json'))
-    report['deliveryKind']='preview' if incomplete_preview else 'complete'
-    if incomplete_preview:report['previewDelivery']=preview_details(delivery_coverage,successes)
+    report['deliveryKind']='complete'
+    if incomplete_delivery:report['incompleteDelivery']=preview_details(delivery_coverage,successes)
     report['automaticRecovery']=[dict(engine=x['engine'],language=x['language'],path=str(x['folder']/'automatic-recovery.json')) for x in successes if (x['folder']/'automatic-recovery.json').is_file()]
     report['audioFallbacks']=audio_fallbacks
     report['encodedSpeechChecks']=encoded_checks
@@ -582,7 +582,6 @@ def render(w, request):
         w.atomic_json(job/'report.json',report)
     destination = export_copy(target, cfg, sidecars)
     report['exportedOutput'] = str(destination)
-    if incomplete_preview:report['previewOutput']=str(destination)
     w.atomic_json(job/'report.json', report)
     summary=f'音軌封裝 {len(successes)}/{len(pairs)}；日文原聲：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'\n'
     summary+='\n'.join(('部分音軌保留：' if x['report'].get('generationFailed') else '已處理（需覆核）：')+dub_languages.LANGUAGES[x['language']][0]+' · '+ENGINES[x['engine']] for x in successes)
@@ -636,7 +635,7 @@ def render(w, request):
         (job/'result-summary.txt').write_text(summary)
     if any(row.get('strongFailures') for row in encoded_checks):
         partial=True
-        summary+='\n混音後仍有明顯聽寫差異：'+str(sum(len(r.get('strongFailures',[])) for r in encoded_checks))+' 段；已保留成品及逐句證據，未標為完整。'
+        summary+='\n混音後仍有明顯聽寫差異：'+str(sum(len(r.get('strongFailures',[])) for r in encoded_checks))+' 段；正式成品已保留，逐句證據可於校對報告查看。'
         (job/'result-summary.txt').write_text(summary)
     if fast:
         normal=cfg.get('productionMode')=='normal'
@@ -648,16 +647,20 @@ def render(w, request):
         unresolved=[dict(engine=r['engine'],language=r['language'],indices=json.loads((r['folder']/'normal-checks.json').read_text()).get('unresolved',[])) for r in successes if (r['folder']/'normal-checks.json').exists()] if normal else []
         partial=bool(failures or delivery_coverage['status']=='missing-dialogue' or any(r['indices'] for r in unresolved))
         report['normalUnresolved']=unresolved;report['fastModeDefects']=partial
-        if partial:summary+='\n仍有缺聲或局部語言／完整性問題；成品已保存供試聽，未標為完整。'
+        if partial:summary+='\n仍有缺聲或局部語言／完整性問題；正式成品已保存，請於校對報告查看瑕疵。'
         (job/'result-summary.txt').write_text(summary)
         w.atomic_json(job/'report.json',report)
-    if incomplete_preview:
-        partial=True
-        summary='自動修復已完成；已保存未完整配音預覽，唔係完整成品。\n'+delivery_summary(delivery_coverage)+'\n預覽：'+str(destination)+'\n原聲音軌：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'。完整錄音、缺聲位置及 AI 修復紀錄已保留。'
-        report.update(deliveryKind='preview',previewOutput=str(destination),previewDelivery=preview_details(delivery_coverage,successes),qualityStatus='incomplete-preview')
+    if incomplete_delivery:
+        summary='自動修復已完成；正式成品已保存，仍有需要覆核嘅缺聲／原聲後備位置。\n'+delivery_summary(delivery_coverage)+'\n成品：'+str(destination)+'\n原聲音軌：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'。錄音、缺聲位置及 AI 修復紀錄已保留。'
+        report.update(deliveryKind='complete',incompleteDelivery=preview_details(delivery_coverage,successes),qualityStatus='needs-review')
         w.atomic_json(job/'report.json',report);(job/'result-summary.txt').write_text(summary)
+    report['qualityDefects']=bool(partial or incomplete_delivery)
+    w.atomic_json(job/'report.json',report)
+    # A finished, playable export is a final version. Quality findings remain
+    # in the report and never change its filename or block the next video.
+    partial=False
     finish_repair_version(w,job,repair_state,destination,partial)
-    w.emit('結果摘要',summary,1,partial=partial,autoRepair=bool(ai_result))
+    w.emit('結果摘要',summary,1,partial=False,autoRepair=bool(ai_result))
     review['cues'] = submitted
     review['status'] = 'partial' if partial else 'complete'
     w.atomic_json(review_path,review)
@@ -665,4 +668,4 @@ def render(w, request):
     sync(cfg['storage'],review_path,destination,review['status'])
     from production_progress import finish
     finish(partial=partial,exported=destination.is_file())
-    w.emit('完成', ('已保存未完整配音預覽；自動修復紀錄及缺聲位置已保留。' if incomplete_preview else (ai_summary(ai_result) if ai_result else f'已輸出 {len(successes)} 條配音音軌。' + (' 部分引擎失敗，可重試；已完成音軌會沿用。' if failures else '') + ' 聲線同時間仍請試聽核對。')),1,output=str(destination),artifactRole='labelled-preview' if incomplete_preview else 'published',deliveryKind='preview' if incomplete_preview else 'complete',**(dict(previewOutput=str(destination),missingDialogue=report['previewDelivery']['missingDialogue'],incompleteDialogue=report['previewDelivery']['incompleteDialogue']) if incomplete_preview else {}),partial=partial,autoRepair=bool(ai_result),**batch_completion(cfg,review_path,partial))
+    w.emit('完成', ('正式成品已保存；缺聲及原聲後備位置已記入校對報告。' if incomplete_delivery else (ai_summary(ai_result) if ai_result else f'已輸出 {len(successes)} 條配音音軌。' + (' 部分引擎失敗，可重試；已完成音軌會沿用。' if failures else '') + ' 聲線同時間仍請試聽核對。')),1,output=str(destination),artifactRole='published',deliveryKind='complete',partial=False,autoRepair=bool(ai_result),**batch_completion(cfg,review_path,False))

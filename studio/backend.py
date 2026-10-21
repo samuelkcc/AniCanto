@@ -286,6 +286,7 @@ class Studio:
             if p.get('mode') is not None:
                 if p['mode'] not in ('basic','expert'):raise ValueError('Unknown interface mode.')
                 self.store.mode=p['mode']
+            if self.store.mode=='basic':cfg['preferFirstAudibleTake']=True
             if p.get('language') is not None:
                 if p['language'] not in ('en','zh-HK'):raise ValueError('Unknown interface language.')
                 if p['language']!=self.store.language and not p.get('preserveProductionSettings'):

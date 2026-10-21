@@ -1,9 +1,9 @@
-"""Deliver an explicitly labelled preview when automatic repair is exhausted."""
+"""Record incomplete dialogue and recover audible source speech for a final export."""
 import json
 from pathlib import Path
 
 
-def allowed(cfg):return cfg.get('productionMode')=='normal' and not cfg.get('editorRender') and cfg.get('autoPreviewIncomplete',True)
+def allowed(cfg):return cfg.get('productionMode')=='normal' and not cfg.get('editorRender')
 
 
 def needed(cfg,coverage,failures,tracks):
@@ -11,9 +11,8 @@ def needed(cfg,coverage,failures,tracks):
     for track in tracks:
         try:unresolved |= bool(json.loads((Path(track['folder'])/'normal-checks.json').read_text()).get('unresolved'))
         except (OSError,ValueError):pass
-    # A review warning or a failed optional track does not turn a complete
-    # spoken-language export into a preview. Preserve the preview label for
-    # genuine missing dialogue.
+    # A review warning or failed optional track does not imply missing speech.
+    # Missing dialogue is recorded as a quality defect, not a preview export.
     return allowed(cfg) and coverage.get('status')=='missing-dialogue'
 
 
@@ -33,4 +32,4 @@ def details(coverage,tracks=()):
         for index in indices:
             key=(track['engine'],track['language'],index);pending.add(key)
             checks.append(dict(engine=track['engine'],language=track['language'],index=index,reason='language-or-content-check',**{k:by_index[index][k] for k in ('start','end') if index in by_index and k in by_index[index]}))
-    return dict(kind='incomplete-preview',missingDialogue=len(rows),incompleteDialogue=len(pending),missing=rows,unresolvedChecks=checks,sourceFallbacks=source_fallbacks,qualityCertified=False)
+    return dict(kind='incomplete-delivery',missingDialogue=len(rows),incompleteDialogue=len(pending),missing=rows,unresolvedChecks=checks,sourceFallbacks=source_fallbacks,qualityCertified=False)

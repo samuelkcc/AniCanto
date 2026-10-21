@@ -21,11 +21,15 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
         if streams is not None and not any(s.get('codec_type')=='audio' for s in streams):raise ValueError('The source video has no original audio track.')
     else:
         if confirm_defect is not True:raise ValueError('Confirm that you accept this recording with its reported defects.')
-        known=[p for p in snapshot.get('takes',[]) if p.get('index')==index+1 and p.get('engine')==engine and p.get('language')==language]
-        known += [p for p in snapshot.get('history',[]) if p.get('index')==index+1 and p.get('engine')==engine and p.get('language')==language]
+        # A separately installed TTS engine may have produced the best usable
+        # take. Keep the requested output track, but permit any retained take
+        # for the same dialogue and target language, with its source recorded.
+        known=[p for p in snapshot.get('takes',[]) if p.get('index')==index+1 and p.get('language')==language]
+        known += [p for p in snapshot.get('history',[]) if p.get('index')==index+1 and p.get('language')==language]
         for issue in snapshot.get('issues',[])+snapshot.get('resolvedIssues',[]):
-            if issue.get('index')!=index+1 or issue.get('engine')!=engine or issue.get('language')!=language:continue
-            known += [dict(path=a['audition']['path']) for a in issue.get('attempts',[]) if isinstance(a.get('audition'),dict) and a['audition'].get('path')]
+            if issue.get('index')!=index+1 or issue.get('language')!=language:continue
+            known += [dict(path=a['audition']['path'],engine=a.get('engine') or issue.get('engine')) for a in issue.get('attempts',[]) if isinstance(a.get('audition'),dict) and a['audition'].get('path')]
+            known += [dict(path=audition['path'],engine=issue.get('engine')) for kind,audition in issue.get('auditions',{}).items() if kind in ('generated','lastFailed') and isinstance(audition,dict) and audition.get('path')]
         match=next((p for p in known if (p.get('audio') or p.get('path'))==audio),None)
         if match is None:raise ValueError('Choose a retained recording from this line and audio track.')
         source=Path(audio).resolve()
@@ -41,7 +45,7 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
         if seconds<=0 or seconds>b-a+2.0 or a+seconds>cfg['duration']+.015:raise ValueError('The full recording is more than two seconds over its slot or exceeds the video. Adjust timing in the editor.')
         ident=uuid.uuid4().hex;folder=root/'accepted-recordings'/ident;folder.mkdir(parents=True)
         target=folder/'audio.wav';shutil.copy2(source,target);digest=hashlib.sha256(target.read_bytes()).hexdigest()
-        decision.update(audio=str(target),audioSHA256=digest,seconds=seconds,defectsAccepted=True,timingOverlapSeconds=round(max(0,seconds-(b-a)),3))
+        decision.update(audio=str(target),audioSHA256=digest,seconds=seconds,sourceEngine=match.get('engine') or engine,defectsAccepted=True,timingOverlapSeconds=round(max(0,seconds-(b-a)),3))
         (folder/'acceptance.json').write_text(json.dumps(decision,indent=2)+'\n')
     choices[key]=decision
     return draft

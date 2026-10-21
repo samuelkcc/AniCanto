@@ -18,15 +18,19 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.50**
+> **Public beta · 0.24.51**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.50-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.51-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
 ## In this beta
 
+**Every completed video is exported as a finished `-AniCanto.mp4`.** A playable result is no longer named Preview because an accent, language or completeness concern remains; those concerns stay visible in the review report. Basic mode uses the first audible take by default and replaces it only when speech is missing, so automatic repair is less likely to make an acceptable line worse. The report is available when you want to inspect it, rather than a mandatory manual step for every video.
+
+The review report now shows, for each line, the original Japanese mix, separated voice, every retained TTS recording (including failed attempts), and the voice used in the current export. Generate one new take, choose an earlier recording or keep the original voice, then apply the choices to export **another finished video** while retaining the previous version. The new dark-purple app icon combines an anime silhouette, a voice ribbon and the brush-style character 「廣」.
+
 Fixed removal of completed videos from the project list. The app now recognizes recording versions inside its own project workspace, cleans their work files, and keeps the source video and finished export. If an older work path cannot be verified safely, the video can still be removed from the list; the app warns that those work files were retained rather than deleting files at an unknown location.
 
-Fixed the completed-video footer button: “Retry AI repair” now starts repair for reported lines instead of silently finding no queued conversion. Startup errors remain visible. Saved single-line script edits are included, while explicit choices to keep original speech or a selected recording are respected. Split, merged or reordered dialogue requires a new editorial version. When there is nothing left to review, the footer shows a disabled “Done” state. Earlier exports and successful recordings remain available.
+Retry AI repair for a completed video starts from the review report and processes reported lines; startup errors remain visible. Saved single-line script edits are included, while explicit choices to keep original speech or a selected recording are respected. Split, merged or reordered dialogue requires a new editorial version. The main workspace shows “Done” when processing is complete. Earlier exports and successful recordings remain available.
 
 The model picker now lists available voice-model variants. A green dot means downloaded; a red dot shows what remains to download. It also shows estimated memory demand. If a choice exceeds the available memory budget, the app warns you and allows download-only, without switching to a configuration unlikely to load.
 
@@ -98,7 +102,7 @@ Browse the timeline, compare source text and the dubbing script, audition a line
 
 ![English review report showing dialogue, timing measurements, automatic attempts and audio comparisons](docs/images/review-en.png)
 
-The report shows the source line, translated script, recognised generated speech, timing and repair attempts. Listen to a rejected take, accept it if it sounds better, or retake one line before exporting a new video. Uncertain lines remain labelled.
+Each line shows the original Japanese mix, separated voice, retained TTS recordings and the voice used in the current export, with recognition, timing and repair evidence available on demand. Listen, retake one line or choose another recording, then export a new finished video. Uncertain lines remain labelled.
 
 ### 05 · Keep a batch in order
 
@@ -192,7 +196,7 @@ This is a developer-provided reference, not a newly repeated benchmark or a time
 
 After bounded rewrites, reference repair and gentle timing adjustments with the original voice, a target-language reference may be used as a last resort to recover translated speech. The report identifies this voice change; it is not certified character imitation. Small timing differences automatically use safe neighbouring gaps and bounded onset shifts; complete final fallback recordings receive the same measured gentle-tempo trial before rejection. Dialogue and OP/ED ranges constrain placement. Camera cuts and arbitrary twelve-second divisions do not discard usable speech.
 
-Normal mode attempts automatic checks and repair. High-speed mode skips quality review and quality-driven retakes. If a complete dub cannot be verified, a labelled incomplete preview may retain source speech for affected lines; that is not presented as a finished Cantonese dub.
+Normal mode attempts automatic checks and repair while preferring the first audible take. High-speed mode skips quality review and quality-driven retakes. A completed video is exported as a finished file; if a line needs source-voice fallback or remains uncertain, the report identifies it. Such a line should not be mistaken for a verified Cantonese dub.
 
 ## What to expect
 

@@ -10,7 +10,7 @@ class PreviewDeliveryTests(unittest.TestCase):
   self.assertTrue(preview.needed(dict(productionMode='normal'),coverage,{},[]))
   self.assertFalse(preview.needed(dict(productionMode='fast'),coverage,{},[]))
   self.assertFalse(preview.needed(dict(productionMode='normal',editorRender=True),coverage,{},[]))
-  self.assertFalse(preview.needed(dict(productionMode='normal',autoPreviewIncomplete=False),coverage,{},[]))
+  self.assertTrue(preview.needed(dict(productionMode='normal',autoPreviewIncomplete=False),coverage,{},[]))
  def test_complete_dubbing_stays_formal_despite_quality_warnings(self):
   coverage=dict(status='complete',tracks=[dict(rows=[dict(index=1,available=True)])])
   with tempfile.TemporaryDirectory() as d:
@@ -27,8 +27,10 @@ class PreviewDeliveryTests(unittest.TestCase):
    app.finish(row,0)
    self.assertEqual(row['status'],'attention');self.assertEqual(row['missingDialogue'],2)
    shown=output_delivery.presentation(root,row);self.assertEqual(shown['deliveryState'],'preview-exported')
-   row['partial']=False;app.event(row,dict(stage='完成',output=str(movie),deliveryKind='complete',artifactRole='published'))
+   app.event(row,dict(stage='完成',output=str(movie),deliveryKind='complete',artifactRole='published'))
    self.assertNotIn('previewOutput',row);self.assertNotIn('missingDialogue',row)
+   self.assertFalse(row['partial'])
+   app.finish(row,0);self.assertEqual(row['status'],'complete')
 
  def test_old_mac_missing_event_metadata_is_recovered_only_from_matching_report(self):
   with tempfile.TemporaryDirectory() as d:

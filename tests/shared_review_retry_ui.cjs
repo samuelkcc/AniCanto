@@ -74,6 +74,7 @@ const assert=require('node:assert/strict');
      result.issues=[{status:'user-choice-saved',index:1,engine:'drama3',language:'yue'}];
      result.reviewState={...result.reviewState,userChoicesApplied:false};
      result.draft=result.draft||{segments:[],settings:{}};
+     if(result.draft.segments?.[0])result.draft.segments[0].reviewDecisions={'yue:drama3':{action:'original',acceptedByUser:true}};
     }
     return result;
    }},event:{listen:async()=>()=>{}}};
@@ -82,7 +83,8 @@ const assert=require('node:assert/strict');
   await choice.locator('#welcome-language').selectOption('en');
   await choice.locator('[data-action=mode][data-value=expert]').click();
   await choice.locator('[data-action=enter]').click();
-  await choice.locator('[data-action=start]').getByText('Export a new version').click();
+  await choice.locator('[data-action=page][data-value=review]').click();
+  await choice.locator('[data-action=review-export]').click();
   await choice.waitForFunction(()=>window.retryQA.otherStarts.some(x=>x.op==='render'));
   await choice.close();
   console.log('Completed footer remains Done; optional review repair starts with visible feedback in both languages.');
