@@ -489,8 +489,8 @@ class Studio:
             if mode not in ('repair','redownload'):raise ValueError('Unknown model maintenance operation.')
             row,folder=model(self.root,ident,self.platform)
             if row.get('retired'):raise ValueError('This model has been retired. Remove it in model management and choose a supported preset.')
-            from engine_availability import require
-            require(row.get('engine'),self.root,self.platform)
+            # Repair/download is storage-only. Hardware eligibility is checked
+            # separately before selecting the model for inference.
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause conversion before repairing models.')
             program=Path(sys.executable)
             return dict(program=str(program),args=[str(self.shared/'model_maintenance.py'),'--root',str(self.root),'--id',ident,'--mode',mode,'--platform',self.platform],action='model-maintenance',modelID=ident,root=str(self.root))

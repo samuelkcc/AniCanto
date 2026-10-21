@@ -135,3 +135,4 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 /* Use the approved artwork at native UI size instead of placing it inside a second coloured tile. */
 .brand-mark:has(.app-logo){background:transparent}.app-logo{width:32px;height:32px;object-fit:contain;border-radius:8px}
 .model-memory{display:grid;gap:10px}.model-memory-pool{display:grid;gap:5px}.model-memory-pool .download-fill{margin:0}
+.model-choice-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0}.model-choice-dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}.model-choice-dot.installed{background:#25965c}.model-choice-dot.missing{background:#cf4c55}

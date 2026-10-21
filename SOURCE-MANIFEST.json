@@ -21,8 +21,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "9a98b184670a853231284d8f7dfc62a906af7fdd5a7a03a08d268bef020eb9bf",
-      "bytes": 6159
+      "sha256": "fbed5395d4891aef785a2a8426905fbe49cccddf1841b3fef126e185595a427f",
+      "bytes": 7156
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -791,8 +791,8 @@
     },
     {
       "path": "Resources/model_maintenance.py",
-      "sha256": "3ffc15a3ea0917955afee38b7108d06c8903933ac9945dbdb521a2a0d885d0a9",
-      "bytes": 10805
+      "sha256": "8378f7617c54205986c1f096ec0f3001b248dda822160ebb2e846727fdb352ae",
+      "bytes": 10866
     },
     {
       "path": "Resources/model_ownership.py",
@@ -2901,7 +2901,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "b7097285b122d08f5e36ffe48ec647c4b1e060f154326a16812267245d47b37d",
+      "sha256": "d2f5244eceec3aa4622e8e44af31db38818b3a7e049aa35a4dc17f85633e2e24",
       "bytes": 66
     },
     {
@@ -12671,8 +12671,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "ad3b7b65cc644a8e86f515e8978662cc71b307ad1186024254b05f5a21471b8a",
-      "bytes": 40650
+      "sha256": "1982eb97ae6cae3b941776269e6528d56b2a70fb8f08b4a318337774f4a645dd",
+      "bytes": 40681
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -12856,12 +12856,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "1ce86ca53b95304bf28f31bfd4d0bcf08eda76ee955af040b255cfc397e0b64f",
+      "sha256": "5f17ce696da7c915b4eab01e2db90f51c353971c10e302cf91198cb7b00e33be",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "de4a32ae6037debab53067678e832c08cf798c1ad46f084db3e3a8a5124de701",
+      "sha256": "d9fe8e3c2f7d664ce35cb6d4250610f117607e07d3b479e2055226e3bf611bb8",
       "bytes": 543
     },
     {
@@ -12891,7 +12891,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "4d93465edc75d0551aa40608ed019dd4a6956fef8836bf4e7b09d3ef6f8d74cc",
+      "sha256": "70856e9b117113feac3b88be31405a4717de347fc77ff1baad0f3214f5690d00",
       "bytes": 956
     },
     {
@@ -12901,8 +12901,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "0585e8e727c849db93cfc0d9582cf8d86f7895db1ed0856e4c3d2feef86b6d3f",
-      "bytes": 150451
+      "sha256": "43af94000b647975f66a9630c4b3167da25dbcb14930528391ea74431e845cbe",
+      "bytes": 153962
     },
     {
       "path": "studio/web/assistant-motion.js",
@@ -12926,8 +12926,8 @@
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "bd7262e6da4eb2a31dcde2b165e15dfab33a0d7ccd03052113cbe7b05f870baa",
-      "bytes": 60450
+      "sha256": "3532b2c8a83734b33fc970fed5fadefac5aa16bf1ffbab5d86d7a72893a36116",
+      "bytes": 61177
     },
     {
       "path": "studio/web/icons.js",
@@ -12986,8 +12986,8 @@
     },
     {
       "path": "studio/web/styles.css",
-      "sha256": "6cbb509be88c6153704fd8b9df2acbb497c2f65bfae9c02fc4e8d6a9b5672d17",
-      "bytes": 44958
+      "sha256": "69b872a8cf4c87f9834299f99a518b7f7fe8a93e19bac87021f6059e3be152a1",
+      "bytes": 45224
     },
     {
       "path": "studio/web/workflow-text.js",
@@ -13211,8 +13211,8 @@
     },
     {
       "path": "tests/shared_model_ui.cjs",
-      "sha256": "51c9196ed9b1b86058ebcbd14c09a090eb32fa498c3b3ccf081c726f2c50d22c",
-      "bytes": 10315
+      "sha256": "c6728a7b34db1dd9fdbdc3926f6010f339afb9bae658aad41b0560313187b06f",
+      "bytes": 11816
     },
     {
       "path": "tests/shared_output_delivery_ui.cjs",

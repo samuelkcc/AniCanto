@@ -31,6 +31,12 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
  await p.goto('http://127.0.0.1:18732');await p.waitForSelector('#welcome-language');await p.selectOption('#welcome-language',lang);await p.locator('[data-action=mode][data-value=expert]').click();await p.locator('[data-action=enter]').click();await p.waitForSelector('.studio.expert');
  await p.locator('[data-action=page][data-value=models]').click();await p.waitForSelector('[data-action=repair-model]',{state:'attached'});
  await p.locator('[data-action=change-models]').click();await p.waitForSelector('#switch-engine');await p.waitForFunction(()=>!document.querySelector('[data-action=confirm-switch]').disabled);
+ const listed=await p.locator('#switch-voice option').evaluateAll(options=>options.map(o=>({id:o.value,label:o.textContent})));
+ const voices=await p.evaluate(()=>window.qa.choices.filter(r=>r.category==='voice'));
+ assert.equal(listed.length,voices.length,'The voice dropdown must list every supported TTS variant');
+ assert(voices.some(r=>r.engine==='drama3')&&voices.some(r=>r.engine==='gpt-sovits-v2'));
+ assert(listed.every(row=>row.label.startsWith('🟢 ')||row.label.startsWith('🔴 ')),'Every variant needs a download-status dot');
+ assert(listed.some(row=>row.label.includes(lang==='en'?'Download':'下載')&&row.label.includes('GB')),'Missing variants show download size');
  assert((await p.locator('.model-memory').innerText()).includes('64.0 GB'));
  await p.evaluate(()=>{window.qa.hardware={platform:'windows',memoryGB:64,backend:'cuda',acceleratorMemoryGB:24};window.qa.memoryBudget=19.2;});
  await p.selectOption('#switch-engine','gpt-sovits-v2');await p.waitForTimeout(70);
@@ -72,6 +78,14 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
  await p.evaluate(()=>{window.qa.instantFinish=true;});await p.locator('[data-action=redownload-model]').click();await p.waitForSelector('[data-action=start-model-maintenance][data-mode=redownload]');await p.locator('[data-action=start-model-maintenance]').click();await p.waitForTimeout(100);
  assert.equal(await p.locator('.model-maintenance').count(),0,'Instant completion left a stale active task');
  const last=await p.evaluate(()=>window.qa.calls.filter(c=>c.name==='studio_start').at(-1));assert.equal(last.args.params.mode,'redownload');
+ await p.locator('[data-action=change-models]').click();await p.waitForSelector('#switch-voice');
+ await p.evaluate(()=>{window.qa.hardware={platform:'macos',memoryGB:32,backend:'metal'};window.qa.memoryBudget=24;});
+ await p.selectOption('#switch-voice',voices.find(r=>r.engine==='drama3').id);
+ await p.waitForFunction(()=>document.querySelector('.model-memory .warning'));
+ assert(await p.locator('[data-action=confirm-switch]').isDisabled(),'Insufficient memory must prevent switching');
+ assert(await p.locator('[data-action=download-selected-voice]').isEnabled(),'Insufficient memory must still permit download-only');
+ await p.locator('[data-action=download-selected-voice]').click();
+ assert.equal((await p.evaluate(()=>window.qa.calls.filter(c=>c.name==='studio_start').at(-1))).args.op,'maintain-model');
  assert.equal(errors.length,0,errors.join('\n'));results.push({language:lang,stableDrawer:true,stableNativeSelect:true,stalePlansIgnored:true,cancelStaysClosed:true,retryWorks:true,repairProgress:true,redownloadConfirmation:true,instantCompletionHandled:true});await p.close();
  }
  await browser.close();fs.writeFileSync('.build/model-ui-acceptance.json',JSON.stringify({nativeGPUInference:false,results},null,2));console.log(JSON.stringify(results));

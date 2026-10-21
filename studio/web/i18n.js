@@ -494,6 +494,8 @@ Object.assign(zh,{"Automatic processing is running": "自動處理進行中", "R
 export const translate=(text,lang)=>lang==='zh-HK'?(zh[text]??text):(phases[text]??text);
 
 Object.assign(zh,{"Initial voice attempt":"原本聲線首次生成","Try another installed voice model":"試用另一個已下載嘅配音模型","Download another voice model":"下載另一個配音模型","Download without switching":"只下載，不切換","Automatically try another installed voice model for failed lines":"失敗對白自動試用另一個已下載配音模型","Only verified target-language recordings replace the original take.":"只會用通過目標語言核對嘅錄音代替原本錄音。"});
+Object.assign(zh,{"Download only":"只下載","Download":"下載","estimated memory":"預計記憶體","This model may not load on this computer. You can still download it without switching.":"呢個模型可能超出本機記憶體，載入時或會失敗；仍可只下載，唔會切換目前模型。"});
+Object.assign(zh,{"CosyVoice 3 needs an NVIDIA GPU on Windows. Download only is still available.":"Windows 使用 CosyVoice 3 需要 NVIDIA GPU；仍可只下載，唔會切換目前模型。","The selected model may exceed this computer’s memory or is unavailable for use here. Download only is still available.":"所選模型可能超出本機記憶體，或者喺呢部電腦未能使用；仍可只下載。"});
 Object.assign(zh,{"Target language restored; character voice differs":"已補回目標語言；角色聲線不同","Using a fallback voice":"使用後備聲線","Name pronunciation needs checking":"人名讀音需要核對","Pronunciation not confirmed":"讀音未確認"});
 
 Object.assign(zh,{"Retry AI repair":"再次 AI 修復","Repair reported lines only. Keep successful recordings and earlier exports.":"只修復有問題嘅對白，保留成功錄音同舊成品。","Save or export your edits before retrying automatic review.":"請先保存或匯出編輯，再重新進行自動修復。"});

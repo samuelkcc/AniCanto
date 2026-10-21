@@ -62,8 +62,8 @@ def maintain(root,ident,mode='repair',platform=None):
     from model_download import download
     if mode not in ('repair','redownload'):raise ValueError('Unknown model maintenance operation.')
     root=Path(root).resolve();row,base=model(root,ident,platform)
-    from engine_availability import require
-    require(row.get('engine'),root,platform)
+    # A verified download may be prepared on a computer that cannot run it.
+    # Setup still enforces hardware and runtime compatibility before use.
     if row.get('retired'):raise ValueError('This model is retired and cannot be downloaded.')
     key=hashlib.sha256(ident.encode()).hexdigest()[:24]
     record=root/'studio/model-maintenance'/(key+'.json')

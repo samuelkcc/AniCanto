@@ -18,13 +18,15 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [睇吓介面](#睇吓工作室) · [影片與字幕來源](#由日文對白到廣東話及英文) · [模型及硬件](#模型及硬件建議) · [處理流程](#由影片到配音) · [使用限制](#使用前要知道嘅限制) · [☕ 支持計劃](#支持更多人認識廣東話)
 
-> **公開 Beta · 0.24.46**
+> **公開 Beta · 0.24.47**
 >
-> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.46-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
+> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.47-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
 
 ## 今個 Beta 版本
 
-圖示改用較淺嘅淡紫色；macOS、Windows 程式同中英文介面圖集都已同步更新。
+更改模型清單而家會列出可用嘅語音模型版本。綠點表示已下載，紅點表示尚需下載，並顯示剩餘下載量及預計記憶體需求。超出硬件預算時會提示風險；仍可先下載模型，但唔會直接切換到未能安全載入嘅設定。
+
+Windows 嘅 Drama 3 Q2 係以 CPU 運行嘅完整模型壓縮版，約需下載 17.1 GB、預計佔用 22 GB 系統 RAM。Mac 目前使用完整 MLX 4-bit 版，預計佔用 28 GB 統一記憶體；預留 8 GB 系統空間後，**32 GB Mac 唔屬於 Drama 3 建議配置**。較細嘅舊版已因廣東話效果而停用。Apple Silicon 64 GB 或以上仍係目前最高品質建議。
 
 模型選擇而家分開顯示**系統 RAM 同獨立 GPU VRAM**，按實際執行位置計算，並預留至少 8 GB 系統記憶體。Windows 用 32 GB RAM 加 16 GB VRAM 嘅 NVIDIA 裝置，可以選用以 CPU 運行嘅完整 Drama 3，配搭喺 GPU 運行嘅 Qwen 9B；Drama 3 CPU 配音可能明顯較慢。模型會逐個執行，數字係各記憶體池最大單一模型嘅估算，實際用量仍可能隨硬件同片段變動。
 

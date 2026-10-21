@@ -32,7 +32,7 @@ async function showUseTerms(){const lang=state.language==='en'?'en':'zh-HK';awai
 // A composition is selected once; changing views or production state cannot
 // replace the cast underneath an active animation.
 const welcomeVariant=1+Math.floor(Math.random()*4);
-let pendingConfig=null,deployAfterBootstrap=false,initializing=true,modelChoices=[],pendingSwitch=null,setupReturn=null,switchRevision=0,switchSession=0,switchBusy=false,modelStartBusy=false,switchStarting=false;
+let pendingConfig=null,deployAfterBootstrap=false,pendingVoiceDownloadID=null,initializing=true,modelChoices=[],pendingSwitch=null,setupReturn=null,switchRevision=0,switchSession=0,switchBusy=false,modelStartBusy=false,switchStarting=false;
 let pendingStartupMode=null,welcomeThemeTouched=false,startupMessage='Preparing your studio…';
 const firstLanguage=initialLanguage(localStorage.getItem('anicanto-language'),navigator.languages||[navigator.language]);
 async function configure(params){if(params.language)localStorage.setItem('anicanto-language',params.language);if(!runtimeReady){pendingConfig={...pendingConfig,...params,settings:{...pendingConfig?.settings,...params.settings}};if(params.mode)state.mode=params.mode;if(params.language){state.language=params.language;if(!params.preserveProductionSettings){state.settings.dubLanguages=params.language==='en'?['yue','en']:['yue'];state.settings.subtitleModes=params.language==='en'?['yue','english','dual','original']:['yue','original'];state.settings.subtitleSelection='automatic';}}Object.assign(state.settings,params.settings||{});return state;}return rpc('configure',params)}
@@ -567,9 +567,22 @@ async function changeModels(engine){
  const session=++switchSession;++switchRevision;switchBusy=true;
  pendingSwitch={engine:engine||state.settings.ttsBackend,models:{...state.settings.deploymentModels},removeOld:state.mode!=='expert'};
  if(engine&&engine!==state.settings.ttsBackend)delete pendingSwitch.models.voice;
- await showDrawer('Change models',`<div id="model-switch" class="stack"><p class="quality-expectation">${esc(t('Drama 3 sounds closer to Hong Kong Cantonese in our listening tests. Other models may retain a Japanese accent.'))}</p><p>${esc(t('The current model stays available until the new download is verified.'))}</p><div id="switch-controls"></div><div id="switch-plan" role="status">${esc(t('Checking model choices…'))}</div><div class="row">${button('close-drawer','Cancel',null)}${button('confirm-switch','Checking model choices…','download','primary','disabled')}</div></div>`);
+ await showDrawer('Change models',`<div id="model-switch" class="stack"><p class="quality-expectation">${esc(t('Drama 3 sounds closer to Hong Kong Cantonese in our listening tests. Other models may retain a Japanese accent.'))}</p><p>${esc(t('The current model stays available until the new download is verified.'))}</p><div id="switch-controls"></div><div id="switch-plan" role="status">${esc(t('Checking model choices…'))}</div><div class="row wrap">${button('close-drawer','Cancel',null)}${button('download-selected-voice','Download only','download','','disabled')}${button('confirm-switch','Checking model choices…','download','primary','disabled')}</div></div>`);
  try{modelChoices=await rpc('model-choices');if(session!==switchSession||!$('#model-switch'))return;await reviewSwitch();}
  catch(error){if(session!==switchSession||!$('#switch-plan'))return;$('#switch-plan').textContent=String(error.message||error);throw error;}
+}
+function voiceChoiceState(model){
+ const row=inventory.find(item=>item.id===model.id),installed=!!row?.installed;
+ return {installed,remaining:installed?0:Math.max(0,Number(model.bytes||0)-Number(row?.savedBytes||0))};
+}
+function voiceChoiceLabel(model){
+ const status=voiceChoiceState(model);
+ return `${status.installed?'🟢':'🔴'} ${model.title} · ${status.installed?t('Downloaded'):t('Download')+' '+bytes(status.remaining)} · ${Number(model.estimatedMemoryGB||0).toFixed(1)} GB ${t('estimated memory')}${engineBlocked(model.engine)?' · '+t('Cantonese only'):''}`;
+}
+function modelPlanWarning(message){
+ if(String(message).includes('cosyvoice3-requires-windows-nvidia'))return t('CosyVoice 3 needs an NVIDIA GPU on Windows. Download only is still available.');
+ if(String(message).includes('incompatible-requested-model'))return t('The selected model may exceed this computer’s memory or is unavailable for use here. Download only is still available.');
+ return t(message);
 }
 function modelMemorySummary(proposal,selection,categories){
  const h=proposal.hardware||plan?.hardware||{},ram=Number(h.memoryGB||0),vram=Number(h.acceleratorMemoryGB||0);
@@ -577,12 +590,12 @@ function modelMemorySummary(proposal,selection,categories){
  const inactiveDiscrete=h.platform==='windows'&&!dedicated?(h.displayAdapters||[]).filter(a=>[0x10de,0x1002].includes(Number(a.vendorId))&&Number(a.dedicatedMemoryGB||0)>1).sort((a,b)=>Number(b.dedicatedMemoryGB)-Number(a.dedicatedMemoryGB))[0]:null;
  const reserve=Number(proposal.systemReserveGB??plan?.systemReserveGB??Math.max(8,ram*.15)),systemBudget=Number(proposal.systemMemoryBudgetGB??Math.max(0,ram-reserve)),gpuBudget=Number(proposal.acceleratorMemoryBudgetGB??Math.min(systemBudget,vram*.8));
  const selected=categories.map(([role,,category])=>{const id=selection.models[role]||proposal.roles?.[role];const model=modelChoices.find(m=>m.id===id&&m.category===category)||(proposal.downloads||[]).find(m=>m.id===id);return model?{...model,category}:null}).filter(Boolean);
- const cpuVoice=proposal.voiceBackend==='cpu'||selection.models.voice==='drama3-native-q2';
+ const cpuVoice=selection.models.voice==='drama3-native-q2'||proposal.voiceBackend==='cpu'&&(!selection.models.voice||proposal.roles?.voice===selection.models.voice);
  const systemPeak=Math.max(0,...selected.filter(m=>!dedicated||m.category==='voice'&&cpuVoice).map(m=>Number(m.estimatedMemoryGB||0)));
  const gpuPeak=dedicated?Math.max(0,...selected.filter(m=>!(m.category==='voice'&&cpuVoice)).map(m=>Number(m.estimatedMemoryGB||0))):0;
  const fit=ram>0&&systemPeak<=systemBudget&&(!dedicated||vram>0&&gpuPeak<=gpuBudget);
  const meter=(label,peak,capacity,budget)=>`<div class="model-memory-pool"><strong>${esc(t(label))}: ${peak.toFixed(1)} / ${capacity?capacity.toFixed(1):'—'} GB</strong><div class="download-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${capacity?Math.min(100,Math.round(100*peak/capacity)):0}" aria-label="${esc(t(label))}"><i style="width:${capacity?Math.min(100,100*peak/capacity):0}%"></i></div><small>${esc(t('Available model budget'))}: ${budget.toFixed(1)} GB</small></div>`;
- return {fit,html:`<section class="model-memory" role="status">${meter(h.platform==='macos'?'Unified memory':'System RAM',systemPeak,ram,systemBudget)}${dedicated?meter('Dedicated GPU VRAM',gpuPeak,vram,gpuBudget):''}<small>${esc(t('System reserve'))}: ${reserve.toFixed(1)} GB</small>${inactiveDiscrete?`<small>${esc(t('Dedicated GPU VRAM'))}: ${Number(inactiveDiscrete.dedicatedMemoryGB).toFixed(1)} GB · ${esc(t('GPU inference unavailable; model memory is checked against system RAM.'))}</small>`:''}<small>${esc(t('Models run in sequence; the figure is the largest selected model, not the sum.'))}</small>${!fit?`<p class="warning">${esc(t('This model combination exceeds the available memory. Choose a smaller model.'))}</p>`:''}</section>`};
+ return {fit,html:`<section class="model-memory" role="status">${meter(h.platform==='macos'?'Unified memory':'System RAM',systemPeak,ram,systemBudget)}${dedicated?meter('Dedicated GPU VRAM',gpuPeak,vram,gpuBudget):''}<small>${esc(t('System reserve'))}: ${reserve.toFixed(1)} GB</small>${inactiveDiscrete?`<small>${esc(t('Dedicated GPU VRAM'))}: ${Number(inactiveDiscrete.dedicatedMemoryGB).toFixed(1)} GB · ${esc(t('GPU inference unavailable; model memory is checked against system RAM.'))}</small>`:''}<small>${esc(t('Models run in sequence; the figure is the largest selected model, not the sum.'))}</small>${!fit?`<p class="warning">${esc(t('This model may not load on this computer. You can still download it without switching.'))}</p>`:''}</section>`};
 }
 async function reviewSwitch(){
  const revision=++switchRevision,selection=structuredClone(pendingSwitch);switchBusy=true;
@@ -591,23 +604,28 @@ async function reviewSwitch(){
  try{
  let proposal,planningError='';
  try{proposal=await rpc('plan',{engine:selection.engine,models:selection.models});}
- catch(error){planningError=String(error.message||error);if(!planningError.includes('incompatible-requested-model'))throw error;proposal={...(plan||{}),engine:selection.engine,roles:{...(plan?.roles||{}),...selection.models},canDeployModels:false,blockers:[planningError],downloads:[],modelDownloadBytes:0};}
+ catch(error){planningError=String(error.message||error);proposal={...(plan||{}),engine:selection.engine,roles:{...(plan?.roles||{}),...selection.models},canDeployModels:false,blockers:[planningError],downloads:[],modelDownloadBytes:0};}
  if(revision!==switchRevision||!$('#model-switch'))return;
  const roles=proposal.roles||{};
  const categories=[['text','Text translation','text'],['voice','Voice generation','voice'],['asr','Source dialogue recognition','asr'],['speech','Dubbing verification','speech']];
  if(!$('#switch-engine'))$('#switch-controls').innerHTML=field('Voice engine',select('switch-engine',engineMenu(),pendingSwitch.engine,'id="switch-engine"'))+categories.map(([role,label])=>field(label,`<select data-setting="switch-role" data-role="${role}" id="switch-${role}"></select>`)).join('')+(state.mode==='expert'?`<small>${esc(t('Expert mode keeps extra downloads. Remove unused versions in Model centre.'))}</small>`:`<label class="check"><input id="remove-old-model" type="checkbox" ${pendingSwitch.removeOld?'checked':''}>${esc(t('Remove replaced models after successful setup'))}</label><small>${esc(t('Models used by pending jobs or kept in Expert mode are retained.'))}</small>`);
+ const engineSelect=$('#switch-engine');
+ if(engineSelect&&!Array.from(engineSelect.options).some(option=>option.value===selection.engine))engineSelect.add(new Option(engineName(selection.engine),selection.engine));
+ if(engineSelect&&engineSelect.value!==selection.engine)engineSelect.value=selection.engine;
  for(const [role,label,category] of categories){
-  const el=$('#switch-'+role);const choices=modelChoices.filter(r=>r.category===category&&(role!=='voice'||r.engine===proposal.engine));
-  const signature=choices.map(r=>r.id).join('|');
-  if(el.dataset.options!==signature){el.innerHTML=choices.map(r=>`<option value="${esc(r.id)}">${esc(r.title)} · ${Number(r.estimatedMemoryGB||0).toFixed(1)} GB</option>`).join('');el.dataset.options=signature;}
-  const value=roles[role]||selection.models[role]||choices[0]?.id||'';if(el.value!==value)el.value=value;
+  const el=$('#switch-'+role);const choices=modelChoices.filter(r=>r.category===category);
+  const signature=choices.map(r=>r.id+(role==='voice'?':'+voiceChoiceState(r).remaining+':'+voiceChoiceState(r).installed:'')).join('|');
+  if(el.dataset.options!==signature){el.innerHTML=choices.map(r=>`<option value="${esc(r.id)}">${esc(role==='voice'?voiceChoiceLabel(r):r.title+' · '+Number(r.estimatedMemoryGB||0).toFixed(1)+' GB')}</option>`).join('');el.dataset.options=signature;}
+  const value=selection.models[role]||(!planningError&&roles[role])||(role==='voice'?choices.find(r=>r.engine===selection.engine)?.id:null)||roles[role]||choices[0]?.id||'';if(el.value!==value)el.value=value;
  }
  if(!planningError&&proposal.canDeployModels!==false){
   for(const [role] of categories){const value=$('#switch-'+role)?.value;if(value)pendingSwitch.models[role]=value;}
  }
  const memory=modelMemorySummary(proposal,selection,categories);
- $('#switch-plan').innerHTML=`${memory.html}<h3>${esc(t('Required download'))} · ${bytes(proposal.modelDownloadBytes)}</h3>${(proposal.downloads||[]).filter(r=>!r.installed).map(r=>`<div class="package-row"><span>${esc(r.title)}</span><small>${bytes(r.bytes)}</small></div>`).join('')}${(proposal.blockers||[]).map(x=>`<p class="warning">${esc(t(x))}</p>`).join('')}`;
- const button=$('[data-action=confirm-switch]');button.disabled=proposal.canDeployModels===false||!memory.fit||!!planningError||!termsReady();button.querySelector('span').textContent=t(proposal.modelDownloadBytes?'Download & switch':'Use selected models');switchBusy=false;
+ const voice=modelChoices.find(r=>r.id===$('#switch-voice')?.value&&r.category==='voice'),voiceStatus=voice&&voiceChoiceState(voice);
+ $('#switch-plan').innerHTML=`${voice?`<p class="model-choice-status"><span class="model-choice-dot ${voiceStatus.installed?'installed':'missing'}"></span><strong>${esc(voice.title)}</strong> · ${esc(t(voiceStatus.installed?'Downloaded':'Download'))}${voiceStatus.installed?'':' '+bytes(voiceStatus.remaining)}</p>`:''}${memory.html}${voice&&engineBlocked(voice.engine)?`<p class="warning">${esc(t('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.'))}</p>`:''}<h3>${esc(t('Required download'))} · ${bytes(proposal.modelDownloadBytes)}</h3>${(proposal.downloads||[]).filter(r=>!r.installed).map(r=>`<div class="package-row"><span>${esc(r.title)}</span><small>${bytes(r.bytes)}</small></div>`).join('')}${(proposal.blockers||[]).map(x=>`<p class="warning">${esc(modelPlanWarning(x))}</p>`).join('')}${planningError&&!planningError.includes('incompatible-requested-model')?button('retry-model-plan','Retry','refresh'):''}`;
+ const button=$('[data-action=confirm-switch]');button.disabled=proposal.canDeployModels===false||!memory.fit||!!planningError||!!(voice&&engineBlocked(voice.engine))||!termsReady();button.querySelector('span').textContent=t(proposal.modelDownloadBytes?'Download & switch':'Use selected models');switchBusy=false;
+ const download=$('[data-action=download-selected-voice]');download.disabled=!voice||voiceStatus.installed||!!active||!termsReady();download.dataset.value=voice?.id||'';
  }catch(error){if(revision!==switchRevision||!$('#switch-plan'))return;$('#switch-plan').innerHTML=`<p class="warning">${esc(String(error.message||error))}</p>${button('retry-model-plan','Retry','refresh')}`;throw error;}
 }
 function maintenanceHTML(){return installationActive()?`<div class="card model-maintenance" role="status">${installationProgress()}${installationDetails()}</div>`:'';}
@@ -704,6 +722,13 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='remove-project'){await removeProject(v,b);return;}
  if(a==='change-models'){await changeModels();return;}if(a==='retry-model-plan'){await reviewSwitch();return;}
  if(a==='download-extra-voice'){const id=$('#extra-voice-model')?.value;if(id)await startModelMaintenance(id,'repair');return;}
+ if(a==='download-selected-voice'){
+  if(active||!termsReady())return;
+  const id=b.dataset.value,choice=modelChoices.find(m=>m.id===id&&m.category==='voice');
+  if(!choice||voiceChoiceState(choice).installed)return;
+  if(!runtimeReady){pendingVoiceDownloadID=id;beginInstallation();let r;try{r=await invoke('studio_bootstrap');}catch(error){pendingVoiceDownloadID=null;throw error}if(!finishedRunIDs.has(r.id)){active={id:r.id,setup:true,seconds:0};setupEvent={message:t('Prepare runtime')};}await closeDrawer();render();return;}
+  await startModelMaintenance(id,'repair');return;
+ }
  if(a==='repair-model'||a==='redownload-model'){await maintainModel(v,a==='repair-model'?'repair':'redownload');return}
  if(a==='start-model-maintenance'){await startModelMaintenance(v,b.dataset.mode);return}
  if(a==='confirm-switch'){if(switchBusy||!pendingSwitch||active||!termsReady())return;switchBusy=true;switchStarting=true;b.disabled=true;const label=b.querySelector('span'),before=label.textContent;label.textContent=t('Starting download…');setupReturn={screen,page};pendingSwitch.removeOld=$('#remove-old-model')?.checked||false;const params=structuredClone(pendingSwitch);let r;try{beginInstallation();if(!runtimeReady){setupSelection=params;deployAfterBootstrap=true;r=await invoke('studio_bootstrap');}else{r=await invoke('studio_start',{op:'setup',params});}}catch(error){deployAfterBootstrap=false;switchBusy=false;b.disabled=false;label.textContent=before;throw error;}finally{switchStarting=false;}if(!finishedRunIDs.has(r.id)){active={id:r.id,setup:true,seconds:0};setupEvent={message:t(runtimeReady?'Downloading & preparing…':'Prepare runtime')};if(!(screen==='studio'&&page==='models'))screen='welcome';}await closeDrawer();render();return;}
@@ -808,7 +833,7 @@ document.addEventListener('change',e=>safely(async()=>{const el=e.target;
  if(el.dataset.setting){const k=el.dataset.setting;if(k==='captionLanguage'){captionLanguage=el.value;updatePlayer();return}if(k==='retakeEngine'){retakeEngine=el.value;return}let value=el.type==='checkbox'?el.checked:el.type==='number'||el.type==='range'?Number(el.value):el.value;
  if(k==='roleAnalysisMode'||k==='visualRoleAnalysisEnabled'){const patch={[k]:value};if(k==='roleAnalysisMode')patch.visualRoleAnalysisEnabled=false;if(value===true||value==='audio')patch.productionMode='standard';await setSettings(patch);return;}
  if(k==='translationSource'){await setSettings({translationSource:value,...(value==='audio-and-subtitles'?{batchAutoSubtitles:true,subtitleSource:'embedded',subtitle:null,ocr:false,ocrRect:null}:{})});return;}
- if(k==='ttsBackend'){await chooseVoiceEngine(value);return;}if(k==='switch-role'){if(!pendingSwitch)return;pendingSwitch.models[el.dataset.role]=value;await reviewSwitch();return;}if(k==='switch-engine'){if(!pendingSwitch)return;pendingSwitch.engine=value;delete pendingSwitch.models.voice;await reviewSwitch();return;}if(k==='dubLanguages'){value=value==='both'?['yue','en']:[value];if(value.includes('en')&&state.settings.ttsBackend==='wsyue'){toast(t('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.'),true);el.value='yue';return;}if(value.includes('en')){await setSettings({dubLanguages:value,selectedEngines:(state.settings.selectedEngines||[state.settings.ttsBackend]).filter(id=>id!=='wsyue')});return;}}if(k==='translateOPED')value=value==='translate';if(k==='limit')value=Number(value);await setSettings({[k]:value});return}
+ if(k==='ttsBackend'){await chooseVoiceEngine(value);return;}if(k==='switch-role'){if(!pendingSwitch)return;pendingSwitch.models[el.dataset.role]=value;if(el.dataset.role==='voice'){const model=modelChoices.find(r=>r.id===value&&r.category==='voice');if(model)pendingSwitch.engine=model.engine;}await reviewSwitch();return;}if(k==='switch-engine'){if(!pendingSwitch)return;pendingSwitch.engine=value;delete pendingSwitch.models.voice;await reviewSwitch();return;}if(k==='dubLanguages'){value=value==='both'?['yue','en']:[value];if(value.includes('en')&&state.settings.ttsBackend==='wsyue'){toast(t('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.'),true);el.value='yue';return;}if(value.includes('en')){await setSettings({dubLanguages:value,selectedEngines:(state.settings.selectedEngines||[state.settings.ttsBackend]).filter(id=>id!=='wsyue')});return;}}if(k==='translateOPED')value=value==='translate';if(k==='limit')value=Number(value);await setSettings({[k]:value});return}
  if(el.dataset.engineTrack){if(engineBlocked(el.dataset.engineTrack)){el.checked=false;toast(t('Cantonese only'),true);return;}const engines=new Set(state.settings.selectedEngines||[state.settings.ttsBackend]);el.checked?engines.add(el.dataset.engineTrack):engines.delete(el.dataset.engineTrack);engines.add(state.settings.ttsBackend);await setSettings({selectedEngines:ENGINES.map(([k])=>k).filter(k=>engines.has(k))});return}
  if(el.dataset.subtitle){const modes=new Set(state.settings.subtitleModes);el.checked?modes.add(el.dataset.subtitle):modes.delete(el.dataset.subtitle);await setSettings({subtitleModes:[...modes],subtitleSelection:'custom'});return}
  if(el.dataset.cueField&&current()){checkpoint();const k=el.dataset.cueField;current()[k]=el.type==='checkbox'?el.checked:el.type==='number'?Number(el.value):el.value;current().audioTake=null;delete current().reviewDecisions;renderTimeline();updatePlayer();return}
@@ -850,6 +875,8 @@ async function onFinished({payload}){
   if(closing){await native.window.getCurrentWindow().close();return}
   render();
   if(deployAfterBootstrap&&!payload.code&&!payload.paused){deployAfterBootstrap=false;const r=await invoke('studio_start',{op:'setup',params:setupSelection||setupParameters(plan)});active={id:r.id,setup:true,seconds:0};updateSetup();return}
+  if(pendingVoiceDownloadID&&!payload.code&&!payload.paused){const id=pendingVoiceDownloadID;pendingVoiceDownloadID=null;await startModelMaintenance(id,'repair');return}
+  if(payload.code||payload.paused)pendingVoiceDownloadID=null;
   if(payload.code||payload.paused)deployAfterBootstrap=false;
   if(payload.finalizationError){conversionQueue.stop();await rememberQueue(false);toast(t('The task ended, but its queue status could not be saved. Reopen the app to recover saved work. See Terminal for details.'),true);return;}
   if(payload.paused){conversionQueue.stop();await rememberQueue(false)}
