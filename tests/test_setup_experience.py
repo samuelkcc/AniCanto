@@ -6,10 +6,12 @@ sys.path[:0]=[str(ROOT/'windows'),str(ROOT/'Resources')]
 import setup_inventory,native_setup,native_models,studio_core
 
 class SetupExperienceTests(unittest.TestCase):
- def test_laptop_16gb_vram_uses_gpt_instead_of_retired_small(self):
+ def test_laptop_16gb_vram_uses_full_drama_in_system_ram(self):
   hardware=dict(platform='windows',architecture='x86_64',memoryGB=32,acceleratorMemoryGB=16,backend='cuda',nativeWorkflowVersion=1,nativeDramaSmallCPU=True)
   plan=studio_core.call('deployment',hardware=hardware,models=native_setup.catalog(),engine='drama3')
-  self.assertEqual(plan['engine'],'gpt-sovits-v2');self.assertEqual(plan['voice']['id'],'v2ProPlus')
+  self.assertEqual(plan['engine'],'drama3');self.assertEqual(plan['voice']['id'],'drama3-native-q2')
+  self.assertEqual(plan['voiceBackend'],'cpu')
+  self.assertTrue(next(p for p in plan['qualityPresets'] if p['id']=='quality')['available'])
   self.assertNotIn('native-drama-small-cpu-fallback',plan['warnings'])
  def test_inadequate_memory_does_not_force_small_model(self):
   hardware=dict(platform='windows',architecture='x86_64',memoryGB=8,acceleratorMemoryGB=16,backend='cuda',nativeWorkflowVersion=1,nativeDramaSmallCPU=True)
@@ -18,7 +20,7 @@ class SetupExperienceTests(unittest.TestCase):
  def test_old_small_cuda_plugin_never_proves_full_drama_support(self):
   hardware=dict(platform='windows',architecture='x86_64',memoryGB=32,acceleratorMemoryGB=16,backend='cuda',nativeWorkflowVersion=1,nativeDramaSmallCPU=True,nativeDramaSmallCUDA=True)
   plan=studio_core.call('deployment',hardware=hardware,models=native_setup.catalog(),engine='drama3')
-  self.assertEqual(plan['engine'],'gpt-sovits-v2');self.assertEqual(plan['voice']['id'],'v2ProPlus');self.assertEqual(plan['voiceBackend'],'cuda')
+  self.assertEqual(plan['engine'],'drama3');self.assertEqual(plan['voice']['id'],'drama3-native-q2');self.assertEqual(plan['voiceBackend'],'cpu')
   self.assertNotIn('native-drama-small-cuda-planned',plan['warnings'])
  def test_verified_cuda_model_is_not_silently_replaced_with_cpu_or_gpt(self):
   with tempfile.TemporaryDirectory() as folder:
@@ -26,6 +28,14 @@ class SetupExperienceTests(unittest.TestCase):
    cfg=dict(storage=folder,selectedEngines=['drama3'],ttsBackend='drama3',drama3Model='drama3-small-iq3')
    native_models.recover(cfg,lambda *a,**k:None)
    self.assertEqual(cfg['selectedEngines'],['drama3']);self.assertEqual(cfg['drama3Backend'],'cuda');self.assertFalse(cfg['nativeDramaCPU'])
+ def test_verified_full_cpu_drama_is_ready_without_legacy_opt_in(self):
+  with tempfile.TemporaryDirectory() as folder:
+   root=Path(folder);(root/'drama3-windows-ready.json').write_text(json.dumps(dict(variant='drama3-native-q2',backend='cpu',modelLoadPassed=True,speechInferencePassed=True)))
+   cfg=dict(storage=folder,selectedEngines=['drama3'],ttsBackend='drama3')
+   self.assertEqual(native_models.missing_setup(root,['drama3']),[])
+   native_models.recover(cfg,lambda *a,**k:None)
+   self.assertEqual(cfg['ttsBackend'],'drama3');self.assertEqual(cfg['drama3Model'],'drama3-native-q2')
+   self.assertTrue(cfg['nativeDramaCPU'])
  def test_old_small_receipt_never_overrides_a_new_request(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);(root/'drama3-windows-ready.json').write_text(json.dumps(dict(variant='drama3-small-iq3',backend='cuda',modelLoadPassed=True,speechInferencePassed=True)))

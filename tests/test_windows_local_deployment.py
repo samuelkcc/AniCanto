@@ -8,7 +8,7 @@ class WindowsLocalDeploymentTests(unittest.TestCase):
   rows=native_setup.catalog();hardware=dict(platform='windows',architecture='x86_64',nativeWorkflowVersion=1,backend='cuda',memoryGB=64,acceleratorMemoryGB=24)
   with tempfile.TemporaryDirectory() as d:
    root=Path(d)
-   for engine,variants in [('voxcpm2',['voxcpm2-2b-bf16']),('wsyue',['wsyue-cosy2-base','wsyue-cosy2-zjg'])]:
+   for engine,variants in [('voxcpm2',['voxcpm2-2b-bf16']),('wsyue',['wsyue-cosy2-zjg'])]:
     for ident in variants:
      with self.subTest(ident=ident):
       plan=studio_core.call('deployment',hardware=hardware,models=rows,engine=engine,installedModels=[],selectedModels={},requestedModels={'voice':ident},singleModelPerCategory=True)

@@ -14,7 +14,7 @@ def missing_setup(root,engines,allow_cpu_drama=False):
     for engine in engines:
         if engine=='drama3' and not allow_cpu_drama:
             native=ready('drama3')
-            if native.get('variant')=='drama3-small-iq3' and native.get('speechInferencePassed'):
+            if native.get('variant') in ('drama3-small-iq3','drama3-native-q2') and native.get('speechInferencePassed'):
                 continue
             from drama_cuda import capable
             if capable():missing.append(engine);continue
@@ -40,6 +40,9 @@ def recover(cfg,emit):
     try:drama_ready=json.loads((root/'drama3-windows-ready.json').read_text())
     except (OSError,ValueError):drama_ready={}
     small_ready=explicit_legacy_small and drama_ready.get('variant')=='drama3-small-iq3' and drama_ready.get('modelLoadPassed') and drama_ready.get('speechInferencePassed')
+    full_cpu_ready=drama_ready.get('variant')=='drama3-native-q2' and drama_ready.get('backend')=='cpu' and drama_ready.get('modelLoadPassed') and drama_ready.get('speechInferencePassed')
+    if full_cpu_ready and 'drama3' in requested:
+        cfg['drama3Model']='drama3-native-q2';cfg['drama3Backend']='cpu';cfg['nativeDramaCPU']=True;cfg['nativeDramaFormat']='gguf-cpu'
     if small_ready and 'drama3' in requested:
         cfg['drama3Model']='drama3-small-iq3';cfg['drama3Backend']=drama_ready.get('backend','cpu');cfg['nativeDramaCPU']=cfg['drama3Backend']=='cpu'
         cfg['nativeDramaFormat']='gguf-'+cfg['drama3Backend']

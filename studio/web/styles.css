@@ -132,3 +132,6 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 #installation-badge.attention{color:#a2373f;border-color:#a2373f}
 .selected-model-status p{margin:0}.selected-model-status>small{overflow-wrap:anywhere}
 .installation-badge-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Use the approved artwork at native UI size instead of placing it inside a second coloured tile. */
+.brand-mark:has(.app-logo){background:transparent}.app-logo{width:32px;height:32px;object-fit:contain;border-radius:8px}
+.model-memory{display:grid;gap:10px}.model-memory-pool{display:grid;gap:5px}.model-memory-pool .download-fill{margin:0}

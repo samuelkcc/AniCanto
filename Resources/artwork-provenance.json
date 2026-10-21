@@ -7,8 +7,8 @@
   "covers": "welcome-art/provenance.json",
   "policy": "Broad animation genre aesthetics; independent original designs, no franchise attribution or endorsement. Generated art is not a legal clearance certificate.",
   "brandIcon": {
-    "source": "app-icon.svg",
-    "method": "Original project vector design; separate from generated character illustrations",
+    "source": "app-icon-art.png",
+    "method": "Generated with built-in image_gen from user-approved original silhouette concept; resized for platform icons",
     "copyright": "2026 SCKC",
     "license": "MIT",
     "notice": "licenses/BRANDING-NOTICE.txt"

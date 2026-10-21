@@ -63,7 +63,7 @@ class Handler(SimpleHTTPRequestHandler):
                 elif name=='studio_media':result=dict(path=str(source),duration=6,streams=[])
                 elif name=='studio_rpc':
                     op=args['op']
-                    if op=='plan':result=dict(canDeployModels=True,memoryBudgetGB=48,roles=dict(text='mlx:qwen3.5-4b:4bit',voice='v2ProPlus'),engine=args.get('params',{}).get('engine','drama3'),modelDownloadBytes=3_200_000_000,blockers=[],downloads=[dict(id='qwen4b',title='Qwen 4B',purposeKey='text-translation',bytes=3_000_000_000,installed=False),dict(id='audio-classifier',title='AudioSet',purposeKey='audio-classification',bytes=200_000_000,installed=True)])
+                    if op=='plan':result=dict(canDeployModels=True,memoryBudgetGB=48,systemReserveGB=9.6,systemMemoryBudgetGB=48,hardware=dict(platform='macos',backend='metal',memoryGB=64,acceleratorBudgetGB=48),roles=dict(text='mlx:qwen3.5-4b:4bit',voice='v2ProPlus'),engine=args.get('params',{}).get('engine','drama3'),modelDownloadBytes=3_200_000_000,blockers=[],downloads=[dict(id='qwen4b',title='Qwen 4B',purposeKey='text-translation',bytes=3_000_000_000,installed=False),dict(id='audio-classifier',title='AudioSet',purposeKey='audio-classification',bytes=200_000_000,installed=True)])
                     elif op=='licenses':result=[dict(name='Fixture library',version='1.0',license='MIT',text='TEST NOTICE')]
                     else:result=app.dispatch(op,args.get('params',{}))
                 else:raise ValueError('This UI fixture does not execute native model tasks: '+name)

@@ -28,6 +28,8 @@ async function uniqueCommands(page,expert){
    assert((await cover.getAttribute('src')).match(new RegExp(`welcome-${theme}-[1-4]\\.png$`)));
    await page.screenshot({path:path.join(out,`${lang}-welcome-${theme}.png`)});
   }
+  // Keep the public interface gallery on the app's primary purple theme.
+  await page.locator('[data-action=theme][data-value=studio]').first().click();
   await page.locator('[data-action=guide]').click();assert(!(await page.locator('.drawer').innerText()).includes(lang==='en'?'使用教學':'Prepare your studio'));
   await page.locator('.drawer [data-action=close-drawer]').click();
   await page.locator('[data-action=about]').click();await page.waitForSelector('#license-list details');assert.equal(await page.locator('.drawer .welcome-art').count(),0);await page.locator('.drawer [data-action=close-drawer]').click();

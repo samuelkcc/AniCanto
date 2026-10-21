@@ -4,6 +4,8 @@
   <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話. Original assistants celebrating Hong Kong Cantonese around a studio microphone." width="1200">
 </p>
 
+<p align="center"><img src="Resources/AniCanto-icon.png" alt="AniCanto Japanese-to-Cantonese dubbing icon" width="96"></p>
+
 # AniCanto
 
 **Your anime. A Cantonese voice.**
@@ -18,13 +20,15 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.44**
+> **Public beta · 0.24.45**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.44-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.45-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
-## What changed in 0.24.44
+## What changed in 0.24.45
 
-This update keeps the **first audible take** by default, even when automatic language or pronunciation checks are uncertain. Automatic retries now focus on missing or near-silent speech, so a usable character voice is less likely to be replaced by a worse take. In the review report, you can listen to retained rejected takes, accept one for a line, or retake that line. After making your choices, export a new video version; earlier recordings and exports stay available. A manually accepted take may run up to two seconds beyond its original slot, with the overlap marked for review. CosyVoice 3 uses official weights on Apple Silicon Macs via a slower CPU path as well as on Windows NVIDIA/CUDA.
+Model choices now show **system RAM and dedicated GPU VRAM separately**, assigning each model to the pool it actually uses and reserving at least 8 GB of system memory. On a Windows PC with 32 GB RAM and an NVIDIA GPU with 16 GB VRAM, the full Drama 3 CPU model can be selected alongside Qwen 9B on the GPU; CPU dubbing may be substantially slower. Models run in sequence, so each bar estimates the largest model in its pool rather than summing every download. Actual use may vary with hardware and content.
+
+Download progress and errors remain visible, with verification, resume and retry controls. This beta also fixes a macOS CosyVoice 3 installation dependency that could stop preparation after downloading. Wait until a new model is verified before using it. The new icon appears in the desktop builds and interface.
 
 ## Local AI, offline after setup
 
@@ -106,6 +110,12 @@ Reorder waiting videos, see each project’s status and resume unfinished work.
 [View the complete interface gallery](docs/SCREENSHOTS.md)
 
 </details>
+
+### Match models to memory
+
+![Windows model selection showing separate system RAM and dedicated GPU VRAM](docs/images/model-memory-en.png)
+
+This example uses 32 GB system RAM and 16 GB GPU VRAM. The full Drama 3 CPU model uses system RAM; Qwen 9B is planned for the GPU and counted against VRAM. Setup still verifies that the models load and generate speech on the actual device.
 
 ## Japanese dialogue, Chinese subtitles, two new voices
 

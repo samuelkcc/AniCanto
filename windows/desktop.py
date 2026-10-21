@@ -170,6 +170,10 @@ class Studio(StudioRoleTools,StudioPreferences,StudioEditing,StudioPages,StudioL
         self.setup_steps=self.label('Check → Install → Download → Verify → Ready','檢查 → 安裝 → 下載 → 驗證 → 就緒',True);cl.addWidget(self.setup_steps)
         self.setup_progress=QProgressBar();self.setup_progress.setRange(0,1000);self.setup_progress.setValue(0);self.setup_progress.setTextVisible(False);cl.addWidget(self.setup_progress)
         self.setup_detail=self.label('Completed files are reused; interrupted downloads resume.','沿用已完成檔案；中斷下載可以續傳。',True);cl.addWidget(self.setup_detail)
+        self.welcome_system_memory=self.label('System RAM · checking…','系統 RAM · 正在檢查…',True);cl.addWidget(self.welcome_system_memory)
+        self.welcome_system_bar=QProgressBar();self.welcome_system_bar.setRange(0,1000);self.welcome_system_bar.setValue(0);self.welcome_system_bar.setTextVisible(False);cl.addWidget(self.welcome_system_bar)
+        self.welcome_gpu_memory=self.label('GPU VRAM · checking…','GPU VRAM · 正在檢查…',True);cl.addWidget(self.welcome_gpu_memory)
+        self.welcome_gpu_bar=QProgressBar();self.welcome_gpu_bar.setRange(0,1000);self.welcome_gpu_bar.setValue(0);self.welcome_gpu_bar.setTextVisible(False);cl.addWidget(self.welcome_gpu_bar)
         self.inventory=QPlainTextEdit();self.inventory.setReadOnly(True);self.inventory.setMaximumHeight(100);cl.addWidget(self.inventory)
         self.plan_table=QTableWidget(0,4);self.plan_table.setHorizontalHeaderLabels([self.t('Purpose','用途'),self.t('Model','模型'),self.t('Size','大小'),self.t('Action','處理')]);self.plan_table.horizontalHeader().setSectionResizeMode(1,QHeaderView.Stretch);self.plan_table.setEditTriggers(QAbstractItemView.NoEditTriggers);self.plan_table.setMaximumHeight(190);self.plan_table.hide();cl.addWidget(self.plan_table)
         actions=QHBoxLayout();self.button('Review download plan','檢視下載清單',self.show_plan,actions);self.deploy_button=self.button('Deploy / repair','一按部署／修復',self.deploy,actions,True);self.button('Pause download','暫停下載',self.pause_setup,actions);cl.addLayout(actions);self.setup_card=card;self.setup_disclosure=QToolButton();self.setup_disclosure.setToolButtonStyle(Qt.ToolButtonTextBesideIcon);self.setup_disclosure.setText(self.t('Local models & setup','本機模型與部署').replace('&','&&'));self.setup_disclosure.setCheckable(True);self.setup_disclosure.setChecked(not self.ready.get('speechInferencePassed',False));self.setup_disclosure.setArrowType(Qt.DownArrow if self.setup_disclosure.isChecked() else Qt.RightArrow);self.setup_disclosure.toggled.connect(lambda checked:(self.setup_card.setVisible(checked),self.setup_disclosure.setArrowType(Qt.DownArrow if checked else Qt.RightArrow)));right.addWidget(self.setup_disclosure);card.setVisible(self.setup_disclosure.isChecked());right.addWidget(card)
@@ -612,6 +616,19 @@ class Studio(StudioRoleTools,StudioPreferences,StudioEditing,StudioPages,StudioL
             self.setup_plan=deployment
             downloads=deployment.get('downloads',[])+deployment.get('tools',[]);needed=[r for r in downloads if not r.get('installed')]
             h=deployment.get('hardware',{});ram=h.get('memoryGB',h.get('systemMemoryGB',0));gpu=h.get('acceleratorMemoryGB',0)
+            from memory_plan import pools
+            memory=deployment.get('memoryPools') or pools(deployment)
+            system=memory['system'];accelerator=memory['gpu']
+            system_text=self.t('System RAM','系統 RAM')+f" · {system['peak']:.1f} / {system['capacity']:.1f} GB · "+self.t('8 GB+ reserved for Windows','至少預留 8 GB 畀 Windows')
+            gpu_name='NVIDIA' if memory['backend']=='cuda' else 'AMD' if memory['backend']=='rocm' else 'GPU'
+            gpu_text=(gpu_name+' VRAM'+f" · {accelerator['peak']:.1f} / {accelerator['capacity']:.1f} GB" if memory['dedicated'] else self.t('Integrated GPU / CPU · shared system RAM','內顯／CPU · 共用系統 RAM'))
+            for label,bar,value,capacity in ((self.welcome_system_memory,self.welcome_system_bar,system_text,system['capacity']), (self.welcome_gpu_memory,self.welcome_gpu_bar,gpu_text,accelerator['capacity'])):
+                label.setText(value)
+            for bar,pool in ((self.welcome_system_bar,system),(self.welcome_gpu_bar,accelerator)):
+                bar.setValue(round(1000*min(1.,pool['peak']/pool['capacity'])) if pool['capacity'] else 0)
+            if hasattr(self,'model_system_memory'):
+                self.model_system_memory.setText(system_text);self.model_system_bar.setValue(self.welcome_system_bar.value())
+                self.model_gpu_memory.setText(gpu_text);self.model_gpu_bar.setValue(self.welcome_gpu_bar.value())
             lines=[self.t('Voice: ','配音：')+dict(ENGINES).get(deployment.get('engine'),deployment.get('engine','')),
                    self.t('Components to download: ','元件待下載：')+f'{sum(r.get("bytes",0) for r in needed)/1e9:.2f} GB · '+self.t('Reuse ','沿用 ')+str(len(downloads)-len(needed))+self.t(' installed components',' 個已安裝元件'),
                    self.t('Runtimes and tools are additional. Models load one at a time.','另計執行環境及工具；模型會逐個載入。')]
@@ -660,8 +677,10 @@ class Studio(StudioRoleTools,StudioPreferences,StudioEditing,StudioPages,StudioL
             self.ready=event['ready'];engine=self.ready['engine'];requested=self.ready.get('requestedEngine',engine)
             voice_backend=self.ready.get('voiceBackend')
             if engine=='drama3' and voice_backend:
-                self.setup_status.setText(self.t('Ready · Drama3-small · ','已就緒 · Drama3-small · ')+('NVIDIA CUDA' if voice_backend=='cuda' else 'CPU'))
+                self.setup_status.setText(self.t('Ready · Drama 3 · ','已就緒 · Drama 3 · ')+('NVIDIA CUDA' if voice_backend=='cuda' else 'CPU'))
                 if self.ready.get('cudaFailure'):self.inventory.appendPlainText(self.t('CUDA test failed; using CPU. Details: ','CUDA 測試未通過，會使用 CPU。原因：')+self.ready['cudaFailure'])
+            self.cpu_drama.setChecked(bool(self.ready.get('allowDramaCPU')))
+            self.store.settings['nativeDramaCPU']=bool(self.ready.get('allowDramaCPU'))
             if requested!=engine:
                 selected=list(dict.fromkeys(engine if e==requested else e for e in self.store.settings['selectedEngines']))
                 self.store.settings.update(selectedEngines=selected,ttsBackend=selected[0],defaultAudioEngine=selected[0])

@@ -4,6 +4,8 @@
   <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話。原創助手圍住錄音咪，一齊探索香港廣東話。" width="1200">
 </p>
 
+<p align="center"><img src="Resources/AniCanto-icon.png" alt="AniCanto 日轉廣配音圖示" width="96"></p>
+
 # AniCanto
 
 **你嘅動畫，另一把聲音。**
@@ -18,13 +20,15 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [睇吓介面](#睇吓工作室) · [影片與字幕來源](#由日文對白到廣東話及英文) · [模型及硬件](#模型及硬件建議) · [處理流程](#由影片到配音) · [使用限制](#使用前要知道嘅限制) · [☕ 支持計劃](#支持更多人認識廣東話)
 
-> **公開 Beta · 0.24.44**
+> **公開 Beta · 0.24.45**
 >
-> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.44-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
+> [下載 macOS／Windows 安裝檔同對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.45-beta)。呢個係仍在改進嘅興趣作品；配音、翻譯同自動修復可能有瑕疵，重要片段請自行試聽。
 
-## 0.24.44 更新
+## 0.24.45 更新
 
-今次預設保留**第一段有聲錄音**：就算自動語言或讀音檢查未能肯定，都唔會即刻用較差嘅重錄取代。自動重試主要處理缺聲或接近靜音。校對報告可逐段試聽被拒錄音，揀一段採用，亦可只重錄其中一句；揀好之後再匯出新版影片，舊錄音同成品會保留。用家明確採用嘅錄音可比原時段長最多兩秒，重疊會標示出嚟。CosyVoice 3 官方模型除 Windows NVIDIA／CUDA 外，Apple Silicon Mac 亦可用 CPU 路徑，速度可能較慢。
+模型選擇而家分開顯示**系統 RAM 同獨立 GPU VRAM**，按實際執行位置計算，並預留至少 8 GB 系統記憶體。Windows 用 32 GB RAM 加 16 GB VRAM 嘅 NVIDIA 裝置，可以選用以 CPU 運行嘅完整 Drama 3，配搭喺 GPU 運行嘅 Qwen 9B；Drama 3 CPU 配音可能明顯較慢。模型會逐個執行，數字係各記憶體池最大單一模型嘅估算，實際用量仍可能隨硬件同片段變動。
+
+下載流程會保留進度同錯誤詳情，支援檢查、續傳及重試。今次修正咗 macOS CosyVoice 3 安裝依賴檔，避免下載後準備環境時因舊依賴失敗；仍建議新增模型後等佢顯示驗證完成先開始使用。新版圖示亦已套用到桌面程式同介面。
 
 ## 本機 AI，部署後可離線使用
 
@@ -106,6 +110,12 @@ App 以**香港繁體中文**為主要設計語言，另設英文介面。本頁
 [睇完整介面圖集](docs/zh-HK/SCREENSHOTS.md)
 
 </details>
+
+### 模型同記憶體點樣配搭
+
+![Windows 選擇模型時，分開顯示系統 RAM 同獨立 GPU VRAM](docs/images/model-memory-zh-HK.png)
+
+呢張係 Windows 32 GB 系統 RAM、16 GB VRAM 嘅示例。完整 Drama 3 以 CPU 運行，佔用系統 RAM；Qwen 9B 由 GPU 運行，計入 VRAM。實際部署仍要等模型載入同出聲驗證成功。
 
 ## 由日文對白到廣東話及英文
 

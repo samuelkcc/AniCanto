@@ -16,6 +16,10 @@ App 主要以**香港繁體中文**設計，另設**英文介面**，方便對�
 
 ![繁中介面：模型及準備](../images/models-setup-zh-HK.png)
 
+## Windows 模型記憶體
+
+![繁中介面：Windows 系統 RAM 與獨立 GPU VRAM](../images/model-memory-zh-HK.png)
+
 ## 基本模式
 
 ![繁中介面：基本模式](../images/basic-zh-HK.png)

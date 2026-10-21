@@ -16,6 +16,10 @@ Real application screens use original demo dialogue and illustrative model/proje
 
 ![Models & setup in the English interface](images/models-setup-en.png)
 
+## Windows model memory
+
+![Windows system RAM and dedicated GPU VRAM in the English interface](images/model-memory-en.png)
+
 ## Basic mode
 
 ![Basic mode in the English interface](images/basic-en.png)

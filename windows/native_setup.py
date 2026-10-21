@@ -49,6 +49,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  if not any(r['id']==classifier['id'] for r in result['downloads']):
   result['downloads'].append(dict(id=classifier['id'],title=classifier['title'],bytes=classifier['bytes'],installed=available(root,classifier),purposeKey='audio-classification'))
  result['modelDownloadBytes']=sum(r.get('bytes',0) for r in result['downloads'] if not r.get('installed'))
+ from memory_plan import pools
+ result['memoryPools']=pools(result)
  from setup_inventory import inventory
  result['inventory']=inventory(root,rows,result['downloads'])
  result['storage']=str(root);result['requestedModels']=requested or {}
@@ -283,7 +285,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  if kind=='gpt':verified['speechVersions']=list(dict.fromkeys(verified.get('speechVersions',[])+[version]))
  if kind=='local':verified['verifiedEngines']=list(dict.fromkeys(verified.get('verifiedEngines',[])+[chosen]))
  marker.write_text(json.dumps(verified))
- receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=allow_cpu_drama,modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
+ receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=chosen=='drama3' and voice_backend=='cpu',modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
  (root/'native-ready.json').write_text(json.dumps(receipt,indent=2))
  (root/'setup-invalidated.json').unlink(missing_ok=True)
  emit('Native setup completed. The first conversion will validate speech and output on this PC.',ready=receipt,setupStep='ready')

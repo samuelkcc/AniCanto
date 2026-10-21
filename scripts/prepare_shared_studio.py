@@ -13,7 +13,7 @@ def prepare():
     shutil.copy2(ROOT/'Resources/fonts/NOTICE.txt',target/'font-NOTICE.txt')
     (target/'assistant-busy-atlas.png').unlink(missing_ok=True)
     (target/'assistant-rigs.js').write_text('export const ASSISTANT_RIGS='+ (ROOT/'Resources/assistant-rigs.json').read_text()+';\n')
-    shutil.copy2(ROOT/'Resources/app-icon.svg',target/'app-icon.svg')
+    shutil.copy2(ROOT/'Resources/AniCanto-icon.png',target/'app-icon.png')
     shutil.copy2(ROOT/'LICENSE',target/'LICENSE')
     (target/'application-license.js').write_text('export const APPLICATION_LICENSE='+json.dumps((ROOT/'LICENSE').read_text())+';\n')
     terms=(ROOT/'Resources/USE-TERMS.json').read_bytes()

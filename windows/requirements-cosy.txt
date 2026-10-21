@@ -19,5 +19,4 @@ transformers==4.51.3
 x-transformers==2.11.24
 # The reference app intentionally uses text_frontend=False. The optional
 # wetext/Pynini dependency has no stock Windows wheel; do not require it.
-wget==3.2
 huggingface-hub==0.36.2

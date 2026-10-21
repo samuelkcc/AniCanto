@@ -573,15 +573,16 @@ async function changeModels(engine){
 }
 function modelMemorySummary(proposal,selection,categories){
  const h=proposal.hardware||plan?.hardware||{},ram=Number(h.memoryGB||0),vram=Number(h.acceleratorMemoryGB||0);
- const dedicated=h.platform==='windows'&&['cuda','rocm','xpu'].includes(h.backend);
+ const dedicated=h.platform==='windows'&&['cuda','rocm'].includes(h.backend);
  const inactiveDiscrete=h.platform==='windows'&&!dedicated?(h.displayAdapters||[]).filter(a=>[0x10de,0x1002].includes(Number(a.vendorId))&&Number(a.dedicatedMemoryGB||0)>1).sort((a,b)=>Number(b.dedicatedMemoryGB)-Number(a.dedicatedMemoryGB))[0]:null;
- const capacity=dedicated?vram:ram,reserve=Number(proposal.systemReserveGB??plan?.systemReserveGB??Math.max(8,ram*.15)),budget=Number(proposal.memoryBudgetGB??plan?.memoryBudgetGB??0);
- const selected=categories.map(([role,,category])=>modelChoices.find(m=>m.id===(selection.models[role]||proposal.roles?.[role])&&m.category===category)).filter(Boolean);
- const peak=Math.max(0,...selected.map(m=>Number(m.estimatedMemoryGB||0)),...(proposal.downloads||[]).map(m=>Number(m.estimatedMemoryGB||0)));
- const fit=capacity>0&&budget>0&&peak<=budget;
- const label=dedicated?'Dedicated GPU VRAM':h.platform==='macos'?'Unified memory':'System RAM';
- const percent=capacity?Math.min(100,Math.round(100*peak/capacity)):0;
- return {fit,html:`<section class="model-memory" role="status"><strong>${esc(t('Estimated peak model memory'))}: ${peak.toFixed(1)} / ${capacity?capacity.toFixed(1):'—'} GB ${esc(t(label))}</strong><div class="download-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}" aria-label="${esc(t('Estimated memory usage'))}"><i style="width:${percent}%"></i></div><small>${esc(t('Available model budget'))}: ${budget.toFixed(1)} GB · ${esc(t('System reserve'))}: ${reserve.toFixed(1)} GB</small>${dedicated?`<small>${esc(t('System RAM'))}: ${ram.toFixed(1)} GB · ${esc(t('Dedicated GPU VRAM'))}: ${vram?vram.toFixed(1):'—'} GB</small>`:inactiveDiscrete?`<small>${esc(t('Dedicated GPU VRAM'))}: ${Number(inactiveDiscrete.dedicatedMemoryGB).toFixed(1)} GB · ${esc(t('GPU inference unavailable; model memory is checked against system RAM.'))}</small>`:''}<small>${esc(t('Models run in sequence; the figure is the largest selected model, not the sum.'))}</small>${dedicated&&!vram?`<p class="warning">${esc(t('Dedicated GPU VRAM could not be verified. Deployment is blocked until it can be measured.'))}</p>`:!fit?`<p class="warning">${esc(t('This model combination exceeds the available memory. Choose a smaller model.'))}</p>`:''}</section>`};
+ const reserve=Number(proposal.systemReserveGB??plan?.systemReserveGB??Math.max(8,ram*.15)),systemBudget=Number(proposal.systemMemoryBudgetGB??Math.max(0,ram-reserve)),gpuBudget=Number(proposal.acceleratorMemoryBudgetGB??Math.min(systemBudget,vram*.8));
+ const selected=categories.map(([role,,category])=>{const id=selection.models[role]||proposal.roles?.[role];const model=modelChoices.find(m=>m.id===id&&m.category===category)||(proposal.downloads||[]).find(m=>m.id===id);return model?{...model,category}:null}).filter(Boolean);
+ const cpuVoice=proposal.voiceBackend==='cpu'||selection.models.voice==='drama3-native-q2';
+ const systemPeak=Math.max(0,...selected.filter(m=>!dedicated||m.category==='voice'&&cpuVoice).map(m=>Number(m.estimatedMemoryGB||0)));
+ const gpuPeak=dedicated?Math.max(0,...selected.filter(m=>!(m.category==='voice'&&cpuVoice)).map(m=>Number(m.estimatedMemoryGB||0))):0;
+ const fit=ram>0&&systemPeak<=systemBudget&&(!dedicated||vram>0&&gpuPeak<=gpuBudget);
+ const meter=(label,peak,capacity,budget)=>`<div class="model-memory-pool"><strong>${esc(t(label))}: ${peak.toFixed(1)} / ${capacity?capacity.toFixed(1):'—'} GB</strong><div class="download-fill" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${capacity?Math.min(100,Math.round(100*peak/capacity)):0}" aria-label="${esc(t(label))}"><i style="width:${capacity?Math.min(100,100*peak/capacity):0}%"></i></div><small>${esc(t('Available model budget'))}: ${budget.toFixed(1)} GB</small></div>`;
+ return {fit,html:`<section class="model-memory" role="status">${meter(h.platform==='macos'?'Unified memory':'System RAM',systemPeak,ram,systemBudget)}${dedicated?meter('Dedicated GPU VRAM',gpuPeak,vram,gpuBudget):''}<small>${esc(t('System reserve'))}: ${reserve.toFixed(1)} GB</small>${inactiveDiscrete?`<small>${esc(t('Dedicated GPU VRAM'))}: ${Number(inactiveDiscrete.dedicatedMemoryGB).toFixed(1)} GB · ${esc(t('GPU inference unavailable; model memory is checked against system RAM.'))}</small>`:''}<small>${esc(t('Models run in sequence; the figure is the largest selected model, not the sum.'))}</small>${!fit?`<p class="warning">${esc(t('This model combination exceeds the available memory. Choose a smaller model.'))}</p>`:''}</section>`};
 }
 async function reviewSwitch(){
  const revision=++switchRevision,selection=structuredClone(pendingSwitch);switchBusy=true;
@@ -826,7 +827,9 @@ async function onFinished({payload}){
  await startPromise?.catch(()=>{});
  if(active&&payload.runID!==active.id)return;
  finishingRun=true;
- const wasSetup=active?.setup,wasMaintenance=(active?.action||payload.action)==='model-maintenance';
+ // A short setup can finish before its launch RPC returns. The native finish
+ // event still carries its action, so do not lose verification and UI refresh.
+ const wasSetup=!!active?.setup||['setup','runtime'].includes(payload.action),wasMaintenance=(active?.action||payload.action)==='model-maintenance';
  const conversionFinished=!!payload.rowID&&(active?.action||payload.action)==='batch';
  const failedRow=payload.rowID;
  if((wasSetup||wasMaintenance)&&payload.code&&!payload.paused)setupFailure=setupFailure||setupEvent?.message||t('Setup did not finish');

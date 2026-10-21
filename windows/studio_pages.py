@@ -122,6 +122,10 @@ class StudioPages:
         page=QWidget();h=QHBoxLayout(page);h.setContentsMargins(0,0,0,0);self.model_categories=QListWidget();self.model_categories.setObjectName('categorySide');self.model_categories.setFixedWidth(220)
         for key,en,zh in CONTRACT['modelCategories']:self.model_categories.addItem(self.t(en,zh))
         h.addWidget(self.model_categories);right=QWidget();v=QVBoxLayout(right);v.setContentsMargins(24,24,24,24);self.heading(v,'Model centre','模型中心');self.models_text=QPlainTextEdit();self.models_text.setReadOnly(True);self.models_text.setMaximumHeight(140);v.addWidget(self.models_text)
+        self.model_system_memory=self.label('System RAM · checking…','系統 RAM · 正在檢查…',True);v.addWidget(self.model_system_memory)
+        self.model_system_bar=QProgressBar();self.model_system_bar.setRange(0,1000);self.model_system_bar.setValue(0);self.model_system_bar.setTextVisible(False);v.addWidget(self.model_system_bar)
+        self.model_gpu_memory=self.label('GPU VRAM · checking…','GPU VRAM · 正在檢查…',True);v.addWidget(self.model_gpu_memory)
+        self.model_gpu_bar=QProgressBar();self.model_gpu_bar.setRange(0,1000);self.model_gpu_bar.setValue(0);self.model_gpu_bar.setTextVisible(False);v.addWidget(self.model_gpu_bar)
         self.model_table=QTableWidget(0,5);self.model_table.setHorizontalHeaderLabels([self.t('Model','模型'),self.t('Size','大小'),self.t('Status','狀態'),self.t('Use','選用'),self.t('Manage','管理')]);self.model_table.horizontalHeader().setSectionResizeMode(0,QHeaderView.Stretch);self.model_table.setEditTriggers(QAbstractItemView.NoEditTriggers);v.addWidget(self.model_table,1);self.model_categories.currentRowChanged.connect(self.refresh_model_catalog)
         row=QHBoxLayout();self.backend=QComboBox()
         for en,zh,key in [('Automatic','自動','auto'),('NVIDIA CUDA','NVIDIA CUDA','nvidia'),('AMD ROCm (supported GPUs)','AMD ROCm（支援型號）','amd'),('CPU','CPU','cpu')]:self.backend.addItem(self.t(en,zh),key)
@@ -143,16 +147,30 @@ class StudioPages:
                 b.setMenu(menu);b.setPopupMode(QToolButton.InstantPopup);self.model_table.setCellWidget(i,4,b)
             return
         self.model_table.setRowCount(len(rows));selected=read(self.root/'model-selections.json',{})
+        from memory_plan import fit_model
+        hardware=self.setup_plan.get('hardware',{})
         for i,row in enumerate(rows):
             ready=complete(self.root,row);role=dict(voice='voice',text='text',speech='speech',asr='asr').get(row.get('category'))
-            for c,value in enumerate([row['title'],f'{row["bytes"]/1e9:.2f} GB',self.t('Installed','已安裝') if ready else self.t('Not downloaded','未下載')]):self.model_table.setItem(i,c,QTableWidgetItem(value))
-            use=self.button('Selected' if role and selected.get(role)==row['id'] else 'Use','已選用' if role and selected.get(role)==row['id'] else '選用',lambda checked=False,r=row:self.activate_model(r));use.setEnabled(ready and role is not None);self.model_table.setCellWidget(i,3,use)
+            fits,pool=fit_model(row,hardware) if hardware else (False,'unknown-memory')
+            status=self.t('Installed','已安裝') if ready else self.t('Not downloaded','未下載')
+            if hardware and not fits:status+=' · '+(self.t('NVIDIA required','需要 NVIDIA') if pool=='requires-nvidia' else self.t('Memory too low','記憶體不足') if pool in ('system','gpu') else self.t('Unavailable','未能使用'))
+            for c,value in enumerate([row['title'],f'{row["bytes"]/1e9:.2f} GB · {row.get("estimatedMemoryGB",0):g} GB '+('RAM' if pool=='system' else 'VRAM' if pool=='gpu' else ''),status]):self.model_table.setItem(i,c,QTableWidgetItem(value))
+            use=self.button('Selected' if role and selected.get(role)==row['id'] else 'Use','已選用' if role and selected.get(role)==row['id'] else '選用',lambda checked=False,r=row:self.activate_model(r));use.setEnabled(ready and role is not None and fits);self.model_table.setCellWidget(i,3,use)
             menu=QToolButton();menu.setText('⋯');popup=QMenu(menu)
             for action,en,zh in [('repair','Check / install','檢查／安裝'),('redownload','Download again','重新下載'),('remove','Remove files','移除檔案')]:popup.addAction(self.t(en,zh),lambda checked=False,r=row,a=action:self.manage_package(dict(r,kind='model'),a))
             menu.setMenu(popup);menu.setPopupMode(QToolButton.InstantPopup);self.model_table.setCellWidget(i,4,menu)
     def activate_model(self,row):
         selected=read(self.root/'model-selections.json',{});role=dict(voice='voice',text='text',speech='speech',asr='asr').get(row.get('category'))
-        if role:selected[role]=row['id'];write(self.root/'model-selections.json',selected);self.ready={};write(self.root/'setup-invalidated.json',dict(reason='model-selection-changed'));self.refresh_model_catalog();self.show_plan()
+        from memory_plan import fit_model
+        fits,pool=fit_model(row,self.setup_plan.get('hardware',{}))
+        if not fits:
+            self.notice(self.t('This model cannot fit the selected device. Review system RAM and GPU VRAM first.','呢個模型唔適合目前裝置；請先檢查系統 RAM 同 GPU VRAM。'));return
+        if role:
+            selected[role]=row['id'];write(self.root/'model-selections.json',selected)
+            if role=='voice':
+                engine=row['engine'];self.store.settings.update(ttsBackend=engine,selectedEngines=[engine],defaultAudioEngine=engine,nativeDramaCPU=row['id']=='drama3-native-q2')
+                self.cpu_drama.setChecked(row['id']=='drama3-native-q2');self.store.save();self.sync_controls()
+            self.ready={};write(self.root/'setup-invalidated.json',dict(reason='model-selection-changed'));self.refresh_model_catalog();self.show_plan()
     def build_preferences(self):
         page,v=self.page('Preferences','偏好設定');form=QFormLayout();self.field(form,'appearance','Appearance','外觀','choice','system',options=[('System','跟隨系統','system'),('Light','淺色','light'),('Dark','深色','dark')]);self.field(form,'controlDensity','Control size','控制項大小','choice','comfortable',options=[('Comfortable · 15 px','舒適 · 15 px','comfortable'),('Larger · 17 px','較大 · 17 px','large')]);self.field(form,'animeTheme','Companion theme','助手主題','choice',self.cover_path.stem.replace('welcome-',''),options=[(k.title(),k.title(),k) for k in CONTRACT['themes']]);self.field(form,'showStudioCompanion','Show animated companion','顯示動畫助手',default=False);self.field(form,'companionMotion','Animate companion','角色動態效果',default=True);self.field(form,'desktopPetRoaming','Roam on desktop','桌面自由走動',default=False);v.addLayout(form);self.button('Interface language and Welcome','介面語言與首頁',self.welcome,v);self.button('Open app data folder','開啟資料資料夾',lambda:self.reveal(self.root),v);self.button('About and licences','關於與授權',self.about,v);v.addStretch();self.pages.addWidget(self.scroll(page))
     def build_projects(self):

@@ -16,4 +16,4 @@ const paths={
  check:'m5 12 4 4L19 6',warning:'m12 3 10 18H2zM12 9v5m0 3h.01',download:'M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5',spark:'m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z',
  split:'M12 3v18M3 8h5v8H3zM16 8h5v8h-5z',moon:'M20 14A9 9 0 0 1 10 3a9 9 0 1 0 10 11',sun:'M12 3v2m0 14v2M3 12h2m14 0h2M6 6l1 1m10 10 1 1M6 18l1-1M17 7l1-1M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0'
 };
-export function icon(name){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.settings}"/></svg>`}
+export function icon(name){if(name==='logo')return '<img class="app-logo" src="./assets/app-icon.png" alt="" aria-hidden="true">';return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]||paths.settings}"/></svg>`}

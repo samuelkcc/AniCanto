@@ -281,7 +281,6 @@ urllib3==2.8.0
     # via
     #   modelscope
     #   requests
-wget==3.2
     # via -r windows/requirements-cosy.txt
 win32-setctime==1.2.0
     # via loguru
