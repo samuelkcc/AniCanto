@@ -499,6 +499,7 @@ Object.assign(zh,{"CosyVoice 3 needs an NVIDIA GPU on Windows. Download only is 
 Object.assign(zh,{"Target language restored; character voice differs":"已補回目標語言；角色聲線不同","Using a fallback voice":"使用後備聲線","Name pronunciation needs checking":"人名讀音需要核對","Pronunciation not confirmed":"讀音未確認"});
 
 Object.assign(zh,{"Retry AI repair":"再次 AI 修復","Repair reported lines only. Keep successful recordings and earlier exports.":"只修復有問題嘅對白，保留成功錄音同舊成品。","Save or export your edits before retrying automatic review.":"請先保存或匯出編輯，再重新進行自動修復。"});
+Object.assign(zh,{"Starting AI repair…":"正在啟動 AI 修復…","Another task is finishing. Please try again in a moment.":"另一項工作仲喺度完成收尾，請稍後再試。"});
 
 Object.assign(zh,{"Download only; deploy this voice engine before it can join automatic repair.":"只下載模型檔；完成配音引擎部署後先會參與自動補聲。"});
 Object.assign(zh,{"Listen to last failed recording":"試聽最後一次未通過錄音","Listen to selected / replacement recording":"試聽已採用／替代錄音","Heard in selected recording":"已採用錄音辨識結果","Heard in this attempt":"本次錄音辨識結果","Heard in last failed recording":"最後一次未通過錄音辨識結果","Retained rejected recording":"已保留嘅未通過錄音"});

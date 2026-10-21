@@ -1,4 +1,5 @@
-AniCanto approved image-generated app icon, lighter-purple variant, 2026-10-21.
-An original plum-purple long-haired anime silhouette faces the brush-calligraphy 廣 formed by her voice; a small microphone is integrated into the final sound curl. The pale lavender background and purple frame suit the light-purple interface. The user selected this variant for the official app icon.
+AniCanto image-generated app icon, borderless lighter-purple variant requested by user, 2026-10-21.
+An original plum-purple long-haired anime silhouette faces the brush-calligraphy 廣 formed by her voice; a small microphone is integrated into the final sound curl. The outer purple frame and white rim were removed with imagegen at the user's request after iPad/macOS masking clipped the frame. The pale lavender background now continues to every square edge; platform systems apply their own corner masks.
 Canonical source: app-icon-art.png; raster platform and UI icons are derived from this source. The older app-icon.svg is retained only as historical artwork.
+Previous framed artwork: app-icon-art-framed.png. Border removal edit: exec-39635e9f-58fa-4bea-a70d-c2ed925e864b.png.
 Copyright (c) 2026 SCKC. MIT License (see root LICENSE).

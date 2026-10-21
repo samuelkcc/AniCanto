@@ -49,7 +49,7 @@ let timelineDragging=false,timelineSuppressClickUntil=0;
 function rememberTimelineViewport(){const el=$('.timeline-scroll');if(el)timelineViewport={rowID:el.dataset.rowId,left:el.scrollLeft,top:el.scrollTop};}
 let previewEnabled=false,previewLoading=false,previewError='',previewProgress=null,previewFallback=false,previewOutput=false,previewTimer=null,helpQuery='',helpChapter='start',aboutSession=0;
 const finishedRunIDs=new Set(),conversionQueue=new ConversionQueue(),mediaRequests=new Map();
-let starting=false,startPromise=null,finishingRun=false,finishChain=Promise.resolve();
+let starting=false,startPromise=null,finishingRun=false,finishChain=Promise.resolve(),retryReviewStarting=false,retryReviewError='';
 let enteringWorkspace=false;
 let queueRevision=0,queueRenderPending=false,queueFocus=null;
 const queueOrder=installQueueOrder({move:moveQueueRow,step:stepQueueRow,updated:()=>{if(queueRenderPending){queueRenderPending=false;render()}else refreshQueueViews();restoreQueueFocus()},error:e=>toast(e.message||e,true)});
@@ -344,7 +344,7 @@ function updateAudition(){const el=$('#audition-card');if(el){const index=cueAt(
 function pageHeader(title,body='',action=''){return `<div class="page-header"><div><h2>${esc(t(title))}</h2>${body?`<p>${esc(t(body))}</p>`:''}</div>${action}</div>`}
 function fullPage(){let content='';
  if(page==='roles')content=rolesPage();
- else if(page==='review'){content=pageHeader('Review report','Incomplete recordings stay available for comparison.')+reviewPage({snapshot,cues:cues(),t,button,historyRow,engineName,active,sourceLanguage:sourceLanguage()});}
+ else if(page==='review'){content=pageHeader('Review report','Incomplete recordings stay available for comparison.')+reviewPage({snapshot,cues:cues(),t,button,historyRow,engineName,active,sourceLanguage:sourceLanguage(),retryReviewStarting,retryReviewError});}
  else if(page==='produce'){content=pageHeader('Export a new version','Edits and retakes create a new version. Earlier recordings and exports are retained.')+(!draft?empty('No project selected','Open a processed video from the list to edit its script.'): `<div class="defaults-grid"><section class="card"><h3>${esc(t('Clips'))}</h3>${(draft.clips.length?draft.clips:[{start:0,end:duration||snapshot.review.config.duration,enabled:true,ripple:true}]).map((c,i)=>`<div class="clip-editor"><span class="badge">${i+1}</span><label>${esc(t('Start'))}<input type="number" data-clip="${i}" data-key="start" step=".1" value="${c.start}"></label><label>${esc(t('End'))}<input type="number" data-clip="${i}" data-key="end" step=".1" value="${c.end}"></label><input type="checkbox" data-clip="${i}" data-key="enabled" ${c.enabled?'checked':''}></div>`).join('')}</section><section class="card"><h3>${esc(t('Production settings'))}</h3>${productionSettings(true)}</section></div>`);}
  else if(page==='queue'||page==='projects'){content=pageHeader(page==='queue'?'Work queue':'Projects and exports','',`<div class="row wrap">${button('clear-cache','Clear temporary files','trash','',active?'disabled':'')}${button('start-all','Resume all unfinished videos','play','primary',active||starting||finishingRun?'disabled':'')}</div>`)+(state.queue.length?`<div class="queue-list" data-queue-list aria-label="${esc(t('Work queue'))}">`+state.queue.map((r,i)=>`<article class="card queue-row" data-queue-id="${esc(r.id)}"><div class="queue-rail">${queueControls(i)}<span class="queue-num">${String(i+1).padStart(2,'0')}</span></div><div><h4>${esc(filename(r.video))}</h4><small>${esc(t('Total processing'))} · ${shortTime(r.processingSeconds||0)}</small>${r.requestedExportFolder?`<small class="queue-destination" title="${esc(r.requestedExportFolder)}">${esc(t('Export destination'))}: ${esc(r.requestedExportFolder)}</small>`:''}${r.deliveryKind==='preview'?`<small class="warning preview-delivery-note">${esc(t('Automatic repair finished. This labelled preview still contains incomplete dialogue.'))}${(r.incompleteDialogue??r.missingDialogue)!=null?` ${r.incompleteDialogue??r.missingDialogue} ${esc(t('Unfinished dialogue lines'))}`:''}</small>`:''}${r.deliveryState==='not-exported'?`<small class="warning">${esc(t('Not exported. Working recordings are retained for repair.'))}</small>`:''}${r.lastError?`<div class="queue-error">${esc(projectWarning(r.lastError.message,state.language))}</div>`:''}</div><div><span class="pill">${esc(deliveryLabel(r))}</span><div class="download-fill" style="margin-top:10px"><i style="width:${100*(r.progress||0)}%"></i></div></div><div class="row wrap">${button('select-project','Edit','edit','',`data-value="${r.id}"`)}${r.output?button('reveal',r.deliveryKind==='preview'?'Show preview':'Show file','folder','',`data-path="${esc(r.output)}"`):`${button('retry','Retry','refresh','',`data-value="${r.id}" ${active?'disabled':''}`)}${r.workingOutput?button('reveal','Working files','folder','',`data-path="${esc(r.job||r.workingOutput)}"`):''}`}${ib('remove','Remove','trash',`data-value="${r.id}" ${active?'disabled':''}`)}</div></article>`).join('')+'</div>':empty('No videos yet','Drop one or more episodes here','folder'));}
  else if(page==='terminal')return `<section class="page terminal-page"><div class="row spread terminal-tools"><div class="row wrap"><select id="log-source" aria-label="${esc(t('Log source'))}">${logSources.map(r=>`<option value="${esc(r.id)}" ${logSource===r.id?'selected':''}>${esc(t(r.title))}</option>`).join('')}</select><label class="check"><input id="errors-only" type="checkbox" ${errorsOnly?'checked':''}>${esc(t('Errors only'))}</label><input id="log-search" placeholder="${esc(t('Search logs'))}" value="${esc(logSearch)}"><label class="check"><input id="follow-logs" type="checkbox" ${followLogs?'checked':''}>${esc(t('Follow latest'))}</label></div><div class="row">${button('refresh-logs','Refresh','refresh')}${button('copy-logs','Copy logs','terminal')}${button('export-logs','Export debug report','download')}</div></div><pre id="terminal-output" class="terminal-output"></pre></section>`;
@@ -500,6 +500,22 @@ async function pauseConversion(){
  await rememberQueue(false);
 }
 async function renderVersion(segment=null,submitted=draft){if(active||!submitted)return;const spec=await invoke('studio_start',{op:'render',params:{id:state.selected,draft:submitted,segment,engine:retakeEngine||state.settings.ttsBackend,language}});dirty=false;runID=spec.id;phaseSample=null;active={id:spec.id,rowID:state.selected,seconds:0};await refreshState();render();}
+async function retryReportedLines(){
+ if(active||starting||finishingRun||retryReviewStarting){retryReviewError=t('Another task is finishing. Please try again in a moment.');render();return;}
+ retryReviewStarting=true;retryReviewError='';render();
+ try{
+  if(dirty)await save();
+  const id=state.selected;
+  // A short failed repair may finish before studio_start returns. Keep the
+  // launch promise visible to onFinished and never restore a stale active run.
+  startPromise=invoke('studio_start',{op:'retry-review',params:{id,mode:'pending'}});
+  const spec=await startPromise;runID=spec.id;phaseSample=null;
+  if(!finishedRunIDs.has(spec.id))active={id:spec.id,rowID:id,action:'render-project',seconds:0};
+  await refreshState().catch(error=>console.warn(error));
+  await refreshSnapshot().catch(error=>console.warn(error));
+ }catch(error){retryReviewError=t(error.message||String(error));toast(retryReviewError,true)}
+ finally{retryReviewStarting=false;render()}
+}
 async function refreshModels(){inventory=await rpc('models');if(page==='models')modelChoices=await rpc('model-choices');updateSetup();if(page==='models'&&screen==='studio'){const el=$('.main .page');if(el){const saved=captureReviewViewport();el.outerHTML=fullPage();restoreReviewViewport(saved);}}}
 let drawerReturnFocus=null;
 async function closeDrawer(){
@@ -773,7 +789,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  }
  if(a==='save'){await save();return}
  if(a==='undo'||a==='redo'){const stack=a==='undo'?undoStack:redoStack,other=a==='undo'?redoStack:undoStack;if(stack.length){other.push(structuredClone(draft));draft=stack.pop();dirty=true;renderTranscript();renderTimeline()}return}
- if(a==='retry-review'){if(active||starting||finishingRun)return;if(dirty){toast(t('Save or export your edits before retrying automatic review.'));return;}const spec=await invoke('studio_start',{op:'retry-review',params:{id:state.selected,mode:'pending'}});runID=spec.id;phaseSample=null;active={id:spec.id,rowID:state.selected,seconds:0};await refreshState();render();return}
+ if(a==='retry-review'){await retryReportedLines();return}
  if(a==='retake'){await renderVersion(current()?.id);return}if(a==='export'){await renderVersion();return}
  if(a==='adopt'){const take=takeAt(snapshot.takes||[],selectedCue,auditionEngine||state.settings.ttsBackend,language);if(take&&current()){checkpoint();current().audioTake=take.audio;toast(t('Chosen recording'));}return}
  if(a==='split'){if(!draft)return;checkpoint();const clips=draft.clips.length?draft.clips:[{start:0,end:duration,enabled:true,ripple:true}];for(let i=0;i<clips.length;i++){const c=clips[i];if(c.start+.04<sourceTime&&sourceTime<c.end-.04){clips.splice(i,1,{...c,end:sourceTime},{...c,start:sourceTime});break}}draft.clips=clips;renderTimeline();return}

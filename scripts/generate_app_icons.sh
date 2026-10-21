@@ -20,7 +20,7 @@ cp "$temp_dir/icon.png" "$root/Resources/AniCanto-icon.png"
 cp "$temp_dir/icon.png" "$root/studio/src-tauri/icons/icon.png"
 cp "$temp_dir/icon.png" "$root/studio/web/assets/app-icon.png"
 
-swift "$root/scripts/app-icon.swift" "$temp_dir/AniCanto.iconset" "$temp_dir/icon.png"
+xcrun --sdk macosx swift -module-cache-path "$temp_dir/module-cache" "$root/scripts/app-icon.swift" "$temp_dir/AniCanto.iconset" "$temp_dir/icon.png"
 iconutil --convert icns --output "$root/Resources/AniCanto.icns" "$temp_dir/AniCanto.iconset"
 magick "$temp_dir/icon.png" -define icon:auto-resize=256,128,64,48,32,24,16 "$root/studio/src-tauri/icons/icon.ico"
 

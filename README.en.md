@@ -18,11 +18,13 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.47**
+> **Public beta · 0.24.48**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.47-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.48-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
 ## In this beta
+
+“Retry AI repair” now shows its launch state immediately. If startup fails, the error stays visible in the review report so it can be investigated and retried. The action targets reported lines only, preserving successful recordings and earlier exports.
 
 The model picker now lists available voice-model variants. A green dot means downloaded; a red dot shows what remains to download. It also shows estimated memory demand. If a choice exceeds the available memory budget, the app warns you and allows download-only, without switching to a configuration unlikely to load.
 
