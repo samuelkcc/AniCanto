@@ -18,11 +18,13 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.49**
+> **Public beta · 0.24.50**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.49-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.50-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
 ## In this beta
+
+Fixed removal of completed videos from the project list. The app now recognizes recording versions inside its own project workspace, cleans their work files, and keeps the source video and finished export. If an older work path cannot be verified safely, the video can still be removed from the list; the app warns that those work files were retained rather than deleting files at an unknown location.
 
 Fixed the completed-video footer button: “Retry AI repair” now starts repair for reported lines instead of silently finding no queued conversion. Startup errors remain visible. Saved single-line script edits are included, while explicit choices to keep original speech or a selected recording are respected. Split, merged or reordered dialogue requires a new editorial version. When there is nothing left to review, the footer shows a disabled “Done” state. Earlier exports and successful recordings remain available.
 

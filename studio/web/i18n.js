@@ -412,7 +412,7 @@ const zh={
  "Debug report saved":"除錯記錄已儲存",
  "Copied":"已複製",
 
- 'Remove project':'移除專案','Pause processing before removing a project.':'請先暫停處理，再移除專案。','Project removed. Source videos and exports were kept.':'專案已移除，原片同輸出成品已保留。',
+ 'Remove project':'移除專案','Pause processing before removing a project.':'請先暫停處理，再移除專案。','Project removed. Source videos and exports were kept.':'專案已移除，原片同輸出成品已保留。','Project removed from the list. Some processing files were kept because cleanup could not be completed. Source videos and exports were kept.':'已從清單移除專案；部分工作檔未能安全清理，已予保留。原片同輸出成品亦已保留。',
  'Verifying downloaded files…':'正在驗證已下載檔案…','Using downloaded files':'正在沿用已下載檔案','Connecting / resuming…':'正在連線／繼續下載…','Loading and checking models…':'正在載入及檢查模型…',
  'Review notes':'項覆核提示',
  "Downloading & preparing…":"正在下載及準備…",

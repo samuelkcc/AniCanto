@@ -711,7 +711,7 @@ async function removeProject(id,b){
   }
   await closeDrawer();render();
   if(state.selected!==previous){await refreshSnapshot();await loadMedia();}
-  toast(t('Project removed. Source videos and exports were kept.'));
+  toast(t(result.cleanupWarning?'Project removed from the list. Some processing files were kept because cleanup could not be completed. Source videos and exports were kept.':'Project removed. Source videos and exports were kept.'),Boolean(result.cleanupWarning));
  }finally{removing=false;b.disabled=false;}
 }
 async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disabled)return;const a=b.dataset.action,v=b.dataset.value;if(a==='installation-details'){await showDrawer('Installation details',(setupFailure&&!installationActive()?`<section class="warning setup-failure" role="alert"><strong>${esc(t('Setup did not finish'))}</strong><p>${esc(setupFailure)}</p></section>`:installationProgress())+installationDetails()+(installationActive()?button('pause','Pause download','pause'):setupFailure?button('setup','Retry setup','refresh'):''));const details=$('#drawer .installation-details')||$('.drawer .installation-details');if(details)details.open=true;paintInstallation();return;}if(a==='copy-installation'){await navigator.clipboard.writeText(installationLog.text);toast(t('Copied'));return;}if(a==='open-project-link')e.preventDefault();

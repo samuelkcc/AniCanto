@@ -323,10 +323,17 @@ class Studio:
             row=self.row(p.get('id'))
             if row['status']=='running':raise ValueError('Pause this video before removing it.')
             from desktop_cleanup import remove
-            saved=remove(self.root,row,[r for r in self.store.queue if r['id']!=row['id']])
+            # A stale or unsafe legacy work path must not trap a finished video
+            # in the list. The cleaner refuses unsafe deletion; detach the row
+            # and report that its work files were retained for manual recovery.
+            try:
+                saved=remove(self.root,row,[r for r in self.store.queue if r['id']!=row['id']])
+                cleanup_warning=None
+            except Exception as error:
+                saved=[];cleanup_warning=str(error)
             self.store.queue.remove(row)
             if self.store.selected==row['id']:self.store.selected=self.store.queue[0]['id'] if self.store.queue else None
-            self.store.save();return dict(state=self.state(),preservedExports=saved)
+            self.store.save();return dict(state=self.state(),preservedExports=saved,cleanupWarning=cleanup_warning)
         if op=='snapshot':
             row=self.row(p.get('id'));snapshot=job_snapshot(row)
             seconds=snapshot.get('time',{}).get('seconds')

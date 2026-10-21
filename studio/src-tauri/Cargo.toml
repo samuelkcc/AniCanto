@@ -1,6 +1,6 @@
 [package]
 name = "anicanto-studio"
-version = "0.24.49"
+version = "0.24.50"
 edition = "2021"
 license = "MIT"
 publish = false

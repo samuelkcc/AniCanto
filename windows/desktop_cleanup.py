@@ -13,16 +13,29 @@ def remove(root,row,others=()):
     def owned(path,base):
         raw=Path(path)
         return not base.is_symlink() and base.resolve().is_relative_to(root) and not raw.is_symlink() and raw.resolve().is_relative_to(base.resolve()) and raw.resolve()!=base.resolve()
-    folders=set()
-    for value in (row.get('review'),row.get('job')):
-        if not value:continue
-        path=Path(value);folder=path.parent if path.name=='review.json' else path
-        if not owned(folder,jobs) or folder.resolve().parent!=jobs.resolve():
+    def project_folder(key,value):
+        path=Path(value)
+        if key=='review':
+            if path.name!='review.json' or path.is_symlink():raise ValueError('The project review path is invalid; no files were removed.')
+            folder=path.parent
+        else:
+            # A completed version records its own job path, while the review
+            # and working files still live in the enclosing app-owned project.
+            folder=path.parent.parent if path.parent.name=='versions' else path
+            if path!=folder and (path.is_symlink() or path.parent.is_symlink()):
+                raise ValueError('The project version path is a symlink; no files were removed.')
+        if not owned(folder,jobs) or folder.resolve().parent!=jobs.resolve() or not path.resolve().is_relative_to(folder.resolve()):
             raise ValueError('The project is outside the app-owned jobs folder; no files were removed.')
-        folders.add(folder.resolve())
+        return folder.resolve()
+    folders=set()
+    for key in ('review','job'):
+        value=row.get(key)
+        if not value:continue
+        folders.add(project_folder(key,value))
+    if len(folders)>1:raise ValueError('The project paths disagree; no files were removed.')
     for job in folders:
         if original.is_relative_to(job):raise ValueError('The source video is inside this project. Move the original before removing processing data.')
-    shared_jobs={Path(v).resolve().parent if key=='review' else Path(v).resolve() for other in others for key in ('review','job') if (v:=other.get(key))}
+    shared_jobs={project_folder(key,v) for other in others for key in ('review','job') if (v:=other.get(key))}
     folders-=shared_jobs
     # Preserve actual final outputs only. Per-engine movies, preview proxies and
     # JSON/SRT diagnostics are working data, not additional user exports.

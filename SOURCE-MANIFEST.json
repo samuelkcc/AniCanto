@@ -2901,7 +2901,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "b65fea8f394624a7287fad45af6029cd157518278645c1ce28544979bc5e5fb3",
+      "sha256": "3849f333c7e19d2a3c0dcb9ff2399bf2d40f3e81a9c1e6752bf4695e21940f1f",
       "bytes": 66
     },
     {
@@ -12671,8 +12671,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "4941a73b9bbb35a928ad4baeb82c908a807de964bc3666823e6aa8164f159589",
-      "bytes": 41728
+      "sha256": "171bb117013ad538c65d9d7213a25420286c27d6ca39c37bd1c3adbbf99c26b7",
+      "bytes": 42147
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -12856,12 +12856,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "2cc3ad478d5848440baf7f5610339a4a263f6369e3c9041aac6b268978a827ba",
+      "sha256": "923a04616e21fca9182c1307e4fddb33fe5a94bd9da25815485ee984e3093803",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "48da940542c67ed9b577f771de913ad652f2b6fb461c35446e0a2c1f2752939f",
+      "sha256": "64cc729f7ffddd2e5e274602b2e83fbac77eed7970194a4be53bc8af60eeb9aa",
       "bytes": 543
     },
     {
@@ -12891,7 +12891,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "25f59e9e688404ccbaf404c152adb549beb5a5a6eb16438b82970804dd5c8f83",
+      "sha256": "13b9d52f2af1234323c2407ef7ce91c6c1811570efcde475557dda147ac7e13a",
       "bytes": 956
     },
     {
@@ -12901,8 +12901,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "4fff0aff853879225be0ece6f9fd04268ca6e99048927527d658c1ecb9ae9bd3",
-      "bytes": 155297
+      "sha256": "59ca459235788ec4e73e5243291acbe8e8bf29361733b06b63ae312261407f7c",
+      "bytes": 155492
     },
     {
       "path": "studio/web/assistant-motion.js",
@@ -12926,8 +12926,8 @@
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "eb6e2851c60c658473eec67a262ea05a887a24325e4b290d19c74793636bb703",
-      "bytes": 61413
+      "sha256": "25fa02dbcb9dbb7e6e87a86e4d0bc35317e94104fef6f9866992702bce7b5326",
+      "bytes": 61672
     },
     {
       "path": "studio/web/icons.js",
@@ -13736,8 +13736,8 @@
     },
     {
       "path": "tests/test_project_cleanup.py",
-      "sha256": "ddbfc5c32e95643b9838d4e02aecc10db3df3a31178bc7df122642b3fcb205b3",
-      "bytes": 3177
+      "sha256": "e3bc2842e09860171c9cf0fdd7650f31c2e6accbac2ffa462691ae7d04d8bb44",
+      "bytes": 4636
     },
     {
       "path": "tests/test_project_edit.py",
@@ -13891,8 +13891,8 @@
     },
     {
       "path": "tests/test_shared_studio.py",
-      "sha256": "3a599181a469f5c2ae4f3cfcc47f32239163b134d7efec63919bc78fb9c7196f",
-      "bytes": 23124
+      "sha256": "cf15533cc14dbc8a34825e50f3137666e489ce6a48f049b89aeb664384b35284",
+      "bytes": 23835
     },
     {
       "path": "tests/test_signal_quality.py",
@@ -14196,8 +14196,8 @@
     },
     {
       "path": "windows/desktop_cleanup.py",
-      "sha256": "2604bd90387044ef4b691d81230feaa220cf8a71af10972ea0064a68802e19b7",
-      "bytes": 4971
+      "sha256": "7a2ddadf6e39a3783e12f57e8a568ad8c8358d0c04834437e7f8d01e42ec724c",
+      "bytes": 5728
     },
     {
       "path": "windows/desktop_state.py",

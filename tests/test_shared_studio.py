@@ -236,6 +236,18 @@ class SharedStudioTests(unittest.TestCase):
         self.assertEqual(external.read_bytes(),b'export outside project');self.assertEqual(model.read_bytes(),b'model')
         self.assertEqual(result['preservedExports'],[]) # external final exists; do not duplicate intermediate movies
         self.assertEqual(Studio(self.root,ROOT/'Resources',helper=self.helper).state()['queue'],[])
+
+    def test_remove_with_unsafe_old_job_path_detaches_list_but_keeps_work_files(self):
+        ident,folder=self.project();source=self.video
+        outside=self.root/'not-an-app-job';outside.mkdir()
+        row=self.app.row(ident);row.update(status='complete',job=str(outside))
+        self.app.store.save()
+        result=self.app.dispatch('remove',dict(id=ident))
+        self.assertEqual(result['state']['queue'],[])
+        self.assertTrue(result['cleanupWarning'])
+        self.assertTrue(folder.exists());self.assertTrue(outside.exists())
+        self.assertEqual(source.read_bytes(),b'fixture source')
+        self.assertEqual(Studio(self.root,ROOT/'Resources',helper=self.helper).state()['queue'],[])
     def test_remove_unselected_and_running_project_behaviour(self):
         first=self.add();second=self.root/'second.mp4';second.write_bytes(b'second source')
         self.app.dispatch('add',dict(paths=[str(second)]));ident=self.app.store.queue[-1]['id']
