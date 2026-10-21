@@ -32,7 +32,7 @@ def recover_batch(saved,cue,cfg,job):
 def repair(cfg,job,cues,paths,run,emit,placement=None):
     # Child tracks are frozen for reproducibility; only an automatically
     # generated job authorises a wording edit. Human editor scripts stay locked.
-    if cfg.get('editorRender') or not cfg.get('automaticDurationRewrite'):return paths
+    if cfg.get('editorRender') or not cfg.get('automaticDurationRewrite') or cfg.get('preferFirstAudibleTake',True):return paths
     from types import SimpleNamespace
     from worker import atomic_json,ollama_chat
     from concise_dialogue import compact,units

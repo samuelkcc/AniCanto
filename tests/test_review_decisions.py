@@ -36,6 +36,14 @@ class ReviewDecisionTests(unittest.TestCase):
    review_choices.select(r,review,draft,snap,0,'drama3','yue','recording',str(p),True);choice=draft['segments'][0]['reviewDecisions']['yue:drama3'];accepted=Path(choice['audio']);self.assertNotEqual(accepted,p);self.assertEqual(accepted.read_bytes(),p.read_bytes());accepted.write_bytes(b'changed')
    cue=dict(cantonese='完整台詞',editorDecisions=draft['segments'][0]['reviewDecisions'])
    with self.assertRaisesRegex(ValueError,'changed'):review_choices.apply([cue],dict(editorRender=True,_editorSourceRoot=str(r)),'drama3','yue')
+ def test_rejected_attempt_can_be_accepted_and_reexported(self):
+  with tempfile.TemporaryDirectory() as d:
+   r=Path(d);review,draft=self.fixture(r);p=r/'normal-repairs/rejected.wav';p.parent.mkdir()
+   with wave.open(str(p),'wb') as f:f.setparams((1,2,16000,0,'NONE','not compressed'));f.writeframes(b'\x10\x00'*24000)
+   snap=dict(issues=[dict(index=1,engine='drama3',language='yue',attempts=[dict(audition=dict(path=str(p)))])])
+   review_choices.select(r,review,draft,snap,0,'drama3','yue','recording',str(p),True)
+   cue=dict(cantonese='完整台詞',editorDecisions=draft['segments'][0]['reviewDecisions'])
+   self.assertEqual(review_choices.apply([cue],dict(editorRender=True,_editorSourceRoot=str(r)),'drama3','yue')[0]['manualReviewChoice'],'accepted-defect-recording')
  def test_changed_words_and_split_lines_cannot_reuse_an_old_acceptance(self):
   with tempfile.TemporaryDirectory() as d:
    r=Path(d);review,draft=self.fixture(r);draft['segments'][0]['sources']=[0,1]

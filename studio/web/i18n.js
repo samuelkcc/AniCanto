@@ -1,4 +1,13 @@
 const zh={
+"First audible take retained":"已保留首次有聲錄音",
+"Edit / retake":"編輯／重錄",
+"Retake this line":"重錄呢一句",
+"Voice for this line":"呢句使用嘅聲音",
+"Save selected voice":"儲存所選聲音",
+"Keep the first audible take; repair missing speech only":"保留首次有聲錄音；只補真正冇聲嘅對白",
+"Language concerns are shown in the review report without replacing audible recordings.":"語言疑點會列入校對報告，但唔會取代有聲錄音。",
+"Automatically try another installed voice model for missing lines":"缺聲時自動試用其他已安裝配音模型",
+"Only verified target-language recordings replace missing speech.":"只有通過核對嘅目標語言錄音先會補上缺聲對白。",
 "This recording uses a bundled Cantonese / English voice, not the original character voice. Language repair does not confirm voice similarity.":"呢段採用內置廣東話／英文後備聲線，並非原角色聲線；補回語言唔代表已成功模擬聲線。",
 "Processing environment":"處理環境",
 "Preparing components…":"正在準備元件…",
@@ -116,8 +125,8 @@ const zh={
 "Automatic attempts finished. Compare the retained recordings and saved output.":"自動嘗試已完成，可比較保留錄音同已儲存輸出。",
 "Text model memory release could not be confirmed. Saved recordings are retained; the next large model was not loaded.":"未能確認文字模型已釋放記憶體；已保留錄音，未載入下一個大模型。",
 
-"CosyVoice 3 is available only on Windows with an NVIDIA GPU and a working CUDA runtime. Choose another compatible voice engine.":"CosyVoice 3 只限配備 NVIDIA 顯示卡及可用 CUDA 環境嘅 Windows；請選另一個相容配音引擎。",
-"cosyvoice3-requires-windows-nvidia":"CosyVoice 3 只限 Windows NVIDIA；請選另一個相容配音引擎。",
+"CosyVoice 3 supports Apple Silicon Mac with PyTorch CPU or Windows with NVIDIA CUDA. Choose a compatible voice engine.":"CosyVoice 3 可喺 Apple Silicon Mac 使用 PyTorch CPU，或喺配備 NVIDIA 顯示卡及可用 CUDA 環境嘅 Windows 使用；請選相容配音引擎。",
+"cosyvoice3-requires-windows-nvidia":"CosyVoice 3 可喺 Apple Silicon Mac 使用 CPU，或喺 Windows NVIDIA 使用 CUDA；請選相容配音引擎。",
 
 "Highest quality (closer to a Hong Kong Cantonese accent)":"最高品質（較接近香港廣東話口音）",
 "Balanced (may retain a Japanese accent)":"平衡（可能帶日語口音）",

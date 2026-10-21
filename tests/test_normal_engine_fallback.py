@@ -23,7 +23,7 @@ class AlternateEngineTests(unittest.TestCase):
         source = audio(root / 'source.wav')
         candidate = audio(root / 'candidate.wav')
         cues = [dict(start=0, end=2, cantonese='你究竟想點呀？', speakerId='r')]
-        cfg = dict(productionMode='normal', targetLanguage='yue', duration=2, ttsBackend='drama3', storage=str(root), voiceProfiles=[dict(id='r', name='角色', reference=str(source), promptText='參考對白')])
+        cfg = dict(productionMode='normal', preferFirstAudibleTake=False, targetLanguage='yue', duration=2, ttsBackend='drama3', storage=str(root), voiceProfiles=[dict(id='r', name='角色', reference=str(source), promptText='參考對白')])
         placement = [dict(fit=False, seconds=3, start=0, deadline=2)]
         proof = proof or dict(decision='cantonese', heard='你究竟想點呀？')
         return cfg, cues, placement, source, candidate, proof

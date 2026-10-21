@@ -4,6 +4,22 @@ sys.path.insert(0,str(Path(__file__).parents[1]/'Resources'))
 import speech_timing,dubbing
 
 class SpeechTimingTests(unittest.TestCase):
+ @unittest.skipUnless(shutil.which('ffmpeg'),'FFmpeg required')
+ def test_explicitly_accepted_recording_renders_with_reported_small_overlap(self):
+  sr=24000;ff=shutil.which('ffmpeg')
+  def run(args):return subprocess.check_output([str(a) for a in args],stderr=subprocess.DEVNULL)
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp);p=root/'accepted.wav'
+   raw=array.array('h',(round(3000*math.sin(i*2*math.pi*300/sr)) for i in range(sr)))
+   with wave.open(str(p),'wb') as f:f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(raw.tobytes())
+   cue=dict(start=0,end=.7,cantonese='完整錄音',manualReviewChoice='accepted-defect-recording')
+   following=dict(start=.7,end=1.5,cantonese='下一句')
+   row=dict(index=1,seconds=1.,slot=.7)
+   audio,warnings=dubbing.render_complete_preview(dict(duration=2,ffmpeg=ff,strictSpeechTiming=True,speechRatePolicy='natural'),root,[cue,following],[p],[row],run,lambda *a:None)
+   self.assertTrue(audio.is_file());self.assertEqual(row['renderedSeconds'],1.)
+   self.assertTrue(row['acceptedTimingOverlap']);self.assertTrue(row['requiresTimingReview'])
+   self.assertIn('timing-overrun',[w['kind'] for w in warnings])
+   with wave.open(str(audio)) as f:self.assertEqual(f.getnframes(),sr*2)
  def test_duration_budget_is_concise_and_short_reactions_stay_short(self):
   self.assertEqual(speech_timing.text_budget(.38),1)
   self.assertEqual(speech_timing.text_budget(2),9)

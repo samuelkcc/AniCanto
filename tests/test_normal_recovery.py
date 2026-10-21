@@ -12,9 +12,13 @@ def wav(path,seconds=1.,edge=0):
  return path
 
 class RecoveryDirectorTests(unittest.TestCase):
- def cfg(self,**kw):return dict(dict(productionMode='normal',duration=1.,targetLanguage='en',ttsBackend='drama3',model='selected-qwen-9b',port=1),**kw)
+ def cfg(self,**kw):return dict(dict(productionMode='normal',preferFirstAudibleTake=False,duration=1.,targetLanguage='en',ttsBackend='drama3',model='selected-qwen-9b',port=1),**kw)
  def cue(self):return dict(start=0,end=1,japanese='来て',text='来て',cantonese='Come here.',speakerId='own')
  def placement(self,seconds=1.4):return [dict(start=0,deadline=1,seconds=seconds,fit=False)]
+ def test_first_audible_take_does_not_enter_recovery_even_when_overlong(self):
+  with tempfile.TemporaryDirectory() as d:
+   job=Path(d);old=wav(job/'old.wav',1.4)
+   self.assertEqual(recovery.collect(self.cfg(preferFirstAudibleTake=True),job,[self.cue()],[old],self.placement(),{}),[])
  def test_ai_cannot_invent_commands_or_actions_and_uses_selected_model(self):
   w=SimpleNamespace(ollama_chat=Mock(return_value='{"1":{"action":"execute-shell","reason":"rm files"}}'))
   rows=[dict(key='k',index=1,position=0,allowedActions=['retry-clauses','retain'])]

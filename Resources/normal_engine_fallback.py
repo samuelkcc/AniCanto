@@ -111,6 +111,8 @@ def repair(cfg, job, cues, paths, placement, run, emit):
         records = []
         for i, cue in enumerate(cues):
             index = cue.get('reviewIndex', i) + 1
+            if cfg.get('preferFirstAudibleTake',True) and audio_present(selected[i]):
+                continue
             if index not in pending and audio_present(selected[i]) and placement[i].get('fit'):
                 continue
             if cue.get('editorAudio') or cue.get('preserveOriginalSpeech') or not cue.get('enabled', True) or is_vocalization(cue) or not cue.get('cantonese', '').strip():

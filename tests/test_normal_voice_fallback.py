@@ -13,7 +13,7 @@ class TargetReferenceTests(unittest.TestCase):
   (root/'normal-checks.json').write_text(json.dumps(dict(unresolved=[1])))
   source=audio(root/'source.wav');candidate=audio(root/'candidate.wav',duration);reference=audio(root/'reference.wav',4)
   cues=[dict(start=0,end=2,cantonese='你究竟想點呀？',speakerId='r',editorAudio=str(source) if manual else None)]
-  cfg=dict(productionMode='normal',targetLanguage='yue',duration=2,ttsBackend='drama3')
+  cfg=dict(productionMode='normal',preferFirstAudibleTake=False,targetLanguage='yue',duration=2,ttsBackend='drama3')
   placement=[dict(fit=False,seconds=3,start=0,deadline=2)]
   profile=dict(id='r',language='ja',reference=str(source));bank=dict(profile,reference=str(reference),language='yue',naturalReferenceId='yue-mid')
   proof=proof if proof is not None else dict(decision='cantonese',heard='你究竟想點呀？')

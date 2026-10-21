@@ -56,6 +56,7 @@ def collect(cfg,job,cues,paths,placement,ledger):
     for i,c in enumerate(cues):
         if not c.get('enabled',True) or c.get('editorAudio') or (c.get('preserveOriginalSpeech') and c.get('originalSpeechReason')!='missing-script') or is_vocalization(c):continue
         index=c.get('reviewIndex',i)+1;path=Path(paths[i]);placed=placement[i]
+        if cfg.get('preferFirstAudibleTake',True) and audio_present(path):continue
         errors=[str(e.get('message',''))[:350] for e in issues if e.get('index')==index and e.get('engine',cfg.get('ttsBackend'))==cfg.get('ttsBackend') and e.get('language',cfg.get('targetLanguage','yue'))==cfg.get('targetLanguage','yue')]
         reference_failure=any(re.search(r'reference|參考',e,re.I) for e in errors)
         reason='missing-script' if not c.get('cantonese','').strip() else 'reference' if reference_failure and not audio_present(path) else 'generation' if not audio_present(path) else 'language-or-content' if index in pending else 'timing' if not placed['fit'] else ''

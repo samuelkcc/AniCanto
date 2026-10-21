@@ -18,13 +18,13 @@ AniCanto started as a hobby project with a simple family wish: helping children 
 
 [Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
 
-> **Public beta · 0.24.43**
+> **Public beta · 0.24.44**
 >
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.43-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.44-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
 
-## What changed in 0.24.43
+## What changed in 0.24.44
 
-This update fixes a macOS package mismatch that could stop a video immediately when processing began. The review report retains both a failed take and the selected replacement for comparison. When another compatible voice model is already installed, automatic repair can try it to recover missing dialogue. Language checks and voice matching can still make mistakes, so listen to important scenes.
+This update keeps the **first audible take** by default, even when automatic language or pronunciation checks are uncertain. Automatic retries now focus on missing or near-silent speech, so a usable character voice is less likely to be replaced by a worse take. In the review report, you can listen to retained rejected takes, accept one for a line, or retake that line. After making your choices, export a new video version; earlier recordings and exports stay available. A manually accepted take may run up to two seconds beyond its original slot, with the overlap marked for review. CosyVoice 3 uses official weights on Apple Silicon Macs via a slower CPU path as well as on Windows NVIDIA/CUDA.
 
 ## Local AI, offline after setup
 
@@ -88,7 +88,7 @@ Browse the timeline, compare source text and the dubbing script, audition a line
 
 ![English review report showing dialogue, timing measurements, automatic attempts and audio comparisons](docs/images/review-en.png)
 
-The report shows the source line, translated script, recognised generated speech, timing and repair attempts. Unresolved lines remain labelled.
+The report shows the source line, translated script, recognised generated speech, timing and repair attempts. Listen to a rejected take, accept it if it sounds better, or retake one line before exporting a new video. Uncertain lines remain labelled.
 
 ### 05 · Keep a batch in order
 

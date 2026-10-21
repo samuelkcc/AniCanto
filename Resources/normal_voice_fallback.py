@@ -32,6 +32,7 @@ def repair(cfg,job,cues,paths,placement,run,emit):
     records=[];profiles={};drafts=[]
     for i,(cue,path) in enumerate(zip(cues,paths)):
         index=cue.get('reviewIndex',i)+1
+        if cfg.get('preferFirstAudibleTake',True) and audio_present(path):continue
         if cue.get('editorAudio') or cue.get('preserveOriginalSpeech') or not cue.get('enabled',True) or is_vocalization(cue) or not cue.get('cantonese','').strip():continue
         # Merely being a little long is not a reason to change the actor. Only
         # the final delivery boundary may authorise a timing fallback, after

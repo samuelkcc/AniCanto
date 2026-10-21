@@ -62,7 +62,7 @@ class NormalModeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             job=Path(d);old=audio(job/'old.wav');new=audio(job/'new.wav')
             with patch.object(normal_mode,'inspect',return_value={1:dict(decision='unconfirmed',language='Chinese')}),patch('dubbing.gsv_audio',return_value=[new]):
-                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal'),job,[dict(start=0,end=2,cantonese=text,speakerId='own')],[old],Mock(),Mock()),[old])
+                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal',preferFirstAudibleTake=False),job,[dict(start=0,end=2,cantonese=text,speakerId='own')],[old],Mock(),Mock()),[old])
             report=json.loads((job/'normal-checks.json').read_text());self.assertEqual(report['unresolved'],[1]);self.assertEqual(report['repairs'][0]['reason'],'dialect-unconfirmed')
     def test_clear_nonlexical_cry_with_no_translation_is_not_missing_dialogue(self):
         from dubbing import is_vocalization
@@ -107,8 +107,18 @@ class NormalModeTests(unittest.TestCase):
             folder=Path(d);old=audio(folder/'old.wav');new=audio(folder/'new.wav')
             cue=dict(start=0,end=1,cantonese='我哋一齊出發啦',speakerId='own')
             with patch.object(normal_mode,'inspect',side_effect=[{1:dict(decision='mandarin')},{1:dict(decision='unconfirmed')},{1:dict(decision='unconfirmed')}]),patch('dubbing.gsv_audio',return_value=[new]):
-                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[old],Mock(),Mock()),[old])
+                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal',preferFirstAudibleTake=False),folder,[cue],[old],Mock(),Mock()),[old])
             self.assertEqual(json.loads((folder/'normal-checks.json').read_text())['unresolved'],[1])
+
+    def test_default_keeps_audible_first_take_and_reports_language_doubt(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder=Path(d);first=audio(folder/'first.wav');cue=dict(start=0,end=2,cantonese='橡皮，橡皮',speakerId='own')
+            with patch.object(normal_mode,'inspect',return_value={1:dict(decision='japanese',languageFailure='japanese')}),patch('dubbing.gsv_audio') as generate:
+                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[first],Mock(),Mock()),[first])
+                generate.assert_not_called()
+            report=json.loads((folder/'normal-checks.json').read_text())
+            self.assertEqual(report['unresolved'],[])
+            self.assertEqual(report['advisories'][0]['originalAudio'],str(first))
 
     def test_missing_result_cannot_drop_a_translated_line_and_retry_budget_survives_resume(self):
         with tempfile.TemporaryDirectory() as d:

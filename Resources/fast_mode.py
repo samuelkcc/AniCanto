@@ -249,8 +249,13 @@ def synthesize(cfg,job,cues,run,emit):
             if natural:
                 rate=schedule[i].get('tempoRate',1.) if schedule else 1.
                 if len(raw)//2>available_frames:
-                    failure_kind='timing-overrun'
-                    raise ValueError('完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。'+(' 已嘗試有限時間微調，詳細結果已記錄。' if schedule else ''))
+                    overrun=(len(raw)//2-available_frames)/sr
+                    if cfg.get('preferFirstAudibleTake',True) and overrun<=2.0 and offset+len(raw)//2<=len(timeline):
+                        row['timingOverlapSeconds']=round(overrun,3)
+                        warnings.append(dict(index=row['index'],kind='first-take-timing-overlap',message=f'保留完整首次錄音，較原定時段長 {overrun:.2f} 秒；可能與下一句重疊。'))
+                    else:
+                        failure_kind='timing-overrun'
+                        raise ValueError('完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。'+(' 已嘗試有限時間微調，詳細結果已記錄。' if schedule else ''))
             else:raw,rate=fit_pcm(cfg,raw,available,run)
             # Measure the final timed take, including cached or repaired audio.
             # This is deterministic gain staging, not ASR/AI quality review.

@@ -378,12 +378,14 @@ def repair_paths(cfg,job,cues,paths,run,emit):
     # Never let zip silently discard a cue when a child returns fewer paths.
     if len(paths)>len(cues):raise ValueError('配音數量多於台詞；未合成錯配音軌。')
     paths += [job/f'skipped-missing-result-{n}.wav' for n in range(len(paths),len(cues))]
-    checks=inspect(cfg,job,cues,paths,emit);selected=list(paths);rows=[]
+    checks=inspect(cfg,job,cues,paths,emit);selected=list(paths);rows=[];advisories=[]
     for n,(cue,path) in enumerate(zip(cues,paths)):
         if not cue.get('enabled',True) or not cue.get('cantonese','').strip() or cue.get('preserveOriginalSpeech') or cue.get('editorAudio') or is_vocalization(cue):continue
         index=cue.get('reviewIndex',n)+1;evidence=checks.get(index,{})
         reason='missing-or-near-silent' if not audio_present(path) else evidence['languageFailure'] if evidence.get('languageFailure') else 'mandarin' if evidence.get('decision')=='mandarin' else 'incomplete-speech' if evidence.get('contentFailure') else 'dialect-unconfirmed' if needs_dialect_confirmation(cue.get('cantonese',''),evidence,cfg.get('targetLanguage','yue')) else ''
-        if reason:rows.append(dict(index=index,position=n,reason=reason,originalAudio=str(path),check=evidence,repaired=False,attempts=[]))
+        if reason and cfg.get('preferFirstAudibleTake',True) and audio_present(path):
+            advisories.append(dict(index=index,position=n,reason=reason,originalAudio=str(path),check=evidence,retainedFirstTake=True))
+        elif reason:rows.append(dict(index=index,position=n,reason=reason,originalAudio=str(path),check=evidence,repaired=False,attempts=[]))
     for attempt in range(2):
         active=[r for r in rows if not r['repaired']]
         if not active:break
@@ -418,7 +420,7 @@ def repair_paths(cfg,job,cues,paths,run,emit):
     resolve_issues(cfg,job,[r['index'] for r in rows if r['repaired']])
     for r in rows:
         if not r['repaired']:record_issue(cfg,job,dict(cues[r['position']],reviewIndex=r['index']-1),'normal-unresolved',r['reason']+'：本句局部補聲已達上限；原錄音及重錄版本保留供試聽。')
-    atomic_json(job/'normal-checks.json',dict(revision=REVISION,checks=checks,repairs=rows,
+    atomic_json(job/'normal-checks.json',dict(revision=REVISION,checks=checks,repairs=rows,advisories=advisories,
         unresolved=[r['index'] for r in rows if not r['repaired']],dialectUnconfirmed=[i for i,e in checks.items() if e.get('decision')=='unconfirmed'],qualityCertified=False,languageCheckStatus='completed' if checks else 'unavailable-or-no-lexical-items',
         nameLanguageUnconfirmed=[cue.get('reviewIndex',n)+1 for n,cue in enumerate(cues) if mixed_letter_name(cue.get('cantonese','')) and checks.get(cue.get('reviewIndex',n)+1,{}).get('decision')=='unconfirmed'],
         genericRoleFallback=False,fullAIReview=False,maximumLocalAttempts=2))

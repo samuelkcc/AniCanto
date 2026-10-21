@@ -67,6 +67,8 @@ def project(root,review,row):
         checks=read(folder/'normal-checks.json',{})
         for v in checks.get('repairs',[]):
             insert(dict(v,kind='targeted-language-or-integrity'),engine,language,'repaired' if v.get('repaired') else 'repairing' if active else 'unresolved',origin+'/normal-checks.json')
+        for v in checks.get('advisories',[]):
+            insert(dict(v,kind='first-audible-take-retained'),engine,language,'language-unconfirmed',origin+'/normal-checks.json')
         for index in checks.get('nameLanguageUnconfirmed',[]):insert(dict(index=index,kind='name-language-unconfirmed'),engine,language,'language-unconfirmed',origin+'/normal-checks.json')
         for index in checks.get('unresolved',[]):insert(dict(index=index,kind='targeted-language-or-integrity'),engine,language,origin=origin+'/normal-checks.json')
         placement=read(folder/'natural-placement.json',{})
@@ -100,10 +102,10 @@ def project(root,review,row):
         target=next((v for v in evidence['target'] if v.get('index')==item['index']),None)
         if target:director=dict(director,selectedAudio=target.get('selectedAudio') or target.get('audio') if target.get('status') in ('adopted','selected-unverified') else director.get('selectedAudio'),attempts=(director.get('attempts') or [])+[dict(target,candidateAudio=target.get('selectedAudio') or target.get('audio'))])
         earlier=[]
-        for record in checks.get('repairs',[]):
+        for record in checks.get('repairs',[])+checks.get('advisories',[]):
             if record.get('index')==item['index']:
                 if record.get('originalAudio'):
-                    earlier.append(dict(action='initial-voice-attempt',status='not-verified',candidateAudio=record['originalAudio'],check=record.get('originalCheck',{})))
+                    earlier.append(dict(action='initial-voice-attempt',status='retained' if record.get('retainedFirstTake') else 'not-verified',candidateAudio=record['originalAudio'],check=record.get('originalCheck') or record.get('check',{})))
                 earlier.extend(dict(a,action='retry-clauses',status='adopted' if a.get('repaired') else 'not-verified',check=a.get('candidateCheck',{})) for a in record.get('attempts',[]) if isinstance(a,dict))
         earlier.extend(dict(a,action='adapt-source',status='adopted' if a.get('adopted') else 'not-verified',candidateSeconds=a.get('seconds'),check=a.get('languageCheck',{})) for a in evidence['natural'] if a.get('index')==item['index'])
         earlier.extend(a for a in evidence['finishing'] if a.get('index')==item['index'])

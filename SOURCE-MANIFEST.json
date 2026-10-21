@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "scope": "Local source candidate with checksum-approved original synthetic references; no executable/model/private recording publication",
+  "scope": "Reviewed GitHub source subset; the bilingual project pages and original interface screenshots are additional repository content.",
   "published": false,
   "legalApproval": false,
   "files": [
@@ -21,8 +21,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "26e47dd83f6690951720b0781a46e35595658c4a4e7156dfcd161154856bf907",
-      "bytes": 6052
+      "sha256": "58f915b91615418be0bc2762b964c06ea2907561a694f619e373716c8452c2fb",
+      "bytes": 15520
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -35,14 +35,334 @@
       "bytes": 181422
     },
     {
+      "path": "Resources/Licenses/anicanto-core/block-buffer-0.10.4/LICENSE-APACHE",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5",
+      "bytes": 10849
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/block-buffer-0.10.4/LICENSE-MIT",
+      "sha256": "d5c22aa3118d240e877ad41c5d9fa232f9c77d757d4aac0c2f943afc0a95e0ef",
+      "bytes": 1082
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/cfg-if-1.0.5/LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+      "bytes": 10847
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/cfg-if-1.0.5/LICENSE-MIT",
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397",
+      "bytes": 1057
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/cpufeatures-0.2.17/LICENSE-APACHE",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5",
+      "bytes": 10849
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/cpufeatures-0.2.17/LICENSE-MIT",
+      "sha256": "ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985",
+      "bytes": 1082
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/crypto-common-0.1.7/LICENSE-APACHE",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5",
+      "bytes": 10849
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/crypto-common-0.1.7/LICENSE-MIT",
+      "sha256": "3521672491a3479422d5fe1aca6645dd2984090f85da6e5205abfb18fb7a6897",
+      "bytes": 1065
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/digest-0.10.7/LICENSE-APACHE",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5",
+      "bytes": 10849
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/digest-0.10.7/LICENSE-MIT",
+      "sha256": "9e0dfd2dd4173a530e238cb6adb37aa78c34c6bc7444e0e10c1ab5d8881f63ba",
+      "bytes": 1057
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/generic-array-0.14.7/LICENSE",
+      "sha256": "c09aae9d3c77b531f56351a9947bc7446511d6b025b3255312d3e3442a9a7583",
+      "bytes": 1107
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/itoa-1.0.18/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/itoa-1.0.18/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/libc-0.2.190/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/libc-0.2.190/LICENSE-MIT",
+      "sha256": "123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e",
+      "bytes": 1066
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/memchr-2.8.3/COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f",
+      "bytes": 126
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/memchr-2.8.3/LICENSE-MIT",
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f",
+      "bytes": 1081
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/proc-macro2-1.0.107/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/proc-macro2-1.0.107/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/quote-1.0.47/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/quote-1.0.47/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde-1.0.228/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde-1.0.228/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_core-1.0.228/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_core-1.0.228/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_derive-1.0.228/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_derive-1.0.228/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_json-1.0.150/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/serde_json-1.0.150/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/sha2-0.10.9/LICENSE-APACHE",
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5",
+      "bytes": 10849
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/sha2-0.10.9/LICENSE-MIT",
+      "sha256": "b4eb00df6e2a4d22518fcaa6a2b4646f249b3a3c9814509b22bd2091f1392ff1",
+      "bytes": 1138
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/syn-2.0.119/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/syn-2.0.119/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/typenum-1.20.1/LICENSE",
+      "sha256": "db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a",
+      "bytes": 17
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/typenum-1.20.1/LICENSE-APACHE",
+      "sha256": "516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406",
+      "bytes": 10835
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/typenum-1.20.1/LICENSE-MIT",
+      "sha256": "a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f",
+      "bytes": 1083
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "bytes": 9723
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/unicode-ident-1.0.27/LICENSE-UNICODE",
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1",
+      "bytes": 1995
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/version_check-0.9.5/LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+      "bytes": 10847
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/version_check-0.9.5/LICENSE-MIT",
+      "sha256": "b7e650f3fce5c53249d1cdc608b54df156a97edd636cf9d23498d0cfe7aec63e",
+      "bytes": 1085
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-0.62.2/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-0.62.2/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-collections-0.3.2/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-collections-0.3.2/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-core-0.62.2/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-core-0.62.2/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-future-0.3.2/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-future-0.3.2/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-implement-0.60.2/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-implement-0.60.2/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-interface-0.59.3/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-interface-0.59.3/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-link-0.2.1/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-link-0.2.1/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-numerics-0.3.1/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-numerics-0.3.1/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-result-0.4.1/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-result-0.4.1/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-strings-0.5.1/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-strings-0.5.1/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-threading-0.2.1/license-apache-2.0",
+      "sha256": "c16f8dcf1a368b83be78d826ea23de4079fe1b4469a0ab9ee20563f37ff3d44b",
+      "bytes": 11351
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/windows-threading-0.2.1/license-mit",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "bytes": 1141
+    },
+    {
+      "path": "Resources/Licenses/anicanto-core/zmij-1.0.23/LICENSE-MIT",
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+      "bytes": 1023
+    },
+    {
       "path": "Resources/MODEL-NOTICES.txt",
       "sha256": "eb0923563f3922f66be0ba83e41dc560a3c9b396f884b124fd4492bc9e237d79",
       "bytes": 4448
     },
     {
       "path": "Resources/PUBLIC-DISTRIBUTION.json",
-      "sha256": "2d455775f76078970c5a8bd0444896b0f851c6ff4d021f7b5ae14d63313fd85b",
-      "bytes": 5232
+      "sha256": "cb59c9c012719a2428d2a8d5a400f25c53e76bfce7c8de880e738298289e78ce",
+      "bytes": 5306
     },
     {
       "path": "Resources/THIRD-PARTY-NOTICES.txt",
@@ -215,9 +535,24 @@
       "bytes": 14605
     },
     {
+      "path": "Resources/core-dependencies.json",
+      "sha256": "23ce095beda5585d5faa2967de005ec9721e69a21f092bb853654bf6bd1835b8",
+      "bytes": 9562
+    },
+    {
       "path": "Resources/cosy-models.json",
       "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
       "bytes": 3
+    },
+    {
+      "path": "Resources/cosy-native-requirements.lock",
+      "sha256": "d73d142515a53a27a8e705d01e47069e7fbe891e0c1e6d1349134984c9bf00ef",
+      "bytes": 1809
+    },
+    {
+      "path": "Resources/cosy-native-sources.json",
+      "sha256": "cd0b2733ee681dfd080c8d5bb2d54340e88e8fc49a276d7dd962001021c88164",
+      "bytes": 562
     },
     {
       "path": "Resources/cosy-requirements.lock",
@@ -226,8 +561,13 @@
     },
     {
       "path": "Resources/cosy.py",
-      "sha256": "835d569d39ac0e53bbe1949f960368a2324cf31d7b9e97ab0a4908fb06972b03",
-      "bytes": 9324
+      "sha256": "54a2aaae2141cb8e84734a8deab15a36379a85dac1675c1619e8db6a9b6351fe",
+      "bytes": 10141
+    },
+    {
+      "path": "Resources/cosy_native.py",
+      "sha256": "bf9b57ab6763ebe5b124b04936c640dc3760288a0d59d5b9d5aaee794a79eb9e",
+      "bytes": 2817
     },
     {
       "path": "Resources/delivery.py",
@@ -276,8 +616,8 @@
     },
     {
       "path": "Resources/dubbing.py",
-      "sha256": "9bd226c34bd959824ebb043cb20a3c63335dbdc4e8daaa9d4b07466e242149b6",
-      "bytes": 49344
+      "sha256": "63180a93c2d05110bd93fed843d7d89076db258fcaa13c9604db0a92409f0099",
+      "bytes": 49809
     },
     {
       "path": "Resources/dubbing_runner.py",
@@ -296,13 +636,13 @@
     },
     {
       "path": "Resources/en.lproj/Localizable.strings",
-      "sha256": "0b5159560eed915457e56f9ade05c9e0507f9cb8c3422bd116e4ec95cace84d8",
-      "bytes": 142323
+      "sha256": "42f6e43913bb1a773d1f3c13eba1c43aad3dca938c7194bf47365b0216f2abfb",
+      "bytes": 142258
     },
     {
       "path": "Resources/engine_availability.py",
-      "sha256": "5a7cc1a26e5cacea1aaaaaf8def384095ee056904f8a7e943c650c5c1fc0297e",
-      "bytes": 766
+      "sha256": "8949c61a837d41ecb26762d806a14e0b4ed08823ee7e49c2e1dfc7d14fb5cb94",
+      "bytes": 786
     },
     {
       "path": "Resources/engine_policy.py",
@@ -326,8 +666,8 @@
     },
     {
       "path": "Resources/fast_mode.py",
-      "sha256": "f7a50c2b97e9a0e92f214b68b3f9e07eeee3271385d0ef3629c0f67a7eb21954",
-      "bytes": 20583
+      "sha256": "edc4f6548d069045e57ef138689960ff917ed7dc5633657934c75e59f03bcd99",
+      "bytes": 21317
     },
     {
       "path": "Resources/fonts/LICENSE",
@@ -391,8 +731,8 @@
     },
     {
       "path": "Resources/mac-runtime-catalog.json",
-      "sha256": "660bfc76d165fcdf2861120faf2d0d9669dae87b4840b3011ac68a0210656ae4",
-      "bytes": 1258
+      "sha256": "b292c93e7e39130ff35818213d216641b872344ee0057277ee907859bb544620",
+      "bytes": 1301
     },
     {
       "path": "Resources/mac_runtime.py",
@@ -426,13 +766,13 @@
     },
     {
       "path": "Resources/model-options.json",
-      "sha256": "21ba75cb60543f69a503f75ed510a2a914f9ef19b4e8cfbf3294d5cb6ba1d894",
-      "bytes": 220804
+      "sha256": "1feff7c2ea2b7b9e3dba8998beb479135af52d02d7c3bab7488a53875fc23f06",
+      "bytes": 224744
     },
     {
       "path": "Resources/model_catalog.py",
-      "sha256": "66f4e57d1ba8734c333ea058aac5e68cbe23dc181876e74b8ba980ce94caf1ef",
-      "bytes": 3211
+      "sha256": "bc7e874cd9ca49a6ea803a36c221a673bf3f09ca534c540aa7f36e9ba74afc1d",
+      "bytes": 3273
     },
     {
       "path": "Resources/model_download.py",
@@ -461,8 +801,8 @@
     },
     {
       "path": "Resources/model_recovery.py",
-      "sha256": "e51854775bdaa1735eb45b4074a76c06c407c507bcc75d4f233813b4f7f977be",
-      "bytes": 3267
+      "sha256": "861af4b4b7bdf8ea65c2be750ac604040f323d964a25be2c9fa9abe8756db0fb",
+      "bytes": 3269
     },
     {
       "path": "Resources/model_switch.py",
@@ -471,8 +811,8 @@
     },
     {
       "path": "Resources/multitrack.py",
-      "sha256": "bb7cd1dd4c7a2e5af2977c1636766ac908c2060ad1011904ab17abb214f53900",
-      "bytes": 50187
+      "sha256": "6e6980dbb1ae6b1d606231be3e88f1cf20ff9ce4c99f018c8167e8eba4650164",
+      "bytes": 50193
     },
     {
       "path": "Resources/natural-voices/Kokoro-model-card.md",
@@ -541,8 +881,8 @@
     },
     {
       "path": "Resources/natural_delivery.py",
-      "sha256": "5169029e401554caca4cc6da0e77716d45b55e159b12b62cd890f3772d8be6e1",
-      "bytes": 9353
+      "sha256": "9b706069a852ac658707e68ec48ba0f4cc9750600fd670ceb407e5c40fda5fa7",
+      "bytes": 9395
     },
     {
       "path": "Resources/natural_finish.py",
@@ -565,14 +905,19 @@
       "bytes": 12060
     },
     {
+      "path": "Resources/normal_engine_fallback.py",
+      "sha256": "b9c91245e5034e43df996486491bcdad6a1b81e49fe09e7133754c3148f809ab",
+      "bytes": 10203
+    },
+    {
       "path": "Resources/normal_mode.py",
-      "sha256": "507fb6aa6bed68717f768f5f8f22d730e13fea3d765f067bd701c651d34e169b",
-      "bytes": 33715
+      "sha256": "518a938f8d4208aad297365a7235a4d575bee2866c89bb53da102c9143ff87ec",
+      "bytes": 34563
     },
     {
       "path": "Resources/normal_recovery.py",
-      "sha256": "7679a2bbee3c4b13f086f3f5c2aa38947c86c1a81524ce65da478d428c3dbfbb",
-      "bytes": 27097
+      "sha256": "034a4d5a480f75775b0d160ebf117557d4006dd61b28eef351529dbb79355d2a",
+      "bytes": 27180
     },
     {
       "path": "Resources/normal_reference_audit.py",
@@ -581,8 +926,8 @@
     },
     {
       "path": "Resources/normal_voice_fallback.py",
-      "sha256": "9fc998d0ec111b97446e2f0172ea29b72b26b17af97d277e06032fc46902b0b8",
-      "bytes": 8694
+      "sha256": "8bfa305f8406e28b47c5e6b91ff6def1e36f170a0e334d2d07e0645312129ee0",
+      "bytes": 8777
     },
     {
       "path": "Resources/ocr_licenses.py",
@@ -681,7 +1026,7 @@
     },
     {
       "path": "Resources/production-contract.json",
-      "sha256": "67b792ff2a47ae2af3bb9ab1ec53427f73da85409bb9398fcf0989f5aaf7aa99",
+      "sha256": "08683984b894cfbecc8134a2faf7e2b29aac83d93cdd0143baa81986966584c5",
       "bytes": 1709
     },
     {
@@ -751,8 +1096,8 @@
     },
     {
       "path": "Resources/qwen_reference.py",
-      "sha256": "f2f0824da9664c1d2eece7a893442ff5388febfabaf237e09ee00318e60d819c",
-      "bytes": 3593
+      "sha256": "f54aa6e152dadab2d6c27e3a7c8adfcc47ce59ee48cb7d580c2036d854d9c28f",
+      "bytes": 3595
     },
     {
       "path": "Resources/qwen_voice.py",
@@ -781,18 +1126,18 @@
     },
     {
       "path": "Resources/review_choices.py",
-      "sha256": "3750c438a7490aa34a2d9f64b152facfe173ed92041eea4954c77de07825ee53",
-      "bytes": 5017
+      "sha256": "5f917f0095c3d4bbe9dfaba6a9ae06f90534dbc11527af76a7274776ada87981",
+      "bytes": 5444
     },
     {
       "path": "Resources/review_diagnostics.py",
-      "sha256": "dcbbc7fecc0a188022ae8d70376d72791b6f86328adf2ac990aa63c16e120bb4",
-      "bytes": 7190
+      "sha256": "86da73c99043d3bdb7d48e3fa84cac02b021fdfde954d45157483a927ccba4d8",
+      "bytes": 8520
     },
     {
       "path": "Resources/review_report.py",
-      "sha256": "ef9241327d7f03ba7018279e548aacd2960f9c2a44f19ee7dba9593cd8a1aaf2",
-      "bytes": 10656
+      "sha256": "5258802ecc6ece1ed43e836024b0fb422c351a652235d954506f548c3911d879",
+      "bytes": 12419
     },
     {
       "path": "Resources/review_retry.py",
@@ -1786,8 +2131,8 @@
     },
     {
       "path": "Resources/tts-vendor/wsyue/matcha/utils/utils.py",
-      "sha256": "f9768a89bbea7fa9970a818f90d705281f189eafdb2bafd2f3e9ed521491d561",
-      "bytes": 7159
+      "sha256": "d9be141d47d40b92c0acead3f5304216d74ca6577a798ed4dbc199eb58cd07cd",
+      "bytes": 7176
     },
     {
       "path": "Resources/tts_health.py",
@@ -1821,8 +2166,8 @@
     },
     {
       "path": "Resources/voice-models.json",
-      "sha256": "bfc5ac74285e860a530c510af9da28219456a65d23801116c7580fcbaeac424f",
-      "bytes": 36922
+      "sha256": "399f25f7e88275f6df632b46f47feff6ca3097ebbfd100da940e53cd50ed822b",
+      "bytes": 40652
     },
     {
       "path": "Resources/voice_expression.py",
@@ -1831,8 +2176,8 @@
     },
     {
       "path": "Resources/voice_models.py",
-      "sha256": "ca2e4f08fadef07f0253cfef45926d86745ac34f31f423670b92100ef0b61ef5",
-      "bytes": 2220
+      "sha256": "e4267f76ecb125b7ab992e6578079abf0ce2266266ab46c8714f5844bf642999",
+      "bytes": 2284
     },
     {
       "path": "Resources/voice_samples.py",
@@ -2061,8 +2406,8 @@
     },
     {
       "path": "Resources/zh-HK.lproj/Localizable.strings",
-      "sha256": "6ae8bab4f729265b2b1d32991f4b11331b0d9324836f8a5ef55ec28aa4027eb6",
-      "bytes": 120104
+      "sha256": "cbb59cab7a21c96491b771bfc655ef9a0771d09b81733bb695aa250ef9e3b248",
+      "bytes": 120018
     },
     {
       "path": "Sources/AIResultSummary.swift",
@@ -2146,8 +2491,8 @@
     },
     {
       "path": "Sources/DubbingUI.swift",
-      "sha256": "b18f29f781f58fe3994c67e9ae8fa1cadfd295a7d3f63f59cc67d8c6392e62e8",
-      "bytes": 20572
+      "sha256": "e1ea043029d21ffdd530c631e62df84b28333244c51ef39b88bece13f1c26a0a",
+      "bytes": 20679
     },
     {
       "path": "Sources/EditorScriptSync.swift",
@@ -2156,8 +2501,8 @@
     },
     {
       "path": "Sources/Engine.swift",
-      "sha256": "121901db5ecd698751f93ed6e55db5429ce86c29e9500b9d4f460630400cd841",
-      "bytes": 45402
+      "sha256": "bd31fb77cbd04a9d18f3a408bbb8d6f4fe0ea69c269d3de3bd72ce0f7db5ae71",
+      "bytes": 45635
     },
     {
       "path": "Sources/FirstRunDeployment.swift",
@@ -2176,13 +2521,13 @@
     },
     {
       "path": "Sources/Main.swift",
-      "sha256": "2f9056e184bca6d7053c115004174847c8cfe31a95350123eadde1413d6a182a",
-      "bytes": 94273
+      "sha256": "d35584a8f2c703c2184d084cc97852f2d501194674987e71208ce29b501f7797",
+      "bytes": 94367
     },
     {
       "path": "Sources/ModelDeployment.swift",
-      "sha256": "4d2d5a167d6a1f7b9c966215113f21b153d3be6ae8b6a71b454ce60fb56dfa66",
-      "bytes": 15975
+      "sha256": "f82555c1a70d19a1ae316535e6d88d7955ab66ad6c6e5419f8e6f6f4656e95db",
+      "bytes": 16136
     },
     {
       "path": "Sources/MonitorSubtitles.swift",
@@ -2256,8 +2601,8 @@
     },
     {
       "path": "Sources/ProfessionalModelBrowser.swift",
-      "sha256": "1988b331a47dbc4049be3a4e52052b062a82ebc2d649e05fdccaaf2cbb3443fa",
-      "bytes": 10436
+      "sha256": "f386f9c9bdc6ff9a6d2e9b8a61803dd638c3ac671ed189891eef216bfe48d233",
+      "bytes": 10497
     },
     {
       "path": "Sources/ProfessionalSettings.swift",
@@ -2386,7 +2731,7 @@
     },
     {
       "path": "Sources/StudioContractCatalog.swift",
-      "sha256": "c703e4dc8ab8d141382656493e7d02e9bba95d8ea9924130e2298a7525fc01ca",
+      "sha256": "235d53952496b1b0f0a5128fce367bd302f3bda67cbc6d4e29aa28357fe7bbf2",
       "bytes": 1887
     },
     {
@@ -2496,8 +2841,8 @@
     },
     {
       "path": "Sources/VoiceModels.swift",
-      "sha256": "41b6959cd2275228d3802dfaeb24f6c5f7aa2950378f0a3068567d1185a792a1",
-      "bytes": 8038
+      "sha256": "893cd06c5c42dcc024ddb96371f3fcd92bd8db3323d88343f031f22205839603",
+      "bytes": 8154
     },
     {
       "path": "Sources/VoiceRegenerationLaunch.swift",
@@ -2556,7 +2901,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "b4189c8044f59cd7994fcbfe7dbb17dbadaa878c01838237bc1abd04e0c72a3f",
+      "sha256": "9eeb715e9473f1e034120c2e19e3047ff0eb1452c3eece7dbeba16326080e541",
       "bytes": 66
     },
     {
@@ -2576,8 +2921,8 @@
     },
     {
       "path": "core/src/lib.rs",
-      "sha256": "27add9c6168be61743d2013c0d7b46b0401873cbcf74b5b0b7d82f1241687347",
-      "bytes": 29848
+      "sha256": "522d732433a95d07b02f9714d46f027ccaa11dc2a412c0d6ea37df0fadabfa9a",
+      "bytes": 29761
     },
     {
       "path": "core/src/main.rs",
@@ -2611,13 +2956,13 @@
     },
     {
       "path": "docs/PUBLIC-DISTRIBUTION-REVIEW.md",
-      "sha256": "a0211d4b18ae2489ce86bee933dcef0030368a63c21a030f23df95bb5dd8d3b8",
-      "bytes": 17571
+      "sha256": "15ee3a8c3992d94fc3d634a39f37f3e4bccc3ea0a6398bdb4f58b8eac3b3a90c",
+      "bytes": 18309
     },
     {
       "path": "docs/README.md",
-      "sha256": "dde5e9dbe43c846582bb2b2558fb8a894dcba7998853cfe97395fd844607c5cb",
-      "bytes": 1467
+      "sha256": "c4bf1d5c005097ad5eef276c063fcc43694a7848624039fc79de6a05f2edf7e1",
+      "bytes": 1543
     },
     {
       "path": "docs/SHARED-ARCHITECTURE.md",
@@ -12196,8 +12541,8 @@
     },
     {
       "path": "scripts/build.py",
-      "sha256": "caa467479eab3ab34093a077d0a133a1b4ac7ee8c3bd713ea8b06527065776f5",
-      "bytes": 12352
+      "sha256": "d41b3aac590021becf4b95e0ea499a535b709e8388ea5b697bf37315bec6e9c2",
+      "bytes": 12393
     },
     {
       "path": "scripts/build_core.py",
@@ -12236,8 +12581,8 @@
     },
     {
       "path": "scripts/download_sources.py",
-      "sha256": "77419abeabb8b0c9b53863c40248dc1b7a1b266c89cc25ae7f06537a18b061ca",
-      "bytes": 5476
+      "sha256": "58a77bb6304665da7c3e9e6490df1612f3a275350a8ddd8cfff9a82f596e80f7",
+      "bytes": 5616
     },
     {
       "path": "scripts/fetch_studio_notices.py",
@@ -12271,8 +12616,8 @@
     },
     {
       "path": "scripts/package_shared_studio.py",
-      "sha256": "3f5fad32066256fa91fd62f6679ae55cfd3f2db7d1668d532d8fac90a09e1946",
-      "bytes": 6598
+      "sha256": "478d1c0e43e50f3c41e8b4f1df14fc177a70c21a50043996b6996aa8c435b734",
+      "bytes": 7116
     },
     {
       "path": "scripts/package_windows.py",
@@ -12321,13 +12666,13 @@
     },
     {
       "path": "scripts/stage_release.py",
-      "sha256": "d2d79ab365ee19aaaff092ed60a0d97ed892bfb08998ea983adcceab3d349040",
-      "bytes": 5407
+      "sha256": "3a0e781300e256580113fb400a46479b6f03f16e42b220876dc1852a91df29bc",
+      "bytes": 5434
     },
     {
       "path": "studio/backend.py",
-      "sha256": "6e271dc57adc8bd871e07ebafd5815108f9961fef4645326ddc976ea91cc3894",
-      "bytes": 40543
+      "sha256": "ad3b7b65cc644a8e86f515e8978662cc71b307ad1186024254b05f5a21471b8a",
+      "bytes": 40650
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -12511,12 +12856,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "7c3ebafc695aa4e37d367dbb312668442a7efff77dcc2ea69d2d25e0fd6367cc",
+      "sha256": "65bbf37c21a3217eb892877ee3db693cefe897d2845bfd64249be510d2afaee3",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "54cbc541f3700a74ed4fbcaa0ce51990619004d4891535d6f445bc967e9baf63",
+      "sha256": "35b2042a26016b9a0ef514ded5fab302a520d15e925603ee6433dbf65c6f06ce",
       "bytes": 543
     },
     {
@@ -12541,12 +12886,12 @@
     },
     {
       "path": "studio/src-tauri/src/main.rs",
-      "sha256": "e5b6c334c9759a7291bd69b752e94f06216fe78957e4c1a75d17cbc67857cee7",
-      "bytes": 39407
+      "sha256": "fa37f2a9f35edde90d39938647dd624d319ce444e641c99c1ddaf8d7b4e423b0",
+      "bytes": 39622
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "92060fefc5bf849db4375f7c4985e6c987d93e45d1fe7030a32bc50fad52633d",
+      "sha256": "24baed3c423000e985c2406e3d92c23ff665d97f46249a0bfcfa7b24434dc4db",
       "bytes": 956
     },
     {
@@ -12556,8 +12901,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "3c951a2cb2412aa2a58d02e49bcfb22485b33113f794bdad22d475c12e21cd76",
-      "bytes": 146026
+      "sha256": "18d62c9e315557b815e2596e5e2c65dc72a391e052b034a9964d29df4bd35d5d",
+      "bytes": 149998
     },
     {
       "path": "studio/web/assistant-motion.js",
@@ -12576,13 +12921,13 @@
     },
     {
       "path": "studio/web/help.js",
-      "sha256": "97dd03cb184ebc8ff1c971fcd1293ec34d01cae176dc959a031d6f276be2925e",
-      "bytes": 95596
+      "sha256": "c655406030baeb618dabc260e48ac5c6656a6267613c28b97f05398c6b368a44",
+      "bytes": 95785
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "20240d7fd394f70fb07857ee4563ebac6da903b0e09b8558f5c10e8cd5320d54",
-      "bytes": 57960
+      "sha256": "bd7262e6da4eb2a31dcde2b165e15dfab33a0d7ccd03052113cbe7b05f870baa",
+      "bytes": 60450
     },
     {
       "path": "studio/web/icons.js",
@@ -12601,13 +12946,13 @@
     },
     {
       "path": "studio/web/licence-copy.js",
-      "sha256": "bf4d8f9d043bda11260f88f00a81bdd21dc1714e8d0f6948e2b8717925634b00",
-      "bytes": 5770
+      "sha256": "50011251bf8a8672780316d7852af4d131e8614b6e47705ea393659258b5886a",
+      "bytes": 5869
     },
     {
       "path": "studio/web/model.js",
-      "sha256": "9a16e1d7cc1ee582866528acd916b86b6a5d995d2e2bef3a20ca7f3a283ad829",
-      "bytes": 2672
+      "sha256": "9f501831026ee73b23edae47cb67cd0043de5188e6e6a45361cd3eeb37f8e055",
+      "bytes": 2713
     },
     {
       "path": "studio/web/product-info.js",
@@ -12626,8 +12971,8 @@
     },
     {
       "path": "studio/web/review-page.js",
-      "sha256": "db9d441f118b51dd64d5687572d6ce5107b0f9b9bf3ab1164b2ba7ea6bf1a1d7",
-      "bytes": 9705
+      "sha256": "2bc21e6e3c07af6df67d7f863c1466c1281ef9f50c29ab84e48ceb23da81805d",
+      "bytes": 10946
     },
     {
       "path": "studio/web/review-viewport.js",
@@ -12641,8 +12986,8 @@
     },
     {
       "path": "studio/web/styles.css",
-      "sha256": "bd2ebae175fb280e16fdc20331b9fd697f5b158020ec53b3516e16e3ae4fbec2",
-      "bytes": 44462
+      "sha256": "15f32d35b91766162671920da65233d691e00d4de3b4d526a5f4c293ccad82e5",
+      "bytes": 44615
     },
     {
       "path": "studio/web/workflow-text.js",
@@ -12851,8 +13196,8 @@
     },
     {
       "path": "tests/shared_installation_ui.cjs",
-      "sha256": "1ad9f966caec0b1fef3244df35e9ad438501af02ec609375de5f2d7ec8f575df",
-      "bytes": 5959
+      "sha256": "62c0f32548f0d05f6d2935c6be86cdd98edd2e5d282aa49e6c6e556abfc6ef58",
+      "bytes": 6587
     },
     {
       "path": "tests/shared_manual_ui.cjs",
@@ -12901,8 +13246,8 @@
     },
     {
       "path": "tests/shared_review_diagnostics_ui.cjs",
-      "sha256": "7793b00432e0ab780d0bf34097fa83643ca0315d20683deee46e3fe55b178945",
-      "bytes": 3666
+      "sha256": "9761d1b760c21380d5fd26cebb263769b2affe695cae41843d27eee4c277cf3e",
+      "bytes": 4504
     },
     {
       "path": "tests/shared_review_scroll_ui.cjs",
@@ -13111,8 +13456,8 @@
     },
     {
       "path": "tests/test_download_sources.py",
-      "sha256": "cc017b8c078f4fcaf7346d3200a1909aa9b2f8dbea020e41ed0f3e3e04417cb8",
-      "bytes": 2494
+      "sha256": "e37bb45620facbd9d62dbbc72401ca4e61f5691c5586c9ed111fb20963e05214",
+      "bytes": 2507
     },
     {
       "path": "tests/test_drama3.py",
@@ -13136,8 +13481,8 @@
     },
     {
       "path": "tests/test_engine_availability.py",
-      "sha256": "3ddd6843cebce0fa8f6682c149b375fd80b9a5a0699bb04ae0fc49ac30f3ada2",
-      "bytes": 1139
+      "sha256": "620e5aeb7b69c9fc2cbe7d57a02f11859d466e0b27a940825b259d1c1efab5d3",
+      "bytes": 1208
     },
     {
       "path": "tests/test_engine_policy.py",
@@ -13295,14 +13640,19 @@
       "bytes": 5443
     },
     {
+      "path": "tests/test_normal_engine_fallback.py",
+      "sha256": "3f6aef7f531136614161f9f7a678895bfcf4be6df6d0e88eaa115bcd6d3f39e8",
+      "bytes": 4753
+    },
+    {
       "path": "tests/test_normal_mode.py",
-      "sha256": "8026d6afc7996c1b603ec85fa55c89a032b6eb2b54d51c94344bb1cb11a4a377",
-      "bytes": 11670
+      "sha256": "dd578aaed3e9ca6a704e25e7be4710340f207fc92e7476011069d16176ec3a45",
+      "bytes": 14021
     },
     {
       "path": "tests/test_normal_recovery.py",
-      "sha256": "093585783c3518fb762ae39a35acd1cb87c9bc2141b7f2d99a73668fc090e17b",
-      "bytes": 10241
+      "sha256": "4b9aab958375b2ffd263c0b5b93607c329aaa377d00a7c905ee45fa32c94f32f",
+      "bytes": 10557
     },
     {
       "path": "tests/test_normal_script_rescue.py",
@@ -13311,13 +13661,18 @@
     },
     {
       "path": "tests/test_normal_voice_fallback.py",
-      "sha256": "8cbc721096bc9becff283062d806cd778377c6f1bc4eebd8faba996e29f5f0c0",
-      "bytes": 8065
+      "sha256": "000c42494117d4dfcdc482ab90a725255e0038a8e301c76b8542460e11abc0e8",
+      "bytes": 8094
     },
     {
       "path": "tests/test_ocr_optimisation.py",
       "sha256": "4610a178803b70190708a6e68913eea3df7322a00be689854ade62eede3f3547",
       "bytes": 4359
+    },
+    {
+      "path": "tests/test_official_cosy.py",
+      "sha256": "d7736ba4b60bb8c19edd1bb221cf371e7c7433556d4edbca70cc797b1f2380c6",
+      "bytes": 2797
     },
     {
       "path": "tests/test_opening.py",
@@ -13356,8 +13711,8 @@
     },
     {
       "path": "tests/test_preview_delivery.py",
-      "sha256": "4f4395b80e7a654cad3c1c4d1920ba587d0fd93f11432c9ebb9f8a1b75d1cd06",
-      "bytes": 3647
+      "sha256": "935f67c281466ddc40bf9ef2944af5deea5095156069924d6a1fdf3290551717",
+      "bytes": 4065
     },
     {
       "path": "tests/test_production_progress.py",
@@ -13456,8 +13811,8 @@
     },
     {
       "path": "tests/test_review_decisions.py",
-      "sha256": "d03fe0ccfb1e12e897ec737e201e4a7195338f6a15b3aca62244ad470aed945c",
-      "bytes": 10764
+      "sha256": "a808e6f6383c938dc86ff55397bf1fc304cba93da78f891516c842218928ef5b",
+      "bytes": 13117
     },
     {
       "path": "tests/test_role_commit_render.py",
@@ -13526,8 +13881,8 @@
     },
     {
       "path": "tests/test_shared_studio.py",
-      "sha256": "b54cc3e00eee038a89e75773711453a024ef51e556b7410e72a5047884164480",
-      "bytes": 22960
+      "sha256": "3a599181a469f5c2ae4f3cfcc47f32239163b134d7efec63919bc78fb9c7196f",
+      "bytes": 23124
     },
     {
       "path": "tests/test_signal_quality.py",
@@ -13576,8 +13931,8 @@
     },
     {
       "path": "tests/test_speech_timing.py",
-      "sha256": "8e7836ab0111b2d2b95c9a0fc202709187cc3c87688ffb9325b6453df03cd935",
-      "bytes": 2925
+      "sha256": "e4b01b654500c418f076db618ec28fbceafe2f4842bf6f4fca65ee1c504ec903",
+      "bytes": 4181
     },
     {
       "path": "tests/test_studio_preview.py",
@@ -13666,8 +14021,8 @@
     },
     {
       "path": "tests/test_voice_updates.py",
-      "sha256": "99da4b03dea9e7b5b462885214f60816fe1668079cd81514d74694d3d55876a5",
-      "bytes": 8804
+      "sha256": "3ec169f68a35d90db4d2b2e23b7084a1be975909f0711b28742bd1a1244488d9",
+      "bytes": 9016
     },
     {
       "path": "tests/test_whisper_audio.py",
@@ -13816,8 +14171,8 @@
     },
     {
       "path": "windows/conversion_details.py",
-      "sha256": "263d5862a9c0eff1f0bee8dba96ec0b728c57a49cc543ace1fad68b28452272b",
-      "bytes": 8298
+      "sha256": "32d1fcabee889d54ec71a355a87ba172aa398d25cce91b29deae493d3c598280",
+      "bytes": 8349
     },
     {
       "path": "windows/desktop.py",
@@ -13831,8 +14186,8 @@
     },
     {
       "path": "windows/desktop_state.py",
-      "sha256": "a03d3bd7f28319846cbe2f7cd158fc9f662f4eb85a76fa0d45530d21ff2c9404",
-      "bytes": 15103
+      "sha256": "0c93d3b9f9c46b01db908a46532a6bebb8b0986f4084bd565681dc68003a0a69",
+      "bytes": 15160
     },
     {
       "path": "windows/desktop_widgets.py",

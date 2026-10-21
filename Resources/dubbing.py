@@ -692,9 +692,14 @@ def render_complete_preview(cfg,job,cues,paths,report,run,emit):
    offset=round(anchor*sr)
    if natural:
     if len(samples)>math.floor(deadline*sr)-offset:
-     row.update(needsReview=True,requiresTimingReview=True,audio=str(path),failureKind='timing-overrun',rate=rate)
-     (job/'timing.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
-     raise ValueError(f'第 {row["index"]} 句精簡後仍超時；完整錄音及原稿已保留，未加速、截尾或推遲下一句。')
+     explicitly_accepted=cue.get('manualReviewChoice')=='accepted-defect-recording' and len(samples)/sr <= deadline-anchor+2.0 and anchor+len(samples)/sr <= cfg['duration']+.015
+     if explicitly_accepted:
+      row.update(needsReview=True,requiresTimingReview=True,acceptedTimingOverlap=True)
+      warnings.append(dict(index=row['index'],kind='timing-overrun',message='用家選用嘅完整錄音超出原定時段；已保留並標示重疊。'))
+     else:
+      row.update(needsReview=True,requiresTimingReview=True,audio=str(path),failureKind='timing-overrun',rate=rate)
+      (job/'timing.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+      raise ValueError(f'第 {row["index"]} 句精簡後仍超時；完整錄音及原稿已保留，未加速、截尾或推遲下一句。')
     raw,compression=samples.tobytes(),1.
    else:raw,compression=fit_pcm(cfg,samples.tobytes(),max(1/sr,(math.floor(deadline*sr)-offset)/sr),run)
    samples=array.array('h');samples.frombytes(raw)
