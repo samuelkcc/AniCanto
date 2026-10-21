@@ -4,8 +4,6 @@
   <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話. Original assistants celebrating Hong Kong Cantonese around a studio microphone." width="1200">
 </p>
 
-<p align="center"><img src="Resources/AniCanto-icon.png" alt="AniCanto Japanese-to-Cantonese dubbing icon" width="96"></p>
-
 # AniCanto
 
 **Your anime. A Cantonese voice.**

@@ -4,8 +4,6 @@
   <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話。原創助手圍住錄音咪，一齊探索香港廣東話。" width="1200">
 </p>
 
-<p align="center"><img src="Resources/AniCanto-icon.png" alt="AniCanto 日轉廣配音圖示" width="96"></p>
-
 # AniCanto
 
 **你嘅動畫，另一把聲音。**
