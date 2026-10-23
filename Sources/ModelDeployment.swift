@@ -25,12 +25,12 @@ struct ModelOption:Decodable,Identifiable {
 }
 enum ModelHardware {
     static var memoryGB:Double {Double(ProcessInfo.processInfo.physicalMemory)/1_073_741_824}
-    static var reserveGB:Double {min(8,max(3,memoryGB*0.15))}
+    static var reserveGB:Double {max(8,memoryGB*0.15)}
     static var gpuBudgetGB:Double {MTLCreateSystemDefaultDevice().map{Double($0.recommendedMaxWorkingSetSize)/1_073_741_824} ?? memoryGB}
     static var modelBudgetGB:Double {min(memoryGB-reserveGB,gpuBudgetGB)}
     static func suggestion(category:String,engine:String?=nil,tier:Int,memoryGB:Double=ModelHardware.memoryGB)->ModelOption? {
         let rows=ModelOption.all.filter{$0.engine != "qwen-tts" && $0.deployable && $0.category==category && (engine==nil || $0.engine==engine)}
-        let reserve=min(8,max(3,memoryGB*0.15))
+        let reserve=max(8,memoryGB*0.15)
         let gpuLimit=abs(memoryGB-ModelHardware.memoryGB)<0.01 ? ModelHardware.gpuBudgetGB:memoryGB*0.75
         let limit=min(memoryGB-reserve,gpuLimit)*(tier==0 ? 0.6:tier==1 ? 0.8:1)
         let cap:Double=tier==0 ? (category=="text" ? 4:category=="speech" ? 0.244:0.6):Double.greatestFiniteMagnitude

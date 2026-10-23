@@ -1037,7 +1037,7 @@ def batch_convert(cfg):
             from translation_source import configure as source_policy
             source_policy(current)
             if current.get('batchAutoSubtitles') and current.get('subtitleSource') != 'none':
-                sidecar = next((Path(item['video']).with_suffix(ext) for ext in ('.srt','.ass','.vtt') if Path(item['video']).with_suffix(ext).is_file()),None)
+                sidecar = next((Path(item['video']).with_suffix(ext) for ext in ('.srt','.ass','.ssa','.vtt') if Path(item['video']).with_suffix(ext).is_file()),None)
                 if sidecar:
                     current.update(subtitleSource='external',subtitle=str(sidecar),ocr=False)
                 else:
@@ -1046,9 +1046,10 @@ def batch_convert(cfg):
                     current.update(subtitleSource='embedded' if has_text else 'burned',subtitle=None,ocr=not has_text)
                 forward('字幕', '本集自動字幕來源：'+current['subtitleSource'])
             if current.get('subtitleSource') == 'external':
-                matches = [Path(item['video']).with_suffix(ext) for ext in ('.srt', '.ass', '.vtt')]
+                matches = [Path(item['video']).with_suffix(ext) for ext in ('.srt', '.ass', '.ssa', '.vtt')]
                 sub = Path(current['subtitle']) if current.get('batchExplicitSubtitle') and current.get('subtitle') else next((p for p in matches if p.is_file()), None)
                 if sub is None: raise ValueError('搵唔到同名外掛字幕；請放喺影片旁邊，或者改用畫面字幕／語音辨識。')
+                if not sub.is_file():raise ValueError('匯入嘅外掛字幕檔案已移動或刪除，請重新選擇。')
                 current['subtitle'] = str(sub)
             elif current.get('subtitleSource') == 'embedded':
                 meta = json.loads(run([current['ffprobe'], '-v', 'error', '-show_streams', '-of', 'json', current['video']]))

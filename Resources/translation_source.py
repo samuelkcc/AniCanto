@@ -15,6 +15,14 @@ CAPTION_FIELDS=('subtitleHint','captionRecords','captionAllocation','hybridEvide
 AUDIO_PRIORITY_PROMPT=' Japanese speech is the primary source. OCR captions are fallible auxiliary evidence for names and context. If OCR is missing, garbled or contradicts the Japanese, translate the Japanese transcript. Never copy a contradictory caption or discard a heard turn because OCR missed it. If the hearing itself is uncertain, preserve that uncertainty rather than inventing speech.'
 
 
+def priority_prompt(cfg):
+    if cfg.get('sourceLanguage')=='en':
+        return (' English speech is the primary source. Captions are fallible auxiliary evidence for names and context. '
+                'Translate the English transcript directly into the requested target language, one spoken turn at a time. '
+                'Never echo an English sentence as Cantonese dialogue, copy a contradictory caption, or import neighbouring speech.')
+    return AUDIO_PRIORITY_PROMPT
+
+
 def audio_only(cfg):return cfg.get('translationSource',COMBINED)==AUDIO_ONLY
 
 
@@ -58,14 +66,16 @@ def analyze_sources(w,cfg,job,meta):
         return dialogue.analyze(cfg,job,captions,w.run,w.emit)
     cfg['ocrEvidenceOnly']=True
     cfg.pop('sourceCaptionLanguage',None)
-    w.emit('日語原聲','先聽完整日文原聲；畫面字幕只作翻譯參考。',.10)
+    from source_language import speech_name
+    name='英文' if cfg.get('sourceLanguage')=='en' else '日文' if cfg.get('sourceLanguage')=='ja' else speech_name(cfg)
+    w.emit('原聲辨識',f'先聽完整{name}原聲；畫面字幕只作翻譯參考。',.10)
     cues=dialogue.analyze(cfg,job,[],w.run,w.emit)
     cfg['_ocrSpeechWindows']=[dict(start=c['start'],end=c['end']) for c in cues]
     failure=None
     try:captions=w.extract_cues(cfg,job,meta)
     except (RuntimeError,OSError,ValueError) as error:
         captions=[];failure=str(error)
-        w.emit('OCR 提示','畫面字幕未能辨識；繼續按日文原聲聽寫翻譯廣東話／英文。',.28,
+        w.emit('OCR 提示',f'畫面字幕未能辨識；繼續按{name}原聲聽寫翻譯廣東話／英文。',.28,
                warningCode='ocr-unavailable-audio-used',ocrError=failure)
     finally:cfg.pop('_ocrSpeechWindows',None)
     context=dialogue.caption_context(captions)
@@ -81,11 +91,11 @@ def analyze_sources(w,cfg,job,meta):
         cue['subtitleHint']=' ／ '.join(hints[:3])
         cue['captionEvidenceOnly']=True
     w.atomic_json(job/'subtitle-context.json',context)
-    w.atomic_json(job/'input-source.json',dict(primary='japanese-audio',captions='screen-ocr',
-        policyRevision='japanese-primary-ocr-auxiliary-2',
+    w.atomic_json(job/'input-source.json',dict(primary=cfg.get('sourceLanguage','ja')+'-audio',captions='screen-ocr',
+        policyRevision='source-primary-ocr-auxiliary-3',
         captionCount=len(captions),audioCueCount=len(cues),cueCount=len(result),ocrError=failure,
-        order=['japanese-asr','screen-ocr','integrated-translation'],region=cfg.get('ocrRect')))
-    w.emit('字幕整合',f'日文原聲 {len(cues)} 句；OCR {len(captions)} 段只作參考，之後整合翻譯。' if captions else '畫面未辨識到字幕；繼續按完整日文原聲翻譯，唔需要手動畫框。',.29)
+        order=[cfg.get('sourceLanguage','ja')+'-asr','screen-ocr','integrated-translation'],region=cfg.get('ocrRect')))
+    w.emit('字幕整合',f'{name}原聲 {len(cues)} 句；OCR {len(captions)} 段只作參考，之後整合翻譯。' if captions else f'畫面未辨識到字幕；繼續按完整{name}原聲翻譯，唔需要手動畫框。',.29)
     return result
 
 

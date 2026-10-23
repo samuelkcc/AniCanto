@@ -308,6 +308,8 @@ def gsv_audio(cfg,job,cues,run,emit):
    fingerprint=hashlib.sha256(Path(profile['reference']).read_bytes()).hexdigest()
    from voice_expression import settings as expression_settings
    expression=expression_settings(cfg)
+   from voice_parameters import overrides as voice_parameter_overrides
+   parameter_overrides=voice_parameter_overrides(cfg,backend)
    identity=[REVISION,cfg.get('productionMode','standard'),backend,"cosy-yue-instruct-trim-1",cfg.get('gsvDevice','mps'),cue['cantonese'],{k:profile.get(k) for k in ('id','promptText','language')},fingerprint]
    if backend in ('gpt-sovits','gpt-sovits-v2','gpt-sovits-v3','cosyvoice3'):identity.append(['expression-settings-1',expression])
    if backend=='qwen-tts':identity.append('qwen-auto-dialect-verified-4')
@@ -322,6 +324,7 @@ def gsv_audio(cfg,job,cues,run,emit):
    if backend=='drama3':
     from drama3 import REVISION as drama_revision
     identity.append(drama_revision)
+   if parameter_overrides:identity.append(['expert-voice-parameters-1',parameter_overrides])
    if cfg.get('audioRerunToken'):identity.extend(['audio-rerun',cfg['audioRerunToken']])
    if spoken_text!=cue['cantonese']:identity.extend(['spoken-alias',spoken_text])
    if readings:identity.extend(['v4-jyutping-1',readings])
@@ -351,6 +354,8 @@ def gsv_audio(cfg,job,cues,run,emit):
  publish(job,backend,cfg.get('targetLanguage','yue'),cues,paths)
  if any(not Path(item['output']).exists() for item in items):
   request=dict(gsvVersion=cfg.get('gsvVersion','v4'),storage=cfg['storage'],job=str(job),items=items,device=cfg.get('gsvDevice','mps'),sampleSteps=int(cfg.get('gsvSampleSteps',32)),targetLanguage=cfg.get('targetLanguage','yue'),qwenModel=cfg.get('qwenModel'),cosyModel=cfg.get('cosyModel'),voxcpmModel=cfg.get('voxcpmModel'),wsyueModel=cfg.get('wsyueModel'),drama3Model=cfg.get('drama3Model'),voxcpmDevice=cfg.get('voxcpmDevice','mps'),localTTSThreads=cfg.get('localTTSThreads',2),audioRerunToken=cfg.get('audioRerunToken'))
+  from voice_parameters import overrides as voice_parameter_overrides
+  request.update(voice_parameter_overrides(cfg,backend))
   request['primaryGeneration']=primary_generation
   try:
    if backend=='qwen-tts':

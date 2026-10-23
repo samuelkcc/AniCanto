@@ -68,6 +68,63 @@ class FastModeTests(unittest.TestCase):
     def test_exhausted_normal_repair_exports_final_with_original_audio_and_review_warning(self):
         self.check_one_pass_mux('normal',preview=True)
 
+    def test_normal_mix_keeps_complete_take_with_small_timing_overlap(self):
+        from contextlib import ExitStack
+        with tempfile.TemporaryDirectory() as folder,ExitStack() as stack:
+            job=Path(folder);take=job/'complete-take.wav';sr=24000
+            samples=array.array('h',(round(6000*math.sin(n*2*math.pi*330/sr)) for n in range(sr)))
+            with wave.open(str(take),'wb') as f:
+                f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(samples.tobytes())
+            cfg=dict(productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
+            cues=[dict(start=0.,end=.7,cantonese='完整一句。',speakerId='R01')]
+            paths=[take];schedule=[dict(start=0.,deadline=.7,shift=0.,method='source-clock')]
+            stack.enter_context(patch('source_counting.repair',return_value=[]))
+            stack.enter_context(patch('dubbing.gsv_audio',return_value=paths))
+            stack.enter_context(patch('normal_mode.repair_paths',return_value=paths))
+            stack.enter_context(patch('natural_finish.finish',return_value=(paths,schedule)))
+            stack.enter_context(patch('natural_delivery.repair',return_value=paths))
+            stack.enter_context(patch('natural_schedule.prepare',return_value=schedule))
+            stack.enter_context(patch('normal_recovery.recover',return_value=(paths,schedule)))
+            stack.enter_context(patch('review_retry.keep_better_baselines',return_value=(paths,schedule)))
+            stack.enter_context(patch('normal_engine_fallback.repair',return_value=paths))
+            stack.enter_context(patch('normal_voice_fallback.repair',return_value=paths))
+            stack.enter_context(patch('opening.local_ranges',return_value=[]))
+            output,warnings=fast_mode.synthesize(cfg,job,cues,worker.run,Mock())
+            rows=json.loads((job/'timing.json').read_text())
+            self.assertTrue(output.is_file());self.assertFalse(rows[0]['skipped'])
+            self.assertAlmostEqual(rows[0]['renderedSeconds'],1.,places=2)
+            self.assertAlmostEqual(rows[0]['overlapSeconds'],.3,places=2)
+            self.assertTrue(rows[0]['requiresTimingReview'])
+            self.assertIn('bounded-dialogue-overlap',{w['kind'] for w in warnings})
+
+    def test_normal_mix_does_not_introduce_overlap_between_separate_source_turns(self):
+        from contextlib import ExitStack
+        with tempfile.TemporaryDirectory() as folder,ExitStack() as stack:
+            job=Path(folder);take=job/'complete-take.wav';sr=24000
+            samples=array.array('h',(round(6000*math.sin(n*2*math.pi*330/sr)) for n in range(sr)))
+            with wave.open(str(take),'wb') as f:
+                f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(samples.tobytes())
+            cfg=dict(productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
+            cues=[dict(start=0.,end=.7,cantonese='第一句。',speakerId='R01'),dict(start=.7,end=1.2,cantonese='第二句。',speakerId='R01')]
+            # The first take fits its cached deadline but overlaps a later
+            # decision that moved the next voice earlier.
+            paths=[take,take];schedule=[dict(start=0.,deadline=1.1,shift=0.,method='source-clock'),dict(start=.7,deadline=2.,shift=0.,method='source-clock')]
+            stack.enter_context(patch('source_counting.repair',return_value=[]))
+            stack.enter_context(patch('dubbing.gsv_audio',return_value=paths))
+            stack.enter_context(patch('normal_mode.repair_paths',return_value=paths))
+            stack.enter_context(patch('natural_finish.finish',return_value=(paths,schedule)))
+            stack.enter_context(patch('natural_delivery.repair',return_value=paths))
+            stack.enter_context(patch('natural_schedule.prepare',return_value=schedule))
+            stack.enter_context(patch('normal_recovery.recover',return_value=(paths,schedule)))
+            stack.enter_context(patch('review_retry.keep_better_baselines',return_value=(paths,schedule)))
+            stack.enter_context(patch('normal_engine_fallback.repair',return_value=paths))
+            stack.enter_context(patch('normal_voice_fallback.repair',return_value=paths))
+            stack.enter_context(patch('opening.local_ranges',return_value=[]))
+            _,warnings=fast_mode.synthesize(cfg,job,cues,worker.run,Mock())
+            rows=json.loads((job/'timing.json').read_text())
+            self.assertTrue(rows[0]['skipped']);self.assertFalse(rows[1]['skipped'])
+            self.assertIn('introduced-dialogue-overlap',{w['kind'] for w in warnings})
+
     def check_one_pass_mux(self, mode,missing_script=False,preview=False):
         from contextlib import ExitStack
         with tempfile.TemporaryDirectory() as folder,ExitStack() as stack:
@@ -128,8 +185,10 @@ class FastModeTests(unittest.TestCase):
                 self.assertTrue(report['incompleteDelivery']['missingDialogue']>0)
                 self.assertTrue(report['qualityDefects'])
                 audio_streams=[s for s in result['streams'] if s['codec_type']=='audio']
-                self.assertEqual(audio_streams[0]['disposition']['default'],1)
-                self.assertEqual(audio_streams[-1]['disposition']['default'],0)
+                # Every mocked take is longer than the available source slot;
+                # original audio remains the default rather than a silent dub.
+                self.assertEqual(audio_streams[0]['disposition']['default'],0)
+                self.assertEqual(audio_streams[-1]['disposition']['default'],1)
             else:self.assertIn(fast_mode.warning(cfg),(job/'result-summary.txt').read_text())
             self.assertTrue(any(args[0][0]=='完成' and args[1].get('partial') is False for args in emit.call_args_list))
 

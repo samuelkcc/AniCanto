@@ -55,6 +55,13 @@ class TargetReferenceTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);cfg,cues,place,source,*_=self.trial(root,manual=True)
    with patch('dubbing.gsv_audio') as generate:self.assertEqual(repair(cfg,root,cues,[source],place,Mock(),Mock()),[source]);generate.assert_not_called()
+ def test_missing_actor_reference_still_tries_generic_target_language_voice(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);cfg,cues,place,source,candidate,p,bank,proof=self.trial(root)
+   with patch('dubbing.profile_for',side_effect=ValueError('missing actor reference')),patch('natural_voices.resolve',return_value=bank) as resolve,patch('dubbing.gsv_audio',return_value=[candidate]) as generate,patch('normal_mode.inspect',return_value={1:proof}):
+    self.assertEqual(repair(cfg,root,cues,[source],place,Mock(),Mock()),[candidate])
+   self.assertEqual(resolve.call_args.args[0]['id'],'r')
+   self.assertEqual(generate.call_args.args[2][0]['speakerId'],bank['id'])
  def test_repeated_interruptions_are_bounded_even_without_output(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);cfg,cues,place,source,candidate,p,bank,proof=self.trial(root)

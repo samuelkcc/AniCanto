@@ -56,7 +56,7 @@ def collect(cfg,job,cues,paths,placement,ledger):
     for i,c in enumerate(cues):
         if not c.get('enabled',True) or c.get('editorAudio') or (c.get('preserveOriginalSpeech') and c.get('originalSpeechReason')!='missing-script') or is_vocalization(c):continue
         index=c.get('reviewIndex',i)+1;path=Path(paths[i]);placed=placement[i]
-        if cfg.get('preferFirstAudibleTake',True) and audio_present(path):continue
+        if cfg.get('preferFirstAudibleTake',True) and audio_present(path) and index not in pending and placed.get('fit'):continue
         errors=[str(e.get('message',''))[:350] for e in issues if e.get('index')==index and e.get('engine',cfg.get('ttsBackend'))==cfg.get('ttsBackend') and e.get('language',cfg.get('targetLanguage','yue'))==cfg.get('targetLanguage','yue')]
         reference_failure=any(re.search(r'reference|參考',e,re.I) for e in errors)
         reason='missing-script' if not c.get('cantonese','').strip() else 'reference' if reference_failure and not audio_present(path) else 'generation' if not audio_present(path) else 'language-or-content' if index in pending else 'timing' if not placed['fit'] else ''
@@ -123,9 +123,9 @@ def decisions(w,cfg,rows):
 
 
 def adapt(w,cfg,cues,rows):
-    from normal_mode import valid,written_mandarin
+    from normal_mode import valid_target,written_mandarin
     from semantic_review import audit
-    from translation_source import audio_primary,AUDIO_PRIORITY_PROMPT
+    from translation_source import audio_primary,priority_prompt
     from source_language import instruction
     out={};language=cfg.get('targetLanguage','yue')
     for offset in range(0,len(rows),8):
@@ -137,11 +137,11 @@ def adapt(w,cfg,cues,rows):
         # during a duration repair. Audit the own audio transcript alone.
         local=dict(cfg,ocrEvidenceOnly=True)
         prompt+=' For this repair, source.japanese is the ONLY spoken turn. source.caption is context and may continue into the next turn. Never complete an unfinished sentence with that continuation. A timing repair must not increase the spoken draft length.'
-        if audio_primary(cfg) or any(audio_primary(cue=cues[r['position']]) for r in batch):local['ocrEvidenceOnly']=True;prompt+=AUDIO_PRIORITY_PROMPT
+        if audio_primary(cfg) or any(audio_primary(cue=cues[r['position']]) for r in batch):local['ocrEvidenceOnly']=True;prompt+=priority_prompt(cfg)
         try:
             answer=json.loads(w.ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(payload,ensure_ascii=False))],structured=schema,think=False,**request_options(cfg)))
             if not isinstance(answer,dict):continue
-            candidates={k:v.strip() for k,v in answer.items() if k in payload and valid(v,language) and not (language=='yue' and written_mandarin(v))}
+            candidates={k:v.strip() for k,v in answer.items() if k in payload and valid_target(v,language,cfg.get('sourceLanguage','ja')) and not (language=='yue' and written_mandarin(v))}
             proofs=audit(local,{k:dict(source=payload[k]['source'],candidate=v) for k,v in candidates.items()},request_options=request_options(cfg,90,2048)) if candidates else {}
             for row in batch:
                 key=str(row['index']);text=candidates.get(key)
@@ -181,7 +181,7 @@ def verified_check(proof,text,language):
     from speechcheck import text_key
     exact=bool(proof.get('heard')) and text_key(proof['heard'])==text_key(text)
     return bool((proof.get('decision')==('english' if language=='en' else 'cantonese') or language=='en' and exact)
-        and not proof.get('languageFailure') and not proof.get('contentFailure') and proof.get('decision') not in ('mandarin','japanese'))
+        and not proof.get('languageFailure') and not proof.get('contentFailure') and proof.get('decision') not in ('mandarin','japanese','english' if language=='yue' else '_none'))
 
 
 def clear_confirmed(cfg,job,confirmed,write):

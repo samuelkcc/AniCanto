@@ -90,7 +90,7 @@ def repair(cfg, job, cues, paths, placement, run, emit):
     language = cfg.get('targetLanguage', 'yue')
 
     def simulate(trial):
-        if planning.get('sceneBoundaryStatus') == 'detected':
+        if cfg.get('naturalTimingPolicy', 'micro-shift') == 'micro-shift':
             return plan(cfg, cues, trial, cuts)
         rows = []
         for cue, length in zip(cues, trial):
@@ -111,7 +111,7 @@ def repair(cfg, job, cues, paths, placement, run, emit):
         records = []
         for i, cue in enumerate(cues):
             index = cue.get('reviewIndex', i) + 1
-            if cfg.get('preferFirstAudibleTake',True) and audio_present(selected[i]):
+            if cfg.get('preferFirstAudibleTake',True) and audio_present(selected[i]) and index not in pending and placement[i].get('fit'):
                 continue
             if index not in pending and audio_present(selected[i]) and placement[i].get('fit'):
                 continue

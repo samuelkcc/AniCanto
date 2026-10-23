@@ -44,16 +44,29 @@ class NaturalScheduleTests(unittest.TestCase):
   rows=schedule.plan(dict(duration=4),cues,[.5,4.,.5,.5])
   self.assertFalse(rows[1]['fit']);self.assertEqual(rows[1]['method'],'timing-capacity-exhausted')
   self.assertTrue(all(rows[i]['fit'] for i in (0,2,3)));self.assertEqual(rows[1]['shift'],0)
- def test_original_timing_is_kept_when_boundary_scan_is_unavailable(self):
+ def test_impossible_shift_keeps_source_clock_without_waiting_for_visual_cut_scan(self):
   import wave,array
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);p=job/'take.wav'
    with wave.open(str(p),'wb') as f:f.setparams((1,2,24000,0,'NONE','not compressed'));f.writeframes(array.array('h',[1000,-1000]*16800).tobytes())
    cues=[dict(start=1,end=2,cantonese='Hello.'),dict(start=2,end=3,cantonese='Yes.')]
-   with patch.object(schedule,'scene_boundaries',return_value=dict(status='unavailable',cuts=[])):
+   with patch.object(schedule,'scene_boundaries',side_effect=AssertionError('visual scan must not run')):
     rows=schedule.prepare(dict(duration=3),job,cues,[p,p],Mock(),Mock())
    self.assertEqual([r['shift'] for r in rows],[0,0]);self.assertFalse(rows[0]['fit'])
-   self.assertEqual(json.loads((job/'natural-placement.json').read_text())['sceneBoundaryStatus'],'unavailable')
+   self.assertEqual(json.loads((job/'natural-placement.json').read_text())['sceneBoundaryStatus'],'not-required')
+ def test_safe_shift_works_when_visual_cut_scan_is_unavailable(self):
+  import wave,array
+  with tempfile.TemporaryDirectory() as d:
+   job=Path(d);long=job/'long.wav';short=job/'short.wav'
+   for path,seconds in ((long,1.3),(short,.6)):
+    with wave.open(str(path),'wb') as f:
+     f.setparams((1,2,24000,0,'NONE','not compressed'));f.writeframes(array.array('h',[1000,-1000]*round(seconds*12000)).tobytes())
+   cues=[dict(start=1,end=2,cantonese='第一句'),dict(start=2,end=3,cantonese='第二句')]
+   with patch.object(schedule,'scene_boundaries',side_effect=AssertionError('visual scan must not run')):
+    rows=schedule.prepare(dict(duration=4),job,cues,[long,short],Mock(),Mock())
+   self.assertTrue(all(row['fit'] for row in rows))
+   self.assertGreater(rows[1]['shift'],0)
+   self.assertLessEqual(rows[0]['start']+rows[0]['seconds'],rows[1]['start']+.001)
  @unittest.skipUnless(shutil.which('ffmpeg'),'FFmpeg required')
  def test_real_cut_scan_is_local_cached_and_shared_between_languages(self):
   with tempfile.TemporaryDirectory() as d:

@@ -34,3 +34,12 @@ def fit_model(row,hardware):
     if row.get('id')=='drama3-native-q2':return need<=system,'system'
     if backend in ('cuda','rocm'):return need<=min(system,vram*.8),'gpu'
     return need<=system,'system'
+
+def can_attempt_over_budget(row,hardware):
+    """A deliberate model choice may use headroom or swap; never claim it fits."""
+    fits,pool=fit_model(row,hardware)
+    if fits or pool not in ('system','gpu'):return False
+    ram=float(hardware.get('memoryGB') or 0)
+    vram=float(hardware.get('acceleratorMemoryGB') or 0)
+    capacity=ram if pool=='system' else min(ram,vram)
+    return capacity>0 and float(row.get('estimatedMemoryGB') or 0)<=capacity

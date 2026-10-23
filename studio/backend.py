@@ -24,11 +24,16 @@ from desktop_state import Store, defaults, read, write, job_snapshot, editor_dra
 from workflow_settings import validated
 
 VIDEO_TYPES = {'.mkv','.mp4','.mov','.m4v','.avi','.webm','.ts'}
+SUBTITLE_TYPES = {'.srt','.ass','.ssa','.vtt'}
 SETTING_KEYS = set(defaults()) | {'model','visualModel','asrModel','speechModel','referenceSpeechModel',
     'drama3Model','cosyModel','qwenModel','voxcpmModel','wsyueModel','gsvDevice','voiceProfiles','defaultSpeaker',
     'backgroundGain','backgroundDucking','appearance','animeTheme','controlDensity',
     'subtitle','subtitleStream','ocrRect','ocr','ocrAutoRegion','exportFolder','translationSource','allowCrossEngineRepair',
-    'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels'}
+    'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels',
+    'failedVoicePolicy'}
+from voice_parameters import keys as voice_parameter_keys, validate as validate_voice_parameters
+SETTING_KEYS.update(voice_parameter_keys())
+SETTING_KEYS.add('cosyExpression')
 
 
 class Studio:
@@ -144,6 +149,7 @@ class Studio:
             from diagnostics import start
             row['previousStatus']=row.get('status','attention')
             result.update(rowID=row['id'],attempt=start(self.root,row,action,request))
+            for key in ('lastEventAt','lastProgressAt','activitySignature'):row.pop(key,None)
             row['status']='running';row['previewAttempt']=preview;self.store.save()
         return result
 
@@ -245,7 +251,7 @@ class Studio:
         if op=='revoke-use-terms':
             from use_terms import revoke
             return revoke(self.root)
-        if op in ('start','render','retake','setup','maintain-model','retry-review'):
+        if op in ('start','render','retake','setup','maintain-model','maintain-models','retry-review'):
             from use_terms import require
             require(self.root)
         if op=='state':return self.state()
@@ -262,9 +268,20 @@ class Studio:
             patch=p.get('settings',{})
             if not isinstance(patch,dict) or set(patch)-SETTING_KEYS:raise ValueError('Unsupported production setting.')
             patch=dict(patch)
+            if ('productionMode' in patch and patch['productionMode']!=self.store.settings.get('productionMode')
+                    and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue)):
+                raise ValueError('Production mode is locked until processing finishes.')
+            if 'failedVoicePolicy' in patch and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue):
+                raise ValueError('Failed voice fallback is locked until processing finishes.')
+            if set(patch).intersection(voice_parameter_keys() | {'cosyExpression'}) and any(
+                    r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue):
+                raise ValueError('Voice parameters are locked until processing finishes.')
             if 'subtitleModes' in patch and 'subtitleSelection' not in patch:patch['subtitleSelection']='custom'
             if patch.get('subtitleSelection','automatic') not in ('automatic','custom'):raise ValueError('Unknown subtitle selection policy.')
             cfg=validated(dict(self.store.settings,**patch))
+            if cfg.get('failedVoicePolicy') not in ('first-take','source','generic'):
+                raise ValueError('Unknown failed voice fallback policy.')
+            validate_voice_parameters(cfg)
             if 'ttsBackend' in patch and 'selectedEngines' not in patch:
                 cfg.update(selectedEngines=[patch['ttsBackend']],defaultAudioEngine=patch['ttsBackend'])
             if set(patch).intersection({'ttsBackend','selectedEngines'}):
@@ -286,11 +303,9 @@ class Studio:
             if p.get('mode') is not None:
                 if p['mode'] not in ('basic','expert'):raise ValueError('Unknown interface mode.')
                 self.store.mode=p['mode']
-            if self.store.mode=='basic':cfg['preferFirstAudibleTake']=True
+            if self.store.mode=='basic':cfg.update(preferFirstAudibleTake=True)
             if p.get('language') is not None:
-                if p['language'] not in ('en','zh-HK'):raise ValueError('Unknown interface language.')
-                if p['language']!=self.store.language and not p.get('preserveProductionSettings'):
-                    for k in ('dubLanguages','includeOriginal','subtitleModes','subtitleSelection'):cfg[k]=defaults(p['language'])[k]
+                if p['language'] not in ('en','zh-HK','zh-CN','ja'):raise ValueError('Unknown interface language.')
                 self.store.language=p['language']
                 self.store.ui['interfaceLanguageInitialized']=True
             from subtitle_policy import configure as subtitle_policy
@@ -305,6 +320,21 @@ class Studio:
                 f=Path(path)
                 if not f.is_file() or f.suffix.lower() not in VIDEO_TYPES:raise ValueError('Unsupported or missing video: '+str(f))
             self.store.add(paths);return self.state()
+        if op=='set-external-subtitle':
+            row=self.row(p.get('id'))
+            if row.get('status') in ('running','paused'):
+                raise ValueError('Pause and finish this conversion before changing its subtitle file.')
+            path=p.get('path')
+            if path is not None:
+                if not isinstance(path,str) or not path.strip():raise ValueError('Choose a subtitle file.')
+                subtitle=Path(path).expanduser().resolve()
+                if subtitle.suffix.lower() not in SUBTITLE_TYPES or not subtitle.is_file():
+                    raise ValueError('Choose an existing SRT, ASS, SSA or VTT subtitle file.')
+                if not subtitle.stat().st_size:raise ValueError('The subtitle file is empty.')
+                row['externalSubtitle']=str(subtitle)
+            else:
+                row.pop('externalSubtitle',None)
+            self.store.save();return self.state()
         if op=='select':self.row(p['id']);self.store.selected=p['id'];self.store.save();return self.state()
         if op=='move-video':
             # Native RPCs serialize this write with progress/finalization. Move
@@ -355,7 +385,16 @@ class Studio:
                             if applied:break
                     snapshot.setdefault('reviewState',{})['userChoicesApplied']=applied
                 except ValueError:pass
-            snapshot['rowID']=row['id'];return snapshot
+            snapshot['rowID']=row['id']
+            from review_workbench import project
+            return project(snapshot.get('root',str(Path(row.get('review') or row.get('job') or self.root/'jobs/nonexistent').parent)),snapshot)
+        if op=='review-triage':
+            row=self.row(p.get('id'))
+            if row.get('status')=='running':raise ValueError('Pause and save before reviewing a line.')
+            path=self.review_path(row)
+            snapshot=self.dispatch('snapshot',dict(id=row['id']))
+            from review_workbench import mark
+            return mark(path.parent,snapshot,p.get('issueID'),p.get('fingerprint'),p.get('state'))
         if op=='review-resolution':
             row=self.row(p.get('id'))
             if row.get('status')=='running':raise ValueError('Pause and save before making an explicit review choice.')
@@ -420,7 +459,7 @@ class Studio:
             row=self.row(p.get('id'))
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before retrying review.')
             from review_retry import submission
-            draft=submission(self.root,self.review_path(row),job_snapshot(row),p.get('mode','pending'),self.draft(row))
+            draft=submission(self.root,self.review_path(row),self.dispatch('snapshot',dict(id=row['id'])),p.get('mode','pending'),self.draft(row))
             requests=self.root/'requests';requests.mkdir(exist_ok=True)
             path=requests/('review-retry-'+draft['id']+'.json');write(path,draft)
             cfg=dict(draft['settings'],storage=str(self.root),submission=str(path),**self.tools())
@@ -514,6 +553,18 @@ class Studio:
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause conversion before repairing models.')
             program=Path(sys.executable)
             return dict(program=str(program),args=[str(self.shared/'model_maintenance.py'),'--root',str(self.root),'--id',ident,'--mode',mode,'--platform',self.platform],action='model-maintenance',modelID=ident,root=str(self.root))
+        if op=='maintain-models':
+            from model_maintenance import model
+            ids=p.get('ids')
+            if not isinstance(ids,list) or not ids or len(ids)>32 or any(not isinstance(ident,str) for ident in ids) or len(set(ids))!=len(ids):
+                raise ValueError('Select between 1 and 32 different voice models.')
+            if any(r.get('status')=='running' for r in self.store.queue):
+                raise ValueError('Pause conversion before downloading models.')
+            for ident in ids:
+                row,_=model(self.root,ident,self.platform)
+                if row.get('category')!='voice' or row.get('retired') or row.get('licenseReviewRequired'):
+                    raise ValueError('This voice model is unavailable for download: '+ident)
+            return dict(program=str(Path(sys.executable)),args=[str(self.shared/'model_maintenance.py'),'--root',str(self.root),'--ids-json',json.dumps(ids),'--mode','repair','--platform',self.platform],action='model-maintenance',modelIDs=ids,root=str(self.root))
         if op=='setup':
             engine=p.get('engine') or self.store.settings['ttsBackend']
             requested=p.get('models',self.store.settings.get('deploymentModels',{}))

@@ -32,6 +32,17 @@ class SharedStudioTests(unittest.TestCase):
         ident=self.add();write(self.root/'model-selections.json',dict(voice='drama3-small-iq3'))
         with self.assertRaisesRegex(ValueError,'retired'):self.app.dispatch('start',dict(id=ident))
         self.assertFalse(self.app.row(ident).get('request'))
+    def test_production_mode_is_locked_during_running_and_paused_job(self):
+        ident=self.add();row=self.app.row(ident);original=self.app.store.settings['productionMode']
+        row.update(status='running',request='frozen-request.json');self.app.store.save()
+        for status in ('running','paused'):
+            row['status']=status
+            with self.assertRaisesRegex(ValueError,'locked'):
+                self.app.dispatch('configure',dict(settings=dict(productionMode='fast')))
+            self.assertEqual(self.app.store.settings['productionMode'],original)
+        row['status']='complete';self.app.store.save()
+        self.app.dispatch('configure',dict(settings=dict(productionMode='fast')))
+        self.assertEqual(self.app.store.settings['productionMode'],'fast')
     def test_existing_output_retries_only_reported_lines_unless_new_version_requested(self):
         ident,folder=self.project();output=folder/'existing.mp4';output.write_bytes(b'earlier export')
         row=self.app.row(ident);row.update(status='attention',output=str(output));self.app.store.save()
@@ -55,12 +66,65 @@ class SharedStudioTests(unittest.TestCase):
         spec=other.dispatch('start',{'id':ident});cfg=read(Path(spec['args'][-1]))
         self.assertEqual(cfg['translationSource'],'audio-and-subtitles');self.assertEqual(cfg['ttsBackend'],'gpt-sovits-v2')
         self.assertNotEqual(cfg['roleAnalysisMode'],'audiovisual')
+    def test_basic_and_expert_can_both_choose_failed_voice_fallback(self):
+        ident=self.add()
+        self.assertEqual(self.app.store.settings['failedVoicePolicy'],'generic')
+        self.app.dispatch('configure',dict(mode='basic',settings={'failedVoicePolicy':'source'}))
+        self.assertEqual(self.app.store.settings['failedVoicePolicy'],'source')
+        request=self.app.store.submit(self.app.row(ident))
+        self.assertEqual(read(request)['failedVoicePolicy'],'source')
+        self.app.row(ident).update(status='running',request=str(request))
+        with self.assertRaisesRegex(ValueError,'locked'):
+            self.app.dispatch('configure',dict(settings={'failedVoicePolicy':'generic'}))
+        self.app.row(ident)['status']='complete'
+        self.app.dispatch('configure',dict(mode='expert',settings={'failedVoicePolicy':'first-take'}))
+        self.assertEqual(self.app.store.settings['failedVoicePolicy'],'first-take')
+    def test_imported_subtitle_is_frozen_for_one_video_only(self):
+        first=self.add()
+        second_video=self.root/'next episode.mp4';second_video.write_bytes(b'fixture source')
+        self.app.dispatch('add',dict(paths=[str(second_video)]))
+        second=next(r['id'] for r in self.app.store.queue if Path(r['video'])==second_video.resolve())
+        subtitle=self.root/'different name.srt';subtitle.write_text('1\n00:00:01,000 --> 00:00:02,000\n你好\n',encoding='utf-8')
+        state=self.app.dispatch('set-external-subtitle',dict(id=first,path=str(subtitle)))
+        self.assertEqual(state['queue'][0]['externalSubtitle'],str(subtitle.resolve()))
+        self.assertNotIn('externalSubtitle',state['queue'][1])
+        reopened=Studio(self.root,ROOT/'Resources',helper=self.helper)
+        self.assertEqual(reopened.row(first)['externalSubtitle'],str(subtitle.resolve()))
+        first_request=read(reopened.store.submit(reopened.row(first)))
+        second_request=read(reopened.store.submit(reopened.row(second)))
+        self.assertEqual(first_request['subtitle'],str(subtitle.resolve()))
+        self.assertEqual(first_request['subtitleSource'],'external')
+        self.assertFalse(first_request['batchAutoSubtitles'])
+        self.assertTrue(first_request['batchExplicitSubtitle'])
+        self.assertTrue(second_request['batchAutoSubtitles'])
+        self.assertNotEqual(second_request.get('subtitle'),str(subtitle.resolve()))
+        reopened.dispatch('set-external-subtitle',dict(id=first,path=None))
+        self.assertNotIn('externalSubtitle',reopened.row(first))
+    def test_imported_subtitle_must_exist_and_cannot_change_frozen_job(self):
+        ident=self.add()
+        with self.assertRaisesRegex(ValueError,'SRT, ASS, SSA or VTT'):
+            self.app.dispatch('set-external-subtitle',dict(id=ident,path=str(self.video)))
+        subtitle=self.root/'episode.vtt';subtitle.write_text('WEBVTT\n',encoding='utf-8')
+        self.app.dispatch('set-external-subtitle',dict(id=ident,path=str(subtitle)))
+        self.app.row(ident)['status']='paused';self.app.store.save()
+        with self.assertRaisesRegex(ValueError,'finish this conversion'):
+            self.app.dispatch('set-external-subtitle',dict(id=ident,path=None))
+        self.app.row(ident)['status']='waiting';subtitle.unlink()
+        with self.assertRaisesRegex(ValueError,'missing'):
+            self.app.store.submit(self.app.row(ident))
     def test_english_welcome_defaults_and_explicit_subtitle_choice(self):
         self.app.dispatch('configure',dict(language='zh-HK',settings={}))
         state=self.app.dispatch('configure',dict(language='en',settings={}))
         self.assertEqual(state['settings']['dubLanguages'],['yue','en'])
         self.assertEqual(state['settings']['subtitleModes'],['yue','english','dual','original']);self.assertTrue(state['settings']['includeOriginal'])
         self.assertEqual(self.app.dispatch('configure',dict(settings={'subtitleModes':['yue']}))['settings']['subtitleModes'],['yue'])
+    def test_interface_language_does_not_change_production_languages(self):
+        self.app.dispatch('configure',dict(settings={'dubLanguages':['yue'],'subtitleModes':['yue','original']}))
+        for language in ('zh-CN','ja','en','zh-HK'):
+            state=self.app.dispatch('configure',dict(language=language,settings={}))
+            self.assertEqual(state['language'],language)
+            self.assertEqual(state['settings']['dubLanguages'],['yue'])
+            self.assertEqual(state['settings']['subtitleModes'],['yue','original'])
     def test_basic_submit_uses_automatic_captions_and_preserves_japanese_and_background(self):
         ident=self.add()
         self.app.dispatch('configure',dict(mode='expert',settings=dict(subtitleModes=[],dubLanguages=['en'],includeOriginal=False,selectedEngines=['drama3','gpt-sovits-v2'],mixOriginal=.5,separateBackground=False)))
@@ -179,11 +243,14 @@ class SharedStudioTests(unittest.TestCase):
             self.assertEqual(self.app.store.settings,before)
     def test_single_model_repair_is_owned_task_without_changing_selection(self):
         import model_maintenance
-        row=dict(id='test',files=[dict(path='weights',size=4,sha='a'*64)],legacy='models/test',title='Test')
+        row=dict(id='test',category='voice',files=[dict(path='weights',size=4,sha='a'*64)],legacy='models/test',title='Test')
         before=copy.deepcopy(self.app.store.settings)
         with patch.object(model_maintenance,'catalog_paths',return_value=([row],lambda root,r:root/r['legacy'])):
             spec=self.app.dispatch('maintain-model',dict(id='test',mode='repair'))
             self.assertEqual(spec['action'],'model-maintenance');self.assertIn('--id',spec['args']);self.assertIn('test',spec['args'])
+            batch=self.app.dispatch('maintain-models',dict(ids=['test']))
+            self.assertEqual(batch['action'],'model-maintenance');self.assertIn('--ids-json',batch['args'])
+            with self.assertRaises(ValueError):self.app.dispatch('maintain-models',dict(ids=['test','test']))
             self.assertEqual(self.app.store.settings,before)
             ident=self.add();self.app.row(ident)['status']='running'
             with self.assertRaisesRegex(ValueError,'Pause'):self.app.dispatch('maintain-model',dict(id='test',mode='repair'))

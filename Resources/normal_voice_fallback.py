@@ -32,7 +32,7 @@ def repair(cfg,job,cues,paths,placement,run,emit):
     records=[];profiles={};drafts=[]
     for i,(cue,path) in enumerate(zip(cues,paths)):
         index=cue.get('reviewIndex',i)+1
-        if cfg.get('preferFirstAudibleTake',True) and audio_present(path):continue
+        if cfg.get('preferFirstAudibleTake',True) and audio_present(path) and index not in pending and placement[i].get('fit'):continue
         if cue.get('editorAudio') or cue.get('preserveOriginalSpeech') or not cue.get('enabled',True) or is_vocalization(cue) or not cue.get('cantonese','').strip():continue
         # Merely being a little long is not a reason to change the actor. Only
         # the final delivery boundary may authorise a timing fallback, after
@@ -40,9 +40,15 @@ def repair(cfg,job,cues,paths,placement,run,emit):
         timing_exhausted=cfg.get('_sourceVoiceRepairsExhausted') is True and not placement[i]['fit']
         if index not in pending and audio_present(path) and not timing_exhausted:continue
         try:
-            original=profile_for(cue,cfg)
-            if original.get('language')==language:continue
-            reference=resolve(dict(original,engineReferences={}),dict(cfg,voiceStyleMode='natural'))
+            try:original=profile_for(cue,cfg)
+            except (OSError,ValueError):
+                # Missing/corrupt actor references must not prevent a translated
+                # line from trying the bundled target-language bank voice.
+                original=dict(id=cue.get('speakerId') or f'generic-{index}',name='Generic voice',
+                              language=cfg.get('sourceLanguage','ja'),reference='',promptText='')
+            # The final bank voice must really be a generic target-language
+            # reference, even when the actor profile already uses that language.
+            reference=resolve(dict(original,engineReferences={},promptText=''),dict(cfg,voiceStyleMode='natural'))
         except (OSError,ValueError):continue
         identity=[REVISION,cfg.get('ttsBackend'),cfg.get('drama3Model'),cfg.get('gsvVersion'),language,index,cue['start'],cue['end'],cue['cantonese'],hashlib.sha256(Path(reference['reference']).read_bytes()).hexdigest()]
         key=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()[:24]
@@ -51,7 +57,7 @@ def repair(cfg,job,cues,paths,placement,run,emit):
         if record and record.get('status') not in ('reserved','generating','generated','adopted','selected-unverified') and not retry_timing:continue
         if record and record.get('attempts',0)>=2 and not (record.get('audio') and audio_present(record['audio'])):continue
         records.append((i,index,key,reference));profiles[reference['id']]=reference
-        draft=dict(cue,reviewIndex=index-1,_seed=781433,_targetSeconds=placement[i]['deadline']-placement[i]['start'],_deliveryStyle='cantonese-strict-clauses' if language=='yue' else 'complete-clauses');drafts.append(draft)
+        draft=dict(cue,reviewIndex=index-1,speakerId=reference['id'],_seed=781433,_targetSeconds=placement[i]['deadline']-placement[i]['start'],_deliveryStyle='cantonese-strict-clauses' if language=='yue' else 'complete-clauses');drafts.append(draft)
         if record is None:ledger[key]=dict(index=index,status='reserved',text=cue['cantonese'],action='target-language-reference',reason='timing-after-source-voice-repairs' if timing_exhausted and index not in pending else 'language-or-missing-voice',voiceSimilarityCertified=False,referenceID=reference.get('naturalReferenceId'),referenceLanguage=language,referenceSHA256=identity[-1])
     if not records:return selected
     def save():atomic_json(marker,ledger)
@@ -76,7 +82,7 @@ def repair(cfg,job,cues,paths,placement,run,emit):
     planning=read(job/'natural-placement.json',{});base=job.parent.parent if job.parent.name=='tracks' else job
     cuts=read(base/'natural-scene-boundaries.json',{}).get('cuts',[]);lengths=[p.get('seconds') for p in placement];confirmed=set();uncertain=set()
     def simulate(trial):
-        if planning.get('sceneBoundaryStatus')=='detected':return plan(cfg,cues,trial,cuts)
+        if cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift':return plan(cfg,cues,trial,cuts)
         rows=[]
         for cue,length in zip(cues,trial):
             a,b=natural_window(cue,cues,cfg['duration'],cfg);rows.append(dict(fit=length is not None and length<=b-a,start=a,deadline=b))

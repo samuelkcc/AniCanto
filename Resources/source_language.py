@@ -63,6 +63,11 @@ def instruction(cfg):
             'Preserve names and meaning. The source audio transcript has priority over mismatched captions. ')
 
 
+def speech_name(cfg):
+    """User-facing source name, independent of legacy ``japanese`` field names."""
+    return NAMES.get(cfg.get('sourceLanguage', 'ja'), 'Source')
+
+
 def probe(request):
     """CPU-only language ID; no translation or TTS is started before consent."""
     import os

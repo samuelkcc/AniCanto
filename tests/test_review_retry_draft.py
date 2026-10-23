@@ -45,6 +45,21 @@ class ReviewRetryDraftTests(unittest.TestCase):
                              dict(_reviewRetry=changed, _editorSourceRoot=str(job)), 'drama3', 'yue')
             self.assertTrue(selected[0]['preserveOriginalSpeech'])
 
+    def test_affected_references_retry_only_requested_tracks_and_protect_manual_choices(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);job=root/'jobs/film';track=job/'tracks/yue';track.mkdir(parents=True)
+            review_path=job/'review.json';cfg=dict(productionMode='normal',duration=6,video=str(root/'film.mp4'),ttsBackend='drama3',selectedEngines=['drama3'],dubLanguages=['yue'],voiceProfiles=[dict(id='R01',reference='old.wav')])
+            review=dict(config=cfg,cues=[dict(start=0,end=2,text='一',cantonese='第一句',speakerId='R01'),dict(start=3,end=5,text='二',cantonese='第二句',speakerId='R02')]);review_path.write_text(json.dumps(review))
+            (job/'report.json').write_text(json.dumps(dict(tracks=[dict(engine='drama3',language='yue',report=str(track/'report.json'))])))
+            (track/'timing.json').write_text('[]');draft=editor_draft(review_path,review,cfg);draft['settings']['voiceProfiles'][0]['reference']='new.wav'
+            snapshot=dict(issues=[dict(index=2,language='yue',engine='drama3',triage='checked')],staleRecordings=[dict(index=1,language='yue',engine='drama3',protected=False)])
+            request=submission(root,review_path,snapshot,saved_draft=draft)
+            self.assertEqual(request['automaticReviewRetry']['targets'],{'yue:drama3':[1]})
+            self.assertEqual(request['settings']['voiceProfiles'][0]['reference'],'new.wav')
+            self.assertEqual(json.loads(review_path.read_text())['config']['voiceProfiles'][0]['reference'],'old.wav')
+            snapshot['staleRecordings'][0]['protected']=True
+            with self.assertRaisesRegex(ValueError,'no reported'):submission(root,review_path,snapshot,saved_draft=draft)
+
     def test_split_line_requires_editorial_version(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

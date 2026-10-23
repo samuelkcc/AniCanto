@@ -32,6 +32,7 @@ def defaults(language='en'):
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=True,continueOnError=True,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,
+        failedVoicePolicy='generic',
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
         cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,
         burnOutputCaptions=False,startOffset=0,limit=0,mixOriginal=0,subtitleOutput='none')
@@ -62,7 +63,7 @@ class Store:
         for row in self.queue:
             if recover_running and row.get('status')=='running':row['status']='paused'
         self.selected=saved.get('selected');self.ui=saved.get('ui',{})
-        self.ui.setdefault('interfaceLanguageInitialized',saved.get('language') in ('en','zh-HK'))
+        self.ui.setdefault('interfaceLanguageInitialized',saved.get('language') in ('en','zh-HK','zh-CN','ja'))
         if not self.ui.get('aniCantoThemeDefaultApplied'):
             self.settings.update(animeTheme='studio',randomAnimeTheme=False)
             self.ui['aniCantoThemeDefaultApplied']=True
@@ -83,7 +84,11 @@ class Store:
     def submit(self,row):
         if row.get('request') and row['status']=='paused':return Path(row['request'])
         settings=validated(self.settings)
-        if self.mode=='basic':settings['preferFirstAudibleTake']=True
+        from voice_parameters import validate as validate_voice_parameters
+        validate_voice_parameters(settings)
+        if settings.get('failedVoicePolicy') not in ('first-take','source','generic'):
+            raise ValueError('Unknown failed voice fallback policy.')
+        if self.mode=='basic':settings.update(preferFirstAudibleTake=True)
         if 'en' in settings.get('dubLanguages',[]) and 'wsyue' in settings.get('selectedEngines',[settings.get('ttsBackend')]):
             raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
         from subtitle_policy import configure
@@ -91,6 +96,11 @@ class Store:
         settings.update(storage=str(self.root),video=row['video'],exportFolder=settings.get('exportFolder') or str(self.root/'exports'),
                         interfaceMode=self.mode,targetLanguage=settings['dubLanguages'][0],
                         defaultDubLanguage=settings['dubLanguages'][0],automaticDurationRewrite=True)
+        if row.get('externalSubtitle'):
+            subtitle=Path(row['externalSubtitle'])
+            if not subtitle.is_file():raise ValueError('The imported subtitle file is missing. Choose it again before converting.')
+            settings.update(translationSource=COMBINED,subtitleSource='external',subtitle=str(subtitle),
+                            batchAutoSubtitles=False,batchExplicitSubtitle=True,ocr=False)
         if self.mode=='basic' and settings.get('roleAnalysisMode')=='audiovisual':settings.update(roleAnalysisMode='independent',visualRoleAnalysisEnabled=False)
         settings['videos']=[dict(id=row['id'],video=row['video'])]
         path=self.root/'requests'/('submitted-'+uuid.uuid4().hex+'.json');write(path,settings)
@@ -142,7 +152,7 @@ def job_snapshot(row):
         # review. Never project the previous conversion's voices as this job.
         root=active_root;review_path=root/'review.json'
     review=read(review_path,{}) or read(root/'review.json',{}) or {}
-    result=dict(portraitAtlas=read(root/'visual-photo-atlas.json',{}),originalCaptions=read(root/'subtitle-context.json',[]),review=review,root=str(root),takes=[],history=[],roles=review.get('config',{}).get('voiceProfiles',[]),
+    result=dict(portraitAtlas=read(root/'visual-photo-atlas.json',{}),originalCaptions=read(root/'subtitle-context.json',[]),review=review,root=str(root),takes=[],history=[],recordingCandidates=[],roles=review.get('config',{}).get('voiceProfiles',[]),
                 journey=read(root/'production-progress.json',{}),time=read(root/'processing-time.json',{}),
                 report=read(root/'report.json',{}),issues=read(root/'segment-issues.json',[]))
     journey=result['journey'];report=result['report'];last=(result['time'].get('runs') or [{}])[-1]
@@ -153,8 +163,23 @@ def job_snapshot(row):
             if r['id']=='export':r['state']='complete'
     paths=([root]+sorted((root/'tracks').glob('*'))+sorted((root/'versions').glob('*'))+
            sorted((root/'versions').glob('*/tracks/*'))) if root.is_dir() else []
+    seen_candidates=set()
+    def add_candidate(path,index,engine,language,kind,reason='',created=0,spoken_text=None):
+        if type(index) is not int or index<1 or not path:return
+        try:
+            file=Path(path).resolve()
+            if not file.is_relative_to(root.resolve()) or not file.is_file():return
+        except (OSError,ValueError):return
+        identity=(str(file),index,language)
+        if identity in seen_candidates:return
+        seen_candidates.add(identity)
+        cue=review.get('cues',[])[index-1] if index<=len(review.get('cues',[])) else {}
+        text=spoken_text if spoken_text is not None else cue.get('english' if language=='en' else 'cantonese','')
+        result['recordingCandidates'].append(dict(path=str(file),index=index,engine=engine,language=language,kind=kind,reason=reason,created=created,text=text))
     for folder in paths:
-        cfg=read(folder/'review.json',{}).get('config',{})
+        local_review=read(folder/'review.json',{});cfg=local_review.get('config',{})
+        local_cues_by_index={c.get('reviewIndex',n):c for n,c in enumerate(local_review.get('cues',[]))}
+        profiles_by_id={p.get('id'):p for p in cfg.get('voiceProfiles',[])}
         manifest=read(folder/'audio-preview.json',{})
         engine=manifest.get('engine',cfg.get('ttsBackend'));language=manifest.get('language',cfg.get('targetLanguage','yue'))
         # Fitted timing takes precedence over earlier model outputs.
@@ -163,12 +188,35 @@ def job_snapshot(row):
         if not version and folder.parent.name=='tracks' and folder.parent.parent.parent.name=='versions':
             version=read(folder.parent.parent/'version.json',{})
         engine=engine or version.get('engine');language=version.get('language',language)
+        for n,take in enumerate(manifest.get('rows',[])):
+            add_candidate(take.get('audio'),take.get('index',take.get('reviewIndex',n)+1),engine,language,'first',spoken_text=take.get('text'))
+        checks=read(folder/'normal-checks.json',{})
+        for row in checks.get('repairs',[])+checks.get('advisories',[]):
+            index=row.get('index')
+            add_candidate(row.get('originalAudio'),index,engine,language,'first',row.get('reason',''))
+            for attempt in row.get('attempts',[]):
+                add_candidate(attempt.get('candidateAudio'),index,engine,language,'generated' if attempt.get('repaired') else 'rejected',row.get('reason',''))
+        for record in read(folder/'automatic-recovery.json',{}).get('rows',{}).values():
+            for attempt in record.get('attempts',[]):
+                add_candidate(attempt.get('candidateAudio') or attempt.get('selectedAudio'),record.get('index'),attempt.get('engine') or engine,language,'generated' if attempt.get('status')=='adopted' else 'rejected',attempt.get('reason',''),spoken_text=attempt.get('text') or record.get('initialText'))
+        for manifest_path in sorted(folder.rglob('recording-history/*/take.json')):
+            if 'tracks' in manifest_path.relative_to(folder).parts:continue
+            archived=read(manifest_path,{})
+            add_candidate(manifest_path.parent/archived.get('audio','audio.wav'),archived.get('index'),archived.get('engine') or engine,archived.get('language') or language,'rejected',archived.get('reason',''),archived.get('created',0),archived.get('text'))
         for index,take in enumerate(rows):
             audio=take.get('renderedAudio') or take.get('audio')
             if audio and not take.get('skipped') and Path(audio).is_file():
                 cue_id=version.get('segment')
                 cue_index=next((n+1 for n,c in enumerate(review.get('cues',[])) if c.get('editorID',f'cue-{n}')==cue_id),None)
-                result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1),versionOutput=version.get('output'),versionStatus=version.get('status')))
+                local_index=take.get('reviewIndex',index)
+                local_cue=local_cues_by_index.get(local_index,{})
+                profile=profiles_by_id.get(local_cue.get('speakerId'))
+                from review_workbench import reference_signature
+                provenance=dict(speakerId=local_cue['speakerId']) if 'speakerId' in local_cue else {}
+                if profile:provenance['reference']=reference_signature(profile)
+                spoken_key='english' if language=='en' else 'cantonese'
+                if spoken_key in local_cue:provenance['text']=local_cue[spoken_key]
+                result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1),versionOutput=version.get('output'),versionStatus=version.get('status'),recordingProvenance=provenance))
         for path in sorted((folder/'recording-history').glob('*/take.json')):
             history=read(path,{})
             if history:

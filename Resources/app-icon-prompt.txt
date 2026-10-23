@@ -1,5 +1,4 @@
-AniCanto image-generated app icon, borderless lighter-purple variant requested by user, 2026-10-21.
-An original plum-purple long-haired anime silhouette faces the brush-calligraphy 廣 formed by her voice; a small microphone is integrated into the final sound curl. The outer purple frame and white rim were removed with imagegen at the user's request after iPad/macOS masking clipped the frame. The pale lavender background now continues to every square edge; platform systems apply their own corner masks.
-Canonical source: app-icon-art.png; raster platform and UI icons are derived from this source. The older app-icon.svg is retained only as historical artwork.
-Previous framed artwork: app-icon-art-framed.png. Border removal edit: exec-39635e9f-58fa-4bea-a70d-c2ed925e864b.png.
+AniCanto desktop app icon: the user-approved orange Japanese/Cantonese dubbing artwork, selected for macOS and Windows on 2026-10-22.
+The purple anime silhouette wears pink headphones and faces a studio microphone with a teal pop filter. Bold Japanese/Cantonese lettering appears at the upper right against the orange background. The artwork is full bleed; platform systems apply their own corner masks.
+Canonical desktop source: app-icon-art.png, copied unchanged from the approved generated original in the adjacent iPad task (exec-2fc31316-a0ff-4d0f-81d8-3298156201a5.png). The attached screenshot was checked pixel-for-pixel against that original. Raster platform and UI icons are derived from this source. The older app-icon.svg and app-icon-art-framed.png remain historical artwork.
 Copyright (c) 2026 SCKC. MIT License (see root LICENSE).

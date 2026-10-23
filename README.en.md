@@ -1,229 +1,70 @@
-[繁體中文](README.md) · **English**
+[繁體中文](README.md) · **English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-<p align="center">
-  <img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — 廣東話. Original assistants celebrating Hong Kong Cantonese around a studio microphone." width="1200">
-</p>
+<p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
 # AniCanto
 
-**Your anime. A Cantonese voice.**
+**Your anime. A whole new voice.**
 
-An AI dubbing studio built for Japanese animation: turn Japanese dialogue into **Hong Kong Cantonese or English**, with both languages available in the same video. **Once the models are downloaded, recognition, translation, dubbing and export run on your computer—no cloud service required.**
+Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-## Why this little project exists
+## Download the Beta · 0.24.58
 
-AniCanto 係一個由興趣開始嘅小作品。最初只係希望小朋友可以一邊聽香港廣東話，一邊睇中文字幕，接觸日常口語同學中文字。App 以香港繁體中文為主要設計語言，另設英文介面，方便對廣東話有興趣嘅英語人士使用同參考。希望透過動畫嘅趣味，讓更多人認識香港廣東話嘅表達同文化。
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto-macOS-0.24.58.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.58-beta)
 
-AniCanto started as a hobby project with a simple family wish: helping children hear everyday Hong Kong Cantonese while reading Chinese subtitles and learning Chinese characters. **The app is designed primarily in Hong Kong Traditional Chinese, with an English interface to help English speakers interested in Cantonese use it and follow along.** Through the fun of animation, the project invites more people to discover Cantonese expression and culture.
+## Choose your computer setup
 
-[Explore the interface](#a-look-inside) · [Formats & subtitle sources](#japanese-dialogue-chinese-subtitles-two-new-voices) · [Models & hardware](#start-with-the-right-voice) · [Workflow](#from-scene-to-speech) · [Limitations](#what-to-expect) · [☕ Support](#support-a-little-more-cantonese)
+**Preferred voice model: full Drama 3.** Pair it with Qwen 3.5 for translation: 35B is recommended on a 64 GB Mac; 9B is a smaller option for Windows with 32 GB RAM. Drama 3 sounded closer to Hong Kong Cantonese in developer listening tests; results still depend on the source and scene.
 
-> **Public beta · 0.24.51**
->
-> [Download the macOS/Windows builds and corresponding source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.51-beta). This hobby project is still evolving. Dubbing, translation and automatic repair can be imperfect; listen to important scenes before relying on the output.
+| Platform | Recommended system and memory | How Drama 3 runs |
+| --- | --- | --- |
+| **Mac** | Apple Silicon, macOS 14+; **64 GB+ unified memory recommended** | Full 4-bit MLX on Apple Silicon GPU / unified memory; approximately 28 GB estimated |
+| **Windows** | Windows 10 / 11 x64; **32 GB RAM minimum, 64 GB offers more headroom** | Full GGUF Q2 **on the CPU**; approximately 22 GB system RAM estimated |
 
-## In this beta
+**On Windows, Drama 3 currently has no NVIDIA, AMD or Intel GPU acceleration.** Even with a dedicated graphics card, Drama 3 uses the CPU and system RAM. Other supported models may use the GPU depending on the card and driver; dedicated VRAM does not replace the RAM Drama 3 needs. This exact Windows package still needs testing on a Windows PC.
 
-**Every completed video is exported as a finished `-AniCanto.mp4`.** A playable result is no longer named Preview because an accent, language or completeness concern remains; those concerns stay visible in the review report. Basic mode uses the first audible take by default and replaces it only when speech is missing, so automatic repair is less likely to make an acceptable line worse. The report is available when you want to inspect it, rather than a mandatory manual step for every video.
+A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may cause swapping, severe slowdown or loading failure. Memory figures are planning estimates. Allow **100 GB+ free storage** for models, runtimes and working files; long videos need more.
 
-The review report now shows, for each line, the original Japanese mix, separated voice, every retained TTS recording (including failed attempts), and the voice used in the current export. Generate one new take, choose an earlier recording or keep the original voice, then apply the choices to export **another finished video** while retaining the previous version. The new dark-purple app icon combines an anime silhouette, a voice ribbon and the brush-style character 「廣」.
+## This Beta
 
-Fixed removal of completed videos from the project list. The app now recognizes recording versions inside its own project workspace, cleans their work files, and keeps the source video and finished export. If an older work path cannot be verified safely, the video can still be removed from the list; the app warns that those work files were retained rather than deleting files at an unknown location.
+- Videos continue in queue order; reorder videos that have not started.
+- Import subtitles from one Subtitle source panel; mark review notes checked or deferred.
+- A compact Basic preview brings progress and audition higher; Pause & save is red on Mac and Windows.
 
-Retry AI repair for a completed video starts from the review report and processes reported lines; startup errors remain visible. Saved single-line script edits are included, while explicit choices to keep original speech or a selected recording are respected. Split, merged or reordered dialogue requires a new editorial version. The main workspace shows “Done” when processing is complete. Earlier exports and successful recordings remain available.
+## Start in three steps
 
-The model picker now lists available voice-model variants. A green dot means downloaded; a red dot shows what remains to download. It also shows estimated memory demand. If a choice exceeds the available memory budget, the app warns you and allows download-only, without switching to a configuration unlikely to load.
+1. Download and open the app, then prepare the models and runtimes. Initial setup needs internet access.
+2. Add videos and choose Cantonese, English or both. For external subtitles, use **Subtitle source → Import subtitle file** above the preview (SRT / ASS / SSA / VTT).
+3. Start processing and play the finished movie. Use the review report to compare original, separated and generated speech, retake a line or select an earlier recording, then export another version.
 
-The Windows Drama 3 Q2 option is a quantized full model running on the CPU: about 17.1 GB to download and an estimated 22 GB of system RAM to load. On Mac, the supported full MLX 4-bit option is estimated at 28 GB of unified memory. With 8 GB reserved for the system, **a 32 GB Mac is not a recommended Drama 3 configuration**. The older smaller variant was retired after Cantonese quality testing. Apple Silicon with at least 64 GB remains the tested highest-quality recommendation.
+[Subtitle import guide](docs/en/GETTING-STARTED.md)
 
-Model choices now show **system RAM and dedicated GPU VRAM separately**, assigning each model to the pool it actually uses and reserving at least 8 GB of system memory. On a Windows PC with 32 GB RAM and an NVIDIA GPU with 16 GB VRAM, the full Drama 3 CPU model can be selected alongside Qwen 9B on the GPU; CPU dubbing may be substantially slower. Models run in sequence, so each bar estimates the largest model in its pool rather than summing every download. Actual use may vary with hardware and content.
+## Inside the current app
 
-Download progress and errors remain visible, with verification, resume and retry controls. The macOS CosyVoice 3 installation dependency fix remains included. Wait until a new model is verified before using it.
+Real 0.24.58 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
 
-## Local AI, offline after setup
+### Welcome and setup
 
-AniCanto uses local language and voice models. Once the required models and runtimes are ready, Japanese speech recognition, translation, dubbing and video export run on your computer. **Your video and audio do not need to be uploaded to the cloud, and no cloud translation or dubbing service is required.** Internet access is needed for first-time setup, additional models, download repair and updates.
+![Welcome and setup](docs/images/welcome-en.png)
 
-## With respect to voice performers
+### Basic mode: progress and audition
 
-Dubbing is a craft. Character interpretation, emotion, timing, pronunciation and dramatic intent come from people’s training, creativity and dedication.
+![Basic mode: progress and audition](docs/images/basic-en.png)
 
-AniCanto is for personal learning and creative experiments. **It is not intended to replace professional voice actors, and its AI output does not meet the standard of a professional performance.** Please recognise and support the performers behind the voices you love.
+### Expert mode: timeline and line editing
 
-## Built by learning from the failures
+![Expert mode: timeline and line editing](docs/images/timeline-en.png)
 
-Japanese animation is a particularly demanding test for AI dubbing: expressive performances, rapid changes of emotion, overlapping voices and cross-language voice imitation can all expose weaknesses in the workflow.
+### Review report: issues and recording comparison
 
-Getting from the first prototype to the current build has taken repeated testing and refinement. Much of that work means watching failed conversions, listening to individual lines, tracing what went wrong and adjusting how the app handles exceptions. A fix is checked against other situations too; improving one scene should not damage another.
+![Review report: issues and recording comparison](docs/images/review-en.png)
 
-**Human judgement remains essential.** AI can flag suspicious recordings and try repairs, but matching a character’s voice, preserving dramatic intent and deciding whether a line sounds natural still need a person to listen. Automatic checks do not prove that a performance is right. AniCanto is an evolving hobby project, and that process of listening, testing and improving continues.
+[See every interface screenshot](docs/en/SCREENSHOTS.md)
 
-## A new way to hear a familiar scene
+## Before you start
 
-The big entrance. The awkward confession. The perfectly timed “Let’s go!” AniCanto lets you explore how a familiar scene feels in Hong Kong Cantonese, with English alongside it when you want a little help following along.
+AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese and English tracks and OP / ED preservation; results vary by scene.
 
-**Curious about Cantonese?** Use the English interface, generate Cantonese and English audio, and compare the subtitle options. Enjoy discovering new expressions while keeping in mind that AI translations and pronunciation can be wrong.
+A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 
-## What makes it different
-
-| Made for animation | A studio to explore |
-|---|---|
-| **🎵 Keep the opening and ending**<br>Detect OP/ED songs and preserve their original Japanese audio by default. | **🔁 Repair, then listen again**<br>Automatic repair can adapt a line, regenerate a take and check the new recording. |
-| **🌏 Cantonese + English dubbing**<br>Generate both languages in one production, with separate Cantonese and English audio tracks in the same exported video and switchable subtitles. | **🎬 Simple start, detailed control**<br>Basic mode for automatic production; Expert mode adds a timeline, line editing and retakes. |
-| **🎧 Hear the evidence**<br>Compare the original mix, separated voice and generated recording in the review report when available. | **💻 Run on your own computer**<br>Model inference runs locally after setup. Queue videos, pause, save and resume your work. |
-
-OP/ED detection and repair are automatic attempts, not a guarantee that every song boundary, voice or line will be recognised correctly. The report keeps unfinished work visible.
-
-## A look inside
-
-The app’s primary design language is **Hong Kong Traditional Chinese**. The English interface makes the same workspace accessible to English speakers exploring Cantonese. This page and its [full gallery](docs/SCREENSHOTS.md) use English interface screenshots throughout. Choose the Traditional Chinese language link above to read the complete Chinese version with Chinese interface screenshots.
-
-Screenshots show the real application interface with original demonstration dialogue and illustrative project/model states. They contain no commercial anime footage and are not conversion benchmarks.
-
-### 01 · Pick your way in
-
-![English Welcome screen with Basic and Expert mode choices](docs/images/welcome-en.png)
-
-Original assistants and two ways into the same studio, with a choice of Hong Kong Traditional Chinese or English interface text.
-
-### 02 · Start simply
-
-![English Basic mode with a demonstration video queue and automatic production settings](docs/images/basic-en.png)
-
-Import your videos, choose a dubbing language and an output folder, then let the workflow proceed.
-
-### 03 · Get close to every line
-
-![English Expert mode with a timeline, source Japanese text, Cantonese script and recording controls](docs/images/timeline-en.png)
-
-Browse the timeline, compare source text and the dubbing script, audition a line and keep earlier takes.
-
-### 04 · See what the AI checked
-
-![English review report showing dialogue, timing measurements, automatic attempts and audio comparisons](docs/images/review-en.png)
-
-Each line shows the original Japanese mix, separated voice, retained TTS recordings and the voice used in the current export, with recognition, timing and repair evidence available on demand. Listen, retake one line or choose another recording, then export a new finished video. Uncertain lines remain labelled.
-
-### 05 · Keep a batch in order
-
-![English projects page with queue ordering controls and export destinations](docs/images/batch-en.png)
-
-Reorder waiting videos, see each project’s status and resume unfinished work.
-
-<details>
-<summary><strong>More screenshots</strong></summary>
-
-| Models & setup | Preferences |
-|---|---|
-| ![English model quality and setup options](docs/images/models-setup-en.png) | ![English language, theme and appearance preferences](docs/images/preferences-en.png) |
-
-[View the complete interface gallery](docs/SCREENSHOTS.md)
-
-</details>
-
-### Match models to memory
-
-![Windows model selection showing separate system RAM and dedicated GPU VRAM](docs/images/model-memory-en.png)
-
-This example uses 32 GB system RAM and 16 GB GPU VRAM. The full Drama 3 CPU model uses system RAM; Qwen 9B is planned for the GPU and counted against VRAM. Setup still verifies that the models load and generate speech on the actual device.
-
-## Japanese dialogue, Chinese subtitles, two new voices
-
-**AniCanto supports Cantonese and English bilingual dubbing.** Choose Cantonese, English, or both. With both selected, the exported video contains separate Cantonese and English dubbed audio tracks, alongside the original Japanese track when retained. Switch audio languages in a compatible player; the two dubs do not play over each other.
-
-The translation workflow combines Japanese dialogue with the Chinese subtitle evidence available in your source:
-
-| Input source | How AniCanto uses it |
-|---|---|
-| **Japanese audio** | Recognises the spoken Japanese and its timing to build the dialogue transcript. |
-| **Embedded Chinese text subtitle tracks** | Reads selectable subtitle text stored inside the video container, such as a text track in an MKV or MP4, as supporting evidence for names and meaning. |
-| **Burned-in Chinese subtitles — screen OCR** | Reads Chinese captions that are part of the video image. OCR supplies time-matched text evidence; it is distinct from extracting an embedded text track. |
-| **External subtitle files** | Can use matching `.srt`, `.ass` or `.vtt` files alongside the video. |
-
-Qwen uses the recognised dialogue and available subtitle evidence to produce **Hong Kong Cantonese and English scripts**; the selected voice engine then generates the dubbed recordings. Subtitles help with context, but missing OCR text should not remove dialogue heard in Japanese. If no readable captions are available, the workflow can continue from Japanese speech recognition.
-
-Automatic subtitle selection checks for a matching external file first, then an embedded text track, then burned-in captions through screen OCR. Expert mode also offers **Japanese audio only** or **Japanese audio + screen OCR** for a newly submitted conversion. OCR quality depends on caption clarity, layout and contrast; embedded subtitle support refers to usable text tracks, not every image-based subtitle format.
-
-For language comparison, choose separate Cantonese and English subtitles, or the combined learning track with **Cantonese on the first line and English underneath**. Audio and subtitle tracks can be selected independently in a compatible player.
-
-### Supported video formats
-
-**MP4 · MKV · MOV · M4V · AVI · WebM · TS**
-
-These are the video container formats accepted by the app. Actual compatibility also depends on the video/audio codecs and file integrity; an accepted extension does not guarantee every encoding will decode. Burned-in captions can be read with OCR, but cannot always be cleanly removed or replaced in the picture.
-
-## Start with the right voice
-
-**For a Hong Kong Cantonese accent, our recommendation is Drama 3 with Qwen 3.5 35B.** In the developer’s listening tests, Drama 3 sounded closest to the Cantonese commonly heard in Hong Kong. Accent and voice resemblance still depend on the reference recording and scene.
-
-| Voice model | What to expect |
-|---|---|
-| **Drama 3 — recommended** | Closest to a Hong Kong Cantonese accent in current listening tests. |
-| **GPT-SoVITS** | May retain a Japanese accent when imitating a Japanese source voice. |
-| **CosyVoice 3** | May retain a Japanese accent in this workflow. Uses the official model on Windows NVIDIA/CUDA and can also run with the official model on Apple Silicon Mac CPUs, potentially much more slowly. |
-
-Qwen translates and helps plan repairs; Drama 3 generates speech. Download choices for text translation are **Qwen 3.5 9B and 35B**. Model versions without confirmed licence evidence have been removed from the download catalogues.
-
-### Recommended Mac
-
-| | Recommendation |
-|---|---|
-| Computer | **Apple Silicon Mac with 64 GB or more unified memory** |
-| System | macOS 14 or later |
-| Voice | Drama 3 · 35B · 4-bit MLX |
-| Translation | Qwen 3.5 · 35B-A3B · 4-bit MLX |
-| Storage | Plan for **100 GB or more free space** for models, environments and working files; long videos need additional room. |
-| First setup | Internet access for model and runtime downloads; inference runs locally afterwards. |
-
-Lower-memory presets can differ in accent, voice expression and translation detail. The developer completed one video conversion on a Windows NVIDIA RTX 4090 machine; other Windows hardware, videos and model combinations remain unverified. Intel Macs are not supported by this Apple Silicon setup.
-
-### Conversion time reference
-
-| Input | Mode | Machine | Models | Approximate processing |
-|---|---|---|---|---|
-| 25-minute animation | Normal | MacBook Pro M2 Max | Qwen 3.5 35B + Drama 3 | **45 minutes** |
-
-This is a developer-provided reference, not a newly repeated benchmark or a time guarantee. Dialogue density, first-time downloads, video encoding, memory pressure and automatic retakes can change the total substantially.
-
-## From scene to speech
-
-1. **Prepare** — Read the video, audio and subtitle tracks; prepare the project and working files.
-2. **Find the dialogue** — Recognise Japanese speech, use available subtitle evidence and detect OP/ED regions.
-3. **Prepare source references** — Separate dialogue from background audio and collect reference clips for the chosen voice strategy.
-4. **Translate** — Adapt dialogue into Cantonese and/or English while considering meaning and the available speaking window.
-5. **Generate and repair** — Generate takes, check language/content/timing, then try targeted rewriting, retakes, reference repair or bounded timing and tempo adjustments when needed.
-6. **Review and export** — Mix the selected voices with the background, keep the original track and produce a versioned export with the selected subtitles.
-
-After bounded rewrites, reference repair and gentle timing adjustments with the original voice, a target-language reference may be used as a last resort to recover translated speech. The report identifies this voice change; it is not certified character imitation. Small timing differences automatically use safe neighbouring gaps and bounded onset shifts; complete final fallback recordings receive the same measured gentle-tempo trial before rejection. Dialogue and OP/ED ranges constrain placement. Camera cuts and arbitrary twelve-second divisions do not discard usable speech.
-
-Normal mode attempts automatic checks and repair while preferring the first audible take. High-speed mode skips quality review and quality-driven retakes. A completed video is exported as a finished file; if a line needs source-voice fallback or remains uncertain, the report identifies it. Such a line should not be mistaken for a verified Cantonese dub.
-
-## What to expect
-
-- **Animation first, Japanese first.** The main workflow targets Japanese animated dialogue, not live dubbing or every possible source language.
-- **Difficult audio is still difficult.** Overlapping speakers, shouting, whispers, songs, effects and noisy separation can affect recognition, reference quality and completeness.
-- **One character, not always one consistent voice.** Normal mode imitates a source reference for each line; it does not lock a character’s identity or timbre across a whole episode. Voice colour, accent and expression can vary between takes.
-- **Expressive acting can confuse the AI.** Professional Japanese performers may change timbre dramatically for whispers, shouting, comedy or emotion. When role analysis is used, AI can split the same character into different roles, or merge similar voices. That is a limit of AI recognition, not a flaw in the acting.
-- **Automatic repair has limits.** Translation, names, accent, emotion, speaker identity and lip sync can still be wrong. A voice-per-line reference is not proof of a recognised character.
-- **No cut-off speech as a shortcut.** The workflow tries shorter wording, full retakes and safe timing changes; small tempo adjustments are bounded. Some lines can remain unresolved.
-- **Opening/ending songs stay Japanese by default.** Detection can miss unusual arrangements; inspect the result.
-- **Subtitles have boundaries.** Embedded text and speech recognition are useful evidence; burned-in captions cannot be cleanly replaced in every video.
-- **Local does not mean lightweight.** Large models need substantial memory, storage and processing time.
-
-[Read the first-run guide](docs/GETTING-STARTED.md) · [Full screenshot gallery](docs/SCREENSHOTS.md)
-
-## Your media, your choices
-
-Use only video, subtitles and voices you have permission to process. AniCanto does not provide anime episodes or grant rights to another person’s voice. Recognition and inference run locally after model setup; setup and updates contact the relevant download hosts.
-
-Original application code is **MIT · © 2026 SCKC**. Third-party tools, models and assets keep their own licences. **Built with Fish Audio** — Drama 3 uses the [Fish Audio Community License](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE), with separate use, commercial and hosted-service conditions. The MIT application licence does not replace those model terms.
-
-[Licence details](docs/LICENSING.md)
-
-## Support a little more Cantonese
-
-If AniCanto helps you discover a new phrase, enjoy a new voice, or share a little Hong Kong Cantonese with a friend, you can support its continued development. A coffee is optional; curiosity is always welcome.
-
-<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Samuel a coffee — support AniCanto" width="217"></a>
-
-Made by SCKC · For the fun of hearing Cantonese in a new scene.
+[Support the project](https://buymeacoffee.com/samuelchen) · [MIT](LICENSE) · [Licences](docs/LICENSING.md)

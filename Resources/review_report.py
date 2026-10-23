@@ -65,6 +65,8 @@ def project(root,review,row):
         for v in read(folder/'timing.json',[]):
             if v.get('originalFallback'):insert(dict(v,kind='preview-original-fallback'),engine,language,origin=origin+'/timing.json')
         checks=read(folder/'normal-checks.json',{})
+        for v in read(folder/'failed-voice-choices.json',{}).get('decisions',[]):
+            insert(dict(v,kind='failed-voice-choice'),engine,language,origin=origin+'/failed-voice-choices.json')
         for v in checks.get('repairs',[]):
             insert(dict(v,kind='targeted-language-or-integrity'),engine,language,'repaired' if v.get('repaired') else 'repairing' if active else 'unresolved',origin+'/normal-checks.json')
         for v in checks.get('advisories',[]):

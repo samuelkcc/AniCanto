@@ -91,12 +91,20 @@ class NaturalDeliveryTests(unittest.TestCase):
   with patch('dubbing.gsv_audio') as tts:
    self.assertEqual(natural_delivery.repair(dict(editorRender=True,automaticDurationRewrite=True),Path('.'),[],['take'],Mock(),Mock()),['take'])
    tts.assert_not_called()
+ def test_first_take_preference_keeps_audible_recording_for_later_timing_recovery(self):
+  with tempfile.TemporaryDirectory() as d:
+   job=Path(d);first=audio(job/'first.wav',1.4)
+   cue=dict(start=0,end=1,japanese='行こう',cantonese='出發啦。')
+   cfg=dict(duration=2,automaticDurationRewrite=True,preferFirstAudibleTake=True,productionMode='normal',targetLanguage='yue')
+   with patch('dubbing.gsv_audio',side_effect=AssertionError('Unrequested rewrite')):
+    self.assertEqual(natural_delivery.repair(cfg,job,[cue],[first],Mock(),Mock()),[first])
+   self.assertEqual(cue['cantonese'],'出發啦。')
  @unittest.skipUnless(shutil.which('ffmpeg'),'FFmpeg required')
  def test_measured_long_line_only_is_rewritten_at_rate_one_and_resume_reuses_take(self):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);long=audio(job/'long.wav',1.5);short=audio(job/'short.wav',.4);healthy=audio(job/'healthy.wav',.4)
    original=[dict(start=0,end=.7,japanese='来て',cantonese='I would like you to come here.',speakerId='own-1'),dict(start=.7,end=1.5,japanese='はい',cantonese='Yes.',speakerId='own-2')]
-   cfg=dict(duration=1.5,speechRatePolicy='natural',automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1,ffmpeg=shutil.which('ffmpeg'))
+   cfg=dict(duration=1.5,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1,ffmpeg=shutil.which('ffmpeg'))
    calls=[]
    def run(args):calls.append(args);return subprocess.check_output([str(x) for x in args],stderr=subprocess.PIPE)
    def generate(c,folder,cues,*args):
@@ -116,7 +124,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=[audio(job/f'old-{i}.wav',1.4) for i in range(3)];new=[audio(job/f'new-{i}.wav',.5) for i in range(3)]
    original=[dict(start=i,end=i+1,japanese='行こう',cantonese='I would like you to come here.',speakerId=f'own-{i}',reviewIndex=i+20) for i in range(3)]
-   cfg=dict(duration=3,speechRatePolicy='natural',automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
+   cfg=dict(duration=3,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
    def generate(c,folder,rows,*args):
     self.assertEqual([r['speakerId'] for r in rows],['own-0','own-1','own-2'])
     self.assertEqual([r['reviewIndex'] for r in rows],[20,21,22]);return new
@@ -175,7 +183,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=audio(job/'old.wav',1.5)
    cue=dict(start=0,end=1,japanese='来て',cantonese='I would like you to come here.',speakerId='own')
-   cfg=dict(duration=1,automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
+   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
    def interrupted(c,folder,rows,*args):
     target=audio(folder/'completed.wav',.4)
     worker.atomic_json(folder/'audio-preview.json',dict(engine='drama3',language='en',rows=[dict(rows[0],audio=str(target))]))
@@ -188,7 +196,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=audio(job/'old.wav',1.4);new=audio(job/'new.wav',.5)
    cue=dict(start=0,end=1,japanese='行こう',cantonese='I would like you to come here.')
-   cfg=dict(duration=1,automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',model='m',port=1)
+   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',model='m',port=1)
    worker.atomic_json(job/'normal-checks.json',dict(unresolved=[1],repairs=[dict(index=1,repaired=False)]))
    worker.atomic_json(job/'segment-issues.json',[dict(index=1,kind='normal-unresolved',message='Japanese')])
    with patch('dubbing.gsv_audio',return_value=[new]),patch.object(worker,'ollama_chat',return_value='{"0":"Come here."}'),patch('semantic_review.audit',return_value={'0':dict(faithful=True)}),patch('normal_mode.inspect',return_value={1:dict(decision='english',contentFailure=False)}):

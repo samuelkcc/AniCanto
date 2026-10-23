@@ -15,6 +15,10 @@ def record(root,row,event,language=None):
     if not stage and not message:return
     path=folder(root,row)
     if path is None:return
+    now=time.time();row['lastEventAt']=now
+    progress=[stage,event.get('workID'),event.get('workCompleted'),event.get('workTotal'),event.get('progress')]
+    if progress!=row.get('activitySignature'):
+        row.update(activitySignature=progress,lastProgressAt=now)
     signature=[stage,message,language]
     if row.get('workflowSignature')==signature:return
     sequence=int(row.get('workflowSequence',0))+1

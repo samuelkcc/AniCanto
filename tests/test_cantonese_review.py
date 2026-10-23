@@ -49,6 +49,18 @@ class CantoneseReviewTests(unittest.TestCase):
   self.assertEqual(row['languageStatus'],'unconfirmed-cantonese');self.assertTrue(row['languageUnverified'])
   self.assertFalse(policy.verified(row));self.assertTrue(policy.retain_original(row));self.assertFalse(row['confirmedContentFailure'])
   self.assertEqual(calls,0,'A broad language label must not trigger endless re-recording')
+ def test_two_mandarin_listeners_reject_even_matching_chinese_text(self):
+  text='我哋而家一齊出發去搵佢啦'
+  row,calls=self.check(text,text,'mandarin',second=dict(heard=text,language='mandarin'))
+  self.assertEqual(calls,1)
+  self.assertEqual(row['reviewReason'],'independently-confirmed-mandarin')
+  self.assertTrue(row['confirmedContentFailure'])
+ def test_one_mandarin_label_cannot_discard_audible_cantonese(self):
+  text='我哋而家一齊出發去搵佢啦'
+  row,calls=self.check(text,text,'mandarin',second=dict(heard=text,language='yue'))
+  self.assertEqual(calls,1)
+  self.assertFalse(row['confirmedContentFailure'])
+  self.assertTrue(policy.retain_original(row))
  def test_ep07_117_stammered_courtesy_is_not_a_missing_negative(self):
   row,calls=self.check('唔……唔該。','運がいい。','japanese',second=dict(heard='うんがい',language='ja'))
   self.assertFalse(row['confirmedContentFailure']);self.assertTrue(policy.retain_original(row))

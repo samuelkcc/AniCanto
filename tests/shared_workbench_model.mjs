@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {activity,reviewMatches,staleFor} from '../studio/web/workbench.js';
+assert.equal(activity({status:'running'},1000).known,false);
+assert.equal(activity({status:'running',lastEventAt:800,lastProgressAt:700},1000).quiet,true);
+assert.equal(activity({status:'paused',lastEventAt:800},1000).quiet,false);
+assert.equal(reviewMatches({triage:'checked'},'issues'),false);
+assert.equal(reviewMatches({triage:'deferred'},'deferred'),true);
+assert.equal(reviewMatches({category:'missing',triage:'pending'},'missing'),true);
+assert.equal(staleFor({staleRecordings:[{index:1,engine:'drama3',language:'en'}]},0,'drama3','yue'),undefined);
+console.log('PASS review filters, track-scoped stale recordings, unknown activity and quiet-worker semantics');

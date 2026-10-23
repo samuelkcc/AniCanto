@@ -1,4 +1,5 @@
-// Shared by the Mac and Windows About drawer. Keep both languages equivalent.
+import {localeData} from './locale-data.js';
+// Shared by the Mac and Windows About drawer. Keep all languages equivalent.
 export const ABOUT_COPY={
  en:[
   {title:'Created for learning',text:'AniCanto is a hobby project by SCKC. It began with a simple wish: to help the developer’s children learn Chinese characters and everyday Hong Kong Cantonese by listening to Cantonese dialogue while reading Chinese subtitles. Through animation, the project explores technology-assisted language learning and introduces the expression and culture of Hong Kong Cantonese to audiences around the world.'},
@@ -13,4 +14,4 @@ export const ABOUT_COPY={
   {title:'聆聽、閱讀與比較',text:'程式支援廣東話及英文配音、日文原聲，以及可切換的廣東話、英文和中英雙語字幕。AI 翻譯與語音生成可能出現錯譯、口音、漏句或不完整演繹，效果亦取決於所選模型與來源素材。這些功能旨在協助探索與學習，並不等同於專業製作的配音作品。'}
  ]
 };
-export function aboutCopy(language){return ABOUT_COPY[language==='en'?'en':'zh-HK'];}
+export function aboutCopy(language){const locale=localeData(language);return locale?ABOUT_COPY.en.map((row,i)=>({title:locale.about[`${i}.title`]??row.title,text:locale.about[`${i}.text`]??row.text})):ABOUT_COPY[language==='zh-HK'?'zh-HK':'en'];}

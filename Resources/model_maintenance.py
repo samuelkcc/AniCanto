@@ -114,10 +114,32 @@ def maintain(root,ident,mode='repair',platform=None):
         raise
 
 
+def maintain_many(root,idents,platform=None):
+    if not isinstance(idents,list) or not idents or len(idents)>32 or any(not isinstance(ident,str) for ident in idents) or len(set(idents))!=len(idents):
+        raise ValueError('Select between 1 and 32 different voice models.')
+    # Validate the full batch before writing any files. A later failed download
+    # does not undo earlier verified models; retry only fetches missing files.
+    for ident in idents:
+        row,_=model(root,ident,platform)
+        if row.get('category')!='voice' or row.get('retired') or row.get('licenseReviewRequired'):
+            raise ValueError('This voice model is unavailable for download: '+ident)
+    failures=[]
+    for index,ident in enumerate(idents,1):
+        emit(f'Downloading voice model {index}/{len(idents)}',modelID=ident,modelIndex=index,modelCount=len(idents))
+        try:maintain(root,ident,'repair',platform)
+        except Exception as error:failures.append(dict(id=ident,error=str(error)))
+    emit('Voice model downloads finished' if not failures else f'{len(failures)} voice model download(s) failed',modelCount=len(idents),failedModels=failures,progress=1,**({'error':'; '.join(f['id']+': '+f['error'] for f in failures)} if failures else {}))
+    return failures
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--root',required=True);p.add_argument('--id',required=True);p.add_argument('--mode',choices=['repair','redownload'],default='repair');p.add_argument('--platform',default=sys.platform)
+    p=argparse.ArgumentParser();p.add_argument('--root',required=True);choice=p.add_mutually_exclusive_group(required=True);choice.add_argument('--id');choice.add_argument('--ids-json');p.add_argument('--mode',choices=['repair','redownload'],default='repair');p.add_argument('--platform',default=sys.platform)
     args=p.parse_args()
-    try:maintain(args.root,args.id,args.mode,args.platform)
+    try:
+        if args.ids_json:
+            if args.mode!='repair':raise ValueError('Batch downloads only support repair mode.')
+            return 1 if maintain_many(args.root,json.loads(args.ids_json),args.platform) else 0
+        maintain(args.root,args.id,args.mode,args.platform)
     except Exception:return 1
     return 0
 

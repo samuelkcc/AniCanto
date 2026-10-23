@@ -1,3 +1,4 @@
+import {localeData} from './locale-data.js';
 // Plain-language guidance. Original component terms remain in the notice viewer.
 const COPY={
  en:[
@@ -17,4 +18,4 @@ const COPY={
   {title:'保證範圍與模型輸出',text:'AniCanto 依 MIT 授權的免責保證條款提供。AI 翻譯與配音可能出現錯誤、口音、漏句或不完整輸出；成功匯出或通過自動品質檢查，不等於用途已獲法律許可，亦不保證演繹準確。使用第三方模型時，仍須遵守該模型的條款。'}
  ]
 };
-export const licenceCopy=language=>COPY[language==='en'?'en':'zh-HK'];
+export const licenceCopy=language=>{const locale=localeData(language);return locale?COPY.en.map((row,i)=>({title:locale.licence[`${i}.title`]??row.title,text:locale.licence[`${i}.text`]??row.text})):COPY[language==='zh-HK'?'zh-HK':'en'];};

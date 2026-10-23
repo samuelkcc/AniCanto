@@ -23,8 +23,10 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
  if mode not in ('pending','all'):raise ValueError('Unknown review retry mode.')
  targets={}
  for issue in snapshot.get('issues',[]):
-  if issue.get('status')=='user-choice-saved':continue
+  if issue.get('status')=='user-choice-saved' or (mode=='pending' and issue.get('triage') in ('checked','deferred')):continue
   if type(issue.get('index')) is int:targets.setdefault(issue.get('language','yue')+':'+issue.get('engine',''),[]).append(issue['index'])
+ for stale in snapshot.get('staleRecordings',[]):
+  if not stale.get('protected'):targets.setdefault(stale['language']+':'+stale['engine'],[]).append(stale['index'])
  from multitrack import saved_track_reports
  donors={}
  for row in saved_track_reports(path):
@@ -54,7 +56,9 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
     if key in donors:targets[key]=[n for n in targets.get(key,[]) if n!=i]
   cues=edited
  if mode=='pending' and not any(targets.values()) and not any(c.get('editorDecisions') for c in cues):raise ValueError('There are no reported lines or saved changes to repair.')
- return dict(id=uuid.uuid4().hex,review=str(path),settings=copy.deepcopy(review['config']),automaticReviewRetry=dict(revision=REVISION,mode=mode,fingerprint=fingerprint(review),targets={k:sorted(set(v)) for k,v in targets.items()},donors=donors,submittedCues=cues))
+ settings=copy.deepcopy(review['config'])
+ if saved_draft and 'voiceProfiles' in saved_draft.get('settings',{}):settings['voiceProfiles']=copy.deepcopy(saved_draft['settings']['voiceProfiles'])
+ return dict(id=uuid.uuid4().hex,review=str(path),settings=settings,automaticReviewRetry=dict(revision=REVISION,mode=mode,fingerprint=fingerprint(review),targets={k:sorted(set(v)) for k,v in targets.items()},donors=donors,submittedCues=cues))
 
 def render(w,request,draft):
  source=Path(draft['review']).resolve();base=source.parent;review=read(source,{})

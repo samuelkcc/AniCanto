@@ -14,7 +14,7 @@ SUFFIXES={'.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mj
 SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels','archive'}
 DOCS={'README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
-      'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md'}
+      'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)
 SECRET=re.compile(rb'(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{35,}|AKIA[0-9A-Z]{16})')
 IMAGE_SUFFIXES={'.png','.otf','.icns','.ico'}

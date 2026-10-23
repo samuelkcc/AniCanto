@@ -1,27 +1,11 @@
-**繁體中文** · [English](../LICENSING.md)
-
-# 授權及發佈範圍
+# AniCanto · 繁體中文
 
 [← AniCanto](../../README.md)
 
-## 呢個儲存庫包含啲乜
+Original application code: MIT, © 2026 SCKC. Third-party libraries, native tools, runtimes and optional models retain their own licences.
 
-目前準備階段提供繁體中文及英文計劃介紹、對應語言指南，以及原創示範截圖同封面。儲存庫唔包含 App 安裝檔、模型權重、用戶影片，亦未包含完整應用程式原始碼。公開下載同完整原始碼發佈仍待完成。
+**Built with Fish Audio.** Drama 3 weights use the [Fish Audio Community License 1.0](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE), separately from the application code. Optional models are downloaded by the app and are not bundled in the release installers.
 
-原創應用程式碼採用 MIT，版權 © 2026 SCKC，請保留 [LICENSE](../../LICENSE)。根目錄嘅 MIT 授權唔會改變第三方依賴項目或模型權重嘅授權。
+[Release binaries and matching source materials](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.58-beta) · [Packaged component notices](../../licenses/) · [Source and distribution notes](../PUBLIC-DISTRIBUTION-REVIEW.md)
 
-## 模型及工具
-
-**Built with Fish Audio。** Drama 3 保留 [Fish Audio Community License](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE)，包括署名，以及適用嘅使用、商業及託管服務條件。使用或分發模型素材前，請閱讀確切版本嘅條款；社群轉換版唔會因基礎模型有授權，就自動獲得相同授權保障。
-
-十一個未確認證據嘅轉換版本，已從隨 App 提供嘅下載清單移除。原有審查紀錄可能保留提及，以便追溯，唔代表提供下載。官方原生 CosyVoice 3 只供 Windows NVIDIA／CUDA 使用；Mac 不提供 MLX CosyVoice 3。
-
-正式安裝檔需要附上對應第三方聲明、確切原始碼／建置資料及發佈檢查。只準備呢個介紹頁面，唔會取代上述責任。可參考 [FFmpeg 分發指引](https://ffmpeg.org/legal.html)。
-
-## 插圖及截圖
-
-封面以計劃原創 Welcome 助手為身份參考，為 AniCanto 生成 AI 插圖。截圖來自實際介面，使用原創示範對白同示意專案／模型狀態，唔係第三方動畫畫面，亦唔係轉換測試結果。介面元件保留各自聲明，包括 Feather 圖示幾何同 Noto 字體。
-
-## 影片及聲音權利
-
-請只處理你有權使用嘅影片同聲音。應用程式授權唔會授予第三方內容嘅版權、表演、肖像或聲音權利。未解決嘅配音品質同 Windows 硬件驗收，屬另外需要完成嘅工程檢查。
+Use only media and voices you have permission to process.

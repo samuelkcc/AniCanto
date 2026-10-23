@@ -227,7 +227,7 @@ async fn studio_pick(kind:String)->Result<Vec<String>,String> {
         let dialog=rfd::FileDialog::new();
         let paths=match kind.as_str(){
             "video"=>dialog.add_filter("Videos",&["mkv","mp4","mov","m4v","avi","webm","ts"]).pick_files().unwrap_or_default(),
-            "subtitle"=>dialog.add_filter("Subtitles",&["srt","ass","vtt"]).pick_file().into_iter().collect(),
+            "subtitle"=>dialog.add_filter("Subtitles",&["srt","ass","ssa","vtt"]).pick_file().into_iter().collect(),
             "audio"=>dialog.add_filter("Reference audio",&["wav","mp3","m4a","flac"]).pick_file().into_iter().collect(),
             "folder"=>dialog.pick_folder().into_iter().collect(),_=>return Err("Unsupported file picker".to_string())};
         Ok(paths.iter().map(|p|p.to_string_lossy().into_owned()).collect())
@@ -302,10 +302,10 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
 }
 #[tauri::command]
 async fn studio_start(op:String,params:Value,app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<Value,String> {
-    if !["start","render","retry-review","setup","maintain-model"].contains(&op.as_str()){return Err("Unsupported task".into());}
+    if !["start","render","retry-review","setup","maintain-model","maintain-models"].contains(&op.as_str()){return Err("Unsupported task".into());}
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         let _gate=host.task_lock.lock().map_err(|e|e.to_string())?;
-        if ["setup","maintain-model"].contains(&op.as_str())&&host.older_app_open(){return Err("Close the previous AniCanto app before switching or removing models.".into());}
+        if ["setup","maintain-model","maintain-models"].contains(&op.as_str())&&host.older_app_open(){return Err("Close the previous AniCanto app before switching or removing models.".into());}
         if host.root.join("batch-inflight.json").is_file()&&host.older_app_open(){return Err("Close the previous AniCanto app before starting a task here. Its saved conversion is retained.".into());}
         // Reserve across preparation and spawn, without holding a mutex while
         // native callbacks need it. RPC serialization also protects drafts.

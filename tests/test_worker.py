@@ -13,6 +13,18 @@ spec.loader.exec_module(worker)
 
 
 class WorkerTests(unittest.TestCase):
+    def test_batch_uses_selected_external_subtitle_over_same_name_sidecar(self):
+        with tempfile.TemporaryDirectory() as folder:
+            directory=Path(folder);video=directory/'episode.mp4';video.write_bytes(b'video')
+            sidecar=directory/'episode.srt';sidecar.write_text('wrong',encoding='utf-8')
+            selected=directory/'translation.ass';selected.write_text('chosen',encoding='utf-8')
+            configs=[]
+            with patch.object(worker,'convert',side_effect=lambda cfg:configs.append(cfg)),patch.object(worker,'emit'):
+                worker.batch_convert(dict(videos=[dict(id='first',video=str(video))],subtitleSource='external',
+                                          subtitle=str(selected),batchAutoSubtitles=False,batchExplicitSubtitle=True))
+            self.assertEqual(len(configs),1)
+            self.assertEqual(configs[0]['subtitle'],str(selected))
+
     def test_critical_action_must_be_corroborated_by_audio_and_caption(self):
         dead=dict(japanese='彼は死んじゃった',subtitleHint='他死了')
         self.assertTrue(worker.meaning_issues(dead,'佢唔喺咗'))

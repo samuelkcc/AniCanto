@@ -8,7 +8,7 @@ import hashlib,json,subprocess
 from pathlib import Path
 from types import SimpleNamespace
 
-REVISION='yue-advisory-two-witnesses-4-lexical-evidence'
+REVISION='yue-advisory-two-witnesses-5-mandarin-confirmation'
 ACCEPTANCES=('cantonese-phonetic-variant','cantonese-independent-transcript')
 
 
@@ -45,6 +45,11 @@ def corroborated(expected,first,second):
     aliases={'en':'english','ja':'japanese','ko':'korean','th':'thai','zh':'chinese','yue':'cantonese'}
     lang=lambda row:aliases.get(str(row.get('detectedLanguage','')).lower(),str(row.get('detectedLanguage','')).lower())
     la,lb=lang(first),lang(second)
+    # The same Chinese characters can be pronounced in Cantonese or Mandarin.
+    # Two independent explicit Mandarin labels are acoustic evidence even when
+    # both transcripts match the approved Chinese text exactly.
+    if n>=6 and la in ('mandarin','cmn') and lb in ('mandarin','cmn') and a and b:
+        return 'independently-confirmed-mandarin'
     foreign=lambda language:language not in ('','none','unknown','chinese','cantonese')
     if n>=6 and foreign(la) and la==lb and similarity(expected,first.get('heard',''))<.45 and similarity(expected,second.get('heard',''))<.45:
         return 'independently-confirmed-wrong-language'
@@ -84,7 +89,9 @@ def review(cfg,job,cues,paths,checks,emit):
             entry['row']=annotate(raw,'accept','full-cantonese-syllable-sequence-matches',deliveryAccepted=True,
                          deliveryAcceptance='cantonese-phonetic-variant',phoneticAlignment=alignment,
                          warning='完整粵語音節相符；保留字形／聲調提示，未認證表演或原角色身分。')
-        elif clear_content_problem(dict(cantonese=expected),raw):pending.append(entry)
+        elif clear_content_problem(dict(cantonese=expected),raw) or (
+            len(expected)>=6 and str(raw.get('detectedLanguage','')).lower() in ('mandarin','cmn','普通話','普通话')
+            and bool(raw.get('heard'))):pending.append(entry)
         prepared.append(entry)
     if pending:
         emit('廣東話核對',f'{len(pending)} 段較大差異合併獨立核對；只載入一次模型，原角色錄音保留。',None)

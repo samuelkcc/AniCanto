@@ -38,6 +38,20 @@ class MaintenanceTests(unittest.TestCase):
   record=json.loads(next((self.root/'studio/model-maintenance').glob('*.json')).read_text());self.assertEqual(record['status'],'failed')
   result=self.run_task('redownload');self.assertEqual(result['status'],'complete');self.assertEqual(result['downloaded'],2)
  def test_complete_repair_does_not_download(self):self.assertEqual(self.run_task()['downloaded'],0);self.assertEqual(self.calls,[])
+ def test_batch_download_keeps_successes_and_reports_other_failures(self):
+  other=dict(self.row,id='other',title='Other voice model',legacy='models/other',files=[self.row['files'][1]])
+  self.mock.stop();self.mock=patch.object(m,'catalog_paths',return_value=([self.row,other],lambda root,row:root/row['legacy']));self.mock.start()
+  (self.base/'voice').unlink()
+  def selective_download(url,target,digest,size):
+   if 'other' in str(target):raise RuntimeError('second model unavailable')
+   self.download(url,target,digest,size)
+  with patch('model_download.download',side_effect=selective_download),patch.object(m.shutil,'disk_usage',return_value=type('Space',(),{'free':10**12})()),contextlib.redirect_stdout(io.StringIO()):
+   failures=m.maintain_many(self.root,['model-test','other'])
+  self.assertTrue((self.base/'voice').is_file())
+  self.assertEqual([r['id'] for r in failures],['other'])
+  self.assertTrue((self.root/'model-ready/model-test.json').is_file())
+  self.assertFalse((self.root/'model-ready/other.json').exists())
+  with self.assertRaises(ValueError):m.maintain_many(self.root,['model-test','model-test'])
  def test_licence_block_allows_local_verification_but_no_repair_download(self):
   self.row['licenseReviewRequired']=True
   self.assertEqual(self.run_task()['downloaded'],0)

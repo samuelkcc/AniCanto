@@ -118,15 +118,19 @@ def generate(model, engine, item, cfg):
     seed = int(item.get('seed', 42))
     random.seed(seed); np.random.seed(seed); torch.manual_seed(seed)
     if engine == 'voxcpm2':
+        from voice_parameters import effective
+        parameters=effective(cfg,engine)
         guidance = '用自然香港廣東話，保持參考錄音的音色' if cfg.get('targetLanguage', 'yue') == 'yue' else 'Speak natural English, preserving the reference voice'
         return model.generate(text='('+guidance+')'+text, reference_wav_path=voice['reference'], seed=seed,
-                              cfg_value=2., inference_timesteps=10, normalize=False, denoise=False,
+                              cfg_value=parameters['voxcpmGuidance'], inference_timesteps=parameters['voxcpmSteps'], normalize=False, denoise=False,
                               retry_badcase=False, max_len=min(768, max(96, len(text)*8))), 48000
     from cosyvoice.utils.file_utils import load_wav
     prompt = load_wav(voice['reference'], 16000)
     frontend = model['frontend']
     inputs = frontend.frontend_instruct2(text, '用粤语说这句话', prompt, model['rate'], '')
-    chunks = [result['tts_speech'].detach().cpu().numpy().reshape(-1) for result in model['model'].tts(**inputs, stream=False, speed=1.)]
+    from voice_parameters import effective
+    parameters=effective(cfg,engine)
+    chunks = [result['tts_speech'].detach().cpu().numpy().reshape(-1) for result in model['model'].tts(**inputs, stream=False, speed=parameters['wsyueSpeed'])]
     return (np.concatenate(chunks) if chunks else np.zeros(0)), model['rate']
 
 

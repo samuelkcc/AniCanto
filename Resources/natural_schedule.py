@@ -176,13 +176,13 @@ def prepare(cfg,job,cues,paths,run,emit):
         try:lengths.append(seconds(path,cfg,run) if not Path(path).name.startswith('skipped-') and healthy(path) else None)
         except (OSError,RuntimeError,ValueError):lengths.append(None)
     overlong=[i for i,(c,length) in enumerate(zip(cues,lengths)) if c.get('enabled',True) and length is not None and length>natural_window(c,cues,cfg['duration'],cfg)[1]-natural_window(c,cues,cfg['duration'],cfg)[0]]
-    boundaries=dict(status='not-needed',cuts=[])
+    boundaries=dict(status='not-required',cuts=[])
     enabled=cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift' and not cfg.get('editorRender')
-    if overlong and enabled:boundaries=scene_boundaries(cfg,job,run,emit)
-    if boundaries['status']=='detected':rows=plan(cfg,cues,lengths,boundaries['cuts'])
+    # Dialogue clocks and protected audio constrain safe placement directly.
+    # The old visual-cut scan could time out after two minutes and disable all
+    # placement, creating dozens of overlaps; cuts are not a hard constraint.
+    if enabled:rows=plan(cfg,cues,lengths,boundaries.get('cuts',[]))
     else:
-        # plan() is also useful for offline analysis, but no inferred placement
-        # is applied until scene boundary analysis has actually succeeded.
         rows=[]
         for i,c in enumerate(cues):
             a,b=natural_window(c,cues,cfg['duration'],cfg);length=lengths[i]

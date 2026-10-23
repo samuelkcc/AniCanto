@@ -36,6 +36,19 @@ def complete_clauses(text):
     return pieces
 
 
+def language_hint(language,style):
+    """Two textual Yue cues; Drama 3 has no hard Cantonese language ID."""
+    if language=='en':return 'Speak natural English'
+    if style in ('cantonese-yue','cantonese-yue-clauses'):
+        return '請用粵語讀出以下台詞，唔好用普通話或日文。完整讀出每個字，保留原聲語氣，唔好加字或重複。'
+    if style in ('cantonese-strict','cantonese-strict-clauses'):
+        return '用香港廣東話講，唔好日文或普通話。完整讀出指定台詞，唔好加字、重複、拖長尾音或額外停頓，保留自然情緒'
+    return '用香港廣東話講，自然語氣'
+
+
+CLAUSE_STYLES=('complete-clauses','plain-clauses','cantonese-strict-clauses','cantonese-yue-clauses')
+
+
 def generation_budget(text,target=None):
     """Generation must finish the words before the renderer fits their timing.
 
@@ -113,6 +126,8 @@ def generate(model,item,cfg):
     from scipy.signal import resample_poly
     from math import gcd
     profile=item['profile'];text=item['text']
+    from voice_parameters import drama_sampling
+    sampling=drama_sampling(cfg)
     reference,sr=sf.read(profile['reference'],dtype='float32')
     if reference.ndim==2:reference=reference.mean(axis=1)
     if sr!=RATE:
@@ -120,16 +135,16 @@ def generate(model,item,cfg):
     if not len(reference) or not profile.get('promptText','').strip():raise ValueError('Drama 3 需要可用角色參考及逐字原文。')
     mx.random.seed(int(item.get('seed',42)))
     language=cfg.get('targetLanguage','yue')
-    cue=('用香港廣東話講，唔好日文或普通話。完整讀出指定台詞，唔好加字、重複、拖長尾音或額外停頓，保留自然情緒' if item.get('deliveryStyle') in ('cantonese-strict','cantonese-strict-clauses') else '用香港廣東話講，自然語氣') if language=='yue' else 'Speak natural English'
+    cue=language_hint(language,item.get('deliveryStyle'))
     # Instructions are model-only; approved captions and verification text stay intact.
     chunks=[]
-    pieces=complete_clauses(text) if item.get('deliveryStyle') in ('complete-clauses','plain-clauses','cantonese-strict-clauses') else [text]
+    pieces=complete_clauses(text) if item.get('deliveryStyle') in CLAUSE_STYLES else [text]
     import hashlib
     trace=dict(policy=REVISION,status='generating',parts=[],seed=int(item.get('seed',42)),
                requestedText=text,plannedParts=len(pieces),
                targetLanguage=language,languageControl='textual instruction; not a guaranteed decoder constraint',
                reference=str(profile['reference']),referenceSHA256=hashlib.sha256(Path(profile['reference']).read_bytes()).hexdigest(),
-               targetSeconds=item.get('targetSeconds'),referenceLanguage=profile.get('language'),sampling=dict(SAMPLING),modelVariant=selection(cfg),backend='mlx',
+               targetSeconds=item.get('targetSeconds'),referenceLanguage=profile.get('language'),sampling=sampling,modelVariant=selection(cfg),backend='mlx',
                deliveryStyle=item.get('deliveryStyle'),sampleRate=RATE)
     cfg['_dramaLastGeneration']=trace
     for piece in pieces:
@@ -137,7 +152,7 @@ def generate(model,item,cfg):
         maximum=generation_budget(piece,item.get('targetSeconds'))
         counts={}
         for result in model.generate(text=prompted,ref_audio=reference,ref_text=profile['promptText'],stream=True,
-                                     first_chunk_frames=8,max_tokens=maximum,**SAMPLING,speed=1.):
+                                     first_chunk_frames=8,max_tokens=maximum,**sampling,speed=1.):
             from track_control import check
             check(cfg)
             audio=np.asarray(result.audio,dtype=np.float32).reshape(-1)

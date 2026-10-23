@@ -126,6 +126,7 @@ class StudioPages:
         self.model_system_bar=QProgressBar();self.model_system_bar.setRange(0,1000);self.model_system_bar.setValue(0);self.model_system_bar.setTextVisible(False);v.addWidget(self.model_system_bar)
         self.model_gpu_memory=self.label('GPU VRAM · checking…','GPU VRAM · 正在檢查…',True);v.addWidget(self.model_gpu_memory)
         self.model_gpu_bar=QProgressBar();self.model_gpu_bar.setRange(0,1000);self.model_gpu_bar.setValue(0);self.model_gpu_bar.setTextVisible(False);v.addWidget(self.model_gpu_bar)
+        v.addWidget(self.label('System-RAM models reserve at least 8 GB for Windows. Full Drama 3 Q2 runs on CPU: about 22 GB RAM, so 32 GB system RAM is recommended. An over-budget model can be tried with a warning, but may use swap, slow down severely or fail.','系統 RAM 模型至少預留 8 GB 畀 Windows。完整 Drama 3 Q2 用 CPU，估計佔約 22 GB RAM，建議 32 GB 系統 RAM。超出建議預算嘅模型可以警告後試用，但可能使用交換空間、嚴重變慢或失敗。',True))
         self.model_table=QTableWidget(0,5);self.model_table.setHorizontalHeaderLabels([self.t('Model','模型'),self.t('Size','大小'),self.t('Status','狀態'),self.t('Use','選用'),self.t('Manage','管理')]);self.model_table.horizontalHeader().setSectionResizeMode(0,QHeaderView.Stretch);self.model_table.setEditTriggers(QAbstractItemView.NoEditTriggers);v.addWidget(self.model_table,1);self.model_categories.currentRowChanged.connect(self.refresh_model_catalog)
         row=QHBoxLayout();self.backend=QComboBox()
         for en,zh,key in [('Automatic','自動','auto'),('NVIDIA CUDA','NVIDIA CUDA','nvidia'),('AMD ROCm (supported GPUs)','AMD ROCm（支援型號）','amd'),('CPU','CPU','cpu')]:self.backend.addItem(self.t(en,zh),key)
@@ -147,24 +148,27 @@ class StudioPages:
                 b.setMenu(menu);b.setPopupMode(QToolButton.InstantPopup);self.model_table.setCellWidget(i,4,b)
             return
         self.model_table.setRowCount(len(rows));selected=read(self.root/'model-selections.json',{})
-        from memory_plan import fit_model
+        from memory_plan import fit_model,can_attempt_over_budget
         hardware=self.setup_plan.get('hardware',{})
         for i,row in enumerate(rows):
             ready=complete(self.root,row);role=dict(voice='voice',text='text',speech='speech',asr='asr').get(row.get('category'))
             fits,pool=fit_model(row,hardware) if hardware else (False,'unknown-memory')
+            attempt=can_attempt_over_budget(row,hardware) if hardware else False
             status=self.t('Installed','已安裝') if ready else self.t('Not downloaded','未下載')
-            if hardware and not fits:status+=' · '+(self.t('NVIDIA required','需要 NVIDIA') if pool=='requires-nvidia' else self.t('Memory too low','記憶體不足') if pool in ('system','gpu') else self.t('Unavailable','未能使用'))
+            if hardware and not fits:status+=' · '+(self.t('Over advised budget; may be very slow','超出建議預算；可能嚴重變慢') if attempt else self.t('NVIDIA required','需要 NVIDIA') if pool=='requires-nvidia' else self.t('Memory too low','記憶體不足') if pool in ('system','gpu') else self.t('Unavailable','未能使用'))
             for c,value in enumerate([row['title'],f'{row["bytes"]/1e9:.2f} GB · {row.get("estimatedMemoryGB",0):g} GB '+('RAM' if pool=='system' else 'VRAM' if pool=='gpu' else ''),status]):self.model_table.setItem(i,c,QTableWidgetItem(value))
-            use=self.button('Selected' if role and selected.get(role)==row['id'] else 'Use','已選用' if role and selected.get(role)==row['id'] else '選用',lambda checked=False,r=row:self.activate_model(r));use.setEnabled(ready and role is not None and fits);self.model_table.setCellWidget(i,3,use)
+            use=self.button('Selected' if role and selected.get(role)==row['id'] else 'Use','已選用' if role and selected.get(role)==row['id'] else '選用',lambda checked=False,r=row:self.activate_model(r));use.setEnabled(ready and role is not None and (fits or attempt));self.model_table.setCellWidget(i,3,use)
             menu=QToolButton();menu.setText('⋯');popup=QMenu(menu)
             for action,en,zh in [('repair','Check / install','檢查／安裝'),('redownload','Download again','重新下載'),('remove','Remove files','移除檔案')]:popup.addAction(self.t(en,zh),lambda checked=False,r=row,a=action:self.manage_package(dict(r,kind='model'),a))
             menu.setMenu(popup);menu.setPopupMode(QToolButton.InstantPopup);self.model_table.setCellWidget(i,4,menu)
     def activate_model(self,row):
         selected=read(self.root/'model-selections.json',{});role=dict(voice='voice',text='text',speech='speech',asr='asr').get(row.get('category'))
-        from memory_plan import fit_model
+        from memory_plan import fit_model,can_attempt_over_budget
         fits,pool=fit_model(row,self.setup_plan.get('hardware',{}))
         if not fits:
-            self.notice(self.t('This model cannot fit the selected device. Review system RAM and GPU VRAM first.','呢個模型唔適合目前裝置；請先檢查系統 RAM 同 GPU VRAM。'));return
+            if not can_attempt_over_budget(row,self.setup_plan.get('hardware',{})):
+                self.notice(self.t('This model cannot fit the selected device. Review system RAM and GPU VRAM first.','呢個模型唔適合目前裝置；請先檢查系統 RAM 同 GPU VRAM。'));return
+            if QMessageBox.question(self,'AniCanto',self.t('This model exceeds the advised memory budget. Loading may use swap, become very slow or fail. Try it anyway?','呢個模型超出建議記憶體預算；載入可能使用交換空間、嚴重變慢或失敗。仍然試用？'))!=QMessageBox.Yes:return
         if role:
             selected[role]=row['id'];write(self.root/'model-selections.json',selected)
             if role=='voice':

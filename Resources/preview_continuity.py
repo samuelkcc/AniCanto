@@ -1,7 +1,7 @@
-"""Audible source only after bounded automatic repair; never a target-language pass.
+"""Audible source after bounded repair; never a target-language quality pass.
 
-The normal track remains incomplete and is exported under the Preview label.
-Source clocks and the failed generated take remain intact for later repair.
+The finished video and review report retain the defect. Source clocks and the
+failed generated take remain intact for later repair.
 """
 import array,hashlib,math,wave
 from pathlib import Path

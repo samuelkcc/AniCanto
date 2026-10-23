@@ -26,6 +26,7 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
         # for the same dialogue and target language, with its source recorded.
         known=[p for p in snapshot.get('takes',[]) if p.get('index')==index+1 and p.get('language')==language]
         known += [p for p in snapshot.get('history',[]) if p.get('index')==index+1 and p.get('language')==language]
+        known += [p for p in snapshot.get('recordingCandidates',[]) if p.get('index')==index+1 and p.get('language')==language]
         for issue in snapshot.get('issues',[])+snapshot.get('resolvedIssues',[]):
             if issue.get('index')!=index+1 or issue.get('language')!=language:continue
             known += [dict(path=a['audition']['path'],engine=a.get('engine') or issue.get('engine')) for a in issue.get('attempts',[]) if isinstance(a.get('audition'),dict) and a['audition'].get('path')]

@@ -62,8 +62,8 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
     throw Error('Unexpected fixture IPC '+name+' '+args.op);
    }},event:{listen:async(name,fn)=>{f.listeners.set(name,fn);return ()=>f.listeners.delete(name)}},window:{getCurrentWindow:()=>({close:async()=>{f.closed=true}})}};
   },options);
-  await page.goto('http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');
-  async function count(n){await page.waitForFunction(n=>window.queueFixture.starts.length===n,n);await page.waitForFunction(()=>!document.querySelector('[data-action=start]')?.textContent.includes('Starting'));}
+  await page.goto(process.env.ANICANTO_QA_URL||'http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');
+  async function count(n){await page.waitForFunction(n=>window.queueFixture.starts.length===n,n);await page.waitForFunction(()=>!document.querySelector('[data-action=start]')?.textContent.includes('Starting'));const pause=page.locator('button[data-action=pause]').first();if(await pause.count()){const color=await pause.evaluate(e=>getComputedStyle(e).backgroundColor);assert(['rgb(189, 48, 61)','rgb(159, 35, 48)'].includes(color),'Pause & save must be red on the shared Mac/Windows UI: '+color);}}
   async function finish(opts){await page.evaluate(opts=>window.queueFixture.finish(opts),opts);}
   async function end(name){assert.deepEqual(errors,[],name);if(!options.sourceLanguage)assert.equal(await page.evaluate(()=>window.queueFixture.drawers),0,'Automatic Japanese detection flashed a drawer');assert.equal(await page.evaluate(()=>window.queueFixture.media),0,'Preview decoder was started');console.log('PASS '+name);results.push({name,starts:await page.evaluate(()=>window.queueFixture.starts),errors});await page.close();}
   return {page,count,finish,end};
@@ -119,11 +119,24 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a','b']);await finish();await end('Next starts once after '+variant);
  }
  {
-  const {page,count,finish,end}=await fixture();await page.locator('[data-action=start]').click();await count(1);await page.locator('[data-action=switch-mode]').click();await page.waitForSelector('.studio.expert');await finish();await count(2);await finish();await end('Switch to Expert preserves active Basic queue');
+  const {page,count,finish,end}=await fixture();await page.locator('[data-action=start]').click();await count(1);await page.locator('[data-action=mode][data-value=expert]').click();await page.waitForSelector('.studio.expert');await finish();await count(2);await finish();await end('Switch to Expert preserves active Basic queue');
  }
  {
-  const {page,count,finish,end}=await fixture({mode:'expert',selected:'b'});await page.locator('[data-action=start]').click();await count(1);await finish();assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),1);
-  await page.locator('[data-action=page][data-value=queue]').click();await page.locator('[data-action=start-all]').click();await count(2);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['b','a']);await finish();await end('Expert Start is selected only; Start all processes remaining');
+  const {page,count,finish,end}=await fixture({mode:'expert',selected:'b'});await page.locator('[data-action=start]').click();await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a']);await finish();await count(2);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a','b']);await finish();await end('Expert Start follows the full queue, matching Basic');
+ }
+ {
+  const {page,count,finish,end}=await fixture({mode:'expert',rows:[['a','waiting']]});
+  await page.locator('[data-action=inspector][data-value=production]').click();
+  const mode=page.locator('[data-setting=productionMode]');
+  await mode.locator('xpath=ancestor::details').evaluate(el=>el.open=true);
+  assert.equal(await mode.isDisabled(),false);
+  await page.locator('[data-action=start]').click();await count(1);
+  await mode.locator('xpath=ancestor::details').evaluate(el=>el.open=true);
+  assert.equal(await mode.isDisabled(),true,'Production mode must lock while conversion runs');
+  await mode.evaluate(el=>{el.value='fast';el.dispatchEvent(new Event('change',{bubbles:true}))});
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.settings.productionMode),'normal','Synthetic change must not bypass the lock');
+  await finish();await page.waitForFunction(()=>!document.querySelector('[data-setting=productionMode]')?.disabled);
+  await end('Production mode unlocks only after conversion finishes');
  }
  {
   const {page,count,finish,end}=await fixture({mode:'expert',rows:[['a','running'],['b','waiting']],restore:true});await finish();await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['b']);await finish();await end('Restore live batch intent after UI reload');

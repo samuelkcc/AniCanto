@@ -102,6 +102,16 @@ class DesktopStateTests(unittest.TestCase):
    write(track/'timing.json',[dict(reviewIndex=0,start=1,end=2,renderedAudio=str(wav))])
    take=find_take(job_snapshot(dict(job=str(root))),0,'drama3','yue')
    self.assertEqual(take['audio'],str(wav));self.assertEqual(take['index'],1)
+ def test_review_lists_first_and_rejected_takes_even_without_open_issue(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);track=root/'tracks/drama';track.mkdir(parents=True)
+   write(root/'review.json',dict(config=dict(ttsBackend='drama3',targetLanguage='yue'),cues=[dict(start=1,end=2,cantonese='你好呀')]))
+   write(track/'review.json',dict(config=dict(ttsBackend='drama3',targetLanguage='yue'),cues=[]))
+   first=track/'first.wav';first.write_bytes(b'first')
+   retry=track/'retry.wav';retry.write_bytes(b'retry')
+   write(track/'normal-checks.json',dict(repairs=[dict(index=1,originalAudio=str(first),attempts=[dict(candidateAudio=str(retry),repaired=False)])]))
+   candidates=job_snapshot(dict(job=str(root)))['recordingCandidates']
+   self.assertEqual([(p['index'],p['kind'],p['path']) for p in candidates],[(1,'first',str(first.resolve())),(1,'rejected',str(retry.resolve()))])
  def test_cleanup_keeps_original_export_and_models(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);job=root/'jobs/episode';job.mkdir(parents=True);write(job/'review.json',{})

@@ -106,7 +106,7 @@ def finish(cfg,job,cues,paths,run,emit,allow_tempo=True):
     if allow_tempo and cfg.get('automaticMicroTempo',True):
         planning=read(job/'natural-placement.json',{});base=job.parent.parent if job.parent.name=='tracks' else job
         boundaries=read(base/'natural-scene-boundaries.json',{})
-        use_cuts=planning.get('sceneBoundaryStatus')=='detected' and cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift'
+        use_cuts=cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift'
         lengths=[row.get('seconds') for row in placement]
         def simulate(lengths):
             if use_cuts:return plan(cfg,cues,lengths,boundaries.get('cuts',[]))

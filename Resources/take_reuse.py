@@ -12,7 +12,8 @@ import time
 
 CONFIG_FIELDS=('targetLanguage','gsvVersion','sampleSteps','qwenModel','cosyModel',
                'voxcpmModel','wsyueModel','drama3Model','device','voxcpmDevice',
-               'nativeComputeBackend','nativeDramaFormat','audioRerunToken','productionMode')
+               'nativeComputeBackend','nativeDramaFormat','audioRerunToken','productionMode',
+               'dramaTemperature','dramaTopP','dramaTopK','voxcpmGuidance','voxcpmSteps','wsyueSpeed')
 ITEM_FIELDS=('text','approvedText','seed','targetSeconds','deliveryStyle','expressionSettings',
              'cantoneseReadings','experimentalProsody','prosodyStrength')
 

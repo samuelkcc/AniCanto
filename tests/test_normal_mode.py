@@ -110,15 +110,44 @@ class NormalModeTests(unittest.TestCase):
                 self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal',preferFirstAudibleTake=False),folder,[cue],[old],Mock(),Mock()),[old])
             self.assertEqual(json.loads((folder/'normal-checks.json').read_text())['unresolved'],[1])
 
-    def test_default_keeps_audible_first_take_and_reports_language_doubt(self):
+    def test_default_retries_confirmed_wrong_language_and_keeps_original_if_unresolved(self):
         with tempfile.TemporaryDirectory() as d:
             folder=Path(d);first=audio(folder/'first.wav');cue=dict(start=0,end=2,cantonese='橡皮，橡皮',speakerId='own')
             with patch.object(normal_mode,'inspect',return_value={1:dict(decision='japanese',languageFailure='japanese')}),patch('dubbing.gsv_audio') as generate:
                 self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[first],Mock(),Mock()),[first])
-                generate.assert_not_called()
+                self.assertEqual(generate.call_count,2)
             report=json.loads((folder/'normal-checks.json').read_text())
-            self.assertEqual(report['unresolved'],[])
-            self.assertEqual(report['advisories'][0]['originalAudio'],str(first))
+            self.assertEqual(report['unresolved'],[1])
+            self.assertEqual(report['repairs'][0]['originalAudio'],str(first))
+
+    def test_english_source_passthrough_requires_a_sentence_not_a_name(self):
+        expected='我哋而家即刻出發啦！'
+        source='We have to leave right now!'
+        self.assertEqual(normal_mode.language_decision(expected,'We have to leave right now!','English','yue',source),'english')
+        self.assertEqual(normal_mode.language_decision(expected,'We have to leave right now!','Chinese','yue',source),'english')
+        self.assertNotEqual(normal_mode.language_decision(expected,'Luffy D. Monkey','English','yue',source),'english')
+
+    def test_english_source_translation_rejects_echo_and_retries_in_cantonese(self):
+        w=Mock();w.traditional_cantonese.side_effect=lambda cfg,text:text
+        w.ollama_chat.side_effect=['{"0":"We have to leave right now!"}','{"0":"我哋而家即刻出發啦！"}']
+        cues=[dict(start=0,end=2,japanese='We have to leave right now!',cantonese='')]
+        with tempfile.TemporaryDirectory() as d,patch.object(normal_mode,'glossary',return_value=[]):
+            normal_mode.translate(w,dict(sourceLanguage='en',dubLanguages=['yue'],subtitleModes=[],model='qwen',port=1),Path(d),cues)
+        self.assertEqual(cues[0]['cantonese'],'我哋而家即刻出發啦！')
+        self.assertEqual(w.ollama_chat.call_count,2)
+        self.assertIn('Translate English anime dialogue',w.ollama_chat.call_args_list[0].args[2][0]['content'])
+
+    def test_two_independent_listeners_confirm_english_voice_in_cantonese_track(self):
+        from worker import atomic_json
+        with tempfile.TemporaryDirectory() as d:
+            job=Path(d);take=audio(job/'english.wav')
+            cue=dict(start=0,end=2,japanese='We have to leave right now!',cantonese='我哋而家即刻出發啦！')
+            cfg=dict(storage=d,ffmpeg='ffmpeg',asrModel='chosen-asr',targetLanguage='yue')
+            def first(c,action,request,emit):
+                atomic_json(request['cache'],{item['key']:dict(heard='We have to leave right now!',language='English') for item in request['items']})
+            with patch('dubbing.model_job',side_effect=first),patch('runtime_paths.python_for',return_value=Path(sys.executable)),patch('secondary_speech.transcribe_batch',return_value=[dict(heard='We have to leave right now!',language='English')]):
+                result=normal_mode.inspect(cfg,job,[cue],[take],Mock())
+            self.assertEqual(result[1]['languageFailure'],'english')
 
     def test_missing_result_cannot_drop_a_translated_line_and_retry_budget_survives_resume(self):
         with tempfile.TemporaryDirectory() as d:

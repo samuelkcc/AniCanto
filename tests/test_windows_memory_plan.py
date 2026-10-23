@@ -1,7 +1,7 @@
 import sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'windows'))
-from memory_plan import pools,fit_model
+from memory_plan import pools,fit_model,can_attempt_over_budget
 
 class MemoryPlanTests(unittest.TestCase):
  def test_nvidia_cpu_drama_and_gpu_text_use_separate_pools(self):
@@ -17,6 +17,8 @@ class MemoryPlanTests(unittest.TestCase):
   hardware=dict(memoryGB=32,acceleratorMemoryGB=0,backend='cpu')
   self.assertEqual(fit_model(dict(id='drama3-native-q2',estimatedMemoryGB=22),hardware),(True,'system'))
   self.assertEqual(fit_model(dict(id='huge',estimatedMemoryGB=26),hardware),(False,'system'))
+  self.assertTrue(can_attempt_over_budget(dict(id='huge',estimatedMemoryGB=26),hardware))
+  self.assertFalse(can_attempt_over_budget(dict(id='impossible',estimatedMemoryGB=40),hardware))
  def test_cuda_only_cosy_and_gpu_budget(self):
   cosy=dict(id='cosy-native-0.5b',engine='cosyvoice3',estimatedMemoryGB=7)
   self.assertEqual(fit_model(cosy,dict(memoryGB=32,acceleratorMemoryGB=16,backend='rocm')),(False,'requires-nvidia'))

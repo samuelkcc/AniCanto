@@ -82,16 +82,18 @@ def monitored_request(model,body,emit=None):
 def generate(model,item,cfg):
  import numpy as np
  import soundfile as sf
- from drama3 import complete_clauses,generation_budget,GenerationLimit,RATE,SAMPLING
+ from drama3 import complete_clauses,generation_budget,GenerationLimit,RATE,CLAUSE_STYLES,language_hint
+ from voice_parameters import drama_sampling
+ sampling=drama_sampling(cfg)
  text=item['text'];profile=item['profile'];chunks=[]
- pieces=complete_clauses(text) if item.get('deliveryStyle') in ('complete-clauses','plain-clauses','cantonese-strict-clauses') else [text]
- trace=dict(policy='native-gguf-complete-text-2-explicit-sampling',nativeFormat='gguf',backend=model.backend,modelVariant=model.variant,sampling=dict(SAMPLING),status='generating',parts=[],requestedText=text,plannedParts=len(pieces),reference=profile['reference'],targetLanguage=cfg.get('targetLanguage','yue'),seed=int(item.get('seed',42)))
+ pieces=complete_clauses(text) if item.get('deliveryStyle') in CLAUSE_STYLES else [text]
+ trace=dict(policy='native-gguf-complete-text-2-explicit-sampling',nativeFormat='gguf',backend=model.backend,modelVariant=model.variant,sampling=sampling,status='generating',parts=[],requestedText=text,plannedParts=len(pieces),reference=profile['reference'],targetLanguage=cfg.get('targetLanguage','yue'),seed=int(item.get('seed',42)))
  cfg['_dramaLastGeneration']=trace
  for piece in pieces:
   maximum=generation_budget(piece,item.get('targetSeconds'))
-  cue=('用香港廣東話講，唔好普通話，保留原聲情緒' if item.get('deliveryStyle') in ('cantonese-strict','cantonese-strict-clauses') else '用香港廣東話講，自然語氣') if cfg.get('targetLanguage','yue')=='yue' else 'Speak natural English'
+  cue=language_hint(cfg.get('targetLanguage','yue'),item.get('deliveryStyle'))
   prompted=piece if item.get('deliveryStyle') in ('plain-clauses','plain-whole') else '['+cue+'] '+piece
-  body=dict(model='drama3',input=prompted,voice_ref=profile['reference'],reference_text=profile.get('promptText',''),max_tokens=maximum,seed=int(item.get('seed',42)),response_format='wav',**SAMPLING)
+  body=dict(model='drama3',input=prompted,voice_ref=profile['reference'],reference_text=profile.get('promptText',''),max_tokens=maximum,seed=int(item.get('seed',42)),response_format='wav',**sampling)
   if model.variant=='drama3-small-iq3':body['options']=dict(max_pause_frames='10',silence_codes=str(model.silence))
   audio,sr=sf.read(io.BytesIO(monitored_request(model,body,getattr(model,'emit',None))),dtype='float32',always_2d=True);audio=audio.mean(axis=1)
   if sr!=RATE:raise ValueError('Native Drama returned an unexpected sample rate.')

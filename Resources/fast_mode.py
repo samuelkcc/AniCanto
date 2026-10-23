@@ -228,6 +228,17 @@ def synthesize(cfg,job,cues,run,emit):
         # A new fallback take also needs bounded final timing, with the same
         # cumulative tempo limits; no words are cropped to fit.
         paths,schedule=finish_natural(cfg,job,cues,paths,run,emit,allow_tempo=True)
+    source_fallback=set()
+    if cfg.get('productionMode')=='normal' and not cfg.get('editorRender'):
+        from failed_voice_policy import choose
+        before_policy=list(paths)
+        paths,source_fallback=choose(cfg,job,cues,paths)
+        if schedule and any(str(before)!=str(after) for before,after in zip(before_policy,paths)):
+            # A first-take choice can have a different duration from the last
+            # trial. Re-plan it before mixing so the old slot is never reused.
+            paths,schedule=finish_natural(cfg,job,cues,paths,run,emit,allow_tempo=True)
+        if source_fallback:
+            emit('配音後備',f'{len(source_fallback)} 句通用配音或所選錄音未能交付，會試用原片對白並保留校對提示。',.91)
     timeline=array.array('i',[0])*round(cfg['duration']*sr)
     rows=[];warnings=[];directory=job/'rendered-takes';directory.mkdir(exist_ok=True)
     for i,(cue,path) in enumerate(zip(cues,paths)):
@@ -237,25 +248,56 @@ def synthesize(cfg,job,cues,run,emit):
             anchor,deadline=natural_window(cue,cues,cfg['duration'],cfg)
             if schedule:anchor,deadline=schedule[i]['start'],schedule[i]['deadline']
         else:anchor,deadline=window(cue,cues,cfg['duration'])
+        # A shifted next turn can start before this turn's old deadline. Check
+        # the actual planned starts even when the current take fits its slot.
+        following=[(j,window(other,cues,cfg['duration'])[0]) for j,other in enumerate(cues)
+                   if j!=i and other.get('enabled',True) and window(other,cues,cfg['duration'])[0]>window(cue,cues,cfg['duration'])[0]+.001]
+        next_index=min(following,key=lambda item:item[1])[0] if following else None
+        source_overlap=0.
+        safe_deadline=deadline
+        if next_index is not None:
+            source_overlap=max(0.,window(cue,cues,cfg['duration'])[1]-window(cues[next_index],cues,cfg['duration'])[0])
+            next_start=schedule[next_index]['start'] if schedule else window(cues[next_index],cues,cfg['duration'])[0]
+            safe_deadline=min(deadline,next_start+source_overlap)
         row=dict(index=cue.get('reviewIndex',i)+1,start=cue['start'],end=cue['end'],slot=deadline-anchor,speakerId=cue.get('speakerId'),text=cue.get('cantonese',''),renderedStart=anchor,renderedEnd=deadline,renderedSeconds=0,qualityChecked=False)
         if schedule:row.update(timingShiftSeconds=schedule[i]['shift'],timingMethod=schedule[i]['method'])
+        if i in source_fallback:
+            from preview_continuity import fill
+            try:
+                row.update(skipped=True,needsReview=True,requiresTimingReview=True,failureKind='selected-voice-fallback',audio=str(path))
+                if fill(cfg,job,cue,row,timeline,run,sr):
+                    warnings.append(dict(index=row['index'],kind='original-source-fallback',message='所選配音後備未能交付；成品保留原片對白，翻譯字幕不受影響，請喺校對報告檢查。'))
+                    rows.append(row)
+                    continue
+            except (OSError,ValueError,RuntimeError,wave.Error):
+                pass
+            row.clear()
+            row.update(index=cue.get('reviewIndex',i)+1,start=cue['start'],end=cue['end'],slot=deadline-anchor,speakerId=cue.get('speakerId'),text=cue.get('cantonese',''),renderedStart=anchor,renderedEnd=deadline,renderedSeconds=0,qualityChecked=False)
+            if schedule:row.update(timingShiftSeconds=schedule[i]['shift'],timingMethod=schedule[i]['method'])
         failure_kind='fast-generation-failed'
         try:
             if Path(path).name.startswith('skipped-'):raise ValueError('配音未生成')
             raw=run([cfg['ffmpeg'],'-v','error','-i',path,'-ar',str(sr),'-ac','1','-f','s16le','pipe:1'])
             if not raw:raise ValueError('配音檔案無法解碼')
             row['seconds']=len(raw)/2/sr
-            offset=round(anchor*sr);available_frames=math.floor(deadline*sr+1e-6)-offset;available=available_frames/sr
+            offset=round(anchor*sr);available_frames=math.floor(safe_deadline*sr+1e-6)-offset;available=available_frames/sr
+            overlap_seconds=0.
             if natural:
                 rate=schedule[i].get('tempoRate',1.) if schedule else 1.
                 if len(raw)//2>available_frames:
                     overrun=(len(raw)//2-available_frames)/sr
-                    if cfg.get('preferFirstAudibleTake',True) and overrun<=2.0 and offset+len(raw)//2<=len(timeline):
-                        row['timingOverlapSeconds']=round(overrun,3)
-                        warnings.append(dict(index=row['index'],kind='first-take-timing-overlap',message=f'保留完整首次錄音，較原定時段長 {overrun:.2f} 秒；可能與下一句重疊。'))
+                    end=anchor+len(raw)/2/sr
+                    from opening import local_ranges
+                    protected=any(anchor<r['end'] and end>r['start'] and deadline<=r['start']+.001 for r in local_ranges(cfg))
+                    preserved=any(c.get('preserveOriginalSpeech') and anchor<c.get('speechEnd',c['end']) and end>c.get('speechStart',c['start']) for j,c in enumerate(cues) if j!=i)
+                    # A take may use spare time at the end of the video, but
+                    # cannot extend beyond the next planned voice start.
+                    if cfg.get('productionMode')=='normal' and next_index is None and overrun<=2. and end<=cfg['duration']+.00001 and not protected and not preserved:
+                        overlap_seconds=round(overrun,3)
+                        warnings.append(dict(index=row['index'],kind='bounded-dialogue-overlap',message=f'保留完整目標語言錄音；比原定時段長 {overlap_seconds:.2f} 秒，已確認後面冇下一句配音，請喺校對報告試聽。'))
                     else:
-                        failure_kind='timing-overrun'
-                        raise ValueError('完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。'+(' 已嘗試有限時間微調，詳細結果已記錄。' if schedule else ''))
+                        failure_kind='introduced-dialogue-overlap' if next_index is not None and end>safe_deadline+.001 else 'timing-overrun'
+                        raise ValueError(f'完整錄音超出下一句之前嘅安全時段 {overrun:.2f} 秒；錄音已保留供校對，未同下一句重疊或截尾。'+(' 已嘗試有限時間微調，詳細結果已記錄。' if schedule else ''))
             else:raw,rate=fit_pcm(cfg,raw,available,run)
             # Measure the final timed take, including cached or repaired audio.
             # This is deterministic gain staging, not ASR/AI quality review.
@@ -267,14 +309,14 @@ def synthesize(cfg,job,cues,run,emit):
             take=directory/f'{row["index"]}.wav'
             with wave.open(str(take),'wb') as f:
                 f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(raw)
-            row.update(renderedAudio=str(take),renderedEnd=(offset+len(samples))/sr,renderedSeconds=len(samples)/sr,rate=rate,speechDeadline=deadline,hardSlotCompression=rate,requiresTimingReview=False,needsReview=False,skipped=False)
+            row.update(renderedAudio=str(take),renderedEnd=(offset+len(samples))/sr,renderedSeconds=len(samples)/sr,rate=rate,speechDeadline=deadline,hardSlotCompression=rate,overlapSeconds=overlap_seconds,requiresTimingReview=bool(overlap_seconds),needsReview=bool(overlap_seconds),skipped=False)
         except (ValueError,RuntimeError,OSError) as error:
             row.update(skipped=True,needsReview=True,requiresTimingReview=True,failureKind=failure_kind,error=str(error),audio=str(path))
             if cfg.get('productionMode')=='normal':
                 from preview_continuity import fill
                 try:
                     if fill(cfg,job,cue,row,timeline,run,sr):
-                        warnings.append(dict(index=row['index'],kind='preview-original-fallback',message='自動修復後仍未有可交付翻譯錄音；預覽保留本句原聲，未標為翻譯完成。'))
+                        warnings.append(dict(index=row['index'],kind='original-source-fallback',message='自動修復後仍未有可交付翻譯錄音；成品保留本句原聲並標記校對，唔會冒充翻譯配音。'))
                 except (OSError,ValueError,RuntimeError,wave.Error):pass
             warnings.append(dict(index=row['index'],kind=failure_kind,message=str(error)))
         rows.append(row)

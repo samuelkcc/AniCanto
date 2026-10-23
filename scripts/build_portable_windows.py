@@ -109,7 +109,7 @@ def build():
                  entry='tools/AniCanto-Studio.exe' if shared_host.is_file() else 'desktop.py',sharedWorker='native_worker.py -> shared/worker.py',
                  features=['welcome','basic-expert-shared-settings','batch-queue','automatic-repair','pause-resume',
                  'video-preview','timeline','script-editor','role-references','per-line-retakes','recording-history',
-                 'versioned-exports','local-terminal','hardware-aware-setup','bilingual-guide','about-mit-notices'])
+                 'versioned-exports','local-terminal','hardware-aware-setup','four-language-guide','about-mit-notices'])
     (output/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt,indent=2))
 
 if __name__=='__main__':build()
