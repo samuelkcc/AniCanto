@@ -125,7 +125,10 @@ class FastModeTests(unittest.TestCase):
             self.assertTrue(rows[0]['skipped']);self.assertFalse(rows[1]['skipped'])
             self.assertIn('introduced-dialogue-overlap',{w['kind'] for w in warnings})
 
-    def check_one_pass_mux(self, mode,missing_script=False,preview=False):
+    def test_three_language_mux_preserves_mandarin_metadata_and_simplified_subtitles(self):
+        self.check_one_pass_mux('fast',mandarin=True)
+
+    def check_one_pass_mux(self, mode,missing_script=False,preview=False,mandarin=False):
         from contextlib import ExitStack
         with tempfile.TemporaryDirectory() as folder,ExitStack() as stack:
             job=Path(folder);video=job/'source.mp4'
@@ -133,9 +136,12 @@ class FastModeTests(unittest.TestCase):
             bg=job/'background.wav';voice=job/'dialogue.wav'
             for path in (bg,voice):worker.run([FF,'-v','error','-y','-i',video,'-vn','-ar','24000','-ac','2','-c:a','pcm_s16le',path])
             cfg=dict(normalRepairPolicy="verified",productionMode=mode,video=str(video),storage=str(job/'storage'),ffmpeg=FF,ffprobe=PROBE,duration=3,ttsBackend='cosyvoice3',selectedEngines=['cosyvoice3'],dubLanguages=['yue','en'],includeOriginal=True,subtitleModes=['yue','english'],interfaceMode='simple',model='qwen',port=1,backgroundPath=str(bg),dialoguePath=str(voice),exportFolder=str(job/'export'))
+            if mandarin:cfg.update(dubLanguages=['yue','zh','en'],subtitleModes=['yue','zh','english'])
             if preview:cfg.update(speechRatePolicy='natural',automaticRecovery=False)
             (job/'export').mkdir();(job/'storage').mkdir()
             cues=[dict(start=0,end=.7,speechStart=.1,speechEnd=.7,text='行こう',japanese='行こう',cantonese='出發啦。',english='Let us go.',enabled=True),dict(start=.8,end=1.5,text='はい',japanese='はい',cantonese='好呀。',english='Yes.',enabled=True),dict(start=1.6,end=2.6,text='待って',japanese='待って',cantonese='等陣。',english='Wait.',enabled=True)]
+            if mandarin:
+                for cue,text in zip(cues,['出发吧。','好啊。','等一下。']):cue['mandarin']=text
             if missing_script:cues[1]['cantonese']=''
             original=copy.deepcopy(cues)
             worker.atomic_json(job/'cues.json',cues)
@@ -166,8 +172,13 @@ class FastModeTests(unittest.TestCase):
             self.assertEqual(report['qualityStatus'],'needs-review' if preview else 'targeted-checks-only' if mode=='normal' else 'not-checked-fast-mode')
             self.assertEqual(json.loads((job/'review.json').read_text())['status'],'complete')
             result=json.loads(worker.run([PROBE,'-v','error','-show_streams','-of','json',output]))
-            self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='audio']),3)
-            self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='subtitle']),2)
+            self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='audio']),4 if mandarin else 3)
+            self.assertEqual(len([s for s in result['streams'] if s['codec_type']=='subtitle']),3 if mandarin else 2)
+            if mandarin:
+                self.assertEqual([s.get('tags',{}).get('language') for s in result['streams'] if s['codec_type']=='audio'],['yue','zho','eng','jpn'])
+                self.assertIn('zho',[s.get('tags',{}).get('language') for s in result['streams'] if s['codec_type']=='subtitle'])
+                z=next(t for t in report['tracks'] if t['language']=='zh')
+                self.assertIn('出发吧。',(Path(z['report']).parent/'cantonese.srt').read_text())
             for track in report['tracks']:
                 rows=json.loads((Path(track['report']).parent/'timing.json').read_text())
                 if preview:continue

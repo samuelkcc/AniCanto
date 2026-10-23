@@ -16,7 +16,7 @@ AniCanto 是用于语言学习和创作实验的个人项目，尊重专业配�
 
 - [应用许可证](../../LICENSE)及[分发通知](../../NOTICE.txt)。
 - [模型授权证据](../../licenses/model-evidence.json)、[完整模型通知](../../licenses/models/)及[第三方组件通知](../../licenses/)。
-- [版本下载与配套源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.64-beta)：二进制版本附有所选组件的相关源代码和构建资料；请保留与该版本对应的文件。
+- [版本下载与配套源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.67-beta)：二进制版本附有所选组件的相关源代码和构建资料；请保留与该版本对应的文件。
 - 应用内可到 **关于 → 授权**搜索随附通知。
 
 FFmpeg 等工具按实际编译版本遵守相应条款；可参阅 [FFmpeg 分发指引](https://ffmpeg.org/legal.html)及版本随附资料。

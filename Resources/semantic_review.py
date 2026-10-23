@@ -18,6 +18,7 @@ def audit(cfg,items,request_options=None):
     if audio_primary(cfg):prompt+=AUDIO_PRIORITY_PROMPT
     from source_language import instruction
     prompt+=instruction(cfg)
+    if cfg.get('targetLanguage')=='zh':prompt+=' The candidate is Mainland Mandarin in Simplified Chinese; Mandarin is the intended target, not a defect. Preserve meaning, names and negation. Cantonese style is not required.'
     if cfg.get('targetLanguage')=='en':prompt+=' The candidate is English dubbing. Apply the same meaning checks to natural spoken English; Cantonese style is not required.'
     prompt+=' When source.approved_translation is supplied, this is a shortening task: preserve its entire meaning as well. Removing redundant wording is allowed, losing a substantive clause is not.'
     response=parse_editor_response(ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(items,ensure_ascii=False))],schema,think=False,**(request_options or {})))

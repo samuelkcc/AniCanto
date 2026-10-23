@@ -10,9 +10,9 @@ COMBINED='audio-and-subtitles'
 SCREEN='audio-and-ocr'
 CAPTION_FIELDS=('subtitleHint','captionRecords','captionAllocation','hybridEvidence',
                 'hybridNeedsReview','captionPolicyExcluded',
-                'captionAllocationIssue','sourceCaptionRecords','preHybridCantonese','captionEvidenceOnly')
+                'captionAllocationIssue','sourceCaptionRecords','preHybridCantonese','captionEvidenceOnly','ocrEvidence','subtitleConfidence')
 
-AUDIO_PRIORITY_PROMPT=' Japanese speech is the primary source. OCR captions are fallible auxiliary evidence for names and context. If OCR is missing, garbled or contradicts the Japanese, translate the Japanese transcript. Never copy a contradictory caption or discard a heard turn because OCR missed it. If the hearing itself is uncertain, preserve that uncertainty rather than inventing speech.'
+AUDIO_PRIORITY_PROMPT=' Japanese speech is the primary source. OCR captions are fallible auxiliary evidence for names and context. The Japanese transcript is a noisy hypothesis, not ground truth. Use coherent time-aligned Chinese captions to resolve phonetically ambiguous source words and low-confidence hearing. Do not let high-confidence scene/page text override actual speech. If OCR is missing or garbled, use the supported source hearing. Never copy a contradictory caption or discard a heard turn because OCR missed it. If the hearing itself is uncertain, preserve that uncertainty rather than inventing speech.'
 
 
 def priority_prompt(cfg):
@@ -90,6 +90,7 @@ def analyze_sources(w,cfg,job,meta):
             if key and key not in seen:seen.add(key);hints.append(text)
         cue['subtitleHint']=' ／ '.join(hints[:3])
         cue['captionEvidenceOnly']=True
+        cue['ocrEvidence']=[{k:c[k] for k in ('start','end','text','subtitleConfidence') if k in c} for c in local]
     w.atomic_json(job/'subtitle-context.json',context)
     w.atomic_json(job/'input-source.json',dict(primary=cfg.get('sourceLanguage','ja')+'-audio',captions='screen-ocr',
         policyRevision='source-primary-ocr-auxiliary-3',

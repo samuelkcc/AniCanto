@@ -1,4 +1,4 @@
-AniCanto desktop app icon: the user-approved orange Japanese/Cantonese dubbing artwork, selected for macOS and Windows on 2026-10-22.
-The purple anime silhouette wears pink headphones and faces a studio microphone with a teal pop filter. Bold Japanese/Cantonese lettering appears at the upper right against the orange background. The artwork is full bleed; platform systems apply their own corner masks.
-Canonical desktop source: app-icon-art.png, copied unchanged from the approved generated original in the adjacent iPad task (exec-2fc31316-a0ff-4d0f-81d8-3298156201a5.png). The attached screenshot was checked pixel-for-pixel against that original. Raster platform and UI icons are derived from this source. The older app-icon.svg and app-icon-art-framed.png remain historical artwork.
-Copyright (c) 2026 SCKC. MIT License (see root LICENSE).
+AniCanto desktop default icon: 紫音 / Shion, selected by the user on 2026-10-23.
+Existing original Studio character silhouette, lavender hair and teal headphones, at a microphone on a purple background with Japanese/Cantonese lettering.
+Canonical source: Resources/app-icon-art.png. Same original artwork as mobile/Design/IconVariants/character-studio-jp-yue.png. No new character art was generated. All macOS, Windows and shared UI icon sizes derive from this source. The previous orange icon has been replaced.
+Copyright (c) 2026 SCKC. MIT License (see root LICENSE and licenses/BRANDING-NOTICE.txt).

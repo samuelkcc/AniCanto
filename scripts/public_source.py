@@ -12,7 +12,7 @@ TREES={'Sources','Resources','core','scripts','studio','windows','tests','licens
 SUFFIXES={'.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mjs','.cjs',
           '.html','.css','.md','.txt','.srt','.strings','.ps1','.cmd','.sh','.svg','.png','.otf','.icns','.ico','.patch','.h','.c','.cpp','.hpp','.cmake','.in','.cfg','.rst','.pyx','.pxd','.tiktoken','.plist','.entitlements'}
 SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels','archive'}
-DOCS={'INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
+DOCS={'DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
       'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)

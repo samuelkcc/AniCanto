@@ -213,3 +213,13 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 @media(max-width:850px){.speech-document-row,.speech-script-grid{grid-template-columns:1fr}.speech-library{grid-template-columns:1fr}.speech-library-list{position:static;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));max-height:180px}.speech-learning-text{grid-template-columns:1fr}.speech-player{padding:14px}.speech-control-grid{gap:12px}.speech-page>.page-header{align-items:flex-start}}
 
 .speech-page .speech-editor-label{flex:none}.speech-page .speech-editor-label textarea{height:clamp(150px,19vh,210px);min-height:140px}.speech-page .speech-input audio{flex:none}
+
+/* One cleanup entry; removal scopes are choices, not competing main actions. */
+.cleanup-options{border:0;padding:0;margin:20px 0;display:grid;gap:12px;min-width:0}
+.cleanup-options legend{font-weight:650;margin-bottom:12px}
+.cleanup-option{display:flex;align-items:flex-start;gap:12px;padding:16px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--surface)}
+.cleanup-option:has(input:checked){border-color:var(--accent);background:var(--tint)}
+.cleanup-option:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.cleanup-option input[type=radio]{flex:none;width:17px;height:17px;min-height:0;padding:0;margin:3px 0 0;accent-color:var(--accent)}
+.cleanup-option span{display:grid;gap:6px;min-width:0}.cleanup-option strong{font-size:14px}.cleanup-option small{font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.cleanup-actions{justify-content:flex-end;flex-wrap:wrap}

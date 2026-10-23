@@ -78,7 +78,7 @@ def compare(w,cfg,folder,cues,segment):
     candidates=cfg.get('comparisonCandidates')
     if not isinstance(candidates,list) or len(candidates)!=2:raise ValueError('請設定 A、B 兩個試音版本。')
     language=cfg.get('targetLanguage','yue')
-    if language not in ('yue','en'):raise ValueError('試音只支援廣東話或英文。')
+    if language not in ('yue','zh','en'):raise ValueError('試音支援廣東話、普通話或英文。')
     cfg=copy.deepcopy(cfg);cfg['voiceStyleMode']='clone'
     if language=='en':
         from dub_languages import english_script

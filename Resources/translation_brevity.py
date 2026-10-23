@@ -65,7 +65,7 @@ def repeated_phrase(text,language):
 
 def assess(cfg,cues,index,language):
     from concise_dialogue import units,budget
-    cue=cues[index];field='english' if language=='en' else 'cantonese'
+    cue=cues[index];field=__import__('output_language').field(language)
     text=cue.get(field,'');count=units(text,language);seconds=cue.get('speechEnd',cue['end'])-cue.get('speechStart',cue['start'])
     reference=caption_reference(cfg,cues,index);reasons=[]
     # This nominates a review; it does not establish a translation defect.
@@ -74,13 +74,13 @@ def assess(cfg,cues,index,language):
     if count>max(target*1.8,target+(5 if language=='en' else 8)):reasons.append('large-spoken-duration-expansion')
     caption=reference.get('text','');ref_language=reference.get('language')
     if caption and ref_language in ('zh','en'):
-        if language=='yue' and ref_language=='zh':expected=units(caption,'yue')
+        if language in ('yue','zh') and ref_language=='zh':expected=units(caption,'yue')
         elif language=='en' and ref_language=='en':expected=units(caption,'en')
         else:
             # Cross-language comparison uses a rough spoken-duration estimate,
             # not equality between Chinese characters and English word counts.
             reference_units=units(caption,'yue' if ref_language=='zh' else 'en')
-            expected=reference_units/(4.5 if ref_language=='zh' else 2.4)*(4.5 if language=='yue' else 2.4)
+            expected=reference_units/(4.5 if ref_language=='zh' else 2.4)*(4.5 if language!='en' else 2.4)
         if count>max(expected*1.5,expected+(3 if language=='en' else 4)):
             reasons.append('caption-relative-expansion')
     return dict(reference=reference,reasons=reasons,units=count,sourceSpeechSeconds=round(seconds,3),
@@ -99,7 +99,7 @@ def review(w,cfg,job,cues,languages):
     except (OSError,ValueError):saved={}
     cache=saved.get('cache',{});changed=[]
     for language in sorted(languages):
-        field='english' if language=='en' else 'cantonese';pending=[];targets={};keys={}
+        field=__import__('output_language').field(language);pending=[];targets={};keys={}
         for i,cue in enumerate(cues):
             if not cue.get('enabled',True) or cue.get('preserveOriginalSpeech') or cue.get('editorAudio') or not valid(cue.get(field,''),language):continue
             evidence=assess(cfg,cues,i,language)

@@ -32,7 +32,7 @@ def critical_omissions(expected,heard):
 
 def evidence(expected,heard,detected,target='yue'):
     detected=str(detected or '').lower()
-    accepted={'english','en'} if target=='en' else {'cantonese','yue'}
+    accepted={'english','en','eng'} if target=='en' else {'zh','zho','cmn','chinese','mandarin','普通话','普通話'} if target=='zh' else {'cantonese','yue'}
     mismatch=bool(detected and detected not in accepted)
     unverified=detected in ('','none','unknown')
     matches=bool(text_key(expected)) and text_key(expected)==text_key(heard)
@@ -93,7 +93,7 @@ def verify(request):
             result=model.generate(audio_array(audio),max_tokens=min(384,max(48,round(len(audio)/16000*20))),verbose=False)
         heard=result.text.strip()
         if request.get('executable') and request.get('targetLanguage')!='en':
-            heard=subprocess.check_output([request['executable'],'--traditional-text'],input=heard.encode()).decode().strip()
+            heard=subprocess.check_output([request['executable'],'--simplified-text' if request.get('targetLanguage')=='zh' else '--traditional-text'],input=heard.encode()).decode().strip()
         detected=getattr(result,'language','') or ''
         if isinstance(detected,(list,tuple)):detected=detected[0] if detected else ''
         cache[item['key']]=evidence(item['expected'],heard,detected,request.get('targetLanguage','yue'))

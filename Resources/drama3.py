@@ -39,6 +39,7 @@ def complete_clauses(text):
 def language_hint(language,style):
     """Two textual Yue cues; Drama 3 has no hard Cantonese language ID."""
     if language=='en':return 'Speak natural English'
+    if language=='zh':return '请用中国大陆标准普通话，保持自然情绪与参考音色，完整读出指定台词，不添加、重复或省略。'
     if style in ('cantonese-yue','cantonese-yue-clauses'):
         return '請用粵語讀出以下台詞，唔好用普通話或日文。完整讀出每個字，保留原聲語氣，唔好加字或重複。'
     if style in ('cantonese-strict','cantonese-strict-clauses'):
@@ -65,8 +66,8 @@ def selection(cfg):return cfg.get('drama3Model') or DEFAULT
 
 
 def validate(cfg):
-    if cfg.get('targetLanguage','yue') not in ('yue','en'):
-        raise ValueError('Drama 3 此工作流程提供廣東話及英文音軌。')
+    if cfg.get('targetLanguage','yue') not in ('yue','zh','en'):
+        raise ValueError('Drama 3 此工作流程提供廣東話、普通話及英文音軌。')
     from voice_models import choice
     return choice('drama3',selection(cfg))
 

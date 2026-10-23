@@ -129,7 +129,7 @@ def subtitle_choices(cfg):
         return automatic_modes(cfg.get('dubLanguages')),None
     if 'subtitleModes' in cfg:
         modes=cfg['subtitleModes']
-        if not isinstance(modes,list) or any(m not in ('original','yue','english','dual') for m in modes):raise ValueError('字幕多選設定無效。')
+        if not isinstance(modes,list) or any(m not in ('original','yue','zh','english','dual') for m in modes):raise ValueError('字幕多選設定無效。')
         return list(dict.fromkeys(modes)),None
     mode=cfg.get('subtitleOutput','yue')
     from caption_tracks import MODES
@@ -246,6 +246,7 @@ def render(w, request):
         review['cues']=copy.deepcopy(submitted)
         w.atomic_json(review_path,review)
     if 'en' in languages and not repair_only and not fast:dub_languages.english_script(w,cfg,job,submitted)
+    if 'zh' in languages and not repair_only:dub_languages.mandarin_script(w,cfg,job,submitted)
     from engine_policy import pairs as supported_pairs
     pairs=supported_pairs(engines,languages)
     reuse=stored_repair_tracks(review_path,pairs,request.get('repairTrack') or {}) if repair_only else {}
@@ -271,7 +272,7 @@ def render(w, request):
     from production_progress import phase
     phase(job,'voice',prepared=True)
     for index, (language,engine) in enumerate(pairs):
-        track_id=engine if language=="yue" else "en-"+engine
+        track_id=engine if language=="yue" else language+"-"+engine
         speech=dub_languages.track_cues(submitted,language)
         from review_choices import apply as apply_review_choices
         speech=apply_review_choices(speech,cfg,engine,language)
@@ -384,9 +385,9 @@ def render(w, request):
         if state['state']!='failed':continue
         try:
             placeholder=original_placeholder(cfg,Path(state['folder']),state['engine'],state['language'],submitted,w.run)
-            placeholder['report']['failureReason']=failures.get(state['engine'] if state['language']=='yue' else 'en-'+state['engine'],'音軌生成未完成。')
+            placeholder['report']['failureReason']=failures.get(state['engine'] if state['language']=='yue' else state['language']+'-'+state['engine'],'音軌生成未完成。')
             w.atomic_json(placeholder['folder']/'report.json',placeholder['report'])
-            w.save_srt(placeholder['folder']/'cantonese.srt',[dict(c,cantonese=c.get('english','') if state['language']=='en' else c.get('cantonese','')) for c in submitted if c.get('enabled',True)])
+            w.save_srt(placeholder['folder']/'cantonese.srt',[dict(c,cantonese=c.get(__import__('output_language').field(state['language']),'')) for c in submitted if c.get('enabled',True)])
             successes.append(placeholder)
         except Exception as exc:original_emit('補聲失敗',str(exc))
     if not successes:raise RuntimeError('配音及部分音軌輸出均未完成；進度已保存。')
@@ -470,6 +471,8 @@ def render(w, request):
         if row is successes[0] and burn_mode and burn_mode not in requested: requested.append(burn_mode)
         active=[matching_cue(c,submitted) for c in cues]
         for cue,approved in zip(cues,active):cue['english']=approved.get('englishCaptionText') or approved.get('english','')
+        if row['language']=='zh':
+            for i,c in enumerate(cues):c['cantonese']=active[i].get('captionText') or active[i].get('cantonese','')
         if row['language']=='en':
             eng=[c['text'] for c in cues]
             for i,c in enumerate(cues):c['cantonese']=active[i].get('captionText') or active[i].get('cantonese','')
@@ -483,13 +486,14 @@ def render(w, request):
                 continue
             # Captions describe a language, not an engine. Multiple audio
             # languages/engines must never duplicate the same caption choice.
-            if mode in ('yue','english','dual','original-yue','original-english'):
-                target='en' if mode=='english' else 'yue'
+            if mode in ('yue','zh','english','dual','original-yue','original-english'):
+                target='en' if mode=='english' else 'zh' if mode=='zh' else 'yue'
                 owner=next((r for r in successes if r['language']==target),successes[0])
                 if row is not owner:continue
             converted=copy.deepcopy(cues)
             for i,c in enumerate(converted):
-                if mode in ('english','original-english'): c['cantonese']=eng[i]
+                if mode=='zh': c['cantonese']=matching_cue(c,delivered_captions.get('zh',[])).get('text') or active[i].get('mandarin','')
+                elif mode in ('english','original-english'): c['cantonese']=eng[i]
                 elif mode=='dual': c['cantonese']+='\n'+eng[i]
             if mode=='dual' and 'yue' in delivered_captions and 'en' in delivered_captions:
                 converted=combine(delivered_captions['yue'],delivered_captions['en'])

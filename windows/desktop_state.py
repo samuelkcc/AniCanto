@@ -89,7 +89,7 @@ class Store:
         if settings.get('failedVoicePolicy') not in ('first-take','source','generic'):
             raise ValueError('Unknown failed voice fallback policy.')
         if self.mode=='basic':settings.update(preferFirstAudibleTake=True)
-        if 'en' in settings.get('dubLanguages',[]) and 'wsyue' in settings.get('selectedEngines',[settings.get('ttsBackend')]):
+        if any(l!='yue' for l in settings.get('dubLanguages',[])) and 'wsyue' in settings.get('selectedEngines',[settings.get('ttsBackend')]):
             raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
         from subtitle_policy import configure
         configure(settings,basic=self.mode=='basic')
@@ -174,7 +174,7 @@ def job_snapshot(row):
         if identity in seen_candidates:return
         seen_candidates.add(identity)
         cue=review.get('cues',[])[index-1] if index<=len(review.get('cues',[])) else {}
-        text=spoken_text if spoken_text is not None else cue.get('english' if language=='en' else 'cantonese','')
+        text=spoken_text if spoken_text is not None else cue.get(__import__('output_language').field(language),'')
         result['recordingCandidates'].append(dict(path=str(file),index=index,engine=engine,language=language,kind=kind,reason=reason,created=created,text=text))
     for folder in paths:
         local_review=read(folder/'review.json',{});cfg=local_review.get('config',{})
@@ -214,7 +214,7 @@ def job_snapshot(row):
                 from review_workbench import reference_signature
                 provenance=dict(speakerId=local_cue['speakerId']) if 'speakerId' in local_cue else {}
                 if profile:provenance['reference']=reference_signature(profile)
-                spoken_key='english' if language=='en' else 'cantonese'
+                spoken_key=__import__('output_language').field(language)
                 if spoken_key in local_cue:provenance['text']=local_cue[spoken_key]
                 result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1),versionOutput=version.get('output'),versionStatus=version.get('status'),recordingProvenance=provenance))
         for path in sorted((folder/'recording-history').glob('*/take.json')):
@@ -238,14 +238,14 @@ def job_snapshot(row):
 def review_fingerprint(review):
     cfg=review.get('config',{})
     data=dict(config={key:cfg.get(key) for key in ('video','duration','ttsBackend','selectedEngines','dubLanguages')},
-        cues=[{key:cue.get(key) for key in ('start','end','text','japanese','cantonese','english','speakerId','enabled')} for cue in review.get('cues',[])])
+        cues=[{key:cue.get(key) for key in ('start','end','text','japanese','cantonese','mandarin','english','speakerId','enabled')} for cue in review.get('cues',[])])
     return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
 
 def editor_draft(review_path,review,settings):
     cues=review.get('cues',[])
     return dict(id=uuid.uuid4().hex,review=str(review_path),baseFingerprint=review_fingerprint(review),created=time.time(),settings=copy.deepcopy(settings),
         segments=[dict(id=c.get('editorID') or 'cue-'+str(i),sources=[i],start=c['start'],end=c['end'],
-                       original=c.get('japanese',c.get('text','')),text=c.get('cantonese',''),english=c.get('english',''),
+                       original=c.get('japanese',c.get('text','')),text=c.get('cantonese',''),english=c.get('english',''),mandarin=c.get('mandarin',''),
                        speakerId=c.get('speakerId',''),enabled=c.get('enabled',True),
                        captionStart=c.get('subtitleStart',c['start']),captionEnd=c.get('subtitleEnd',c['end']),
                        captionText=c.get('captionText',''),take=c.get('_seed',42),rate=c.get('editorRate',1),

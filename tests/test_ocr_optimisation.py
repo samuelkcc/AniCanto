@@ -63,7 +63,8 @@ class OCRSamplingTests(unittest.TestCase):
    from unittest.mock import MagicMock
    engine=MagicMock(return_value=([[[[1,1],[90,1],[90,20],[1,20]],'字幕',.9]],None))
    factory=MagicMock(return_value=engine)
-   with patch.dict(sys.modules,{'rapidocr_onnxruntime':SimpleNamespace(RapidOCR=factory)}):rows=native_tools.ocr(folder)
+   with patch.dict(sys.modules,{'rapidocr_onnxruntime':SimpleNamespace(RapidOCR=factory,__file__=str(folder/'fake_rapidocr.py'))}),patch('ocr_licenses.install'):
+    rows=native_tools.ocr(folder)
    factory.assert_called_once();self.assertEqual(engine.call_count,2)
    self.assertEqual([row['index'] for row in rows],[0,1,2])
    progress=json.loads((folder/'ocr-progress.json').read_text());self.assertEqual(progress['completed'],3);self.assertEqual(progress['reused'],1)

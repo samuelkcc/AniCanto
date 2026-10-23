@@ -79,7 +79,8 @@ def bundle():
     for name in ('CantoSync.icns','CantoSync-icon.png'):(resources/name).unlink(missing_ok=True)
     (resources/'bin/cantosync-core').unlink(missing_ok=True)
     shutil.rmtree(resources/'Licenses/cantosync-core',ignore_errors=True)
-    shutil.copy2(ROOT/'Resources/AniCanto.icns',resources/'AniCanto.icns')
+    for name in ('AniCanto.icns','AniCanto-icon.png','app-icon-art.png','app-icon-art-framed.png','app-icon-prompt.txt'):
+        shutil.copy2(ROOT/'Resources'/name,resources/name)
     from resource_assets import prune
     prune(resources)
     # The Rust helper embeds production-contract.json at compile time. Verify
@@ -92,6 +93,17 @@ def bundle():
                     str(resources)],env=smoke_env,check=True)
     subprocess.run(['/usr/bin/codesign','--force','--deep','--sign','-',str(target)],check=True)
     subprocess.run(['/usr/bin/codesign','--verify','--deep','--strict',str(target)],check=True)
+    # Check the compiled native worker too. Python/Tauri catalog validation alone
+    # cannot detect a stale Swift snapshot inside an otherwise matching bundle.
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix='anicanto-contract-') as scratch:
+        env=dict(os.environ,SAM_CANTO_DATA=scratch)
+        result=subprocess.run([str(contents/'MacOS/AniCanto-worker'),'--studio-validate-contract'],env=env,capture_output=True,text=True,timeout=30)
+        if result.returncode:
+            raise RuntimeError('Packaged Swift/core contract verification failed: '+(result.stdout+result.stderr)[-2000:])
+        probe=json.loads(result.stdout.strip().splitlines()[-1])
+        if probe.get('languages')!=['yue','zh','en']:
+            raise RuntimeError('Packaged native language plan does not match the release contract')
     files={str(p.relative_to(ROOT/'studio/web')):hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'studio/web').rglob('*') if p.is_file()}
     receipt=dict(version=version['version'],file=str(target),framework='Tauri 2',sharedFrontend=files,
         installedAppReplaced=False,modelWeightsBundled=False,windowsGPUInferenceTested=False)

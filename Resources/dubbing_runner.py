@@ -236,7 +236,7 @@ def tts(cfg):
   if not voice.get('promptText','').strip(): raise ValueError('請填寫角色參考錄音嘅日語原文。')
   from voice_expression import settings as expression_settings
   expressive=expression_settings(item.get('expressionSettings',{}))
-  request={'text':text,'text_lang':'en' if cfg.get('targetLanguage')=='en' else 'all_yue','ref_audio_path':voice['reference'],'prompt_text':voice['promptText'],'prompt_lang':{'ja':'all_ja','yue':'all_yue','en':'en','zh':'all_zh','ko':'all_ko'}.get(voice.get('language','ja'),'all_ja'),'text_split_method':'cut0','batch_size':1,'speed_factor':1.0,'seed':item.get('seed',42),'parallel_infer':False,'streaming_mode':False,'fragment_interval':0.0,'repetition_penalty':1.35,'sample_steps':steps,'super_sampling':False}
+  request={'text':text,'text_lang':{'en':'en','zh':'all_zh','yue':'all_yue'}[cfg.get('targetLanguage','yue')],'ref_audio_path':voice['reference'],'prompt_text':voice['promptText'],'prompt_lang':{'ja':'all_ja','yue':'all_yue','en':'en','zh':'all_zh','ko':'all_ko'}.get(voice.get('language','ja'),'all_ja'),'text_split_method':'cut0','batch_size':1,'speed_factor':1.0,'seed':item.get('seed',42),'parallel_infer':False,'streaming_mode':False,'fragment_interval':0.0,'repetition_penalty':1.35,'sample_steps':steps,'super_sampling':False}
   request.update(top_k=expressive['gptTopK'],top_p=expressive['gptTopP'],temperature=expressive['gptTemperature'],repetition_penalty=expressive['gptRepetitionPenalty'])
   if index==0 and voice.get('language','ja')!=cfg.get('targetLanguage','yue'):
    emit('配音語言',f'GPT {title(version)} 跨語言配音 · 原生 {RATES[version]//1000} kHz；按目標語言生成並覆聽。')

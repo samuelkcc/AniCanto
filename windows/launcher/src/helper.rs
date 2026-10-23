@@ -7,7 +7,7 @@ fn run() -> Result<i32, String> {
     let args: Vec<_> = std::env::args_os().skip(1).collect();
     let first = args.first().and_then(|a| a.to_str()).ok_or("Missing media action")?;
     let runtime = match first {
-        "--traditional-text" | "--ocr" | "--render-subtitles" => "worker",
+        "--traditional-text" | "--simplified-text" | "--ocr" | "--render-subtitles" => "worker",
         "--classify-opening" | "--classify-performance" => "analysis",
         _ => return Err("Unsupported AniCanto media action".into()),
     };

@@ -13,9 +13,9 @@ import time
 
 ROOT = Path(__file__).resolve().parent
 ENGINES = {
-    'voxcpm2': dict(key='voxcpmModel', default='voxcpm2-2b-bf16', languages=('yue', 'en'), rate=48000, title='VoxCPM2'),
+    'voxcpm2': dict(key='voxcpmModel', default='voxcpm2-2b-bf16', languages=('yue', 'zh', 'en'), rate=48000, title='VoxCPM2'),
     'wsyue': dict(key='wsyueModel', default='wsyue-cosy2-zjg', languages=('yue',), rate=24000, title='WenetSpeech-Yue'),
-    'drama3': dict(key='drama3Model', default='drama3-35b-4bit', languages=('yue','en'), rate=44100, title='Drama 3'),
+    'drama3': dict(key='drama3Model', default='drama3-35b-4bit', languages=('yue','zh','en'), rate=44100, title='Drama 3'),
 }
 REVISION = 'official-local-tts-2'
 
@@ -120,7 +120,7 @@ def generate(model, engine, item, cfg):
     if engine == 'voxcpm2':
         from voice_parameters import effective
         parameters=effective(cfg,engine)
-        guidance = '用自然香港廣東話，保持參考錄音的音色' if cfg.get('targetLanguage', 'yue') == 'yue' else 'Speak natural English, preserving the reference voice'
+        guidance = '用自然香港廣東話，保持參考錄音的音色' if cfg.get('targetLanguage', 'yue') == 'yue' else '请用中国大陆标准普通话，保持参考录音的音色' if cfg.get('targetLanguage')=='zh' else 'Speak natural English, preserving the reference voice'
         return model.generate(text='('+guidance+')'+text, reference_wav_path=voice['reference'], seed=seed,
                               cfg_value=parameters['voxcpmGuidance'], inference_timesteps=parameters['voxcpmSteps'], normalize=False, denoise=False,
                               retry_badcase=False, max_len=min(768, max(96, len(text)*8))), 48000

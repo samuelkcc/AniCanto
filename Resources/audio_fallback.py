@@ -321,7 +321,7 @@ def original_placeholder(cfg,folder,engine,language,cues,run):
         with wave.open(str(voice),'wb') as f:
             f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(array.array('h',(round(x*gain) for x in samples)).tobytes())
     if not timing:
-        timing=[dict(index=c.get('reviewIndex',i)+1,start=c['start'],end=c['end'],speakerId=c.get('speakerId'),text=c.get('english') if language=='en' else c.get('cantonese'),skipped=True,renderedSeconds=0) for i,c in enumerate(cues) if c.get('enabled',True)]
+        timing=[dict(index=c.get('reviewIndex',i)+1,start=c['start'],end=c['end'],speakerId=c.get('speakerId'),text=c.get(__import__('output_language').field(language)),skipped=True,renderedSeconds=0) for i,c in enumerate(cues) if c.get('enabled',True)]
     cmd=[cfg['ffmpeg'],'-v','error','-y','-ss',str(cfg.get('startOffset',0)),'-i',cfg['video'],'-i',voice]
     background=Path(cfg.get('backgroundPath',''))
     if background.is_file():
@@ -333,4 +333,4 @@ def original_placeholder(cfg,folder,engine,language,cues,run):
     atomic_json(folder/'timing.json',timing)
     report=dict(duration=duration,qualityStatus='needs-review',generationFailed=True,output=str(output),nativePreserved=sum(not r.get('skipped') for r in timing),japaneseFallback=0)
     atomic_json(folder/'report.json',report)
-    return dict(engine=engine,language=language,id=engine if language=='yue' else 'en-'+engine,folder=folder,output=output,report=report)
+    return dict(engine=engine,language=language,id=engine if language=='yue' else language+'-'+engine,folder=folder,output=output,report=report)

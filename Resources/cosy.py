@@ -140,13 +140,13 @@ def synthesize(cfg, emit):
                 ref = librosa.resample(ref.mean(axis=1), orig_sr=sr, target_sr=24000)
                 import torch
                 torch.manual_seed(item.get('seed',42)+31*retry)
-                instruction = ('You are a helpful assistant. Speak natural, expressive English. Say every word exactly as written.' if cfg.get('targetLanguage')=='en' else 'You are a helpful assistant. 请用地道的香港粤语说话。')
+                instruction = ('You are a helpful assistant. Speak natural, expressive English. Say every word exactly as written.' if cfg.get('targetLanguage')=='en' else 'You are a helpful assistant. 请用中国大陆标准普通话清晰表达。' if cfg.get('targetLanguage')=='zh' else 'You are a helpful assistant. 请用地道的香港粤语说话。')
                 if cfg.get('targetLanguage')=='en' and item.get('deliveryStyle') in ('brisk','measured','timed'):
                     instruction += f' Deliver the complete line in about {item["targetSeconds"]:.1f} seconds with natural expression and clear words. Do not add, omit or repeat words.'
                 if cfg.get('targetLanguage')!='en' and item.get('deliveryStyle') == 'brisk':
                     instruction += '用较快、紧凑利落的语速，减少停顿，不要拖长尾音，完整说出所有台词。'
                 if cfg.get('targetLanguage')!='en' and item.get('deliveryStyle') == 'measured':
-                    instruction += f'请用从容、有表情的香港粤语，在大约{item["targetSeconds"]:.1f}秒内讲完。字字清晰，适当停顿，不要赶快读完，不添加、重复或省略文字。'
+                    instruction += f'请用从容、有表情的说话方式，在大约{item["targetSeconds"]:.1f}秒内讲完。字字清晰，适当停顿，不要赶快读完，不添加、重复或省略文字。'
                 if cfg.get('targetLanguage')!='en' and item.get('deliveryStyle') == 'timed':
                     instruction += f'请在大约{item["targetSeconds"]:.1f}秒内完整说完这句台词。用自然利落的较快语速，停顿短，不要拉长尾音，不漏字。'
                 from voice_expression import settings,instruction as acting_instruction

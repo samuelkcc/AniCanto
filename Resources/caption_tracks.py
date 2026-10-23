@@ -2,7 +2,7 @@
 import math
 from source_evidence import caption_records
 
-MODES=('none','yue','english','dual','all','original','original-yue','original-english','complete','separate')
+MODES=('none','yue','zh','english','dual','all','original','original-yue','original-english','complete','separate')
 
 def source_cues(job, duration):
     result=[]
@@ -20,12 +20,13 @@ def labels(track):
         if language in ('jpn','ja'):return 'jpn','Original Japanese / 日文原字幕'
         if language in ('eng','en'):return 'eng','Original English subtitles'
         return 'zho','Original Chinese / 原裝中文字幕'
+    if mode=='zh':return 'zho','Mainland Mandarin / 普通话（简体）'
     if mode=='english':return 'eng','English translation / 英文譯文'
     if mode=='yue':return 'yue','Cantonese translation / 廣東話譯文'
     return 'zho',{'dual':'Cantonese + English (learning) / 廣東話＋英文（學習）','original-yue':'Original Chinese + Hong Kong Cantonese','original-english':'Original Chinese + English'}.get(mode,mode)
 
 def ordered(tracks):
-    return sorted(tracks,key=lambda t:({'yue':0,'english':1,'dual':2,'original-yue':3,'original-english':4,'original':5}.get(t['mode'],3),t['language']!='yue'))
+    return sorted(tracks,key=lambda t:({'yue':0,'zh':.5,'english':1,'dual':2,'original-yue':3,'original-english':4,'original':5}.get(t['mode'],3),t['language']!='yue'))
 
 def matching_cue(cue,cues):
     """Dropped draft rows cannot shift the translations of later subtitle rows."""

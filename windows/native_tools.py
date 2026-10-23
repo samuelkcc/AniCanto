@@ -109,9 +109,9 @@ def subtitles(path):
 
 def main(args):
  flag=args[0]
- if flag=='--traditional-text':
+ if flag in ('--traditional-text','--simplified-text'):
   from opencc import OpenCC
-  sys.stdout.write(OpenCC('s2twp').convert(sys.stdin.read()));return
+  sys.stdout.write(OpenCC('t2s' if flag=='--simplified-text' else 's2twp').convert(sys.stdin.read()));return
  if flag=='--render-subtitles':subtitles(args[1]);return
  if flag=='--ocr':result=ocr(args[1])
  elif flag in ('--classify-opening','--classify-performance'):result=classify(args[1])

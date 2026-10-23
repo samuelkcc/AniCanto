@@ -80,9 +80,13 @@ def translate(w,cfg,job,cues):
     from dub_languages import selected
     languages=set(selected(cfg))
     modes=cfg.get('subtitleModes',[]) or [cfg.get('subtitleOutput','yue')]
+    if 'zh' in modes:languages.add('zh')
     if any('english' in m or m in ('dual','all','complete') for m in modes):languages.add('en')
     if any(m in ('yue','dual','all','complete','original-yue') for m in modes):languages.add('yue')
     for language in sorted(languages):
+        if language=='zh':
+            from dub_languages import mandarin_script
+            mandarin_script(w,cfg,job,cues);continue
         field='english' if language=='en' else 'cantonese'
         system=("Translate Japanese anime dialogue into natural spoken English. Aim for 2.4 words per second at natural speed. Use contractions and direct short phrasing; do not expand brief reactions or rely on accelerated playback. " if language=='en' else
                 "將日本動畫對白翻譯成生動自然嘅香港廣東話口語，繁體字；用香港日常用語，唔好書面語或廣州用語。每秒約4.5字。")
@@ -143,7 +147,7 @@ def convert(w,cfg):
     # Keep processing inputs distinct; presentation and delivery choices cannot
     # discard recognition, translations or source voice references.
     identity=dict(cfg,fastRevision=REVISION,sourceStat=[video.stat().st_size,video.stat().st_mtime_ns])
-    if cfg.get('ocr'):identity['ocrWorkflowRevision']='speech-first-auto-region-2-audio-primary'
+    if cfg.get('ocr'):identity['ocrWorkflowRevision']='speech-first-auto-region-3-local-source-clock'
     if identity.get('translationSource','audio-and-subtitles')=='audio-and-subtitles':identity.pop('translationSource',None)
     if cfg.get('subtitle') and Path(cfg['subtitle']).is_file():identity['subtitleHash']=hashlib.sha256(Path(cfg['subtitle']).read_bytes()).hexdigest()
     from job_identity import resolve
@@ -365,7 +369,7 @@ def validation(cfg,job,cues,target,run,emit):
     streams=meta.get('streams',[]);duration=float(meta.get('format',{}).get('duration',0))
     audio=[s for s in streams if s.get('codec_type')=='audio']
     if not any(s.get('codec_type')=='video' for s in streams) or not audio or not math.isfinite(duration) or abs(duration-cfg['duration'])>.2:raise ValueError('高速合成檔案無效：影片、音軌或長度不符。')
-    if audio[0].get('tags',{}).get('language')!=('eng' if cfg.get('targetLanguage')=='en' else 'yue'):raise ValueError('輸出音軌語言標籤不符。')
+    if audio[0].get('tags',{}).get('language')!=__import__('output_language').LANGUAGES[cfg.get('targetLanguage','yue')][2]:raise ValueError('輸出音軌語言標籤不符。')
     if not cfg.get('burnOutputCaptions') and not any(s.get('codec_type')=='subtitle' for s in streams):raise ValueError('輸出字幕軌缺失。')
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     normal=cfg.get('productionMode')=='normal'

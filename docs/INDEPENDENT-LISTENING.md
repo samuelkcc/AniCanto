@@ -12,7 +12,7 @@ Each successful recording is atomically checkpointed before emitting its complet
 
 A single item has a 180-second default deadline and a batch a 1200-second deadline. A timed-out item remains unconfirmed; completed results survive. The owned child is terminated and later uncached items may continue with at most two continuation processes. Startup failure does not loop. A later invocation resumes uncached items. Heartbeats report activity separately from measurable completed counts. Recognition failure is never turned into evidence of missing speech.
 
-The token-scoped **Finish with saved recordings** command cooperatively stops further repair and mixes existing recordings. It does not terminate the entire track as failed. It does not declare speech quality passed. The red Pause & save action remains separate and stops processing without exporting.
+Output controls are kept in Production & export. The top transport contains the red Pause & save action, which saves and pauses without exporting; there is no adjacent direct-export shortcut.
 
 ## Measured comparison
 

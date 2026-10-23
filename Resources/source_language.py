@@ -48,9 +48,6 @@ def apply(cfg,language):
         # Full AI's scene/character prompts are Japanese-specific. Experimental
         # sources use the independent source-voice path, with no visual grouping.
         cfg.update(productionMode='normal',roleAnalysisMode='independent',visualRoleAnalysisEnabled=False)
-    if language=='en':
-        cfg.update(dubLanguages=['yue'],defaultDubLanguage='yue',targetLanguage='yue',
-                   subtitleModes=['yue'],subtitleSelection='custom',burnOutputCaptions=False)
     return cfg
 
 

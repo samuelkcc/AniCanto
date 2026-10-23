@@ -1,4 +1,4 @@
-# Welcome download management (0.22.12)
+# Welcome download management (0.24.67)
 
 Welcome → Manage models & runtimes lists installed, missing and partial model
 files, per-component repair / redownload / remove actions and the app storage
@@ -13,19 +13,23 @@ before leaving its workspace. The download plan includes the AudioSet classifier
 it distinguishes music, speech and other sounds for OP/ED detection. Model-file
 completion is separate from the subsequent real model-load / inference checks.
 
-Two explicit cleanup actions are available:
+Welcome now has one **Clean up downloads…** entry. Choose the scope inside its
+slide-in panel:
 
-- **Delete downloaded models:** app-local weights, model sources, interrupted
-  model downloads, model cache and readiness receipts. Runtimes remain installed.
-- **Delete all downloads & close:** also removes app-local Python runtimes,
-  downloaded tools, extracted Windows packages and download caches.
+- **Models only** (default): remove app-local weights, model sources, interrupted
+  model downloads, model cache and readiness receipts. Keep execution environments.
+- **Models and execution environments**: additionally remove app-local Python
+  runtimes, downloaded tools, extracted Windows packages and download caches.
+  The next setup prepares both models and environments again.
 
-The confirmation shows the scope and approximate file size. Both actions close
-the app. The Mac stops its owned model services before removal. Windows writes
-a one-shot request bound to the current portable launcher process; the launcher
-executes it after the desktop has exited, so loaded runtime DLLs are no longer
-in use. A second launcher cannot act on another desktop's cleanup request.
-The portable EXE must be kept outside its downloaded data folder.
+Opening the panel, changing the selection or cancelling does not remove anything.
+**Review removal** scans the selected scope and shows the approximate size and
+file inventory. Only **Confirm removal** starts deletion. Cleanup shows live
+progress and refreshes setup readiness afterwards; preparing missing components
+can then start without restarting the app. On Windows, when loaded files require
+post-exit cleanup, the launcher uses a one-shot request bound to the current
+portable process. Another launcher cannot execute that process's request. Keep
+the portable EXE outside its downloaded data folder.
 
 A shared Rust implementation restricts removal to named app download directories.
 It does not traverse symlinks or Windows reparse points, and verifies the file

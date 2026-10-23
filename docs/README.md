@@ -12,6 +12,7 @@ The searchable bilingual **Help centre** inside AniCanto is the current user man
 - [Windows interface alignment](WINDOWS-STUDIO-ALIGNMENT.md)
 - [Lightweight Mac deployment](MAC-LIGHTWEIGHT-DEPLOYMENT.md)
 - [Welcome download management](WELCOME-DOWNLOAD-MANAGEMENT.md)
+- [Desktop Mandarin output, OCR timing and startup readiness](DESKTOP-MANDARIN-OCR.md)
 - [Optional voice models: CosyVoice 3 and WenetSpeech-Yue](VOICE-MODELS.md)
 - [Drama3-small and NVIDIA](WINDOWS-PORT-2026-10-17.md)
 

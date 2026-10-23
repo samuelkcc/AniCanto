@@ -111,7 +111,7 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
             checks=inspect(cfg,job,[dict(drafts[i],reviewIndex=cues[i].get('reviewIndex',i)) for i,_ in candidates],[p for _,p in candidates],emit)
         for i,candidate in candidates:
             evidence=checks.get(cues[i].get('reviewIndex',i)+1,{})
-            rejected=bool(evidence.get('languageFailure') or evidence.get('decision') in ('mandarin','japanese') or evidence.get('contentFailure'))
+            rejected=bool(evidence.get('languageFailure') or evidence.get('decision') in tuple(v for v in ('mandarin','cantonese','english','japanese') if v!=__import__('output_language').decision(language)) or evidence.get('contentFailure'))
             available=(placement[i]['deadline']-placement[i]['start']) if placement is not None else natural_window(cues[i],cues,cfg['duration'],cfg)[1]-natural_window(cues[i],cues,cfg['duration'],cfg)[0]
             duration=seconds(candidate,cfg,run)
             too_long=bool(cfg.get('_durationFitRequired') and duration>available+.005)
@@ -124,16 +124,16 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
             if rejected:continue
             cue=drafts[i]
             selected[i]=candidate;cues[i].update(cantonese=cue['cantonese'],preConciseCantonese=cue.get('preConciseCantonese'))
-            if language=='en':cues[i]['english']=cue['cantonese']
+            if language in ('en','zh'):cues[i][__import__('output_language').field(language)]=cue['cantonese']
             if not cues[i].get('captionOverride'):cues[i]['captionText']=cue['cantonese']
         review=job/'review.json'
         if review.is_file():
             obj=json.loads(review.read_text());by_id={c.get('reviewIndex',i):c for i,c in enumerate(cues)}
             for i,c in enumerate(obj.get('cues',[])):
                 revised=by_id.get(c.get('reviewIndex',i))
-                if revised:c.update({k:revised[k] for k in ('cantonese','english','captionText','preConciseCantonese') if k in revised})
+                if revised:c.update({k:revised[k] for k in ('cantonese','english','mandarin','captionText','preConciseCantonese') if k in revised})
             atomic_json(review,obj)
-    confirmed={r['index']:r for r in audit if r['adopted'] and r['languageCheck'].get('decision')==('english' if language=='en' else 'cantonese')}
+    confirmed={r['index']:r for r in audit if r['adopted'] and r['languageCheck'].get('decision')==__import__('output_language').decision(language)}
     checkfile=job/'normal-checks.json'
     if confirmed and checkfile.is_file():
         normal=json.loads(checkfile.read_text())

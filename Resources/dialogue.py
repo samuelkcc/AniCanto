@@ -9,7 +9,7 @@ from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
 
-REVISION = 'speech-first-7-chinese-window-coverage'
+REVISION = 'speech-first-8-local-word-clock-review'
 MODEL_REV = 'edaa852ec7e145841d8ffdb056a99866b5f0a478'
 MODEL_SHA = '69f74147e3334731bc3a76048724833325d2ec74642fb52620eda87352e3d4f1'
 
@@ -43,10 +43,11 @@ def caption_context(captions):
         if not c.get('text','').strip(): continue
         if result and c['start']-result[-1]['end'] <= .65 and similar(c['text'],result[-1]['text']):
             previous=result[-1];previous['end']=max(previous['end'],c['end'])
+            if 'subtitleConfidence' in c:previous['subtitleConfidence']=min(previous.get('subtitleConfidence',1),c['subtitleConfidence'])
             key=c['text'];previous['variants'][key]=previous['variants'].get(key,0)+c['end']-c['start']
             previous['text']=max(previous['variants'],key=previous['variants'].get)
         else:
-            result.append(dict(start=c['start'],end=c['end'],text=c['text'],variants={c['text']:c['end']-c['start']}))
+            result.append(dict(start=c['start'],end=c['end'],text=c['text'],variants={c['text']:c['end']-c['start']},**({'subtitleConfidence':c['subtitleConfidence']} if 'subtitleConfidence' in c else {})))
     return [{k:v for k,v in c.items() if k!='variants'} for c in result]
 
 
@@ -65,7 +66,7 @@ def build_cues(segments, spans, captions, duration, offset=0):
             if w['end']==w['start'] and not (timed[0]<=i<=timed[-1]): continue
             # VAD is corroborating evidence, not a knife through Japanese words.
             # Cartoon voices over music are often rejected by conversational VAD.
-            w=dict(w,start=max(0,w['start']),end=min(duration,w['end']))
+            w=dict(w,start=max(0,w['start']),end=min(duration,w['end']),sourceClockUnconfirmed=bool(segment.get('sourceClockUnconfirmed')))
             if w['end']<w['start'] or w['start']>=duration: continue
             if current and (w['start']-current[-1]['end']>1.2 or (w['start']-current[-1]['end']>.32 and current[-1]['word'].rstrip().endswith(('。','！','？','!','?'))) or (w['end']-current[0]['start']>7 and w['start']-current[-1]['end']>.25)):
                 groups.append(current);current=[]
@@ -87,9 +88,10 @@ def build_cues(segments, spans, captions, duration, offset=0):
         # reject weak uncorroborated noise, or typical closing-credit ASR filler
         # with almost no acoustic support and no matching subtitle evidence.
         boilerplate=any(t in text for t in ('ご視','チャンネル登録'))
-        if coverage/max(.001,b-a)<.35 and boilerplate and not any('視聴' in h or '收看' in h or '观看' in h or '訂閱' in h or '订阅' in h for h in hints): continue
+        if not any(w.get('sourceClockUnconfirmed') for w in words) and coverage/max(.001,b-a)<.35 and boilerplate and not any('視聴' in h or '收看' in h or '观看' in h or '訂閱' in h or '订阅' in h for h in hints): continue
         if coverage==0 and score<.65 and not hints: continue
         note=[]
+        if any(w.get('sourceClockUnconfirmed') for w in words):note.append('原聲字音時間異常，局部重聽仍未確認；此段保留原聲，請核對。')
         if coverage/max(.001,b-a)<.35: note.append('動畫聲線未被人聲偵測器完整捕捉；保留原聲辨識，時間以日語音訊為準。')
         fragment = len(normalized(text)) == 1 and '\u4e00' <= normalized(text) <= '\u9fff'
         if fragment: note.append('只辨識到單個漢字，可能係截斷字／雜聲；保留配音並標記覆核，請聽原聲確認。')
@@ -99,7 +101,7 @@ def build_cues(segments, spans, captions, duration, offset=0):
         cues.append(dict(start=round(start,3),end=round(end,3),text=text,japanese=text,
                          subtitleHint=' ／ '.join(hints[:3]),asrConfidence=round(score,3),
                          reviewNote=' '.join(note),timingSource='japanese-audio',cantonese='',
-                         enabled=True,sourceReviewReasons=note.copy()))
+                         enabled=True,sourceReviewReasons=note.copy(),**(dict(preserveOriginalSpeech=True,originalSpeechReason='uncertain-source-clock',sourceClockUnconfirmed=True) if any(w.get('sourceClockUnconfirmed') for w in words) else {})))
     cues.sort(key=lambda c:c['start'])
     merged=[]
     for c in cues:
@@ -261,6 +263,11 @@ def analyze(cfg,job,captions,run,emit):
                         rows.append(dict(start=group[0]['start'],end=group[-1]['end'],text=''.join(w['word'] for w in group),words=group,recovered=True))
                 emit('日語原聲',f'已覆核 {gap_index+1}/{len(gaps)} 段遺漏候選。',.28,workID='japanese-coverage',workCompleted=gap_index+1,workTotal=len(gaps))
             rows.sort(key=lambda s:s['start'])
+        from source_timing_review import repair as repair_source_clock
+        cfg['_sourceClockModelRevision']=choice(variant)['revision']
+        # Corroborate the abnormal original word clock against that same
+        # original waveform; separation may itself truncate quiet speech.
+        rows=repair_source_clock(model,audio,spans,rows,cfg,job,emit)
         saved=dict(key=key,segments=rows,spans=spans);atomic_json(cache,saved)
         del model
     cues=build_cues(saved['segments'],saved['spans'],captions,cfg['duration'],cfg.get('startOffset',0))

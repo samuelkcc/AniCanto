@@ -686,8 +686,9 @@ def merge_ocr_rows(rows, duration, stable=True, interval=0.5):
         if cues and contiguous and same and start <= cues[-1]["end"] + 0.001:
             cues[-1]["end"] = end
             cues[-1]["hits"] += 1
+            if "subtitleConfidence" in row:cues[-1]["subtitleConfidence"]=min(cues[-1].get("subtitleConfidence",1),row["subtitleConfidence"])
         else:
-            cues.append({"start":start, "end":end, "text":text, "hits":1})
+            cues.append({"start":start, "end":end, "text":text, "hits":1, **({"subtitleConfidence":row["subtitleConfidence"]} if "subtitleConfidence" in row else {})})
         contiguous = True
     for cue in cues:
         if stable and cue["hits"] < 2:

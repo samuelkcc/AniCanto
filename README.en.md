@@ -6,9 +6,9 @@
 
 **Your anime. A whole new voice.**
 
-Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
+Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02464) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
+[Download](#download-the-beta--02467) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
 
 ## Why AniCanto exists
 
@@ -26,15 +26,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.64
+## Download the Beta · 0.24.67
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto-macOS-0.24.64.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.64-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto-macOS-0.24.67.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.67-beta)
 
 ## What’s new in this Beta
 
-- Stability fix: Normal mode retains audible first takes, restores missing audio and locally shortens measured overlong lines. Language and missing-word doubts no longer trigger repeated automatic retakes.
-- Optional Apple MLX Whisper checking, per-recording checkpoints, live counts and bounded continuation after timeouts.
-- Finish with saved recordings, plus the existing Dubbing studio and Windows NVIDIA CUDA option.
+- **Clearer download cleanup:** one entry, with separate model-only and complete environment choices. Review the scope and size before confirming; projects and finished movies stay intact.
+- **Start readiness fixed:** installed models are recognised correctly. A failed setup check now offers a retry instead of incorrectly asking for another download.
+- **Mandarin video tracks, OCR timing improvements and the Shion icon.** Cantonese and English remain available; standalone Dubbing studio still creates Cantonese speech.
 
 ## Choose your computer setup
 
@@ -69,7 +69,7 @@ If your configuration behaves differently, please [report the problem](https://g
 
 | Feature | How you can use it |
 | --- | --- |
-| **Cantonese / English dubbing** | Choose either language or both, with separate audio and subtitle tracks in one movie, switchable in a compatible player. |
+| **Cantonese / Mandarin / English dubbing** | Choose one language or a combination, with separate audio and subtitle tracks in one movie, switchable in a compatible player. |
 | **Chinese subtitles as context** | Use embedded text tracks, external subtitles or screen OCR to help check names and meaning. Japanese speech remains the primary source. |
 | **Opening and ending preservation** | Automatically detect OP / ED regions and keep their original Japanese songs and audio by default. |
 | **Basic and Expert modes** | Start with automatic processing, or use the timeline to edit scripts, adjust timing and work on individual lines. |
@@ -78,6 +78,12 @@ If your configuration behaves differently, please [report the problem](https://g
 | **Model & download management** | See installed models, missing downloads and estimated memory needs; check or repair files before switching. |
 | **Saved projects & versions** | Keep scripts, recordings and review notes together. Make another export without overwriting the previous movie. |
 | **Standalone Dubbing studio** | Turn typed text or a recording into editable Cantonese speech, then save versions, learn with both texts and export a WAV. |
+
+### New: Mandarin video dubbing
+
+In **Production settings → Dubbing languages**, choose **Mainland Mandarin** alone or combine it with Hong Kong Cantonese and English, including all three. Mandarin has its own script and recording, with Mainland wording and Simplified Chinese subtitles. Keep the original audio too if selected, then switch tracks in a compatible player.
+
+Available in Basic and Expert video workflows. Changing the interface language does not add dubbing tracks. **Standalone Dubbing studio currently outputs Cantonese**, and the downloadable comparison demo remains Cantonese / English / Japanese.
 
 ### Dubbing studio: from text or your recording to a saved clip
 
@@ -114,7 +120,7 @@ AniCanto uses **spoken dialogue as the primary source**, with subtitles helping 
 | **External subtitle file** | Use **Subtitle source → Import subtitle file** to attach SRT, ASS, SSA or VTT to the selected video. |
 | **Embedded text subtitles** | Read available text tracks inside containers such as MKV and MP4. |
 | **Burned-in Chinese captions** | Try OCR when readable text tracks are unavailable. Picture quality and layout affect recognition. |
-| **Original, Cantonese and English tracks** | Keep the original audio if selected, add one or both dubbing languages, and choose independent or bilingual learning subtitles. Switch tracks in a compatible player. |
+| **Original, Cantonese, Mandarin and English tracks** | Keep the original audio if selected, add your selected dubbing languages, and choose independent or bilingual learning subtitles. Switch tracks in a compatible player. |
 
 Automatic subtitle selection checks a matching external file, then embedded text, then screen OCR. **Original subtitle timestamps are preserved separately from dubbing timing.** Changing the interface language does not change the languages of the finished movie.
 
@@ -132,7 +138,7 @@ An accepted extension still needs readable audio and video codecs. Burned-in cap
 ## From video to a new voice
 
 1. **Import & prepare** — Add videos, inspect audio/subtitles and download any missing models.
-2. **Listen & translate** — Recognise the source dialogue, prepare separated speech references and write Cantonese and/or English scripts with available subtitle context.
+2. **Listen & translate** — Recognise the source dialogue, prepare separated speech references and write Cantonese, Mandarin and/or English scripts with available subtitle context.
 3. **Generate & check** — Create speech, preserve detected OP/ED audio and try bounded local repairs where needed.
 4. **Export & review** — Save a new MP4 with the chosen tracks. Use the review report to inspect remaining notes when you want to improve a line.
 
@@ -151,7 +157,7 @@ Recordings and previous exports are retained. New languages, models or changed s
 ## Start in three steps
 
 1. Download and open the app, then prepare the models and runtimes. Initial setup needs internet access.
-2. Add videos and choose Cantonese, English or both. For external subtitles, use **Subtitle source → Import subtitle file** above the preview (SRT / ASS / SSA / VTT).
+2. Add videos and choose Cantonese, Mandarin, English or a combination. For external subtitles, use **Subtitle source → Import subtitle file** above the preview (SRT / ASS / SSA / VTT).
 3. Start processing and play the finished movie. Use the review report to compare original, separated and generated speech, retake a line or select an earlier recording, then export another version.
 
 [Subtitle import guide](docs/en/GETTING-STARTED.md)
@@ -246,7 +252,7 @@ No cloud translation or dubbing service is required for this workflow. Once mode
 
 ## Before you start
 
-AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese and English tracks and OP / ED preservation; results vary by scene.
+AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese, Mandarin and English tracks and OP / ED preservation; results vary by scene.
 
 A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 

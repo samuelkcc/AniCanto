@@ -32,7 +32,7 @@ func runOCR() {
             return a == b ? $0.boundingBox.minX < $1.boundingBox.minX : a > b
         }
         let boxes = results.compactMap { observation -> [String:Any]? in
-            guard let best = observation.topCandidates(1).first, best.confidence >= 0.35 else { return nil }
+            guard let best = observation.topCandidates(1).first, best.confidence >= 0.10 else { return nil }
             let b=observation.boundingBox
             return ["text":best.string,"confidence":best.confidence,"x":b.minX,"y":1-b.maxY,"width":b.width,"height":b.height]
         }
@@ -50,10 +50,10 @@ func runOCR() {
     static func main() {
         runManagedToolIfNeeded()
         if runSharedStudioBridgeIfNeeded() {return}
-        if CommandLine.arguments.count > 1 && CommandLine.arguments[1] == "--traditional-text" {
+        if CommandLine.arguments.count > 1 && ["--traditional-text", "--simplified-text"].contains(CommandLine.arguments[1]) {
             let data = FileHandle.standardInput.readDataToEndOfFile()
             guard let text = String(data: data, encoding: .utf8) else { exit(1) }
-            let result = text.applyingTransform(StringTransform("Simplified-Traditional"), reverse: false) ?? text
+            let result = text.applyingTransform(StringTransform("Simplified-Traditional"), reverse: CommandLine.arguments[1] == "--simplified-text") ?? text
             FileHandle.standardOutput.write(Data(result.utf8))
             return
         }

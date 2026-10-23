@@ -39,9 +39,12 @@ def project(root,review,row):
         key=f'{lang}:{e}:{index}';cue=cues[index-1] if index<=len(cues) else {}
         target=resolved if status=='repaired' else items
         item=target.setdefault(key,dict(id=hashlib.sha256(key.encode()).hexdigest()[:20],index=index,engine=e,language=lang,start=value.get('start',cue.get('start')),end=value.get('end',cue.get('end')),kind=value.get('kind') or value.get('reason') or 'verification-unresolved',status=status,evidence=[],attempts=[]))
-        item['evidence'].append(dict(file=origin,**value));item['text']=cue.get('english' if lang=='en' else 'cantonese','')
+        item['evidence'].append(dict(file=origin,**value));item['text']=cue.get(__import__('output_language').field(lang),'')
         if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script'):item['kind']=value['kind']
         if status=='repairing':item['status']='repairing'
+    for index,cue in enumerate(cues,1):
+        if cue.get('sourceClockUnconfirmed'):
+            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-clock-unconfirmed',message='Source word timing could not be confirmed; original speech is retained.'),origin='source-timing-review.json')
     # Explicit current-track records avoid merging every obsolete render hash.
     folders={root};progress=read(root/'track-progress.json',{}).get('tracks',[])
     for t in progress:

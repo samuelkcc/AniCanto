@@ -8,10 +8,13 @@
   "policy": "Broad animation genre aesthetics; independent original designs, no franchise attribution or endorsement. Generated art is not a legal clearance certificate.",
   "brandIcon": {
     "source": "app-icon-art.png",
-    "method": "Lighter lavender variant of the user-approved original silhouette, edited with built-in image_gen; resized for platform icons",
+    "method": "Existing original Studio character artwork chosen by the user as the sole desktop icon; resized to native platform sizes",
     "copyright": "2026 SCKC",
     "license": "MIT",
-    "notice": "licenses/BRANDING-NOTICE.txt"
+    "notice": "licenses/BRANDING-NOTICE.txt",
+    "character": "紫音 / Shion",
+    "sourceAsset": "mobile/Design/IconVariants/character-studio-jp-yue.png",
+    "sourceSHA256": "198d44284253d58df01ca76e0153d82d22918d57d935a43439662afe59f983a2"
   },
   "identityAlignment": {
     "reviewedThemes": 9,

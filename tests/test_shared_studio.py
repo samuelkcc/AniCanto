@@ -150,8 +150,8 @@ class SharedStudioTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Confirm'):self.app.dispatch('start',dict(id=ident))
         spec=self.app.dispatch('start',dict(id=ident,sourceConfirmed='source-token'))
         cfg=read(Path(spec['args'][-1]))
-        self.assertEqual(cfg['sourceLanguage'],'en');self.assertEqual(cfg['dubLanguages'],['yue'])
-        self.assertEqual(cfg['subtitleModes'],['yue']);self.assertEqual(cfg['sourceAudioStream'],1)
+        self.assertEqual(cfg['sourceLanguage'],'en');self.assertEqual(cfg['dubLanguages'],['yue','en'])
+        self.assertEqual(cfg['subtitleModes'],['yue','english','dual','original']);self.assertEqual(cfg['sourceAudioStream'],1)
     def test_unsupported_source_cannot_start_with_a_confirmation_token(self):
         ident=self.add();self.app.row(ident)['sourcePreflight']=dict(language='fr',needsConfirmation=True,supported=False,token='token',reason='Unsupported voice reference')
         self.app.store.save()

@@ -73,7 +73,7 @@ def discover(w,cfg,job):
            workID='ocr-discovery',workCompleted=len(points),workTotal=len(points))
 
 
-SCAN_REVISION=2
+SCAN_REVISION=3
 
 
 def select_speech_frames(files,speech,duration):
@@ -164,6 +164,7 @@ def scan(w,cfg,job):
     rows=run_ocr(w,cfg,folder) if files else []
     if len(rows)!=len(files) or any(row.get('index')!=i for i,row in enumerate(rows)):
         raise ValueError('OCR helper returned incomplete frame coverage')
+    if guided:rows=subtitle_rows(rows)
     for row in rows:row['time']=int(files[row['index']].stem)/1000
     # Sparse auxiliary samples may be single hits in a fast utterance. They
     # remain evidence, never independent dialogue or a reason to delete ASR.
@@ -184,3 +185,34 @@ def scan(w,cfg,job):
     w.emit('OCR',f"OCR: {len(files)}/{len(files)} · {metrics['totalSeconds']:.1f}s",.29,
            workID='ocr-scan',workCompleted=len(files),workTotal=len(files),ocrMetrics=metrics)
     return cues
+
+
+def subtitle_rows(rows):
+    """Prefer centered subtitle-size lines over scene text.
+
+    Lower-confidence outlined captions remain auxiliary evidence with their
+    confidence; high-confidence Japanese page text must not win by confidence.
+    No box is turned into a speech turn or an authoritative transcript.
+    """
+    import re
+    result=[]
+    for row in rows:
+        if not row.get('boxes'):result.append(row);continue
+        choices=[];japanese_choices=[]
+        for box in row['boxes']:
+            text=str(box.get('text','')).strip();x=float(box.get('x',0));y=float(box.get('y',0));w=float(box.get('width',0));h=float(box.get('height',0));confidence=float(box.get('confidence',0))
+            chinese=bool(re.search(r'[\u3400-\u9fff]',text)) and not re.search(r'[\u3040-\u30ff]',text)
+            english=bool(re.search(r'[A-Za-z]{2,}',text)) and not re.search(r'[\u3040-\u30ff]',text)
+            if confidence<.1 or w<.12 or not .18<x+w/2<.82 or y+h/2<.2:continue
+            if chinese or english:choices.append(box)
+            elif re.search(r'[\u3040-\u30ff]',text) and .32<x+w/2<.68 and w>=.24 and h>=.12:
+                japanese_choices.append(box)
+        # Keep large centered Japanese-only subtitles if no Chinese/English
+        # caption exists. Small off-centre Japanese page writing stays excluded.
+        if not choices:choices=japanese_choices
+        if choices:
+            height=max(float(b['height']) for b in choices)
+            choices=[b for b in choices if float(b['height'])>=height*.65]
+            choices.sort(key=lambda b:(round(float(b['y'])/.12),float(b['x'])))
+        result.append(dict(row,text=' '.join(b['text'] for b in choices),selectedBoxes=choices,subtitleConfidence=min((float(b['confidence']) for b in choices),default=0),excludedSceneBoxes=len(row['boxes'])-len(choices)))
+    return result

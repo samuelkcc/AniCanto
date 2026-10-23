@@ -37,11 +37,11 @@ print(json.dumps(out))`],{maxBuffer:4000000}));
   await p.locator('#quality-hardware-details > summary').click();
   assert(await p.locator('#quality-hardware-details').evaluate(e=>e.open));
   await p.locator('#download-management > summary').click();
-  assert.equal(await p.locator('[data-action=cleanup-models]').count(),1);
-  assert(await p.locator('[data-action=cleanup-models]').isVisible());
+  assert.equal(await p.locator('[data-action=cleanup-downloads]').count(),1);
+  assert(await p.locator('[data-action=cleanup-downloads]').isVisible());
   assert(!(await p.locator('#download-management > summary').innerText()).includes('0 MB'));
   assert(!(await p.locator('#download-details > summary').allTextContents()).some(s=>s.includes('0 MB')));
-  assert(!await p.locator('[data-action=cleanup-all]').isVisible(),'Runtime cleanup should be collapsed');
+  assert.equal(await p.locator('[data-action=cleanup-all],#runtime-cleanup').count(),0,'Removal scopes belong in the single cleanup dialog');
   const high=p.locator('[data-action=quality-preset][data-value=quality]');assert.equal(await high.isDisabled(),!['mac64','win16'].includes(key));
   if(!await p.locator('#use-terms-checkbox').isChecked())await p.locator('#use-terms-checkbox').check();await p.waitForTimeout(100);const setup=p.locator('[data-action=setup]');assert.equal(await setup.isDisabled(),['mac16','win8'].includes(key),key+' '+lang+' '+await p.locator('#setup-content').innerText());
   if(key==='win16'){

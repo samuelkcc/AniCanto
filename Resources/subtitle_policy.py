@@ -3,7 +3,7 @@
 
 def automatic_modes(languages):
     languages=set(languages or ['yue'])
-    return ([m for lang,m in (('yue','yue'),('en','english')) if lang in languages]
+    return ([m for lang,m in (('yue','yue'),('zh','zh'),('en','english')) if lang in languages]
             + (['dual'] if {'yue','en'}<=languages else []) + ['original'])
 
 

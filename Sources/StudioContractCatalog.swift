@@ -16,6 +16,7 @@ enum StudioContractCatalog {
       "download": "23.8 GB",
       "languages": [
         "yue",
+        "zh",
         "en"
       ]
     },
@@ -28,6 +29,7 @@ enum StudioContractCatalog {
       "download": "1.4 GB",
       "languages": [
         "yue",
+        "zh",
         "en"
       ]
     },
@@ -40,6 +42,7 @@ enum StudioContractCatalog {
       "download": "1.82 GB",
       "languages": [
         "yue",
+        "zh",
         "en"
       ]
     },
@@ -52,6 +55,7 @@ enum StudioContractCatalog {
       "download": "9.7 GB",
       "languages": [
         "yue",
+        "zh",
         "en"
       ]
     },
@@ -64,6 +68,7 @@ enum StudioContractCatalog {
       "download": "5 GB",
       "languages": [
         "yue",
+        "zh",
         "en"
       ]
     },
@@ -81,18 +86,20 @@ enum StudioContractCatalog {
   ],
   "languages": [
     "yue",
+    "zh",
     "en"
   ],
   "subtitleModes": [
     "original",
     "yue",
+    "zh",
     "english"
   ],
   "retiredEngines": {
     "qwen-tts": "cosyvoice3",
     "gpt-sovits-v3": "gpt-sovits"
   },
-  "policyRevision": "2026-10-shared-1"
+  "policyRevision": "2026-10-shared-2-mandarin"
 }
 """#.data(using:.utf8)!
 }

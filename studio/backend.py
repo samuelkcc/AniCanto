@@ -232,7 +232,7 @@ class Studio:
         # arbitrary user files. Export remains bounded during a live conversion.
         for source in self.log_sources():
             parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,512*1024)])
-        for group,names in [('job',('processing-time.json','production-progress.json','report.json','segment-issues.json','normal-script-rescue.json','normal-checks.json','english-overlap.json','concise-dialogue.json','dialogue-delivery-audit.json','translation-brevity.json','natural-repair.json','natural-placement.json','automatic-recovery.json')),('attempt',('attempt.json','conversion-details.json','workflow.jsonl'))]:
+        for group,names in [('job',('processing-time.json','production-progress.json','report.json','segment-issues.json','normal-script-rescue.json','source-timing-review.json','normal-checks.json','english-overlap.json','concise-dialogue.json','dialogue-delivery-audit.json','translation-brevity.json','natural-repair.json','natural-placement.json','automatic-recovery.json')),('attempt',('attempt.json','conversion-details.json','workflow.jsonl'))]:
             folder=Path(row.get('job') or self.root/'jobs/nonexistent') if group=='job' else Path(row.get('attempt',{}).get('path',self.root/'attempts/nonexistent'))
             for name in names:
                 path=(folder/name).resolve()
@@ -370,8 +370,8 @@ class Studio:
                 raise ValueError('The default voice engine must be selected.')
             cfg['defaultAudioEngine']=cfg['ttsBackend']
             if cfg.get('ttsBackend') not in [e[0] for e in __import__('desktop_state').ENGINES]:raise ValueError('Unknown voice engine.')
-            if not cfg.get('dubLanguages') or set(cfg['dubLanguages'])-{'yue','en'}:raise ValueError('Select a supported dubbing language.')
-            if 'en' in cfg.get('dubLanguages',[]) and 'wsyue' in cfg['selectedEngines']:
+            if not cfg.get('dubLanguages') or set(cfg['dubLanguages'])-{'yue','zh','en'}:raise ValueError('Select a supported dubbing language.')
+            if any(l!='yue' for l in cfg.get('dubLanguages',[])) and 'wsyue' in cfg['selectedEngines']:
                 raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
             if 'visualRoleAnalysisEnabled' in patch and ('roleAnalysisMode' not in patch or patch['visualRoleAnalysisEnabled']):cfg['roleAnalysisMode']='audiovisual' if patch['visualRoleAnalysisEnabled'] else 'audio'
             if p.get('mode') is not None:
@@ -654,7 +654,7 @@ class Studio:
         if op=='setup':
             engine=p.get('engine') or self.store.settings['ttsBackend']
             requested=p.get('models',self.store.settings.get('deploymentModels',{}))
-            if engine=='wsyue' and 'en' in self.store.settings.get('dubLanguages',[]):raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
+            if engine=='wsyue' and any(l!='yue' for l in self.store.settings.get('dubLanguages',[])):raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
             drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto'))
             plan=self.dispatch('plan',dict(engine=engine,models=requested,dramaBackend=drama_backend))
             from model_switch import begin

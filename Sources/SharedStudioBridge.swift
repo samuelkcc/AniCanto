@@ -35,6 +35,8 @@ func runSharedStudioBridgeIfNeeded() -> Bool {
         switch args[1] {
         case "--studio-bootstrap":
             if !engine.runtimeReady {try engine.installRuntime()}
+        case "--studio-validate-contract":
+            output(try engine.productionPlan(["ttsBackend":"drama3","dubLanguages":["yue","zh","en"]]))
         case "--studio-plan":
             let requested=args.count>3 ? (try JSONSerialization.jsonObject(with:Data(args[3].utf8)) as? [String:String] ?? [:]):[:]
             output(try engine.firstRunModelPlan(engine:args.count>2 ? args[2]:"drama3",requested:requested))

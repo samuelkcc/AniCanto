@@ -15,6 +15,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def main():
     from python_installer_assets import prepare as installer_assets
     installer_assets()
+    # The Swift worker and Rust core must embed the exact same contract.
+    subprocess.run(['python3',str(ROOT/'scripts/generate_contract.py'),'--check'],check=True)
     release=json.loads((ROOT/'VERSION.json').read_text())
     source=ROOT/'dist/AniCanto.app'
     if not source.exists():source=ROOT/'dist/CantoSync.app'

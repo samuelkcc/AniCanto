@@ -37,14 +37,14 @@ def materialize(review, draft):
         if cb <= ca: raise ValueError('字幕結束必須遲過開始。')
         text = row['text']
         languages=draft.get('settings',{}).get('dubLanguages',draft.get('dubLanguages') or review['config'].get('dubLanguages',['yue']))
-        english_only=languages==['en'] and isinstance(row.get('english'),str) and bool(row['english'].strip())
+        english_only=len(languages)==1 and languages[0] in ('en','zh') and bool(str(row.get(__import__('output_language').field(languages[0]),'')).strip())
         missing_script=isinstance(text,str) and not text.strip() and not english_only
         existing_empty=bool(indices) and not row.get('manual') and all(
             not str(originals[i].get('cantonese') or '').strip() and
-            (languages!=['en'] or not str(originals[i].get('english') or '').strip()) for i in indices)
+            (not (len(languages)==1 and languages[0] in ('en','zh')) or not str(originals[i].get(__import__('output_language').field(languages[0])) or '').strip()) for i in indices)
         if not isinstance(text,str) or (missing_script and row.get('enabled',True) and not existing_empty and not draft.get('settings',{}).get('subtitlesOnly')):
             raise ValueError('所選語言嘅台詞不可空白。')
-        cue.update(start=a, end=b, text=row.get('original',cue['text']),japanese=row.get('original',cue.get('japanese',cue['text'])),english=row.get('english') or cue.get('english',''), originalEvidence=cue['text'], cantonese=text, speakerId=row.get('speakerId', ''),
+        cue.update(start=a, end=b, text=row.get('original',cue['text']),japanese=row.get('original',cue.get('japanese',cue['text'])),english=row.get('english') or cue.get('english',''),mandarin=row.get('mandarin',cue.get('mandarin','')), originalEvidence=cue['text'], cantonese=text, speakerId=row.get('speakerId', ''),
                    enabled=row.get('enabled', True), editorID=row['id'], editorSources=indices,
                    subtitleStart=ca, subtitleEnd=cb, captionText=row.get('captionText') or text)
         changed = (len(indices) != 1 or text != originals[indices[0]].get('cantonese') or
@@ -225,7 +225,7 @@ def render(w, request):
                 if not audio.is_relative_to(root) or not audio.is_file() or audio.suffix!='.wav':raise ValueError('所選聲音 take 已移走或不屬於呢個工作。')
                 if cue.get('userAcceptedRecording'):
                     acceptance=json.loads((audio.parent/'acceptance.json').read_text())
-                    expected=cue.get('english','') if acceptance['language']=='en' else cue.get('cantonese','')
+                    expected=cue.get(__import__('output_language').field(acceptance['language']),'')
                     if acceptance['text']!=expected:
                         cue.pop('editorAudio',None);cue.pop('userAcceptedRecording',None)
                         continue
@@ -309,6 +309,7 @@ def render(w, request):
             if cfg.get('auditionSeed') is not None:chosen[0]['_seed']=int(number(cfg['auditionSeed'],0,2147483647,'試音種子'))
             if cfg['targetLanguage']=='en':
                 dub_languages.english_script(w,cfg,folder,chosen)
+            elif cfg['targetLanguage']=='zh':dub_languages.mandarin_script(w,cfg,folder,chosen)
             chosen=dub_languages.track_cues(chosen,cfg['targetLanguage'])
             w.atomic_json(folder/'review.json',dict(review,config=cfg,cues=chosen))
             if cfg.get('previewScriptOnly'):

@@ -34,7 +34,7 @@ def fingerprint(issue,snapshot):
     profiles=snapshot.get('draft',{}).get('settings',{}).get('voiceProfiles',snapshot.get('review',{}).get('config',{}).get('voiceProfiles',[]))
     roles={s.get('speakerId') for s in segments} or {cue.get('speakerId')}
     references=[p for p in profiles if p.get('id') in roles]
-    return digest(dict(references=references,issue={k:issue.get(k) for k in ('id','index','engine','language','kind','text','evidence','diagnostic','attempts')},cue=cue,segments=[{k:s.get(k) for k in ('id','sources','start','end','text','english','speakerId','take','rate','trimStart','trimEnd')} for s in segments]))
+    return digest(dict(references=references,issue={k:issue.get(k) for k in ('id','index','engine','language','kind','text','evidence','diagnostic','attempts')},cue=cue,segments=[{k:s.get(k) for k in ('id','sources','start','end','text','mandarin','english','speakerId','take','rate','trimStart','trimEnd')} for s in segments]))
 
 def stale_recordings(snapshot):
     draft=snapshot.get('draft') or {};review=snapshot.get('review') or {};cfg=review.get('config',{})
@@ -48,7 +48,7 @@ def stale_recordings(snapshot):
         seen.add(identity)
         segment=next((s for s in draft.get('segments',[]) if s.get('sources')==[index-1]),None)
         if not segment or segment.get('enabled') is False or segment.get('preserveOriginalSpeech'):continue
-        text=segment.get('english' if language=='en' else 'text','');reasons=[]
+        text=segment.get('english' if language=='en' else 'mandarin' if language=='zh' else 'text','');reasons=[]
         provenance=take.get('recordingProvenance') or {}
         spoken=take.get('text',take.get('cantonese',provenance.get('text')))
         if spoken is not None and spoken!=text:reasons.append('script')

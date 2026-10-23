@@ -18,4 +18,5 @@ def settings(cfg):
 def instruction(style,language):
  if language=='en':
   return {'neutral':'','expressive':' Use warm, expressive acting, with meaningful emphasis and natural changes in intonation. Keep the same voice and say every word exactly.','urgent':' Use urgent, determined acting with clear emphasis and natural pauses. Keep the same voice and say every word exactly.','calm':' Use calm, gentle acting with natural pauses and subtle expression. Keep the same voice and say every word exactly.'}[style]
+ if language=='zh':return {'neutral':'','expressive':' 使用自然有层次的普通话表演，保持参考音色与中国大陆普通话字音，完整说出台词。','urgent':' 使用紧张坚定的普通话表演，保持参考音色，清晰完整说出台词。','calm':' 使用温柔平静的普通话表演，保持参考音色，清晰完整说出台词。'}[style]
  return {'neutral':'','expressive':'用有层次的动画角色表演，自然的重音和语气起伏；保持原来的音色和地道香港粤语字音，完整说出台词，不增加文字。','urgent':'用紧张而坚定的情绪，语气有力量，重音鲜明，停顿自然；保持原来的音色和地道香港粤语字音，完整说出台词，不增加文字。','calm':'用平静温柔的表演，停顿自然，有细腻的情绪；保持原来的音色和地道香港粤语字音，完整说出台词，不增加文字。'}[style]

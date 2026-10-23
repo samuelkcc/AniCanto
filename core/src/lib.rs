@@ -72,7 +72,7 @@ pub fn plan(cfg: &Value) -> Result<Value, String> {
         if !known.iter().any(|e| e["id"] == *engine) { return Err(format!("unknown-engine:{engine}")); }
     }
     for lang in &languages {
-        if !["yue", "en"].contains(&lang.as_str()) { return Err(format!("unknown-language:{lang}")); }
+        if !["yue", "zh", "en"].contains(&lang.as_str()) { return Err(format!("unknown-language:{lang}")); }
         if !known.iter().any(|e| engines.iter().any(|id| e["id"] == *id) && e["languages"].as_array().unwrap().contains(&json!(lang))) {
             return Err(format!("unsupported-language:{lang}"));
         }
@@ -83,7 +83,7 @@ pub fn plan(cfg: &Value) -> Result<Value, String> {
     }).collect();
     let primary = cfg["defaultAudioEngine"].as_str().unwrap_or(default);
     let primary = if engines.iter().any(|v| v==primary) {primary} else {&engines[0]};
-    let ordered_languages: Vec<&str> = ["yue", "en"].into_iter().filter(|l| languages.iter().any(|v| v==l)).collect();
+    let ordered_languages: Vec<&str> = ["yue", "zh", "en"].into_iter().filter(|l| languages.iter().any(|v| v==l)).collect();
     let mut tracks = Vec::new();
     for language in &ordered_languages { for engine in known {
         let id=engine["id"].as_str().unwrap();
@@ -97,12 +97,12 @@ pub fn plan(cfg: &Value) -> Result<Value, String> {
         "original-english"=> &["original","english"], "original" => &["original"], _ => &["yue"],
     })?;
     if cfg["subtitleSelection"].as_str()==Some("automatic") {
-        subs=ordered_languages.iter().map(|l| if *l=="en" {"english".to_string()} else {"yue".to_string()}).collect();
-        if ordered_languages.len()==2 {subs.push("dual".to_string());}
+        subs=ordered_languages.iter().map(|l| if *l=="en" {"english".to_string()} else {l.to_string()}).collect();
+        if ordered_languages.contains(&"yue") && ordered_languages.contains(&"en") {subs.push("dual".to_string());}
         subs.push("original".to_string());
     }
-    if subs.iter().any(|v| !["original","yue","english","dual"].contains(&v.as_str())) {return Err("unknown-subtitle-mode".into());}
-    let subtitles: Vec<&str> = ["yue","english","dual","original"].into_iter().filter(|v| subs.iter().any(|s| s==v)).collect();
+    if subs.iter().any(|v| !["original","yue","zh","english","dual"].contains(&v.as_str())) {return Err("unknown-subtitle-mode".into());}
+    let subtitles: Vec<&str> = ["yue","zh","english","dual","original"].into_iter().filter(|v| subs.iter().any(|s| s==v)).collect();
     let mut streams=Vec::new();
     if subtitles.contains(&"original") {
         if let Some(value)=cfg.get("originalSubtitleStreams") {

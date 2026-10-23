@@ -98,7 +98,7 @@ def validate_export(cfg,job,cues,target,run,emit):
     duration=float(meta['format']['duration'])
     if not videos or not audio or not math.isfinite(duration) or abs(duration-expected)>.2:
         raise ValueError('輸出驗證失敗：影片或音軌缺失／長度唔一致。')
-    if audio[0].get('tags',{}).get('language')!=('eng' if cfg.get('targetLanguage')=='en' else 'yue') or not audio[0].get('disposition',{}).get('default'):
+    if audio[0].get('tags',{}).get('language')!=__import__('output_language').LANGUAGES[cfg.get('targetLanguage','yue')][2] or not audio[0].get('disposition',{}).get('default'):
         raise ValueError('輸出驗證失敗：預設音軌同所選配音語言不符。')
     if cfg.get('separateBackground') and audio[0].get('channels')!=2:raise ValueError('輸出驗證失敗：背景立體聲缺失。')
     if not cfg.get('burnOutputCaptions') and not any(s.get('codec_type')=='subtitle' for s in meta['streams']):

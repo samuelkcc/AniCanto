@@ -4,6 +4,7 @@ from types import SimpleNamespace
 from unittest.mock import Mock,patch
 import numpy as np
 import soundfile as sf
+from scipy.signal import resample_poly  # Load native NumPy modules before patch.dict restores sys.modules.
 sys.path.insert(0,str(Path(__file__).parents[1]/'Resources'))
 import drama3,local_tts,dubbing,voice_models
 

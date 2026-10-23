@@ -45,10 +45,10 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
   # and reordered lines need the full editorial render, not a targeted retry.
   if len(edited)!=len(cues) or any(c.get('editorSources')!=[i] for i,c in enumerate(edited)):
    raise ValueError('Split, merged or reordered dialogue needs Produce a new version.')
-  fields=('start','end','cantonese','english','speakerId','enabled','subtitleStart','subtitleEnd','captionText','preserveOriginalSpeech')
+  fields=('start','end','cantonese','mandarin','english','speakerId','enabled','subtitleStart','subtitleEnd','captionText','preserveOriginalSpeech')
   for i,(old,new) in enumerate(zip(cues,edited),1):
    decisions=new.get('editorDecisions',{})
-   defaults=dict(english='',speakerId='',enabled=True,subtitleStart=old['start'],subtitleEnd=old['end'],captionText=old.get('cantonese',''),preserveOriginalSpeech=False)
+   defaults=dict(english='',mandarin='',speakerId='',enabled=True,subtitleStart=old['start'],subtitleEnd=old['end'],captionText=old.get('cantonese',''),preserveOriginalSpeech=False)
    changed=any(new.get(k,defaults.get(k))!=old.get(k,defaults.get(k)) for k in fields)
    if changed:
     for key in donors:targets.setdefault(key,[]).append(i)

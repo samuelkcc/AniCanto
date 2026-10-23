@@ -11,10 +11,10 @@ class SourceLanguageTests(unittest.TestCase):
  def test_selected_default_audio_is_the_detection_and_processing_source(self):
   streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn')),dict(index=3,codec_type='audio',tags=dict(language='eng'),disposition=dict(default=1))]
   self.assertEqual(source.metadata(dict(streams=streams)),dict(language='en',stream=3,method='audio-stream-metadata'))
- def test_english_source_can_only_generate_cantonese_captions_and_dub(self):
+ def test_english_source_preserves_explicit_multilingual_output(self):
   cfg=dict(dubLanguages=['yue','en'],subtitleSelection='automatic',subtitleModes=['original','english','dual'],productionMode='standard')
   source.apply(cfg,'en')
-  self.assertEqual(cfg['dubLanguages'],['yue']);self.assertEqual(cfg['subtitleModes'],['yue'])
+  self.assertEqual(cfg['dubLanguages'],['yue','en']);self.assertEqual(cfg['subtitleModes'],['original','english','dual'])
   self.assertEqual(cfg['productionMode'],'normal');self.assertEqual(cfg['sourceLanguage'],'en')
  def test_nonenglish_source_keeps_selected_output_languages_and_subtitles(self):
   cfg=dict(dubLanguages=['yue','en'],subtitleModes=['yue','english','dual','original'])
