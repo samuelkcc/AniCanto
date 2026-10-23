@@ -162,13 +162,14 @@ def planning_hardware():
         if candidates:
             chosen=max(candidates,key=lambda row:float(row['dedicatedMemoryGB']))
             h.update(backend='cuda' if wanted=='nvidia' else 'rocm',
-                     acceleratorMemoryGB=float(chosen['dedicatedMemoryGB']),
+                     acceleratorMemoryGB=float(chosen['dedicatedMemoryGB']),acceleratorName=chosen.get('name',''),
                      inferenceVerified=False,memorySource='DXGI dedicated video memory; kernel not yet tested')
             return h
     if sys.platform=='win32' and h['suggestedSetupBackend']=='nvidia':
         try:
-            result=subprocess.run(['nvidia-smi','--query-gpu=memory.total','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=10,check=True)
-            gib=next(float(x.strip())/1024 for x in result.stdout.splitlines() if x.strip())
-            h.update(backend='cuda',acceleratorMemoryGB=gib,inferenceVerified=False,memorySource='nvidia-smi; kernel not yet tested')
+            result=subprocess.run(['nvidia-smi','--query-gpu=name,memory.total','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=10,check=True)
+            name,amount=next(x.rsplit(',',1) for x in result.stdout.splitlines() if x.strip())
+            gib=float(amount.strip())/1024
+            h.update(backend='cuda',acceleratorName=name.strip(),acceleratorMemoryGB=gib,inferenceVerified=False,memorySource='nvidia-smi; kernel not yet tested')
         except (OSError,ValueError,subprocess.SubprocessError):pass
     return h

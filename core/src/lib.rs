@@ -128,6 +128,16 @@ pub fn plan(cfg: &Value) -> Result<Value, String> {
     Ok(result)
 }
 
+/// Conservative planning estimates. A real native speech probe is required.
+fn drama_memory(h:&Value,preference:&str)->Value {
+    let vram=h["acceleratorMemoryGB"].as_f64().unwrap_or(0.);
+    let cuda=preference!="cpu" && h["backend"]=="cuda" && h["nativeDramaCUDA"]==true && vram>=7.5;
+    let (layers,gpu)=if vram>=23.5 {(0,18.)} else if vram>=15.5 {(16,12.)} else if vram>=11.5 {(24,9.)} else {(32,6.)};
+    json!({"backend":if cuda {"cuda"}else{"cpu"},"systemGB":22.,"gpuGB":if cuda {gpu}else{0.},
+        "cpuExpertLayers":if cuda {layers}else{0},"contextLength":if cuda {2048}else{4096},
+        "estimated":true,"policy":"full-drama-q2-split-1","requiresSpeechProbe":true})
+}
+
 /// Evaluate only registered adapters. GPU advertising is not evidence of successful model inference.
 fn windows_deployment(req:&Value)->Result<Value,String> {
     let h=&req["hardware"];
@@ -136,6 +146,11 @@ fn windows_deployment(req:&Value)->Result<Value,String> {
     let backend=h["backend"].as_str().unwrap_or("cpu");
     let budget=if ["cuda","rocm"].contains(&backend) {host_budget.min(h["acceleratorMemoryGB"].as_f64().unwrap_or(0.)*0.8)} else {host_budget};
     let models=req["models"].as_array().ok_or("missing-model-catalog")?;
+    let preference=req["dramaBackend"].as_str().unwrap_or("auto");
+    if !["auto","cuda","cpu"].contains(&preference){return Err("invalid-drama-backend".into());}
+    let voice_memory=drama_memory(h,preference);
+    if req["engine"]=="drama3" && preference=="cuda" && voice_memory["backend"]!="cuda" {return Err("full-drama-cuda-requires-nvidia-8gb".into());}
+
     let installed=strings(req.get("installedModels"),&[])?;
     let valid=|m:&&Value| m["retired"]!=true && m["licenseReviewRequired"]!=true && m["nativeFormat"].is_string() && m["bytes"].as_u64().unwrap_or(0)>0 && m["files"].as_array().is_some_and(|f|!f.is_empty());
     let explicitly_requested=|m:&Value|req["requestedModels"].as_object().is_some_and(|roles|roles.values().any(|id|id==&m["id"]));
@@ -159,11 +174,11 @@ fn windows_deployment(req:&Value)->Result<Value,String> {
     let requested=req["engine"].as_str().unwrap_or("drama3");
     if requested=="cosyvoice3" && backend!="cuda" {return Err("cosyvoice3-requires-windows-nvidia".into());}
     if !catalog()["engines"].as_array().unwrap().iter().any(|e|e["id"]==requested) {return Err("unknown-engine".into());}
-    // The shipped full Drama adapter runs on CPU. Its 22 GB estimate belongs
-    // to the system-RAM pool, independently of a discrete GPU's VRAM.
+    // Full Q2 always needs host RAM, even with CUDA expert offload.
+    // Dedicated VRAM is a separate pool; neither capacity substitutes for the other.
     let full_drama_fits=models.iter().any(|m|m["id"]=="drama3-native-q2" && fits(&m));
     let explicit_full=req["requestedModels"]["voice"]=="drama3-native-q2";
-    let slow_drama=req["allowDramaCPU"].as_bool().unwrap_or(false) || (requested=="drama3" && full_drama_fits && (ram>=32. || explicit_full));
+    let slow_drama=req["allowDramaCPU"].as_bool().unwrap_or(false) || (requested=="drama3" && full_drama_fits && (ram>=30. || explicit_full));
     let small=models.iter().find(|m|(h["nativeDramaSmallCPU"]==true || h["nativeDramaSmallCUDA"]==true) && m["id"]=="drama3-small-iq3" && valid(m) && m["estimatedMemoryGB"].as_f64().is_some_and(|n|n<=host_budget));
     let small_cuda=backend=="cuda" && h["nativeDramaSmallCUDA"]==true && small.is_some_and(|m|fits(&m));
     let small_fallback=requested=="drama3" && !slow_drama && small.is_some();
@@ -182,16 +197,16 @@ fn windows_deployment(req:&Value)->Result<Value,String> {
         m["estimatedMemoryGB"].as_f64().unwrap_or(0.)>advised
     }) {warnings.push("model-memory-pressure-swap-or-load-failure-possible");}
     if small_fallback {warnings.push(if small_cuda {"native-drama-small-cuda-planned"} else {"native-drama-small-cpu-fallback"});}
-    else if engine=="drama3"{warnings.push("native-drama-cpu-explicit-slow-path");}
+    else if engine=="drama3"{warnings.push(if voice_memory["backend"]=="cuda" {"native-drama-full-cuda-needs-probe"}else{"native-drama-cpu-explicit-slow-path"});}
     let visual=text.filter(|m|m["estimatedMemoryGB"].as_f64().unwrap_or(0.)+3.<=budget);
     if visual.is_none(){warnings.push("visual-analysis-unavailable-use-audio-roles");}
-    let summarize=|m:&Value|json!({"id":m["id"],"title":m["title"],"repo":m["repo"],"revision":m["revision"],"bytes":m["bytes"],"estimatedMemoryGB":m["estimatedMemoryGB"],"nativeFormat":m["nativeFormat"],"installed":is_installed(m)});
+    let summarize=|m:&Value|json!({"id":m["id"],"title":m["title"],"repo":m["repo"],"revision":m["revision"],"bytes":m["bytes"],"estimatedMemoryGB":m["estimatedMemoryGB"],"estimatedSystemMemoryGB":if m["id"]=="drama3-native-q2" {voice_memory["systemGB"].clone()}else{Value::Null},"estimatedVRAMGB":if m["id"]=="drama3-native-q2" {voice_memory["gpuGB"].clone()}else{Value::Null},"nativeFormat":m["nativeFormat"],"installed":is_installed(m)});
     let mut downloads=Vec::new();
     for m in [text,visual,voice,speech,asr,reference].into_iter().flatten(){if !downloads.iter().any(|r:&Value|r["id"]==m["id"]){downloads.push(summarize(m));}}
     for m in models.iter().filter(|m|m["category"]=="classifier").filter(fits){downloads.push(summarize(m));}
     let bytes=downloads.iter().filter(|m|m["installed"]!=true).map(|m|m["bytes"].as_u64().unwrap_or(0)).sum::<u64>();
     let roles=json!({"text":text.map(|m|&m["id"]),"visual":visual.map(|m|&m["id"]),"voice":voice.map(|m|&m["id"]),"speech":speech.map(|m|&m["id"]),"asr":asr.map(|m|&m["id"]),"referenceSpeech":reference.map(|m|&m["id"])});
-    Ok(json!({"schemaVersion":1,"hardware":h,"requestedEngine":requested,"engine":engine,"voiceBackend":if small_fallback && small_cuda {"cuda"} else if engine=="drama3" {"cpu"} else {backend},"warnings":warnings,"blockers":blockers,"roles":roles,"downloads":downloads,"text":text.map(summarize),"voice":voice.map(summarize),"memoryBudgetGB":budget,"systemMemoryBudgetGB":host_budget,"acceleratorMemoryBudgetGB":if ["cuda","rocm"].contains(&backend){budget}else{0.},"systemReserveGB":reserve,"modelDownloadBytes":bytes,"runtimeDownloadBytes":null,"canDeployModels":blockers.is_empty(),"fullWorkflowReady":false,"roleAnalysisMode":if visual.is_some(){"audiovisual"}else{"audio"},"stagesRunSerially":true,"requiresRuntimeAndAuxiliaryModels":true,"additionalComponents":["native-worker","native-asr","native-separator","speakers","ffmpeg","ollama"]}))
+    Ok(json!({"schemaVersion":1,"hardware":h,"requestedEngine":requested,"engine":engine,"voiceBackend":if small_fallback && small_cuda {"cuda"} else if engine=="drama3" {voice_memory["backend"].as_str().unwrap_or("cpu")} else {backend},"dramaBackend":preference,"voiceMemory":if engine=="drama3"&&!small_fallback {voice_memory.clone()}else{Value::Null},"warnings":warnings,"blockers":blockers,"roles":roles,"downloads":downloads,"text":text.map(summarize),"voice":voice.map(summarize),"memoryBudgetGB":budget,"systemMemoryBudgetGB":host_budget,"acceleratorMemoryBudgetGB":if ["cuda","rocm"].contains(&backend){budget}else{0.},"systemReserveGB":reserve,"modelDownloadBytes":bytes,"runtimeDownloadBytes":null,"canDeployModels":blockers.is_empty(),"fullWorkflowReady":false,"roleAnalysisMode":if visual.is_some(){"audiovisual"}else{"audio"},"stagesRunSerially":true,"requiresRuntimeAndAuxiliaryModels":true,"additionalComponents":["native-worker","native-asr","native-separator","speakers","ffmpeg","ollama"]}))
 }
 
 fn deployment_inner(req: &Value) -> Result<Value,String> {
@@ -297,7 +312,7 @@ pub fn deployment(req:&Value)->Result<Value,String> {
     let models=req["models"].as_array().ok_or("missing-model-catalog")?;
     let mut presets=Vec::new();
     for (id,title,size,voice,engine,min_ram,description) in [
-        ("quality","Highest quality",if windows || ram<64. {"9b"} else {"35b"},if apple {"drama3-35b-4bit"} else {"drama3-native-q2"},"drama3",if apple && ram>=64. {64.} else {32.},if windows {"Full Drama 3 runs on the CPU with 32 GB system RAM; Qwen 9B and analysis use the supported GPU when they fit. Slower than Apple Silicon; quality is not guaranteed to match it."} else if ram<64. {"Full Drama 3 + Qwen 9B can be tried on a 32 GB Apple Silicon Mac. The 28 GB voice-model estimate exceeds the 24 GB budget after reserving 8 GB for macOS; swap and severe slowdowns are possible. 64 GB is the tested best-quality recommendation."} else {"Best Cantonese results in project listening tests so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results."}),
+        ("quality","Highest quality",if windows || ram<64. {"9b"} else {"35b"},if apple {"drama3-35b-4bit"} else {"drama3-native-q2"},"drama3",if apple && ram>=64. {64.} else {32.},if windows {"Full Drama 3 Q2 uses NVIDIA CUDA when selected and supported, with CPU/RAM offload. AMD and integrated graphics use CPU for Drama 3. Setup must verify actual loading and speech."} else if ram<64. {"Full Drama 3 + Qwen 9B can be tried on a 32 GB Apple Silicon Mac. The 28 GB voice-model estimate exceeds the 24 GB budget after reserving 8 GB for macOS; swap and severe slowdowns are possible. 64 GB is the tested best-quality recommendation."} else {"Best Cantonese results in project listening tests so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results."}),
         ("balanced","Balanced","9b","v2ProPlus","gpt-sovits-v2",16.,"GPT-SoVITS V2 Pro Plus + Qwen 9B. A lower-memory alternative; voice expression, pronunciation and translation detail may differ from the highest-quality setup.")
     ] {
         let text=if apple {format!("mlx:qwen3.5-{}:4bit",if size=="35b" {"35b-a3b"} else {size})} else {format!("qwen3.5:{size}")};
@@ -308,13 +323,19 @@ pub fn deployment(req:&Value)->Result<Value,String> {
         proposal["singleModelPerCategory"]=json!(true);proposal["allowDramaCPU"]=json!(windows && engine=="drama3");
         let mut blockers=Vec::<String>::new();
         if !apple && !windows {blockers.push("platform-not-supported".into());}
-        if ram<min_ram {blockers.push("insufficient-system-memory".into());}
+        // Windows reports usable RAM after hardware reservations, not DIMM size.
+        // Nominal tiers allow that reservation; actual pool fit below stays strict.
+        if ram<min_ram && !(windows && ram>=min_ram-2.) {blockers.push("insufficient-system-memory".into());}
         let mut peak=0f64;let mut host_peak=0f64;let mut gpu_peak=0f64;
         for ident in [text.as_str(),voice,asr,speech] {
             if let Some(model)=models.iter().find(|m|m["id"]==ident && m["retired"]!=true){
                 let need=model["estimatedMemoryGB"].as_f64().unwrap_or(f64::INFINITY);
                 peak=peak.max(need);
-                if windows && ["cuda","rocm"].contains(&backend) && ident!=voice {gpu_peak=gpu_peak.max(need);} else {host_peak=host_peak.max(need);}
+                if windows && ident=="drama3-native-q2" {
+                    let memory=drama_memory(h,req["dramaBackend"].as_str().unwrap_or("auto"));
+                    host_peak=host_peak.max(memory["systemGB"].as_f64().unwrap_or(22.));
+                    gpu_peak=gpu_peak.max(memory["gpuGB"].as_f64().unwrap_or(0.));
+                } else if windows && ["cuda","rocm"].contains(&backend) && ident!=voice {gpu_peak=gpu_peak.max(need);} else {host_peak=host_peak.max(need);}
                 if model["licenseReviewRequired"]==true {blockers.push("model-license-review-required".into());}
             } else {blockers.push("model-package-unavailable".into());}
         }

@@ -92,7 +92,7 @@ export const CHAPTERS=[
           },
           {
             "en": "Follow the milestones. When output is saved, choose Play output or Show file. The exported movie and processing time remain in Projects and exports.",
-            "zh-HK": "透過里程碑查看進度。成品儲存後可按「播放成品」或「顯示檔案」；專案／成品管理會保留成品位置及處理時間。"
+            "zh-HK": "透過里程碑查看進度。成品儲存後可按「播放成品」或「顯示檔案」；專案及輸出會保留成品位置及處理時間。"
           }
         ],
         "steps": true
@@ -213,7 +213,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "Interface language is also available in Preferences, below Projects and exports in the left navigation. Changing it there preserves production language choices. New workflow entries use the new interface language; older entries and raw third-party/model logs keep their original wording. Theme colour is applied across the workspace, menus and panels. Each theme retains its own assistant identity in Welcome and the preview-off scene.",
-            "zh-HK": "偏好設定亦有介面語言選項，位置喺左邊「專案／成品管理」下方；喺度換語言會保留製作語言設定。新流程紀錄用新介面語言，舊紀錄同第三方／模型原始紀錄保留原文。主題顏色會套用到工作區、選單同面板；Welcome 同關閉預覽畫面會沿用同一主題助手身份。"
+            "zh-HK": "偏好設定亦有介面語言選項，位置喺左邊「專案及輸出」下方；喺度換語言會保留製作語言設定。新流程紀錄用新介面語言，舊紀錄同第三方／模型原始紀錄保留原文。主題顏色會套用到工作區、選單同面板；Welcome 同關閉預覽畫面會沿用同一主題助手身份。"
           }
         ],
         "steps": false
@@ -380,7 +380,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "Basic and Expert use the same queue workflow. Start processes every unfinished video in the video-list order, one at a time. Completed outputs are skipped. Resume continues a paused video with its saved settings and then the remaining queue. Videos added during a running queue join the remaining work. Drag a waiting video handle or use its up/down arrows to change future order; a running video is not restarted or moved out of its current processing slot. Order is shared by the video list, Work queue and Projects and exports. Pause & save stops automatic continuation. Failed videos retain their reason and the next waiting video continues; the same failed video is not retried repeatedly in one session. An explicit Retry or Produce a new version remains a separate selected-video action.",
-            "zh-HK": "基本同專家模式共用同一佇列流程。「開始」會按影片清單順序逐條處理全部未完成影片，跳過已完成成品。「繼續」先用已保存設定續做暫停影片，再接續餘下清單；轉換中加入嘅影片亦會排入。未開始影片可拖曳左邊手柄或用上下箭嘴調位；正在處理嗰集唔會重開或被移走。影片清單、工作佇列同專案／成品管理共用排序。「暫停並保存」會停止自動接續。失敗影片保留原因後繼續下一條，同一輪唔會無限重試。明確按「重試」或「製作新版本」仍然係指定影片嘅獨立操作。"
+            "zh-HK": "基本同專家模式共用同一佇列流程。「開始」會按影片清單順序逐條處理全部未完成影片，跳過已完成成品。「繼續」先用已保存設定續做暫停影片，再接續餘下清單；轉換中加入嘅影片亦會排入。未開始影片可拖曳左邊手柄或用上下箭嘴調位；正在處理嗰集唔會重開或被移走。影片清單、工作佇列同專案及輸出共用排序。「暫停並保存」會停止自動接續。失敗影片保留原因後繼續下一條，同一輪唔會無限重試。明確按「重試」或「製作新版本」仍然係指定影片嘅獨立操作。"
           }
         ],
         "steps": false
@@ -591,7 +591,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "The left navigation selects Edit, Roles, Review report, Produce, Work queue, Terminal, Production defaults, Model centre, Preferences or Projects and exports. The video list selects the project. The right inspector provides Production, Dialogue, Picture and Mix. Header panel icons independently show or hide navigation, video list and inspector.",
-            "zh-HK": "左邊導覽可選剪輯、角色、校對報告、製作匯出、工作佇列、終端機、製作預設、模型中心、偏好設定及專案／成品管理。影片清單選專案；右邊檢查器有製作、對白、畫面及混音。上方的面板圖示可獨立開關導覽、影片清單及檢查器。"
+            "zh-HK": "左邊導覽可選剪輯、角色、校對報告、製作匯出、工作佇列、終端機、製作預設、模型中心、偏好設定及專案及輸出。影片清單選專案；右邊檢查器有製作、對白、畫面及混音。上方的面板圖示可獨立開關導覽、影片清單及檢查器。"
           }
         ],
         "steps": false
@@ -969,7 +969,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "After a successful export, Play output opens the finished movie in the preview and Show file reveals its location. Output folder controls new exports. Projects and exports keeps the episode, status, accumulated time and available output. Existing movie versions remain unless you explicitly remove them through a corresponding cleanup operation.",
-            "zh-HK": "成功匯出後，「播放成品」會在預覽開啟完成影片，「顯示檔案」會顯示位置。「輸出資料夾」控制新成品存放位置。專案／成品管理保留集數、狀態、累計時間及可用輸出；已有版本會保留，除非另行透過相關清理操作移除。"
+            "zh-HK": "成功匯出後，「播放成品」會在預覽開啟完成影片，「顯示檔案」會顯示位置。「輸出資料夾」控制新成品存放位置。專案及輸出保留集數、狀態、累計時間及可用輸出；已有版本會保留，除非另行透過相關清理操作移除。"
           }
         ],
         "steps": false
@@ -982,7 +982,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "Use the × in the video list or the trash button in Projects and exports. Confirm the project name before removal. Processing files for that project are cleared; source videos, completed exports and downloaded models are preserved. Pause running work first. Back to preview returns from management to the editor in either interface mode.",
-            "zh-HK": "可按影片清單的 ×，或專案／成品管理的垃圾桶；確認專案名稱後移除。這會清除該專案的處理資料，保留原片、完成成品及下載模型。正在執行的工作須先暫停。「返回預覽」可於兩種介面模式返回剪輯頁。"
+            "zh-HK": "可按影片清單的 ×，或專案及輸出的垃圾桶；確認專案名稱後移除。這會清除該專案的處理資料，保留原片、完成成品及下載模型。正在執行的工作須先暫停。「返回預覽」可於兩種介面模式返回剪輯頁。"
           }
         ],
         "steps": false
@@ -1021,7 +1021,7 @@ export const CHAPTERS=[
         "body": [
           {
             "en": "Projects and exports → Clear temporary files scans the app-owned storage directly, including old preview copies, package/compiled caches and unlinked interrupted work. A zero cache total means no removable items in the scanned categories, not that application storage is empty. Unlinked work can contain useful recordings; review that selection before deletion. Downloaded models, runtimes, original media and finished exports are preserved by cache cleanup. Scanning, deletion progress and the final freed-space result are shown. Nothing is removed during the scan.",
-            "zh-HK": "「專案／成品管理 → 清理暫存」會直接掃描 App 自己嘅儲存目錄，包括舊預覽副本、套件／編譯快取，同冇連結到清單嘅中斷工作。顯示 0 只代表掃描分類入面冇可移除項目，唔代表整個資料目錄係空。未連結工作可能仍有有用錄音，移除前應檢視選擇。清理暫存會保留已下載模型、執行環境、原片同成品，並顯示掃描、刪除進度同最後釋放容量；掃描時唔會刪嘢。"
+            "zh-HK": "「專案及輸出 → 清理暫存」會直接掃描 App 自己嘅儲存目錄，包括舊預覽副本、套件／編譯快取，同冇連結到清單嘅中斷工作。顯示 0 只代表掃描分類入面冇可移除項目，唔代表整個資料目錄係空。未連結工作可能仍有有用錄音，移除前應檢視選擇。清理暫存會保留已下載模型、執行環境、原片同成品，並顯示掃描、刪除進度同最後釋放容量；掃描時唔會刪嘢。"
           }
         ],
         "steps": false
@@ -1211,7 +1211,9 @@ export const CHAPTERS=[
   }
 ];
 
-export function chapters(language){const locale=localeData(language),lang=language==='zh-HK'?'zh-HK':'en';return CHAPTERS.map((c,i)=>({...c,number:i+1,title:locale?.help[`${i}.title`]??c.title[lang],summary:locale?.help[`${i}.summary`]??c.summary[lang],sections:c.sections.map((s,j)=>({title:locale?.help[`${i}.${j}.title`]??s.title[lang],body:s.body.map((p,k)=>locale?.help[`${i}.${j}.${k}`]??p[lang]),steps:s.steps}))}));}
+CHAPTERS.push({"id": "speech-studio", "title": {"en": "Dubbing studio", "zh-HK": "配音器", "zh-CN": "配音器", "ja": "吹き替えスタジオ"}, "summary": {"en": "Create a Cantonese clip, keep versions and compare source and generated speech.", "zh-HK": "製作廣東話片段，保存不同錄音版本，再對照原聲同配音。", "zh-CN": "制作广东话片段，保存不同录音版本，再对照原声和配音。", "ja": "広東語の音声クリップを作成し、版を保存して元音声と比較します。"}, "sections": [{"title": {"en": "Input, review and translate", "zh-HK": "輸入、核稿及翻譯", "zh-CN": "输入、核稿及翻译", "ja": "入力・原稿確認・翻訳"}, "body": [{"en": "Open Dubbing studio from the video list in Basic mode or the navigation menu in Expert mode. No video import is needed. Type a source script, or record/import up to two minutes of audio. Recognise the recording first, correct names and missing words in the editable source, then translate. Choose an installed local text model and check the Cantonese script before generating. Recording recognition detects the source language automatically; model language coverage still applies.", "zh-HK": "基本模式由影片列表底部開「配音器」，專家模式由功能表進入；毋須匯入影片。可以打原稿，或者錄音／匯入最長兩分鐘聲音。先辨識錄音，喺原稿修正人名同漏字，再翻譯；揀已安裝嘅本機文字模型，核對廣東話稿後先生成。錄音會自動偵測語言，但仍受辨識模型支援範圍限制。", "zh-CN": "基本模式从影片列表底部打开「配音器」，专家模式从菜单进入；无需导入影片。可以输入原稿，或者录音／导入最长两分钟声音。先识别录音，在原稿修正人名和漏字，再翻译；选择已安装的本机文字模型，核对广东话稿后再生成。录音会自动检测语言，但仍受识别模型支持范围限制。", "ja": "基本モードでは動画一覧の下、エキスパートモードではメニューから開けます。動画の読み込みは不要です。文章を入力するか、最長2分の音声を録音・読み込みます。先に音声認識し、名前や抜けた語を原稿で修正してから翻訳してください。インストール済みのローカル翻訳モデルを選び、広東語原稿を確認して音声を生成します。録音の言語は自動判定しますが、認識モデルの対応範囲に依存します。"}], "steps": false}, {"title": {"en": "Generate, listen and review", "zh-HK": "生成、試聽及覆核", "zh-CN": "生成、试听及复核", "ja": "生成・試聴・確認"}, "body": [{"en": "Choose an installed voice engine, a reference voice and speech speed. In recording mode, using your own voice requires recognition to find a complete 3–10 second reference; otherwise choose a preset voice. Expand supported generation parameters when needed. Independent listening checks run after generation. Automatic repair makes at most two additional attempts per confirmed missing-audio, language or content problem. Uncertain spelling alone does not replace a take. Retained audio, attempts and review notes remain available. A flagged recording requires your explicit acceptance before saving; this does not certify its quality.", "zh-HK": "揀已安裝嘅配音引擎、參考聲線同語速，亦可展開支援嘅生成參數。錄音模式如要用自己聲線，需要先辨識並搵到完整 3–10 秒參考；否則請揀範本聲線。生成後會獨立覆聽；只有確認缺聲、語言或內容失敗，先會額外重試，逐段最多兩次。單純錯字疑點唔會自動換聲。錄音、嘗試同檢查說明會保留；有疑點嘅版本要由你明確接受後先保存，唔代表音質已認證。", "zh-CN": "选择已安装的配音引擎、参考声线和语速，也可展开支持的生成参数。录音模式如要用自己声线，需要先识别并找到完整 3–10 秒参考；否则请选择模板声线。生成后会独立复听；只有确认缺声、语言或内容失败，才会额外重试，每段最多两次。单纯错字疑点不会自动换声。录音、尝试和检查说明会保留；有疑点的版本需由你明确接受后再保存，不代表音质已认证。", "ja": "インストール済みの音声エンジン、参照音声、話速を選びます。対応する生成パラメーターも調整できます。録音した声の模倣には、認識で見つかった完全な3〜10秒の参照が必要です。参照がない場合はテンプレートを選んでください。生成後に独立した認識で確認し、無音・言語・内容の失敗が確認された部分だけ最大2回追加生成します。不確かな表記だけでは録音を置換しません。試行と確認結果は保持します。注意付きの録音は明示的に承認して保存できますが、品質認証にはなりません。"}], "steps": false}, {"title": {"en": "Saved recordings and learning", "zh-HK": "已保存錄音與學習", "zh-CN": "已保存录音与学习", "ja": "保存した録音と学習"}, "body": [{"en": "Save to the separate Dubbing studio player category. Each take retains its own scripts, reference, settings and output hash; generating another version does not overwrite it. Saved & learning lets you switch versions, choose the preferred take, reopen its settings for editing, rename the document, export a WAV or remove just one take. Source and generated audio, dual text, part playback, speed, volume and loop controls support comparison. Playback position is remembered separately for each audio file. Original and Cantonese speech do not share word timestamps. Changing the interface language changes the category label without moving or deleting recordings. Video projects and production settings remain separate.", "zh-HK": "保存後會放入獨立「配音器」播放器分類。每個版本保留自己嘅稿、參考、參數及音檔指紋，再生成唔會覆寫舊版。「已保存／學習」可切版本、揀採用版本、載入設定再修改、改名、匯出 WAV 或只刪一個版本。可對照整段原聲／廣東話、雙語文字，按配音段落試聽，調速度、音量及循環；每條音檔分開記住播放位置。兩種語言唔共用逐字時間。轉介面語言只會改分類顯示名，唔會搬移或刪錄音；影片專案同製作設定亦保持獨立。", "zh-CN": "保存后会放入独立「配音器」播放器分类。每个版本保留自己的稿、参考、参数和音档指纹，再生成不会覆盖旧版。「已保存／学习」可切换版本、选用版本、载入设置再修改、改名、导出 WAV 或只删除一个版本。可对照整段原声／广东话、双语文字，按配音段落试听，调速度、音量和循环；每个音档分别记住播放位置。两种语言不共用逐字时间。切换界面语言只会改变分类显示名，不会移动或删除录音；影片项目和制作设置亦保持独立。", "ja": "保存した録音は独立したスタジオ分類に表示されます。各版の原稿、参照、設定、音声ハッシュは保持され、新しい生成で上書きしません。「保存・学習」では版の切り替え、採用、設定の再編集、改名、WAV書き出し、特定の版だけの削除ができます。元音声と広東語、対訳、生成部分の再生、速度、音量、ループで比較できます。再生位置は音声ごとに記憶します。両言語の語単位タイムスタンプは共通ではありません。UI言語の変更では分類名のみ変わり、録音を移動・削除しません。動画プロジェクトや制作設定とは独立しています。"}], "steps": false}]});
+
+export function chapters(language){const locale=localeData(language),lang=language==='zh-HK'?'zh-HK':'en';return CHAPTERS.map((c,i)=>({...c,number:i+1,title:locale?.help[`${i}.title`]??c.title[language]??c.title[lang],summary:locale?.help[`${i}.summary`]??c.summary[language]??c.summary[lang],sections:c.sections.map((s,j)=>({title:locale?.help[`${i}.${j}.title`]??s.title[language]??s.title[lang],body:s.body.map((p,k)=>locale?.help[`${i}.${j}.${k}`]??p[language]??p[lang]),steps:s.steps}))}));}
 export function searchChapters(rows,query){const words=String(query).normalize('NFKC').toLocaleLowerCase().trim().split(/\s+/u).filter(Boolean);return rows.filter(c=>{const text=[c.title,c.summary,...c.sections.flatMap(s=>[s.title,...s.body])].join(' ').normalize('NFKC').toLocaleLowerCase();return words.every(w=>text.includes(w));});}
 export function articleHTML(c){return `<div class="help-eyebrow">ANICANTO / ${String(c.number).padStart(2,'0')}</div><h1 id="help-article-title">${esc(c.title)}</h1><p class="help-lead">${esc(c.summary)}</p>${c.sections.map(s=>`<section class="help-section"><h2>${esc(s.title)}</h2>${s.steps?`<ol>${s.body.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>`:s.body.map(p=>`<p>${esc(p)}</p>`).join('')}</section>`).join('')}`;}
 

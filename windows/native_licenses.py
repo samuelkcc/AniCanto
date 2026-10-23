@@ -21,4 +21,10 @@ def inventory(root):
                 if not path.resolve().is_relative_to(Path(root).resolve()) or path.stat().st_size>5_000_000:continue
                 raw=path.read_bytes();digest=hashlib.sha256(raw).hexdigest()
                 if not any(n['sha256']==digest for n in row['notices']):row['notices'].append(dict(name=path.name,sha256=digest,text=raw.decode('utf-8',errors='replace')))
+    for base in sorted((Path(root)/'tools').glob('drama-full-cuda*/notices')):
+        row=dict(name='Complete Drama 3 CUDA installed runtime',version=base.parent.name,license='Apache-2.0; dependency-specific NVIDIA / Microsoft terms',runtimes=[base.parent.name],notices=[])
+        for path in sorted(base.rglob('*')):
+            if path.is_file() and path.suffix in ('.txt','.md') and path.stat().st_size<5_000_000 and path.resolve().is_relative_to(Path(root).resolve()):
+                raw=path.read_bytes();row['notices'].append(dict(name=str(path.relative_to(base)),sha256=hashlib.sha256(raw).hexdigest(),text=raw.decode('utf-8',errors='replace')))
+        grouped[(row['name'],row['version'])]=row
     return list(grouped.values())

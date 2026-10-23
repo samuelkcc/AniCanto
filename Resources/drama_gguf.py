@@ -33,19 +33,30 @@ class NativeDrama:
   here=Path(__file__).resolve().parent
   binary=(here.parent/'tools'/('audiocpp_small_server.exe' if small else 'audiocpp_server.exe')) if sys.platform=='win32' else here/'bin/drama3-small-server'
   self.backend=native_backend(root,cfg)
+  runtime_path=None;memory={}
   if self.backend=='cuda':
-   if not small:raise ValueError('This CUDA adapter is for Drama3-small only.')
-   from drama_cuda import ready
-   if not ready(root):raise ValueError('Drama3-small CUDA runtime needs repair in Welcome setup.')
-   binary=root/'tools/drama-small-cuda/audiocpp_server.exe'
+   if small:
+    from drama_cuda import ready
+    if not ready(root):raise ValueError('Drama3-small CUDA runtime needs repair in Welcome setup.')
+    binary=root/'tools/drama-small-cuda/audiocpp_server.exe';runtime_path=str(binary.parent)
+   else:
+    from drama_full_cuda import runtime
+    binary,runtime_path,memory=runtime(root)
+  session_options={'fish_drama3.context_length':4096,'fish_drama3.cpu_expert_layers':0}
+  if memory:
+   layers=memory.get('cpuExpertLayers');context=memory.get('contextLength')
+   if memory.get('policy')!='full-drama-q2-split-1' or layers not in (0,16,24,32) or context!=2048:
+    raise ValueError('The full Drama CUDA memory profile needs redeployment.')
+   session_options.update({'fish_drama3.context_length':context,'fish_drama3.cpu_expert_layers':layers,'fish_drama3.codec_encoder_chunk_samples':65536})
+  self.memory=memory
   if not binary.is_file():raise ValueError('Native Drama server is missing from this package.')
   with socket.socket() as sock:sock.bind(('127.0.0.1',0));self.port=sock.getsockname()[1]
   job=Path(cfg.get('job',root/'checks'));job.mkdir(parents=True,exist_ok=True)
-  settings=dict(host='127.0.0.1',port=self.port,backend=self.backend,device=int(cfg.get('gpuIndex',0)),threads=min(8,max(1,(os.cpu_count() or 4)//2)),lazy_load=True,max_loaded_models=1,ui=False,models=[dict(id='drama3',family='fish_drama3',path=str(model),task='tts',mode='streaming',session_options={'fish_drama3.context_length':4096,'fish_drama3.cpu_expert_layers':0},default_request_options=dict(max_tokens=512))])
+  settings=dict(host='127.0.0.1',port=self.port,backend=self.backend,device=int(cfg.get('gpuIndex',0)),threads=min(8,max(1,(os.cpu_count() or 4)//2)),lazy_load=True,max_loaded_models=1,ui=False,models=[dict(id='drama3',family='fish_drama3',path=str(model),task='tts',mode='streaming',session_options=session_options,default_request_options=dict(max_tokens=512))])
   file=job/'native-drama-server.json';file.write_text(json.dumps(settings));log_path=job/'native-drama-server.log';self.progressPosition=log_path.stat().st_size if log_path.exists() else 0;self.log=log_path.open('a');self.emit=_emitter
   self.variant=variant;self.cfg=cfg;self.threads=settings['threads'];self.silence=folder/'silence_codes.json'
   environment=dict(os.environ)
-  if self.backend=='cuda':environment['PATH']=str(binary.parent)+os.pathsep+environment.get('PATH','')
+  if runtime_path:environment['PATH']=runtime_path+os.pathsep+environment.get('PATH','')
   self.process=subprocess.Popen([str(binary),'--config',str(file),'--log','--load-progress','1'],stdout=self.log,stderr=self.log,env=environment,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0) if sys.platform=='win32' else 0)
   try:
    for _ in range(120):
@@ -72,7 +83,7 @@ def monitored_request(model,body,emit=None):
  label='Drama3-small' if model.variant=='drama3-small-iq3' else 'Drama 3'
  path=Path(model.log.name);status_path=path.with_name('native-drama-request.json')
  status=dict(state='waiting',modelVariant=model.variant,backend=model.backend,
-             cpuThreads=getattr(model,'threads',None),timeoutSeconds=timeout,
+             cpuThreads=getattr(model,'threads',None),memory=getattr(model,'memory',{}),timeoutSeconds=timeout,
              inputCharacters=len(body.get('input','')),generatedProgressAvailable=False)
  def record(state,error=None):
   status.update(state=state,elapsedSeconds=round(time.monotonic()-started,2))

@@ -15,6 +15,9 @@ def missing_setup(root,engines,allow_cpu_drama=False):
         if engine=='drama3' and not allow_cpu_drama:
             native=ready('drama3')
             if native.get('variant') in ('drama3-small-iq3','drama3-native-q2') and native.get('speechInferencePassed'):
+                if native.get('variant')=='drama3-native-q2' and native.get('backend')=='cuda':
+                    from drama_full_cuda import ready as cuda_ready
+                    if not cuda_ready(root,require_speech=True):missing.append(engine)
                 continue
             from drama_cuda import capable
             if capable():missing.append(engine);continue
@@ -41,14 +44,21 @@ def recover(cfg,emit):
     except (OSError,ValueError):drama_ready={}
     small_ready=explicit_legacy_small and drama_ready.get('variant')=='drama3-small-iq3' and drama_ready.get('modelLoadPassed') and drama_ready.get('speechInferencePassed')
     full_cpu_ready=drama_ready.get('variant')=='drama3-native-q2' and drama_ready.get('backend')=='cpu' and drama_ready.get('modelLoadPassed') and drama_ready.get('speechInferencePassed')
+    full_cuda_ready=False
+    if drama_ready.get('variant')=='drama3-native-q2' and drama_ready.get('backend')=='cuda' and drama_ready.get('modelLoadPassed') and drama_ready.get('speechInferencePassed'):
+        from drama_full_cuda import ready
+        if not ready(root,require_speech=True):raise ValueError('The full Drama 3 CUDA runtime needs repair in One-click setup. Existing recordings are retained.')
+        full_cuda_ready=True
+    if full_cuda_ready and 'drama3' in requested:
+        cfg.update(drama3Model='drama3-native-q2',drama3Backend='cuda',nativeDramaCPU=False,nativeDramaFormat='gguf-cuda',drama3Memory=drama_ready.get('memory'))
     if full_cpu_ready and 'drama3' in requested:
         cfg['drama3Model']='drama3-native-q2';cfg['drama3Backend']='cpu';cfg['nativeDramaCPU']=True;cfg['nativeDramaFormat']='gguf-cpu'
     if small_ready and 'drama3' in requested:
         cfg['drama3Model']='drama3-small-iq3';cfg['drama3Backend']=drama_ready.get('backend','cpu');cfg['nativeDramaCPU']=cfg['drama3Backend']=='cpu'
         cfg['nativeDramaFormat']='gguf-'+cfg['drama3Backend']
-    if 'drama3' in requested and not small_ready and not cfg.get('nativeDramaCPU'):
-        # The bundled native GGUF component is CPU only. A CUDA device name
-        # cannot turn it into a CUDA build. User-authorized GPT fallback is explicit.
+    if 'drama3' in requested and not small_ready and not full_cuda_ready and not cfg.get('nativeDramaCPU'):
+        # An older, undeployed job may retain an explicit GPT fallback. A CUDA
+        # device name alone is never evidence of a working Drama runtime.
         marker=root/'gpt-windows-ready.json'
         ready=json.loads(marker.read_text()) if marker.is_file() else {}
         available=ready.get('speechVersions',ready.get('modelVersions', [ready.get('modelVersion')]))
@@ -58,7 +68,7 @@ def recover(cfg,emit):
         cfg['selectedEngines']=list(dict.fromkeys(replacement if e=='drama3' else e for e in requested))
         for key in ('ttsBackend','defaultAudioEngine'):
             if cfg.get(key)=='drama3':cfg[key]=replacement
-        reason='Native Drama 3 CUDA is not bundled; using the installed GPT fallback. Native CPU Drama is available as an explicit expert option.'
+        reason='Drama 3 has not passed deployment on this PC; using the previously installed GPT fallback. Deploy Drama 3 in One-click setup to enable it.'
         cfg['nativeEngineFallback']=dict(requested='drama3',selected=replacement,reason=reason)
         emit('Windows voice fallback',reason,nativeEngineFallback=cfg['nativeEngineFallback'])
     if cfg.get('ttsBackend')=='gpt-sovits-v2':cfg['gsvVersion']='v2ProPlus'

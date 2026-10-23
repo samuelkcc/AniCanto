@@ -28,7 +28,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language"];
+const DESKTOP_OPERATIONS:&[&str]=&["speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
@@ -44,10 +44,12 @@ impl Host {
             return Ok(if value["operationID"]==id{value}else{Value::Null});
         }
         let removing_model=["model-removal-plan","remove-model","remove-retired-model","project-cache-plan","clear-project-cache","source-language"].contains(&op);
-        let _task=if removing_model {Some(self.task_lock.lock().unwrap())} else {None};
+        let speech_mutation=["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op);
+        let _task=if removing_model || speech_mutation {Some(self.task_lock.lock().unwrap())} else {None};
         if removing_model && (self.active.lock().unwrap().is_some() || self.older_app_open()){
             return Err(if op=="source-language"{"Pause processing before checking another source language."}else if op.contains("cache"){"Pause processing before clearing cache."}else{"Pause processing before removing a model."}.into());
         }
+        if ["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing saved speech recordings.".into());}
         if op=="review-resolution" && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
         if op=="remove" && self.active.lock().unwrap().is_some(){return Err("Pause processing before deleting a project.".into());}
         if self.python().is_none(){
@@ -181,7 +183,7 @@ impl Host {
                 if m["engine"].as_str().is_some_and(|e|e.starts_with("gpt-")){m["nativeFormat"]=json!("pytorch");}
                 if m["engine"]=="whisper"{m["nativeFormat"]=json!("ctranslate2");}
             }
-            let mut hardware=anicanto_core::hardware();hardware["nativeWorkflowVersion"]=json!(1);hardware["backend"]=json!("cpu");
+            let mut hardware=anicanto_core::hardware();hardware["nativeWorkflowVersion"]=json!(1);hardware["nativeDramaCUDA"]=json!(true);hardware["backend"]=json!("cpu");
             hardware["nativeDramaSmallCPU"]=json!(self.windows.join("tools/audiocpp_small_server.exe").is_file());
             hardware["nativeDramaSmallCUDA"]=json!(self.windows.join("tools/drama-small-cuda/audiocpp_server.exe").is_file());
             let adapters=hardware["displayAdapters"].as_array().cloned().unwrap_or_default();
@@ -196,17 +198,41 @@ impl Host {
             }).max_by(|a,b|a["dedicatedMemoryGB"].as_f64().unwrap_or(0.).total_cmp(&b["dedicatedMemoryGB"].as_f64().unwrap_or(0.)));
             if let Some((adapter,backend,vendor))=nvidia.map(|a|(a,"cuda","nvidia")).or_else(||amd.map(|a|(a,"rocm","amd"))){
                 hardware["backend"]=json!(backend);hardware["suggestedSetupBackend"]=json!(vendor);
-                hardware["acceleratorMemoryGB"]=adapter["dedicatedMemoryGB"].clone();
+                hardware["acceleratorMemoryGB"]=adapter["dedicatedMemoryGB"].clone();hardware["acceleratorName"]=adapter["name"].clone();
                 hardware["memorySource"]=json!("DXGI dedicated video memory; inference not yet verified");
             }else{
-                let mut probe=Command::new("nvidia-smi");probe.args(["--query-gpu=memory.total","--format=csv,noheader,nounits"]);self.environment(&mut probe);
-                if let Ok(output)=probe.output(){if output.status.success(){if let Some(gib)=String::from_utf8_lossy(&output.stdout).lines().filter_map(|l|l.trim().parse::<f64>().ok()).map(|n|n/1024.).next(){hardware["backend"]=json!("cuda");hardware["acceleratorMemoryGB"]=json!(gib);hardware["memorySource"]=json!("nvidia-smi; inference not yet verified");}}}
+                let mut probe=Command::new("nvidia-smi");probe.args(["--query-gpu=name,memory.total","--format=csv,noheader,nounits"]);self.environment(&mut probe);
+                if let Ok(output)=probe.output(){if output.status.success(){if let Some((name,gib))=String::from_utf8_lossy(&output.stdout).lines().filter_map(|l|l.rsplit_once(',').and_then(|(name,n)|n.trim().parse::<f64>().ok().map(|n|(name.trim().to_owned(),n/1024.)))).next(){hardware["backend"]=json!("cuda");hardware["acceleratorName"]=json!(name);hardware["acceleratorMemoryGB"]=json!(gib);hardware["memorySource"]=json!("nvidia-smi; inference not yet verified");}}}
             }
             let installed:Vec<Value>=models.iter().filter(|m|{
                 let relative=m["legacy"].as_str().map(str::to_owned).unwrap_or_else(||format!("models/{}/{}",if m["category"]=="voice"{"voice-variants"}else{"variants"},m["id"].as_str().unwrap_or("").replace(':',"-")));
                 m["files"].as_array().is_some_and(|files|!files.is_empty()&&files.iter().all(|f|self.root.join(&relative).join(f["path"].as_str().unwrap_or("")).metadata().is_ok_and(|s|Some(s.len())==f["size"].as_u64())))
             }).map(|m|m["id"].clone()).collect();
-            let mut result=anicanto_core::deployment(&json!({"hardware":hardware,"models":models,"engine":engine,"requestedModels":requested,"singleModelPerCategory":true,"installedModels":installed,"selectedModels":load(self.root.join("model-selections.json")).unwrap_or(json!({}))}))?;
+            let mut result=anicanto_core::deployment(&json!({"hardware":hardware,"models":models,"engine":engine,"dramaBackend":params["dramaBackend"].as_str().unwrap_or("auto"),"requestedModels":requested,"singleModelPerCategory":true,"installedModels":installed,"selectedModels":load(self.root.join("model-selections.json")).unwrap_or(json!({}))}))?;
+            let tools=load(self.windows.join("native-tools.json"))?;
+            let names=hardware["displayAdapters"].to_string()+hardware["acceleratorName"].as_str().unwrap_or("");
+            let upper=names.to_ascii_uppercase();
+            let modern=upper.contains("BLACKWELL") || upper.contains("RTX 50") || upper.contains("RTX PRO ") || upper.contains("B200") || upper.contains("R200");
+            let major=if modern {"13"}else{"12"};
+            let decorate=|value:&mut Value| {
+                let mut components=Vec::new();
+                if value["engine"]=="drama3" && value["voiceBackend"]=="cuda" {
+                    for stem in ["drama-full-cuda","drama-full-cudart"] {
+                        let key=format!("{stem}{major}");let tool=&tools[&key];
+                        let base=self.root.join("tools").join(&key);
+                        let receipt=load(base.join("verified.json")).unwrap_or(json!({}));
+                        let installed=receipt["sha256"]==tool["sha256"] && tool["requiredFiles"].as_array().is_some_and(|files|files.iter().all(|file| {
+                            let name=file.as_str().unwrap_or("");base.join(name).metadata().is_ok_and(|m|Some(m.len())==receipt["files"][name]["bytes"].as_u64())
+                        }));
+                        components.push(json!({"id":key,"title":if stem.ends_with("cudart"){format!("NVIDIA CUDA {} libraries",tool["cudaVersion"].as_str().unwrap_or(""))}else{format!("Drama 3 · NVIDIA CUDA {}",tool["cudaVersion"].as_str().unwrap_or(""))},"kind":"tool","bytes":tool["size"],"installed":installed,"required":true}));
+                    }
+                }
+                let extra:u64=components.iter().filter(|r|r["installed"]!=true).map(|r|r["bytes"].as_u64().unwrap_or(0)).sum();
+                value["tools"]=json!(components);value["toolDownloadBytes"]=json!(extra);
+                value["totalDownloadBytes"]=json!(value["modelDownloadBytes"].as_u64().unwrap_or(0)+extra);
+            };
+            decorate(&mut result);
+            if let Some(presets)=result["qualityPresets"].as_array_mut(){for preset in presets{if preset["plan"]["downloads"].is_array(){decorate(&mut preset["plan"]);}}}
             result["bootstrapRequired"]=json!(true);Ok(result)
         }
     }
@@ -228,9 +254,27 @@ async fn studio_pick(kind:String)->Result<Vec<String>,String> {
         let paths=match kind.as_str(){
             "video"=>dialog.add_filter("Videos",&["mkv","mp4","mov","m4v","avi","webm","ts"]).pick_files().unwrap_or_default(),
             "subtitle"=>dialog.add_filter("Subtitles",&["srt","ass","ssa","vtt"]).pick_file().into_iter().collect(),
-            "audio"=>dialog.add_filter("Reference audio",&["wav","mp3","m4a","flac"]).pick_file().into_iter().collect(),
+            "audio"=>dialog.add_filter("Reference audio",&["wav","mp3","m4a","flac","webm","ogg"]).pick_file().into_iter().collect(),
             "folder"=>dialog.pick_folder().into_iter().collect(),_=>return Err("Unsupported file picker".to_string())};
         Ok(paths.iter().map(|p|p.to_string_lossy().into_owned()).collect())
+    }).await.map_err(|e|e.to_string())?
+}
+
+#[tauri::command]
+async fn studio_export_speech(id:String,source:Option<bool>,host:State<'_,Arc<Host>>)->Result<Value,String>{
+    let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
+        let _gate=host.task_lock.lock().map_err(|e|e.to_string())?;
+        if host.active.lock().unwrap().is_some(){return Err("Pause processing before exporting speech.".into());}
+        let record=host.rpc("speech-export-file",json!({"id":id,"source":source.unwrap_or(false)}))?;
+        let input=PathBuf::from(record["path"].as_str().ok_or("Recording is missing")?);
+        let extension=record["extension"].as_str().unwrap_or("wav");
+        let title:String=record["title"].as_str().unwrap_or("AniCanto recording").chars().map(|c|if c.is_control() || "<>:\"/\\|?*".contains(c){'_'}else{c}).take(100).collect();
+        let Some(output)=rfd::FileDialog::new().set_file_name(format!("{title}.{extension}")).add_filter("Audio",&[extension]).save_file() else{return Ok(json!({"cancelled":true}));};
+        let parent=output.parent().ok_or("Invalid destination")?.canonicalize().map_err(|e|e.to_string())?;
+        let root=host.root.canonicalize().map_err(|e|e.to_string())?;
+        if parent.starts_with(root){return Err("Choose an export folder outside AniCanto's recording library.".into());}
+        std::fs::copy(input,&output).map_err(|e|e.to_string())?;
+        Ok(json!({"cancelled":false,"path":output.to_string_lossy()}))
     }).await.map_err(|e|e.to_string())?
 }
 
@@ -295,6 +339,11 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
             code=1;let _=writeln!(log.lock().unwrap(),"Queue finalization failed: {error}");
             let _=app.emit("studio-log",format!("Queue finalization failed: {error}"));finalization_error=Some(error);
         }}
+        if spec["action"]=="speech-studio" {
+            if let Err(error)=host.rpc("speech-finish",json!({"id":spec["speechClipID"],"code":code,"paused":paused,"stderr":*stderr.lock().unwrap()})) {
+                code=1;finalization_error=Some(error);
+            }
+        }
         host.active.lock().unwrap().take();
         let _=app.emit("studio-finished",json!({"runID":run_id,"rowID":row,"code":code,"paused":paused,"action":spec["action"],"modelID":spec["modelID"],"finalizationError":finalization_error}));
     });
@@ -302,7 +351,7 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
 }
 #[tauri::command]
 async fn studio_start(op:String,params:Value,app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<Value,String> {
-    if !["start","render","retry-review","setup","maintain-model","maintain-models"].contains(&op.as_str()){return Err("Unsupported task".into());}
+    if !["speech-studio","start","render","retry-review","setup","maintain-model","maintain-models"].contains(&op.as_str()){return Err("Unsupported task".into());}
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         let _gate=host.task_lock.lock().map_err(|e|e.to_string())?;
         if ["setup","maintain-model","maintain-models"].contains(&op.as_str())&&host.older_app_open(){return Err("Close the previous AniCanto app before switching or removing models.".into());}
@@ -312,7 +361,8 @@ async fn studio_start(op:String,params:Value,app:tauri::AppHandle,host:State<'_,
         if host.active.lock().unwrap().is_some(){return Err("A task is already running.".into());}
         let spec=host.rpc(&op,params)?;
         match launch(host.clone(),app,spec.clone()) {Ok(v)=>Ok(v),Err(error)=>{
-            if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"stderr":error}));}Err(error)
+            if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"stderr":error}));}
+            if let Some(id)=spec["speechClipID"].as_str(){let _=host.rpc("speech-finish",json!({"id":id,"code":1,"stderr":error}));}Err(error)
         }}
     }).await.map_err(|e|e.to_string())?
 }
@@ -421,7 +471,7 @@ fn main(){
             }
             #[cfg(not(windows))] let _=(webview,payload);
         })
-        .invoke_handler(tauri::generate_handler![studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs])
+        .invoke_handler(tauri::generate_handler![studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
             let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
             else {#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}

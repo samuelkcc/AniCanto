@@ -10,6 +10,6 @@ AniCanto 原創程式碼採 MIT；第三方元件及模型權重依各自條款�
 - [Distribution notice / 分發通知](../NOTICE.txt)
 - [Model evidence / 模型授權證據](../licenses/model-evidence.json)
 - [Full component notices / 完整元件通知](../licenses/)
-- [Release binaries and matching source / 下載及配套源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta)
+- [Release binaries and matching source / 下載及配套源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
 
 Choose a language above for the component overview, source-material links and media/voice permissions explanation.

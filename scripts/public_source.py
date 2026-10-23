@@ -12,7 +12,7 @@ TREES={'Sources','Resources','core','scripts','studio','windows','tests','licens
 SUFFIXES={'.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mjs','.cjs',
           '.html','.css','.md','.txt','.srt','.strings','.ps1','.cmd','.sh','.svg','.png','.otf','.icns','.ico','.patch','.h','.c','.cpp','.hpp','.cmake','.in','.cfg','.rst','.pyx','.pxd','.tiktoken','.plist','.entitlements'}
 SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels','archive'}
-DOCS={'README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
+DOCS={'SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
       'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)
@@ -51,7 +51,10 @@ def findings(raw,relative):
         if not (raw.startswith(b'RIFF') and raw[8:12]==b'WAVE'):errors.append('invalid-reference-audio')
     # Personal identity is not the same as required upstream author attribution.
     identity=os.environ.get('USER','').encode()
-    if len(identity)>4 and identity.lower() in raw.lower():errors.append('local-account-identifier')
+    # The author explicitly publishes this funding URL on the project page.
+    # It is a public destination, not a private builder/account path.
+    public_copy=re.sub(rb'https://(?:www\.)?buymeacoffee\.com/'+re.escape(identity)+rb'(?=[/\s\"\x27<>)?#]|$)',b'public-funding-link',raw,flags=re.I) if identity else raw
+    if len(identity)>4 and identity.lower() in public_copy.lower():errors.append('local-account-identifier')
     return errors
 
 def export(root,output):

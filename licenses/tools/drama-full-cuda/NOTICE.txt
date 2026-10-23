@@ -1,0 +1,11 @@
+AniCanto optional complete Drama 3 CUDA adapter
+
+Runtime: audio.cpp v0.9.2-drama3-base-small, source commit 507495611b22dc4590e0e5609e05e8096384e33f (Apache-2.0). Despite the release tag name, the fish_drama3 family supports the full Q2 model. Original source and dependency notices are retained in source-notices/.
+
+Optional NVIDIA CUDA 12.4.1 or 13.3.0 libraries: NVIDIA Software License Agreement and CUDA Supplement; see the complete matching EULA. These are downloaded solely for AniCanto inference and must not be redistributed as a standalone toolkit. NVIDIA driver and full CUDA SDK are not installed by this app.
+
+Microsoft Visual C++ runtime DLLs are unchanged app-local redistributable dependencies supplied by the upstream Windows release, under Microsoft runtime terms. See the supplied runtime terms and redistributable-code list.
+
+GGML and vendored tokenizer/UTF8/YAML/JSON/HTTP/SentencePiece dependencies retain their own notices. The release build disables static eSpeak-ng (default OFF); the optional phonemizer tools, frontend, model-manager scripts and CLI executables are not installed.
+
+Built with Fish Audio. Model weights use Fish Audio Community License v1.0, supplied separately; code/runtime permissions do not replace model permissions.

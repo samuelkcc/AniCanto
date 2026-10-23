@@ -700,7 +700,8 @@ final class Engine: @unchecked Sendable {
             requestConfig["productionPlan"]=try productionPlan(config)
         }
         let model=effective["model"] as? String
-        if let model,model.hasPrefix("mlx:") || ["render","render-project","rebuild-dialogue","shorten-cue","translate-cue"].contains(action) {
+        let needsText = action != "speech-studio" || (effective["speechStudio"] as? [String:Any])?["action"] as? String == "translate"
+        if needsText,let model,model.hasPrefix("mlx:") || ["speech-studio","render","render-project","rebuild-dialogue","shorten-cue","translate-cue"].contains(action) {
             try startTextModel(model)
         }
         if let model {lock.lock();usedModels.insert(model);lock.unlock()}

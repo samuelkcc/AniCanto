@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "https://github.com/0xShug0/audio.cpp",
+  "sourceRevision": "507495611b22dc4590e0e5609e05e8096384e33f",
+  "sourceArchiveSHA256": "b3f08bd652d0f618dad53d2c1b45c00038dfa7fd3e3924d67d5cc7292677262a",
+  "reviewed": "2026-10-23",
+  "artifacts": {
+    "drama-full-cuda12": {
+      "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-bin-windows-x64-cuda12.4.zip",
+      "sha256": "48852da40790c40f3285bca6c53ff7829b3963080f0e95b6742f868fc1d7c757",
+      "size": 464268606,
+      "version": "v0.9.2-drama3-base-small",
+      "cudaVersion": "12.4",
+      "requiredFiles": [
+        "audiocpp_server.exe",
+        "ggml.dll",
+        "ggml-base.dll",
+        "ggml-cuda.dll",
+        "ggml-cpu-x64.dll"
+      ],
+      "extractRuntime": true
+    },
+    "drama-full-cudart12": {
+      "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-cudart-windows-x64-cuda12.4.zip",
+      "sha256": "4b1186a525c9ac70a4fbd031b47e0dfca2ebaa36cfcb760d5be1a76eb2b12da5",
+      "size": 607273675,
+      "version": "v0.9.2-drama3-base-small",
+      "cudaVersion": "12.4",
+      "requiredFiles": [
+        "cudart64_12.dll",
+        "cublas64_12.dll",
+        "cublasLt64_12.dll",
+        "cufft64_11.dll"
+      ],
+      "extractRuntime": true
+    },
+    "drama-full-cuda13": {
+      "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-bin-windows-x64-cuda13.3.zip",
+      "sha256": "b570efa4b17c2aa32c431c653489c009b58f57f60d68782b3b94b6c06304a9e8",
+      "size": 275837338,
+      "version": "v0.9.2-drama3-base-small",
+      "cudaVersion": "13.3",
+      "requiredFiles": [
+        "audiocpp_server.exe",
+        "ggml.dll",
+        "ggml-base.dll",
+        "ggml-cuda.dll",
+        "ggml-cpu-x64.dll"
+      ],
+      "extractRuntime": true
+    },
+    "drama-full-cudart13": {
+      "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-cudart-windows-x64-cuda13.3.zip",
+      "sha256": "cf58e70c53db680af5e4b8e5ef538ffd1d81bd489ef49843fe486fcd079c9182",
+      "size": 575457454,
+      "version": "v0.9.2-drama3-base-small",
+      "cudaVersion": "13.3",
+      "requiredFiles": [
+        "cudart64_13.dll",
+        "cublas64_13.dll",
+        "cublasLt64_13.dll",
+        "cufft64_12.dll"
+      ],
+      "extractRuntime": true
+    }
+  },
+  "documents": [
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/LICENSE",
+      "sha256": "8f0b762d062e1ec79a3e73189b29474051c0e957973f43146aefeb03f2e11581",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/cJSON/LICENSE",
+      "sha256": "a36dda207c36db5818729c54e7ad4e8b0c6fba847491ba64f372c1a2037b6d5c",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/cJSON/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/libyaml/License",
+      "sha256": "c40112449f254b9753045925248313e9270efa36d226b22d82d4cc6c43c57f29",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/libyaml/License"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/utf8proc/LICENSE.md",
+      "sha256": "3b510150d34f248a221bb88e1d811238d6c6c18b51231822c42974c39bb07256",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/utf8proc/LICENSE.md"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/LICENSE",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/sentencepiece/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/cpp-httplib/LICENSE",
+      "sha256": "4b45cbe16d7b71b89ae6127e26e0d90a029198ca5e958ad8e3d0b8bbed364d8b",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/cpp-httplib/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/ggml/LICENSE",
+      "sha256": "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/ggml/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/ggml/AUTHORS",
+      "sha256": "2c51d74b1a0b46e074f6f4ef86942b136af196af778a2ac39f34b9a8e983eafb",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/ggml/AUTHORS"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/esaxx/LICENSE",
+      "sha256": "c32d2b3a60ed4b71616dd544f0865e171631ce26d3a3855c43428e61cbf89d67",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/sentencepiece/third_party/esaxx/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/darts_clone/LICENSE",
+      "sha256": "ed8437dc7358a40ef10afd3635ac1cd43c88fbaaaf6cd27c414f8ada5d68f447",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/sentencepiece/third_party/darts_clone/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/absl/LICENSE",
+      "sha256": "7871ddb0d7635157a82afc21720d795660a024c59652b7a5b1ed812355320fdc",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/sentencepiece/third_party/absl/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/protobuf-lite/LICENSE",
+      "sha256": "f4df8b2457697851385d9ebb93267832c1dfa24e0e61881952f6b0c452663dc9",
+      "origin": "https://github.com/0xShug0/audio.cpp/blob/507495611b22dc4590e0e5609e05e8096384e33f/external/sentencepiece/third_party/protobuf-lite/LICENSE"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-12.4.1-EULA.html",
+      "sha256": "c0e213c4c53fbc9b29dc3e8cea0fb06b0498a28eca01858d3611d975dd70f585",
+      "origin": "https://docs.nvidia.com/cuda/archive/12.4.1/eula/index.html"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-13.3.0-EULA.html",
+      "sha256": "91aea454a943a3394d04eba13aef09dc1546bd9d2cd9cb04ae9ea808ddfff9a3",
+      "origin": "https://docs.nvidia.com/cuda/archive/13.3.0/eula/index.html"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Redistribution.html",
+      "sha256": "22c07c097c3eaf8ec93a841b760e25ad75a40718f3ccc3d2f83cd8eeef68a324",
+      "origin": "https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Runtime-Terms.html",
+      "sha256": "699f0c9948e4938bc7657f08de866bbaa3ae8703554b0072b82ae523b6386a5d",
+      "origin": "https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/"
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Runtime-License.txt",
+      "sha256": "6c675e88b19265ca1fbeb1a8756b3423d34bb41036e603364172038db019d040",
+      "origin": "https://visualstudio.microsoft.com/wp-content/uploads/2021/09/Visual-C-Runtime-2015-2022-License-1.docx"
+    }
+  ],
+  "scope": "Optional private Windows Drama CUDA deployment. Complete Drama Q2 model weights retain their separate Fish Audio terms. CUDA and Microsoft runtime libraries are not MIT licensed."
+}

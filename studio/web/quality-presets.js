@@ -8,7 +8,7 @@ export function presetPlan(base,id){
 }
 export function setupParameters(plan){
  if(!plan?.canDeployModels||(plan.qualityPresets?.length&&!plan.qualityPresets.some(p=>p.available)))throw Error('Choose a compatible quality preset before downloading.');
- return {engine:plan.engine,models:{...(plan.requestedModels||{})},removeOld:true};
+ return {engine:plan.engine,models:{...(plan.requestedModels||{})},removeOld:true,...(plan.dramaBackend?{dramaBackend:plan.dramaBackend}:{})};
 }
 export function presetReasons(p){
  const reasons=[];

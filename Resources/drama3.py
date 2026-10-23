@@ -238,7 +238,10 @@ def _synthesize(cfg,emit):
     if selection(cfg)=='drama3-small-iq3':
         from drama_gguf import native_backend
         message='Loading Drama3-small · '+('NVIDIA CUDA' if native_backend(cfg['storage'],cfg)=='cuda' else 'CPU')+' · experimental'
-    else:message='載入 Drama 3；Windows 原生 CPU 生成。' if sys.platform=='win32' else '載入 Drama 3；Apple Silicon 本機生成。'
+    elif sys.platform=='win32':
+        from drama_gguf import native_backend
+        message='載入完整 Drama 3；'+('NVIDIA CUDA＋CPU／RAM 分配。' if native_backend(cfg['storage'],cfg)=='cuda' else 'Windows 原生 CPU 生成。')
+    else:message='載入 Drama 3；Apple Silicon 本機生成。'
     emit('配音',message,workID='tts',workCompleted=0,workTotal=len(cfg['items']))
     with contextlib.redirect_stdout(sys.stderr):model=load(cfg)
     failures=[]

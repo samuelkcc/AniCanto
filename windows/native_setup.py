@@ -33,33 +33,40 @@ def reuse_roots(row):
 
 def available(root,row):return complete(root,row) or any(complete(base.parent.parent,dict(row,legacy=str(base))) for base in reuse_roots(row))
 
-def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requested=None):
+def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requested=None,drama_backend='auto'):
  from studio_core import call as core
  root=data_root();rows=catalog();installed=[r['id'] for r in rows if r.get('nativeFormat') and available(root,r)]
  from gpu import planning_hardware
- from drama_cuda import capable,plan_components
- h=hardware or planning_hardware();h=dict(h,nativeWorkflowVersion=1,nativeDramaSmallCPU=(HERE/'tools/audiocpp_small_server.exe').is_file(),nativeDramaSmallCUDA=capable())
+ from drama_cuda import capable
+ h=hardware or planning_hardware();h=dict(h,nativeDramaCUDA=True,nativeWorkflowVersion=1,nativeDramaSmallCPU=(HERE/'tools/audiocpp_small_server.exe').is_file(),nativeDramaSmallCUDA=capable())
  if hardware is None and backend!='auto':h['backend']=dict(nvidia='cuda',amd='rocm').get(backend,'cpu')
  if h.get('backend') in ('unprobed',None):h['backend']='cpu'
  try:selected=json.loads((root/'model-selections.json').read_text())
  except (OSError,ValueError):selected={}
- result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama)
- # Keep the preview identical to installation, including non-role components.
- classifier=next(r for r in rows if r['id']=='audio-classifier-native')
- if not any(r['id']==classifier['id'] for r in result['downloads']):
-  result['downloads'].append(dict(id=classifier['id'],title=classifier['title'],bytes=classifier['bytes'],installed=available(root,classifier),purposeKey='audio-classification'))
- result['modelDownloadBytes']=sum(r.get('bytes',0) for r in result['downloads'] if not r.get('installed'))
+ result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama,dramaBackend=drama_backend)
  from memory_plan import pools
- result['memoryPools']=pools(result)
+ from drama_full_cuda import components,ready as cuda_ready
+ classifier=next(r for r in rows if r['id']=='audio-classifier-native')
+ def enrich(value):
+  if not value.get('downloads'):return
+  if not any(r['id']==classifier['id'] for r in value['downloads']):
+   value['downloads'].append(dict(id=classifier['id'],title=classifier['title'],bytes=classifier['bytes'],installed=available(root,classifier),purposeKey='audio-classification'))
+  value['modelDownloadBytes']=sum(r.get('bytes',0) for r in value['downloads'] if not r.get('installed'))
+  value['tools']=components(root,h) if value.get('engine')=='drama3' and value.get('voiceBackend')=='cuda' else []
+  value['toolDownloadBytes']=sum(r['bytes'] for r in value['tools'] if not r['installed'])
+  value['totalDownloadBytes']=value['modelDownloadBytes']+value['toolDownloadBytes']
+  value['memoryPools']=pools(value)
+ enrich(result)
+ for preset in result.get('qualityPresets',[]):enrich(preset.get('plan') or {})
  from setup_inventory import inventory
- result['inventory']=inventory(root,rows,result['downloads'])
+ result['inventory']=inventory(root,rows,result['downloads'])+result.get('tools',[])
  result['storage']=str(root);result['requestedModels']=requested or {}
  ready_file=root/'native-ready.json'
  try:ready=json.loads(ready_file.read_text())
  except (OSError,ValueError):ready={}
  result['setupReady']=ready.get('engine')==result['engine'] and ready.get('speechInferencePassed') is True and ready.get('modelLoadPassed') is True and all(ready.get('roles',{}).get(k)==v for k,v in result['roles'].items()) and not (root/'setup-invalidated.json').exists() and all(r.get('installed') for r in result['downloads'])
- result['tools']=plan_components(root) if result.get('engine')=='drama3' and result.get('voiceBackend')=='cuda' else []
- result['inventory']+=result['tools']
+ if result.get('tools') and (not all(r['installed'] for r in result['tools']) or not cuda_ready(root,require_speech=True)):result['setupReady']=False
+ if result.get('engine')=='drama3' and ready.get('voiceBackend')!=result.get('voiceBackend'):result['setupReady']=False
  try:
   verified=json.loads((root/'drama3-windows-ready.json').read_text())
   if result.get('engine')=='drama3' and verified.get('variant')==result['roles'].get('voice') and verified.get('speechInferencePassed'):
@@ -111,7 +118,7 @@ def environment(name,backend=None):
  stamp.write_text(json.dumps(dict(identity=identity,backend=backend,python=str(python))))
  return python
 
-def extract_zip(archive,target,suffix=None):
+def extract_zip(archive,target,suffix=None,runtime_only=False):
  target.mkdir(parents=True,exist_ok=True)
  with zipfile.ZipFile(archive) as z:
   for f in z.infolist():
@@ -119,19 +126,23 @@ def extract_zip(archive,target,suffix=None):
    if not destination.is_relative_to(target.resolve()) or (f.external_attr>>16)&0o170000==0o120000:raise ValueError('Unsafe tool archive path.')
   for f in z.infolist():
    legal=Path(f.filename).name.upper().startswith(('LICENSE','LICENCE','COPYING','NOTICE','EULA','AUTHORS','COPYRIGHT'))
-   if suffix is None or f.filename.endswith(suffix) or legal:z.extract(f,target)
+   selected=(Path(f.filename).name==f.filename and (f.filename.endswith('.dll') or f.filename=='audiocpp_server.exe')) if runtime_only else suffix is None or f.filename.endswith(suffix)
+   if selected or legal:z.extract(f,target)
 
 def tool(name):
  root=data_root();row=json.loads((HERE/'native-tools.json').read_text())[name]
  target=root/'tools'/name;marker=target/'verified.json'
  if marker.is_file():
-  receipt=json.loads(marker.read_text());files=receipt.get('files',{})
-  if receipt.get('sha256')==row['sha256'] and (all((target/n).is_file() and (target/n).stat().st_size==v['bytes'] for n,v in files.items()) and files if row.get('requiredFiles') else list(target.rglob(name+'.exe'))):return target
+  try:receipt=json.loads(marker.read_text())
+  except (OSError,ValueError):receipt={}
+  files=receipt.get('files',{})
+  intact=bool(files) and all((target/n).is_file() and (target/n).stat().st_size==v.get('bytes') and (not row.get('extractRuntime') or v.get('sha256')==sha256(target/n)) for n,v in files.items())
+  if receipt.get('sha256')==row['sha256'] and (intact if row.get('requiredFiles') else bool(list(target.rglob(name+'.exe')))):return target
  archive=root/'downloads'/(name+'-'+row['sha256'][:12]+'.zip')
  emit('Download / verify '+name,downloadBytes=row['size']);download(row['url'],archive,row['sha256'],row['size'])
- extract_zip(archive,target,row.get('extractSuffix'))
+ extract_zip(archive,target,row.get('extractSuffix'),row.get('extractRuntime',False))
  if row.get('requiredFiles') and not all((target/n).is_file() for n in row['requiredFiles']):raise ValueError('Tool archive is incomplete: '+name)
- receipt=dict(row,files={p.relative_to(target).as_posix():dict(bytes=p.stat().st_size) for p in target.rglob('*.dll')})
+ receipt=dict(row,files={p.relative_to(target).as_posix():dict(bytes=p.stat().st_size,sha256=sha256(p)) for p in target.rglob('*') if p.is_file() and p.suffix in ('.dll','.exe')})
  marker.write_text(json.dumps(receipt));return target
 
 def install_model(row):
@@ -169,10 +180,10 @@ def probe_runtime(python,backend):
  result=subprocess.check_output([str(python),str(HERE/'gpu.py'),'--probe','gpt','--device',device],text=True,env=dict(os.environ,PYTHONUTF8='1'))
  return json.loads(result.strip().splitlines()[-1])
 
-def setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
- root=data_root();names=['model-selections.json','native-ready.json','setup-invalidated.json']
+def setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,drama_backend='auto'):
+ root=data_root();names=['model-selections.json','native-ready.json','setup-invalidated.json','drama3-windows-ready.json','drama-full-cuda-ready.json']
  prior={name:(root/name).read_bytes() if (root/name).is_file() else None for name in names}
- try:return _setup(engine,backend,allow_cpu_drama,requested)
+ try:return _setup(engine,backend,allow_cpu_drama,requested,drama_backend)
  except BaseException:
   for name,data in prior.items():
    path=root/name
@@ -181,7 +192,7 @@ def setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
     temp=path.with_suffix('.restore');temp.write_bytes(data);temp.replace(path)
   raise
 
-def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
+def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,drama_backend='auto'):
  emit('Checking hardware and existing installation',setupStep='check')
  if sys.platform!='win32':raise RuntimeError('Run native setup on Windows 11 x64.')
  root=data_root();root.mkdir(parents=True,exist_ok=True)
@@ -194,8 +205,8 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  if backend=='intel':backend='cpu';emit('This native voice stack uses CPU on Intel; hardware video export remains available.')
  if backend=='amd' and not any(vendor(r)=='amd' and amd_supported(r.get('Name','')) for r in adapters()):raise ValueError('Use CPU for this Radeon; the selected native ROCm build does not support this model.')
  worker=environment('worker');analysis=environment('analysis',backend)
- probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],nativeWorkflowVersion=1)
- deployment=plan(engine,h,allow_cpu_drama,requested=requested)
+ probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],acceleratorName=probe.get('name',''),nativeWorkflowVersion=1)
+ deployment=plan(engine,h,allow_cpu_drama,requested=requested,drama_backend=drama_backend)
  if deployment['blockers']:raise ValueError('; '.join(deployment['blockers']))
  emit('Deployment plan',deployment=deployment)
  ffdir=tool('ffmpeg');tool('ollama')
@@ -207,7 +218,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  classifier=all_rows['audio-classifier-native']
  if classifier not in required:required.append(classifier)
  space=sum(r['bytes'] for r in required if not complete(root,r))
- if shutil.disk_usage(root).free<space+8_000_000_000:raise ValueError('Not enough disk space for models plus runtime workspace (8 GB reserve).')
+ if shutil.disk_usage(root).free<space+int(deployment.get('toolDownloadBytes',0))*3+8_000_000_000:raise ValueError('Not enough disk space for models plus runtime workspace (8 GB reserve).')
  for index,row in enumerate(required):
   emit('Model '+str(index+1)+' / '+str(len(required))+' · '+row['title'],setupStep='models',modelProgress=dict(index=index+1,total=len(required),title=row['title']))
   install_model(row)
@@ -254,15 +265,13 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  elif chosen=='drama3':
   voice_backend=deployment.get('voiceBackend','cpu');fallback_reason=None
   if voice_backend=='cuda':
-   try:
-    from drama_cuda import prepare
-    prepare(root,emit)
-    call([worker,HERE/'setup_checks.py','drama3',root,'cuda'])
+   from drama_full_cuda import prepare
+   prepare(root,h,deployment['voiceMemory'],emit)
+   try:call([worker,HERE/'setup_checks.py','drama3',root,'cuda'])
    except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
-    fallback_reason=str(error);voice_backend='cpu'
-    emit('Drama3-small CUDA verification failed; using the same model on CPU. '+fallback_reason,voiceBackend='cpu',cudaFailure=fallback_reason)
+    raise RuntimeError('Full Drama 3 CUDA verification failed. Existing selections were retained. Update the NVIDIA driver or select CPU and retry. '+str(error)) from error
   if voice_backend=='cpu':call([worker,HERE/'setup_checks.py','drama3',root,'cpu'])
-  (root/'drama3-windows-ready.json').write_text(json.dumps(dict(backend=voice_backend,modelLoadPassed=True,nativeFormat='gguf',variant=selected['voice'],cudaFailure=fallback_reason)))
+  (root/'drama3-windows-ready.json').write_text(json.dumps(dict(backend=voice_backend,modelLoadPassed=True,nativeFormat='gguf',variant=selected['voice'],memory=deployment.get('voiceMemory'),cudaFailure=fallback_reason)))
  from native_service import service,request as model_request
  with service(root):
   test=model_request(11445,'/api/generate',dict(model=text_alias,prompt='Reply with OK.',stream=False,think=False,keep_alive=0,options=dict(num_predict=8)),1200)
@@ -272,7 +281,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  from natural_voices import catalog as voices
  voice=next(v for v in voices() if v['language']=='yue')
  checks=root/'checks';checks.mkdir(exist_ok=True)
- probe_cfg=dict(storage=str(root),job=str(checks),device='cuda' if backend in ('nvidia','amd') else 'cpu',drama3Backend=voice_backend if chosen=='drama3' else None,targetLanguage='yue',gsvVersion='v2ProPlus' if chosen=='gpt-sovits-v2' else 'v4',cosyModel='cosy-native-0.5b',drama3Model=selected['voice'] if chosen=='drama3' else 'drama3-native-q2',items=[dict(profile=dict(voice,name='Native probe'),text='今日一齊出發啦。',output=str(checks/'native-voice-probe.wav'),reviewIndex=0,seed=42,targetSeconds=4)])
+ probe_cfg=dict(storage=str(root),job=str(checks),device='cuda' if backend in ('nvidia','amd') else 'cpu',drama3Backend=voice_backend if chosen=='drama3' else None,targetLanguage='yue',gsvVersion='v2ProPlus' if chosen=='gpt-sovits-v2' else 'v4',cosyModel='cosy-native-0.5b',drama3Model=selected['voice'] if chosen=='drama3' else 'drama3-native-q2',drama3Memory=deployment.get('voiceMemory'),items=[dict(profile=dict(voice,name='Native probe'),text='今日一齊出發啦。',output=str(checks/'native-voice-probe.wav'),reviewIndex=0,seed=42,targetSeconds=4)])
  if chosen=='voxcpm2':probe_cfg['voxcpmModel']=selected['voice']
  if chosen=='wsyue':probe_cfg.update(wsyueModel=selected['voice'],device='cpu')
  (checks/'native-voice-probe.wav').unlink(missing_ok=True)
@@ -285,7 +294,11 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
  if kind=='gpt':verified['speechVersions']=list(dict.fromkeys(verified.get('speechVersions',[])+[version]))
  if kind=='local':verified['verifiedEngines']=list(dict.fromkeys(verified.get('verifiedEngines',[])+[chosen]))
  marker.write_text(json.dumps(verified))
- receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=chosen=='drama3' and voice_backend=='cpu',modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
+ if kind=='drama3' and voice_backend=='cuda':
+  from drama_full_cuda import MARKER,read
+  cuda_receipt=read(root/MARKER,{});cuda_receipt['speechInferencePassed']=True
+  (root/MARKER).write_text(json.dumps(cuda_receipt))
+ receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,dramaBackend=drama_backend,drama3Memory=deployment.get('voiceMemory'),cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=chosen=='drama3' and voice_backend=='cpu',modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
  (root/'native-ready.json').write_text(json.dumps(receipt,indent=2))
  (root/'setup-invalidated.json').unlink(missing_ok=True)
  emit('Native setup completed. The first conversion will validate speech and output on this PC.',ready=receipt,setupStep='ready')
@@ -293,7 +306,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None):
 if __name__=='__main__':
  from process_job import install as own_processes
  own_processes()
- parser=argparse.ArgumentParser();parser.add_argument('--models-json',default='{}');parser.add_argument('--engine',default='drama3');parser.add_argument('--backend',default='auto');parser.add_argument('--allow-cpu-drama',action='store_true');parser.add_argument('--plan',action='store_true');parser.add_argument('--manage',choices=['repair','redownload','remove']);parser.add_argument('--package');parser.add_argument('--kind',choices=['model','runtime','tool']);args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--drama-backend',choices=['auto','cuda','cpu'],default='auto');parser.add_argument('--models-json',default='{}');parser.add_argument('--engine',default='drama3');parser.add_argument('--backend',default='auto');parser.add_argument('--allow-cpu-drama',action='store_true');parser.add_argument('--plan',action='store_true');parser.add_argument('--manage',choices=['repair','redownload','remove']);parser.add_argument('--package');parser.add_argument('--kind',choices=['model','runtime','tool']);args=parser.parse_args()
  try:
   if args.manage:
    from setup_inventory import remove,RUNTIMES
@@ -304,11 +317,12 @@ if __name__=='__main__':
      if args.package not in RUNTIMES:raise ValueError('Unknown runtime')
      environment(args.package,None if args.package=='worker' else (recommended(adapters()) if args.backend=='auto' else args.backend))
     elif args.kind=='tool':
-     if args.package not in ('drama-cuda','drama-cudart'):raise ValueError('Unknown managed tool')
+     from drama_full_cuda import TOOLS
+     if args.package not in ('drama-cuda','drama-cudart')+TOOLS:raise ValueError('Unknown managed tool')
      tool(args.package)
     else:install_model(next(r for r in rows if r['id']==args.package and r.get('nativeFormat')))
-   emit('Component updated. Review the plan before conversion.',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend))
-  elif args.plan:emit('Deployment plan',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend))
-  else:setup(args.engine,args.backend,args.allow_cpu_drama,json.loads(args.models_json))
+   emit('Component updated. Review the plan before conversion.',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend,drama_backend=args.drama_backend))
+  elif args.plan:emit('Deployment plan',deployment=plan(args.engine,allow_cpu_drama=args.allow_cpu_drama,backend=args.backend,drama_backend=args.drama_backend))
+  else:setup(args.engine,args.backend,args.allow_cpu_drama,json.loads(args.models_json),args.drama_backend)
  except Exception as error:
   import traceback;traceback.print_exc(file=sys.stderr);emit(str(error),error=True);sys.exit(1)

@@ -18,8 +18,14 @@ def pools(plan):
         if not row:continue
         need=float(row.get('estimatedMemoryGB') or 0)
         if need<=0:continue
-        entry=dict(role=role,id=ident,gb=need)
-        (system if role=='voice' and plan.get('voiceBackend')=='cpu' or not dedicated else gpu).append(entry)
+        memory=plan.get('voiceMemory') or {}
+        if role=='voice' and ident=='drama3-native-q2':
+            system.append(dict(role=role,id=ident,gb=float(memory.get('systemGB') or need)))
+            if dedicated and plan.get('voiceBackend')=='cuda':
+                gpu.append(dict(role=role,id=ident,gb=float(memory.get('gpuGB') or 0)))
+        else:
+            entry=dict(role=role,id=ident,gb=need)
+            (system if role=='voice' and plan.get('voiceBackend')=='cpu' or not dedicated else gpu).append(entry)
     return dict(system=dict(capacity=ram,budget=max(0.,ram-reserve),peak=max((r['gb'] for r in system),default=0.),models=system),
                 gpu=dict(capacity=vram,budget=min(max(0.,ram-reserve),vram*.8) if dedicated else 0.,peak=max((r['gb'] for r in gpu),default=0.),models=gpu),
                 dedicated=dedicated,backend=hardware.get('backend','cpu'),reserve=reserve)

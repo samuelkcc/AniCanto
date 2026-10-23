@@ -30,7 +30,7 @@ SETTING_KEYS = set(defaults()) | {'model','visualModel','asrModel','speechModel'
     'backgroundGain','backgroundDucking','appearance','animeTheme','controlDensity',
     'subtitle','subtitleStream','ocrRect','ocr','ocrAutoRegion','exportFolder','translationSource','allowCrossEngineRepair',
     'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels',
-    'failedVoicePolicy'}
+    'failedVoicePolicy','dramaBackend'}
 from voice_parameters import keys as voice_parameter_keys, validate as validate_voice_parameters
 SETTING_KEYS.update(voice_parameter_keys())
 SETTING_KEYS.add('cosyExpression')
@@ -265,6 +265,67 @@ class Studio:
         if op in ('start','render','retake','setup','maintain-model','maintain-models','retry-review'):
             from use_terms import require
             require(self.root)
+        if op=='speech-library':
+            from speech_library import listing
+            result=listing(self.root,self.store.language)
+            installed=self.model_inventory()
+            current=self.tools().get('textModel',self.store.settings.get('model')) if self.platform=='win32' else self.store.settings.get('model')
+            result['textModels']=[dict(id=r['id'],title=r['title']) for r in installed if r.get('category')=='text' and r.get('installed')]
+            if current and not any(r['id']==current for r in result['textModels']):result['textModels'].insert(0,dict(id=current,title=current))
+            result['defaultTextModel']=current
+            from desktop_state import ENGINES
+            result['engines']=[dict(id=key,title=title,installed=any(r.get('engine')==key and r.get('installed') and not r.get('retired') for r in installed)) for key,title in ENGINES]
+            return result
+        if op=='speech-upload':
+            from speech_library import upload
+            return upload(self.root,p.get('data'),p.get('mime'))
+        if op=='speech-import':
+            from speech_library import import_audio
+            return import_audio(self.root,p.get('path',''))
+        if op=='speech-save':
+            from speech_library import save
+            save(self.root,p.get('id'),bool(p.get('acceptReview')))
+            return self.dispatch('speech-library',{})
+        if op=='speech-draft':
+            from speech_library import save_draft
+            return save_draft(self.root,p)
+        if op=='speech-new':
+            from speech_library import new_document
+            return new_document(self.root,p)
+        if op in ('speech-select','speech-load','speech-delete','speech-rename','speech-export-file'):
+            if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause the video conversion before changing saved speech recordings.')
+            import speech_library as library
+            if op=='speech-select':library.select(self.root,p.get('id'))
+            elif op=='speech-load':library.load_take(self.root,p.get('id'))
+            elif op=='speech-delete':library.delete(self.root,p.get('id'))
+            elif op=='speech-rename':library.rename(self.root,p.get('projectID'),p.get('title',''))
+            else:
+                audio=library.verified_audio(self.root,p.get('id'),bool(p.get('source')))
+                row=library.read(library.folder(self.root,p.get('id'))/'result.json',{})
+                meta=library.read(library.owned(self.root,'documents',row.get('projectID') or p.get('id'))/'document.json',{})
+                return dict(path=str(audio),title=meta.get('title') or row.get('title') or 'AniCanto recording',extension=audio.suffix.lstrip('.'))
+            return self.dispatch('speech-library',{})
+        if op=='speech-finish':
+            from speech_library import folder,read as load,write as save
+            job=folder(self.root,p.get('id'));result=load(job/'result.json',{})
+            if result.get('status') in ('waiting','running'):
+                result.update(status='stopped' if p.get('paused') else 'failed',error='Generation stopped. Your input is kept.' if p.get('paused') else str(p.get('stderr') or 'The local model task ended before producing a result.')[-2000:])
+                save(job/'result.json',result)
+            return result
+        if op=='speech-studio':
+            from use_terms import require
+            require(self.root)
+            if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause the video conversion before generating speech.')
+            from speech_library import submit
+            cfg=dict(self.store.settings,**self.tools())
+            selected=read(self.root/'model-selections.json',{})
+            for role,key in [('text','model'),('speech','speechModel'),('drama3','drama3Model')]:
+                if selected.get(role):cfg.setdefault(key,selected[role])
+            if p.get('textModel'):
+                options=self.dispatch('speech-library',{}).get('textModels',[])
+                if p['textModel'] not in {r['id'] for r in options}:raise ValueError('Deploy the selected text model before using it in Dubbing studio.')
+            path=submit(self.root,cfg,p)
+            return dict(self.task('speech-studio',path),speechClipID=path.parent.name)
         if op=='state':return self.state()
         if op=='source-language':
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before checking another source language.')
@@ -580,12 +641,13 @@ class Studio:
             engine=p.get('engine') or self.store.settings['ttsBackend']
             requested=p.get('models',self.store.settings.get('deploymentModels',{}))
             if engine=='wsyue' and 'en' in self.store.settings.get('dubLanguages',[]):raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
-            plan=self.dispatch('plan',dict(engine=engine,models=requested))
+            drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto'))
+            plan=self.dispatch('plan',dict(engine=engine,models=requested,dramaBackend=drama_backend))
             from model_switch import begin
             token=begin(self.root,plan,requested,p.get('removeOld',False),self.store.mode=='expert')
             if self.platform=='win32':
                 python=self.root/'runtimes/ui/Scripts/python.exe'
-                return dict(program=str(python),args=[str(WINDOWS/'native_setup.py'),'--engine',engine,'--models-json',json.dumps(requested)],action='setup',root=str(self.root),modelSwitchToken=token)
+                return dict(program=str(python),args=[str(WINDOWS/'native_setup.py'),'--engine',engine,'--models-json',json.dumps(requested),'--drama-backend',drama_backend],action='setup',root=str(self.root),modelSwitchToken=token)
             return dict(program=str(self.helper),args=['--studio-setup',engine,json.dumps(requested)],action='setup',root=str(self.root),modelSwitchToken=token)
         if op=='finish-model-switch':
             from model_switch import finish
@@ -601,7 +663,9 @@ class Studio:
                 for role,key in [('text','model'),('asr','asrModel'),('speech','speechModel'),('referenceSpeech','referenceSpeechModel')]:
                     if roles.get(role):settings[key]=roles[role]
                 if roles.get('voice'):settings[{'drama3':'drama3Model','cosyvoice3':'cosyModel','voxcpm2':'voxcpmModel','wsyue':'wsyueModel'}.get(engine,'voiceModel')]=roles['voice']
-                if self.platform=='win32':settings['model']=read(self.root/'native-ready.json',{}).get('textModel',settings.get('model'))
+                if self.platform=='win32':
+                    receipt=read(self.root/'native-ready.json',{})
+                    settings.update(model=receipt.get('textModel',settings.get('model')),dramaBackend=result['plan'].get('dramaBackend','auto'))
                 self.store.settings.update(settings);self.store.save()
             return result
         if op=='plan':
@@ -610,7 +674,7 @@ class Studio:
             if not isinstance(requested,dict) or set(requested)-ROLES or any(not isinstance(v,str) for v in requested.values()):raise ValueError('Unknown model choice.')
             if self.platform=='win32':
                 from native_setup import plan
-                return plan(engine,requested=requested)
+                return plan(engine,requested=requested,drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto')))
             response=subprocess.check_output([str(self.helper),'--studio-plan',engine,json.dumps(requested)],timeout=60)
             return json.loads(response.decode().strip().splitlines()[-1])
         if op=='log-sources':return self.log_sources()

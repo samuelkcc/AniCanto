@@ -1,4 +1,4 @@
-# Inside the current app · 0.24.59
+# Inside the current app · 0.24.63
 
 [← AniCanto](../../README.md)
 
@@ -14,11 +14,11 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ## Basic mode
 
-![Basic mode](../images/basic-en.png?v=preview-off)
+![Basic mode](../images/basic-en.png?v=0.24.63)
 
 ## Expert timeline
 
-![Expert timeline](../images/timeline-en.png?v=preview-off)
+![Expert timeline](../images/timeline-en.png?v=0.24.63)
 
 ## Review report
 
@@ -38,4 +38,14 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ## Subtitle source
 
-![Subtitle source](../images/subtitles-en.png?v=preview-off)
+![Subtitle source](../images/subtitles-en.png?v=0.24.63)
+
+## Dubbing studio and saved clips
+
+![Dubbing studio](../images/speech-studio-en.png?v=0.24.63)
+
+![Saved & learning](../images/speech-player-en.png?v=0.24.63)
+
+## Windows: NVIDIA CUDA setup
+
+![NVIDIA CUDA](../images/nvidia-cuda-en.png?v=0.24.63)

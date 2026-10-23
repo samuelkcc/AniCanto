@@ -29,7 +29,17 @@ def remove(root,kind,ident,catalog):
         if path.is_symlink() or path.is_file():path.unlink()
         elif path.is_dir():shutil.rmtree(path)
     if kind=='tool':
-        if ident not in ('drama-cuda','drama-cudart'):raise ValueError('Unknown managed tool')
+        from drama_full_cuda import TOOLS
+        if ident not in ('drama-cuda','drama-cudart')+TOOLS:raise ValueError('Unknown managed tool')
+        if ident in TOOLS:
+            erase('tools/'+ident);erase('drama-full-cuda-ready.json')
+            # Removing an unused CUDA download must not invalidate a working CPU installation.
+            try:current=json.loads((root/'drama3-windows-ready.json').read_text())
+            except (OSError,ValueError):current={}
+            if current.get('backend')=='cuda':
+                erase('drama3-windows-ready.json');erase('native-ready.json')
+                (root/'setup-invalidated.json').write_text(json.dumps(dict(kind=kind,id=ident)))
+            return
         erase('tools/'+ident);erase('tools/drama-small-cuda');erase('drama3-windows-ready.json');erase('native-ready.json')
         (root/'setup-invalidated.json').write_text(json.dumps(dict(kind=kind,id=ident)))
         return
@@ -51,6 +61,7 @@ def remove(root,kind,ident,catalog):
     (root/'setup-invalidated.json').write_text(json.dumps(dict(kind=kind,id=ident)))
 
 WARNINGS={
+ 'native-drama-full-cuda-needs-probe':('Full Drama 3 will use NVIDIA CUDA with CPU/RAM offload. Memory figures are estimates; deployment must pass a real speech test.','完整 Drama 3 會使用 NVIDIA CUDA，部分資料仍放喺 CPU／RAM。記憶體數值屬估算；部署必須通過實際配音測試。'),
  'native-drama-small-cuda-planned':('Drama3-small will try NVIDIA CUDA. Setup must pass a real speech test before GPU use is confirmed. Cantonese quality is experimental.','Drama3-small 會嘗試 NVIDIA CUDA；要實際生成測試通過先會確認 GPU 可用。廣東話效果屬實驗性。'),
  'native-drama-small-cpu-fallback':('Drama3-small is selected to keep Drama as your voice engine. This build uses CPU; Cantonese quality is experimental. Your NVIDIA GPU remains available for the other models.','會用 Drama3-small 保留 Drama 配音引擎。此版本使用 CPU，廣東話效果屬實驗性；其他模型仍可使用 NVIDIA GPU。'),
  'native-drama-cuda-unavailable-fallback-gpt-v2-pro-plus':('This package has no full Drama 3 CUDA adapter. GPT is the available fallback; this does not mean your GPU is too slow.','此版本未提供完整 Drama 3 CUDA 接法，會使用可用嘅 GPT 後備；唔代表顯示卡太慢。'),

@@ -8,7 +8,7 @@
 
 將日本動畫嘅日文對白轉成**香港廣東話或英文配音**。模型同執行環境準備好後，辨識、翻譯、配音及匯出都喺本機完成。
 
-[下載](#下載-beta--02459) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [支持計劃](#支持更多人認識廣東話)
+[下載](#下載-beta--02463) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [支持計劃](#支持更多人認識廣東話)
 
 ## 點解會有 AniCanto
 
@@ -22,15 +22,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AI 可以協助探索語言同試做配音，但生成結果仍可能有口音、錯字或演繹不足，唔等同專業演出。希望大家享受呢個小作品之餘，繼續欣賞同支持熟悉聲音背後嘅表演者。
 
-## 下載 Beta · 0.24.59
+## 下載 Beta · 0.24.63
 
-**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto-macOS-0.24.59.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta)
+**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-macOS-0.24.63.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
 
 ## 今個 Beta 新增咗乜
 
-- 基本模式填滿工作區，預覽可隨視窗伸展，下接進度及逐句試聽。
-- 專家模式時間軸橫跨視窗底部，進度放喺預覽正下方。
-- 更新淺紫色介面圖及四語首頁；英文預設，初衷用英中雙語介紹。
+- 新增配音器：打字或錄音、核稿翻譯、生成試聽，再分開保存錄音版本。
+- Windows 完整 Drama 3 Q2 加入 NVIDIA CUDA 選項，分開顯示系統 RAM 同 VRAM 預算。
+- 更新介面圖，提供原創測試原片同 Mac Drama 3 比較成品下載。
 
 ## 先睇電腦配置
 
@@ -39,9 +39,11 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 | 平台 | 建議系統及記憶體 | Drama 3 執行方式 |
 | --- | --- | --- |
 | **Mac** | Apple Silicon、macOS 14+；**64 GB 或以上統一記憶體**建議 | 完整 4-bit MLX，使用 Apple Silicon GPU／統一記憶體；估算約 28 GB |
-| **Windows** | Windows 10／11 x64；**32 GB RAM 起，64 GB 較充裕** | 完整 GGUF Q2 **使用 CPU**；估算約 22 GB 系統 RAM |
+| **Windows** | Windows 10／11 x64；**32 GB RAM 起，64 GB 較充裕** | 完整 GGUF Q2：兼容 NVIDIA 可選 **CUDA 加速**；AMD／Intel／內置顯示晶片用 CPU，仍需要系統 RAM。 |
 
-**Windows：Drama 3 目前唔使用 NVIDIA／AMD／Intel GPU 加速。** 即使配備獨立顯示卡，Drama 3 仍用 CPU 同系統 RAM。其他支援模型可按顯示卡及驅動使用 GPU；獨立 VRAM 唔能代替 Drama 3 所需 RAM。今次 Windows 套件仍需實機測試。
+**Windows 完整 Drama 3 Q2 已加入 NVIDIA CUDA 加速選項。** 喺模型部署揀 **Drama 3 處理方式 → 自動**，或者 **NVIDIA · CUDA**；自動模式會按裝置、記憶體及部署檢查決定能否使用 CUDA。AMD、Intel 或內置顯示晶片請用 CPU。App 會分開顯示系統 RAM 同 VRAM，並下載相應加速程式及函式庫；沿用同一份 Q2 權重，唔使重複下載模型。需要兼容嘅 NVIDIA 驅動。
+
+作者初步 Windows 實測，CUDA 嘅 Drama 3 生成速度明顯改善；未有固定加速倍數，亦唔代表所有顯示卡都已測試。**部分辨識同校對階段仍使用 CPU，唔係整個流程全部 GPU 加速。**
 
 32 GB Mac 可以嘗試較小嘅翻譯模型組合，但 Drama 3 可能令系統用交換空間、明顯變慢或載入失敗。上述數字係規劃估算。兩個平台建議預留 **100 GB 以上**作模型、執行環境及工作檔；長片要更多。
 
@@ -53,7 +55,7 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 
 ### 作者測試平台與使用預期
 
-作者使用 **MacBook Pro M2 Max、64 GB 統一記憶體**，以及一部配備 **NVIDIA 獨立顯示卡（16 GB VRAM）、32 GB 系統 RAM 嘅 Windows 筆電**測試。版本發佈嘅驗證標準，係喺兩部機完成由匯入到輸出嘅轉換；個別版本仍待完成嘅平台測試會喺發佈說明列出。目前 Windows Drama 3 最新修正仍待 Windows 測試機確認。兩部測試機嘅結果，唔代表所有硬件組合都已驗證。
+作者使用 **MacBook Pro M2 Max、64 GB 統一記憶體**，以及一部配備 **NVIDIA 獨立顯示卡（16 GB VRAM）、32 GB 系統 RAM 嘅 Windows 筆電**測試。版本發佈嘅驗證標準，係喺兩部機完成由匯入到輸出嘅轉換；個別版本仍待完成嘅平台測試會喺發佈說明列出。Windows 最新 NVIDIA CUDA 更新已通過作者初步桌面測試，生成速度明顯改善；結果只代表已測配置同工作內容，仍歡迎其他配置回報。兩部測試機嘅結果，唔代表所有硬件組合都已驗證。
 
 **作者用 M2 Max 配完整 Drama 3 嘅實測參考，影片長度與轉換時間約為 1:2**：30 分鐘影片約需 60 分鐘，當中已包括約 8–10% 對白嘅 AI 自動修復。呢個係作者測試片段嘅經驗值，唔係保證速度，亦唔可以當成 Windows 嘅時間估算。片段複雜程度、模型設定、修復次數、儲存速度同記憶體壓力，都會影響總時間。
 
@@ -71,10 +73,17 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 | **本機批次處理** | 排隊轉片、調整未開始影片次序、暫停保存同續做；模型準備好後可離線處理。 |
 | **模型及下載管理** | 查看已安裝模型、尚需下載量及估算記憶體需要；切換前可檢查或修復檔案。 |
 | **保存專案及版本** | 保留台詞、錄音同校對紀錄；匯出另一個版本，唔會覆蓋先前成品。 |
+| **獨立配音器** | 文字或錄音轉成可改稿廣東話，保存錄音版本、雙文對照學習同匯出 WAV。 |
 
-### 即將加入：配音器與錄音功能
+### 配音器：由文字或錄音，製作自己嘅片段
 
-Mac／Windows 正加入獨立嘅**配音器**，亦正協調 iPad 採用相同流程。可以輸入日文或英文，或者錄音／匯入自己嘅說話，由本機 AI 準備可修改嘅廣東話譯稿，再調整聲線參數、生成試聽，將片段儲存到播放器嘅獨立分類。分類顯示名稱會跟介面語言切換。錄音來源會自動辨識語言，唔限日文或英文；實際辨識同模仿效果視乎已安裝模型及錄音質素。**呢個功能仍在開發，未包含喺上面嘅 0.24.59 下載版本。**
+**基本模式同專家模式都可以用**，毋須先匯入影片。可以打日文、英文，或者錄音／匯入自己嘅說話；錄音會自動辨識來源語言，實際支援範圍視乎已安裝模型。
+
+1. **核稿及翻譯**：先修正辨識原稿，揀本機翻譯模型，再修改廣東話譯稿。
+2. **生成及試聽**：揀已安裝配音引擎、範本參考，或支援情況下用自己錄低嘅聲線，調整語速及實際支援嘅生成參數。模仿聲線需要完整、清晰嘅 3–10 秒參考。
+3. **保存及比較**：不同錄音版本放喺獨立「配音器」播放器分類。可對照原聲／配音同兩份文字、調播放速度、循環段落、改名、匯出 WAV，或者只刪某個版本；分類顯示名會跟介面語言切換。
+
+生成後獨立覆聽會標示字句同語言疑點；可選自動修復只對確認有問題嘅部分額外重試，逐段最多兩次，唔會因單純同音字差異就換聲。有疑點版本可由你聽過並明確接受後保存，舊版本會保留。
 
 ### AI 自動修復流程
 
@@ -110,6 +119,7 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 | **輸入影片** | MP4 · MKV · MOV · M4V · AVI · WebM · TS |
 | **外掛字幕** | SRT · ASS · SSA · VTT |
 | **輸出成品** | MP4，按所選設定加入音軌及字幕。 |
+| **配音器音訊** | 匯入 WAV · MP3 · M4A · FLAC · WebM · OGG；匯出 WAV。 |
 
 影片副檔名相容，仍需檔案內嘅影音編碼可以讀取；燒入畫面嘅字幕可嘗試 OCR，唔代表一定可以乾淨移除。
 
@@ -140,9 +150,28 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 [字幕匯入說明](docs/zh-HK/GETTING-STARTED.md)
 
+## 下載測試原片，聽返配音成品比較
+
+[![AniCanto original demo](docs/images/demo-v7-zh-HK.png)](docs/zh-HK/DEMO.md)
+
+下載 **3 分鐘日文原創測試片**，放入 AniCanto，自己試轉廣東話或者英文。畫面、音樂同合成聲線都為呢個計劃準備，唔包含商業動畫片段或專業配音員錄音。
+
+另外提供 **Mac Drama 3 配音成品**，預設廣東話，保留英文同日文音軌，可喺兼容播放器切換。廣東話同英文台詞經過編修再生成，用嚟比較聲音效果，**唔係未經校訂嘅一鍵翻譯成績**，亦唔係 iPad CosyVoice 轉換結果。四種畫面語言版本用同一套日文原聲。
+
+| 畫面語言 | 日文原片・自己試轉 | Mac Drama 3・試聽比較 |
+| --- | --- | --- |
+| English | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-en.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-en.mp4) |
+| 繁體中文 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-HK.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-HK.mp4) |
+| 简体中文 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-CN.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-CN.mp4) |
+| 日本語 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-ja.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-ja.mp4) |
+
+**[下載完整測試套裝](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-kit-v7.zip)** — 包括四種畫面語言嘅日文原片、Mac Drama 3 比較成品，以及同原片配對嘅日文原文字幕。
+
+[示範詳情與字幕](docs/zh-HK/DEMO.md)
+
 ## 新版介面
 
-以下係 0.24.59 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
+以下係 0.24.63 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
 
 ### 歡迎及部署
 
@@ -152,13 +181,13 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 ### 基本模式：進度及試聽
 
-![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=preview-off)
+![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.24.63)
 
 加入影片、揀配音語言同輸出資料夾，再跟進處理及逐句試聽；預覽可以保持關閉，由小助手陪住你。
 
 ### 專家模式：時間軸及逐句編輯
 
-![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=preview-off)
+![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.24.63)
 
 用橫跨底部嘅時間軸比較原聲對白同配音稿、調整時間，亦可以為所選一句即時生成另一條錄音。
 
@@ -167,6 +196,20 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 ![校對報告：疑點及錄音比較](docs/images/review-zh-HK.png)
 
 睇返標示咗啲乜、試過點修復，再比較保留錄音。揀好之後匯出另一個版本，原有成品繼續保留。
+
+### 配音器與已保存片段
+
+![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.24.63)
+
+核對原稿同廣東話譯稿，再生成及保存不同錄音；播放器可對照原聲、配音同兩份文字。
+
+![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.24.63)
+
+### Windows：NVIDIA CUDA 部署
+
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.24.63)
+
+可揀自動偵測、NVIDIA CUDA 或 CPU，分開顯示系統 RAM、VRAM 同額外 CUDA 下載；圖片展示部署選項，唔係速度測試成績。
 
 [查看全部介面截圖](docs/zh-HK/SCREENSHOTS.md)
 
@@ -186,7 +229,7 @@ AniCanto 嘅改進，好多都來自逐句聽返失敗轉換、比較錄音，�
 <details>
 <summary><strong>點解有時轉換需要好耐？</strong></summary>
 
-對白密度、模型載入、記憶體壓力、聲音分離同重錄次數，都會影響時間。Windows 完整 Drama 3 用 CPU，可能非常慢；有剩餘 RAM 唔代表運算自然會快，唔同影片亦冇固定完成時間保證。
+對白密度、模型載入、記憶體壓力、聲音分離同重錄次數都會影響時間。兼容 Windows 可用 NVIDIA CUDA 加速 Drama 3；CPU 選項較慢，而部分辨識／校對仍使用 CPU。有空閒 RAM 唔代表推理自然會更快，唔同影片亦冇固定完成時間保證。
 
 </details>
 

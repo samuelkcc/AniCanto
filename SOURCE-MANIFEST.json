@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0.24.59",
-  "scope": "Public application source, notices and original demonstration screenshots; no user media, model weights or executable prerequisites",
+  "version": "0.24.63",
+  "scope": "Matching desktop sources, notices, four-language product documentation and original demonstration screenshots; no private user media, model weights or executables",
   "files": [
     {
       "path": ".github/FUNDING.yml",
@@ -25,28 +25,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "2c0069483bafc3615487ba5b3be322ffdec56f555e0c7d0c0cf30b87e93c99d6",
-      "bytes": 17922
+      "sha256": "459cd22129e84a88f56da2f6fd78867eb92ea4df99272e92781955a033f53fbe",
+      "bytes": 22246
     },
     {
       "path": "README.ja.md",
-      "sha256": "24f43b7879b16399eaaeab73039d70fff7ee46e2d66f5730a3fea54290dd9850",
-      "bytes": 19407
+      "sha256": "8340aebad53404ae47ee850f78b9bfe17ff9757109ed25cab58e9c2ac4ddfbb6",
+      "bytes": 23931
     },
     {
       "path": "README.md",
-      "sha256": "2c0069483bafc3615487ba5b3be322ffdec56f555e0c7d0c0cf30b87e93c99d6",
-      "bytes": 17922
+      "sha256": "459cd22129e84a88f56da2f6fd78867eb92ea4df99272e92781955a033f53fbe",
+      "bytes": 22246
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "b1753227435c49b3adcf14623db1c874ca9b24e209beef15a49f88b0889c3e89",
-      "bytes": 15062
+      "sha256": "094323dc1a5114807256e0cf7c03d90c5a7d6696cb0842603caaced2c56912b7",
+      "bytes": 19025
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "9fb7aef4123259a2281b5513c57eae4cb54ddddc227e28689793b9802829ba5c",
-      "bytes": 15131
+      "sha256": "7b9e67b312d2df1f7b3c77f0b9109cd168dad9348a51fa30d3d6a91cdf461248",
+      "bytes": 19149
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -625,13 +625,13 @@
     },
     {
       "path": "Resources/drama3.py",
-      "sha256": "2604b7fab23cdf81f303e353c814051559e41752b306f890cd7e120b6edcfca2",
-      "bytes": 15830
+      "sha256": "c831f9ecd34111871e4fe8fe497466264c7ea40480c2a190b4d22e7b0b07df72",
+      "bytes": 15992
     },
     {
       "path": "Resources/drama_gguf.py",
-      "sha256": "585cdb508fa8f50534e9256489196ce3b2dba11eebf8415aa229e203e17c2e42",
-      "bytes": 10715
+      "sha256": "75f93a5eb009a36e02e0303a538b43a75a6ee5eb30f7703471cf3c5048270f88",
+      "bytes": 11303
     },
     {
       "path": "Resources/dub_languages.py",
@@ -1292,6 +1292,21 @@
       "path": "Resources/speech_level.py",
       "sha256": "bb1ee10c2d3677847ad15d2489d99e91ff91cb9b23339ca1e3ab4ce6baf29d1a",
       "bytes": 5320
+    },
+    {
+      "path": "Resources/speech_library.py",
+      "sha256": "975ff877d7485ef189987225a69f2a460dcc56c97ef62eea321a5d833099c813",
+      "bytes": 14446
+    },
+    {
+      "path": "Resources/speech_quality.py",
+      "sha256": "72c07b11384611216c5d7012cdda06f08797b8e8e28881d136f194e3ada1da19",
+      "bytes": 5088
+    },
+    {
+      "path": "Resources/speech_studio.py",
+      "sha256": "d1b7e54ec07511c5ed502900b0b4b51078b0497f68b2f2d5530fae3520f53b95",
+      "bytes": 9357
     },
     {
       "path": "Resources/speech_timing.py",
@@ -2420,8 +2435,8 @@
     },
     {
       "path": "Resources/worker.py",
-      "sha256": "b14ad4b6320c5850ae3a5b60621214847342733dcd3077e177ae986b20d56817",
-      "bytes": 97422
+      "sha256": "022b62217ce630a612583a6546edd7b1a5e7adc9bdbd32cc663a6cda7d9a1d89",
+      "bytes": 97566
     },
     {
       "path": "Resources/workflow-localization.json",
@@ -2540,8 +2555,8 @@
     },
     {
       "path": "Sources/Engine.swift",
-      "sha256": "bd31fb77cbd04a9d18f3a408bbb8d6f4fe0ea69c269d3de3bd72ce0f7db5ae71",
-      "bytes": 45635
+      "sha256": "56a192b0f54c36ba65631ae64cfb6cfcc0a580d3fa59bc514aa77cdf95458223",
+      "bytes": 45796
     },
     {
       "path": "Sources/FirstRunDeployment.swift",
@@ -2730,8 +2745,8 @@
     },
     {
       "path": "Sources/SharedStudioBridge.swift",
-      "sha256": "81d1150e9e3d4f1e5edff728719015f7449adb3b9d921fb83afd9d70e9e02bee",
-      "bytes": 3968
+      "sha256": "84c7435f90346eae56130d4b5b16ff5e294ebf2b9130d6eadce7f83ab5bc17a4",
+      "bytes": 3984
     },
     {
       "path": "Sources/SharedStudioEvent.swift",
@@ -2940,7 +2955,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "03bc94ca6a3535435754e9cc34ef0481c1ab310311e3553e26295aa4140043cd",
+      "sha256": "91443f956ebf9c05b6eeb9f3de7a5e9ea87c80a5e077179ec0dc4bad0093f9c6",
       "bytes": 66
     },
     {
@@ -2960,8 +2975,8 @@
     },
     {
       "path": "core/src/lib.rs",
-      "sha256": "98dd99e56bff8169fe0489e666be717b06541fd2f8859b04b542f8a745181f76",
-      "bytes": 32571
+      "sha256": "532d5881f95dbe56e51d8a79806db95cbe9d55c2a60fcff146f4acc82d8f6eb8",
+      "bytes": 34606
     },
     {
       "path": "core/src/main.rs",
@@ -2990,7 +3005,7 @@
     },
     {
       "path": "docs/LICENSING.md",
-      "sha256": "6d343365f9c0f4c90f73513d9137ba2e31223c34b466845f0d849b353361abf6",
+      "sha256": "de659d30035dc37dde9b9b477317899eab8b39a3aca788f92bdd13d8f40e2544",
       "bytes": 820
     },
     {
@@ -3034,6 +3049,11 @@
       "bytes": 4359
     },
     {
+      "path": "docs/SPEECH-STUDIO-WORKFLOW.md",
+      "sha256": "6ba49e2bc9cf4ce721706a297f0ddd8477383d06dfb4eb050d53229db0edb0c0",
+      "bytes": 7442
+    },
+    {
       "path": "docs/SUBTITLE-IMPORT-GUIDE.md",
       "sha256": "2aa0f782bce66651c5f00ac19175614dbf0610b9243c787c4f562cf6dea7cc4d",
       "bytes": 974
@@ -3059,19 +3079,24 @@
       "bytes": 5621
     },
     {
+      "path": "docs/en/DEMO.md",
+      "sha256": "b595166f1c8dd6ddc2a2d22a0b0e3a4c63c648e53f9e54d8995ef237f9af6670",
+      "bytes": 3811
+    },
+    {
       "path": "docs/en/GETTING-STARTED.md",
       "sha256": "1f1e499f80535b987fa08c3a74af1073d418ed7d58e073de074fd69157938dbf",
       "bytes": 1056
     },
     {
       "path": "docs/en/LICENSING.md",
-      "sha256": "2316c9e401a31a2815a7071d496995a10827b7207a243042df0525a01f4ed4ef",
+      "sha256": "495c8e661b733ab6bea6c5493553366e6fe84a92b25844a20f3da225df476d9d",
       "bytes": 2669
     },
     {
       "path": "docs/en/SCREENSHOTS.md",
-      "sha256": "262d8f3b41cd827dc23baf70aa438c1f6eb00dc19a809a8e5f8533c64c044b23",
-      "bytes": 855
+      "sha256": "a9d4bea8088b9ac595d8b864d34eb220b6ac392a65fb0e192a9edb410967f057",
+      "bytes": 1089
     },
     {
       "path": "docs/images/anicanto-cantonese-cover.png",
@@ -3080,183 +3105,268 @@
     },
     {
       "path": "docs/images/basic-en.png",
-      "sha256": "c758e02466cbadaea3a8900e617e96a3e70fbffef5fbd29b655cda4a90a2d982",
-      "bytes": 190216
+      "sha256": "4ec646b7cad9e323ec24c1316cfb0386dd95d41f6174c336c99ebf5cb74e9690",
+      "bytes": 192131
     },
     {
       "path": "docs/images/basic-ja.png",
-      "sha256": "e9a7abebfeb3c10450173125771d9dd532d2725914dbdd52a1f758fd4b39389f",
-      "bytes": 209138
+      "sha256": "61d84c459c3bd78bbf51e761e374a0a0bec5b2a6f483e6d2b9749455328c141b",
+      "bytes": 211641
     },
     {
       "path": "docs/images/basic-zh-CN.png",
-      "sha256": "23898315f78121ceb2382386fe3d66bd7913509b1e222fd4cd259662a2167844",
-      "bytes": 181389
+      "sha256": "49f573b472f1963efa45bbf885d5285531ff251a211b723a0b56b61a9146a8d6",
+      "bytes": 182743
     },
     {
       "path": "docs/images/basic-zh-HK.png",
-      "sha256": "96ef5f2cb65aa104d72368446045f6b8038e8b9cf2f4e94fa0ca07f44057721a",
-      "bytes": 191122
+      "sha256": "c9666305d42f029b0f698e74f44940e7b6e5a71bc03e08decf4b399d7d3d4ce1",
+      "bytes": 192111
     },
     {
       "path": "docs/images/batch-en.png",
-      "sha256": "25a45c53b9dc5e21443c737b9f56f92bfd0945d769dc95fbe14d6f55d73d0c0a",
-      "bytes": 96359
+      "sha256": "8d8b0ccfabe69f283dff34e8299b6ef47eec198fafdf0004ad6748dc4095f005",
+      "bytes": 102871
     },
     {
       "path": "docs/images/batch-ja.png",
-      "sha256": "4e19a6df338e0ff5ed9e4e705020ea043e99fe0d81265652ce83971ce0961896",
-      "bytes": 95776
+      "sha256": "7cef509880670eba956d164ffb73a376b76dcaaa03abde054b3bf8d2f391a394",
+      "bytes": 104722
     },
     {
       "path": "docs/images/batch-zh-CN.png",
-      "sha256": "475ac74e8920cad2400c7db42f8f8d37cbbf5408c4f0b7610a52eb8a2d8ea421",
-      "bytes": 85735
+      "sha256": "741dd016f99a2293e5fac114ae90ead3521907334be4a3ada6501b00aa04ef84",
+      "bytes": 92060
     },
     {
       "path": "docs/images/batch-zh-HK.png",
-      "sha256": "23c4e40a6e15888f2abd5ba79a8305ed1a6e3221b0f8d9ad87ba84eafac6bc11",
-      "bytes": 91767
+      "sha256": "095fecd0096afd6459cc36687bf3ff203424962b4b3a598dc0fe894d0c3eca75",
+      "bytes": 95915
+    },
+    {
+      "path": "docs/images/demo-v7-en.png",
+      "sha256": "f311d1940c141879224857137ca904de077193df98304dfe902b5d4f23017fad",
+      "bytes": 1008979
+    },
+    {
+      "path": "docs/images/demo-v7-ja.png",
+      "sha256": "9b5c2b81a05f84dc7ec7b4310abed9b15b0e71f6d5adb374f59a441e86586dda",
+      "bytes": 1004105
+    },
+    {
+      "path": "docs/images/demo-v7-zh-CN.png",
+      "sha256": "db2e3d654ab2c91f3f1595b20a1270432955c2835bdc74dcb5468dc1c4a3ee91",
+      "bytes": 1000669
+    },
+    {
+      "path": "docs/images/demo-v7-zh-HK.png",
+      "sha256": "46c0888dfcf2ff9e81e22e88e6801303a1908fbc76f82b664c3f3c5ce27524d8",
+      "bytes": 998673
     },
     {
       "path": "docs/images/model-centre-en.png",
-      "sha256": "3514839c07c638c1177cc7ccada945d27e7132d7b038de71a72eebef36c4c43e",
-      "bytes": 148698
+      "sha256": "33fb33ad082e563b5ec2187454609a465f09a45f1981c8d79c700879ba86a248",
+      "bytes": 149831
     },
     {
       "path": "docs/images/model-centre-ja.png",
-      "sha256": "af6fd1058797ea4ef074ee977882dd635f233d04c2e7e67b530feaddb59bc239",
-      "bytes": 176428
+      "sha256": "a33be41874c6db9dae0bdfd140e6f03e87c42e5b709aa1612b02bc3399c0d03e",
+      "bytes": 177561
     },
     {
       "path": "docs/images/model-centre-zh-CN.png",
-      "sha256": "5927709a2ff083f9ad551edd7daf8f8cbb7baf3b983bf2f6ce78d638c1c496f5",
-      "bytes": 147200
+      "sha256": "831fc0da1ddb86cb5e58b33e0234114a5797e58e20bbd41d4b1cc9b40103e8f5",
+      "bytes": 148774
     },
     {
       "path": "docs/images/model-centre-zh-HK.png",
-      "sha256": "b1991e0757313c82e04363057a9be1ba9451ed6ceb860cd4863e36b1f3258bb2",
-      "bytes": 155637
+      "sha256": "50057e556b5b0d9b50cfc5b3971f01a36e31549900bea621b49cdb584aa49a44",
+      "bytes": 156825
     },
     {
       "path": "docs/images/models-setup-en.png",
-      "sha256": "1a5057d880c2875d631b9b6922a633a9237c8460836f3f2b613bfea3ea95a1d2",
-      "bytes": 641498
+      "sha256": "d08836cd299168fd22c26062347e1258545351422dbc2f7d3e117e5fbee11693",
+      "bytes": 601037
     },
     {
       "path": "docs/images/models-setup-ja.png",
-      "sha256": "e87b1d43dd0606e90aec8dcf21d9e1c733c74e93404a8666fc75d07ca1e21395",
-      "bytes": 630702
+      "sha256": "babc9868bb6c0fc09e4464cb8577b9f8b81c80005072125642e638c2afaefc6d",
+      "bytes": 618630
     },
     {
       "path": "docs/images/models-setup-zh-CN.png",
-      "sha256": "5ff4006e2642c536a890b3a0263b5a27f65f7728665b551a94e8c760f9eb0d1d",
+      "sha256": "9df0d243d833853205089e1b0e1ac6c5148f134dcdb6b5725621ee69765cae55",
       "bytes": 635903
     },
     {
       "path": "docs/images/models-setup-zh-HK.png",
-      "sha256": "17b5cc4bed216a2f27ebcd62a1eaa2ebb50233e1b1446f9ea32af9a247f4b257",
-      "bytes": 594860
+      "sha256": "4aba7f60b67248cd3258d3fe8b59b3c952ccc16cfca367678c253444a59fe564",
+      "bytes": 594862
+    },
+    {
+      "path": "docs/images/nvidia-cuda-en.png",
+      "sha256": "e7cc96332257c43a57675138d60da347afc0b85452be9e9430262c1db954e2f5",
+      "bytes": 664184
+    },
+    {
+      "path": "docs/images/nvidia-cuda-ja.png",
+      "sha256": "f8bb172997296decb4005e0450f26e4ab04fc03319eba28ba8fef870ae5041b6",
+      "bytes": 690475
+    },
+    {
+      "path": "docs/images/nvidia-cuda-zh-CN.png",
+      "sha256": "bc0900d22c9fe1480c805f8d8fecaab77f4a3d600e070aa276c31f577c36482a",
+      "bytes": 708903
+    },
+    {
+      "path": "docs/images/nvidia-cuda-zh-HK.png",
+      "sha256": "ca873543b368e0022707e5aa31a738376887897aa9560fa08c05acf638473414",
+      "bytes": 665589
     },
     {
       "path": "docs/images/preferences-en.png",
-      "sha256": "709948cd2ddd517050264367eb6f4a77a60b03136fc359634301316b841191bc",
-      "bytes": 75919
+      "sha256": "4959b69f0832f21a9ccf79f00a5fb8ae4d0bc79260047bb416cbafee29f07b4f",
+      "bytes": 76838
     },
     {
       "path": "docs/images/preferences-ja.png",
-      "sha256": "0351ee1557e75d6494bfc31f2ed7843edc37ff65f7c9849e8592efa89d3b2f1c",
-      "bytes": 75455
+      "sha256": "a1b9d6d122200268dc2359290af085ff748e739c71acc547b6e9cd5a49a1d111",
+      "bytes": 76529
     },
     {
       "path": "docs/images/preferences-zh-CN.png",
-      "sha256": "ffc8837842ed2ce480b07c99e7ba6b150363f7b2a9d422e3a35d59e69098d5e9",
-      "bytes": 69700
+      "sha256": "6e32437e429a6889310ec8bdc05d258d5e187dd36e52d819bf4c47cfd0bea18b",
+      "bytes": 71112
     },
     {
       "path": "docs/images/preferences-zh-HK.png",
-      "sha256": "84ac4a2afc538159a3f0adb6db33f5ce92f859fb8baebbb47636c4e45e3c04ef",
-      "bytes": 76000
+      "sha256": "931f2c1c0813eb8e1a27e5a37584fdfc245df60c7dee1376b18ad5a6e3ebf93f",
+      "bytes": 76836
     },
     {
       "path": "docs/images/review-en.png",
-      "sha256": "f7e6390ce0e4031ca04cb79543a41333259b551920a136016f7aa627ab5acac2",
-      "bytes": 149997
+      "sha256": "0b0f55c0c59e876b20eeb80ad6b64fab5879bdf9ad5cae38391335140bb3a25e",
+      "bytes": 151101
     },
     {
       "path": "docs/images/review-ja.png",
-      "sha256": "61566fe0f42f6d9debc9cf0046dabb83ba2ee4fdb023506ac928352b2766744c",
-      "bytes": 171774
+      "sha256": "7414f1a6297cf45e9cb8730160aec898ac121eae7f90c9babe03aede98c0fc37",
+      "bytes": 172997
     },
     {
       "path": "docs/images/review-zh-CN.png",
-      "sha256": "cf8999cc1e177b63cd3295407c8041823ead431e7f1f5e953f9afff7d7607665",
-      "bytes": 140962
+      "sha256": "e4f6282b26eec4331b112cb17b409f295768c2a82fc4770ea593b380dacf19b4",
+      "bytes": 142370
     },
     {
       "path": "docs/images/review-zh-HK.png",
-      "sha256": "2b606ab6e7ef2bf91b2fed738827980c357fa675317a57cc55ea3e14f2b48802",
-      "bytes": 149231
+      "sha256": "12cfcd22ee1fe1ae748f12d326e982b18a0b055e156810e8f69a9411db5f6e78",
+      "bytes": 150486
+    },
+    {
+      "path": "docs/images/speech-player-en.png",
+      "sha256": "07ca501b9c10c509de615090f9cac8282c769289f4b6c5cbd9df27aef03aeb53",
+      "bytes": 151369
+    },
+    {
+      "path": "docs/images/speech-player-ja.png",
+      "sha256": "2a782500f725c5b132b523e0934ffbf01a4d8b20e1bd0ed93f2e1080f4c3e167",
+      "bytes": 172212
+    },
+    {
+      "path": "docs/images/speech-player-zh-CN.png",
+      "sha256": "e72d2d08d471a4215b6941d96bcdd4167b037403d85a50de1f8fe515ca734c9d",
+      "bytes": 146240
+    },
+    {
+      "path": "docs/images/speech-player-zh-HK.png",
+      "sha256": "ec2e60778b2d3b53e39ab6613280e4ea7f3d7ac66557800a827b02eed0bcdc6c",
+      "bytes": 151238
+    },
+    {
+      "path": "docs/images/speech-studio-en.png",
+      "sha256": "858cd10a7c3014ad2525b44eaeb2ecb9ad234be31776c3ee2ac930509a7fd5e8",
+      "bytes": 133346
+    },
+    {
+      "path": "docs/images/speech-studio-ja.png",
+      "sha256": "a7f228f69e7481c40bb2ff4c74b5e7200349d04389e52d2027ea92f4cc0f3aea",
+      "bytes": 141471
+    },
+    {
+      "path": "docs/images/speech-studio-zh-CN.png",
+      "sha256": "7da4ef558c02bcfcc91b717e7a83c4fce3cfafe0e8d0c5ccb5460c9fdac0afbc",
+      "bytes": 129772
+    },
+    {
+      "path": "docs/images/speech-studio-zh-HK.png",
+      "sha256": "4c3155e71fcf4a2af3174242511aeacdb759c35e75b474ff34276df3993e8abc",
+      "bytes": 134290
     },
     {
       "path": "docs/images/subtitles-en.png",
-      "sha256": "972fd6c80ae59e0276994c54ca4dae0dab98510352c00a3825484ce713b790c2",
-      "bytes": 127351
+      "sha256": "0112396938afd6d9fc9c46f37759d7a62eb3b08adaae8321e11a23f7b4a06fb3",
+      "bytes": 129187
     },
     {
       "path": "docs/images/subtitles-ja.png",
-      "sha256": "b3d6265ead176857fbe7809845fae23980b2c30aa43d0cc5c4b9299f3829b40b",
-      "bytes": 131309
+      "sha256": "e1ddb0d75c1628caf37a02e9a732f2c5ed7bd588532b87c2ecb1598143689109",
+      "bytes": 133878
     },
     {
       "path": "docs/images/subtitles-zh-CN.png",
-      "sha256": "ca687ed857b80ae73056e6e12fa950dbbac218a86f648252038514ba3e8dac57",
-      "bytes": 115104
+      "sha256": "c4d9b6182cbfabe88cec6006e6c8b73dddaaaabec4ea7614ea02bc77317e487c",
+      "bytes": 116504
     },
     {
       "path": "docs/images/subtitles-zh-HK.png",
-      "sha256": "4cdd26881cb7ec6fb5993c0f409318d1652a4375a8ddf37834a95bfe4b8a0e28",
-      "bytes": 121829
+      "sha256": "b72d89c839c82460ea9d38dabbb8af424cde8b5a3b040e6f405470977f6a67b6",
+      "bytes": 122837
     },
     {
       "path": "docs/images/timeline-en.png",
-      "sha256": "f721a6ea74a5183763bf6276ac04c1f0ac3f9b96b89557b99b391547de4b5437",
-      "bytes": 193349
+      "sha256": "3c26e4eb2169f7452881aae395533096898ed261749c6b8aa58d3f2690922bac",
+      "bytes": 193351
     },
     {
       "path": "docs/images/timeline-ja.png",
-      "sha256": "6c149c77889998a62f6631d9f4da8540c53074cc94904612104471277635a435",
-      "bytes": 195188
+      "sha256": "13243ae356dc08cbb2bc557a7464f171ba4a3f6bef31e9e3b3ea45d04357c886",
+      "bytes": 195163
     },
     {
       "path": "docs/images/timeline-zh-CN.png",
-      "sha256": "1ef1252b277ac8067b4abd610a18268ae2c95b52d74d051c4c2426559ca55567",
-      "bytes": 174806
+      "sha256": "ea73611a810c5ff15be3a84680559e131c145631ce37b8ec03cd31e47f28dc05",
+      "bytes": 174720
     },
     {
       "path": "docs/images/timeline-zh-HK.png",
-      "sha256": "09575bb23ea1a68e62fac85ccecf2d2dfb0d43d7a9232f76a28bdd7c8ac5a715",
-      "bytes": 183879
+      "sha256": "ad44f6c646d67177e25c406ba8bda716d41d3dc98b197b6a9c0abfb298016c66",
+      "bytes": 183164
     },
     {
       "path": "docs/images/welcome-en.png",
-      "sha256": "8965e6295d0a5597addfcf551d6149de4578eff8600ad3edb3769afe5a1d9446",
-      "bytes": 578480
+      "sha256": "aadd79dae898a5d582e6464a24fbb0989444afab2d3008a95d5875fc15ba97ff",
+      "bytes": 538457
     },
     {
       "path": "docs/images/welcome-ja.png",
-      "sha256": "f474cb00430d7688656ff51de9518c8510659e690c362281bfb4501c47d8e30a",
-      "bytes": 547625
+      "sha256": "fbaf5df018e680eb546506a7328bee5d958992f4264c5bcd5dc49fd003471996",
+      "bytes": 534897
     },
     {
       "path": "docs/images/welcome-zh-CN.png",
-      "sha256": "6017f222845ca383b159b22bdbbd94e656dcb7d3f7f742cbc4e238ab157f1ab4",
-      "bytes": 573030
+      "sha256": "eb87886b9998b3d3aaa07d7fefd1ef663c44cf435e6b829526652d045adfe7d7",
+      "bytes": 573054
     },
     {
       "path": "docs/images/welcome-zh-HK.png",
-      "sha256": "19f1b07586bc01a55747fa2754e51a9ac6894632df8a2aa8408a573d1f80f43e",
-      "bytes": 537044
+      "sha256": "118c0941f60584cf852ee2b4c06def9fc07a1e786589f0162b2a7870d1f07867",
+      "bytes": 536918
+    },
+    {
+      "path": "docs/ja/DEMO.md",
+      "sha256": "6e6d2c3fc34ab8759c0a58f1c9e64dc523514a039df548c4995064b8768cf747",
+      "bytes": 3871
     },
     {
       "path": "docs/ja/GETTING-STARTED.md",
@@ -3265,13 +3375,18 @@
     },
     {
       "path": "docs/ja/LICENSING.md",
-      "sha256": "5d51a45deb6060713607748b8bbb824052780a34b53d35de6c95d1e3d2f40a80",
+      "sha256": "176baf934f2930d60d0fb92f115ad92dbd9d89526ae657802b1d952309e727da",
       "bytes": 2748
     },
     {
       "path": "docs/ja/SCREENSHOTS.md",
-      "sha256": "69182a3a48b4bdea6767e09d9b79fb3bb58411bf71fe416030d9222b563b112b",
-      "bytes": 1073
+      "sha256": "799a27c0861cd3f0b2a54050dcbfbd958e9b3e0a140b86976096f690da152836",
+      "bytes": 1327
+    },
+    {
+      "path": "docs/zh-CN/DEMO.md",
+      "sha256": "a372124cfaec67a7912ea9c12d5f3aa37b464b5c8423c3a4530a3a42a3bbe2ac",
+      "bytes": 3466
     },
     {
       "path": "docs/zh-CN/GETTING-STARTED.md",
@@ -3280,13 +3395,18 @@
     },
     {
       "path": "docs/zh-CN/LICENSING.md",
-      "sha256": "80ad859c82c8a0a9da2b02bc5d3f6ff9b1ff8a6ecd583cf69a8d98be3f6a7033",
+      "sha256": "9fe9f10f109597d6ff48b929fb54743180b2f2bde7b622842adad86476f46da3",
       "bytes": 2214
     },
     {
       "path": "docs/zh-CN/SCREENSHOTS.md",
-      "sha256": "972cd759891d4028041b4963844cfe41531648f29af577cd33c55340fc5a86a8",
-      "bytes": 890
+      "sha256": "366cd1d7ff8292332aedc36fbe72285bc547c27c1aebefed3a36064c699261df",
+      "bytes": 1132
+    },
+    {
+      "path": "docs/zh-HK/DEMO.md",
+      "sha256": "7d2428eb4cf2a804091bf02d87fba181bdfa683063e230447d1896fbf425020d",
+      "bytes": 3454
     },
     {
       "path": "docs/zh-HK/GETTING-STARTED.md",
@@ -3295,13 +3415,13 @@
     },
     {
       "path": "docs/zh-HK/LICENSING.md",
-      "sha256": "7bd7ed645f774a629147e607e603da247a951d1a89f2946e4b6f952fc7898379",
+      "sha256": "111162bc41f24e2fff2e26124653be11f3056b36d14f591074105872e4e79676",
       "bytes": 2245
     },
     {
       "path": "docs/zh-HK/SCREENSHOTS.md",
-      "sha256": "fa0036c47046caea2da84cb3fed867d16f4ca45876019b89b1c8e70e2f364b37",
-      "bytes": 884
+      "sha256": "2e88f70efe5b09694b7ce413ff6e9600c19fc47a808fa38bf1065f59a95f425e",
+      "bytes": 1126
     },
     {
       "path": "licenses/BRANDING-NOTICE.txt",
@@ -12844,6 +12964,126 @@
       "bytes": 5125
     },
     {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Redistribution.html",
+      "sha256": "22c07c097c3eaf8ec93a841b760e25ad75a40718f3ccc3d2f83cd8eeef68a324",
+      "bytes": 62616
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Redistribution.txt",
+      "sha256": "d6e738cb5b6dd69e5f67db0a44a7e61c01114c42bc9ed8a9eeec487677bb1cc8",
+      "bytes": 24005
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Runtime-License.txt",
+      "sha256": "6c675e88b19265ca1fbeb1a8756b3423d34bb41036e603364172038db019d040",
+      "bytes": 6725
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Runtime-Terms.html",
+      "sha256": "699f0c9948e4938bc7657f08de866bbaa3ae8703554b0072b82ae523b6386a5d",
+      "bytes": 235454
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/Microsoft-VC-Runtime-Terms.txt",
+      "sha256": "f1eefe0cfc06e3b56f75a91168eb0d0e5c1a1fa9abd961f5da7ae8d2a42dabbf",
+      "bytes": 3191
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NOTICE.txt",
+      "sha256": "15383157cd3bf7e4cc54b11f91e108336a35302d8a91cf8ce137145e83d62aab",
+      "bytes": 1265
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-12.4.1-EULA.html",
+      "sha256": "c0e213c4c53fbc9b29dc3e8cea0fb06b0498a28eca01858d3611d975dd70f585",
+      "bytes": 85051
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-12.4.1-EULA.txt",
+      "sha256": "ac5fd08faa2b69b1de77184085dd5dd60feb8461a416582d1da30c9178458a97",
+      "bytes": 61906
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-13.3.0-EULA.html",
+      "sha256": "91aea454a943a3394d04eba13aef09dc1546bd9d2cd9cb04ae9ea808ddfff9a3",
+      "bytes": 102279
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/NVIDIA-CUDA-13.3.0-EULA.txt",
+      "sha256": "42f66024b0c4bc025076bb25b6c8198b01ca27dfbc5c8b85687a55d8c4b2cecf",
+      "bytes": 79833
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/provenance.json",
+      "sha256": "b1b60e0d6e40b257e59603d783a3183d767f31b1b57eb03410fe671de2ce9a81",
+      "bytes": 7998
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/LICENSE",
+      "sha256": "8f0b762d062e1ec79a3e73189b29474051c0e957973f43146aefeb03f2e11581",
+      "bytes": 10276
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/cJSON/LICENSE",
+      "sha256": "a36dda207c36db5818729c54e7ad4e8b0c6fba847491ba64f372c1a2037b6d5c",
+      "bytes": 1084
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/cpp-httplib/LICENSE",
+      "sha256": "4b45cbe16d7b71b89ae6127e26e0d90a029198ca5e958ad8e3d0b8bbed364d8b",
+      "bytes": 1075
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/ggml/AUTHORS",
+      "sha256": "2c51d74b1a0b46e074f6f4ef86942b136af196af778a2ac39f34b9a8e983eafb",
+      "bytes": 14694
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/ggml/LICENSE",
+      "sha256": "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+      "bytes": 1099
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/libyaml/License",
+      "sha256": "c40112449f254b9753045925248313e9270efa36d226b22d82d4cc6c43c57f29",
+      "bytes": 1101
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/LICENSE",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "bytes": 11560
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/absl/LICENSE",
+      "sha256": "7871ddb0d7635157a82afc21720d795660a024c59652b7a5b1ed812355320fdc",
+      "bytes": 11568
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/darts_clone/LICENSE",
+      "sha256": "ed8437dc7358a40ef10afd3635ac1cd43c88fbaaaf6cd27c414f8ada5d68f447",
+      "bytes": 1491
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/esaxx/LICENSE",
+      "sha256": "c32d2b3a60ed4b71616dd544f0865e171631ce26d3a3855c43428e61cbf89d67",
+      "bytes": 1136
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/sentencepiece/third_party/protobuf-lite/LICENSE",
+      "sha256": "f4df8b2457697851385d9ebb93267832c1dfa24e0e61881952f6b0c452663dc9",
+      "bytes": 1764
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/external/utf8proc/LICENSE.md",
+      "sha256": "3b510150d34f248a221bb88e1d811238d6c6c18b51231822c42974c39bb07256",
+      "bytes": 5125
+    },
+    {
+      "path": "licenses/tools/drama-full-cuda/source-notices/llama-tokenizer-headers.txt",
+      "sha256": "ee1bffebe0c4d470534f172c5a829ad0484a1cd1a35506bba69e4eee8458c6d0",
+      "bytes": 95
+    },
+    {
       "path": "scripts/app-icon.swift",
       "sha256": "94304d42568ad264429d153c9abe82af3cff8abfaccde724216de123cf436025",
       "bytes": 1234
@@ -12930,8 +13170,8 @@
     },
     {
       "path": "scripts/package_shared_studio.py",
-      "sha256": "478d1c0e43e50f3c41e8b4f1df14fc177a70c21a50043996b6996aa8c435b734",
-      "bytes": 7116
+      "sha256": "a761a959d3f6309f28c63ef1bf90ef5f57bc4556fea60397273e4f907b2eb88d",
+      "bytes": 7224
     },
     {
       "path": "scripts/package_windows.py",
@@ -12945,8 +13185,8 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "9e8e5ce802ebc39da618f6b7fe9f4f3f8e398eb4a36ca7b9b4860e10778acae6",
-      "bytes": 7677
+      "sha256": "b1eb115be9377a08681d4f8e3d409d1fe51589238184d1c79b973b7a825cb2c1",
+      "bytes": 8030
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -12955,8 +13195,8 @@
     },
     {
       "path": "scripts/release_notices.py",
-      "sha256": "dc690f1a7bb770ec798bfeaa30a01b0ad06ca4150b8371581354f8ceeea354a2",
-      "bytes": 7755
+      "sha256": "d16f304aa83907819cb78f99e7d40beec7dd6cacfcbfa6de0a0949766d424ec8",
+      "bytes": 8229
     },
     {
       "path": "scripts/release_privacy.py",
@@ -12985,8 +13225,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "6801503dda241f0e66db6e889fb98f1a472c5f285703475079089eab06802aca",
-      "bytes": 46835
+      "sha256": "d37b06e56812ae4d0e96bfa40dc25ba22eb1f122ed8d21dabf51994886e5e8df",
+      "bytes": 51562
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -13170,12 +13410,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "d28bf363832bc0d902ba4ff085ade93b5ef7995f50e1231f2b979e2a6171cef7",
+      "sha256": "b6e962754bdb7f20e5406f0394da126e61d58919f72fcd5b70e2d8ab3f518e3d",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "59fc3ac3e6de65f55b1e921e445331c409095787896394549732a19239a5a88f",
+      "sha256": "2aceea332939d4826038a3b103569966e69b30cd83865aeb074cc9166c4d81bc",
       "bytes": 543
     },
     {
@@ -13200,12 +13440,12 @@
     },
     {
       "path": "studio/src-tauri/src/main.rs",
-      "sha256": "910bab51163a3c3596a026590b84834b8fa068a7d860e497c80bc723e6d575f0",
-      "bytes": 39664
+      "sha256": "da61c666481125cb610233f1434780089c0ae858559d589daf7d37e5c060070e",
+      "bytes": 44662
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "c5529223f7ed66cd3540f5ec37991b8f1bfe94aa23a8cf1712a4f22d7fa5e266",
+      "sha256": "d06854349cbfb010d04f140f5e31638f7f73dd06b1fc9b10e93a9a1995ed4fe8",
       "bytes": 956
     },
     {
@@ -13215,8 +13455,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "3007b5e955c2c71c40e79d9661df3f9ebe7fca15cbc83753113956131dc9d7e6",
-      "bytes": 172256
+      "sha256": "662b8ca12e615a3c1d3c366846f9e4bfa4a31938a407ebacee5498c705119c3c",
+      "bytes": 177048
     },
     {
       "path": "studio/web/assistant-motion.js",
@@ -13235,13 +13475,13 @@
     },
     {
       "path": "studio/web/help.js",
-      "sha256": "7f5357f5e319cf3314ef6e72702028756a700a8fd2e1caf885a8bec0afbfa363",
-      "bytes": 99922
+      "sha256": "3b10af1c1f9beed4d961ba9a4f0bc7ecc99f78f6a62c3ee69708707cc8f0ce34",
+      "bytes": 107872
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "387451dcc7d19ba685530b4ad6e8b0535877e3b9d1aeac7c5230d48858172352",
-      "bytes": 72891
+      "sha256": "a7e2046462b01d88c6c3d2ccd524a8e27e029e2ae19cc962f3b185bc3477877c",
+      "bytes": 74466
     },
     {
       "path": "studio/web/icons.js",
@@ -13270,13 +13510,13 @@
     },
     {
       "path": "studio/web/locales/ja.js",
-      "sha256": "ba18a8e37dbdb6a75ada87a8272db8770ddf4c19423e3111184ff9ebbe9c3868",
-      "bytes": 175134
+      "sha256": "311120acf36a0d7129484cdaf5fa17a7ef4d9268a4dc2a028ea5f8836dfdb0cb",
+      "bytes": 176821
     },
     {
       "path": "studio/web/locales/zh-CN.js",
-      "sha256": "da7f56562de7dee4f369a727218ffcc4343248c6f1fa739da10f87074d72c74b",
-      "bytes": 124732
+      "sha256": "d44ea21177271a42bd5eccdf6935c28cded387288320e0a09eace049eb257474",
+      "bytes": 126306
     },
     {
       "path": "studio/web/model.js",
@@ -13295,8 +13535,8 @@
     },
     {
       "path": "studio/web/quality-presets.js",
-      "sha256": "d0eac17cbf68c41bf22e8f652a63585bf0454192128d1ab16c75b63f6f7a6017",
-      "bytes": 1989
+      "sha256": "0556ff442d15818f80e57160c814eae28dc7ce35eb5534fa0ad088373563ce08",
+      "bytes": 2048
     },
     {
       "path": "studio/web/queue-order.js",
@@ -13319,9 +13559,14 @@
       "bytes": 1998
     },
     {
+      "path": "studio/web/speech-studio.js",
+      "sha256": "1b8dc9f4a879fd1f74d1ce88c0b1375a37fb4bbfa5dc8f602710dfe8488b65e5",
+      "bytes": 42324
+    },
+    {
       "path": "studio/web/styles.css",
-      "sha256": "4419f461da3fb58c631aa4bc316901864aa6a61ca42fa7b6a72bc4f68cf81ba1",
-      "bytes": 53978
+      "sha256": "bac2bff9b0511d5479ef31ad2952abc45bb2e5f8852f9886ac0f8df07c32cf9a",
+      "bytes": 62605
     },
     {
       "path": "studio/web/workbench.js",
@@ -13590,8 +13835,8 @@
     },
     {
       "path": "tests/shared_queue_ui.cjs",
-      "sha256": "d1db819b86b033f6e0271358795a8a76a13f6323051198476cfb4749461f5177",
-      "bytes": 23641
+      "sha256": "c3fb3067780f1af6c33606fb258e1a3a43114d0fbabc1a1fe27ff3d156a372fe",
+      "bytes": 23768
     },
     {
       "path": "tests/shared_review_diagnostics_ui.cjs",
@@ -13612,6 +13857,11 @@
       "path": "tests/shared_roles_ui.cjs",
       "sha256": "4e8373a6d90026560baffe5c765ba0e45f0660fcd0767b17d710211e86e49ccb",
       "bytes": 4414
+    },
+    {
+      "path": "tests/shared_speech_ui.cjs",
+      "sha256": "b8f0c0178179dd334c1603b5828f44cc72cc2a83ecc44772f873e5a0757049df",
+      "bytes": 8455
     },
     {
       "path": "tests/shared_studio_actions.cjs",
@@ -13662,6 +13912,11 @@
       "path": "tests/shared_workspace_entry_ui.cjs",
       "sha256": "0e0136d50f6e1ac552715dbdbd804e16e539830c7b9a96b85d983424d5660f2c",
       "bytes": 5400
+    },
+    {
+      "path": "tests/speech_studio_server.py",
+      "sha256": "44b62f1942effb5c6afbd9e96e187fbeeddf27b97edcf703832b37e130dc3fac",
+      "bytes": 4474
     },
     {
       "path": "tests/test_acoustics.py",
@@ -14314,6 +14569,16 @@
       "bytes": 5651
     },
     {
+      "path": "tests/test_speech_studio.py",
+      "sha256": "9266a5fbdda75654b8113021c4367bbfeab041d0fd517f872eb0e4692a9e1552",
+      "bytes": 6956
+    },
+    {
+      "path": "tests/test_speech_studio_versions.py",
+      "sha256": "114e3e8bef7045604c5e9b157cd39945a35ec55ac94192781150fed7d3a3f704",
+      "bytes": 12064
+    },
+    {
       "path": "tests/test_speech_timing.py",
       "sha256": "e4b01b654500c418f076db618ec28fbceafe2f4842bf6f4fca65ee1c504ec903",
       "bytes": 4181
@@ -14425,13 +14690,18 @@
     },
     {
       "path": "tests/test_windows_cuda_setup.py",
-      "sha256": "8eb9d1b5dbf61521112ecaf20cdc6eebdb435797150115efc4437cb49a38ebed",
-      "bytes": 5681
+      "sha256": "0b7f19aff939cc0e349edd3c672639531d0da06f009e07937c3f231363d62b2f",
+      "bytes": 5692
     },
     {
       "path": "tests/test_windows_desktop_state.py",
       "sha256": "884cc6a41aaaaeb56d84530e788136c0af85f9fefdc848515ea048ac7e173c98",
       "bytes": 11236
+    },
+    {
+      "path": "tests/test_windows_full_drama_cuda.py",
+      "sha256": "bf74df5a336574e0d264c938458684c0a93757a906fe386589dea49bbd9756ce",
+      "bytes": 10031
     },
     {
       "path": "tests/test_windows_local_deployment.py",
@@ -14497,6 +14767,11 @@
       "path": "tests/windows_desktop_qa.py",
       "sha256": "f340dbde15a6a9b37dd621f566bb19975a6d7d83930baa53d501c4f935b137b2",
       "bytes": 5244
+    },
+    {
+      "path": "tests/windows_full_drama_cuda_ui.cjs",
+      "sha256": "af8076e3216634f103be1dd70f0c42390d9eff7344425b1fb80c9e4a8cf34c48",
+      "bytes": 6173
     },
     {
       "path": "tests/windows_media_qa.py",
@@ -14599,9 +14874,14 @@
       "bytes": 3266
     },
     {
+      "path": "windows/drama_full_cuda.py",
+      "sha256": "2992836b402f0fc26db41eae17e9f8a969054cee6588ddedae2eb6c828cac4cf",
+      "bytes": 4680
+    },
+    {
       "path": "windows/gpu.py",
-      "sha256": "a9dabf8ec7c618ca28975091270c5a7f12cc686ce699e51cc5e43427487b1a97",
-      "bytes": 8010
+      "sha256": "328f22aac05c3fbb8411e75fb49a1b801410d32a1552b67d6b887929753acebf",
+      "bytes": 8127
     },
     {
       "path": "windows/install.py",
@@ -14650,8 +14930,8 @@
     },
     {
       "path": "windows/memory_plan.py",
-      "sha256": "2d9a37390b7522252a55532e52518df6a90d177aceb1a6b25dd6c9a38d691f77",
-      "bytes": 2615
+      "sha256": "6400f1e939ad4d902c17bd15591931e8f891a7662ecffe256423abf608c2bcec",
+      "bytes": 2982
     },
     {
       "path": "windows/models.json",
@@ -14665,8 +14945,8 @@
     },
     {
       "path": "windows/native-tools.json",
-      "sha256": "1bb9dec73adc2c0393ecab1b8d2e8ad6d3e6817641ccba85df0a8c2925213f1d",
-      "bytes": 1327
+      "sha256": "53c6ad61b987c4de3759c788ac8ac50b49c12664429a5c90b7af8ae00009ddf4",
+      "bytes": 3437
     },
     {
       "path": "windows/native_asr.py",
@@ -14685,13 +14965,13 @@
     },
     {
       "path": "windows/native_licenses.py",
-      "sha256": "9151fadc7092ffb570e136a5f1677d1157333ca4091edaf721e0e6643b86ab0e",
-      "bytes": 1803
+      "sha256": "e19aa5cb742dfa14a5c78b3c22a6155d2d260626d241933a66af939f369ac94f",
+      "bytes": 2509
     },
     {
       "path": "windows/native_models.py",
-      "sha256": "43ee0c2d2120e1037fffe864e731c28b3231c4ed9be26d44d00a2d7e21e9fd84",
-      "bytes": 5180
+      "sha256": "45d86540b2375d3b3b7c6dde32b451e3199a5df9b40dbf825f1342624c5e553f",
+      "bytes": 6106
     },
     {
       "path": "windows/native_service.py",
@@ -14700,8 +14980,8 @@
     },
     {
       "path": "windows/native_setup.py",
-      "sha256": "f02e478a1f4e6e479c0781c0c00829731b0f30bcbd5706860a22ec8f788962d9",
-      "bytes": 22845
+      "sha256": "5b359f36ffee465b7732ab64b3a596e27dcee079731c548b08a4fd9c8bcf18b5",
+      "bytes": 24682
     },
     {
       "path": "windows/native_tools.py",
@@ -14820,8 +15100,8 @@
     },
     {
       "path": "windows/setup_inventory.py",
-      "sha256": "0a10d023c378f5f0345483e938667d2d36443cc01244a1699d7f36ac9d9c4888",
-      "bytes": 4451
+      "sha256": "ba9f7a1ce1090f3bdb0031b25245e4074ddc2bfbe5ab664e2c3aab50ab8108c2",
+      "bytes": 5378
     },
     {
       "path": "windows/shared_backend.py",

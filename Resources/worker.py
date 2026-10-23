@@ -1294,14 +1294,17 @@ def render_review(request):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=["translate-cue", "render-project", "rebuild-dialogue", "download-speech", "batch", "detect-op", "auto-speakers", "shorten-cue", "import-reference", "prepare-reference", "preview-separation", "preview-voice", "preview-ocr", "render", "convert", "download-stt", "download-model"])
+    parser.add_argument("action", choices=["speech-studio", "translate-cue", "render-project", "rebuild-dialogue", "download-speech", "batch", "detect-op", "auto-speakers", "shorten-cue", "import-reference", "prepare-reference", "preview-separation", "preview-voice", "preview-ocr", "render", "convert", "download-stt", "download-model"])
     parser.add_argument("config")
     args = parser.parse_args()
     cfg = json.loads(Path(args.config).read_text())
     if cfg.get('storage'):
         from project_store import migrate
         migrate(cfg['storage'])
-    if args.action == 'render-project':
+    if args.action == 'speech-studio':
+        import speech_studio
+        speech_studio.process(sys.modules[__name__],cfg)
+    elif args.action == 'render-project':
         import project_edit
         project_edit.render(sys.modules[__name__], cfg)
     elif args.action == 'download-speech':

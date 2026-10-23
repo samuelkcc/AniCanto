@@ -81,4 +81,7 @@ def records(resources):
     if dictionaries.is_file():
         for record in json.loads(dictionaries.read_text()):
             rows.append(dict(name='Open JTalk dictionary and bundled Mei voice ('+record['platform']+')',version=record['version'],license='BSD-3-Clause dictionary; CC-BY-3.0 Mei voice; MIT adapter',origin='Exact published wheel; voice is unused by AniCanto',files=['licenses/text-data/pyopenjtalk-evidence.json']+[doc['path'] for doc in record['documents']]))
+    cuda=resources/'licenses/tools/drama-full-cuda'
+    if cuda.is_dir():
+        rows.append(dict(name='Complete Drama 3 NVIDIA CUDA runtime (optional Windows download)',version='v0.9.2-drama3-base-small',license='Apache-2.0, MIT, component notices; NVIDIA CUDA and Microsoft runtime terms',origin='Pinned binary archives and exact source evidence; downloaded on demand',files=[str(p.relative_to(resources)) for p in cuda.rglob('*') if p.is_file() and p.suffix!='.html']))
     return rows

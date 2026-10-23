@@ -45,7 +45,7 @@ func runSharedStudioBridgeIfNeeded() -> Bool {
             output(["stage":"Setup complete","message":"Models and runtimes verified.","selections":selections,"progress":1])
         case "--studio-task":
             guard args.count==4 else {throw AppFailure(message:"Missing studio action or request.")}
-            let actions=Set(["batch","convert","render-project","prepare-reference","import-reference","preview-separation","translate-cue","shorten-cue","auto-speakers"])
+            let actions=Set(["speech-studio","batch","convert","render-project","prepare-reference","import-reference","preview-separation","translate-cue","shorten-cue","auto-speakers"])
             guard actions.contains(args[2]) else {throw AppFailure(message:"Unsupported studio action.")}
             let cfg=try JSONSerialization.jsonObject(with:Data(contentsOf:URL(fileURLWithPath:args[3]))) as! [String:Any]
             if !engine.runtimeReady {try engine.installRuntime()}

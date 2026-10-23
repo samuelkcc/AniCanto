@@ -55,6 +55,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
       if(options.badSnapshot===p.id)throw Error('Fixture snapshot unavailable');
       return {root:'/jobs/'+p.id,takes:[],review:{config:{duration:6}},issues:p.id==='a'?(options.reviewIssues||[]):[],reviewState:{pending:p.id==='a'?(options.reviewIssues||[]).length:0}};
      }
+     if(args.op==='speech-library')return {folder:{id:'speech-studio',name:'Dubbing studio'},clips:[],parameters:{},draft:{}};
      if(args.op==='models'||args.op==='model-choices'||args.op==='licenses')return [];
      if(args.op==='plan')return {setupReady:true,downloads:[],roles:{}};
      if(args.op==='save-draft')return {};

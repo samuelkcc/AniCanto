@@ -33,5 +33,63 @@
       "cublasLt64_12.dll"
     ],
     "extractSuffix": ".dll"
+  },
+  "drama-full-cuda12": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-bin-windows-x64-cuda12.4.zip",
+    "sha256": "48852da40790c40f3285bca6c53ff7829b3963080f0e95b6742f868fc1d7c757",
+    "size": 464268606,
+    "version": "v0.9.2-drama3-base-small",
+    "cudaVersion": "12.4",
+    "requiredFiles": [
+      "audiocpp_server.exe",
+      "ggml.dll",
+      "ggml-base.dll",
+      "ggml-cuda.dll",
+      "ggml-cpu-x64.dll"
+    ],
+    "extractRuntime": true
+  },
+  "drama-full-cudart12": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-cudart-windows-x64-cuda12.4.zip",
+    "sha256": "4b1186a525c9ac70a4fbd031b47e0dfca2ebaa36cfcb760d5be1a76eb2b12da5",
+    "size": 607273675,
+    "version": "v0.9.2-drama3-base-small",
+    "cudaVersion": "12.4",
+    "requiredFiles": [
+      "cudart64_12.dll",
+      "cublas64_12.dll",
+      "cublasLt64_12.dll",
+      "cufft64_11.dll"
+    ],
+    "extractRuntime": true
+  },
+  "drama-full-cuda13": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-bin-windows-x64-cuda13.3.zip",
+    "sha256": "b570efa4b17c2aa32c431c653489c009b58f57f60d68782b3b94b6c06304a9e8",
+    "size": 275837338,
+    "version": "v0.9.2-drama3-base-small",
+    "cudaVersion": "13.3",
+    "requiredFiles": [
+      "audiocpp_server.exe",
+      "ggml.dll",
+      "ggml-base.dll",
+      "ggml-cuda.dll",
+      "ggml-cpu-x64.dll"
+    ],
+    "extractRuntime": true
+  },
+  "drama-full-cudart13": {
+    "url": "https://github.com/0xShug0/audio.cpp/releases/download/v0.9.2-drama3-base-small/audio-v0.9.2-drama3-base-small-cudart-windows-x64-cuda13.3.zip",
+    "sha256": "cf58e70c53db680af5e4b8e5ef538ffd1d81bd489ef49843fe486fcd079c9182",
+    "size": 575457454,
+    "version": "v0.9.2-drama3-base-small",
+    "cudaVersion": "13.3",
+    "requiredFiles": [
+      "cudart64_13.dll",
+      "cublas64_13.dll",
+      "cublasLt64_13.dll",
+      "cufft64_12.dll"
+    ],
+    "extractRuntime": true
   }
 }

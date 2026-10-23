@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02459) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
+[Download](#download-the-beta--02463) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
 
 ## Why AniCanto exists
 
@@ -26,15 +26,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.59
+## Download the Beta · 0.24.63
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto-macOS-0.24.59.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-macOS-0.24.63.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
 
 ## What’s new in this Beta
 
-- Basic mode now fills the workspace, with a flexible preview above progress and line audition.
-- Expert mode has a full-window timeline at the bottom; progress sits directly below the preview.
-- Refreshed light-purple screenshots and four-language pages, with English as the default and a bilingual introduction.
+- Dubbing studio: type or record, check the transcript, translate, generate and keep separate audio versions.
+- Windows NVIDIA CUDA option for full Drama 3 Q2, with separate system-RAM and VRAM estimates.
+- New screenshots and a downloadable original demo plus Mac Drama 3 comparison movies.
 
 ## Choose your computer setup
 
@@ -43,9 +43,11 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 | Platform | Recommended system and memory | How Drama 3 runs |
 | --- | --- | --- |
 | **Mac** | Apple Silicon, macOS 14+; **64 GB+ unified memory recommended** | Full 4-bit MLX on Apple Silicon GPU / unified memory; approximately 28 GB estimated |
-| **Windows** | Windows 10 / 11 x64; **32 GB RAM minimum, 64 GB offers more headroom** | Full GGUF Q2 **on the CPU**; approximately 22 GB system RAM estimated |
+| **Windows** | Windows 10 / 11 x64; **32 GB RAM minimum, 64 GB offers more headroom** | Full GGUF Q2: **NVIDIA CUDA when supported**, or CPU for AMD / Intel / integrated graphics. System RAM is still required. |
 
-**On Windows, Drama 3 currently has no NVIDIA, AMD or Intel GPU acceleration.** Even with a dedicated graphics card, Drama 3 uses the CPU and system RAM. Other supported models may use the GPU depending on the card and driver; dedicated VRAM does not replace the RAM Drama 3 needs. This exact Windows package still needs testing on a Windows PC.
+**Windows now offers NVIDIA CUDA acceleration for full Drama 3 Q2.** In model setup, choose **Drama 3 processing → Automatic** or **NVIDIA · CUDA**. Automatic uses CUDA when the device, memory and deployment checks support it; choose CPU for AMD, Intel or integrated graphics. The app shows system RAM and VRAM separately and downloads the matching acceleration program and libraries. It reuses the same Q2 weights instead of downloading a second model. A compatible NVIDIA driver is required.
+
+The author’s preliminary Windows tests report substantially faster Drama 3 generation with CUDA. This is not a fixed speed multiplier or proof of compatibility with every card. **Some recognition and checking stages still use the CPU; CUDA does not accelerate the entire workflow.**
 
 A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may cause swapping, severe slowdown or loading failure. Memory figures are planning estimates. Allow **100 GB+ free storage** for models, runtimes and working files; long videos need more.
 
@@ -57,7 +59,7 @@ In the author’s repeated scene-by-scene listening tests, **full Drama 3 has gi
 
 ### Tested computers and realistic expectations
 
-The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified memory**, and a **Windows laptop with an NVIDIA graphics card with 16 GB VRAM and 32 GB system RAM**. The release-validation standard is to complete an end-to-end conversion on both machines. Check each release’s notes for outstanding platform checks; the latest Windows Drama 3 fixes still need confirmation on the Windows test machine. Testing these two configurations does not establish compatibility with every computer.
+The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified memory**, and a **Windows laptop with an NVIDIA graphics card with 16 GB VRAM and 32 GB system RAM**. The release-validation standard is to complete an end-to-end conversion on both machines. Check each release’s notes for outstanding platform checks; The latest Windows NVIDIA CUDA update has passed the author’s preliminary desktop test with a clear speed improvement; this remains limited to the tested configuration and workload. Testing these two configurations does not establish compatibility with every computer.
 
 **Author-reported timing with full Drama 3 on the M2 Max: approximately 1:2 video-to-processing time** — a 30-minute video takes about 60 minutes to convert, including automatic AI repair for roughly 8–10% of dialogue lines in those tests. This is an example from the author’s workload, not a promised speed or a Windows estimate. Scene complexity, model settings, repairs, storage and memory pressure can change the total substantially.
 
@@ -75,10 +77,17 @@ If your configuration behaves differently, please [report the problem](https://g
 | **Local batch processing** | Queue videos, reorder waiting items, pause, save and resume. Processing can run offline after model setup. |
 | **Model & download management** | See installed models, missing downloads and estimated memory needs; check or repair files before switching. |
 | **Saved projects & versions** | Keep scripts, recordings and review notes together. Make another export without overwriting the previous movie. |
+| **Standalone Dubbing studio** | Turn typed text or a recording into editable Cantonese speech, then save versions, learn with both texts and export a WAV. |
 
-### Coming next: Dubbing studio and voice recording
+### Dubbing studio: from text or your recording to a saved clip
 
-A dedicated **Dubbing studio** is being added for macOS and Windows, with the same workflow being coordinated for iPad. Enter Japanese or English text, or record/import your own speech, then use local AI to prepare an editable Cantonese script. Adjust voice controls, generate and listen before saving each clip to its own player folder. The folder’s displayed name follows the interface language. Recording uses automatic source-language detection, without a Japanese/English restriction; actual recognition and voice imitation depend on the installed models and recording quality. **This feature is under development and is not included in the 0.24.59 downloads above.**
+Available in **Basic and Expert modes**, without importing a video. Type Japanese or English text, or record/import your speech. Recording detects the source language automatically, subject to the installed model’s coverage.
+
+1. **Check & translate** — Correct the recognised source text, choose a local translation model and edit the Cantonese script.
+2. **Generate & listen** — Choose an installed voice engine, a preset reference or your recorded voice where supported, and adjust speech speed and supported generation parameters. Voice imitation needs a clear, complete 3–10 second reference.
+3. **Save & compare** — Keep immutable takes in the separate **Dubbing studio** player folder. Compare original and generated audio with both texts, change playback speed, loop a part, rename/export a WAV or delete one version. The category name follows the interface language.
+
+Independent listening checks flag uncertain words and language problems. Optional repair makes at most two additional attempts per confirmed faulty part; uncertain spelling alone does not replace a take. Flagged recordings can be saved after explicit listening acceptance. Earlier versions remain available.
 
 ### AI automatic repair
 
@@ -114,6 +123,7 @@ Automatic subtitle selection checks a matching external file, then embedded text
 | **Video input** | MP4 · MKV · MOV · M4V · AVI · WebM · TS |
 | **External subtitles** | SRT · ASS · SSA · VTT |
 | **Finished output** | MP4 with the selected audio and subtitle tracks. |
+| **Dubbing studio audio** | WAV · MP3 · M4A · FLAC · WebM · OGG input; WAV export. |
 
 An accepted extension still needs readable audio and video codecs. Burned-in captions can be read with OCR, but cannot always be cleanly removed from the picture.
 
@@ -144,6 +154,25 @@ Recordings and previous exports are retained. New languages, models or changed s
 
 [Subtitle import guide](docs/en/GETTING-STARTED.md)
 
+## Try the original demo and compare the voices
+
+[![AniCanto original demo](docs/images/demo-v7-en.png)](docs/en/DEMO.md)
+
+Download the **three-minute original Japanese sample**, add it to AniCanto and try your own Cantonese or English conversion. The artwork, music and synthetic voices were prepared for this project; this sample contains no commercial anime footage or professional actor recording.
+
+For listening comparison, the **Mac Drama 3 movie** defaults to Cantonese and also retains English and Japanese audio tracks. Switch tracks in a compatible player. Its Cantonese and English scripts were edited before generation: it demonstrates the voice model, **not an untouched one-click translation benchmark**, and is not an iPad CosyVoice conversion. All four picture-language editions have the same source speech.
+
+| Picture language | Japanese original · try converting | Mac Drama 3 · listen & compare |
+| --- | --- | --- |
+| English | [Original MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-en.mp4) | [Comparison MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-en.mp4) |
+| 繁體中文 | [Original MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-HK.mp4) | [Comparison MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-HK.mp4) |
+| 简体中文 | [Original MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-CN.mp4) | [Comparison MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-CN.mp4) |
+| 日本語 | [Original MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-ja.mp4) | [Comparison MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-ja.mp4) |
+
+**[Download the complete demo kit](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-kit-v7.zip)** — Includes all four picture languages, original Japanese MP4s, Mac Drama 3 comparison movies and matching Japanese source subtitles.
+
+[Demo details and subtitles](docs/en/DEMO.md)
+
 ## Inside the current app
 
 Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
@@ -156,13 +185,13 @@ Choose the interface language, prepare local models, and enter Basic or Expert m
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=preview-off)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.63)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=preview-off)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.63)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
@@ -171,6 +200,20 @@ Use the full-width timeline to compare source dialogue and dubbing scripts, adju
 ![Review report: issues and recording comparison](docs/images/review-en.png)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
+
+### Dubbing studio and saved clips
+
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.63)
+
+Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
+
+![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.63)
+
+### Windows: NVIDIA CUDA setup
+
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.63)
+
+Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 
 [See every interface screenshot](docs/en/SCREENSHOTS.md)
 
@@ -190,7 +233,7 @@ A saved movie can still be played while notes remain. The report tells you which
 <details>
 <summary><strong>Why can a conversion take a long time?</strong></summary>
 
-Dialogue density, model loading, memory pressure, separation and repeated speech generation all affect the time. Full Drama 3 uses the CPU on Windows and can be very slow. More unused RAM does not itself make inference faster; there is no fixed conversion-time promise.
+Dialogue density, model loading, memory pressure, separation and repeated speech generation all affect the time. NVIDIA CUDA can speed up Drama 3 on supported Windows systems; the CPU option is slower, and some recognition/checking steps remain on the CPU. More unused RAM alone does not make inference faster. There is no fixed conversion-time promise.
 
 </details>
 

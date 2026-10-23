@@ -73,6 +73,7 @@ def bundle():
     (resources/'license-inventory.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
     with (contents/'Info.plist').open('rb') as f:info=plistlib.load(f)
     info.update(CFBundleIdentifier='com.sckc.cantosync.studio',CFBundleDisplayName='AniCanto',CFBundleName='AniCanto',CFBundleExecutable='AniCanto',CFBundleIconFile='AniCanto.icns',NSHighResolutionCapable=True,NSHumanReadableCopyright='Copyright © 2026 SCKC')
+    info['NSMicrophoneUsageDescription']='Record your voice for local Cantonese dubbing in Dubbing studio.'
     with (contents/'Info.plist').open('wb') as f:plistlib.dump(info,f)
     for name in ('CantoSync','CantoSync-worker'):(contents/'MacOS'/name).unlink(missing_ok=True)
     for name in ('CantoSync.icns','CantoSync-icon.png'):(resources/name).unlink(missing_ok=True)
