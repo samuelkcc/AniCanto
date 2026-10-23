@@ -62,7 +62,7 @@ class NormalModeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             job=Path(d);old=audio(job/'old.wav');new=audio(job/'new.wav')
             with patch.object(normal_mode,'inspect',return_value={1:dict(decision='unconfirmed',language='Chinese')}),patch('dubbing.gsv_audio',return_value=[new]):
-                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal',preferFirstAudibleTake=False),job,[dict(start=0,end=2,cantonese=text,speakerId='own')],[old],Mock(),Mock()),[old])
+                self.assertEqual(normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal',preferFirstAudibleTake=False),job,[dict(start=0,end=2,cantonese=text,speakerId='own')],[old],Mock(),Mock()),[old])
             report=json.loads((job/'normal-checks.json').read_text());self.assertEqual(report['unresolved'],[1]);self.assertEqual(report['repairs'][0]['reason'],'dialect-unconfirmed')
     def test_clear_nonlexical_cry_with_no_translation_is_not_missing_dialogue(self):
         from dubbing import is_vocalization
@@ -90,7 +90,7 @@ class NormalModeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             job=Path(d);original=audio(job/'original.wav',8);good=audio(job/'good.wav')
             cues=[dict(start=0,end=1,cantonese='點解你知呀',speakerId='own-line-18')]
-            cfg=dict(productionMode='normal',ttsBackend='drama3',targetLanguage='yue')
+            cfg=dict(normalRepairPolicy='verified',productionMode='normal',ttsBackend='drama3',targetLanguage='yue')
             before=original.read_bytes();seen=[]
             def generate(c,folder,rows,run,emit):
                 seen.append(copy.deepcopy(rows));self.assertEqual(rows[0]['speakerId'],'own-line-18');return [good]
@@ -107,14 +107,14 @@ class NormalModeTests(unittest.TestCase):
             folder=Path(d);old=audio(folder/'old.wav');new=audio(folder/'new.wav')
             cue=dict(start=0,end=1,cantonese='我哋一齊出發啦',speakerId='own')
             with patch.object(normal_mode,'inspect',side_effect=[{1:dict(decision='mandarin')},{1:dict(decision='unconfirmed')},{1:dict(decision='unconfirmed')}]),patch('dubbing.gsv_audio',return_value=[new]):
-                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal',preferFirstAudibleTake=False),folder,[cue],[old],Mock(),Mock()),[old])
+                self.assertEqual(normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal',preferFirstAudibleTake=False),folder,[cue],[old],Mock(),Mock()),[old])
             self.assertEqual(json.loads((folder/'normal-checks.json').read_text())['unresolved'],[1])
 
     def test_default_retries_confirmed_wrong_language_and_keeps_original_if_unresolved(self):
         with tempfile.TemporaryDirectory() as d:
             folder=Path(d);first=audio(folder/'first.wav');cue=dict(start=0,end=2,cantonese='橡皮，橡皮',speakerId='own')
             with patch.object(normal_mode,'inspect',return_value={1:dict(decision='japanese',languageFailure='japanese')}),patch('dubbing.gsv_audio') as generate:
-                self.assertEqual(normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[first],Mock(),Mock()),[first])
+                self.assertEqual(normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal'),folder,[cue],[first],Mock(),Mock()),[first])
                 self.assertEqual(generate.call_count,2)
             report=json.loads((folder/'normal-checks.json').read_text())
             self.assertEqual(report['unresolved'],[1])
@@ -153,9 +153,9 @@ class NormalModeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             folder=Path(d);cue=dict(start=0,end=1,cantonese='我哋而家一齊出發啦',speakerId='own')
             with patch.object(normal_mode,'inspect',return_value={}),patch('dubbing.gsv_audio',return_value=[]) as generate:
-                chosen=normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[],Mock(),Mock())
+                chosen=normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal'),folder,[cue],[],Mock(),Mock())
                 self.assertEqual(len(chosen),1);self.assertEqual(generate.call_count,2)
-                normal_mode.repair_paths(dict(productionMode='normal'),folder,[cue],[],Mock(),Mock())
+                normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal'),folder,[cue],[],Mock(),Mock())
                 self.assertEqual(generate.call_count,2)
             report=json.loads((folder/'normal-checks.json').read_text())
             self.assertEqual(report['unresolved'],[1]);self.assertEqual(report['maximumLocalAttempts'],2)
@@ -166,7 +166,7 @@ class NormalModeTests(unittest.TestCase):
             self.assertFalse(normal_mode.major_omission(expected,heard))
 
     def test_normal_retains_nonverbal_performances_fast_stays_unchecked(self):
-        self.assertTrue(fast_mode.configure(dict(productionMode='normal'))['preserveNonverbal'])
+        self.assertTrue(fast_mode.configure(dict(normalRepairPolicy='verified',productionMode='normal'))['preserveNonverbal'])
         self.assertFalse(fast_mode.configure(dict(productionMode='fast'))['preserveNonverbal'])
 
     def test_written_mandarin_is_retranslated_without_changing_proper_names(self):

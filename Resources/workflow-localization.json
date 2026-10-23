@@ -174,7 +174,11 @@
     "完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。": "The complete recording still exceeds its safe window after bounded timing and small tempo adjustments. Script and audio were retained without truncation or large acceleration.",
     "數數對白修正": "Spoken counting repair",
     "有完整錄音超時；一次輕量檢查畫面切換邊界，作診斷參考；實際微調以對白及保留原聲範圍為準。唔載入視覺 AI 模型。": "Complete recordings exceed their time slots. Visual cuts are diagnostic only; timing follows dialogue and preserved source ranges. No vision AI model is loaded.",
-    "等待原生生成（未提供逐幀進度）": "Waiting for native generation (frame progress unavailable)"
+    "等待原生生成（未提供逐幀進度）": "Waiting for native generation (frame progress unavailable)",
+    "一般錄音保留": "Retaining audible recordings",
+    "一般補回缺聲": "Restoring missing audio",
+    "獨立覆聽": "Independent listening",
+    "有聲錄音保留；語言及漏句疑點供人工覆聽，未標為檢查通過。": "Audible recordings retained; language and missing-word concerns remain for review, not certified as passed."
   },
   "patterns": [
     [
@@ -328,6 +332,18 @@
     [
       "^.*校稿第 (\\d+) 句（(\\d+)/(\\d+)）$",
       "Synthesizing dialogue line $1 ($2/$3)."
+    ],
+    [
+      "^獨立覆聽已保存 (\\d+)/(\\d+) 句；未確認錄音保留。$",
+      "Independent listening saved $1/$2 recordings; unconfirmed recordings retained."
+    ],
+    [
+      "^獨立覆聽仍在運作；已保存 (\\d+)/(\\d+) 句；本批已用 (\\d+) 秒。$",
+      "Independent listening is active; $1/$2 saved; current batch $3 seconds."
+    ],
+    [
+      "^保留 (\\d+)/(\\d+) 句有聲錄音；冇按語言標籤、口音或漏句疑點自動重錄。$",
+      "Retained $1/$2 audible recordings; language labels, accent and suspected missing words did not trigger retakes."
     ]
   ]
 }

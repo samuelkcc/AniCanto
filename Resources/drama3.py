@@ -246,6 +246,8 @@ def _synthesize(cfg,emit):
     with contextlib.redirect_stdout(sys.stderr):model=load(cfg)
     failures=[]
     for i,item in enumerate(cfg['items']):
+        from normal_policy import finish_requested
+        if finish_requested(cfg):break
         check(cfg);path=Path(item['output']);started=time.monotonic()
         failure_path=path.with_suffix('.failure.json')
         if not (path.is_file() and (path.stat().st_size>44 if one_pass(cfg) else healthy(path))):

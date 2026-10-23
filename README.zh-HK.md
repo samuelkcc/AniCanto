@@ -22,15 +22,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AI 可以協助探索語言同試做配音，但生成結果仍可能有口音、錯字或演繹不足，唔等同專業演出。希望大家享受呢個小作品之餘，繼續欣賞同支持熟悉聲音背後嘅表演者。
 
-## 下載 Beta · 0.24.63
+## 下載 Beta · 0.24.64
 
-**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-macOS-0.24.63.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
+**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto-macOS-0.24.64.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.64-beta)
 
 ## 今個 Beta 新增咗乜
 
-- 新增配音器：打字或錄音、核稿翻譯、生成試聽，再分開保存錄音版本。
-- Windows 完整 Drama 3 Q2 加入 NVIDIA CUDA 選項，分開顯示系統 RAM 同 VRAM 預算。
-- 更新介面圖，提供原創測試原片同 Mac Drama 3 比較成品下載。
+- 穩定性修正：一般模式保留首輪有聲錄音，補缺聲及局部改短超時對白；語言同漏句疑點唔再觸發反覆自動重錄。
+- Mac 可選 MLX Whisper 加速覆聽；每句即時保存、顯示進度，超時後可接續未完成部分。
+- 可用已保存錄音直接輸出；保留配音器及 Windows NVIDIA CUDA 選項。
 
 ## 先睇電腦配置
 
@@ -87,13 +87,15 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 
 ### AI 自動修復流程
 
-一般模式會先生成配音，再檢查同嘗試局部修復：
+一般模式而家優先保留首輪有聲錄音：
 
-1. **檢查**：覆聽配音並對照台詞，找出冇聲、語言錯誤、漏字同時長問題。
-2. **修復**：只針對有問題句子重試，按需要調整台詞或時間；啟用相關設定時，亦會嘗試其他已安裝模型或後備聲線。
-3. **校對**：剩低嘅疑點會列喺校對報告，可以直接試聽、重錄或揀已保存錄音，再匯出新版，保留原有成品。
+1. **保留**：有聲錄音照用；語言、口音同漏句疑點只留覆核提示。
+2. **補聲**：無聲或損壞自動補，最多兩次額外嘗試；實際超時嘅對白仍會局部保留意思改短，新錄音適合時段先採用；唔因語言疑點重錄。
+3. **按需要校對**：逐句試聽、揀已保存錄音或手動重錄；偏好設定仍可明確揀詳細自動檢查。
 
-口音、情緒同聲線相似度，仍然需要自己聽返確認。
+Apple Silicon 可選 **MLX Whisper** 加速覆聽（模型約 3.1 GB）；每句完成即保存及沿用，超時唔會白做已完成部分。同一批 102 句測試：CPU 約 18 分 16 秒，MLX 約 2 分 45 秒。呢個只係覆聽階段速度，辨識結果仍可能不同。
+
+[檢查及修復詳情](docs/INDEPENDENT-LISTENING.md)
 
 ### 實驗功能：其他來源語言
 
@@ -179,13 +181,13 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 ### 基本模式：進度及試聽
 
-![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.24.63)
+![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.24.64)
 
 加入影片、揀配音語言同輸出資料夾，再跟進處理及逐句試聽；預覽可以保持關閉，由小助手陪住你。
 
 ### 專家模式：時間軸及逐句編輯
 
-![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.24.63)
+![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.24.64)
 
 用橫跨底部嘅時間軸比較原聲對白同配音稿、調整時間，亦可以為所選一句即時生成另一條錄音。
 
@@ -197,15 +199,15 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 ### 配音器與已保存片段
 
-![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.24.63)
+![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.24.64)
 
 核對原稿同廣東話譯稿，再生成及保存不同錄音；播放器可對照原聲、配音同兩份文字。
 
-![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.24.63)
+![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.24.64)
 
 ### Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.24.63)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.24.64)
 
 可揀自動偵測、NVIDIA CUDA 或 CPU，分開顯示系統 RAM、VRAM 同額外 CUDA 下載；圖片展示部署選項，唔係速度測試成績。
 

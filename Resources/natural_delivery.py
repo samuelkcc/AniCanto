@@ -42,6 +42,8 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
     w=SimpleNamespace(atomic_json=atomic_json,ollama_chat=ollama_chat)
     audit=[]
     for attempt in range(2):
+        from normal_policy import finish_requested
+        if finish_requested(cfg):break
         if placement is not None:
             from natural_schedule import prepare
             placement=prepare(cfg,job,cues,selected,run,emit)
@@ -104,15 +106,21 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
         # A rewritten take is new speech too. Listen to the changed subset once
         # per bounded pass; never restart the full language-repair loop here.
         checks={}
-        if candidates and cfg.get('productionMode')=='normal':
+        if candidates and cfg.get('productionMode')=='normal' and not cfg.get('_durationFitRequired'):
             from normal_mode import inspect
             checks=inspect(cfg,job,[dict(drafts[i],reviewIndex=cues[i].get('reviewIndex',i)) for i,_ in candidates],[p for _,p in candidates],emit)
         for i,candidate in candidates:
             evidence=checks.get(cues[i].get('reviewIndex',i)+1,{})
             rejected=bool(evidence.get('languageFailure') or evidence.get('decision') in ('mandarin','japanese') or evidence.get('contentFailure'))
+            available=(placement[i]['deadline']-placement[i]['start']) if placement is not None else natural_window(cues[i],cues,cfg['duration'],cfg)[1]-natural_window(cues[i],cues,cfg['duration'],cfg)[0]
+            duration=seconds(candidate,cfg,run)
+            too_long=bool(cfg.get('_durationFitRequired') and duration>available+.005)
+            from audio_fallback import healthy
+            damaged=not healthy(candidate)
+            rejected=rejected or too_long or damaged
             audit.append(dict(index=cues[i].get('reviewIndex',i)+1,attempt=attempt+1,candidateAudio=str(candidate),
-                seconds=seconds(candidate,cfg,run),adopted=not rejected,languageCheck=evidence,
-                reason='language-or-content-failure' if rejected else 'shorter-take-no-confirmed-content-failure'))
+                seconds=duration,availableSeconds=available,adopted=not rejected,languageCheck=evidence,
+                reason='damaged-candidate' if damaged else 'candidate-still-overlong' if too_long else 'language-or-content-failure' if rejected else 'measured-fit-with-semantic-review' if cfg.get('_durationFitRequired') else 'shorter-take-no-confirmed-content-failure'))
             if rejected:continue
             cue=drafts[i]
             selected[i]=candidate;cues[i].update(cantonese=cue['cantonese'],preConciseCantonese=cue.get('preConciseCantonese'))

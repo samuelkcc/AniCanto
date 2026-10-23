@@ -69,7 +69,7 @@ def review(cfg,job,cues,paths,checks,emit):
     from speechcheck import evidence
     from worker import atomic_json
     def run(args):return subprocess.check_output([str(a) for a in args],stderr=subprocess.PIPE,timeout=1200)
-    w=SimpleNamespace(run=run,atomic_json=atomic_json)
+    w=SimpleNamespace(run=run,atomic_json=atomic_json,emit=emit)
     prepared=[];pending=[]
     for cue,path,raw in zip(cues,paths,checks):
         if verified(raw):

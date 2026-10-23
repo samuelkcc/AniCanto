@@ -22,15 +22,15 @@ SCKC が趣味と学びのために作っているこのプロジェクトは、
 
 AI の生成音声には、アクセント、読み間違い、演技の不足などが残る場合があります。作品を楽しむとともに、その声を届けるプロの演技を、これからも大切にし、応援してください。
 
-## Beta をダウンロード · 0.24.63
+## Beta をダウンロード · 0.24.64
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-macOS-0.24.63.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto-macOS-0.24.64.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.64-beta)
 
 ## 今回の Beta の変更点
 
-- 吹き替えスタジオ：文章・録音から原稿確認、翻訳、音声生成、版の保存まで。
-- Windows の完全版 Drama 3 Q2 に NVIDIA CUDA オプションを追加。RAM と VRAM を別表示。
-- 新しい画面と、元の日本語デモ・Mac Drama 3 比較動画を公開。
+- 安定性修正：通常モードは最初の有声音声を保持し、欠損を補完し、実測で長すぎる台詞を局所的に短縮します。言語や読み落としの疑いで繰り返し再生成しません。
+- Mac の任意の MLX Whisper 高速確認、録音ごとの保存、進捗表示、タイムアウト後の続行。
+- 保存済み音声で出力。吹き替えスタジオと Windows NVIDIA CUDA も引き続き利用できます。
 
 ## パソコンの推奨構成
 
@@ -87,13 +87,15 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 ### AI による自動修復
 
-通常モードでは、音声を生成してから問題のある台詞の修復を試みます。
+通常モードは最初の有声音声を優先して保持します。
 
-1. **確認** — 音声と台詞を照合し、無音、言語の誤り、読み落とし、長さの問題を確認。
-2. **修復** — 該当する台詞を再生成し、必要に応じて台詞やタイミングを調整。設定が有効なら、導入済みの別モデルや代替音声も試行。
-3. **校正** — 残った問題は校正レポートから試聴し、再録音や保存済み録音を選択。以前の動画を残して新版を書き出せます。
+1. **保持** — 有声音声を使用し、言語・アクセント・語の欠落の疑いは確認メモに残します。
+2. **補完** — 無音・破損だけ最大2回追加生成します。言語の疑いでは再生成しません。実測で長すぎる台詞は意味を保って短縮し、時間内に収まる音声のみ採用します。
+3. **必要時に確認** — 行ごとに試聴し、保存済み音声の選択や手動再生成を行えます。詳細な自動確認は環境設定で明示的に選べます。
 
-アクセント、感情表現、声の似かたは、試聴して確認してください。
+Apple Silicon では任意の **MLX Whisper**（約3.1 GB）で高速確認できます。各結果を保存・再利用し、タイムアウト時も完了分を保持します。同じ102録音の確認ではCPUが18分16秒、MLXが2分45秒でした。確認段階のみの計測で、認識結果は異なる場合があります。
+
+[確認と修復の詳細](docs/INDEPENDENT-LISTENING.md)
 
 ### 実験機能：その他の入力言語
 
@@ -179,13 +181,13 @@ UI 言語を選び、ローカルモデルを準備して基本・エキスパ�
 
 ### 基本モード：進捗と試聴
 
-![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.24.63)
+![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.24.64)
 
 動画、吹き替え言語、出力先を選び、進捗と各台詞の音声を確認。プレビューを閉じたままアシスタントを表示できます。
 
 ### エキスパートモード：タイムラインと編集
 
-![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.24.63)
+![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.24.64)
 
 下部全幅のタイムラインで原文と吹き替え台詞を比較し、時刻を調整して選択した台詞を再生成。
 
@@ -197,15 +199,15 @@ UI 言語を選び、ローカルモデルを準備して基本・エキスパ�
 
 ### 吹き替えスタジオと保存した録音
 
-![Dubbing studio](docs/images/speech-studio-ja.png?v=0.24.63)
+![Dubbing studio](docs/images/speech-studio-ja.png?v=0.24.64)
 
 原文と広東語の台詞を確認し、生成した各版を保存。元音声・生成音声・対訳をプレーヤーで比較できます。
 
-![Saved clips and learning](docs/images/speech-player-ja.png?v=0.24.63)
+![Saved clips and learning](docs/images/speech-player-ja.png?v=0.24.64)
 
 ### Windows：NVIDIA CUDA の設定
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.24.63)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.24.64)
 
 自動・NVIDIA CUDA・CPU を選択。システム RAM、VRAM、追加の CUDA ダウンロードを別表示します。設定画面の例であり、速度の測定結果ではありません。
 

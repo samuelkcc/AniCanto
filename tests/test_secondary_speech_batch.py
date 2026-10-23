@@ -15,13 +15,13 @@ class SecondaryBatchTests(unittest.TestCase):
     folder=root/str(i);folder.mkdir();audio=folder/'audio.wav';audio.write_bytes(('unique'+str(i)).encode());items.append((folder,audio))
    def write(p,o):Path(p).write_text(json.dumps(o))
    requests=[]
-   def run(args):
-    request=json.loads(Path(args[-1]).read_text());requests.append(request)
-    self.assertEqual(set(request),{'items','model','language'})
-    self.assertTrue(all(set(i)=={'audio'} for i in request['items']))
-    return json.dumps([dict(heard='原本嘅聲音',language='zh') for i in request['items']])
-   w=SimpleNamespace(atomic_json=write,run=run)
-   with patch('model_catalog.resolve',return_value=root),patch('runtime_paths.python_for',return_value='python'):
+   def batch(cfg,args,python,emit):
+    request=json.loads(Path(args).read_text());requests.append(request)
+    self.assertNotIn('expected',json.dumps(request));self.assertNotIn('prompt',json.dumps(request))
+    speech.process_request(request,lambda p:dict(heard='原本嘅聲音',language='zh'),emit)
+    return dict(failure=None,attempted={i['key'] for i in request['items']})
+   w=SimpleNamespace(atomic_json=write)
+   with patch('model_catalog.resolve',return_value=root),patch('runtime_paths.python_for',return_value='python'),patch.object(speech,'run_batch',side_effect=batch):
     first=speech.transcribe_batch(w,dict(storage=d),items,True)
     again=speech.transcribe_batch(w,dict(storage=d),items,True)
     self.assertEqual(first,again);self.assertEqual(len(requests),1)

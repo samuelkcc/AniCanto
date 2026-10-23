@@ -75,7 +75,7 @@ class FastModeTests(unittest.TestCase):
             samples=array.array('h',(round(6000*math.sin(n*2*math.pi*330/sr)) for n in range(sr)))
             with wave.open(str(take),'wb') as f:
                 f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(samples.tobytes())
-            cfg=dict(productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
+            cfg=dict(normalRepairPolicy='verified',productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
             cues=[dict(start=0.,end=.7,cantonese='完整一句。',speakerId='R01')]
             paths=[take];schedule=[dict(start=0.,deadline=.7,shift=0.,method='source-clock')]
             stack.enter_context(patch('source_counting.repair',return_value=[]))
@@ -104,7 +104,7 @@ class FastModeTests(unittest.TestCase):
             samples=array.array('h',(round(6000*math.sin(n*2*math.pi*330/sr)) for n in range(sr)))
             with wave.open(str(take),'wb') as f:
                 f.setparams((1,2,sr,0,'NONE','not compressed'));f.writeframes(samples.tobytes())
-            cfg=dict(productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
+            cfg=dict(normalRepairPolicy='verified',productionMode='normal',speechRatePolicy='natural',duration=2.,ffmpeg=FF,targetLanguage='yue')
             cues=[dict(start=0.,end=.7,cantonese='第一句。',speakerId='R01'),dict(start=.7,end=1.2,cantonese='第二句。',speakerId='R01')]
             # The first take fits its cached deadline but overlaps a later
             # decision that moved the next voice earlier.
@@ -132,7 +132,7 @@ class FastModeTests(unittest.TestCase):
             worker.run([FF,'-v','error','-y','-f','lavfi','-i','color=c=blue:s=160x90:r=12:d=3','-f','lavfi','-i','sine=frequency=200:duration=3','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac','-shortest',video])
             bg=job/'background.wav';voice=job/'dialogue.wav'
             for path in (bg,voice):worker.run([FF,'-v','error','-y','-i',video,'-vn','-ar','24000','-ac','2','-c:a','pcm_s16le',path])
-            cfg=dict(productionMode=mode,video=str(video),storage=str(job/'storage'),ffmpeg=FF,ffprobe=PROBE,duration=3,ttsBackend='cosyvoice3',selectedEngines=['cosyvoice3'],dubLanguages=['yue','en'],includeOriginal=True,subtitleModes=['yue','english'],interfaceMode='simple',model='qwen',port=1,backgroundPath=str(bg),dialoguePath=str(voice),exportFolder=str(job/'export'))
+            cfg=dict(normalRepairPolicy="verified",productionMode=mode,video=str(video),storage=str(job/'storage'),ffmpeg=FF,ffprobe=PROBE,duration=3,ttsBackend='cosyvoice3',selectedEngines=['cosyvoice3'],dubLanguages=['yue','en'],includeOriginal=True,subtitleModes=['yue','english'],interfaceMode='simple',model='qwen',port=1,backgroundPath=str(bg),dialoguePath=str(voice),exportFolder=str(job/'export'))
             if preview:cfg.update(speechRatePolicy='natural',automaticRecovery=False)
             (job/'export').mkdir();(job/'storage').mkdir()
             cues=[dict(start=0,end=.7,speechStart=.1,speechEnd=.7,text='行こう',japanese='行こう',cantonese='出發啦。',english='Let us go.',enabled=True),dict(start=.8,end=1.5,text='はい',japanese='はい',cantonese='好呀。',english='Yes.',enabled=True),dict(start=1.6,end=2.6,text='待って',japanese='待って',cantonese='等陣。',english='Wait.',enabled=True)]

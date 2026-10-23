@@ -1,4 +1,4 @@
-# 現在のアプリ画面 · 0.24.63
+# 現在のアプリ画面 · 0.24.64
 
 [← AniCanto](../../README.ja.md)
 
@@ -14,11 +14,11 @@
 
 ## 基本モード
 
-![基本モード](../images/basic-ja.png?v=0.24.63)
+![基本モード](../images/basic-ja.png?v=0.24.64)
 
 ## タイムライン
 
-![タイムライン](../images/timeline-ja.png?v=0.24.63)
+![タイムライン](../images/timeline-ja.png?v=0.24.64)
 
 ## 校正レポート
 
@@ -38,14 +38,14 @@
 
 ## 字幕ソース
 
-![字幕ソース](../images/subtitles-ja.png?v=0.24.63)
+![字幕ソース](../images/subtitles-ja.png?v=0.24.64)
 
 ## 吹き替えスタジオと保存した録音
 
-![Dubbing studio](../images/speech-studio-ja.png?v=0.24.63)
+![Dubbing studio](../images/speech-studio-ja.png?v=0.24.64)
 
-![Saved & learning](../images/speech-player-ja.png?v=0.24.63)
+![Saved & learning](../images/speech-player-ja.png?v=0.24.64)
 
 ## Windows：NVIDIA CUDA の設定
 
-![NVIDIA CUDA](../images/nvidia-cuda-ja.png?v=0.24.63)
+![NVIDIA CUDA](../images/nvidia-cuda-ja.png?v=0.24.64)

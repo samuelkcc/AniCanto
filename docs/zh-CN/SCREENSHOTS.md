@@ -1,4 +1,4 @@
-# 新版界面 · 0.24.63
+# 新版界面 · 0.24.64
 
 [← AniCanto](../../README.zh-CN.md)
 
@@ -14,11 +14,11 @@
 
 ## 基本模式
 
-![基本模式](../images/basic-zh-CN.png?v=0.24.63)
+![基本模式](../images/basic-zh-CN.png?v=0.24.64)
 
 ## 专家时间轴
 
-![专家时间轴](../images/timeline-zh-CN.png?v=0.24.63)
+![专家时间轴](../images/timeline-zh-CN.png?v=0.24.64)
 
 ## 校对报告
 
@@ -38,14 +38,14 @@
 
 ## 字幕来源
 
-![字幕来源](../images/subtitles-zh-CN.png?v=0.24.63)
+![字幕来源](../images/subtitles-zh-CN.png?v=0.24.64)
 
 ## 配音器与已保存片段
 
-![Dubbing studio](../images/speech-studio-zh-CN.png?v=0.24.63)
+![Dubbing studio](../images/speech-studio-zh-CN.png?v=0.24.64)
 
-![Saved & learning](../images/speech-player-zh-CN.png?v=0.24.63)
+![Saved & learning](../images/speech-player-zh-CN.png?v=0.24.64)
 
 ## Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA](../images/nvidia-cuda-zh-CN.png?v=0.24.63)
+![NVIDIA CUDA](../images/nvidia-cuda-zh-CN.png?v=0.24.64)

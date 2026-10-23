@@ -14,7 +14,7 @@ import sys
 import wave
 
 REVISION = 'normal-source-voice-7-english-source-selection'
-WARNING = '一般模式：已作局部完整性及語言檢查，並非逐字、口音或角色身分認證。'
+WARNING = '一般模式：保留首輪有聲錄音，補無聲／損壞及局部改短超時對白；語言、漏句及口音未認證，請按報告試聽。'
 
 
 def enabled(cfg):
@@ -319,6 +319,10 @@ def language_decision(expected,heard,language,target='yue',source=''):
 
 
 def inspect(cfg,job,cues,paths,emit):
+    from normal_policy import retain
+    if retain(cfg) and not cfg.get("_forceIndependentListening"):
+        emit("一般錄音保留","有聲錄音保留；語言及漏句疑點供人工覆聽，未標為檢查通過。",.82)
+        return {}
     from dubbing import model_job
     from worker import atomic_json
     from runtime_paths import python_for
@@ -335,7 +339,17 @@ def inspect(cfg,job,cues,paths,emit):
     try:
         if not Path(python_for(cfg['storage'],'asr-runtime')).is_file():raise ValueError('語言辨識執行環境未準備好')
         emit('一般語言檢查',f'一次載入模型，核對 {len(items)} 句語言；字形差異唔會直接判失敗。',.82)
-        model_job(cfg,'normal-listen',request,emit)
+        try:local=json.loads(cache.read_text())
+        except (OSError,ValueError):local={}
+        shared=Path(cfg['storage'])/'cache/normal-language'
+        for item in items:
+            if item['key'] in local:continue
+            try:row=json.loads((shared/(item['key']+'.json')).read_text())
+            except (OSError,ValueError):continue
+            if row.get('key')==item['key'] and isinstance(row.get('heard'),str):local[item['key']]=row
+        atomic_json(cache,local)
+        if any(item['key'] not in local for item in items):model_job(cfg,'normal-listen',request,emit)
+        else:emit('一般語言檢查',f'沿用 {len(items)} 句未改動錄音嘅核對結果；冇重新載入模型。',.82)
         saved=json.loads(cache.read_text())
         result={item['index']:dict(saved[item['key']],decision=language_decision(item['expected'],saved[item['key']].get('heard',''),saved[item['key']].get('language',''),target,item['source'])) for item in items if item['key'] in saved}
         # Only disputed dialect or an apparently missing whole clause needs a
@@ -352,7 +366,7 @@ def inspect(cfg,job,cues,paths,emit):
                 folders.append((folder,Path(item['audio'])))
             try:
                 emit('一般局部覆聽',f'{len(disputed)} 句有語言／漏句疑點；合併獨立覆聽一次，唔因同音字差異重錄。',.83)
-                witnesses=transcribe_batch(SimpleNamespace(run=run,atomic_json=atomic_json),cfg,folders,auto_language=True)
+                witnesses=transcribe_batch(SimpleNamespace(run=run,atomic_json=atomic_json,emit=emit,secondaryStage="一般局部覆聽"),cfg,folders,auto_language=True)
                 for item,second in zip(disputed,witnesses):
                     row=result[item['index']]
                     row['contentFailure']=False
@@ -378,6 +392,61 @@ def inspect(cfg,job,cues,paths,emit):
         return {}
 
 
+
+def repair_missing_only(cfg,job,cues,paths,run,emit):
+    from worker import atomic_json
+    from dubbing import gsv_audio,is_vocalization
+    from normal_policy import finish_requested
+    from track_control import check,UserSkipped
+    from project_store import record_issue
+    job=Path(job);selected=list(paths)
+    if len(selected)>len(cues):raise ValueError('Too many recordings for the script')
+    selected += [job/f'skipped-missing-result-{n}.wav' for n in range(len(selected),len(cues))]
+    rows=[]
+    for n,(cue,path) in enumerate(zip(cues,selected)):
+        if not cue.get('enabled',True) or cue.get('preserveOriginalSpeech') or cue.get('editorAudio') or is_vocalization(cue):continue
+        if not audio_present(path):rows.append(dict(position=n,index=cue.get('reviewIndex',n)+1,originalAudio=str(path),reason='missing-or-damaged',repaired=False,attempts=[]))
+    marker=job/'missing-only-repairs.json'
+    try:saved=json.loads(marker.read_text())
+    except (OSError,ValueError):saved={}
+    identity=hashlib.sha256(json.dumps([cfg.get('ttsBackend'),cfg.get('targetLanguage'),[(c.get('reviewIndex',i),c.get('cantonese'),c.get('speakerId')) for i,c in enumerate(cues)]],sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+    if saved.get('identity')!=identity:saved={}
+    history=saved.get('attempts',{})
+    previous={r['index']:r for r in saved.get('rows',[])}
+    for row in rows:
+        old=previous.get(row['index'],{})
+        if old.get('repaired') and audio_present(old.get('candidateAudio','')):
+            selected[row['position']]=Path(old['candidateAudio']);row.update(repaired=True,candidateAudio=old['candidateAudio'],attempts=old.get('attempts',[]))
+    for attempt in range(2):
+        if finish_requested(cfg):break
+        active=[r for r in rows if not r['repaired'] and r['index'] not in history.get(str(attempt),[])]
+        if not active:continue
+        pending=[dict(cues[r['position']],reviewIndex=r['index']-1,_seed=104771+attempt*104729) for r in active]
+        key=hashlib.sha256(json.dumps([cfg.get('ttsBackend'),cfg.get('targetLanguage'),pending,attempt],sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:24]
+        folder=job/'missing-only-repairs'/key;folder.mkdir(parents=True,exist_ok=True)
+        history.setdefault(str(attempt),[]).extend(r['index'] for r in active)
+        atomic_json(marker,dict(policy='missing-only',identity=identity,attempts=history,maximumExtraAttempts=2,rows=rows))
+        emit('一般補回缺聲',f'只補 {len(active)} 句無聲／損壞錄音（{attempt+1}/2）；其他有聲錄音保留。',.84)
+        try:
+            check(cfg);fresh=gsv_audio(dict(cfg,editorCache=str(folder),audioRerunToken=key,_normalRepair=True),folder,pending,run,emit)
+        except UserSkipped:raise
+        except (OSError,RuntimeError,ValueError) as error:
+            fresh=[];emit('一般補回缺聲','未完成補聲；已生成錄音保留：'+str(error)[:180])
+        for row,audio in zip(active,fresh):
+            accepted=audio_present(audio);row['attempts'].append(dict(candidateAudio=str(audio),repaired=accepted))
+            if accepted:selected[row['position']]=Path(audio);row.update(repaired=True,candidateAudio=str(audio))
+        atomic_json(marker,dict(policy='missing-only',identity=identity,attempts=history,maximumExtraAttempts=2,rows=rows))
+    old=job/'normal-checks.json';prior={}
+    try:prior=json.loads(old.read_text())
+    except (OSError,ValueError):pass
+    if prior.get('checks') and not (job/'normal-checks-before-retain-policy.json').exists():atomic_json(job/'normal-checks-before-retain-policy.json',prior)
+    for row in rows:
+        if not row['repaired']:record_issue(cfg,job,dict(cues[row['position']],reviewIndex=row['index']-1),'normal-unresolved','無聲／損壞錄音未能補回；其他錄音保留，請試聽。')
+    atomic_json(old,dict(revision=REVISION,policy='missing-only',checks={},repairs=rows,unresolved=[r['index'] for r in rows if not r['repaired']],qualityCertified=False,languageCheckStatus='deferred-to-human-review',maximumLocalAttempts=2,priorEvidenceRetained=bool(prior.get('checks'))))
+    emit('一般錄音保留',f'保留 {sum(audio_present(p) for p in selected)}/{len(selected)} 句有聲錄音；冇按語言標籤、口音或漏句疑點自動重錄。',.85)
+    return selected
+
+
 def extra_repetition(expected,heard):
     """Flag added multiword/clause repeats, never a source/script stammer alone."""
     from speechcheck import text_key
@@ -399,6 +468,8 @@ def major_omission(expected,heard):
 
 def repair_paths(cfg,job,cues,paths,run,emit):
     """Two persistent local attempts; retain the same line's source and engine."""
+    from normal_policy import retain
+    if retain(cfg):return repair_missing_only(cfg,job,cues,paths,run,emit)
     from worker import atomic_json
     from dubbing import gsv_audio,is_vocalization
     from track_control import check,UserSkipped
@@ -475,6 +546,8 @@ def listen(request):
         if isinstance(language,(tuple,list)):language=language[0] if language else ''
         saved[item['key']]=dict(heard=result.text.strip(),language=language,expectedTextUsedAsPrompt=False)
         atomic_json(cache,saved)
+        shared=Path(request['storage'])/'cache/normal-language';shared.mkdir(parents=True,exist_ok=True)
+        atomic_json(shared/(item['key']+'.json'),dict(saved[item['key']],key=item['key']))
         print(json.dumps(dict(stage='一般語言檢查',message=f'已核對 {n+1}/{len(pending)} 句；不確定錄音保留。',workID='normal-language',workCompleted=n+1,workTotal=len(pending)),ensure_ascii=False),flush=True)
 
 

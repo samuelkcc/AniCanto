@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02463) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
+[Download](#download-the-beta--02464) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Support](#help-more-people-discover-cantonese)
 
 ## Why AniCanto exists
 
@@ -26,15 +26,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.63
+## Download the Beta · 0.24.64
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-macOS-0.24.63.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.63-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto-macOS-0.24.64.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.64-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.64-beta)
 
 ## What’s new in this Beta
 
-- Dubbing studio: type or record, check the transcript, translate, generate and keep separate audio versions.
-- Windows NVIDIA CUDA option for full Drama 3 Q2, with separate system-RAM and VRAM estimates.
-- New screenshots and a downloadable original demo plus Mac Drama 3 comparison movies.
+- Stability fix: Normal mode retains audible first takes, restores missing audio and locally shortens measured overlong lines. Language and missing-word doubts no longer trigger repeated automatic retakes.
+- Optional Apple MLX Whisper checking, per-recording checkpoints, live counts and bounded continuation after timeouts.
+- Finish with saved recordings, plus the existing Dubbing studio and Windows NVIDIA CUDA option.
 
 ## Choose your computer setup
 
@@ -91,13 +91,15 @@ Independent listening checks flag uncertain words and language problems. Optiona
 
 ### AI automatic repair
 
-In Normal mode, AniCanto checks generated speech and tries to fix affected lines automatically:
+Normal mode now prioritises preserving the first audible recording:
 
-1. **Check** — Compare the recording with the script for missing speech, wrong language, missing words and timing problems.
-2. **Repair** — Retry affected lines, adjust wording or timing when needed, and try another installed model or fallback voice where enabled.
-3. **Review** — Open the review report for remaining issues. Listen, retake or choose a saved recording, then export a new version while keeping the previous movie.
+1. **Keep** — Retain audible recordings; language, accent and missing-word concerns remain review notes.
+2. **Restore missing audio** — Only missing or damaged recordings receive up to two additional attempts. Measured overlong lines are shortened locally, with meaning checked and duration measured before adoption. Language doubts do not trigger retakes.
+3. **Review when needed** — Audition a line, choose a saved take or regenerate manually. Detailed automatic checking is an explicit Preferences choice.
 
-Accent, expression and voice similarity still need a listening check.
+Apple Silicon offers optional **MLX Whisper** checking (about 3.1 GB). Each completed check is saved and reused; timeouts retain completed work. On the same 102-recording test, CPU took 18m16s and MLX 2m45s. This measures only the checking stage; recognition results can differ.
+
+[Checking and repair details](docs/INDEPENDENT-LISTENING.md)
 
 ### Experimental: other source languages
 
@@ -183,13 +185,13 @@ Choose the interface language, prepare local models, and enter Basic or Expert m
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.63)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.64)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.63)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.64)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
@@ -201,15 +203,15 @@ See what was flagged and what was tried. Compare retained recordings, make a cho
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.63)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.64)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.63)
+![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.64)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.63)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.64)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 

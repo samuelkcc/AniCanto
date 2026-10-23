@@ -74,9 +74,12 @@ def _run_model_job(cfg, action, request, emit):
   p=subprocess.Popen([str(python),str(Path(__file__).with_name(script)),action,str(req)],stdout=subprocess.PIPE,stderr=errors,env=env,text=True)
   # A stalled model must not hold the queue indefinitely. Progress events reset
   # the deadline; termination is of this child only, not another user process.
-  last=[time.monotonic()];stalled=[False];finished=threading.Event()
+  last=[time.monotonic()];stalled=[False];finish_now=[False];finished=threading.Event()
   def watchdog():
    while not finished.wait(2):
+    from normal_policy import finish_requested
+    if action=='normal-listen' and finish_requested(cfg):
+     finish_now[0]=True;p.terminate();return
     if time.monotonic()-last[0]>float(cfg.get('modelStallSeconds',600)):
      stalled[0]=True;p.terminate()
      try:p.wait(timeout=10)
@@ -94,6 +97,7 @@ def _run_model_job(cfg, action, request, emit):
    except (json.JSONDecodeError,KeyError): pass
   code=p.wait();finished.set()
   if stalled[0]:raise RuntimeError('模型超過等待上限；已保存成功錄音，未完成片段列入摘要。')
+ if finish_now[0]:return
  if code:
   from track_control import check
   check(request)

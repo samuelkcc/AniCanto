@@ -23,7 +23,7 @@ def prepare(cfg,job,cues,run,emit):
     emit('原聲參考覆核',f'只覆聽 {len(pending)} 段未能生成目標語言嘅原角色參考；保留同一錄音，核對日文稿有冇對準。')
     records=[];replacements={}
     try:
-        results=transcribe_batch(SimpleNamespace(run=run,atomic_json=atomic_json),cfg,[(folder,source) for _,folder,source in pending],auto_language=True)
+        results=transcribe_batch(SimpleNamespace(run=run,atomic_json=atomic_json,emit=emit,secondaryStage="原聲參考覆核"),cfg,[(folder,source) for _,folder,source in pending],auto_language=True)
         if len(results)!=len(pending):raise ValueError('Source witness count mismatch')
         clean=lambda s:re.sub(r'[^\wぁ-んァ-ヶ一-龥]','',s)
         for (profile,folder,source),result in zip(pending,results):

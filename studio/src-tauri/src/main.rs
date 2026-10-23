@@ -28,7 +28,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language"];
+const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{

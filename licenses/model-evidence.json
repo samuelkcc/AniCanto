@@ -1528,6 +1528,28 @@
       "evidenceKind": "license layer from pinned Ollama model manifests",
       "status": "declared-permissive",
       "effectiveLicense": "Apache-2.0"
+    },
+    {
+      "repo": "mlx-community/whisper-large-v3-asr-fp16",
+      "revision": "f4b9d561e7f1a5c0587726ff7ff03da2cc80fcf9",
+      "declaredLicense": "apache-2.0",
+      "baseModel": "openai/whisper-large-v3",
+      "documents": [
+        {
+          "path": "licenses/models/mlx-community--whisper-large-v3-asr-fp16--f4b9d561e7f1/README.md",
+          "url": "https://huggingface.co/mlx-community/whisper-large-v3-asr-fp16/resolve/f4b9d561e7f1a5c0587726ff7ff03da2cc80fcf9/README.md",
+          "sha256": "fff3a99cf95ab6ea7d23e799a495ca6efab6d27bf54eafd0f8832c46ee0d9290"
+        },
+        {
+          "path": "licenses/models/mlx-community--whisper-large-v3-asr-fp16--f4b9d561e7f1/LICENSE-whisper-MIT.txt",
+          "url": "https://raw.githubusercontent.com/openai/whisper/v20250625/LICENSE",
+          "sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d"
+        }
+      ],
+      "errors": [],
+      "retired": false,
+      "status": "declared-permissive; original Whisper MIT attribution retained",
+      "effectiveLicense": "Apache-2.0"
     }
   ]
 }

@@ -13,31 +13,31 @@ export const CHAPTERS=[
       "zh-HK": "由首次啟動到完成第一條配音影片。"
     },
     "sections": [
-{
-      "title": {
-            "en": "Language and background downloads",
-            "zh-HK": "語言與背景下載"
+      {
+        "title": {
+          "en": "Language and background downloads",
+          "zh-HK": "語言與背景下載"
+        },
+        "body": [
+          {
+            "en": "On first launch, the interface follows your system language: Japanese uses Japanese; Mainland or Singapore Chinese uses Simplified Chinese; other Chinese and Cantonese locales use Traditional Chinese; other languages use English. Your manual choice is remembered. Interface language does not change dubbing or subtitle settings. You can browse the studio during setup. A bottom-right notification shows model download progress; click it for full installation details. The compact summary stays short while the expandable, scrollable log retains filenames and package messages. Conversion remains unavailable until the selected models and required runtimes are ready.",
+            "zh-HK": "首次啟動會跟隨系統語言：日文用日文，中國內地或新加坡中文用簡體中文，其他中文同廣東話用繁體中文，其餘語言用英文；之後會記住你手動揀嘅語言。介面語言唔會更改配音或字幕設定。部署期間可以瀏覽工作室，右下角提示會顯示模型下載進度，按一下可睇完整安裝詳情。主畫面只顯示簡短分類，詳細檔名同套件記錄放喺可展開、捲動嘅記錄內。所選模型同必要執行環境準備好後，先可以開始轉換。"
+          },
+          {
+            "en": "AniCanto uses local language and voice models. After the required models and runtimes have downloaded, recognition, translation, dubbing and export work offline. First setup, adding models, download repair and updates need internet access.",
+            "zh-HK": "AniCanto 使用本機語言及語音模型。所需模型同執行環境下載完成後，辨識、翻譯、配音同匯出可離線使用。首次部署、新增模型、修復下載同更新需要網絡。"
+          },
+          {
+            "en": "An uninstalled voice engine is marked Automatic download. Selecting it checks compatibility and starts setup while keeping existing models. WenetSpeech-Yue is Cantonese-only and cannot be selected for English or bilingual dubbing. Audio grouping and visual character analysis enable Full AI review; visual analysis takes about three times the processing time of Normal mode. Expanded production options and scroll position are retained when settings change.",
+            "zh-HK": "未安裝語音引擎會標示「自動下載」；揀選後先檢查相容性，再開始部署，保留現有模型。WenetSpeech-Yue 只支援廣東話，英文或雙語配音時不可選。聲音分組及影像角色分析會啟用完整 AI 檢測模式；影像分析處理時間約為一般模式嘅 3 倍。更改設定後會保留製作選項嘅展開狀態同捲動位置。"
+          },
+          {
+            "en": "Dubbing does not have to match the original speech duration exactly. Natural delivery can use an empty following gap, including one or two extra seconds when available, before another source turn, preserved passage or detected scene boundary. An overlong recording is not a reason to change the actor voice. A generic Chinese transcript alone cannot certify Cantonese pronunciation. Automatic repair can still fail; the review report distinguishes language evidence and a bundled target-language fallback from a successful imitation of the original voice.",
+            "zh-HK": "配音唔需要同原聲秒數完全一致；下一句、保留原聲段落或已偵測場景界線之前，如有安全空檔，可以自然講長少少，包括可用嘅一兩秒。單純錄音偏長唔應成為換角色聲線嘅理由。「Chinese」聽寫結果本身唔代表已確認廣東話發音。自動修復仍可能失敗；校對報告會分清語言核對證據、內置目標語言後備聲線，同成功模擬原角色聲線。"
+          }
+        ],
+        "steps": false
       },
-      "body": [
-            {
-                  "en": "On first launch, the interface follows your system language: Japanese uses Japanese; Mainland or Singapore Chinese uses Simplified Chinese; other Chinese and Cantonese locales use Traditional Chinese; other languages use English. Your manual choice is remembered. Interface language does not change dubbing or subtitle settings. You can browse the studio during setup. A bottom-right notification shows model download progress; click it for full installation details. The compact summary stays short while the expandable, scrollable log retains filenames and package messages. Conversion remains unavailable until the selected models and required runtimes are ready.",
-                  "zh-HK": "首次啟動會跟隨系統語言：日文用日文，中國內地或新加坡中文用簡體中文，其他中文同廣東話用繁體中文，其餘語言用英文；之後會記住你手動揀嘅語言。介面語言唔會更改配音或字幕設定。部署期間可以瀏覽工作室，右下角提示會顯示模型下載進度，按一下可睇完整安裝詳情。主畫面只顯示簡短分類，詳細檔名同套件記錄放喺可展開、捲動嘅記錄內。所選模型同必要執行環境準備好後，先可以開始轉換。"
-            },
-            {
-                  "en": "AniCanto uses local language and voice models. After the required models and runtimes have downloaded, recognition, translation, dubbing and export work offline. First setup, adding models, download repair and updates need internet access.",
-                  "zh-HK": "AniCanto 使用本機語言及語音模型。所需模型同執行環境下載完成後，辨識、翻譯、配音同匯出可離線使用。首次部署、新增模型、修復下載同更新需要網絡。"
-            },
-            {
-                  "en": "An uninstalled voice engine is marked Automatic download. Selecting it checks compatibility and starts setup while keeping existing models. WenetSpeech-Yue is Cantonese-only and cannot be selected for English or bilingual dubbing. Audio grouping and visual character analysis enable Full AI review; visual analysis takes about three times the processing time of Normal mode. Expanded production options and scroll position are retained when settings change.",
-                  "zh-HK": "未安裝語音引擎會標示「自動下載」；揀選後先檢查相容性，再開始部署，保留現有模型。WenetSpeech-Yue 只支援廣東話，英文或雙語配音時不可選。聲音分組及影像角色分析會啟用完整 AI 檢測模式；影像分析處理時間約為一般模式嘅 3 倍。更改設定後會保留製作選項嘅展開狀態同捲動位置。"
-            },
-            {
-                  "en": "Dubbing does not have to match the original speech duration exactly. Natural delivery can use an empty following gap, including one or two extra seconds when available, before another source turn, preserved passage or detected scene boundary. An overlong recording is not a reason to change the actor voice. A generic Chinese transcript alone cannot certify Cantonese pronunciation. Automatic repair can still fail; the review report distinguishes language evidence and a bundled target-language fallback from a successful imitation of the original voice.",
-                  "zh-HK": "配音唔需要同原聲秒數完全一致；下一句、保留原聲段落或已偵測場景界線之前，如有安全空檔，可以自然講長少少，包括可用嘅一兩秒。單純錄音偏長唔應成為換角色聲線嘅理由。「Chinese」聽寫結果本身唔代表已確認廣東話發音。自動修復仍可能失敗；校對報告會分清語言核對證據、內置目標語言後備聲線，同成功模擬原角色聲線。"
-            }
-      ],
-      "steps": false
-},
       {
         "title": {
           "en": "Choose a conversion quality preset",
@@ -106,49 +106,42 @@ export const CHAPTERS=[
       "zh-HK": "自動修復與預覽交付"
     },
     "summary": {
-      "en": "How Normal mode handles translation, timing and missing dialogue automatically, and what the result labels mean.",
-      "zh-HK": "一般模式點樣自動處理翻譯、時長與缺聲，以及輸出狀態代表甚麼。"
+      "en": "Retain first recordings, restore missing audio, and use optional independent listening.",
+      "zh-HK": "保留首輪錄音、補回缺聲，再按需要獨立覆聽。",
+      "zh-CN": "保留首轮录音、补回缺声，按需独立复听。",
+      "ja": "最初の録音を保持し、欠けた音声を補完して必要に応じて聴き直します。"
     },
     "sections": [
       {
         "title": {
-          "en": "Recovery order",
-          "zh-HK": "修復次序"
+          "en": "Keep audible recordings",
+          "zh-HK": "保留有聲錄音",
+          "zh-CN": "保留有声录音",
+          "ja": "有声音声を保持"
         },
         "body": [
           {
-            "en": "Before voice generation, Normal mode screens potentially verbose or repeated translations. A matching original subtitle or OCR caption can guide brevity, but its length is never a hard limit. Japanese/source speech remains primary when OCR is wrong or absent. Only meaning-verified edits are adopted. Natural-speed audio may be longer than the source utterance when it fits before the next turn or protected section.",
-            "zh-HK": "配音前，一般模式會篩選疑似冗長或重複嘅翻譯。對應原裝字幕或 OCR 可提示精簡，但字數唔係硬性上限。OCR 錯誤或缺漏時，仍以日文／來源原聲為準；只有通過意思核對嘅改稿先會採用。自然語速配音可以長過原句，只要喺下一句或受保護片段前講完。"
-          },
-          {
-            "en": "Known defects receive targeted repairs first. If unresolved, the selected local text model chooses among existing mechanisms: source-grounded concise adaptation, complete-clause retakes, conditioning the same original reference, or removal of measured near-silent padding. It cannot execute generated code, install arbitrary models or claim success without audio evidence. Each turn has at most two additional mechanism attempts, saved across resumes. The extra recovery director shares a five-minute text-model budget per output language, with no repeated connection attempts when the model stops responding. Voice generation has its own recorded processing time.",
-            "zh-HK": "已知問題先作局部修復；仍未完成，先由所選本機文字模型揀既有方法，包括按原聲重新精簡、完整分句重錄、處理同一位角色嘅原聲參考，或者移除量度到嘅近乎純靜音邊位。模型不能執行生成程式碼、任意安裝模型或冇錄音證據就宣稱成功。每句最多再試兩種機制，續做會沿用保存紀錄。額外修復調度每種輸出語言共用五分鐘文字模型預算；模型停止回應時唔會反覆連線。錄音生成時間會另外記錄。"
+            "en": "Normal mode defaults to retaining the first audible recordings. Only missing or damaged audio is automatically regenerated, with at most two persistent extra attempts. Language labels and suspected missing words do not trigger retakes. Measured overlong lines still receive local meaning-preserving shortening, at most two passes, without restarting language review; only healthy recordings that fit are adopted, and originals remain saved. These recordings are not certified as correct; use the report and per-line audition. Detailed checking and repair remains an explicit Preferences option.",
+            "zh-HK": "一般模式預設保留首輪有聲錄音，只自動補無聲或損壞，最多兩次額外嘗試並保存進度。語言標籤及懷疑漏句唔會再觸發重錄；實際超出安全時段嘅對白仍會局部保留意思改短，最多兩輪，唔重啟語言覆聽；新錄音有聲兼適合時段先採用，原錄音保留。唔代表已認證正確，請用報告同逐句試聽核對。偏好設定仍可明確選擇詳細檢查及修復。",
+            "zh-CN": "一般模式默认保留首轮有声录音，只自动补无声或损坏，最多两次额外尝试并保存进度。语言标签及疑似漏句不再触发重录；实际超出安全时段的对白仍会局部保留意思改短，最多两轮，不重启语言复听；新录音有声且适合时段才采用，原录音保留。这不代表已认证正确，请使用报告和逐句试听核对。偏好设置仍可明确选择详细检查及修复。",
+            "ja": "通常モードは最初の有声音声を保持し、無音・破損だけ最大2回追加生成します。言語ラベルや語の欠落の疑いでは再生成しません。実測で長すぎる台詞は意味を保って最大2回局所的に短縮し、言語確認を再開しません。正常で時間内に収まる録音のみ採用し、元音声も保持します。正しさの認証ではなく、レポートと行ごとの試聴で確認してください。詳細な自動確認と修復は環境設定で明示的に選べます。"
           }
         ],
         "steps": false
       },
       {
         "title": {
-          "en": "Natural timing and processing limits",
-          "zh-HK": "自然語速與處理上限"
+          "en": "Optional accelerated listening",
+          "zh-HK": "可選加速覆聽",
+          "zh-CN": "可选加速复听",
+          "ja": "任意の高速聴き直し"
         },
         "body": [
           {
-            "en": "Automatic Normal production first trims only measured silent edges and uses safe neighbouring gaps, with onset shifts of at most 0.5 seconds. Visual shot changes are advisory: safe timing is based on dialogue and preserved source ranges, without arbitrary twelve-second divisions. Complete final fallback recordings receive the same measured gentle-tempo trial before rejection. OP / ED, simultaneous speech and manual recordings remain protected. If that is insufficient, the app requests faithful shorter wording and new complete readings. Up to three distinct shorter phrasings receive separate meaning checks; a second timing retry can use another approved phrasing. If grounded meaning checks reject all proposals, one fresh source-only rewrite uses the quoted defects as feedback, then receives another independent meaning check. Name lists recognised only as generic Chinese remain dialect-unconfirmed and can trigger recovery. Clear nonverbal cries with an empty translation are preserved as vocalizations. A final automatic tempo adjustment is normally limited to 5% and at most 0.18 seconds saved. Only recordings up to 2 seconds that exceed the safe window by at most 0.12 seconds may use up to 10%, measured cumulatively; speech is never cut to fit. If a cut scan is unavailable, source timing is retained. Text length alone cannot predict spoken duration. Short source fragments and copied caption text can also be the cause. Counting rewrites require independent source confirmation, high recognition confidence and no contradictory caption or source warning. A sequence of uncertain ASR digits alone never proves counting. Manual scripts are protected.",
-            "zh-HK": "一般模式會先移除實測靜音邊位，利用安全空檔，配音起點最多微調 0.5 秒；鏡頭切換只作參考，會按實際對白同保留原聲範圍編排，唔會被固定十二秒分組截走可用時間。完整後備錄音亦會先實測微量調速，再判斷能否採用。OP／ED、原本同時發聲同手動錄音仍受保護。仍然唔夠時間就保留意思精簡譯文，再完整重讀。最多會儲存三個唔同精簡講法，逐個核對意思；第二輪時長重試可以改用另一個已核對講法。若全部候選都被有來源證據嘅語意問題拒絕，會用問題作回饋，從原文重新翻譯一次，再獨立核對；唔會不停保留有問題嘅舊稿。人名清單若只辨識為籠統 Chinese，仍屬口音未確認並可觸發修復。清楚嘅非語言喊聲即使冇譯文，亦會作原聲喊聲保留。最後微量調速通常上限係 5%，最多節省 0.18 秒。只有錄音不超過 2 秒、超時不超過 0.12 秒嘅近似合格短句，先容許累計最多 10%；唔會截斷說話。未能確認畫面邊界就保留來源時間。字數相近唔代表讀出嚟一樣長。來源切得太碎或字幕串入都可能係原因；數數改寫必須有獨立聽寫確認、足夠辨識信心，而且冇字幕矛盾或來源警告；唔會單靠一串低信心數字就判定係數數，手動稿件亦受保護。"
-          }
-        ],
-        "steps": false
-      },
-      {
-        "title": {
-          "en": "Complete output versus incomplete preview",
-          "zh-HK": "完整成品與未完整預覽"
-        },
-        "body": [
-          {
-            "en": "If recovery succeeds, the normal movie is exported. If some dialogue still cannot be delivered, automatic Normal mode saves a clearly named -AniCanto-Preview.mp4 and marks it Preview saved — dubbing incomplete. This is a playable partial result, not a complete or certified dub. The report records missing positions and attempted mechanisms. When every dub line fails and an original audio track is available, that original track is the default preview audio. Original media, recordings and earlier exports are retained. A damaged/unreadable source or failed movie encoding can still prevent any playable export.",
-            "zh-HK": "修復成功就輸出正常成品；若仍有對白未能交付，一般模式會保存名稱清楚嘅 -AniCanto-Preview.mp4，標示「預覽已保存・配音未完整」。呢個係可以觀看嘅部分結果，唔係完整或已認證配音。報告會記錄缺聲位置同已試機制。如果所有配音句都失敗，而原裝音軌可用，預覽會預設播放原聲。原片、錄音及舊輸出會保留。如果來源已損壞／無法讀取，或者影片編碼失敗，仍可能無法產生可觀看檔案。"
+            "en": "On Apple Silicon, Preferences offers Auto, Apple MLX and CPU independent listening. Download and verify the optional 3.1 GB Whisper model before selecting MLX. Auto uses it only when fully installed. Each completed item is checkpointed; unchanged audio and model settings are reused across repair stages. A stalled item is left unconfirmed and later items can continue; unfinished items remain eligible on resume. Faster decoding is not proof of fewer recognition mistakes.",
+            "zh-HK": "Apple Silicon 可喺偏好設定揀自動、Apple MLX 或 CPU 獨立覆聽；先下載及校驗約 3.1 GB Whisper 模型。自動只喺模型完整時用 MLX。每句完成即保存，相同錄音及模型設定跨修復階段沿用；單句超時會留作未確認並接續後面，未完成句子可喺續跑時再試。解碼快咗唔代表辨識更準。",
+            "zh-CN": "Apple Silicon 可在偏好设置选择自动、Apple MLX 或 CPU 独立复听；先下载并校验约 3.1 GB Whisper 模型。每句完成即时保存，相同录音及模型设置跨修复阶段复用；单句超时保留为未确认并继续后续，未完成句子可在续跑时再试。速度更快不代表识别更准。",
+            "ja": "Apple Silicon の環境設定で自動・Apple MLX・CPUを選択できます。MLXには約3.1 GBのWhisperモデルを事前導入・検証してください。各完了結果を保存し、同じ音声とモデル設定の結果を再利用します。タイムアウトした項目は未確認として残し、後続を続行できます。高速化は認識精度の向上を保証しません。"
           }
         ],
         "steps": false
@@ -418,8 +411,10 @@ export const CHAPTERS=[
         },
         "body": [
           {
-            "en": "Uses each line’s Japanese source voice as an independent reference. It runs targeted checks for missing speech, names and language, and preserves detected Japanese OP / ED. It avoids full speaker grouping and visual character analysis. Local checks improve coverage but do not certify every word, accent or speaker identity.",
-            "zh-HK": "逐句使用日文原聲作獨立模仿參考，局部檢查缺聲、人名及語言，並保留偵測到的日文 OP／ED。此模式不進行完整聲紋分組或角色影像分析。局部檢查可改善完整性，但不代表逐字、口音或角色身分認證。"
+            "en": "Normal mode defaults to retaining the first audible recordings. Only missing or damaged audio is automatically regenerated, with at most two persistent extra attempts. Language labels and suspected missing words do not trigger retakes. Measured overlong lines still receive local meaning-preserving shortening, at most two passes, without restarting language review; only healthy recordings that fit are adopted, and originals remain saved. These recordings are not certified as correct; use the report and per-line audition. Detailed checking and repair remains an explicit Preferences option.",
+            "zh-HK": "一般模式預設保留首輪有聲錄音，只自動補無聲或損壞，最多兩次額外嘗試並保存進度。語言標籤及懷疑漏句唔會再觸發重錄；實際超出安全時段嘅對白仍會局部保留意思改短，最多兩輪，唔重啟語言覆聽；新錄音有聲兼適合時段先採用，原錄音保留。唔代表已認證正確，請用報告同逐句試聽核對。偏好設定仍可明確選擇詳細檢查及修復。",
+            "zh-CN": "一般模式默认保留首轮有声录音，只自动补无声或损坏，最多两次额外尝试并保存进度。语言标签及疑似漏句不再触发重录；实际超出安全时段的对白仍会局部保留意思改短，最多两轮，不重启语言复听；新录音有声且适合时段才采用，原录音保留。这不代表已认证正确，请使用报告和逐句试听核对。偏好设置仍可明确选择详细检查及修复。",
+            "ja": "通常モードは最初の有声音声を保持し、無音・破損だけ最大2回追加生成します。言語ラベルや語の欠落の疑いでは再生成しません。実測で長すぎる台詞は意味を保って最大2回局所的に短縮し、言語確認を再開しません。正常で時間内に収まる録音のみ採用し、元音声も保持します。正しさの認証ではなく、レポートと行ごとの試聴で確認してください。詳細な自動確認と修復は環境設定で明示的に選べます。"
           }
         ],
         "steps": false
@@ -1213,7 +1208,7 @@ export const CHAPTERS=[
 
 CHAPTERS.push({"id": "speech-studio", "title": {"en": "Dubbing studio", "zh-HK": "配音器", "zh-CN": "配音器", "ja": "吹き替えスタジオ"}, "summary": {"en": "Create a Cantonese clip, keep versions and compare source and generated speech.", "zh-HK": "製作廣東話片段，保存不同錄音版本，再對照原聲同配音。", "zh-CN": "制作广东话片段，保存不同录音版本，再对照原声和配音。", "ja": "広東語の音声クリップを作成し、版を保存して元音声と比較します。"}, "sections": [{"title": {"en": "Input, review and translate", "zh-HK": "輸入、核稿及翻譯", "zh-CN": "输入、核稿及翻译", "ja": "入力・原稿確認・翻訳"}, "body": [{"en": "Open Dubbing studio from the video list in Basic mode or the navigation menu in Expert mode. No video import is needed. Type a source script, or record/import up to two minutes of audio. Recognise the recording first, correct names and missing words in the editable source, then translate. Choose an installed local text model and check the Cantonese script before generating. Recording recognition detects the source language automatically; model language coverage still applies.", "zh-HK": "基本模式由影片列表底部開「配音器」，專家模式由功能表進入；毋須匯入影片。可以打原稿，或者錄音／匯入最長兩分鐘聲音。先辨識錄音，喺原稿修正人名同漏字，再翻譯；揀已安裝嘅本機文字模型，核對廣東話稿後先生成。錄音會自動偵測語言，但仍受辨識模型支援範圍限制。", "zh-CN": "基本模式从影片列表底部打开「配音器」，专家模式从菜单进入；无需导入影片。可以输入原稿，或者录音／导入最长两分钟声音。先识别录音，在原稿修正人名和漏字，再翻译；选择已安装的本机文字模型，核对广东话稿后再生成。录音会自动检测语言，但仍受识别模型支持范围限制。", "ja": "基本モードでは動画一覧の下、エキスパートモードではメニューから開けます。動画の読み込みは不要です。文章を入力するか、最長2分の音声を録音・読み込みます。先に音声認識し、名前や抜けた語を原稿で修正してから翻訳してください。インストール済みのローカル翻訳モデルを選び、広東語原稿を確認して音声を生成します。録音の言語は自動判定しますが、認識モデルの対応範囲に依存します。"}], "steps": false}, {"title": {"en": "Generate, listen and review", "zh-HK": "生成、試聽及覆核", "zh-CN": "生成、试听及复核", "ja": "生成・試聴・確認"}, "body": [{"en": "Choose an installed voice engine, a reference voice and speech speed. In recording mode, using your own voice requires recognition to find a complete 3–10 second reference; otherwise choose a preset voice. Expand supported generation parameters when needed. Independent listening checks run after generation. Automatic repair makes at most two additional attempts per confirmed missing-audio, language or content problem. Uncertain spelling alone does not replace a take. Retained audio, attempts and review notes remain available. A flagged recording requires your explicit acceptance before saving; this does not certify its quality.", "zh-HK": "揀已安裝嘅配音引擎、參考聲線同語速，亦可展開支援嘅生成參數。錄音模式如要用自己聲線，需要先辨識並搵到完整 3–10 秒參考；否則請揀範本聲線。生成後會獨立覆聽；只有確認缺聲、語言或內容失敗，先會額外重試，逐段最多兩次。單純錯字疑點唔會自動換聲。錄音、嘗試同檢查說明會保留；有疑點嘅版本要由你明確接受後先保存，唔代表音質已認證。", "zh-CN": "选择已安装的配音引擎、参考声线和语速，也可展开支持的生成参数。录音模式如要用自己声线，需要先识别并找到完整 3–10 秒参考；否则请选择模板声线。生成后会独立复听；只有确认缺声、语言或内容失败，才会额外重试，每段最多两次。单纯错字疑点不会自动换声。录音、尝试和检查说明会保留；有疑点的版本需由你明确接受后再保存，不代表音质已认证。", "ja": "インストール済みの音声エンジン、参照音声、話速を選びます。対応する生成パラメーターも調整できます。録音した声の模倣には、認識で見つかった完全な3〜10秒の参照が必要です。参照がない場合はテンプレートを選んでください。生成後に独立した認識で確認し、無音・言語・内容の失敗が確認された部分だけ最大2回追加生成します。不確かな表記だけでは録音を置換しません。試行と確認結果は保持します。注意付きの録音は明示的に承認して保存できますが、品質認証にはなりません。"}], "steps": false}, {"title": {"en": "Saved recordings and learning", "zh-HK": "已保存錄音與學習", "zh-CN": "已保存录音与学习", "ja": "保存した録音と学習"}, "body": [{"en": "Save to the separate Dubbing studio player category. Each take retains its own scripts, reference, settings and output hash; generating another version does not overwrite it. Saved & learning lets you switch versions, choose the preferred take, reopen its settings for editing, rename the document, export a WAV or remove just one take. Source and generated audio, dual text, part playback, speed, volume and loop controls support comparison. Playback position is remembered separately for each audio file. Original and Cantonese speech do not share word timestamps. Changing the interface language changes the category label without moving or deleting recordings. Video projects and production settings remain separate.", "zh-HK": "保存後會放入獨立「配音器」播放器分類。每個版本保留自己嘅稿、參考、參數及音檔指紋，再生成唔會覆寫舊版。「已保存／學習」可切版本、揀採用版本、載入設定再修改、改名、匯出 WAV 或只刪一個版本。可對照整段原聲／廣東話、雙語文字，按配音段落試聽，調速度、音量及循環；每條音檔分開記住播放位置。兩種語言唔共用逐字時間。轉介面語言只會改分類顯示名，唔會搬移或刪錄音；影片專案同製作設定亦保持獨立。", "zh-CN": "保存后会放入独立「配音器」播放器分类。每个版本保留自己的稿、参考、参数和音档指纹，再生成不会覆盖旧版。「已保存／学习」可切换版本、选用版本、载入设置再修改、改名、导出 WAV 或只删除一个版本。可对照整段原声／广东话、双语文字，按配音段落试听，调速度、音量和循环；每个音档分别记住播放位置。两种语言不共用逐字时间。切换界面语言只会改变分类显示名，不会移动或删除录音；影片项目和制作设置亦保持独立。", "ja": "保存した録音は独立したスタジオ分類に表示されます。各版の原稿、参照、設定、音声ハッシュは保持され、新しい生成で上書きしません。「保存・学習」では版の切り替え、採用、設定の再編集、改名、WAV書き出し、特定の版だけの削除ができます。元音声と広東語、対訳、生成部分の再生、速度、音量、ループで比較できます。再生位置は音声ごとに記憶します。両言語の語単位タイムスタンプは共通ではありません。UI言語の変更では分類名のみ変わり、録音を移動・削除しません。動画プロジェクトや制作設定とは独立しています。"}], "steps": false}]});
 
-export function chapters(language){const locale=localeData(language),lang=language==='zh-HK'?'zh-HK':'en';return CHAPTERS.map((c,i)=>({...c,number:i+1,title:locale?.help[`${i}.title`]??c.title[language]??c.title[lang],summary:locale?.help[`${i}.summary`]??c.summary[language]??c.summary[lang],sections:c.sections.map((s,j)=>({title:locale?.help[`${i}.${j}.title`]??s.title[language]??s.title[lang],body:s.body.map((p,k)=>locale?.help[`${i}.${j}.${k}`]??p[language]??p[lang]),steps:s.steps}))}));}
+export function chapters(language){const locale=localeData(language),lang=language==='zh-HK'?'zh-HK':'en';return CHAPTERS.map((c,i)=>({...c,number:i+1,title:c.title[language]??locale?.help[`${i}.title`]??c.title[lang],summary:c.summary[language]??locale?.help[`${i}.summary`]??c.summary[lang],sections:c.sections.map((s,j)=>({title:s.title[language]??locale?.help[`${i}.${j}.title`]??s.title[lang],body:s.body.map((p,k)=>p[language]??locale?.help[`${i}.${j}.${k}`]??p[lang]),steps:s.steps}))}));}
 export function searchChapters(rows,query){const words=String(query).normalize('NFKC').toLocaleLowerCase().trim().split(/\s+/u).filter(Boolean);return rows.filter(c=>{const text=[c.title,c.summary,...c.sections.flatMap(s=>[s.title,...s.body])].join(' ').normalize('NFKC').toLocaleLowerCase();return words.every(w=>text.includes(w));});}
 export function articleHTML(c){return `<div class="help-eyebrow">ANICANTO / ${String(c.number).padStart(2,'0')}</div><h1 id="help-article-title">${esc(c.title)}</h1><p class="help-lead">${esc(c.summary)}</p>${c.sections.map(s=>`<section class="help-section"><h2>${esc(s.title)}</h2>${s.steps?`<ol>${s.body.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>`:s.body.map(p=>`<p>${esc(p)}</p>`).join('')}</section>`).join('')}`;}
 

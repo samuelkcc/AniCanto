@@ -71,6 +71,9 @@ def maintain(root,ident,mode='repair',platform=None):
     write_json(record,state)
     emit('Checking '+row['title'],modelID=ident,maintenance=state)
     try:
+        if row.get('engine')=='whisper-mlx':
+            from model_licenses import install_notices
+            install_notices(row,base)
         work=[]
         for i,f in enumerate(row['files']):
             path=base/f['path']

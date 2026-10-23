@@ -6823,5 +6823,88 @@
     "licenseReviewRequired": false,
     "licenseEvidence": "licenses/model-evidence.json",
     "platform": "darwin"
+  },
+  {
+    "id": "whisper-large-v3-mlx",
+    "category": "independent-asr",
+    "engine": "whisper-mlx",
+    "platform": "darwin",
+    "title": "Whisper large-v3 · Apple MLX",
+    "repo": "mlx-community/whisper-large-v3-asr-fp16",
+    "revision": "f4b9d561e7f1a5c0587726ff7ff03da2cc80fcf9",
+    "files": [
+      {
+        "path": "README.md",
+        "size": 1689,
+        "sha": "fff3a99cf95ab6ea7d23e799a495ca6efab6d27bf54eafd0f8832c46ee0d9290"
+      },
+      {
+        "path": "added_tokens.json",
+        "size": 34648,
+        "sha": "3c51f66c4c21f9e126970078f11ae77a78c74aee8df606ee9daba86e467108e0"
+      },
+      {
+        "path": "config.json",
+        "size": 1325,
+        "sha": "3a590d2344971ac607e74a45b392ba1bbd5405178b2c3c8628255f58af473bc4"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 3903,
+        "sha": "fbdfa70135de9b1d31553393f14e80aaeb1936ea36576b2ba864055943c09d23"
+      },
+      {
+        "path": "merges.txt",
+        "size": 493869,
+        "sha": "2df2990a395e35e8dfbc7511e08c12d56018d8d04691e0133e5d63b21e154dc6"
+      },
+      {
+        "path": "model.safetensors",
+        "size": 3083275393,
+        "sha": "0039566aa15953315a26ab441944d97b914de0a2b5dc23492fada35ad4d0cfea"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 82514,
+        "sha": "c0527fbb5bb758450ddb95fea7bd17f2640915b6c09d6fd8ba5236155d60aa61"
+      },
+      {
+        "path": "normalizer.json",
+        "size": 52666,
+        "sha": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd"
+      },
+      {
+        "path": "preprocessor_config.json",
+        "size": 340,
+        "sha": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+      },
+      {
+        "path": "special_tokens_map.json",
+        "size": 2072,
+        "sha": "1c70773c078cb2ca96e0fcff113102f1d3e2b1504272c3bb63b035d4a6700d87"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 2480617,
+        "sha": "6d8cbd7cd0d8d5815e478dac67b85a26bbe77c1f5e0c6d76d1ce2abc0e5f21ca"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 282843,
+        "sha": "844b642c73a91359722f47b35705f7174686df33d252695d8572cf9ac03a6389"
+      },
+      {
+        "path": "vocab.json",
+        "size": 1036558,
+        "sha": "e2aa043ef015641d363d8288e7c241c85e36a5c761fb303598e0710233344387"
+      }
+    ],
+    "bytes": 3087748437,
+    "parameterB": 1.55,
+    "precision": "float16 · Apple Metal",
+    "estimatedMemoryGB": 5.5,
+    "license": "Apache-2.0 / MIT upstream",
+    "licenseReviewRequired": false,
+    "licenseEvidence": "licenses/model-evidence.json"
   }
 ]

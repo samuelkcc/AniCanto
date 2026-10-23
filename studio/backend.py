@@ -30,7 +30,7 @@ SETTING_KEYS = set(defaults()) | {'model','visualModel','asrModel','speechModel'
     'backgroundGain','backgroundDucking','appearance','animeTheme','controlDensity',
     'subtitle','subtitleStream','ocrRect','ocr','ocrAutoRegion','exportFolder','translationSource','allowCrossEngineRepair',
     'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels',
-    'failedVoicePolicy','dramaBackend'}
+    'failedVoicePolicy','dramaBackend','normalRepairPolicy','independentAsrBackend'}
 from voice_parameters import keys as voice_parameter_keys, validate as validate_voice_parameters
 SETTING_KEYS.update(voice_parameter_keys())
 SETTING_KEYS.add('cosyExpression')
@@ -340,6 +340,8 @@ class Studio:
             patch=p.get('settings',{})
             if not isinstance(patch,dict) or set(patch)-SETTING_KEYS:raise ValueError('Unsupported production setting.')
             patch=dict(patch)
+            if patch.get('normalRepairPolicy','missing-only') not in ('missing-only','verified'):raise ValueError('Unknown normal repair policy.')
+            if patch.get('independentAsrBackend','auto') not in ('auto','mlx','cpu'):raise ValueError('Unknown independent ASR backend.')
             if ('productionMode' in patch and patch['productionMode']!=self.store.settings.get('productionMode')
                     and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue)):
                 raise ValueError('Production mode is locked until processing finishes.')
@@ -601,6 +603,18 @@ class Studio:
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before removing a model.')
             from model_maintenance import remove_retired
             return remove_retired(self.root,p['id'],self.platform)
+        if op=='finish-current':
+            row=self.row(p.get('id'))
+            if row.get('status')!='running':raise ValueError('No conversion is running for this video.')
+            job=self.review_path(row).parent
+            tracks=read(job/'track-progress.json',{}).get('tracks',[])
+            active=[t for t in tracks if t.get('state')=='running' and t.get('token')]
+            if not active:raise ValueError('There is no active voice track to finish.')
+            for track in active:
+                folder=Path(track['folder']).resolve()
+                if not folder.is_relative_to((job/'tracks').resolve()):raise ValueError('Invalid active track folder.')
+                write(folder/'finish-with-current.json',dict(token=track['token'],requestedAt=time.time(),retainRecordings=True,qualityCertified=False))
+            return dict(status='finishing-saved-recordings',tracks=len(active))
         if op=='model-choices':
             if self.platform=='win32':
                 from native_setup import catalog

@@ -95,7 +95,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);first=audio(job/'first.wav',1.4)
    cue=dict(start=0,end=1,japanese='行こう',cantonese='出發啦。')
-   cfg=dict(duration=2,automaticDurationRewrite=True,preferFirstAudibleTake=True,productionMode='normal',targetLanguage='yue')
+   cfg=dict(duration=2,automaticDurationRewrite=True,preferFirstAudibleTake=True,normalRepairPolicy='verified',productionMode='normal',targetLanguage='yue')
    with patch('dubbing.gsv_audio',side_effect=AssertionError('Unrequested rewrite')):
     self.assertEqual(natural_delivery.repair(cfg,job,[cue],[first],Mock(),Mock()),[first])
    self.assertEqual(cue['cantonese'],'出發啦。')
@@ -104,7 +104,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);long=audio(job/'long.wav',1.5);short=audio(job/'short.wav',.4);healthy=audio(job/'healthy.wav',.4)
    original=[dict(start=0,end=.7,japanese='来て',cantonese='I would like you to come here.',speakerId='own-1'),dict(start=.7,end=1.5,japanese='はい',cantonese='Yes.',speakerId='own-2')]
-   cfg=dict(duration=1.5,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1,ffmpeg=shutil.which('ffmpeg'))
+   cfg=dict(duration=1.5,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1,ffmpeg=shutil.which('ffmpeg'))
    calls=[]
    def run(args):calls.append(args);return subprocess.check_output([str(x) for x in args],stderr=subprocess.PIPE)
    def generate(c,folder,cues,*args):
@@ -124,7 +124,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=[audio(job/f'old-{i}.wav',1.4) for i in range(3)];new=[audio(job/f'new-{i}.wav',.5) for i in range(3)]
    original=[dict(start=i,end=i+1,japanese='行こう',cantonese='I would like you to come here.',speakerId=f'own-{i}',reviewIndex=i+20) for i in range(3)]
-   cfg=dict(duration=3,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
+   cfg=dict(duration=3,speechRatePolicy='natural',automaticDurationRewrite=True,preferFirstAudibleTake=False,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
    def generate(c,folder,rows,*args):
     self.assertEqual([r['speakerId'] for r in rows],['own-0','own-1','own-2'])
     self.assertEqual([r['reviewIndex'] for r in rows],[20,21,22]);return new
@@ -139,7 +139,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=audio(job/'old.wav',1.4);new=audio(job/'new.wav',.5)
    cue=dict(start=0,end=1,japanese='行こう',cantonese='I would like you to come here.',reviewIndex=41)
-   cfg=dict(duration=1,automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',model='m',port=1)
+   cfg=dict(duration=1,automaticDurationRewrite=True,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',model='m',port=1)
    with patch('dubbing.gsv_audio',return_value=[new]),patch.object(worker,'ollama_chat',return_value='{"0":"Come here."}'),patch('semantic_review.audit',return_value={'0':dict(faithful=True)}),patch('normal_mode.inspect',return_value={42:dict(decision='japanese')}):
     self.assertEqual(natural_delivery.repair(cfg,job,[cue],[old],Mock(),Mock()),[old])
     self.assertEqual(cue['cantonese'],'I would like you to come here.')
@@ -147,14 +147,14 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=[audio(job/f'old-{i}.wav',1.4) for i in range(2)];new=audio(job/'new.wav',.4)
    cues=[dict(start=i,end=i+1,japanese='行こう',cantonese='I would like you to come here.') for i in range(2)]
-   cfg=dict(duration=2,automaticDurationRewrite=True,productionMode='normal',targetLanguage='en',model='m',port=1)
+   cfg=dict(duration=2,automaticDurationRewrite=True,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',model='m',port=1)
    with patch('dubbing.gsv_audio',return_value=[new]),patch.object(worker,'ollama_chat',return_value='{"0":"Come here.","1":"Come here."}'),patch('semantic_review.audit',return_value={str(i):dict(faithful=True) for i in range(2)}):
     self.assertEqual(natural_delivery.repair(cfg,job,cues,old,Mock(),Mock()),old)
  def test_repaired_language_audio_is_measured_after_replacement_before_mixing(self):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);first=audio(job/'first.wav',.4);language_fixed=audio(job/'language.wav',1.4);shortened=audio(job/'concise.wav',.5)
    cue=dict(start=0,end=1,japanese='行こう',cantonese='Come here.')
-   cfg=dict(duration=1,speechRatePolicy='natural',productionMode='normal',targetLanguage='en',ffmpeg='ffmpeg')
+   cfg=dict(duration=1,speechRatePolicy='natural',normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ffmpeg='ffmpeg')
    def repair(c,j,rows,paths,*a,**kw):
     self.assertEqual(paths,[language_fixed]);return [shortened]
    raw=b'\x01\x00'*12000
@@ -167,7 +167,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);long=audio(job/'long.wav',1.3);short=audio(job/'short.wav',.6)
    cues=[dict(start=0,end=1,cantonese='Hello.'),dict(start=1,end=2,cantonese='Yes.')]
-   cfg=dict(duration=3,speechRatePolicy='natural',productionMode='normal',targetLanguage='en',ffmpeg=shutil.which('ffmpeg'))
+   cfg=dict(duration=3,speechRatePolicy='natural',normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ffmpeg=shutil.which('ffmpeg'))
    calls=[]
    def run(args):calls.append(args);return subprocess.check_output([str(a) for a in args],stderr=subprocess.PIPE)
    with patch('dubbing.gsv_audio',return_value=[long,short]),patch('normal_mode.repair_paths',side_effect=lambda c,j,cs,ps,*args:ps),patch('natural_delivery.repair',side_effect=lambda c,j,cs,ps,*args,**kwargs:ps),patch('natural_schedule.scene_boundaries',return_value=dict(status='detected',cuts=[])):
@@ -183,7 +183,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=audio(job/'old.wav',1.5)
    cue=dict(start=0,end=1,japanese='来て',cantonese='I would like you to come here.',speakerId='own')
-   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
+   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ttsBackend='drama3',model='m',port=1)
    def interrupted(c,folder,rows,*args):
     target=audio(folder/'completed.wav',.4)
     worker.atomic_json(folder/'audio-preview.json',dict(engine='drama3',language='en',rows=[dict(rows[0],audio=str(target))]))
@@ -196,7 +196,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);old=audio(job/'old.wav',1.4);new=audio(job/'new.wav',.5)
    cue=dict(start=0,end=1,japanese='行こう',cantonese='I would like you to come here.')
-   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,productionMode='normal',targetLanguage='en',model='m',port=1)
+   cfg=dict(duration=1,automaticDurationRewrite=True,preferFirstAudibleTake=False,normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',model='m',port=1)
    worker.atomic_json(job/'normal-checks.json',dict(unresolved=[1],repairs=[dict(index=1,repaired=False)]))
    worker.atomic_json(job/'segment-issues.json',[dict(index=1,kind='normal-unresolved',message='Japanese')])
    with patch('dubbing.gsv_audio',return_value=[new]),patch.object(worker,'ollama_chat',return_value='{"0":"Come here."}'),patch('semantic_review.audit',return_value={'0':dict(faithful=True)}),patch('normal_mode.inspect',return_value={1:dict(decision='english',contentFailure=False)}):
@@ -210,7 +210,7 @@ class NaturalDeliveryTests(unittest.TestCase):
    with self.subTest(language=language),tempfile.TemporaryDirectory() as d:
     job=Path(d);long=audio(job/'long.wav',4.);short=audio(job/'short.wav',.4)
     cues=[dict(start=0,end=2,japanese='行こう',cantonese=text),dict(start=5,end=6,japanese='はい',cantonese='Yes.' if language=='en' else '係呀。')]
-    cfg=dict(duration=6,speechRatePolicy='natural',automaticDurationRewrite=True,productionMode='normal',targetLanguage=language,ffmpeg=shutil.which('ffmpeg'))
+    cfg=dict(duration=6,speechRatePolicy='natural',automaticDurationRewrite=True,normalRepairPolicy='verified',productionMode='normal',targetLanguage=language,ffmpeg=shutil.which('ffmpeg'))
     before=copy.deepcopy(cues);calls=[]
     def run(args):calls.append(args);return subprocess.check_output([str(a) for a in args],stderr=subprocess.PIPE)
     with patch('dubbing.gsv_audio',return_value=[long,short]) as generate,patch('normal_mode.repair_paths',side_effect=lambda c,j,cs,ps,*a:ps),patch.object(worker,'ollama_chat',side_effect=AssertionError('Unnecessary rewrite of a line that fits the following gap')),patch('natural_schedule.scene_boundaries',side_effect=AssertionError('Unnecessary cut scan of a line that fits')):

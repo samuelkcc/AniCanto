@@ -13,11 +13,10 @@ The searchable bilingual **Help centre** inside AniCanto is the current user man
 - [Lightweight Mac deployment](MAC-LIGHTWEIGHT-DEPLOYMENT.md)
 - [Welcome download management](WELCOME-DOWNLOAD-MANAGEMENT.md)
 - [Optional voice models: CosyVoice 3 and WenetSpeech-Yue](VOICE-MODELS.md)
-- [Drama3-small and NVIDIA](DRAMA3-SMALL-NVIDIA.md)
+- [Drama3-small and NVIDIA](WINDOWS-PORT-2026-10-17.md)
 
 ## Investigations and historical context
 
-Episode-specific QA reports in this folder record their dated findings. Earlier plans, continuation logs and the old README are kept in [archive/](archive/). They may describe superseded behaviour; current app help and source take precedence.
 
 ## Local generated files
 

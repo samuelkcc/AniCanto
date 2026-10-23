@@ -33,3 +33,7 @@ Use isolated fixture storage only. Test persisted choices after reopen, same cue
 Both interface modes now use the same primary Start/Resume intent: process the unfinished video list in queue order, skip completed outputs, and include videos added while running. Waiting videos may be reordered without interrupting the current episode. Explicit pause stops continuation; a failed episode retains its error and does not loop. Explicit selected-video Retry and new-version operations remain scoped. This corrects the old Expert-mode selected-only default that left episode 804 waiting after 803 completed. Opening the app alone still does not restart user-paused work.
 
 Pause & save uses the same red action style in both Mac and Windows shared interfaces, including hover, focus and disabled variants.
+
+## 0.24.64 stability correction
+
+Normal mode now retains audible first recordings and automatically repairs missing/damaged audio, and locally shortens objectively overlong lines. Language, accent and suspected omissions are review notes rather than automatic retake triggers. Timing candidates must fit before adoption; a maximum of two local passes cannot restart broad language repair. Detailed checking is opt-in. Independent ASR checkpoints each recording, resumes incomplete work and reuses unchanged evidence across stages. Apple Silicon has an optional pinned MLX Whisper model; faster decoding is not a pronunciation certificate. These are independently implemented AniCanto mechanisms, not claims about SmartSub behaviour. See INDEPENDENT-LISTENING.md.

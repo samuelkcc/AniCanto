@@ -253,6 +253,8 @@ def recover(cfg,job,cues,paths,run,emit,placement):
         review=read(job/'review.json',{});review['cues']=cues;atomic_json(job/'review.json',review)
         placement=prepare(cfg,job,cues,selected,run,emit)
     for pass_number in range(2):
+        from normal_policy import finish_requested
+        if finish_requested(cfg):break
         check(cfg);rows=collect(cfg,job,cues,selected,placement,ledger)
         if not rows:break
         emit('自動修復調度',f'只處理 {len(rows)} 句未完成對白（{pass_number+1}/2）；由所選文字模型選擇已有修復方法，唔重跑整集。',.88)

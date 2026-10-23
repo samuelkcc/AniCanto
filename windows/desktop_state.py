@@ -28,7 +28,7 @@ def defaults(language='en'):
     return dict(animeTheme='studio',randomAnimeTheme=False,selectedEngines=['drama3'],ttsBackend='drama3',defaultAudioEngine='drama3',
         dubLanguages=['yue','en'] if language=='en' else ['yue'],includeOriginal=True,
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
-        subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',
+        subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',normalRepairPolicy='missing-only',independentAsrBackend='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=True,continueOnError=True,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,

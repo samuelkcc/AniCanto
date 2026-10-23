@@ -21,7 +21,8 @@ def enabled(cfg):
 def warning(cfg):
     if cfg.get('productionMode')=='normal':
         from normal_mode import WARNING as normal_warning
-        return normal_warning
+        from normal_policy import retain
+        return normal_warning if retain(cfg) else '一般模式：已作局部完整性及語言檢查，並非逐字、口音或角色身分認證。'
     return WARNING
 
 
@@ -196,6 +197,7 @@ def synthesize(cfg,job,cues,run,emit):
     from source_counting import repair as repair_counting
     repaired_counts=repair_counting(cfg,job,cues)
     if repaired_counts:emit('數數對白修正',f'已修正 {len(repaired_counts)} 句連續數字被同一句字幕重複覆蓋嘅譯稿。',.55)
+    from normal_policy import retain
     paths=dubbing.gsv_audio(cfg,job,cues,run,emit)
     # Finish language/integrity replacement before measuring and rewriting.
     # Otherwise a later repair could put an overlong take back into the mix.
@@ -204,7 +206,7 @@ def synthesize(cfg,job,cues,run,emit):
         paths=repair_paths(cfg,job,cues,paths,run,emit)
     if len(paths)!=len(cues):raise ValueError('配音結果數量與台詞不符；已保留進度，未忽略漏句。')
     schedule=None
-    if cfg.get('speechRatePolicy')=='natural' and cfg.get('productionMode')=='normal' and not cfg.get('editorRender'):
+    if cfg.get('speechRatePolicy')=='natural' and cfg.get('productionMode')=='normal' and not cfg.get('editorRender') and not retain(cfg):
         from natural_schedule import prepare
         from natural_finish import finish as finish_natural
         # Safe gaps and measured silent edges come before any wording changes.
@@ -228,8 +230,19 @@ def synthesize(cfg,job,cues,run,emit):
         # A new fallback take also needs bounded final timing, with the same
         # cumulative tempo limits; no words are cropped to fit.
         paths,schedule=finish_natural(cfg,job,cues,paths,run,emit,allow_tempo=True)
+    if retain(cfg) and cfg.get('speechRatePolicy')=='natural' and not cfg.get('editorRender'):
+        from natural_finish import finish as finish_retained
+        paths,schedule=finish_retained(cfg,job,cues,paths,run,emit,allow_tempo=False)
+        # Keep objective timing repair without restarting language inspection,
+        # the AI director or alternate-engine/voice recovery. Safe gaps come first.
+        from normal_policy import finish_requested
+        if not finish_requested(cfg) and any(not row['fit'] for row in schedule):
+            from natural_delivery import repair
+            timing_cfg=dict(cfg,automaticDurationRewrite=True,preferFirstAudibleTake=False,_durationFitRequired=True)
+            paths=repair(timing_cfg,job,cues,paths,run,emit,placement=schedule)
+            paths,schedule=finish_retained(cfg,job,cues,paths,run,emit,allow_tempo=False)
     source_fallback=set()
-    if cfg.get('productionMode')=='normal' and not cfg.get('editorRender'):
+    if cfg.get('productionMode')=='normal' and not cfg.get('editorRender') and not retain(cfg):
         from failed_voice_policy import choose
         before_policy=list(paths)
         paths,source_fallback=choose(cfg,job,cues,paths)
@@ -292,7 +305,10 @@ def synthesize(cfg,job,cues,run,emit):
                     preserved=any(c.get('preserveOriginalSpeech') and anchor<c.get('speechEnd',c['end']) and end>c.get('speechStart',c['start']) for j,c in enumerate(cues) if j!=i)
                     # A take may use spare time at the end of the video, but
                     # cannot extend beyond the next planned voice start.
-                    if cfg.get('productionMode')=='normal' and next_index is None and overrun<=2. and end<=cfg['duration']+.00001 and not protected and not preserved:
+                    if retain(cfg) and end<=cfg['duration']+.00001 and not protected and not preserved:
+                        overlap_seconds=round(overrun,3)
+                        warnings.append(dict(index=row['index'],kind='retained-take-overrun',message=f'已保留完整有聲錄音；超出原定時段 {overrun:.2f} 秒，可能同下一句重疊，請試聽。未自動改稿、重錄或加速。'))
+                    elif cfg.get('productionMode')=='normal' and next_index is None and overrun<=2. and end<=cfg['duration']+.00001 and not protected and not preserved:
                         overlap_seconds=round(overrun,3)
                         warnings.append(dict(index=row['index'],kind='bounded-dialogue-overlap',message=f'保留完整目標語言錄音；比原定時段長 {overlap_seconds:.2f} 秒，已確認後面冇下一句配音，請喺校對報告試聽。'))
                     else:
@@ -354,5 +370,7 @@ def validation(cfg,job,cues,target,run,emit):
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     normal=cfg.get('productionMode')=='normal'
     result=dict(structuralStatus='passed',fullDecode='passed',qualityStatus='targeted-checks-only' if normal else 'not-checked-fast-mode',qualityChecked=False,contentCheck='targeted-language-and-integrity' if normal else 'skipped-fast-mode',timingReviewIndices=[],contentReviewIndices=[],duration=duration,cues=len(cues),warning=warning(cfg))
+    from normal_policy import retain
+    if normal and retain(cfg):result.update(qualityStatus='retained-recordings-unverified',contentCheck='not-automatically-reviewed',repairPolicy='missing-only')
     atomic_json(Path(job)/'validation.json',result)
     return result
