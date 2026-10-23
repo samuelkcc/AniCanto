@@ -25,28 +25,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "459cd22129e84a88f56da2f6fd78867eb92ea4df99272e92781955a033f53fbe",
-      "bytes": 22246
+      "sha256": "8fc33c2c1db19109fca69d24aa6b681747d8f07a324bcf4286b664f5d091f778",
+      "bytes": 22172
     },
     {
       "path": "README.ja.md",
-      "sha256": "8340aebad53404ae47ee850f78b9bfe17ff9757109ed25cab58e9c2ac4ddfbb6",
-      "bytes": 23931
+      "sha256": "bc2aa08edb5edf0821e031604d41b32ef7b4798554c1b277bae17b138249e829",
+      "bytes": 23857
     },
     {
       "path": "README.md",
-      "sha256": "459cd22129e84a88f56da2f6fd78867eb92ea4df99272e92781955a033f53fbe",
-      "bytes": 22246
+      "sha256": "8fc33c2c1db19109fca69d24aa6b681747d8f07a324bcf4286b664f5d091f778",
+      "bytes": 22172
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "094323dc1a5114807256e0cf7c03d90c5a7d6696cb0842603caaced2c56912b7",
-      "bytes": 19025
+      "sha256": "592d5b362242fb6a76b5a978aec5093e493530bb29e44b1bbb03586f4a377f4b",
+      "bytes": 18945
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "7b9e67b312d2df1f7b3c77f0b9109cd168dad9348a51fa30d3d6a91cdf461248",
-      "bytes": 19149
+      "sha256": "c9fe85e72e78c6b6642d502311053ef8d4929432c68a3efd73dbed51fdd0ff33",
+      "bytes": 19069
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -3142,26 +3142,6 @@
       "path": "docs/images/batch-zh-HK.png",
       "sha256": "095fecd0096afd6459cc36687bf3ff203424962b4b3a598dc0fe894d0c3eca75",
       "bytes": 95915
-    },
-    {
-      "path": "docs/images/demo-v7-en.png",
-      "sha256": "f311d1940c141879224857137ca904de077193df98304dfe902b5d4f23017fad",
-      "bytes": 1008979
-    },
-    {
-      "path": "docs/images/demo-v7-ja.png",
-      "sha256": "9b5c2b81a05f84dc7ec7b4310abed9b15b0e71f6d5adb374f59a441e86586dda",
-      "bytes": 1004105
-    },
-    {
-      "path": "docs/images/demo-v7-zh-CN.png",
-      "sha256": "db2e3d654ab2c91f3f1595b20a1270432955c2835bdc74dcb5468dc1c4a3ee91",
-      "bytes": 1000669
-    },
-    {
-      "path": "docs/images/demo-v7-zh-HK.png",
-      "sha256": "46c0888dfcf2ff9e81e22e88e6801303a1908fbc76f82b664c3f3c5ce27524d8",
-      "bytes": 998673
     },
     {
       "path": "docs/images/model-centre-en.png",

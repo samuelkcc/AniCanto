@@ -156,8 +156,6 @@ Recordings and previous exports are retained. New languages, models or changed s
 
 ## Try the original demo and compare the voices
 
-[![AniCanto original demo](docs/images/demo-v7-en.png)](docs/en/DEMO.md)
-
 Download the **three-minute original Japanese sample**, add it to AniCanto and try your own Cantonese or English conversion. The artwork, music and synthetic voices were prepared for this project; this sample contains no commercial anime footage or professional actor recording.
 
 For listening comparison, the **Mac Drama 3 movie** defaults to Cantonese and also retains English and Japanese audio tracks. Switch tracks in a compatible player. Its Cantonese and English scripts were edited before generation: it demonstrates the voice model, **not an untouched one-click translation benchmark**, and is not an iPad CosyVoice conversion. All four picture-language editions have the same source speech.
