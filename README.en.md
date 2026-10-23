@@ -8,6 +8,12 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
+## Why AniCanto exists
+
+AniCanto began as a hobby project by SCKC, with a simple family wish: **help children hear everyday Hong Kong Cantonese while reading Chinese subtitles and learning Chinese characters.** Giving a familiar animated scene a Cantonese voice offers another small way to enjoy and explore the language.
+
+The project also welcomes people curious about Cantonese. Compare Cantonese, English and the original Japanese, discover expressions, and get to know a little more of Hong Kong Cantonese culture. The interface is available in Traditional Chinese, English, Simplified Chinese and Japanese; dubbing output supports Cantonese and English.
+
 ## Download the Beta · 0.24.58
 
 **[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto-macOS-0.24.58.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.58-beta)
@@ -25,7 +31,28 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Re
 
 A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may cause swapping, severe slowdown or loading failure. Memory figures are planning estimates. Allow **100 GB+ free storage** for models, runtimes and working files; long videos need more.
 
-## This Beta
+## What the app does
+
+| Feature | How you can use it |
+| --- | --- |
+| **Cantonese / English dubbing** | Choose either language or both, with separate audio and subtitle tracks in one movie, switchable in a compatible player. |
+| **Chinese subtitles as context** | Use embedded text tracks, external subtitles or screen OCR to help check names and meaning. Japanese speech remains the primary source. |
+| **Opening and ending preservation** | Automatically detect OP / ED regions and keep their original Japanese songs and audio by default. |
+| **Basic and Expert modes** | Start with automatic processing, or use the timeline to edit scripts, adjust timing and work on individual lines. |
+| **Audition, retake and review** | Compare original, separated and generated speech; retake a line or choose a saved recording, then export another version while retaining the previous movie. |
+| **Local batch processing** | Queue videos, reorder waiting items, pause, save and resume. Processing can run offline after model setup. |
+
+## Supported formats
+
+| Type | Formats |
+| --- | --- |
+| **Video input** | MP4 · MKV · MOV · M4V · AVI · WebM · TS |
+| **External subtitles** | SRT · ASS · SSA · VTT |
+| **Finished output** | MP4 with the selected audio and subtitle tracks. |
+
+An accepted extension still needs readable audio and video codecs. Burned-in captions can be read with OCR, but cannot always be cleanly removed from the picture.
+
+## What’s new in this Beta
 
 - Videos continue in queue order; reorder videos that have not started.
 - Import subtitles from one Subtitle source panel; mark review notes checked or deferred.
@@ -64,6 +91,10 @@ Real 0.24.58 interface with original demonstration material and illustrative mod
 ## Before you start
 
 AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese and English tracks and OP / ED preservation; results vary by scene.
+
+The project improves by learning from failed scenes: listening to individual lines, tracing the problem and refining the workflow. AI can help flag concerns, but deciding whether a line feels natural or suits a character still needs a person to listen.
+
+**Dubbing is a craft.** AniCanto is for learning and creative experiments, and its AI performances remain imperfect. Please keep appreciating and supporting professional voice performers.
 
 A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 
