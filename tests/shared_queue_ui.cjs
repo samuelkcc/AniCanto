@@ -233,5 +233,23 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   await page.mouse.up();await count(2);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a','c']);
   await finish();await count(3);await finish();await end('Worker finishes during drag: next movie waits for saved order');
  }
+ for(const language of ['en','zh-HK']){
+  const {page,count,end}=await fixture({language,mode:'expert',rows:[['a','waiting']]});
+  await page.locator('[data-action=start]').click();await count(1);
+  await page.locator('.inspector-footer [data-action=pause]').waitFor();
+  assert.equal(await page.locator('.inspector-footer [data-action=pause]').count(),1);
+  await page.locator('[data-action=toggle-inspector]').click();
+  assert.equal(await page.locator('.workspace-title [data-action=pause]').count(),1,'Hidden inspector keeps Pause in the Edit header');
+  assert.equal(await page.locator('.statusbar.has-transport').count(),0);
+  for(const destination of ['review','produce','queue','models','preferences']){
+   await page.locator(`[data-action=page][data-value=${destination}]`).click();
+   assert.equal(await page.locator('[data-action=pause]').count(),0,'Pause must only appear in Edit');
+   assert.equal(await page.locator('.statusbar .transport-control').count(),0,'No global transport footer');
+  }
+  await page.locator('[data-action=page][data-value=edit]').click();assert.equal(await page.locator('.workspace-title [data-action=pause]').count(),1);
+  await page.locator('[data-action=toggle-inspector]').click();assert.equal(await page.locator('.inspector-footer [data-action=pause]').count(),1);assert.equal(await page.locator('[data-action=pause]').count(),1);
+  await page.locator('[data-action=pause]').click();await page.waitForSelector('[data-action=start]');
+  await end('Pause only in Edit, including hidden inspector; no full-width transport footer: '+language);
+ }
  await browser.close();fs.writeFileSync(path.join(out,'acceptance.json'),JSON.stringify({fixtureOnly:true,realUIActions:true,previewOff:true,results},null,2));console.log(JSON.stringify(results));
 })().catch(e=>{console.error(e);process.exit(1)});

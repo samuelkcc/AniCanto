@@ -175,16 +175,28 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 
 .review-category-label{display:flex;align-items:center;gap:8px;white-space:nowrap}.review-category-label select{max-width:190px}
 
-/* Basic mode keeps progress and audition close to the preview on large displays. */
-.basic .preview-column{gap:12px;padding:16px 22px;align-items:stretch}
-.basic .preview-heading h2{font-size:16px}
-.basic .player-card{flex:none}
-.basic .video-stage{aspect-ratio:auto;height:clamp(180px,32vh,380px);min-height:0;max-height:none}
-.basic .video-stage.preview-off{height:clamp(150px,20vh,230px)}
-.basic .waiting-stage{height:100%;max-height:190px;width:32%;max-width:200px}
-.basic .waiting-stage.ensemble{width:40%;max-width:260px}
-.basic .waiting-copy strong{font-size:16px}
-.basic .waiting-copy p{margin:6px 0 10px}
-.basic .audition-card{padding:12px 16px}
-.basic .audition-card .script{margin:7px 0 9px}
-@media(max-height:760px){.basic .preview-column{padding:12px 18px;gap:10px}.basic .video-stage.preview-off{height:145px}.basic .waiting-scene{padding:10px 24px}.basic .waiting-stage{max-height:125px}.basic .waiting-copy p{margin:4px 0 6px}}
+/* Basic and Expert share a flexible player that fills the available workspace. */
+.basic .preview-column{gap:0;padding:0;overflow:hidden;min-height:0}
+.basic .preview-heading{display:none}
+.basic .player-card{flex:1 1 0;min-height:190px;display:flex;flex-direction:column;border:0;border-radius:0;border-bottom:4px solid var(--line)}
+.basic .video-stage,.basic .video-stage.preview-off{flex:1 1 0;height:auto;min-height:120px;max-height:none;aspect-ratio:auto}
+.basic .player-controls{flex:none;min-height:42px;padding:6px 12px}
+.basic #basic-progress{flex:none;padding:12px 18px;border-radius:0;border-bottom:1px solid var(--line)}
+.basic #audition-card{flex:0 1 clamp(150px,22vh,220px);min-height:130px;padding:14px 18px;border:0;border-radius:0;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.basic #audition-card .script{flex:1;min-height:0;overflow:auto;margin:0;overflow-wrap:anywhere}
+.basic #audition-card>.row{flex:none}
+.basic #output-row{flex:none;padding:0 18px;background:var(--surface)}
+.basic #output-row:empty{display:none}
+@media(max-height:760px){.basic #basic-progress{padding:9px 14px}.basic #audition-card{padding:10px 14px;gap:8px}}
+
+/* Expert timeline spans the window; processing progress belongs to the preview. */
+.expert>.timeline{flex:none;width:100%;height:clamp(200px,28vh,288px);min-height:200px}
+.expert .preview-column>.expert-progress{flex:none;min-width:0;padding:9px 14px;border-bottom:1px solid var(--line)}
+.expert .preview-column>.transcript{height:clamp(130px,21vh,210px);min-height:130px;flex:0 1 auto}
+.expert .preview-column>.player-card{min-height:160px}
+.expert .video-stage{min-height:90px}
+@media(max-width:1250px){.expert .expert-progress .progress-times{white-space:normal;max-width:180px}.expert .expert-progress .milestones{gap:3px}.expert .expert-progress .milestone{font-size:9px;gap:3px}}
+
+@media(max-height:760px){.expert>.timeline{height:180px;min-height:180px}.expert .preview-column>.transcript{height:130px;min-height:110px}.expert .expert-progress .milestones{display:none}}
+
+.workspace-title>.transport-control{width:auto;flex:none}.workspace-title>.transport-control>button{width:auto;min-height:30px;padding:5px 10px}

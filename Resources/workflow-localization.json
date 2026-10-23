@@ -173,7 +173,8 @@
     "自動修復後仍未有可交付翻譯錄音；預覽保留本句原聲，未標為翻譯完成。": "Automatic recovery could not deliver a translated recording. The labelled preview retains the original speech for this line; translation remains incomplete.",
     "完整錄音經安全時間安排及有限微量調速後仍超出可用時段；已保留原稿及錄音，未截尾或大幅加速。": "The complete recording still exceeds its safe window after bounded timing and small tempo adjustments. Script and audio were retained without truncation or large acceleration.",
     "數數對白修正": "Spoken counting repair",
-    "有完整錄音超時；一次輕量檢查畫面切換邊界，作診斷參考；實際微調以對白及保留原聲範圍為準。唔載入視覺 AI 模型。": "Complete recordings exceed their time slots. Visual cuts are diagnostic only; timing follows dialogue and preserved source ranges. No vision AI model is loaded."
+    "有完整錄音超時；一次輕量檢查畫面切換邊界，作診斷參考；實際微調以對白及保留原聲範圍為準。唔載入視覺 AI 模型。": "Complete recordings exceed their time slots. Visual cuts are diagnostic only; timing follows dialogue and preserved source ranges. No vision AI model is loaded.",
+    "等待原生生成（未提供逐幀進度）": "Waiting for native generation (frame progress unavailable)"
   },
   "patterns": [
     [

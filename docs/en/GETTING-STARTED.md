@@ -1,6 +1,6 @@
 # Subtitle import guide
 
-[← AniCanto](../../README.en.md)
+[← AniCanto](../../README.md)
 
 1. Download and open the app, then prepare the models and runtimes. Initial setup needs internet access.
 2. Add videos and choose Cantonese, English or both. For external subtitles, use **Subtitle source → Import subtitle file** above the preview (SRT / ASS / SSA / VTT).

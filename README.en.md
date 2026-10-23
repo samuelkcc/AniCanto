@@ -1,4 +1,4 @@
-[繁體中文](README.md) · **English** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
+**English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -10,13 +10,23 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese or English dubbing**. Re
 
 ## Why AniCanto exists
 
-AniCanto began as a hobby project by SCKC, with a simple family wish: **help children hear everyday Hong Kong Cantonese while reading Chinese subtitles and learning Chinese characters.** Giving a familiar animated scene a Cantonese voice offers another small way to enjoy and explore the language.
+AniCanto began with a simple wish: **to let children enjoy animation in everyday Hong Kong Cantonese while following Chinese subtitles and becoming familiar with Chinese characters.** Familiar stories and characters can make a language feel closer, bringing its rhythm, expressions and humour into everyday life.
 
-The project also welcomes people curious about Cantonese. Compare Cantonese, English and the original Japanese, discover expressions, and get to know a little more of Hong Kong Cantonese culture. The interface is available in Traditional Chinese, English, Simplified Chinese and Japanese; dubbing output supports Cantonese and English.
+Created by SCKC as a personal learning project, AniCanto also welcomes anyone curious about Cantonese. Whether you are sharing the language with your children or comparing Cantonese, English and Japanese to discover new expressions, the hope is to make Hong Kong Cantonese culture a little more accessible through the stories you enjoy.
 
-## Download the Beta · 0.24.58
+AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可以聽到日常香港廣東話，同時跟住中文字幕認識漢字。** 熟悉嘅故事、角色同對白，可以令接觸語言變得親切一點，亦讓廣東話嘅節奏、語氣同幽默喺生活入面延續落去。
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto-macOS-0.24.58.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.58-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.58-beta)
+呢個由 SCKC 以個人興趣同學習心態建立嘅小作品，亦希望將呢份樂趣分享俾更多人。無論係陪小朋友接觸廣東話，定係自己想透過廣東話、英文同日文對照認識新詞句，都可以由熟悉嘅一幕開始，慢慢感受香港廣東話嘅表達同文化。
+
+## With respect to professional voice performers
+
+**AniCanto is for language learning and creative experimentation. It is not intended to replace professional voice actors.** Character interpretation, emotion, timing and dramatic intent are creative skills; AI-generated speech should not be equated with a professional performance. Please continue to appreciate and support the performers behind the voices you love.
+
+AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
+
+## Download the Beta · 0.24.59
+
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto-macOS-0.24.59.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.59-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta)
 
 ## Choose your computer setup
 
@@ -42,6 +52,10 @@ A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may
 | **Audition, retake and review** | Compare original, separated and generated speech; retake a line or choose a saved recording, then export another version while retaining the previous movie. |
 | **Local batch processing** | Queue videos, reorder waiting items, pause, save and resume. Processing can run offline after model setup. |
 
+### Experimental: other source languages
+
+Beyond Japanese animation, AniCanto can try converting other detected source languages into Cantonese when the selected engine supports them. **Success is not guaranteed. Only English-to-Cantonese has received limited testing and targeted optimisations so far.** This is an experimental option, not verified support for every language or video.
+
 ## Supported formats
 
 | Type | Formats |
@@ -54,9 +68,9 @@ An accepted extension still needs readable audio and video codecs. Burned-in cap
 
 ## What’s new in this Beta
 
-- Videos continue in queue order; reorder videos that have not started.
-- Import subtitles from one Subtitle source panel; mark review notes checked or deferred.
-- A compact Basic preview brings progress and audition higher; Pause & save is red on Mac and Windows.
+- Basic mode now fills the workspace, with a flexible preview above progress and line audition.
+- Expert mode has a full-window timeline at the bottom; progress sits directly below the preview.
+- Refreshed light-purple screenshots and four-language pages, with English as the default and a bilingual introduction.
 
 ## Start in three steps
 
@@ -68,7 +82,7 @@ An accepted extension still needs readable audio and video codecs. Burned-in cap
 
 ## Inside the current app
 
-Real 0.24.58 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
+Real 0.24.59 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
 
 ### Welcome and setup
 
@@ -91,10 +105,6 @@ Real 0.24.58 interface with original demonstration material and illustrative mod
 ## Before you start
 
 AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese and English tracks and OP / ED preservation; results vary by scene.
-
-The project improves by learning from failed scenes: listening to individual lines, tracing the problem and refining the workflow. AI can help flag concerns, but deciding whether a line feels natural or suits a character still needs a person to listen.
-
-**Dubbing is a craft.** AniCanto is for learning and creative experiments, and its AI performances remain imperfect. Please keep appreciating and supporting professional voice performers.
 
 A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 

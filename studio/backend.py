@@ -239,6 +239,17 @@ class Studio:
                 if path.is_relative_to(self.root) and path.is_file():
                     source=dict(id=str(path.relative_to(self.root)))
                     parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,512*1024)])
+        # Include bounded native request and recent per-take completion evidence.
+        # These are app-owned allowlisted diagnostics, never model config or audio.
+        job=Path(row.get('job') or self.root/'jobs/nonexistent').resolve()
+        if job.is_relative_to((self.root/'jobs').resolve()) and job.is_dir():
+            files=[]
+            for pattern in ('native-drama-request.json','*.generation.json','*.failure.json'):
+                files.extend(path for path in job.rglob(pattern) if path.resolve().is_relative_to(job))
+            files=sorted(files,key=lambda path:path.stat().st_mtime,reverse=True)[:16]
+            for path in files:
+                source=dict(id=str(path.relative_to(self.root)))
+                parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,32*1024)])
         return '\n'.join(parts)+'\n'
 
     def dispatch(self,op,p):

@@ -290,6 +290,17 @@ class SharedStudioTests(unittest.TestCase):
         outside=Path(self.tmp.name)/'private.log';outside.write_text('never export outside data')
         (job/'outside.log').symlink_to(outside)
         self.assertNotIn('never export outside data',self.app.dispatch('export-logs',{}))
+    def test_debug_export_has_bounded_native_take_evidence_and_no_symlink_escape(self):
+        ident,job=self.project();track=job/'tracks/drama3-test';track.mkdir(parents=True)
+        write(track/'native-drama-request.json',dict(state='waiting',elapsedSeconds=23))
+        write(track/'cue.generation.json',dict(status='generation-limit',maximumFrames=128))
+        write(track/'cue.failure.json',dict(error='native-drama-timeout'))
+        outside=Path(self.tmp.name)/'secret.generation.json';outside.write_text('never export this')
+        (track/'outside.generation.json').symlink_to(outside)
+        report=self.app.debug_report()
+        for text in ('elapsedSeconds','generation-limit','native-drama-timeout'):self.assertIn(text,report)
+        self.assertNotIn('never export this',report)
+
     def test_remove_completed_project_cleans_work_and_keeps_source_exports_and_models(self):
         ident,folder=self.project();row=self.app.row(ident)
         external=self.root/'finished.mp4';external.write_bytes(b'export outside project')

@@ -1,8 +1,8 @@
-# Inside the current app · 0.24.58
+# Inside the current app · 0.24.59
 
-[← AniCanto](../../README.en.md)
+[← AniCanto](../../README.md)
 
-Real 0.24.58 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
+Real 0.24.59 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
 
 ## Welcome
 

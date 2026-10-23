@@ -13,7 +13,7 @@ from backend import Studio
 from desktop_state import write,read,defaults
 out=Path(os.environ.get('ANICANTO_QA_ROOT',str(ROOT/'.build/shared-studio-qa')));out.mkdir(parents=True,exist_ok=True)
 data=out/'SamCantoSync';data.mkdir(exist_ok=True)
-source=ROOT/'.build/windows/desktop-qa/日本語 episode 01.mp4'
+source=Path(os.environ.get('ANICANTO_QA_VIDEO',str(ROOT/'.build/windows/desktop-qa/日本語 episode 01.mp4')))
 if not source.is_file():raise SystemExit('Run tests/windows_desktop_qa.py to prepare the six-second test clip.')
 candidate=Path(os.environ.get('ANICANTO_QA_APP',str(ROOT/'dist/AniCanto.app')))
 shared=candidate/'Contents/Resources'

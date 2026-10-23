@@ -270,6 +270,7 @@ def _synthesize(cfg,emit):
                     cfg['_dramaLastGeneration']['generatedSeconds']=len(error.audio)/RATE
                 failure_path.write_text(json.dumps(dict(index=position+1,error=str(error)),ensure_ascii=False))
                 emit('配音需修正',failures[-1])
+                if getattr(error,'abortVoiceTrack',False):raise
             finally:
                 if cfg.get('_dramaLastGeneration'):
                     path.parent.mkdir(parents=True,exist_ok=True)
