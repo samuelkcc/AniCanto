@@ -8,8 +8,6 @@
 
 将日本动画的日语对白转换成**香港粤语或英语配音**。安装所需模型和运行环境后，识别、翻译、配音和导出都在本机完成。
 
-<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="请 Samuel 喝杯咖啡，支持 AniCanto" width="217" height="60"></a>
-
 [下载](#下载-beta--02459) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [支持项目](#让更多人认识粤语)
 
 ## 为什么会有 AniCanto

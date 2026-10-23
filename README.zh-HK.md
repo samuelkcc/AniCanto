@@ -8,8 +8,6 @@
 
 將日本動畫嘅日文對白轉成**香港廣東話或英文配音**。模型同執行環境準備好後，辨識、翻譯、配音及匯出都喺本機完成。
 
-<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="請 Samuel 飲杯咖啡，支持 AniCanto" width="217" height="60"></a>
-
 [下載](#下載-beta--02459) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [支持計劃](#支持更多人認識廣東話)
 
 ## 點解會有 AniCanto

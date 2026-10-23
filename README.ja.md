@@ -8,8 +8,6 @@
 
 日本のアニメのセリフを**香港広東語または英語の吹き替え**に変換します。モデルと実行環境の準備後は、認識・翻訳・音声生成・書き出しをすべてローカルで実行します。
 
-<a href="https://buymeacoffee.com/samuelchen"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee — AniCanto を応援" width="217" height="60"></a>
-
 [ダウンロード](#beta-をダウンロード--02459) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [応援](#広東語に出会うきっかけを増やすために)
 
 ## AniCanto を作った理由
