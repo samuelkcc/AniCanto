@@ -51,6 +51,18 @@ A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may
 
 Other voice options include **GPT-SoVITS V2 Pro Plus, GPT-SoVITS V4 and CosyVoice 3**, subject to platform and runtime compatibility. They are alternatives to explore, not extra models you must download. Accents, expression and voice similarity can differ between engines.
 
+### What the author hears in repeated tests
+
+In the author’s repeated scene-by-scene listening tests, **full Drama 3 has given the most convincing Hong Kong Cantonese accent among the models tried in AniCanto**. Other TTS engines can preserve a Japanese character’s voice and expression, but sometimes carry Japanese-influenced pronunciation or intonation into Cantonese. This is a personal listening assessment, not an independent benchmark or a guarantee for every voice. Drama 3 can still mispronounce words, lose expression or need a retake.
+
+### Tested computers and realistic expectations
+
+The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified memory**, and a **Windows laptop with an NVIDIA graphics card with 16 GB VRAM and 32 GB system RAM**. The release-validation standard is to complete an end-to-end conversion on both machines. Check each release’s notes for outstanding platform checks; the latest Windows Drama 3 fixes still need confirmation on the Windows test machine. Testing these two configurations does not establish compatibility with every computer.
+
+**Author-reported timing with full Drama 3 on the M2 Max: approximately 1:2 video-to-processing time** — a 30-minute video takes about 60 minutes to convert, including automatic AI repair for roughly 8–10% of dialogue lines in those tests. This is an example from the author’s workload, not a promised speed or a Windows estimate. Scene complexity, model settings, repairs, storage and memory pressure can change the total substantially.
+
+If your configuration behaves differently, please [report the problem](https://github.com/samuelkcc/AniCanto/issues) with the app version, operating system, CPU, RAM, graphics card/VRAM, selected models and the stage that stopped or slowed down. Include a sanitised diagnostic log where possible; private videos or recordings are not needed.
+
 ## What the app does
 
 | Feature | How you can use it |
@@ -63,6 +75,10 @@ Other voice options include **GPT-SoVITS V2 Pro Plus, GPT-SoVITS V4 and CosyVoic
 | **Local batch processing** | Queue videos, reorder waiting items, pause, save and resume. Processing can run offline after model setup. |
 | **Model & download management** | See installed models, missing downloads and estimated memory needs; check or repair files before switching. |
 | **Saved projects & versions** | Keep scripts, recordings and review notes together. Make another export without overwriting the previous movie. |
+
+### Coming next: Dubbing studio and voice recording
+
+A dedicated **Dubbing studio** is being added for macOS and Windows, with the same workflow being coordinated for iPad. Enter Japanese or English text, or record/import your own speech, then use local AI to prepare an editable Cantonese script. Adjust voice controls, generate and listen before saving each clip to its own player folder. The folder’s displayed name follows the interface language. Recording uses automatic source-language detection, without a Japanese/English restriction; actual recognition and voice imitation depend on the installed models and recording quality. **This feature is under development and is not included in the 0.24.59 downloads above.**
 
 ### AI automatic repair
 
@@ -199,4 +215,4 @@ If AniCanto helps you share Cantonese with your children, learn a new expression
 
 Made by **SCKC** — for the joy of hearing a familiar story in Cantonese.
 
-[MIT](LICENSE) · [Licences](docs/LICENSING.md)
+[MIT](LICENSE) · [Licences](docs/en/LICENSING.md)

@@ -25,28 +25,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "9ffaa2eef5e73de126be94af17ddaf51f45de9f4ad5f7efeadab4bfd194810bc",
-      "bytes": 15295
+      "sha256": "2c0069483bafc3615487ba5b3be322ffdec56f555e0c7d0c0cf30b87e93c99d6",
+      "bytes": 17922
     },
     {
       "path": "README.ja.md",
-      "sha256": "d00155c470f1abca67633b4fefed4487d770f0c87431e5647a325af6532991c1",
-      "bytes": 16566
+      "sha256": "24f43b7879b16399eaaeab73039d70fff7ee46e2d66f5730a3fea54290dd9850",
+      "bytes": 19407
     },
     {
       "path": "README.md",
-      "sha256": "9ffaa2eef5e73de126be94af17ddaf51f45de9f4ad5f7efeadab4bfd194810bc",
-      "bytes": 15295
+      "sha256": "2c0069483bafc3615487ba5b3be322ffdec56f555e0c7d0c0cf30b87e93c99d6",
+      "bytes": 17922
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "476b40fec53e116a150cd679c85bab36a9ad62a328910cefda653948ef01ae4b",
-      "bytes": 12804
+      "sha256": "b1753227435c49b3adcf14623db1c874ca9b24e209beef15a49f88b0889c3e89",
+      "bytes": 15062
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "b5ded3b1bad5496ad1f06c0d7e1b2d49514a4030f391eb418fac59956b84cbb3",
-      "bytes": 12853
+      "sha256": "9fb7aef4123259a2281b5513c57eae4cb54ddddc227e28689793b9802829ba5c",
+      "bytes": 15131
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -2990,8 +2990,8 @@
     },
     {
       "path": "docs/LICENSING.md",
-      "sha256": "fd720d6e2b61cfe1e6d34549619e71f89a8183025b9ca0d08b1464aaafed76ff",
-      "bytes": 147
+      "sha256": "6d343365f9c0f4c90f73513d9137ba2e31223c34b466845f0d849b353361abf6",
+      "bytes": 820
     },
     {
       "path": "docs/MAC-LIGHTWEIGHT-DEPLOYMENT.md",
@@ -3065,8 +3065,8 @@
     },
     {
       "path": "docs/en/LICENSING.md",
-      "sha256": "d5f04d10a8b6ed70d1ba0dc52dba3dd82ac80be82fe66a9b5457d6c497dff197",
-      "bytes": 763
+      "sha256": "2316c9e401a31a2815a7071d496995a10827b7207a243042df0525a01f4ed4ef",
+      "bytes": 2669
     },
     {
       "path": "docs/en/SCREENSHOTS.md",
@@ -3265,8 +3265,8 @@
     },
     {
       "path": "docs/ja/LICENSING.md",
-      "sha256": "6054689f89b5b669a1a97eefb1713c6d6305f34e36a7a3f1fdcfbc880274d2c5",
-      "bytes": 768
+      "sha256": "5d51a45deb6060713607748b8bbb824052780a34b53d35de6c95d1e3d2f40a80",
+      "bytes": 2748
     },
     {
       "path": "docs/ja/SCREENSHOTS.md",
@@ -3280,8 +3280,8 @@
     },
     {
       "path": "docs/zh-CN/LICENSING.md",
-      "sha256": "0776b1537493b9c5d8e2e9083ba401cd41cf6ddb8174c5af0846c4acf2d3bd85",
-      "bytes": 774
+      "sha256": "80ad859c82c8a0a9da2b02bc5d3f6ff9b1ff8a6ecd583cf69a8d98be3f6a7033",
+      "bytes": 2214
     },
     {
       "path": "docs/zh-CN/SCREENSHOTS.md",
@@ -3295,8 +3295,8 @@
     },
     {
       "path": "docs/zh-HK/LICENSING.md",
-      "sha256": "20fca12d0c8afea64819579cb3e41b911d1394ad9e97f6864b0fa057329f3dc2",
-      "bytes": 774
+      "sha256": "7bd7ed645f774a629147e607e603da247a951d1a89f2946e4b6f952fc7898379",
+      "bytes": 2245
     },
     {
       "path": "docs/zh-HK/SCREENSHOTS.md",

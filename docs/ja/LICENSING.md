@@ -1,11 +1,28 @@
-# AniCanto · 日本語
+# ライセンスと謝辞
 
 [← AniCanto](../../README.ja.md)
 
-Original application code: MIT, © 2026 SCKC. Third-party libraries, native tools, runtimes and optional models retain their own licences.
+AniCanto は、プロの声優への敬意を持って作られた言語学習・創作実験の個人プロジェクトです。独自コード、外部ツール、モデルの重みには別々の条件が適用されます。
 
-**Built with Fish Audio.** Drama 3 weights use the [Fish Audio Community License 1.0](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE), separately from the application code. Optional models are downloaded by the app and are not bundled in the release installers.
+| 対象 | 適用条件 |
+| --- | --- |
+| **AniCanto 独自のアプリコード** | © 2026 SCKC、[MIT License](../../LICENSE)。再配布時は著作権・許諾表示を保持してください。全文には無保証条項も含まれます。 |
+| **外部コード・ネイティブツール** | 各部品に MIT、Apache-2.0、BSD、GPL、LGPL、MPL など固有の条件が適用されます。アプリの MIT 表示で変更されません。 |
+| **Drama 3 のモデル重み** | **Built with Fish Audio.** Fish Audio Community License 1.0 の独立した条件が適用されます。[公式全文](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE)。 |
+| **その他の任意モデル** | 実際のモデル・固定リビジョンの通知を参照してください。コードと重みのライセンスは同一とは限りません。 |
+| **フォント・アイコン・参照音声** | 各通知と来歴を保持してください。独自の合成参照音声には[専用通知](../../Resources/natural-voices/NOTICE.txt)があります。 |
 
-[Release binaries and matching source materials](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta) · [Packaged component notices](../../licenses/) · [Source and distribution notes](../PUBLIC-DISTRIBUTION-REVIEW.md)
+## 全文と対応ソース
 
-Use only media and voices you have permission to process.
+- [アプリのライセンス](../../LICENSE)と[配布通知](../../NOTICE.txt)。
+- [モデルのライセンス根拠](../../licenses/model-evidence.json)、[モデル通知全文](../../licenses/models/)、[部品通知](../../licenses/)。
+- [リリースと対応ソース資料](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.59-beta)。選択された部品の関連ソースとビルド資料をバイナリに併せて提供します。同じリリースの資料を保持してください。
+- アプリの **About → Licences** で同梱通知を検索できます。
+
+FFmpeg などには実際のビルドの条件が適用されます。[FFmpeg 配布ガイド](https://ffmpeg.org/legal.html)と同梱資料を参照してください。
+
+## メディア・声・生成物
+
+ソフトウェアのライセンスは、アニメ、字幕、演技、商標、他人の声の利用権を付与しません。許可のある素材を使い、声の模倣には適切な同意を得てください。生成音声は元の声優による承認を意味しません。任意のモデル重みはインストーラーに同梱されず、別途ダウンロード後も元の条件が適用されます。
+
+このページは索引と平易な概要です。各部品に付属するライセンス全文を優先してください。
