@@ -52,6 +52,16 @@ A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may
 | **Audition, retake and review** | Compare original, separated and generated speech; retake a line or choose a saved recording, then export another version while retaining the previous movie. |
 | **Local batch processing** | Queue videos, reorder waiting items, pause, save and resume. Processing can run offline after model setup. |
 
+### AI automatic repair
+
+In Normal mode, AniCanto checks generated speech and tries to fix affected lines automatically:
+
+1. **Check** — Compare the recording with the script for missing speech, wrong language, missing words and timing problems.
+2. **Repair** — Retry affected lines, adjust wording or timing when needed, and try another installed model or fallback voice where enabled.
+3. **Review** — Open the review report for remaining issues. Listen, retake or choose a saved recording, then export a new version while keeping the previous movie.
+
+Accent, expression and voice similarity still need a listening check.
+
 ### Experimental: other source languages
 
 Beyond Japanese animation, AniCanto can try converting other detected source languages into Cantonese when the selected engine supports them. **Success is not guaranteed. Only English-to-Cantonese has received limited testing and targeted optimisations so far.** This is an experimental option, not verified support for every language or video.
