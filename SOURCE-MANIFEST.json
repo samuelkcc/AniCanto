@@ -3117,23 +3117,23 @@
     },
     {
       "path": "docs/images/basic-en.png",
-      "sha256": "a6326eaf7441652044fd11b0d70f589d42e4e4d6efba9ce8e64dbfef7e067b27",
-      "bytes": 192583
+      "sha256": "72ade71d47ad271f9bc7305ccc1852c93c8a47bf055853776936a114af17a487",
+      "bytes": 178333
     },
     {
       "path": "docs/images/basic-ja.png",
-      "sha256": "be337a3c37f6b8b76ef21fa8062b7b1b21a964fcd395de030c563686c2a05381",
-      "bytes": 212351
+      "sha256": "ef5ac11188353fdd87c1ceb7a0cebd62cba655fecf4f8a812165cd403de8153c",
+      "bytes": 186265
     },
     {
       "path": "docs/images/basic-zh-CN.png",
-      "sha256": "efbe9afaa0bfeef1071dbca5fd968151abdb8297968b21ebf146efd8f74fedf2",
-      "bytes": 184783
+      "sha256": "de24e58e49db4d4597aaea4a36dd428da1a43657a0af8b0d6b7afcbae60f818f",
+      "bytes": 159125
     },
     {
       "path": "docs/images/basic-zh-HK.png",
-      "sha256": "71bd131e335153479ee5b03308c61568fac603a8826b044afbd5add404ba17a4",
-      "bytes": 193925
+      "sha256": "2de54cefa642706a354a3969bfd79ae186a36b10d49d47b601265a7753641127",
+      "bytes": 166572
     },
     {
       "path": "docs/images/batch-en.png",
@@ -3182,18 +3182,18 @@
     },
     {
       "path": "docs/images/models-setup-ja.png",
-      "sha256": "babc9868bb6c0fc09e4464cb8577b9f8b81c80005072125642e638c2afaefc6d",
-      "bytes": 618630
+      "sha256": "530f7fdc459a1116aaee9e3104f32bbad07fd06c551fc00fa666adbd69dbd205",
+      "bytes": 670958
     },
     {
       "path": "docs/images/models-setup-zh-CN.png",
-      "sha256": "745b16f2369af1b27042cb65fe8d1bfeedf0b336548865cb58c9b765cabca8e8",
-      "bytes": 625385
+      "sha256": "9df0d243d833853205089e1b0e1ac6c5148f134dcdb6b5725621ee69765cae55",
+      "bytes": 635903
     },
     {
       "path": "docs/images/models-setup-zh-HK.png",
-      "sha256": "5fa4f8ab87b634ff8e7bfaeab178d861b9c2fe582a34c61d1ae7ca670e80ea50",
-      "bytes": 634333
+      "sha256": "e20c91897939264aedce005f06684e072dac2954699d76e341ccaf7261f73d4a",
+      "bytes": 582876
     },
     {
       "path": "docs/images/nvidia-cuda-en.png",
@@ -3307,8 +3307,8 @@
     },
     {
       "path": "docs/images/subtitles-zh-CN.png",
-      "sha256": "c4d9b6182cbfabe88cec6006e6c8b73dddaaaabec4ea7614ea02bc77317e487c",
-      "bytes": 116504
+      "sha256": "763e21455e1ed047a4d5552f6c5519ee02c689ea9f948d1f7e1fe0234a213db9",
+      "bytes": 116505
     },
     {
       "path": "docs/images/subtitles-zh-HK.png",
@@ -3342,18 +3342,18 @@
     },
     {
       "path": "docs/images/welcome-ja.png",
-      "sha256": "d41f5743f206bb81f2fca2949c4d92e0be7487da4e171b37fe21337721e994dd",
-      "bytes": 534765
+      "sha256": "6c5db85b131319f848af7ddffed9a101779c154879b712f40963e6ad2d0f0cb9",
+      "bytes": 587630
     },
     {
       "path": "docs/images/welcome-zh-CN.png",
-      "sha256": "87e86aebe93cdf7fb262e6028746f872a80daa04041b43342f2cc103c58f97c3",
-      "bytes": 562235
+      "sha256": "68fee4be656a499fb67d8b4308003504f496c28fe5358f2851e7036a2704bfb8",
+      "bytes": 573003
     },
     {
       "path": "docs/images/welcome-zh-HK.png",
-      "sha256": "c19c55fb5f187c273e9a1135868c8659423d844ad67e8d53a16d3b36f40f07e9",
-      "bytes": 576815
+      "sha256": "e109dc574c283e924e7f4047771efe3629e5c0a2ae8915041e4b1e4f04711e5e",
+      "bytes": 525167
     },
     {
       "path": "docs/ja/DEMO.md",
@@ -13457,8 +13457,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "e95eb7d11d6d46f1e17476c88b3bc899a17f0466c86b1ca0c35d5aadea612aab",
-      "bytes": 178818
+      "sha256": "429a774cf733f29ba1fb4d63a16142f58c272593affda8a9329a481fd2de8060",
+      "bytes": 178803
     },
     {
       "path": "studio/web/assistant-motion.js",
