@@ -8,4 +8,4 @@
 
 Subtitle import attaches to the selected video. Automatic selection checks a matching external file, then embedded text tracks, then screen OCR. You can choose audio-only in Expert mode. A running or paused job retains its saved subtitle source; change it for a new conversion. Removing the association leaves the original subtitle file intact. Image subtitles are not guaranteed to work as text tracks. Interface language does not add another dubbing language.
 
-![Subtitle source](../images/subtitles-en.png)
+![Subtitle source](../images/subtitles-en.png?v=preview-off)

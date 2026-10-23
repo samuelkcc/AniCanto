@@ -2,7 +2,7 @@
 
 [← AniCanto](../../README.zh-CN.md)
 
-以下为 0.24.59 真实界面，使用原创演示素材和示意模型／项目状态，不代表转换性能测试。
+以下为 0.24.59 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
 
 ## 欢迎画面
 
@@ -14,11 +14,11 @@
 
 ## 基本模式
 
-![基本模式](../images/basic-zh-CN.png)
+![基本模式](../images/basic-zh-CN.png?v=preview-off)
 
 ## 专家时间轴
 
-![专家时间轴](../images/timeline-zh-CN.png)
+![专家时间轴](../images/timeline-zh-CN.png?v=preview-off)
 
 ## 校对报告
 
@@ -38,4 +38,4 @@
 
 ## 字幕来源
 
-![字幕来源](../images/subtitles-zh-CN.png)
+![字幕来源](../images/subtitles-zh-CN.png?v=preview-off)

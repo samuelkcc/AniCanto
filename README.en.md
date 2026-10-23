@@ -82,7 +82,7 @@ An accepted extension still needs readable audio and video codecs. Burned-in cap
 
 ## Inside the current app
 
-Real 0.24.59 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
+Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
 
 ### Welcome and setup
 
@@ -90,11 +90,11 @@ Real 0.24.59 interface with original demonstration material and illustrative mod
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=preview-off)
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=preview-off)
 
 ### Review report: issues and recording comparison
 

@@ -25,28 +25,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "43dd3f70d127af55ec670efdf0a88afef187beb8128bbee2d29cb0fee0b9d32b",
-      "bytes": 8234
+      "sha256": "8fad39c893e916015ca72a5c910bfb52845fe903b84eb67a44cca74a9fc44d75",
+      "bytes": 8303
     },
     {
       "path": "README.ja.md",
-      "sha256": "12845be20d082647dd7888697660f93d43bbd0c0c71ee20167f58e383a8446b5",
-      "bytes": 8764
+      "sha256": "92e3c64a1f517a7ee49ba67556629cfc5d64abc4b16601a33853a0659a9d3cfe",
+      "bytes": 8925
     },
     {
       "path": "README.md",
-      "sha256": "43dd3f70d127af55ec670efdf0a88afef187beb8128bbee2d29cb0fee0b9d32b",
-      "bytes": 8234
+      "sha256": "8fad39c893e916015ca72a5c910bfb52845fe903b84eb67a44cca74a9fc44d75",
+      "bytes": 8303
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "9bef7a37f57fe9e00875ea88c328f33c95686ac9a4753d4b34f11f66a44624cc",
-      "bytes": 6695
+      "sha256": "0517ebbdd5b19e61f72ea67eec7fb7e2df1db2445f7a70f50aa0941bf43ac2d4",
+      "bytes": 6793
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "07bf3d107a8f1b6c418810cfdb6817b9c8427110c78c57b00ce989ede274df7f",
-      "bytes": 6641
+      "sha256": "b1d88e620de6f916c90c854079f572ee16d212b18660a10c4f464a85034c9571",
+      "bytes": 6736
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -3060,8 +3060,8 @@
     },
     {
       "path": "docs/en/GETTING-STARTED.md",
-      "sha256": "f1dd97f4848ffa90be23bf1754d3a6b4c6c73c46b101b5c9164b5f5fda0ca285",
-      "bytes": 1042
+      "sha256": "1f1e499f80535b987fa08c3a74af1073d418ed7d58e073de074fd69157938dbf",
+      "bytes": 1056
     },
     {
       "path": "docs/en/LICENSING.md",
@@ -3070,8 +3070,8 @@
     },
     {
       "path": "docs/en/SCREENSHOTS.md",
-      "sha256": "f3b8de0abb047e8451ed0fa317e24425297baea5e861f3ccf690bd965f50c60b",
-      "bytes": 772
+      "sha256": "262d8f3b41cd827dc23baf70aa438c1f6eb00dc19a809a8e5f8533c64c044b23",
+      "bytes": 855
     },
     {
       "path": "docs/images/anicanto-cantonese-cover.png",
@@ -3080,23 +3080,23 @@
     },
     {
       "path": "docs/images/basic-en.png",
-      "sha256": "77506e30a556bfbbe886bb9e61a25b8b68d8e0321fc840287c1780c20bf16927",
-      "bytes": 384563
+      "sha256": "c758e02466cbadaea3a8900e617e96a3e70fbffef5fbd29b655cda4a90a2d982",
+      "bytes": 190216
     },
     {
       "path": "docs/images/basic-ja.png",
-      "sha256": "6b4a25ae2e36dcacacbdc380038a1023e300e576a5a9b1da2d92229661cbee8a",
-      "bytes": 399663
+      "sha256": "e9a7abebfeb3c10450173125771d9dd532d2725914dbdd52a1f758fd4b39389f",
+      "bytes": 209138
     },
     {
       "path": "docs/images/basic-zh-CN.png",
-      "sha256": "4d8dd0074dba00b15f12539cdf41bbe03b68537a79e6419034704c477a8b6150",
-      "bytes": 379043
+      "sha256": "23898315f78121ceb2382386fe3d66bd7913509b1e222fd4cd259662a2167844",
+      "bytes": 181389
     },
     {
       "path": "docs/images/basic-zh-HK.png",
-      "sha256": "59768b1b6f6d8b9e9ee563ed00c211110ca16968fc2342a00ac996fe395d2c21",
-      "bytes": 384221
+      "sha256": "96ef5f2cb65aa104d72368446045f6b8038e8b9cf2f4e94fa0ca07f44057721a",
+      "bytes": 191122
     },
     {
       "path": "docs/images/batch-en.png",
@@ -3200,43 +3200,43 @@
     },
     {
       "path": "docs/images/subtitles-en.png",
-      "sha256": "788cb4ee644325b1851c0bef1e436a20b49ea0624d7c16504a1fe5e455eb7428",
-      "bytes": 258182
+      "sha256": "972fd6c80ae59e0276994c54ca4dae0dab98510352c00a3825484ce713b790c2",
+      "bytes": 127351
     },
     {
       "path": "docs/images/subtitles-ja.png",
-      "sha256": "da252fafe5a38042d95391657a4174c8b1c7368fac7c5b2d42ddbab2871a3853",
-      "bytes": 261934
+      "sha256": "b3d6265ead176857fbe7809845fae23980b2c30aa43d0cc5c4b9299f3829b40b",
+      "bytes": 131309
     },
     {
       "path": "docs/images/subtitles-zh-CN.png",
-      "sha256": "da0334b4dc6e8772c3986eb351d4f117dd85e19c248589fd268113055ba61f96",
-      "bytes": 250385
+      "sha256": "ca687ed857b80ae73056e6e12fa950dbbac218a86f648252038514ba3e8dac57",
+      "bytes": 115104
     },
     {
       "path": "docs/images/subtitles-zh-HK.png",
-      "sha256": "9b9d34ce426b71a10861b3fa79f880ec7acc8908b6d8ab027d86c08f3dc41218",
-      "bytes": 254433
+      "sha256": "4cdd26881cb7ec6fb5993c0f409318d1652a4375a8ddf37834a95bfe4b8a0e28",
+      "bytes": 121829
     },
     {
       "path": "docs/images/timeline-en.png",
-      "sha256": "080b1595acc02c696a27736db187590130e44332eb516688d947329d71242835",
-      "bytes": 228577
+      "sha256": "f721a6ea74a5183763bf6276ac04c1f0ac3f9b96b89557b99b391547de4b5437",
+      "bytes": 193349
     },
     {
       "path": "docs/images/timeline-ja.png",
-      "sha256": "b3a5f1665c330463364ca8e70ca22b0c42009d7183230222ff640012c80e21b6",
-      "bytes": 226886
+      "sha256": "6c149c77889998a62f6631d9f4da8540c53074cc94904612104471277635a435",
+      "bytes": 195188
     },
     {
       "path": "docs/images/timeline-zh-CN.png",
-      "sha256": "cbb2318ef39fa04eb25c3b3d5d012b0a0c66738ac49d7daa1fcad02cc1a65e67",
-      "bytes": 211400
+      "sha256": "1ef1252b277ac8067b4abd610a18268ae2c95b52d74d051c4c2426559ca55567",
+      "bytes": 174806
     },
     {
       "path": "docs/images/timeline-zh-HK.png",
-      "sha256": "861be4b127eb8573e8a8947b20ce39f5b6dfad16fc1a54ecc5a426ae85331292",
-      "bytes": 218767
+      "sha256": "09575bb23ea1a68e62fac85ccecf2d2dfb0d43d7a9232f76a28bdd7c8ac5a715",
+      "bytes": 183879
     },
     {
       "path": "docs/images/welcome-en.png",
@@ -3260,8 +3260,8 @@
     },
     {
       "path": "docs/ja/GETTING-STARTED.md",
-      "sha256": "418f55d82a630836d56cb142eebc892e78d82b5f4b79f9a2948c17fb2aee59f8",
-      "bytes": 1293
+      "sha256": "96a53d074f13750156dba48b2495566feed76fcd79e2f27d7c476e0e424d726c",
+      "bytes": 1307
     },
     {
       "path": "docs/ja/LICENSING.md",
@@ -3270,13 +3270,13 @@
     },
     {
       "path": "docs/ja/SCREENSHOTS.md",
-      "sha256": "27763b44a6a34dd84cad75a25c9a16c4750d00883adc9c1ca590e42fda99f118",
-      "bytes": 898
+      "sha256": "69182a3a48b4bdea6767e09d9b79fb3bb58411bf71fe416030d9222b563b112b",
+      "bytes": 1073
     },
     {
       "path": "docs/zh-CN/GETTING-STARTED.md",
-      "sha256": "4b28fd651c88ad6534cd7d7065ba87f7c34746ee53911c013eb06848c5839c7f",
-      "bytes": 899
+      "sha256": "e06f8ee1efc5a8a80cb8c9e7321e4c88592bca2e87237922c7ae87e7bb52edc5",
+      "bytes": 913
     },
     {
       "path": "docs/zh-CN/LICENSING.md",
@@ -3285,13 +3285,13 @@
     },
     {
       "path": "docs/zh-CN/SCREENSHOTS.md",
-      "sha256": "a12c99f5ffeddc53b6a664b86e4b9accf25c5b69595c75198f0dd3fabf4e96c2",
-      "bytes": 778
+      "sha256": "972cd759891d4028041b4963844cfe41531648f29af577cd33c55340fc5a86a8",
+      "bytes": 890
     },
     {
       "path": "docs/zh-HK/GETTING-STARTED.md",
-      "sha256": "486a63766b6ad3d868d4a263e1027d7e222603f2acd245b278f92db098cff91f",
-      "bytes": 909
+      "sha256": "45fdc2780de8c5b237ef074844863907dc54a62bd24b7d5a7e9c1a4fb80959a8",
+      "bytes": 923
     },
     {
       "path": "docs/zh-HK/LICENSING.md",
@@ -3300,8 +3300,8 @@
     },
     {
       "path": "docs/zh-HK/SCREENSHOTS.md",
-      "sha256": "f9ab1d442b9e33767e59b8a3d6fd7f6b1918b6f5d15eca5b9f47c0d6e8f5eba1",
-      "bytes": 775
+      "sha256": "fa0036c47046caea2da84cb3fed867d16f4ca45876019b89b1c8e70e2f364b37",
+      "bytes": 884
     },
     {
       "path": "licenses/BRANDING-NOTICE.txt",

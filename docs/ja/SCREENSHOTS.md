@@ -2,7 +2,7 @@
 
 [← AniCanto](../../README.ja.md)
 
-0.24.59 の実際の UI にオリジナルのデモ素材とモデル・プロジェクトの例を表示しています。処理性能の測定結果ではありません。
+0.24.59 の実際の UI です。編集画面は薄紫色のテーマで、**動画プレビューをオフにして、アニメーションするアシスタントを表示**しています。モデルとプロジェクトの状態は表示例であり、処理性能の測定結果ではありません。
 
 ## ようこそ
 
@@ -14,11 +14,11 @@
 
 ## 基本モード
 
-![基本モード](../images/basic-ja.png)
+![基本モード](../images/basic-ja.png?v=preview-off)
 
 ## タイムライン
 
-![タイムライン](../images/timeline-ja.png)
+![タイムライン](../images/timeline-ja.png?v=preview-off)
 
 ## 校正レポート
 
@@ -38,4 +38,4 @@
 
 ## 字幕ソース
 
-![字幕ソース](../images/subtitles-ja.png)
+![字幕ソース](../images/subtitles-ja.png?v=preview-off)

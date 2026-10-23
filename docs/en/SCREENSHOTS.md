@@ -2,7 +2,7 @@
 
 [← AniCanto](../../README.md)
 
-Real 0.24.59 interface with original demonstration material and illustrative model / project states; these screenshots are not conversion benchmarks.
+Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
 
 ## Welcome
 
@@ -14,11 +14,11 @@ Real 0.24.59 interface with original demonstration material and illustrative mod
 
 ## Basic mode
 
-![Basic mode](../images/basic-en.png)
+![Basic mode](../images/basic-en.png?v=preview-off)
 
 ## Expert timeline
 
-![Expert timeline](../images/timeline-en.png)
+![Expert timeline](../images/timeline-en.png?v=preview-off)
 
 ## Review report
 
@@ -38,4 +38,4 @@ Real 0.24.59 interface with original demonstration material and illustrative mod
 
 ## Subtitle source
 
-![Subtitle source](../images/subtitles-en.png)
+![Subtitle source](../images/subtitles-en.png?v=preview-off)

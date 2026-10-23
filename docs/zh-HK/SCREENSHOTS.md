@@ -2,7 +2,7 @@
 
 [← AniCanto](../../README.zh-HK.md)
 
-以下係 0.24.59 真實介面，使用原創示範素材及示意模型／專案狀態，唔係轉換效能測試。
+以下係 0.24.59 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
 
 ## 歡迎畫面
 
@@ -14,11 +14,11 @@
 
 ## 基本模式
 
-![基本模式](../images/basic-zh-HK.png)
+![基本模式](../images/basic-zh-HK.png?v=preview-off)
 
 ## 專家時間軸
 
-![專家時間軸](../images/timeline-zh-HK.png)
+![專家時間軸](../images/timeline-zh-HK.png?v=preview-off)
 
 ## 校對報告
 
@@ -38,4 +38,4 @@
 
 ## 字幕來源
 
-![字幕來源](../images/subtitles-zh-HK.png)
+![字幕來源](../images/subtitles-zh-HK.png?v=preview-off)
