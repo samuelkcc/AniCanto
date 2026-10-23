@@ -165,9 +165,12 @@ class NormalModeTests(unittest.TestCase):
         for expected,heard in [('你喺邊呀','你係邊呀'),('雷德','雷'),('我哋而家出發，之後返屋企','我地而家出發之後返屋企')]:
             self.assertFalse(normal_mode.major_omission(expected,heard))
 
-    def test_normal_retains_nonverbal_performances_fast_stays_unchecked(self):
+    def test_both_modes_retain_performances_without_enabling_fast_quality_checks(self):
         self.assertTrue(fast_mode.configure(dict(normalRepairPolicy='verified',productionMode='normal'))['preserveNonverbal'])
-        self.assertFalse(fast_mode.configure(dict(productionMode='fast'))['preserveNonverbal'])
+        fast=fast_mode.configure(dict(productionMode='fast'))
+        self.assertTrue(fast['preserveNonverbal'])
+        self.assertFalse(fast['autoValidate'])
+        self.assertFalse(fast['aiAutoFix'])
 
     def test_written_mandarin_is_retranslated_without_changing_proper_names(self):
         w=Mock();w.traditional_cantonese.side_effect=lambda cfg,text:text

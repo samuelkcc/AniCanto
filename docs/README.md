@@ -22,3 +22,10 @@ The searchable bilingual **Help centre** inside AniCanto is the current user man
 ## Local generated files
 
 `dist/` contains only the current app and EXE. `.build/` is disposable development output except for tools/caches needed for offline builds and explicitly retained test evidence. The cleanup receipt is `.build/maintenance/cleanup-build-report.json`; obsolete release stages and previews were removed, keeping the current stage and one rollback copy. User application data, installed models and completed movies outside the project are not part of project cleanup.
+
+## Shared recovery and source delivery
+
+- [Desktop / iPad recovery workflow and acceptance checklist](DESKTOP-IPAD-RECOVERY-WORKFLOW.md)
+- [Machine-readable recovery contract](RECOVERY-WORKFLOW-CONTRACT.json)
+- [Desktop platform differences and evidence](DESKTOP-RECOVERY-PARITY.md)
+- [Source backup and rebuilding](BUILD-AND-RECOVERY.md)

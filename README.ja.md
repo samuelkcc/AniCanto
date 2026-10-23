@@ -8,7 +8,7 @@
 
 日本のアニメのセリフを**香港広東語・中国本土普通話・英語の吹き替え**に変換します。モデルと実行環境の準備後は、認識・翻訳・音声生成・書き出しをすべてローカルで実行します。
 
-[ダウンロード](#beta-をダウンロード--02467) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)
+[ダウンロード](#beta-をダウンロード--02468) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)
 
 ## AniCanto を作った理由
 
@@ -24,13 +24,15 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 ## Beta をダウンロード · 0.24.64
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto-macOS-0.24.67.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.67-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto-macOS-0.24.68.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.68-beta)
+
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## 今回の Beta の変更点
 
-- **ダウンロードの整理を一つの入口へ。** モデルのみ、またはモデルと実行環境を選択し、対象と容量を確認してから削除。プロジェクトと完成動画は保持します。
-- **開始ボタンを修正。** インストール済みモデルを正しく認識し、確認失敗時は再試行を表示。不必要な再ダウンロードを促しません。
-- **動画の中国本土普通話トラック、OCR 音声タイミングの改善、紫音アイコン。** 広東語・英語も引き続き利用可能。独立した吹き替えスタジオの出力は広東語です。
+- **高速モードでも元の演技を保護：**笑い声・泣き声・呼吸の追加復元を有効にし、品質判定による再生成は追加しません。Windows の分類ラベル対応を修正。
+- **出力サンプルレートを保持：**元の演技の復元時に Drama 3／GPT V4 のミックスを 24 kHz に固定しません。分類結果は音声トラック間で再利用します。
+- **共通の修復仕様を文書化：**最初の有声音声を保持し、無音・破損のみ自動修復。実測で長い台詞は上限付きで短縮します。Mac／Windows の差異と iPad の未検証項目を明記。
 
 ## パソコンの推奨構成
 

@@ -10,7 +10,7 @@ import math
 from pathlib import Path
 import wave
 
-REVISION = 'fast-source-voice-1'
+REVISION = 'fast-source-voice-2-performance-preserved'
 WARNING = '高速模式：已跳過所有品質檢查及品質重錄，生成影片可能存在配音缺陷。'
 
 
@@ -49,7 +49,7 @@ def configure(cfg):
                    autoValidate=False,aiAutoFix=False,fallbackToRoleVoice=False,
                    allowCrossEngineRepair=False,requireCompleteDubbing=False,
                    fillMissingVoiceScripts=False,reanalyzeRoles=False,
-                   independentReferences=False,preserveNonverbal=cfg.get('productionMode')=='normal')
+                   independentReferences=False,preserveNonverbal=True)
     return cfg
 
 

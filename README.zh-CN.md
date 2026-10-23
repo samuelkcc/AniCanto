@@ -8,7 +8,7 @@
 
 将日本动画的日语对白转换成**香港粤语、普通话或英语配音**。安装所需模型和运行环境后，识别、翻译、配音和导出都在本机完成。
 
-[下载](#下载-beta--02467) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md)
+[下载](#下载-beta--02468) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md)
 
 ## 为什么会有 AniCanto
 
@@ -22,15 +22,17 @@ AniCanto 最初只是一个简单的心愿：**希望孩子看动画时，可以
 
 AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音、错字或表演不足，不等同于专业演出。希望大家在使用这个项目的同时，继续欣赏和支持熟悉声音背后的表演者。
 
-## 下载 Beta · 0.24.67
+## 下载 Beta · 0.24.68
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto-macOS-0.24.67.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.67-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto-macOS-0.24.68.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.68-beta)
+
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 这个 Beta 新增了什么
 
-- **统一清理入口：**选择“仅移除模型”或“模型及运行环境”，先查看范围及容量再确认，保留项目和成品。
-- **修复开始按钮：**正确识别已安装模型；检查失败可重试，不再误判为缺少模型而要求重新下载。
-- **加入视频普通话音轨、改善 OCR 原声时间并使用紫音图标。** 保留粤语／英语；独立配音器目前仍输出粤语。
+- **高速模式也保留原声表演：**笑声、哭声及呼吸的额外保护继续启用，不因此增加质量重录；修正 Windows 分类名称映射。
+- **保留原有交付采样率：**补回原声表演时，不再将 Drama 3／GPT V4 混音强制降至 24 kHz；跨音轨复用分类证据。
+- **修复流程有共同规范：**保留首轮有声录音，仅自动补无声／损坏；实际过长仍可有限改短。列明 Mac／Windows 差异及 iPad 待同步验收。
 
 ## 先选择电脑配置
 

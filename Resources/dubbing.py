@@ -275,11 +275,13 @@ def gsv_audio(cfg,job,cues,run,emit):
     separated=stem.is_file()
     source=stem if separated else Path(cfg['video'])
     start=cue['start']+(0 if separated else float(cfg.get('startOffset',0)))
-    identity=[str(source),source.stat().st_mtime_ns,start,cue['end']-cue['start']]
+    from audio_format import delivery_rate
+    preserved_rate=delivery_rate(cfg)
+    identity=[str(source),source.stat().st_mtime_ns,start,cue['end']-cue['start'],'preserved-performance-native-rate-2',preserved_rate]
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:24]
     path=job/f'original-vocalization-{key}.wav';paths.append(path)
     if not path.exists():
-     run([cfg['ffmpeg'],'-v','error','-y','-ss',str(start),'-i',source,'-t',str(cue['end']-cue['start']),'-ar','24000','-ac','1','-c:a','pcm_s16le',path])
+     run([cfg['ffmpeg'],'-v','error','-y','-ss',str(start),'-i',source,'-t',str(cue['end']-cue['start']),'-ar',str(preserved_rate),'-ac','1','-c:a','pcm_s16le',path])
     emit('配音',f'校稿第 {cue.get("reviewIndex",0)+1} 句：'+('按本段設定保留原聲。' if original_allowed(cfg,cue) else '保留角色原聲氣息（非語言發聲）。'),.8)
     continue
    profile=profile_for(cue,cfg)

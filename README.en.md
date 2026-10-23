@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02467) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
+[Download](#download-the-beta--02468) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
 
 ## Why AniCanto exists
 
@@ -26,15 +26,17 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.67
+## Download the Beta · 0.24.68
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto-macOS-0.24.67.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.67-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.67-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto-macOS-0.24.68.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.68-beta)
+
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-- **Clearer download cleanup:** one entry, with separate model-only and complete environment choices. Review the scope and size before confirming; projects and finished movies stay intact.
-- **Start readiness fixed:** installed models are recognised correctly. A failed setup check now offers a retry instead of incorrectly asking for another download.
-- **Mandarin video tracks, OCR timing improvements and the Shion icon.** Cantonese and English remain available; standalone Dubbing studio still creates Cantonese speech.
+- **Preserve original performances in Fast mode too:** the extra laugh, cry and breath restoration pass now remains enabled without adding quality-driven retakes. Windows event-label mapping is corrected.
+- **Keep native delivery rates:** restoring performances no longer forces Drama 3 / GPT V4 mixes down to 24 kHz. Classification evidence is reused across voice tracks.
+- **Shared recovery rules, documented:** first audible takes stay; only missing/damaged audio gets automatic repair, with bounded shortening for measured overlong lines. Mac / Windows differences and the iPad acceptance checklist are explicit.
 
 ## Choose your computer setup
 

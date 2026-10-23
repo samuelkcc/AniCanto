@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "anicanto-recovery-workflow-1",
+  "status": "shared-requirements; implementations must record their own acceptance",
+  "platforms": [
+    "macOS",
+    "Windows",
+    "iPadOS"
+  ],
+  "normal": {
+    "retainFirstAudible": true,
+    "languageAccentOrSpellingAlone": "report-only",
+    "additionalMissingOrDamagedRepairAttempts": 2,
+    "overlongDialogue": "measure-safe-gaps-then-bounded-meaning-preserving-shortening",
+    "maximumLocalDurationRewritePasses": 2
+  },
+  "fast": {
+    "qualityReview": false,
+    "qualityDrivenRetakes": false,
+    "preserveNonverbal": true
+  },
+  "nonverbal": {
+    "preserveOriginalPerformance": true,
+    "lexicalSpeechExclusion": true,
+    "neverRestoreWholeVocalStem": true,
+    "avoidDuplicateRestoration": true,
+    "duckOnlyNewDialogueOverlap": true,
+    "targetWindowSeconds": 1,
+    "targetHopSeconds": 0.5,
+    "contextAndAccuracyMustBeValidatedPerClassifier": true,
+    "reuseAcrossTracks": true,
+    "shortWindowTrial": "Windows AST one-second direct cropping rejected on three public evaluation clips",
+    "validatedClassifierContextSeconds": {
+      "macOSSoundAnalysis": 1,
+      "WindowsAudioSetAST": 5
+    },
+    "exactClassifierParity": "pending; same decision policy is not same model calibration"
+  },
+  "audio": {
+    "preserveEngineDeliveryRate": true,
+    "analysisRateIsNotDeliveryRate": true,
+    "originalCaptionTimingIndependent": true
+  },
+  "checkpoints": {
+    "perRecording": true,
+    "persistentAttemptBudgets": true,
+    "timeoutStopsOnlyOwnedProcess": true,
+    "uncertaintyIsNotCertification": true
+  },
+  "desktopCandidate": "0.24.68",
+  "ipadAcceptance": "pending-this-workflow-audit"
+}

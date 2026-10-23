@@ -3,7 +3,7 @@ import json,sys
 from pathlib import Path
 HERE=Path(__file__).resolve().parent;SHARED=HERE/'shared' if (HERE/'shared').is_dir() else HERE.parent/'Resources';sys.path.insert(0,str(SHARED))
 
-def classifier_windows(samples,rate=16000):
+def classifier_windows(samples,rate=16000,detailed=False):
  """Integer sample clocks avoid floating-point crumbs at the final hop.
 
  Kaldi's 25 ms analysis window requires 400 samples at 16 kHz. A residual
@@ -11,7 +11,9 @@ def classifier_windows(samples,rate=16000):
  Keep all substantial final windows with their exact source duration.
  """
  if rate<=0:raise ValueError('Invalid classification sample rate')
- hop=round(2.5*rate);window=round(5*rate);minimum=max(2,round(.025*rate))
+ from nonverbal import classification_profile
+ profile=classification_profile('win32')
+ hop=round(profile['hopSeconds']*rate);window=round(profile['windowSeconds']*rate);minimum=max(2,round(.025*rate))
  for start in range(0,len(samples),hop):
   clip=samples[start:start+window]
   if len(clip)<minimum:continue
@@ -21,7 +23,12 @@ def classifier(root):
  from transformers import AutoFeatureExtractor,AutoModelForAudioClassification
  folder=Path(root)/'models/audio-classifier'
  return AutoFeatureExtractor.from_pretrained(str(folder),local_files_only=True),AutoModelForAudioClassification.from_pretrained(str(folder),local_files_only=True).eval()
-def classify(path):
+def performance_scores(labels,scores):
+ # AudioSet uses "Baby cry, infant cry", not "crying". Keep the taxonomy explicit.
+ groups={'music':['music'],'singing':['singing'],'choir_singing':['choir'],'rapping':['rapping'],'speech':['speech','conversation','narration','monologue'],'laughter':['laughter','giggle','snicker','chuckle','chortle'],'baby_laughter':['baby laughter'],'belly_laugh':['belly laugh'],'crying_sobbing':['crying','sobbing','baby cry','infant cry'],'sigh':['sigh'],'breathing':['breathing','pant','wheeze'],'gasp':['gasp'],'screaming':['screaming','scream'],'shout':['shout','shouting'],'yell':['yell','yelling']}
+ return {key:max((scores[i] for i,label in labels.items() if any(w in label.lower() for w in words)),default=0) for key,words in groups.items()}
+
+def classify(path,detailed=False):
  import numpy as np
  import soundfile as sf
  import torch
@@ -32,18 +39,17 @@ def classify(path):
  if sr!=16000:
   g=math.gcd(sr,16000);audio=resample_poly(audio,16000//g,sr//g)
  if not np.isfinite(audio).all():raise ValueError('Audio classification input contains invalid samples')
- windows=iter(classifier_windows(audio));first=next(windows,None)
+ windows=iter(classifier_windows(audio,detailed=detailed));first=next(windows,None)
  if first is None:return []
  import itertools
  processor,model=classifier(data_root());rows=[]
  labels={int(k):str(v).lower() for k,v in model.config.id2label.items()}
- groups={'music':['music'],'singing':['singing'],'choir_singing':['choir'],'rapping':['rapping'],'speech':['speech','conversation','narration','monologue'],'laughter':['laughter','giggle','snicker'],'baby_laughter':['baby laughter'],'belly_laugh':['belly laugh'],'crying_sobbing':['crying','sobbing'],'sigh':['sigh'],'breathing':['breathing'],'gasp':['gasp'],'screaming':['screaming','scream'],'shout':['shout','shouting'],'yell':['yell','yelling']}
  torch.set_num_threads(4)
  for start,span,clip in itertools.chain((first,),windows):
   inputs=processor(clip,sampling_rate=16000,return_tensors='pt')
   with torch.inference_mode():scores=torch.sigmoid(model(**inputs).logits[0]).tolist()
   row=dict(start=round(float(start),3),duration=round(span,3))
-  for key,words in groups.items():row[key]=max((scores[i] for i,label in labels.items() if any(w in label for w in words)),default=0)
+  row.update(performance_scores(labels,scores))
   rows.append(row)
  return rows
 
@@ -114,7 +120,7 @@ def main(args):
   sys.stdout.write(OpenCC('t2s' if flag=='--simplified-text' else 's2twp').convert(sys.stdin.read()));return
  if flag=='--render-subtitles':subtitles(args[1]);return
  if flag=='--ocr':result=ocr(args[1])
- elif flag in ('--classify-opening','--classify-performance'):result=classify(args[1])
+ elif flag in ('--classify-opening','--classify-performance'):result=classify(args[1],detailed=flag=='--classify-performance')
  else:raise ValueError('Unknown native helper action: '+flag)
  print(json.dumps(result,ensure_ascii=False))
 if __name__=='__main__':main(sys.argv[1:])

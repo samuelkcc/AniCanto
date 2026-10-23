@@ -145,6 +145,23 @@ export const CHAPTERS=[
           }
         ],
         "steps": false
+      },
+      {
+        "title": {
+          "en": "Same recovery rules on Mac and Windows",
+          "zh-HK": "Mac 與 Windows 共用修復規則",
+          "zh-CN": "Mac 与 Windows 共用修复规则",
+          "ja": "Mac と Windows の共通修復ルール"
+        },
+        "steps": false,
+        "body": [
+          {
+            "en": "Both desktop versions share the same first-audible retention, missing/damaged repair, bounded overlong-line shortening, retry budgets and checkpoint rules. Normal and High speed both preserve confidently identified isolated laughter, crying and breaths. Classifiers retain their validated context: Mac uses one-second windows and Windows AudioSet uses five seconds. A short-window Windows trial was rejected after confidence fell; OP/ED analysis stays separate. Evidence is cached across voice and language tracks. Restoring performance keeps the selected engine’s delivery sample rate instead of forcing 24 kHz. Classifier and inference models still differ by platform, so identical detection or generated voices are not guaranteed. Do not mix back the whole Japanese vocal stem to recover one laugh.",
+            "zh-HK": "兩個桌面版共用保留首輪有聲錄音、補無聲／損壞、局部改短超時對白、重試上限同進度保存規則。一般及高速模式都會保留有把握、可獨立抽取嘅笑聲、哭聲及呼吸。分類保留各模型已驗證上下文：Mac 用一秒，Windows AudioSet 用五秒；Windows 直接改一秒嘅試驗信心下降，未採用。OP／ED 分析分開。分類證據可喺不同引擎及語言音軌之間沿用；補聲沿用引擎交付取樣率，唔再強制降成24 kHz。分類及推理模型仍有平台差異，唔保證辨識結果或聲線完全一樣；唔會為咗補笑聲而混返整條日文人聲。",
+            "zh-CN": "两个桌面版共用保留首轮有声录音、补无声／损坏、局部缩短超时对白、重试上限和进度保存规则。一般及高速模式都会保留有把握、可独立提取的笑声、哭声和呼吸。分类保留各模型已验证的上下文：Mac 用一秒，Windows AudioSet 用五秒；Windows 直接改一秒的试验置信度下降，未采用。OP／ED 独立处理。分类证据在不同引擎和语言音轨间复用；补声沿用引擎交付采样率，不再强制降为24 kHz。分类和推理模型仍有平台差异，不保证识别结果或声线完全一致；不会为了补笑声混回整条日语人声。",
+            "ja": "両デスクトップ版は、最初の有声音声の保持、欠損・破損補完、実測で長すぎる台詞の局所短縮、再試行上限と保存を共通化しています。標準・高速とも、確実に独立抽出できる笑い・泣き声・呼吸を保持。分類器に適した文脈を維持し、Macは1秒、Windows AudioSetは5秒を使用します。Windowsを直接1秒にした試験は信頼度が低下したため採用していません。OP／EDは別処理です。分類結果を音声エンジンと言語トラック間で再利用し、補完時もエンジンの出力サンプリング周波数を維持します。24 kHz に固定しません。分類・推論モデルは環境により異なるため、判定や生成音声の完全一致は保証しません。笑いを戻すために日本語の声全体を混ぜ戻すことはしません。"
+          }
+        ]
       }
     ]
   },

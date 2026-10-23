@@ -78,7 +78,7 @@ class ShortFadeTests(unittest.TestCase):
    def run(cmd):
     commands.append(cmd)
     return subprocess.check_output([str(x) for x in cmd],stderr=subprocess.STDOUT)
-   with patch.object(nonverbal,'event_ranges',return_value=[event]),patch.object(nonverbal,'original_sound_ranges',return_value=[]):
+   with patch.object(nonverbal,'classification',return_value=[]),patch.object(nonverbal,'event_ranges',return_value=[event]),patch.object(nonverbal,'original_sound_ranges',return_value=[]):
     out=nonverbal.restore(dict(ffmpeg=str(ffmpeg),duration=1100,dialoguePath=str(voice),executable='unused'),p,[],voice,run,lambda *a:None)
    graph=commands[0][commands[0].index('-filter_complex')+1]
    self.assertIn('afade=t=out:st=0.000000',graph)

@@ -1,9 +1,57 @@
 """Conservatively retain original non-lexical performance; never restore all vocals."""
 import json
+import hashlib
+import math
+import sys
 import re
 from pathlib import Path
 
 LABELS=('laughter','baby_laughter','belly_laugh','crying_sobbing','sigh','breathing','gasp','screaming','shout','yell')
+
+# Keep the validated model context; raw probabilities are not cross-model calibrated.
+# The one-second AST trial reduced event confidence on public evaluation clips.
+CLASSIFICATION_REVISION='performance-taxonomy-4-validated-context'
+
+
+def classification_profile(platform=None):
+    if (platform or sys.platform)=='win32':
+        return dict(backend='ast-audioset-f826b80d',windowSeconds=5.,hopSeconds=2.5)
+    return dict(backend='apple-soundanalysis-v1',windowSeconds=1.,hopSeconds=.5)
+
+
+def validate_classification(rows):
+    if not isinstance(rows,list):raise ValueError('Invalid nonverbal classification result')
+    for row in rows:
+        if not isinstance(row,dict) or any(not isinstance(row.get(k),(int,float)) or isinstance(row.get(k),bool) or not math.isfinite(row[k]) for k in ('start','duration')) or row['start']<0 or row['duration']<=0:
+            raise ValueError('Invalid nonverbal classification time range')
+        if any(not isinstance(v,(int,float)) or isinstance(v,bool) or not math.isfinite(v) or not 0<=v<=1 for k,v in row.items() if k not in ('start','duration')):
+            raise ValueError('Invalid nonverbal classification confidence')
+
+
+def classification(cfg,job,run):
+    """Cache source evidence once across language/engine tracks; never trust v2 clocks."""
+    source=Path(cfg['dialoguePath'])
+    with source.open('rb') as stream:digest=hashlib.file_digest(stream,'sha256').hexdigest()
+    profile=classification_profile()
+    identity=[CLASSIFICATION_REVISION,digest,profile]
+    key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()
+    local=Path(job)/'nonverbal-classification-v3.json'
+    shared=Path(cfg['storage'])/'cache/nonverbal'/(key+'.json') if cfg.get('storage') else local
+    for cache in dict.fromkeys((local,shared)):
+        try:saved=json.loads(cache.read_text())
+        except (OSError,ValueError):continue
+        if isinstance(saved,dict) and saved.get('key')==key:
+            try:validate_classification(saved.get('rows'))
+            except ValueError:continue
+            return saved['rows']
+    rows=json.loads(run([cfg['executable'],'--classify-performance',str(source)]))
+    if not isinstance(rows,list):raise ValueError('Invalid nonverbal classification result')
+    validate_classification(rows)
+    from atomic_files import write_json
+    saved=dict(key=key,revision=CLASSIFICATION_REVISION,**profile,rows=rows)
+    write_json(shared,saved)
+    if shared!=local:write_json(local,saved)
+    return rows
 
 
 def source_vocalization(cue):
@@ -81,12 +129,8 @@ def missing_events(rows,events,duration):
 
 def restore(cfg,job,cues,voice,run,emit):
     if not cfg.get('dialoguePath') or not cfg.get('executable'):return voice
-    cache=job/'nonverbal-classification-v2.json'
-    if cache.exists():rows=json.loads(cache.read_text())
-    else:
-        emit('原聲表演','偵測叫聲、笑聲、呼吸同哭聲；只補回有把握嘅非語言片段。',.92)
-        rows=json.loads(run([cfg['executable'],'--classify-performance',cfg['dialoguePath']]))
-        cache.write_text(json.dumps(rows))
+    emit('原聲表演','偵測叫聲、笑聲、呼吸同哭聲；只補回有把握嘅非語言片段。',.92)
+    rows=classification(cfg,job,run)
     source=job/'dual-asr-cues.json'
     lexical=json.loads(source.read_text()) if source.exists() else cues
     analysis=job/'japanese-analysis.json'
@@ -104,7 +148,7 @@ def restore(cfg,job,cues,voice,run,emit):
     # Already excluded original lexical speech above. Preserve the performance
     # even if the NEW Cantonese line runs across it; duck only that overlap.
     events=duck_events(events,audible)
-    (job/'nonverbal-report.json').write_text(json.dumps(dict(events=events,originalSoundRanges=original_ranges,reviewEvents=missing_events(rows,events+[dict(start=a,end=b) for a,b in original_ranges+retained],cfg['duration']),method='local-sound-classifier; original-lexical-speech-excluded; cantonese-overlap-ducked',limitation='Sounds overlapping original Japanese speech or not confidently classified remain excluded.'),ensure_ascii=False,indent=2))
+    (job/'nonverbal-report.json').write_text(json.dumps(dict(events=events,originalSoundRanges=original_ranges,reviewEvents=missing_events(rows,events+[dict(start=a,end=b) for a,b in original_ranges+retained],cfg['duration']),classificationRevision=CLASSIFICATION_REVISION,**classification_profile(),method='local-sound-classifier; original-lexical-speech-excluded; cantonese-overlap-ducked',limitation='Sounds overlapping original Japanese speech or not confidently classified remain excluded.'),ensure_ascii=False,indent=2))
     if not events:
         emit('原聲表演','未找到可安全獨立補回嘅非語言片段；冇混回整條日語人聲。',.92)
         return voice
@@ -118,7 +162,8 @@ def restore(cfg,job,cues,voice,run,emit):
     labels=''.join(f'[n{i}]' for i in range(len(events)))
     pieces.append(f'[0:a]{labels}amix=inputs={len(events)+1}:duration=first:normalize=0,alimiter=limit=0.95:level=0:latency=1[out]')
     output=job/'cantonese-performance.wav'
-    run([cfg['ffmpeg'],'-v','error','-y','-i',voice,'-i',cfg['dialoguePath'],'-filter_complex',';'.join(pieces),'-map','[out]','-ar','24000','-ac','1','-c:a','pcm_s16le',output])
+    from audio_format import delivery_rate
+    run([cfg['ffmpeg'],'-v','error','-y','-i',voice,'-i',cfg['dialoguePath'],'-filter_complex',';'.join(pieces),'-map','[out]','-ar',str(delivery_rate(cfg)),'-ac','1','-c:a','pcm_s16le',output])
     emit('原聲表演',f'已按原本時間補回 {len(events)} 段叫聲／笑聲／呼吸等非語言表演。',.92)
     return output
 

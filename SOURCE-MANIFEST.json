@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "0.24.67",
+  "version": "0.24.68",
   "scope": "Public desktop application source, notices and original demonstration screenshots; no user media, model weights or executable prerequisites",
   "files": [
     {
@@ -25,28 +25,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "37bf648f60ec7cb550726178eb47f60463b4ae50ee548d4988c58f1e73a2bfa6",
-      "bytes": 23424
+      "sha256": "bf370e678e526c54ff3a3ac617b8dfa9e25409c20be04b0362723de5df7c478b",
+      "bytes": 23824
     },
     {
       "path": "README.ja.md",
-      "sha256": "72360874685d5be6146895e41db465caef710876800732bddfe168ce22e3dafa",
-      "bytes": 25419
+      "sha256": "e8f94b4e45e3df08b7aa3bd89c27d1bc8e4265cc9cc5d64d11da9cf015e54574",
+      "bytes": 25772
     },
     {
       "path": "README.md",
-      "sha256": "37bf648f60ec7cb550726178eb47f60463b4ae50ee548d4988c58f1e73a2bfa6",
-      "bytes": 23424
+      "sha256": "bf370e678e526c54ff3a3ac617b8dfa9e25409c20be04b0362723de5df7c478b",
+      "bytes": 23824
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "f3e980b5fbc9d8d15ec0658236f2aac517fef4f02c2383b4ddf6c1c3e855962f",
-      "bytes": 19988
+      "sha256": "9f96ca58606365ee90d25370ad5fc7bf1716532c1f9a96d489d2651f38245813",
+      "bytes": 20352
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "c93926f54d332c849f218b17867efd274812764f114487c5c8816b92d6e315f7",
-      "bytes": 20078
+      "sha256": "fdbd368dc09dd9d7e51623e2408b7cd60a1070fe05c567151af36992196f8ab1",
+      "bytes": 20437
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -640,8 +640,8 @@
     },
     {
       "path": "Resources/dubbing.py",
-      "sha256": "2040c625de17a9abc10cc22f403443147e74a0b0c910b8134461a60d71885025",
-      "bytes": 50383
+      "sha256": "dbf3306d0538f7a764bb89116b656ad3049e979209971049473fde49b048759a",
+      "bytes": 50529
     },
     {
       "path": "Resources/dubbing_runner.py",
@@ -695,8 +695,8 @@
     },
     {
       "path": "Resources/fast_mode.py",
-      "sha256": "410637f8a6e995f5a8bdb91d5a5369daeb9f9bc95060a1e9938b4742b707a9c8",
-      "bytes": 26777
+      "sha256": "2bb1c6a017629ea1721b51d1820f642a4cc1a3a884a5f7f2ed8246b7a4fedc8d",
+      "bytes": 26768
     },
     {
       "path": "Resources/fonts/LICENSE",
@@ -930,8 +930,8 @@
     },
     {
       "path": "Resources/nonverbal.py",
-      "sha256": "43806620fa204e309727c6ca4234c2f7b16773c87e8686dcc43ed9437b406a7f",
-      "bytes": 12060
+      "sha256": "f5c80ac94e750c43a626fc27d7e088cdf083a2b2fe07231bd69c47e66503e2f8",
+      "bytes": 14495
     },
     {
       "path": "Resources/normal_engine_fallback.py",
@@ -2479,6 +2479,26 @@
       "bytes": 120018
     },
     {
+      "path": "SUPPORT.ja.md",
+      "sha256": "51a3e31ec3ec40599d7b2a10e4f6ef6b9649018182ea9ad27d1d644d3254c516",
+      "bytes": 6904
+    },
+    {
+      "path": "SUPPORT.md",
+      "sha256": "d09d899326c7a0658d4e9adb883364c764dec798680582acf4049e0e50bde0ed",
+      "bytes": 5301
+    },
+    {
+      "path": "SUPPORT.zh-CN.md",
+      "sha256": "2486d3891ac95981f6d49f9a8ea7f638975f6845fcaecab10551f04b3195703e",
+      "bytes": 4686
+    },
+    {
+      "path": "SUPPORT.zh-HK.md",
+      "sha256": "928667b2f78d7081e44967c58d39389f002523ee69c552d332d5a39918750818",
+      "bytes": 4471
+    },
+    {
       "path": "Sources/AIResultSummary.swift",
       "sha256": "e229f85961cde116fd18bf0b2a0a8dba3b02592c4d802dd17aa475d7231d1412",
       "bytes": 781
@@ -2970,7 +2990,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "9669329c06ccaefd8b19832f6d3fa03dc84e47e7162a88c1cd5665687c13b341",
+      "sha256": "e70daabb87632efa3f5821f3a41b1b229f4354128041fcdb666769556861e0b7",
       "bytes": 66
     },
     {
@@ -3014,9 +3034,24 @@
       "bytes": 1999
     },
     {
+      "path": "docs/BUILD-AND-RECOVERY.md",
+      "sha256": "a84215f6d3fc69b984755f80dbf654e1d91a9fb6db9421a34323de5946ad13d3",
+      "bytes": 5079
+    },
+    {
+      "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
+      "sha256": "177b22fa776c869b17f424cbe0e423721df8b7335a2011e5b628163a67a6be3c",
+      "bytes": 9414
+    },
+    {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
       "sha256": "d3cfaeaf73bed4dc1747d23b055ea085232dbdeb8822fb5dd5e929815af72c75",
       "bytes": 3162
+    },
+    {
+      "path": "docs/DESKTOP-RECOVERY-PARITY.md",
+      "sha256": "da0abf899402c40db47cd498f4c196b5ece17f6909497b68528fe558662568a9",
+      "bytes": 5225
     },
     {
       "path": "docs/GETTING-STARTED.md",
@@ -3027,6 +3062,26 @@
       "path": "docs/INDEPENDENT-LISTENING.md",
       "sha256": "a05b5f82a25790a97deeeb4da9d9119027dc1ef89fb28a09f15aff87b8a2992a",
       "bytes": 3981
+    },
+    {
+      "path": "docs/IPAD-PRIVACY-POLICY.ja.md",
+      "sha256": "24d25b85cdc677cc1504723d2e75d2cc7b2e69e8c45642dd4dd07ab0996d2ee1",
+      "bytes": 3102
+    },
+    {
+      "path": "docs/IPAD-PRIVACY-POLICY.md",
+      "sha256": "3f36956ea38101825b7c5e01c6408283ba78f110bf82059c1485a431c426e649",
+      "bytes": 2452
+    },
+    {
+      "path": "docs/IPAD-PRIVACY-POLICY.zh-CN.md",
+      "sha256": "98fc7b499df8321aa6dbecd5251e0b05e689bb69e6a7c5715fd39ff819fd6415",
+      "bytes": 2163
+    },
+    {
+      "path": "docs/IPAD-PRIVACY-POLICY.zh-HK.md",
+      "sha256": "967c6d9b1a47af71ac110b2d988280d38f4e74db483cfc4c7e2ff1e9bc85a9ba",
+      "bytes": 2175
     },
     {
       "path": "docs/LICENSING.md",
@@ -3050,8 +3105,13 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "b0ff745718d176431ed27ced7141f5aa3b2bcfba171027357eb719eebf768ed8",
-      "bytes": 1391
+      "sha256": "2e04c0b1784f49cec797c3d8c81cdfcbb4a564fe26e760e8f24d631324183eda",
+      "bytes": 1731
+    },
+    {
+      "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
+      "sha256": "1c0396a7f1fed205c9f0b0eb802df8610baa720fd7a7891cbcb7de761de95fdf",
+      "bytes": 1688
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -3115,7 +3175,7 @@
     },
     {
       "path": "docs/en/LICENSING.md",
-      "sha256": "23c1bf112b164fb5f3014bef8075e1ecad4807ee2cefe0c33dd7584f666ae806",
+      "sha256": "276d9bfdca38a30109f7395b0c293397681f5d526de06d6325d67779fb92c79a",
       "bytes": 2669
     },
     {
@@ -3380,7 +3440,7 @@
     },
     {
       "path": "docs/ja/LICENSING.md",
-      "sha256": "7ca80163e5c6d26ebe0d2ba73884d684da931ad6158d26c178068a626c5518b5",
+      "sha256": "1f396cf3c830d2c08d013f851751bb4377cdda2e7a11d2eefdea5baccbb614c4",
       "bytes": 2748
     },
     {
@@ -3400,7 +3460,7 @@
     },
     {
       "path": "docs/zh-CN/LICENSING.md",
-      "sha256": "1109195ec7355963df60c85acd97f3c2136b9d471bdf475ffb627a91bca36241",
+      "sha256": "1e1f0f8cf1150f7b6d6e0f3df144de177ad0a0d25cf25e5420bb3dc8b367d189",
       "bytes": 2214
     },
     {
@@ -3420,7 +3480,7 @@
     },
     {
       "path": "docs/zh-HK/LICENSING.md",
-      "sha256": "4474e7ebad0d0e2e6e92074f6f69cc841fb2518bb6b9874a20bbae1b2b8f66ca",
+      "sha256": "8fd2bcc6ca76c48aef6ff1dab0dc9a9664dd4841cd5950d758adb642f0eda1ed",
       "bytes": 2245
     },
     {
@@ -13200,8 +13260,8 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "5457ee420556ef15711049d10955a46f6ec17219a8b15c443f91e15438cd8a6a",
-      "bytes": 8083
+      "sha256": "f96fc54a7bff1713418bd670ef38daaf85d7bd7124ed3a64a18fd0df46887068",
+      "bytes": 8388
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -13425,12 +13485,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "35b3de5b17f62ac0004eef7ecb8efae9f1d5be0cfddde92b3a67772e54879b87",
+      "sha256": "d5870e6155f0d3f7225e9a13b00d3b38934860416e4d4ef216a360092bc43ec4",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "2e4d47b03d26957a0d26940719bb918041275ae1ee784f49a265caa95a38cc65",
+      "sha256": "333ad5fafb2f1f1ed73b3835f2ac553d0ed31a131a7d20073100c094f47ec019",
       "bytes": 543
     },
     {
@@ -13460,7 +13520,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "774e9786fac71aeaf9bd236cd01febcfc7bb855c2ff2e126755e1980af2e610c",
+      "sha256": "c1b90cab735aeeefa56e91d54bb4ff67b7c2274e2060fee0c60ebc934fc74365",
       "bytes": 956
     },
     {
@@ -13490,8 +13550,8 @@
     },
     {
       "path": "studio/web/help.js",
-      "sha256": "3762d4b720ad55c1d996b068bb4f6caafe5930174220d09a8ec661c057e04615",
-      "bytes": 114909
+      "sha256": "4555882d17c98154c246a46119945c09b463de678208b915092179d673d7d587",
+      "bytes": 118352
     },
     {
       "path": "studio/web/i18n.js",
@@ -13854,6 +13914,11 @@
       "bytes": 23768
     },
     {
+      "path": "tests/shared_recovery_guide.mjs",
+      "sha256": "4245b5358b9e81dce282cab3180b28701c90563cdc28c5ba840b68e636afcb4a",
+      "bytes": 645
+    },
+    {
       "path": "tests/shared_review_diagnostics_ui.cjs",
       "sha256": "3cb484708900fd2f5776d597b017b2f8e00bdc588b93e07d5f3724de08d2ec2e",
       "bytes": 4284
@@ -14074,6 +14139,11 @@
       "bytes": 4355
     },
     {
+      "path": "tests/test_desktop_parity68.py",
+      "sha256": "67889872af856d243bc9fe14dacbc880b019d2f4464173f02325bc500b4f3c1e",
+      "bytes": 6542
+    },
+    {
       "path": "tests/test_dialogue.py",
       "sha256": "dcf716b9b2a07642593dde0575f39444c64803f0050a61d7afe0561ae9942a10",
       "bytes": 6448
@@ -14290,8 +14360,8 @@
     },
     {
       "path": "tests/test_nonverbal.py",
-      "sha256": "c9e365035ac4d62f466ae03fbdaa51a8a39544f06c9ce7ae5833773b2d28cff7",
-      "bytes": 5443
+      "sha256": "1493b8942d6f5de5f59ecf4228dca64ed879600e053fd0362bde1282bd722f0a",
+      "bytes": 5500
     },
     {
       "path": "tests/test_normal_engine_fallback.py",
@@ -14300,8 +14370,8 @@
     },
     {
       "path": "tests/test_normal_mode.py",
-      "sha256": "345b60241d3fedbb6859f99cbef76fde7408a9d9c5e4f0478affc26f944299d1",
-      "bytes": 16675
+      "sha256": "ba4922645fbed38014db2d603b64673ceed0b7f753c25cff8371e86d837a44db",
+      "bytes": 16792
     },
     {
       "path": "tests/test_normal_recovery.py",
@@ -15015,8 +15085,8 @@
     },
     {
       "path": "windows/native_tools.py",
-      "sha256": "e326b9ce459812456c9eacbcc5bbbbaa39da297816cc7658f1a8f930bac9b466",
-      "bytes": 6481
+      "sha256": "1aefaf745ab73ad8ac9b0f39d7fe19f66e03ee0ed927b1071dffabf7f006bb23",
+      "bytes": 6939
     },
     {
       "path": "windows/native_tts.py",
