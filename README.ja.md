@@ -162,20 +162,16 @@ AniCanto は**実際に話された台詞を主な根拠**とし、字幕で意�
 
 ## 元のデモを変換して、声を比較する
 
-**3分のオリジナル日本語サンプル**をダウンロードし、AniCanto に読み込んで広東語・英語への変換を試せます。絵、音楽、合成音声はこのプロジェクト用に制作され、市販アニメの映像やプロの声優の録音は含みません。
+3分間の日本語入力動画と、デスクトップ版の出力デモの2本です。すべての表示言語で同じ動画を使います。
 
-比較用の **Mac Drama 3 動画**は広東語が標準で、英語・日本語の音声も保持しています。対応プレーヤーで切り替えられます。広東語・英語の台詞は編集してから生成しており、**未編集のワンクリック翻訳ベンチマークではありません**。iPad CosyVoice の変換結果でもありません。4種類の画面言語版は同じ日本語音声を使用します。
+- **[日本語入力動画 · 変換を試す](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-input.mp4)**
+- **[デスクトップ版出力 · 聴き比べる](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-output.mp4)**
 
-| 画面の言語 | 元の日本語・変換用 | Mac Drama 3・比較用 |
-| --- | --- | --- |
-| English | [元のMP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-en.mp4) | [比較MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-en.mp4) |
-| 繁體中文 | [元のMP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-HK.mp4) | [比較MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-HK.mp4) |
-| 简体中文 | [元のMP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-CN.mp4) | [比較MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-CN.mp4) |
-| 日本語 | [元のMP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-ja.mp4) | [比較MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-ja.mp4) |
+出力動画には **広東語・普通話・英語・日本語の4音声** を収録。両動画には **繁体字中国語・簡体字中国語・英語・日本語の字幕** を内蔵しています。対応プレーヤーで切り替えてください。
 
-**[デモ一式をダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-kit-v7.zip)** — 4種類の画面言語の元日本語MP4、Mac Drama 3 比較動画、対応する日本語原文字幕を含みます。
+出力デモはデスクトップ版と Fish Audio Drama3 で制作し、台本を Qwen3.6-35B-A3B 4-bit MLX で確認しました。編集済みの比較用デモであり、iPad アプリの自動変換結果ではありません。Built with Fish Audio.
 
-[デモの詳細と字幕](docs/ja/DEMO.md)
+[デモの詳細](docs/ja/DEMO.md)
 
 ## 現在のアプリ画面
 
@@ -263,3 +259,4 @@ SCKC の趣味のプロジェクトです。独自コードは MIT、第三者�
 **SCKC 制作** — おなじみの物語を、もう一度広東語で。
 
 [MIT](LICENSE) · [ライセンス](docs/ja/LICENSING.md)
+

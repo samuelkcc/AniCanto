@@ -162,20 +162,16 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 ## 下載測試原片，聽返配音成品比較
 
-下載 **3 分鐘日文原創測試片**，放入 AniCanto，自己試轉廣東話或者英文。畫面、音樂同合成聲線都為呢個計劃準備，唔包含商業動畫片段或專業配音員錄音。
+只需兩條三分鐘影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
 
-另外提供 **Mac Drama 3 配音成品**，預設廣東話，保留英文同日文音軌，可喺兼容播放器切換。廣東話同英文台詞經過編修再生成，用嚟比較聲音效果，**唔係未經校訂嘅一鍵翻譯成績**，亦唔係 iPad CosyVoice 轉換結果。四種畫面語言版本用同一套日文原聲。
+- **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-input.mp4)**
+- **[桌面版輸出示範 · 試聽比較](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-output.mp4)**
 
-| 畫面語言 | 日文原片・自己試轉 | Mac Drama 3・試聽比較 |
-| --- | --- | --- |
-| English | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-en.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-en.mp4) |
-| 繁體中文 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-HK.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-HK.mp4) |
-| 简体中文 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-zh-CN.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-zh-CN.mp4) |
-| 日本語 | [原片 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-original-ja.mp4) | [成品 MP4](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-Drama3-cantonese-ja.mp4) |
+輸出片包含 **廣東話、普通話、英文、日文四條聲道**。兩條片都內嵌 **繁體中文、簡體中文、英文、日文字幕**，可喺支援嘅播放器切換。
 
-**[下載完整測試套裝](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.63-beta/AniCanto-demo-kit-v7.zip)** — 包括四種畫面語言嘅日文原片、Mac Drama 3 比較成品，以及同原片配對嘅日文原文字幕。
+示範片由桌面版配合 Fish Audio Drama3 製作，稿件經 Qwen3.6-35B-A3B 4-bit MLX 校對，係經編排嘅比較示範，並非 iPad App 自動轉換成果。Built with Fish Audio.
 
-[示範詳情與字幕](docs/zh-HK/DEMO.md)
+[測試影片詳情](docs/zh-HK/DEMO.md)
 
 ## 新版介面
 
@@ -263,3 +259,4 @@ SCKC 嘅興趣作品。原創程式碼採 MIT；第三方組件及模型各有�
 **SCKC 製作**——為咗聽到熟悉一幕，用廣東話講多一次。
 
 [MIT](LICENSE) · [授權詳情](docs/zh-HK/LICENSING.md)
+
