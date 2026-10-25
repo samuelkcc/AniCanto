@@ -2,10 +2,10 @@
 
 [← AniCanto](../../README.ja.md)
 
-3分間の日本語入力動画と、デスクトップ版の出力デモの2本です。すべての表示言語で同じ動画を使います。
+3分08秒の日本語入力動画と、デスクトップ版の出力デモの2本です。すべての表示言語で同じ動画を使います。
 
-- **[日本語入力動画 · 変換を試す](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
-- **[デスクトップ版出力 · 聴き比べる](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
+- **[日本語入力動画 · 変換を試す](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[デスクトップ版出力 · 聴き比べる](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
 
 出力動画には **広東語・普通話・英語・日本語の4音声** を収録。両動画には **繁体字中国語・簡体字中国語・英語・日本語の字幕** を内蔵しています。対応プレーヤーで切り替えてください。
 

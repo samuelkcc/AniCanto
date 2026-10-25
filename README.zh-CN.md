@@ -162,10 +162,10 @@ AniCanto 以**实际说出的对白为主**，字幕帮助核对含义和人名�
 
 ## 下载测试原片，听配音成品作比较
 
-只需两个三分钟视频：日文输入原片，以及桌面版输出示范。所有界面语言共用同一组。
+只需两个3分08秒视频：日文输入原片，以及桌面版输出示范。所有界面语言共用同一组。
 
-- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
-- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
+- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
 
 输出视频包含 **粤语、普通话、英文、日文四条音轨**。两个视频均内嵌 **繁体中文、简体中文、英文、日文字幕**，可在支持的播放器中切换。
 

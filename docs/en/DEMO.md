@@ -2,10 +2,10 @@
 
 [← AniCanto](../../README.md)
 
-One three-minute Japanese input and one desktop reference output, shared across all interface languages.
+One 3-minute 8-second Japanese input and one desktop reference output, shared across all interface languages.
 
-- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
-- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
+- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
 
 The output contains **Cantonese, Mandarin, English and Japanese audio**. Both movies include **Traditional Chinese, Simplified Chinese, English and Japanese subtitles**; choose tracks in a compatible player.
 

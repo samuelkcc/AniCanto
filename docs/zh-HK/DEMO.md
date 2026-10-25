@@ -2,10 +2,10 @@
 
 [← AniCanto](../../README.zh-HK.md)
 
-只需兩條三分鐘影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
+只需兩條3分08秒影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
 
-- **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
-- **[桌面版輸出示範 · 試聽比較](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
+- **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[桌面版輸出示範 · 試聽比較](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
 
 輸出片包含 **廣東話、普通話、英文、日文四條聲道**。兩條片都內嵌 **繁體中文、簡體中文、英文、日文字幕**，可喺支援嘅播放器切換。
 
