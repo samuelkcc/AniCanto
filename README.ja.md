@@ -164,12 +164,12 @@ AniCanto は**実際に話された台詞を主な根拠**とし、字幕で意�
 
 3分間の日本語入力動画と、デスクトップ版の出力デモの2本です。すべての表示言語で同じ動画を使います。
 
-- **[日本語入力動画 · 変換を試す](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-input.mp4)**
-- **[デスクトップ版出力 · 聴き比べる](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-output.mp4)**
+- **[日本語入力動画 · 変換を試す](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
+- **[デスクトップ版出力 · 聴き比べる](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
 
 出力動画には **広東語・普通話・英語・日本語の4音声** を収録。両動画には **繁体字中国語・簡体字中国語・英語・日本語の字幕** を内蔵しています。対応プレーヤーで切り替えてください。
 
-出力デモはデスクトップ版と Fish Audio Drama3 で制作し、台本を Qwen3.6-35B-A3B 4-bit MLX で確認しました。編集済みの比較用デモであり、iPad アプリの自動変換結果ではありません。Built with Fish Audio.
+出力デモはデスクトップ版と Fish Audio Drama3 で制作し、元の台本を Qwen3.6-35B-A3B 4-bit MLX で確認しました。編集済みの比較用デモであり、iPad アプリの自動変換結果ではありません。Built with Fish Audio.
 
 [デモの詳細](docs/ja/DEMO.md)
 

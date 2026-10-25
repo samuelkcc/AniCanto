@@ -168,12 +168,12 @@ Recordings and previous exports are retained. New languages, models or changed s
 
 One three-minute Japanese input and one desktop reference output, shared across all interface languages.
 
-- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-input.mp4)**
-- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-output.mp4)**
+- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
+- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
 
 The output contains **Cantonese, Mandarin, English and Japanese audio**. Both movies include **Traditional Chinese, Simplified Chinese, English and Japanese subtitles**; choose tracks in a compatible player.
 
-The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
+The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
 
 [Demo details](docs/en/DEMO.md)
 

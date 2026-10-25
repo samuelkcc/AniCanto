@@ -164,12 +164,12 @@ AniCanto 以**实际说出的对白为主**，字幕帮助核对含义和人名�
 
 只需两个三分钟视频：日文输入原片，以及桌面版输出示范。所有界面语言共用同一组。
 
-- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-input.mp4)**
-- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v15/AniCanto-demo-output.mp4)**
+- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-input.mp4)**
+- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v18/AniCanto-demo-output.mp4)**
 
 输出视频包含 **粤语、普通话、英文、日文四条音轨**。两个视频均内嵌 **繁体中文、简体中文、英文、日文字幕**，可在支持的播放器中切换。
 
-示范视频由桌面版配合 Fish Audio Drama3 制作，稿件经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非 iPad App 自动转换结果。Built with Fish Audio.
+示范视频由桌面版配合 Fish Audio Drama3 制作，原稿经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非 iPad App 自动转换结果。Built with Fish Audio.
 
 [测试视频详情](docs/zh-CN/DEMO.md)
 
