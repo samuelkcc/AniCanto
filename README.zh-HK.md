@@ -37,6 +37,10 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 
 ## 下載測試原片，聽返配音成品比較
 
+[![可下載輸出示範嘅實際畫面](docs/images/demo-output-sample.jpg)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
+
+撳圖片開啟輸出示範影片，再喺播放器揀音軌同字幕。
+
 只需兩條3分08秒影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
 
 - **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
