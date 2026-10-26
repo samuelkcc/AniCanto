@@ -1,5 +1,6 @@
 // A single stroke system shared by every platform; no platform emoji controls.
 const paths={
+ fullscreen:'M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5',
  grip:'M9 5h.01M15 5h.01M9 12h.01M15 12h.01M9 19h.01M15 19h.01',up:'m6 15 6-6 6 6',down:'m6 9 6 6 6-6',
  logo:'M7 4h10a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-6l-5 3 1-3a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4zM7 9v4m3-6v8m4-7 4 3-4 3z',
  edit:'M4 4h16v12H4zM8 20h8m-4-4v4',roles:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8m8-7a4 4 0 0 1 0 7',

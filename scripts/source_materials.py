@@ -91,7 +91,7 @@ def assemble(source,output):
         completeCorrespondingSource=True,published=False,legalApproval=False,
         scope='Engineering coverage of the selected Mac/Windows native tools, locked desktop dependencies and bundled source-form installer; not a legal opinion or future-use guarantee.',
         verification=[mac_verification,windows_verification],
-        limitations=['Final publication remains on hold; provide this exact source attachment with the matching binary pair.',
+        limitations=['Publication is a separate step; provide this exact source attachment with the matching binary pair.',
           'Windows first-launch/GPU inference acceptance is separate and has not been executed on a Windows device.',
           'Compiler/SDK and general-purpose build tool variation is not a claim of bit-identical reproduction.',
           'Optional model weights retain their own terms; unreviewed conversions remain disabled.'],files=records)

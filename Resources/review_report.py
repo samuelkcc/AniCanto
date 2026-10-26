@@ -28,7 +28,7 @@ def archived_recordings(folder):
 
 
 def project(root,review,row):
-    root=Path(root).resolve();cfg=review.get('config',{});cues=review.get('cues',[])
+    root=Path(root).resolve();bound=__import__('update_plan').family(root);cfg=review.get('config',{});cues=review.get('cues',[])
     active=row.get('status')=='running';items={};resolved={};contexts={}
     milestones=read(root/'production-progress.json',{}).get('milestones',[])
     phase=next((x.get('id') for x in milestones if x.get('state')=='running'),None)
@@ -40,7 +40,7 @@ def project(root,review,row):
         target=resolved if status=='repaired' else items
         item=target.setdefault(key,dict(id=hashlib.sha256(key.encode()).hexdigest()[:20],index=index,engine=e,language=lang,start=value.get('start',cue.get('start')),end=value.get('end',cue.get('end')),kind=value.get('kind') or value.get('reason') or 'verification-unresolved',status=status,evidence=[],attempts=[]))
         item['evidence'].append(dict(file=origin,**value));item['text']=cue.get(__import__('output_language').field(lang),'')
-        if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script'):item['kind']=value['kind']
+        if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script','name-term-mismatch'):item['kind']=value['kind']
         if status=='repairing':item['status']='repairing'
     for index,cue in enumerate(cues,1):
         if cue.get('sourceClockUnconfirmed'):
@@ -49,12 +49,15 @@ def project(root,review,row):
     folders={root};progress=read(root/'track-progress.json',{}).get('tracks',[])
     for t in progress:
         p=Path(t.get('folder','')).resolve()
-        if p.is_dir() and p.is_relative_to(root):folders.add(p)
+        if p.is_dir() and p.is_relative_to(bound):folders.add(p)
+    if cfg.get('_retainedTracks'):
+        from update_plan import retained
+        for folder,_,_ in retained(cfg,root).values():folders.add(folder)
     report=read(root/'report.json',{})
     if len(folders)==1:
         for t in report.get('tracks',[]):
             p=Path(t.get('report','')).resolve().parent
-            if p.is_dir() and p.is_relative_to(root):folders.add(p)
+            if p.is_dir() and p.is_relative_to(bound):folders.add(p)
     coverage=read(root/'dialogue-delivery-audit.json',{})
     for track in coverage.get('tracks',[]):
         for v in track.get('rows',[]):
@@ -62,7 +65,7 @@ def project(root,review,row):
     for folder in sorted(folders):
         local_review=read(folder/'review.json',{});local=local_review.get('config',{});engine=local.get('ttsBackend',cfg.get('ttsBackend'));language=local.get('targetLanguage','yue')
         contexts[(language,engine)]=(folder,local_review)
-        origin=str(folder.relative_to(root))
+        origin=str(folder.relative_to(bound))
         for v in read(folder/'segment-issues.json',[]):insert(v,engine,language,origin=origin+'/segment-issues.json')
         for v in read(folder/'resolved-segment-issues.json',[]):insert(v,engine,language,'repaired',origin+'/resolved-segment-issues.json')
         for v in read(folder/'timing.json',[]):
@@ -91,6 +94,12 @@ def project(root,review,row):
             insert(dict(index=v.get('index'),kind='automatic-recovery',attempts=v['attempts']),engine,language,status,origin+'/automatic-recovery.json')
             target=resolved if status=='repaired' else items;key=f"{language}:{engine}:{v.get('index')}"
             if key in target:target[key]['attempts']=v['attempts']
+    from performance_review import project as performance_projection
+    performance=performance_projection(__import__('update_plan').family(root),folders,cfg)
+    for folder in sorted(folders):
+        local=read(folder/'review.json',{}).get('config',{})
+        for term_issue in read(folder/'terminology-report.json',{}).get('issues',[]):
+            insert(term_issue,local.get('ttsBackend',cfg.get('ttsBackend')),term_issue.get('language'),origin=str(folder.relative_to(bound))+'/terminology-report.json')
     from review_diagnostics import enrich
     facts={}
     for item in list(items.values())+list(resolved.values()):
@@ -140,4 +149,4 @@ def project(root,review,row):
     for key in items:resolved.pop(key,None)
     summary=dict(processing=active,pending=sum(x['status']!='voice-fallback' for x in items.values()),voiceFallbacks=sum(x['status']=='voice-fallback' for x in items.values()),repairing=sum(x['status']=='repairing' for x in items.values()),repaired=len(resolved),userChoices=sum(x['status']=='user-choice-saved' for x in items.values()),qualityChecked=not active and report.get('qualityStatus')=='automatic-checks-passed',hasReport=bool(report or coverage or items or resolved))
     if not items and row.get('status')=='attention':summary['projectProblem']=(row.get('lastError') or {}).get('message') or row.get('message') or 'The last attempt needs attention; no line-level verdict is available yet.'
-    return dict(issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)
+    return dict(performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)

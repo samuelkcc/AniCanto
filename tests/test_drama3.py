@@ -21,6 +21,7 @@ class Drama3Tests(unittest.TestCase):
      mlx=SimpleNamespace(core=mx)
      with patch.dict(sys.modules,{'mlx':mlx}):result=drama3.generate(model,item,dict(targetLanguage=language))
     args=model.generate.call_args.kwargs
+    self.assertEqual({k:args[k] for k in ('temperature','top_p','top_k')},dict(temperature=1.,top_p=.9,top_k=30))
     self.assertEqual(item['text'],'Approved dialogue');self.assertIn(cue,args['text'])
     self.assertTrue(args['text'].endswith('Approved dialogue'))
     self.assertEqual(len(args['ref_audio']),44100);self.assertEqual(args['ref_audio'].ndim,1)

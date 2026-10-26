@@ -92,7 +92,11 @@ class SharedStudioTests(unittest.TestCase):
         self.assertEqual(reopened.row(first)['externalSubtitle'],str(subtitle.resolve()))
         first_request=read(reopened.store.submit(reopened.row(first)))
         second_request=read(reopened.store.submit(reopened.row(second)))
-        self.assertEqual(first_request['subtitle'],str(subtitle.resolve()))
+        self.assertNotEqual(first_request['subtitle'],str(subtitle.resolve()))
+        self.assertEqual(Path(first_request['subtitle']).read_bytes(),subtitle.read_bytes())
+        self.assertEqual(first_request['subtitleSnapshot']['originalName'],subtitle.name)
+        from subtitle_snapshot import verify
+        verify(first_request)
         self.assertEqual(first_request['subtitleSource'],'external')
         self.assertFalse(first_request['batchAutoSubtitles'])
         self.assertTrue(first_request['batchExplicitSubtitle'])

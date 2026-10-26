@@ -64,9 +64,9 @@ class NormalModeTests(unittest.TestCase):
             with patch.object(normal_mode,'inspect',return_value={1:dict(decision='unconfirmed',language='Chinese')}),patch('dubbing.gsv_audio',return_value=[new]):
                 self.assertEqual(normal_mode.repair_paths(dict(normalRepairPolicy='verified',productionMode='normal',preferFirstAudibleTake=False),job,[dict(start=0,end=2,cantonese=text,speakerId='own')],[old],Mock(),Mock()),[old])
             report=json.loads((job/'normal-checks.json').read_text());self.assertEqual(report['unresolved'],[1]);self.assertEqual(report['repairs'][0]['reason'],'dialect-unconfirmed')
-    def test_clear_nonlexical_cry_with_no_translation_is_not_missing_dialogue(self):
+    def test_vowel_spelling_alone_does_not_certify_nonlexical_cry(self):
         from dubbing import is_vocalization
-        self.assertTrue(is_vocalization(dict(japanese='あああああああああ',cantonese='')))
+        self.assertFalse(is_vocalization(dict(japanese='あああああああああ',cantonese='')))
         self.assertFalse(is_vocalization(dict(japanese='知らん知らん',cantonese='')))
 
     def test_titles_are_not_spoken_but_real_recognized_dialogue_and_names_survive(self):

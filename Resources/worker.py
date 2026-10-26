@@ -723,6 +723,7 @@ def extract_cues(cfg, job, meta):
         return transcribe(cfg, job, ffmpeg)
     if subtitle:
         run([ffmpeg, "-v", "error", "-y", "-i", subtitle, srt])
+        __import__("subtitle_snapshot").record_extracted(cfg,job,srt)
         return window_subtitles(parse_srt(srt.read_text(encoding="utf-8-sig")), cfg.get("startOffset",0), cfg["duration"])
     if cfg.get("ocr"):
         from subtitle_ocr import scan
@@ -737,6 +738,7 @@ def extract_cues(cfg, job, meta):
     if streams:
         cfg['sourceCaptionLanguage']=streams[0].get('tags',{}).get('language','')
         run([ffmpeg, "-v", "error", "-y", "-i", cfg["video"], "-map", f"0:{streams[0]['index']}", srt])
+        __import__("subtitle_snapshot").record_extracted(cfg,job,srt,streams[0]["index"])
         result = parse_srt(srt.read_text(encoding="utf-8-sig"))
         if result:
             return window_subtitles(result, cfg.get("startOffset",0), cfg["duration"])
@@ -771,6 +773,8 @@ def synthesize(cfg, job, cues):
 
 @measured
 def convert(cfg):
+    from subtitle_snapshot import verify
+    verify(cfg)
     from translation_source import configure as source_policy
     cfg=source_policy(dict(cfg))
     emit("準備", "正在準備本次製作。", productionPending=True)
@@ -803,6 +807,8 @@ def convert(cfg):
     if cfg.get("autoSpeakers"):
         identity.pop("voiceProfiles", None)
         identity.pop("defaultSpeaker", None)
+    for field in ('termRules','sourceLanguage','sourceAudioStream','analysisRerunToken'):
+        if cfg.get(field) is not None:identity[field]=cfg[field]
     identity['autoSpeakers'] = bool(cfg.get('autoSpeakers'))
     identity['roleAnalysisMode']=cfg.get('roleAnalysisMode','audio')
     identity['voiceStyleMode']=cfg.get('voiceStyleMode','clone')
@@ -812,11 +818,14 @@ def convert(cfg):
         identity["ocr_revision"] = 8
         identity["ocr_settings"] = {k:cfg.get(k) for k in ("ocrRect", "ocrTop", "ocrBottom", "ocrMargin", "ocrColor", "ocrStable")}
     identity["file"] = (video.stat().st_size, video.stat().st_mtime_ns)
+    if cfg.get("subtitleSnapshot"):
+        identity["subtitle"]=cfg["subtitleSnapshot"]["originalName"]
     if cfg.get("subtitle"):
         identity["sub_hash"] = hashlib.sha256(Path(cfg["subtitle"]).read_bytes()).hexdigest()
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:16]
     job = Path(cfg["storage"]) / "jobs" / key
     job.mkdir(parents=True, exist_ok=True)
+    __import__("subtitle_snapshot").verify_extracted(job)
     from production_progress import phase
     phase(job,"prepare")
     emit("分析", "檢查音軌、字幕同影片長度。", 0.03, job=str(job))
@@ -1085,7 +1094,10 @@ def render_review(request):
     review_path = Path(request["review"])
     from production_progress import phase
     review = json.loads(review_path.read_text())
+    __import__("subtitle_snapshot").verify_extracted(review_path.parent)
     cfg, meta = review["config"], review["meta"]
+    from subtitle_snapshot import verify
+    verify(cfg)
     if cfg.get("sourceLanguage"):
         from source_language import apply
         apply(cfg,cfg["sourceLanguage"])
@@ -1295,7 +1307,7 @@ def render_review(request):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=["speech-studio", "translate-cue", "render-project", "rebuild-dialogue", "download-speech", "batch", "detect-op", "auto-speakers", "shorten-cue", "import-reference", "prepare-reference", "preview-separation", "preview-voice", "preview-ocr", "render", "convert", "download-stt", "download-model"])
+    parser.add_argument("action", choices=["speech-studio", "translate-cue", "render-project", "rebuild-dialogue", "download-speech", "download-acceleration", "batch", "detect-op", "auto-speakers", "shorten-cue", "import-reference", "prepare-reference", "preview-separation", "preview-voice", "preview-ocr", "render", "convert", "download-stt", "download-model"])
     parser.add_argument("config")
     args = parser.parse_args()
     cfg = json.loads(Path(args.config).read_text())
@@ -1308,6 +1320,10 @@ def main():
     elif args.action == 'render-project':
         import project_edit
         project_edit.render(sys.modules[__name__], cfg)
+    elif args.action == 'download-acceleration':
+        if cfg.get('modelID')!='whisper-large-v3-mlx':raise ValueError('Unknown accelerated model.')
+        from model_catalog import install
+        install(cfg['storage'],cfg['modelID'])
     elif args.action == 'download-speech':
         import dialogue
         dialogue.install(cfg['storage'],emit,cfg.get('speechModel'))

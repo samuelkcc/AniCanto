@@ -29,3 +29,13 @@ The searchable bilingual **Help centre** inside AniCanto is the current user man
 - [Machine-readable recovery contract](RECOVERY-WORKFLOW-CONTRACT.json)
 - [Desktop platform differences and evidence](DESKTOP-RECOVERY-PARITY.md)
 - [Source backup and rebuilding](BUILD-AND-RECOVERY.md)
+
+## Desktop 0.24.75 update
+
+- [Startup appearance](DESKTOP-APPEARANCE-0.24.75.md)
+- [Playback and translated subtitle synchronisation](DESKTOP-PLAYBACK-0.24.74.md)
+- [Audio/subtitle playback choices](DESKTOP-PLAYER-0.24.73.md)
+- [Native subtitle import fix](DESKTOP-SUBTITLE-IMPORT-0.24.72.md)
+- [Hardware acceleration and CPU exceptions](DESKTOP-ACCELERATION-0.24.71.md)
+- [General dialogue and source-vocal workflow](DESKTOP-WORKFLOW-0.24.70.md)
+- [Drama 3 sampling controls](DESKTOP-PARAMETERS-0.24.69.md)

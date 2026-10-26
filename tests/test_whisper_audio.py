@@ -29,7 +29,7 @@ class WhisperAudioTests(unittest.TestCase):
                 if not isinstance(audio,np.ndarray):raise TypeError("open() got an unexpected keyword argument 'metadata_errors'")
                 seen.append(audio);return iter([SimpleNamespace(text='こんにちは。')]),None
             model=SimpleNamespace(transcribe=transcribe)
-            with patch.dict(sys.modules,{'faster_whisper':SimpleNamespace(WhisperModel=lambda *a,**kw:model)}):
+            with patch('whisper_accel.load',return_value=model):
                 profile=dict(id='line-199',name='第 199 句原聲',reference=str(p),referenceRanges=[],referenceCandidates=[])
                 speakers.transcribe_profiles(dict(independentVoiceMapping=True),root,[profile],root,lambda *a:None)
             self.assertEqual(profile['promptText'],'こんにちは。');self.assertEqual(seen[0].shape,(16000,))

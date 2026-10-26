@@ -17,7 +17,7 @@ class NativeCudaTests(unittest.TestCase):
   sent=request.call_args.args[1]
   self.assertRegex(sent['input'],r'唔好[^。]*普通話');self.assertTrue(sent['input'].endswith(item['text']))
   self.assertEqual(sent['voice_ref'],'own-source.wav');self.assertEqual(sent['seed'],104771)
-  self.assertEqual({k:sent[k] for k in ('temperature','top_p','top_k')},dict(temperature=.7,top_p=.7,top_k=30))
+  self.assertEqual({k:sent[k] for k in ('temperature','top_p','top_k')},dict(temperature=1.,top_p=.9,top_k=30))
  def fixture(self,root):
   package=root/'package';host=package/'tools/drama-small-cuda';host.mkdir(parents=True)
   for name in ('audiocpp_server.exe','ggml.dll','ggml-base.dll','ggml-cpu.dll'):(host/name).write_bytes(b'patched-host')

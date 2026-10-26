@@ -58,6 +58,8 @@ def load_model(root,variant=None):
         from native_asr import load
         return load(root,variant)
     os.environ.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',HF_HUB_DISABLE_TELEMETRY='1',TOKENIZERS_PARALLELISM='false')
+    from compute_policy import mlx_device
+    mlx_device(root,'qwen-asr')
     from mlx_audio.stt import load
     from model_catalog import resolve,selected
     return load(str(resolve(root,variant or selected(root,'asr'))))

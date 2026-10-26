@@ -197,6 +197,7 @@ def render(w, request):
         from review_retry import render as retry_review
         return retry_review(w,request,draft)
     root=Path(draft['review']).resolve().parent
+    __import__('subtitle_snapshot').verify_extracted(root)
     source_review=json.loads((root/('editor-base.json' if (root/'editor-base.json').exists() else 'review.json')).read_text())
     folder=root/'versions'/draft['id']
     if folder.parent != root/'versions' or not draft['id'].replace('-','').isalnum():raise ValueError('版本 ID 無效。')
@@ -207,6 +208,7 @@ def render(w, request):
     original_emit=w.emit
     try:
         cues=materialize(source_review,draft)
+        __import__('terminology').apply(dict(source_review.get('config',{}),**draft.get('settings',{})),cues)
         if draft.get('settings',{}).get('subtitlesOnly'):
             cfg=dict(source_review['config'],**draft['settings'])
             cfg.update({k:request[k] for k in ('port','ffmpeg','ffprobe','executable') if k in request})
@@ -242,6 +244,7 @@ def render(w, request):
                         cue['editorAudioVersion']=provenance_config.get('gsvVersion','v2')
                         break
         cfg=dict(source_review['config'],**draft.get('settings',{}))
+        cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
         from fast_mode import configure
         configure(cfg)
         from engine_policy import migrate
@@ -295,6 +298,9 @@ def render(w, request):
             original_emit('試音組完成','試音已保存；請覆聽字詞、聲調及角色聲線，未替換成品。',1,job=str(folder))
             return
         if draft.get('previewSegment'):
+            # A deliberate Generate click starts a fresh manual take, not another
+            # automatic retry of a previously exhausted input. Playback is separate.
+            cfg['audioRerunToken']=draft['id'];cfg['_explicitRetakeToken']=draft['id']
             if draft.get('previewEngine')=='gpt-sovits-v3':raise ValueError('GPT V3 已停用；請選擇 V2 Pro Plus 或 V4 重新試音。')
             if cfg.get('previewNativeAudio'):
                 from natural_voices import prepare_cast

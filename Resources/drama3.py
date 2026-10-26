@@ -13,7 +13,7 @@ ROOT=Path(__file__).resolve().parent
 DEFAULT='drama3-35b-4bit'
 REVISION='fish-drama3-5-explicit-shared-sampling'
 RATE=44100
-SAMPLING=dict(temperature=.7,top_p=.7,top_k=30)
+SAMPLING=dict(temperature=1.,top_p=.9,top_k=30)
 
 
 class GenerationLimit(ValueError):
@@ -96,6 +96,8 @@ def load(cfg):
     folder=resolve(cfg['storage'],'drama3',selection(cfg))
     cache=Path(cfg['storage'])/'models/cache/drama3';cache.mkdir(parents=True,exist_ok=True)
     os.environ.update(HF_HOME=str(cache),HF_HUB_CACHE=str(cache/'hub'))
+    from compute_policy import mlx_device
+    mlx_device(cfg['storage'],'drama3')
     vendor_modules()
     from mlx_audio.tts.utils import load_model
     model=load_model(str(folder),strict=True)

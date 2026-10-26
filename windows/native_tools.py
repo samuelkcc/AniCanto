@@ -22,11 +22,23 @@ def classifier_windows(samples,rate=16000,detailed=False):
 def classifier(root):
  from transformers import AutoFeatureExtractor,AutoModelForAudioClassification
  folder=Path(root)/'models/audio-classifier'
- return AutoFeatureExtractor.from_pretrained(str(folder),local_files_only=True),AutoModelForAudioClassification.from_pretrained(str(folder),local_files_only=True).eval()
-def performance_scores(labels,scores):
+ import torch
+ from compute_policy import torch_device
+ device=torch_device(torch,root,'performance-classification',minimum_gb=1.)
+ model=AutoModelForAudioClassification.from_pretrained(str(folder),local_files_only=True).eval()
+ try:model=model.to(device)
+ except (RuntimeError,ValueError):model=model.to('cpu')
+ return AutoFeatureExtractor.from_pretrained(str(folder),local_files_only=True),model
+def performance_scores(labels,scores,require_complete=False):
  # AudioSet uses "Baby cry, infant cry", not "crying". Keep the taxonomy explicit.
  groups={'music':['music'],'singing':['singing'],'choir_singing':['choir'],'rapping':['rapping'],'speech':['speech','conversation','narration','monologue'],'laughter':['laughter','giggle','snicker','chuckle','chortle'],'baby_laughter':['baby laughter'],'belly_laugh':['belly laugh'],'crying_sobbing':['crying','sobbing','baby cry','infant cry'],'sigh':['sigh'],'breathing':['breathing','pant','wheeze'],'gasp':['gasp'],'screaming':['screaming','scream'],'shout':['shout','shouting'],'yell':['yell','yelling']}
- return {key:max((scores[i] for i,label in labels.items() if any(w in label.lower() for w in words)),default=0) for key,words in groups.items()}
+ matched={key:[i for i,label in labels.items() if any(w in label.lower() for w in words)] for key,words in groups.items()}
+ if require_complete and (any(not indices for indices in matched.values()) or any(not isinstance(i,int) or not 0<=i<len(scores) for i in labels)):
+  raise ValueError('Unsupported performance classification taxonomy')
+ result={key:max((scores[i] for i in indices),default=0) for key,indices in matched.items()}
+ moans=[i for i,label in labels.items() if label.lower().strip() in ('groan','groaning','moan','moaning','grunt','grunting')]
+ if moans:result['moaning_groaning']=max(scores[i] for i in moans)
+ return result
 
 def classify(path,detailed=False):
  import numpy as np
@@ -46,11 +58,21 @@ def classify(path,detailed=False):
  labels={int(k):str(v).lower() for k,v in model.config.id2label.items()}
  torch.set_num_threads(4)
  for start,span,clip in itertools.chain((first,),windows):
-  inputs=processor(clip,sampling_rate=16000,return_tensors='pt')
-  with torch.inference_mode():scores=torch.sigmoid(model(**inputs).logits[0]).tolist()
+  inputs=processor(clip,sampling_rate=16000,return_tensors='pt').to(model.device)
+  try:
+   with torch.inference_mode():scores=torch.sigmoid(model(**inputs).logits[0]).float().cpu().tolist()
+  except RuntimeError as error:
+   if str(model.device)=='cpu':raise
+   model=model.to('cpu');inputs=inputs.to('cpu')
+   from compute_policy import record
+   record(data_root(),'performance-classification',dict(backend='cpu',state='fallback',reason=str(error)[:500]))
+   with torch.inference_mode():scores=torch.sigmoid(model(**inputs).logits[0]).tolist()
   row=dict(start=round(float(start),3),duration=round(span,3))
-  row.update(performance_scores(labels,scores))
+  row.update(performance_scores(labels,scores,require_complete=detailed))
   rows.append(row)
+ if detailed:
+  from nonverbal import validate_classification
+  validate_classification(rows)
  return rows
 
 def ocr(folder):

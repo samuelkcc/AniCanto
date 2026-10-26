@@ -2,7 +2,7 @@
 
 規格識別：`anicanto-recovery-workflow-1`。本文件係 Mac、Windows 同 iPad build 對齊流程及驗收嘅交接入口；機器可讀摘要見 [RECOVERY-WORKFLOW-CONTRACT.json](RECOVERY-WORKFLOW-CONTRACT.json)。
 
-**目前狀態：桌面 0.24.68 / build 221 已完成打包及本機安裝；71 項相關測試、Mac 簽名／隔離啟動及兩平台包內容檢查通過。Windows 實機及 iPad 流程未由本輪驗收。** 「規格要求」不代表三平台已全部完成。平台實作、測試證據及剩餘差異必須分開記錄。桌面平台差異詳見 [DESKTOP-RECOVERY-PARITY.md](DESKTOP-RECOVERY-PARITY.md)。
+**目前狀態：桌面 0.24.68 / build 221 已完成 Mac／Windows 打包並替換 dist；71 項相關測試、Mac 簽名／隔離啟動及兩平台包內容檢查通過。Windows 實機及 iPad 流程未由本輪驗收。** 「規格要求」不代表三平台已全部完成。平台實作、測試證據及剩餘差異必須分開記錄。桌面平台差異詳見 [DESKTOP-RECOVERY-PARITY.md](DESKTOP-RECOVERY-PARITY.md)。
 
 ## 1. 共用處理次序
 
@@ -98,3 +98,7 @@
 4. 在交接紀錄填 app／規格版本及驗收證據；未完成填 pending。若需要改共同判定，先修訂此規格與摘要，再各自落實及驗證。
 
 日後涉及偵測、翻譯、配音、修復、保護原聲或輸出行為嘅修正，都應按同一交接方法記錄；單純外觀更改可沿 UI 文件處理。
+
+## 8. 已確認、尚未落實的桌面安全差異（2026-10-24）
+
+獨立 pure policy 覆核確認 SP1（有字日文短詞誤當表演）、SP2（分類缺欄誤當零）、NS1（停用配音但保留原聲的時段未當障礙）。Mac／Windows 0.24.68 包內對應源碼相同；**本輪只記錄，沒有改 production 或重新發佈**。詳見[桌面待修正反例及驗收要求](DESKTOP-RECOVERY-PENDING.md)。iPad私有stage修正不能當三平台已同步，後續各自驗收並保留原聲時鐘。

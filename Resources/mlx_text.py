@@ -126,6 +126,8 @@ class Backend:
         ident=body.get('model',MODEL_ID)
         if choice(ident)['category']!='text':raise ValueError('未知 MLX 文字模型。')
         if body.get('keep_alive')==0:self.unload();return ''
+        from compute_policy import mlx_device
+        mlx_device(self.root,'text-translation')
         from mlx_lm import load,stream_generate
         from mlx_lm.sample_utils import make_sampler
         if self.loaded_id!=ident and self.model is not None:self.unload()

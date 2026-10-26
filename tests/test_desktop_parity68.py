@@ -1,3 +1,4 @@
+from performance_fixtures import performance_row
 """Desktop policy parity and bandwidth; classifier accuracy is not mocked as certified."""
 import hashlib,json,math,subprocess,sys,tempfile,unittest,wave
 from pathlib import Path
@@ -41,7 +42,7 @@ class SharedPolicyTests(unittest.TestCase):
   self.assertFalse(nonverbal.event_ranges([dict(start=0,duration=1,**result)],[],2))
 
  def test_events_use_same_shared_rules_on_both_platforms(self):
-  rows=[dict(start=1.,duration=1.,laughter=.91,speech=.03),dict(start=2.,duration=1.,crying_sobbing=.92,speech=.03)]
+  rows=[performance_row(start=1.,duration=1.,laughter=.91,speech=.03),performance_row(start=2.,duration=1.,crying_sobbing=.92,speech=.03)]
   output=[]
   for platform in ('darwin','win32'):
    with patch.object(sys,'platform',platform):
@@ -51,7 +52,7 @@ class SharedPolicyTests(unittest.TestCase):
 
  def test_classification_cached_across_language_and_engine_tracks_and_invalidated_by_audio(self):
   calls=[]
-  def run(args):calls.append(args);return json.dumps([dict(start=0.,duration=1.,laughter=.9,speech=.01)]).encode()
+  def run(args):calls.append(args);return json.dumps([performance_row(start=0.,duration=1.,laughter=.9,speech=.01)]).encode()
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);audio=root/'dialogue.wav';audio.write_bytes(b'first source')
    cfg=dict(storage=str(root),dialoguePath=str(audio),executable='native')
@@ -82,7 +83,7 @@ class DeliveryTests(unittest.TestCase):
    def tool(args):return subprocess.check_output([str(x) for x in args],stderr=subprocess.STDOUT)
    tool([FF,'-v','error','-f','lavfi','-i','sine=frequency=14000:sample_rate=44100:duration=1','-y',source])
    cfg=dict(ttsBackend='drama3',productionMode='fast',dialoguePath=str(source),ffmpeg=str(FF),storage=d,continueOnError=False)
-   cue=dict(start=0,end=1,japanese='ああ',cantonese='啊')
+   cue=dict(start=0,end=1,japanese='ああ',cantonese='啊',preserveOriginalSpeech=True,originalSpeechReason='manual')
    with patch('local_tts.validate'),patch('natural_voices.prepare_cast'):
     low=dubbing.gsv_audio(dict(cfg,audioSampleRate=24000),root,[cue],tool,lambda *a:None)[0]
     native=dubbing.gsv_audio(cfg,root,[cue],tool,lambda *a:None)[0]
@@ -99,7 +100,7 @@ class DeliveryTests(unittest.TestCase):
     tool([FF,'-v','error','-f','lavfi','-i',f'sine=frequency=600:sample_rate={sr}:duration=3','-y',source])
     cfg=dict(ttsBackend=engine,ffmpeg=str(FF),duration=3,dialoguePath=str(source),executable='native')
     # Speech=.15 excludes whole-original restoration but permits an isolated event.
-    rows=[dict(start=1.,duration=.5,laughter=.9,speech=.15)]
+    rows=[performance_row(start=1.,duration=.5,laughter=.9,speech=.15)]
     with patch.object(nonverbal,'classification',return_value=rows):
      result=nonverbal.restore(cfg,root,[],voice,tool,lambda *a:None)
     with wave.open(str(result)) as f:

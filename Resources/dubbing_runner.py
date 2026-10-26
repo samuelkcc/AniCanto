@@ -84,8 +84,10 @@ def separate(cfg):
    return ('MelBandRoformer.ckpt','MDXC','Mel-Band RoFormer',str(root/'models/separator/MelBandRoformer.ckpt'),str(RESOURCE_DIR/'mel-roformer.yaml'))
  # Output stems stay at their original relative loudness; final mix handles peak limiting.
  separator=LocalSeparator(model_file_dir=str(root/'models/separator'),output_dir=str(out),output_format='WAV',use_soundfile=True,normalization_threshold=1.0,amplification_threshold=0.0,log_level=logging.WARNING,mdxc_params={'segment_size':256,'override_model_segment_size':False,'batch_size':1,'overlap':2,'pitch_shift':0})
- if cfg.get('device')=='cpu':
-  separator.torch_device=torch.device('cpu');separator.torch_device_mps=None
+ from compute_policy import torch_device
+ device=torch_device(torch,root,'background-separation',requested=cfg.get('device','auto'),minimum_gb=3.)
+ separator.torch_device=torch.device(device)
+ separator.torch_device_mps=torch.device('mps') if device=='mps' else None
  emit('分離','載入 Mel-Band RoFormer；分離日語對白同背景音樂／音效。')
  started=time.monotonic()
  separator.load_model('MelBandRoformer.ckpt')
@@ -193,8 +195,8 @@ def tts(cfg):
  import soundfile as sf
  import numpy as np
  from TTS_infer_pack.TTS import TTS,TTS_Config
- device=cfg.get('device','mps')
- if device=='mps' and not torch.backends.mps.is_available(): device='cpu'
+ from compute_policy import torch_device
+ device=torch_device(torch,cfg.get('storage'),'gpt-sovits',requested=cfg.get('device','mps'),minimum_gb=5.)
  steps=int(cfg.get('sampleSteps',32))
  if steps not in (16,32):raise ValueError('V4 配音製作模式無效。')
  torch.set_num_threads(6)

@@ -23,6 +23,7 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
  if mode not in ('pending','all'):raise ValueError('Unknown review retry mode.')
  targets={}
  for issue in snapshot.get('issues',[]):
+  if issue.get('kind')=='name-term-mismatch':continue
   if issue.get('status')=='user-choice-saved' or (mode=='pending' and issue.get('triage') in ('checked','deferred')):continue
   if type(issue.get('index')) is int:targets.setdefault(issue.get('language','yue')+':'+issue.get('engine',''),[]).append(issue['index'])
  for stale in snapshot.get('staleRecordings',[]):
@@ -69,7 +70,7 @@ def render(w,request,draft):
  folder=base/'versions'/ident
  folder.mkdir(parents=True,exist_ok=False)
  cfg=dict(copy.deepcopy(review['config']),**draft.get('settings',{}));cfg.update({k:request[k] for k in ('storage','port','executable','ffmpeg','ffprobe') if k in request})
- cfg.pop('_trackControl',None);cfg.pop('editorCache',None)
+ cfg.pop('_trackControl',None);cfg.pop('editorCache',None);cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
  cfg.update(productionMode='normal',editorRender=False,scriptLocked=True,automaticDurationRewrite=True,exportFolder=review['config'].get('exportFolder',''),_reviewRetry=spec,_reviewRetryToken=ident)
  for name in ('cues.json','japanese-analysis.json','japanese-original.wav','source.srt','subtitle-context.json','subtitle-context-meta.json','natural-scene-boundaries.json','nonverbal-classification-v2.json'):
   p=base/name

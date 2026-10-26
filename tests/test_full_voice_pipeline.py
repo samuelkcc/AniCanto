@@ -42,7 +42,7 @@ class FullVoicePipelineTests(unittest.TestCase):
    self.assertEqual(dubbing.generated_dialogue({},job,[self.cue()],dict(audioFallbacks=[dict(index=1,sourceEngine='voxcpm2',sourceLanguage='yue')])),1)
    self.assertEqual(dubbing.generated_dialogue({},job,[self.cue()],dict(audioFallbacks=[dict(index=1,sourceEngine='original',sourceLanguage='ja')])),0)
  def test_original_only_vocalizations_do_not_require_role_generation(self):
-  cue=dict(self.cue(),text='あああ！',japanese='あああ！',cantonese='啊！',nonverbal=True)
+  cue=dict(self.cue(),text='あああ！',japanese='あああ！',cantonese='啊！',nonverbal=True,preserveOriginalSpeech=True,originalSpeechReason='manual')
   self.assertEqual(dubbing.required_dialogue({},[cue]),[])
   dubbing.require_profiles({},[cue])
 

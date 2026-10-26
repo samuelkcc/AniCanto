@@ -13,7 +13,7 @@ import os
 import subprocess
 import time
 
-REVISION='natural-dialogue-capacity-4'
+REVISION='natural-dialogue-capacity-5-preserved-source'
 MAX_SHIFT=.5
 
 
@@ -24,6 +24,10 @@ def plan(cfg,cues,lengths,cuts=()):
     duration=float(cfg['duration'])
     # Never move speech into deliberately preserved source/OP/ED ranges.
     protected=opening.local_ranges(cfg)
+    for cue in cues:
+        if cue.get('preserveOriginalSpeech'):
+            start,end=window(cue,cues,duration)
+            protected.append(dict(start=start,end=end))
     # Anime motion/camera cuts do not establish a spoken scene boundary.
     # Hard boundaries require an actual preserved source/OP/ED interval.
     barriers=sorted(set([0.,duration]+[float(r[k]) for r in protected for k in ('start','end')]))
@@ -35,14 +39,17 @@ def plan(cfg,cues,lengths,cuts=()):
         row=dict(index=c.get('reviewIndex',i)+1,sourceStart=start,sourceEnd=end,start=start,
             deadline=deadline,seconds=length,shift=0.,method='source-clock',fit=bool(valid and length<=deadline-start))
         rows.append(row)
-        if not c.get('enabled',True):continue
+        preserved=bool(c.get('preserveOriginalSpeech'))
+        if preserved:
+            row.update(deadline=end,method='source-preserved',originalSource=True,fit=bool(valid and length<=end-start+.001))
+        if not c.get('enabled',True) and not preserved:continue
         locked=bool(c.get('editorAudio') or c.get('preserveOriginalSpeech') or is_vocalization(c) or not valid)
         if any(start<r['end'] and end>r['start'] for r in protected):locked=True
         left=max(b for b in barriers if b<=start+.001)
         right=min((b for b in barriers if b>=end-.001),default=duration)
         # Keep a fitting take on its source clock. Only bounded redistribution
         # of actual dialogue can borrow free time; a shot cut is not an obstacle.
-        measured=(length+.001) if valid else end-start
+        measured=end-start if preserved else ((length+.001) if valid else end-start)
         entries.append(dict(i=i,a=start,b=end,length=measured,locked=locked,left=left,right=right))
     entries.sort(key=lambda e:(e['a'],e['b'],e['i']))
     # Original simultaneous speech remains fixed; never serialize it into a

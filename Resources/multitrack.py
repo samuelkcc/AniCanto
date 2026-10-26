@@ -247,9 +247,15 @@ def render(w, request):
         w.atomic_json(review_path,review)
     if 'en' in languages and not repair_only and not fast:dub_languages.english_script(w,cfg,job,submitted)
     if 'zh' in languages and not repair_only:dub_languages.mandarin_script(w,cfg,job,submitted)
+    __import__('terminology').audit(cfg,job,submitted)
     from engine_policy import pairs as supported_pairs
     pairs=supported_pairs(engines,languages)
+    if cfg.get('_trackPairs'):
+        requested=[tuple(p) for p in cfg['_trackPairs']]
+        if len(requested)!=len(set(requested)) or any(p not in pairs for p in requested):raise ValueError('Invalid exact recording track selection.')
+        pairs=requested
     reuse=stored_repair_tracks(review_path,pairs,request.get('repairTrack') or {}) if repair_only else {}
+    if not repair_only and cfg.get('_retainedTracks'):reuse=__import__('update_plan').retained(cfg,job)
     if repair_only and 'en' in languages:
         from audio_fallback import read_json
         saved={}
@@ -308,7 +314,8 @@ def render(w, request):
             if own.get('enabled') and Path(own.get('reference','')).is_file():identity.setdefault('engineReferences',{})[p['id']]=hashlib.sha256(Path(own['reference']).read_bytes()).hexdigest()
         key = hashlib.sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
         child = job / 'tracks' / f'{track_id}-{key}'
-        if repair_only:child=reuse[(language,engine)][0]
+        retained_track=(language,engine) in reuse and not repair_only
+        if repair_only or retained_track:child=reuse[(language,engine)][0]
         child.mkdir(parents=True, exist_ok=True)
         if repair_only and language=='yue' and span_changes:
             saved_review=json.loads((child/'review.json').read_text())
@@ -321,7 +328,7 @@ def render(w, request):
                 for field in ('cantonese','captionSpanRecovery','captionAllocation'):current[field]=copy.deepcopy(source[field])
             w.atomic_json(child/'review.json',saved_review)
             w.save_srt(child/'cantonese.srt',saved_review['cues'])
-        if not repair_only:
+        if not repair_only and not retained_track:
             # A script or timing upgrade invalidates the mixed movie, not raw
             # content-addressed takes. Keep the 245 healthy EP06 recordings.
             from project_edit import seed_cache
@@ -332,7 +339,7 @@ def render(w, request):
         legacy=dict(identity,revision=1)
         legacy_key=hashlib.sha256(json.dumps(legacy,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
         previous=job/'tracks'/f'{engine}-{legacy_key}'
-        if not repair_only and previous.is_dir():
+        if not repair_only and not retained_track and previous.is_dir():
             for take in previous.glob(engine+'-*.wav'):
                 if not (child/take.name).exists():shutil.copyfile(take,child/take.name)
         report = child / 'report.json'
@@ -345,9 +352,9 @@ def render(w, request):
             from output_delivery import track_event
             original_emit(stage, f'音軌 {index+1}/{len(pairs)} · {dub_languages.LANGUAGES[language][0]} · {ENGINES[engine]} · {message}', fraction,**track_event(extra))
         try:
-            prior = reuse[(language,engine)][1] if repair_only else (json.loads(report.read_text()) if report.exists() else {})
-            output = reuse[(language,engine)][2] if repair_only else Path(prior.get('output',''))
-            if not repair_only and (not output.is_file() or prior.get('segmentIssues') or prior.get('generationFailed') or prior.get('userSkipped')):
+            prior = reuse[(language,engine)][1] if repair_only or retained_track else (json.loads(report.read_text()) if report.exists() else {})
+            output = reuse[(language,engine)][2] if repair_only or retained_track else Path(prior.get('output',''))
+            if not repair_only and not retained_track and (not output.is_file() or prior.get('segmentIssues') or prior.get('generationFailed') or prior.get('userSkipped')):
                 for name in ('cues.json', 'dual-asr-cues.json', 'japanese-analysis.json', 'nonverbal-classification-v2.json', 'source-coverage.json'):
                     if (job / name).is_file():
                         shutil.copyfile(job / name, child / name)
@@ -365,7 +372,9 @@ def render(w, request):
             else:
                 relay('沿用音軌', '呢個引擎嘅已完成音軌可以重用；覆核警告仍會保留。', 1)
             control['state']='skipped' if (child/'skip-generation.json').exists() and __import__('track_control').requested(control) else 'complete'
-            if control['state']=='skipped':prior['userSkipped']=True;w.atomic_json(report,prior)
+            if control['state']=='skipped':
+                prior['userSkipped']=True
+                if not retained_track:w.atomic_json(report,prior)
             successes.append(dict(engine=engine, language=language, id=track_id, folder=child, output=output, report=prior))
         except Exception as exc:
             control['state']='failed'
@@ -396,7 +405,7 @@ def render(w, request):
     from audio_fallback import repair as fill_missing_audio
     ai_result=None;ai_donors=[]
     scope=request.get('repairTrack') or {}
-    target_keys={scope.get('engine','')+':'+scope.get('language','')} if repair_only else None
+    target_keys={scope.get('engine','')+':'+scope.get('language','')} if repair_only else ({p[1]+':'+p[0] for p in pairs if p not in reuse} if cfg.get('_retainedTracks') else None)
     from mixed_speech_check import inspect_tracks
     encoded_checks=[]
     if not fast:
@@ -499,7 +508,9 @@ def render(w, request):
                 converted=combine(delivered_captions['yue'],delivered_captions['en'])
             if mode=='original':converted=copy.deepcopy(original_cues)
             elif mode.startswith('original-'):converted=combine(original_cues,converted)
-            path=row['folder']/f'{mode}.srt';w.save_srt(path,converted)
+            caption_folder=job/'retained-captions'/row['id'] if (row['language'],row['engine']) in reuse and not repair_only else row['folder']
+            caption_folder.mkdir(parents=True,exist_ok=True)
+            path=caption_folder/f'{mode}.srt';w.save_srt(path,converted)
             track=dict(path=path,engine=row['engine'],language=row['language'],id=row['id'],mode=mode,cues=converted,sourceLanguage=cfg.get('sourceCaptionLanguage') or 'zho')
             if mode in modes and (mode!='original' or row is successes[0]): tracks.append(track)
             if row is successes[0] and mode==burn_mode: burn_track=track

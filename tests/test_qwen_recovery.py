@@ -10,8 +10,8 @@ class RecoveryTests(unittest.TestCase):
   rows=qwen_voice.attempt_parameters(item)
   self.assertEqual(len(rows),3);self.assertEqual(rows[-1]['text'],'Gum Gum.');self.assertEqual(rows[-1]['seed'],104)
   self.assertEqual(len(qwen_voice.attempt_parameters(item,True)),1);self.assertEqual(item,before)
- def test_source_scream_preserved_in_english_but_not_mixed_dialogue(self):
-  self.assertTrue(dubbing.is_vocalization(dict(japanese='ああ！',cantonese='Aaaah!')))
+ def test_english_scream_transcription_does_not_authorize_original_copy(self):
+  self.assertFalse(dubbing.is_vocalization(dict(japanese='ああ！',cantonese='Aaaah!')))
   self.assertFalse(dubbing.is_vocalization(dict(japanese='3時に俺は アーッ!',cantonese="At three o'clock, I'll... Aaaah!")))
   self.assertFalse(dubbing.is_vocalization(dict(japanese='ああ！',cantonese='Stop!')))
  def test_recovery_only_retries_missing_failed_take_and_audits_reference(self):

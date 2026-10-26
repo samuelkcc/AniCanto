@@ -30,7 +30,8 @@ def load(root,variant=None):
     folder=resolve(root,variant)
     import torch
     from transformers import AutoProcessor,AutoModelForMultimodalLM
-    device='cuda:0' if torch.cuda.is_available() else 'cpu'
+    from compute_policy import torch_device
+    device=torch_device(torch,root,'qwen-asr',minimum_gb=4.5)
     dtype=torch.bfloat16 if device!='cpu' and torch.cuda.is_bf16_supported() else torch.float16 if device!='cpu' else torch.float32
     model=AutoModelForMultimodalLM.from_pretrained(str(folder),device_map=device,dtype=dtype,local_files_only=True,attn_implementation='sdpa')
     processor=AutoProcessor.from_pretrained(str(folder),local_files_only=True)

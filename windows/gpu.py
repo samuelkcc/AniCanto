@@ -88,7 +88,11 @@ def torch_probe(engine='qwen', requested='auto', index=0):
             torch.cuda.synchronize(index)
         elif backend == 'xpu':
             torch.xpu.synchronize(index)
-    return dict(device=device, backend=backend, name=name, memoryGB=round(memory, 2),
+    free_memory=None
+    if backend in ('cuda','rocm'):
+        try:free_memory=round(torch.cuda.mem_get_info(index)[0]/2**30,2)
+        except (RuntimeError,AttributeError):pass
+    return dict(device=device, backend=backend, name=name, memoryGB=round(memory, 2),freeMemoryGB=free_memory,
                 dtype=str(dtype).split('.')[-1], torch=torch.__version__,
                 kernelSeconds=round(time.monotonic()-started, 4), kernelPassed=True,
                 note='Kernel check only; voice quality and model speed require a real inference test.')

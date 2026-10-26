@@ -4,6 +4,8 @@ use std::{collections::HashSet, fs::{File,OpenOptions}, io::{BufRead,BufReader,W
 use serde_json::{json,Value};
 use tauri::{Emitter,Manager,State};
 use fs2::FileExt;
+mod appearance;
+use appearance::{StartupWindow,studio_appearance};
 
 #[cfg(windows)]
 struct OwnedJob(isize);
@@ -28,7 +30,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language"];
+const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-external-subtitle","review-triage"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
@@ -50,7 +52,7 @@ impl Host {
             return Err(if op=="source-language"{"Pause processing before checking another source language."}else if op.contains("cache"){"Pause processing before clearing cache."}else{"Pause processing before removing a model."}.into());
         }
         if ["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing saved speech recordings.".into());}
-        if op=="review-resolution" && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
+        if ["review-resolution","review-triage","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
         if op=="remove" && self.active.lock().unwrap().is_some(){return Err("Pause processing before deleting a project.".into());}
         if self.python().is_none(){
             if op=="plan" {return self.cold_plan(&params);}
@@ -122,10 +124,10 @@ impl Host {
         let mut cmd=Command::new(python);cmd.arg(&self.backend).arg("--root").arg(&self.root).arg("--shared").arg(&self.shared).arg("--helper").arg(&self.helper)
             .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
         self.environment(&mut cmd);
-        #[cfg(unix)] if op=="media" {use std::os::unix::process::CommandExt;cmd.process_group(0);}
+        #[cfg(unix)] if ["media","media-subtitles"].contains(&op) {use std::os::unix::process::CommandExt;cmd.process_group(0);}
         let mut child=cmd.spawn().map_err(|e|e.to_string())?;
-        let media_pid=if op=="media"{self.media.lock().unwrap().insert(child.id());Some(child.id())}else{None};
-        #[cfg(windows)] let _media_job=if op=="media"{Some(OwnedJob::assign(&child)?)}else{None};
+        let media_pid=if ["media","media-subtitles"].contains(&op){self.media.lock().unwrap().insert(child.id());Some(child.id())}else{None};
+        #[cfg(windows)] let _media_job=if ["media","media-subtitles"].contains(&op){Some(OwnedJob::assign(&child)?)}else{None};
         let recover=!self.recovery_checked.load(Ordering::SeqCst)&&self.active.lock().unwrap().is_none()&&!self.older_app_open();
         child.stdin.take().unwrap().write_all(json!({"op":op,"params":params,"recoverOrphans":recover}).to_string().as_bytes()).map_err(|e|e.to_string())?;
         let output=child.wait_with_output().map_err(|e|e.to_string())?;
@@ -384,6 +386,24 @@ async fn studio_media(params:Value,host:State<'_,Arc<Host>>)->Result<Value,Strin
     }).await.map_err(|e|e.to_string())?
 }
 #[tauri::command]
+async fn studio_thumbnail(params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
+    let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
+        // Media transcoding must not hold the state lock for its whole duration.
+        // A separate adapter instance only reads state for this operation.
+        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
+        shadow.rpc("media-thumbnail",params)
+    }).await.map_err(|e|e.to_string())?
+}
+#[tauri::command]
+async fn studio_subtitles(params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
+    let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
+        // Media transcoding must not hold the state lock for its whole duration.
+        // A separate adapter instance only reads state for this operation.
+        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
+        shadow.rpc("media-subtitles",params)
+    }).await.map_err(|e|e.to_string())?
+}
+#[tauri::command]
 async fn studio_bootstrap(app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let spec=if cfg!(windows){json!({"program":"powershell.exe","args":["-NoProfile","-ExecutionPolicy","Bypass","-File",host.backend.parent().unwrap().join("bootstrap-windows.ps1")],"action":"runtime"})}
         else{json!({"program":host.helper,"args":["--studio-bootstrap"],"action":"runtime"})};
@@ -458,7 +478,25 @@ fn main(){
         let result=host.rpc("state",json!({})).and_then(|state|host.rpc("models",json!({})).map(|models|json!({"ok":true,"state":state,"installedModels":models,"sharedResources":host.shared,"adapter":host.backend,"interfaceManifest":serde_json::from_str::<Value>(include_str!("../../web/assets/interface-manifest.json")).unwrap()})));
         match result{Ok(value)=>println!("{value}"),Err(error)=>{eprintln!("{error}");std::process::exit(1)}}return;
     }
-    tauri::Builder::default().manage(host)
+    tauri::Builder::default().manage(host).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
+        .setup(|app|{
+            let preference=appearance::saved(&app.state::<Arc<Host>>().root);
+            let window=tauri::WebviewWindowBuilder::from_config(app.handle(),&app.config().app.windows[0])?
+                .visible(false).theme(appearance::theme(&preference))
+                .background_color(appearance::background(preference=="dark"))
+                .initialization_script(appearance::script(&preference)).build()?;
+            // A script error must never leave the app invisible indefinitely.
+            let shown=app.state::<StartupWindow>().0.clone();
+            std::thread::spawn(move||{
+                std::thread::sleep(std::time::Duration::from_secs(5));
+                if !shown.swap(true,Ordering::AcqRel){
+                    let dark=window.theme().is_ok_and(|t|t==tauri::Theme::Dark);
+                    let _=window.set_background_color(Some(appearance::background(dark)));
+                    let _=window.show();
+                }
+            });
+            Ok(())
+        })
         .on_page_load(|webview,payload|{
             #[cfg(windows)] if payload.event()==tauri::webview::PageLoadEvent::Finished {
                 if let Some(path)=std::env::var_os("CANTOSYNC_LAUNCH_READY_PATH") {
@@ -471,7 +509,7 @@ fn main(){
             }
             #[cfg(not(windows))] let _=(webview,payload);
         })
-        .invoke_handler(tauri::generate_handler![studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
+        .invoke_handler(tauri::generate_handler![studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
             let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
             else {#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}

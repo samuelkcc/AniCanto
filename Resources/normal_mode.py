@@ -54,7 +54,7 @@ def glossary(w,cfg,job,cues):
     cache=Path(job)/'normal-names.json'
     try:saved=json.loads(cache.read_text())
     except (OSError,ValueError):saved={}
-    if saved.get('key')==key:return saved['names']
+    if saved.get('key')==key:return __import__('terminology').merge(saved['names'],cfg)
     schema=dict(type='object',properties=dict(names=dict(type='array',maxItems=64,items=dict(type='object',properties={k:dict(type='string') for k in ('source','cantonese','english')},required=['source','cantonese','english'],additionalProperties=False))),required=['names'],additionalProperties=False)
     w.emit('人名用字','整理本集人名及專有名稱；只做一次文字整理，唔分析畫面。',.30)
     names=[]
@@ -81,13 +81,15 @@ def glossary(w,cfg,job,cues):
             if not any(r['source']==s for r in names):names.append(dict(source=s,cantonese=y,english=e))
     except (RuntimeError,ValueError,TypeError,KeyError,OSError) as error:
         w.emit('人名用字','名稱表暫時未完成；保留原字幕名稱作翻譯參考：'+str(error)[:180])
-    w.atomic_json(cache,dict(key=key,names=names));return names
+    w.atomic_json(cache,dict(key=key,names=names));return __import__('terminology').merge(names,cfg)
 
 
 def translate(w,cfg,job,cues):
     from dub_languages import selected
     from translation_source import remove_caption_evidence
     remove_caption_evidence(cfg,cues)
+    from terminology import apply as apply_terms
+    apply_terms(cfg,cues)
     names=glossary(w,cfg,job,cues);cfg['normalNameGlossary']=names
     source_language=cfg.get('sourceLanguage','ja')
     languages=set(selected(cfg));modes=cfg.get('subtitleModes',[])
@@ -164,6 +166,7 @@ def translate(w,cfg,job,cues):
         repair(w,cfg,job,cues)
         w.atomic_json(Path(job)/'cues.json',cues)
     ensure_scripts(w,cfg,job,cues)
+    __import__('terminology').audit(cfg,job,cues)
     from translation_brevity import review as review_brevity
     review_brevity(w,cfg,job,cues,languages)
 

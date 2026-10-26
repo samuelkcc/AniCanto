@@ -7,11 +7,11 @@ from contextlib import contextmanager
 import hashlib,json,math,os,subprocess,time
 from pathlib import Path
 
-REVISION='preview-2-remux-progress'
+REVISION='preview-3-selected-audio'
 
-def folder(root,source,compatible=False):
+def folder(root,source,compatible=False,audio_stream=None):
     source=Path(source).resolve();stat=source.stat()
-    key=hashlib.sha256(json.dumps([REVISION,str(source),stat.st_size,stat.st_mtime_ns,bool(compatible)]).encode()).hexdigest()[:24]
+    key=hashlib.sha256(json.dumps([REVISION,str(source),stat.st_size,stat.st_mtime_ns,bool(compatible),audio_stream]).encode()).hexdigest()[:24]
     return Path(root)/'cache/studio-preview'/key
 
 def write(path,data):
@@ -36,8 +36,8 @@ def exclusive(path):
             if os.name=='nt':stream.seek(0);msvcrt.locking(stream.fileno(),msvcrt.LK_UNLCK,1)
             else:fcntl.flock(stream.fileno(),fcntl.LOCK_UN)
 
-def status(root,source,compatible=False):
-    directory=folder(root,source,compatible)
+def status(root,source,compatible=False,audio_stream=None):
+    directory=folder(root,source,compatible,audio_stream)
     try:data=json.loads((directory/'status.json').read_text())
     except (OSError,ValueError):return dict(stage='probing',progress=0)
     progress={}
@@ -53,8 +53,8 @@ def status(root,source,compatible=False):
     if data.get('stage')=='ready':data['progress']=1
     return data
 
-def prepare(root,source,tools,platform,compatible=False):
-    source=Path(source).resolve();directory=folder(root,source,compatible)
+def prepare(root,source,tools,platform,compatible=False,audio_stream=None):
+    source=Path(source).resolve();directory=folder(root,source,compatible,audio_stream)
     with exclusive(directory/'prepare.lock'):
         target=directory/'preview.mp4';metadata=directory/'metadata.json'
         if target.is_file() and target.stat().st_size and metadata.is_file():
@@ -73,12 +73,15 @@ def prepare(root,source,tools,platform,compatible=False):
             media_source=source
             info=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_format','-show_streams','-of','json',str(source)],timeout=30))
         streams=info.get('streams',[]);video=next((s for s in streams if s.get('codec_type')=='video'),{})
-        audio=next((s for s in streams if s.get('codec_type')=='audio'),{})
+        audio_tracks=[s for s in streams if s.get('codec_type')=='audio']
+        if audio_stream is not None and (type(audio_stream) is not int or not any(s['index']==audio_stream for s in audio_tracks)):raise ValueError('Invalid preview audio track.')
+        audio=next((s for s in audio_tracks if s['index']==audio_stream),audio_tracks[0] if audio_tracks else {})
+        first_audio=not audio_tracks or audio.get('index')==audio_tracks[0]['index']
         duration=float(info['format']['duration'])
         if not math.isfinite(duration) or duration<=0:raise ValueError('Invalid preview duration.')
         copy_video=not compatible and (video.get('codec_name')=='h264' and video.get('pix_fmt')=='yuv420p' or platform=='darwin' and video.get('codec_name')=='hevc')
-        direct=copy_video and source.suffix.lower() in ('.mp4','.m4v','.mov') and (not audio or audio.get('codec_name') in ('aac','mp3','alac'))
-        result=dict(path=str(media_source),duration=duration,streams=streams,fallbackAvailable=bool(copy_video),mode='direct')
+        direct=copy_video and first_audio and source.suffix.lower() in ('.mp4','.m4v','.mov') and (not audio or audio.get('codec_name') in ('aac','mp3','alac'))
+        result=dict(path=str(media_source),duration=duration,streams=streams,fallbackAvailable=bool(copy_video),mode='direct',selectedAudioStream=audio.get('index'))
         if direct:
             write(directory/'status.json',dict(stage='ready',source=str(source),duration=duration));return result
         try:
@@ -87,7 +90,7 @@ def prepare(root,source,tools,platform,compatible=False):
                 temp=directory/f'preview.{os.getpid()}.partial.mp4'
                 (directory/'progress.txt').unlink(missing_ok=True)
                 write(directory/'status.json',dict(stage=mode,source=str(source),duration=duration))
-                args=[tools['ffmpeg'],'-v','error','-nostdin','-y','-i',str(media_source),'-map','0:v:0','-map','0:a:0?']
+                args=[tools['ffmpeg'],'-v','error','-nostdin','-y','-i',str(media_source),'-map','0:v:0','-map',f"0:{audio['index']}?" if audio else '0:a:0?']
                 if mode=='remux':
                     args+=['-c:v','copy']
                     if video.get('codec_name')=='hevc':args+=['-tag:v','hvc1']
@@ -105,3 +108,23 @@ def prepare(root,source,tools,platform,compatible=False):
             for p in directory.glob('*.partial.mp4'):p.unlink(missing_ok=True)
             write(directory/'status.json',dict(stage='failed',source=str(source),duration=duration,error=str(error)[:500]))
             raise
+
+
+def thumbnail(root,source,tools,seconds):
+    """One lazy thumbnail per five source seconds; no conversion-state mutation."""
+    source=Path(source).resolve()
+    if isinstance(seconds,bool) or not isinstance(seconds,(int,float)) or not math.isfinite(seconds) or seconds<0:raise ValueError('Invalid thumbnail time.')
+    info=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_format','-of','json',str(source)],timeout=8))
+    duration=float(info['format']['duration'])
+    if not math.isfinite(duration) or not 0<duration<=14400:raise ValueError('Invalid thumbnail duration.')
+    point=min(max(0,duration-.1),int(seconds/5)*5)
+    directory=folder(root,source)/'thumbnails';directory.mkdir(parents=True,exist_ok=True)
+    target=directory/f'{int(point*1000)}.jpg'
+    with exclusive(directory/'thumbnail.lock'):
+        if not target.is_file():
+            temp=target.with_suffix('.partial.jpg')
+            try:
+                subprocess.run([tools['ffmpeg'],'-v','error','-nostdin','-y','-ss',f'{point:.3f}','-i',str(source),'-map','0:v:0','-frames:v','1','-threads','2','-vf','scale=256:-2','-q:v','4',str(temp)],check=True,timeout=8,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+                temp.replace(target)
+            finally:temp.unlink(missing_ok=True)
+    return dict(path=str(target),seconds=point)

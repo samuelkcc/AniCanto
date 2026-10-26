@@ -13,7 +13,7 @@ def restore(w,cfg,job,cues):
     except (OSError,ValueError):return False
     if not isinstance(review,dict) or not isinstance(review.get('config'),dict):return False
     old=review['config']
-    for key,default in [('video',None),('model',None),('translationSource','audio-and-subtitles'),('productionMode','standard')]:
+    for key,default in [('video',None),('model',None),('translationSource','audio-and-subtitles'),('productionMode','standard'),('termRules',[]),('sourceLanguage','ja'),('sourceAudioStream',None)]:
         if old.get(key,default)!=cfg.get(key,default):return False
     rows=review.get('cues')
     if not isinstance(rows,list) or len(rows)!=len(cues):return False

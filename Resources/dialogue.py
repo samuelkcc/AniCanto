@@ -5,6 +5,7 @@ import hashlib
 import json
 import math
 import re
+import sys
 from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
@@ -20,6 +21,11 @@ def install(root, emit, variant=None):
     from faster_whisper import WhisperModel
     WhisperModel(str(path),device='cpu',compute_type='int8',local_files_only=True)
     (Path(root)/'speech-ready.json').write_text(json.dumps({'variant':ident}))
+    if sys.platform=='darwin' and ident=='whisper-large-v3':
+        import platform
+        if platform.machine() in ('arm64','aarch64'):
+            emit('準備加速','下載並校驗共用 Apple MLX Whisper，用於原聲時間及獨立覆聽。',.9)
+            download(root,'whisper-large-v3-mlx')
     emit('完成','所選日語辨識模型已部署。',1)
 
 
@@ -191,7 +197,7 @@ def analyze(cfg,job,captions,run,emit):
             label='英語' if cfg.get('sourceLanguage')=='en' else '原聲語音'
             return original_emit(stage.replace('日語',label),message.replace('日語',label).replace('日文',label),progress,**extra)
     import numpy as np
-    from faster_whisper import WhisperModel
+    from whisper_accel import load as load_whisper,identity as compute_identity
     from faster_whisper.vad import get_speech_timestamps,VadOptions
     from worker import atomic_json
     from model_catalog import resolve,selected,choice
@@ -206,7 +212,7 @@ def analyze(cfg,job,captions,run,emit):
     from source_evidence import chinese_captions,merge_ranges
     chinese=chinese_captions(captions,cfg)
     caption_windows=merge_ranges([dict(start=max(0,c['start']-.8),end=min(cfg['duration'],c['end']+.8)) for c in chinese])
-    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows]).encode()).hexdigest()
+    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows,compute_identity(cfg)]).encode()).hexdigest()
     cache=job/'japanese-analysis.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}
     if saved.get('key')!=key:
@@ -225,7 +231,7 @@ def analyze(cfg,job,captions,run,emit):
         if chinese:
             # Do not repeatedly re-listen to songs/effects without source captions.
             spans=merge_spans([dict(start=max(s['start'],c['start']),end=min(s['end'],c['end'])) for s in spans for c in chinese if min(s['end'],c['end'])>max(s['start'],c['start'])])
-        model=WhisperModel(str(model_path),device='cpu',compute_type='int8',local_files_only=True,cpu_threads=8)
+        model=load_whisper(cfg,job,emit)
         # Preserve the whole original waveform. Filtering first discarded the
         # first 13 seconds of voiced dialogue in the anime regression sample.
         transcribe_options=dict(clip_timestamps=[t for r in caption_windows for t in (r['start'],r['end'])]) if caption_windows else {}
@@ -268,7 +274,7 @@ def analyze(cfg,job,captions,run,emit):
         # Corroborate the abnormal original word clock against that same
         # original waveform; separation may itself truncate quiet speech.
         rows=repair_source_clock(model,audio,spans,rows,cfg,job,emit)
-        saved=dict(key=key,segments=rows,spans=spans);atomic_json(cache,saved)
+        saved=dict(key=key,segments=rows,spans=spans,actualCompute=getattr(model,'chosen',dict(backend='cpu',id=variant)));atomic_json(cache,saved)
         del model
     cues=build_cues(saved['segments'],saved['spans'],captions,cfg['duration'],cfg.get('startOffset',0))
     if not cues: raise ValueError('原片未辨識到有效日語，請檢查音軌同開始位置；未改用 OCR 碎句配音。')

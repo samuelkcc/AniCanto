@@ -8,7 +8,7 @@
 
 日本のアニメのセリフを**香港広東語・中国本土普通話・英語の吹き替え**に変換します。モデルと実行環境の準備後は、認識・翻訳・音声生成・書き出しをすべてローカルで実行します。
 
-[ダウンロード](#beta-をダウンロード--02468) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)
+[ダウンロード](#beta-をダウンロード--02475) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)
 
 ## AniCanto を作った理由
 
@@ -22,17 +22,18 @@ SCKC が趣味と学びのために作っているこのプロジェクトは、
 
 AI の生成音声には、アクセント、読み間違い、演技の不足などが残る場合があります。作品を楽しむとともに、その声を届けるプロの演技を、これからも大切にし、応援してください。
 
-## Beta をダウンロード · 0.24.64
+## Beta をダウンロード · 0.24.75
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto-macOS-0.24.68.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.68-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto-macOS-0.24.75.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.75-beta)
 
-[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## 今回の Beta の変更点
 
-- **高速モードでも元の演技を保護：**笑い声・泣き声・呼吸の追加復元を有効にし、品質判定による再生成は追加しません。Windows の分類ラベル対応を修正。
-- **出力サンプルレートを保持：**元の演技の復元時に Drama 3／GPT V4 のミックスを 24 kHz に固定しません。分類結果は音声トラック間で再利用します。
-- **共通の修復仕様を文書化：**最初の有声音声を保持し、無音・破損のみ自動修復。実測で長い台詞は上限付きで短縮します。Mac／Windows の差異と iPad の未検証項目を明記。
+- **起動時から保存した外観を適用：**ライト／ダーク／システム設定に従い、白から黒へ切り替わるちらつきを修正。ダーク固定ではありません。
+- **プレーヤーを整理：**直接再生、音声・字幕の選択、字幕サイズ、翻訳済み台詞との同期、左右パネルの操作を統一。外部字幕の読み込みも修正。
+- **ハードウェアに応じた高速化：**対応 Apple Silicon 環境では MLX Whisper、Windows では対応 NVIDIA Whisper を利用。上限付き CPU フォールバックと実際のバックエンドを表示。
+- **音声調整を分かりやすく：**Drama 3 パラメーターの説明と保存設定、元の声の保護、人名・用語の処理を改善。疑わしい結果は試聴してください。
 
 ## パソコンの推奨構成
 
@@ -179,39 +180,39 @@ AniCanto は**実際に話された台詞を主な根拠**とし、字幕で意�
 
 ### ようこそ・セットアップ
 
-![ようこそ・セットアップ](docs/images/welcome-ja.png)
+![ようこそ・セットアップ](docs/images/welcome-ja.png?v=0.24.75)
 
 UI 言語を選び、ローカルモデルを準備して基本・エキスパートモードへ。
 
 ### 基本モード：進捗と試聴
 
-![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.24.64)
+![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.24.75)
 
 動画、吹き替え言語、出力先を選び、進捗と各台詞の音声を確認。プレビューを閉じたままアシスタントを表示できます。
 
 ### エキスパートモード：タイムラインと編集
 
-![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.24.64)
+![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.24.75)
 
 下部全幅のタイムラインで原文と吹き替え台詞を比較し、時刻を調整して選択した台詞を再生成。
 
 ### 校正レポート：問題と録音の比較
 
-![校正レポート：問題と録音の比較](docs/images/review-ja.png)
+![校正レポート：問題と録音の比較](docs/images/review-ja.png?v=0.24.75)
 
 指摘された問題と修復の試行を確認し、保存済み録音を比較。以前の動画を残したまま新版を書き出せます。
 
 ### 吹き替えスタジオと保存した録音
 
-![Dubbing studio](docs/images/speech-studio-ja.png?v=0.24.64)
+![Dubbing studio](docs/images/speech-studio-ja.png?v=0.24.75)
 
 原文と広東語の台詞を確認し、生成した各版を保存。元音声・生成音声・対訳をプレーヤーで比較できます。
 
-![Saved clips and learning](docs/images/speech-player-ja.png?v=0.24.64)
+![Saved clips and learning](docs/images/speech-player-ja.png?v=0.24.75)
 
 ### Windows：NVIDIA CUDA の設定
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.24.64)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.24.75)
 
 自動・NVIDIA CUDA・CPU を選択。システム RAM、VRAM、追加の CUDA ダウンロードを別表示します。設定画面の例であり、速度の測定結果ではありません。
 

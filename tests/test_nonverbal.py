@@ -1,3 +1,4 @@
+from performance_fixtures import performance_row
 import sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).parents[1]/'Resources'))
@@ -26,38 +27,36 @@ class NonverbalTests(unittest.TestCase):
   cue=dict(start=0,end=5,japanese='今日は晴れ')
   words=[dict(start=0,end=1,word='今日は'),dict(start=4,end=5,word='晴れ')]
   lexical=nonverbal.lexical_ranges([cue],words)
-  events=nonverbal.event_ranges([dict(start=2,duration=1,laughter=.9)],lexical,5)
+  events=nonverbal.event_ranges([performance_row(start=2,duration=1,laughter=.9)],lexical,5)
   self.assertEqual([(e['start'],e['end']) for e in events],[(2,3)])
   self.assertEqual(nonverbal.lexical_ranges([cue],words[:1]),[cue])
   self.assertEqual(nonverbal.lexical_ranges([cue],[]),[cue])
  def test_requires_acoustic_evidence_not_just_absence_of_transcript(self):
-  self.assertEqual(nonverbal.event_ranges([dict(start=1,duration=2,speech=.8,laughter=.9)],[],5),[])
-  self.assertEqual(nonverbal.event_ranges([dict(start=1,duration=2,laughter=.3)],[],5),[])
+  self.assertEqual(nonverbal.event_ranges([performance_row(start=1,duration=2,speech=.8,laughter=.9)],[],5),[])
+  self.assertEqual(nonverbal.event_ranges([performance_row(start=1,duration=2,laughter=.3)],[],5),[])
  def test_preserve_timing_but_remove_lexical_speech(self):
-  rows=[dict(start=1,duration=3,laughter=.8,speech=.05)]
+  rows=[performance_row(start=1,duration=3,laughter=.8,speech=.05)]
   events=nonverbal.event_ranges(rows,[dict(start=2,end=3)],5)
   self.assertEqual([(e['start'],e['end']) for e in events],[(1,1.88),(3.15,4)])
  def test_scream_survives_but_never_reintroduces_lexical_japanese(self):
-  rows=[dict(start=1,duration=3,screaming=.92,speech=.85)]
+  rows=[performance_row(start=1,duration=3,screaming=.92,speech=.85)]
   scream=dict(start=1,end=2,japanese='ああああああ！')
-  self.assertTrue(nonverbal.source_vocalization(scream))
   events=nonverbal.event_ranges(rows,[scream,dict(start=3,end=4,japanese='助けて')],5)
-  self.assertEqual([(e['start'],e['end']) for e in events],[(1,2.88)])
-  self.assertFalse(nonverbal.source_vocalization(dict(japanese='いやだ！')))
-  self.assertEqual(nonverbal.event_ranges([dict(start=1,duration=2,screaming=.6,speech=.8)],[],5),[])
+  self.assertEqual([(e['start'],e['end']) for e in events],[(2.15,2.88)])
+  self.assertEqual(nonverbal.event_ranges([performance_row(start=1,duration=2,screaming=.6,speech=.8)],[],5),[])
  def test_overlap_merges_once_and_does_not_exceed_video(self):
-  events=nonverbal.event_ranges([dict(start=1,duration=2,gasp=.9),dict(start=2,duration=3,gasp=.9)],[],4)
+  events=nonverbal.event_ranges([performance_row(start=1,duration=2,gasp=.9),performance_row(start=2,duration=3,gasp=.9)],[],4)
   self.assertEqual([(e['start'],e['end']) for e in events],[(1,4)])
  def test_overlap_ducks_only_affected_sound_not_entire_event(self):
   events=nonverbal.duck_events([dict(start=1,end=4,label='laughter',confidence=.9)],[dict(start=2,end=3)])
   self.assertEqual([(e['start'],e['end'],e['gain']) for e in events],[(1,2,1.0),(2,3,.4),(3,4,1.0)])
  def test_original_audio_requires_analysis_and_excludes_uncertain_windows(self):
-  rows=[dict(start=0,duration=5,speech=.01),dict(start=2,duration=1,speech=.8)]
+  rows=[performance_row(start=0,duration=5,speech=.01),performance_row(start=2,duration=1,speech=.8)]
   self.assertEqual(nonverbal.original_sound_ranges(rows,[],5),[(0,2),(3,5)])
   self.assertEqual(nonverbal.original_sound_ranges([],[],5),[])
-  self.assertEqual(nonverbal.original_sound_ranges([dict(start=0,duration=5)],[],5),[])
+  with self.assertRaises(ValueError):nonverbal.original_sound_ranges([dict(start=0,duration=5)],[],5)
  def test_original_audio_protects_words_and_avoids_duplicate_laughter(self):
-  ranges=nonverbal.original_sound_ranges([dict(start=0,duration=5,speech=.01)],[dict(start=1,end=2)],5)
+  ranges=nonverbal.original_sound_ranges([performance_row(start=0,duration=5,speech=.01)],[dict(start=1,end=2)],5)
   self.assertEqual(ranges,[(0,.8),(2.2,5)])
   events=nonverbal.subtract_restored([dict(start=0,end=5,label='laughter')],ranges)
   self.assertEqual([(e['start'],e['end']) for e in events],[(.8,2.2)])

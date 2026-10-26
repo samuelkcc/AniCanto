@@ -205,7 +205,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
  if backend=='intel':backend='cpu';emit('This native voice stack uses CPU on Intel; hardware video export remains available.')
  if backend=='amd' and not any(vendor(r)=='amd' and amd_supported(r.get('Name','')) for r in adapters()):raise ValueError('Use CPU for this Radeon; the selected native ROCm build does not support this model.')
  worker=environment('worker');analysis=environment('analysis',backend)
- probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],acceleratorName=probe.get('name',''),nativeWorkflowVersion=1)
+ probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],acceleratorFreeMemoryGB=probe.get('freeMemoryGB'),acceleratorName=probe.get('name',''),nativeWorkflowVersion=1)
  deployment=plan(engine,h,allow_cpu_drama,requested=requested,drama_backend=drama_backend)
  if deployment['blockers']:raise ValueError('; '.join(deployment['blockers']))
  emit('Deployment plan',deployment=deployment)

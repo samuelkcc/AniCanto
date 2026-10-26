@@ -168,6 +168,8 @@ def load_vision(cfg):
     if os.name=='nt':
         from native_vision import NativeVision
         return NativeVision(cfg),None
+    from compute_policy import mlx_device
+    mlx_device(cfg.get('storage'),'visual-analysis')
     from mlx_vlm import load
     return load(cfg['model'])
 

@@ -1,0 +1,13 @@
+# Desktop player · 0.24.73/build226
+
+Matches iPad StandardPreviewPolicy: only a selected movie with running conversion shows Preview / Follow processing. Waiting, paused, finished and attention states use ordinary movie playback. First Play loads and starts the source in one click. Watching never starts ASR, translation or conversion. The original assistant remains while no video is loaded.
+
+Player audio/subtitle selectors work in windowed and fullscreen views. Selected audio retains position and paused/playing state; supported embedded SRT/ASS/SSA/WebVTT/mov_text and the movie's selected external subtitle are rendered on original source clocks. Subtitle Off is explicit. Bitmap subtitle tracks are marked unsupported rather than silently OCR'd. Script tracks remain available for existing edits. Playback choices do not change production settings or frozen job captions.
+
+Resources/playback_subtitles.py only accepts media registered to a project, probes/caches stream metadata and extracts text subtitles with bounded FFmpeg. Sources and job files remain read-only. Native studio_subtitles uses a separate adapter lock, owned child/process group and Windows job, so reading subtitles does not block state polling. Public media-subtitles is explicitly allowlisted and covered by the frontend/native operation contract.
+
+Actual tests: 61 Python tests passed; packaged native endpoint switched embedded/external/off, preserved metadata and sources and created no conversion jobs. Four-language browser tests played a real two-audio/two-subtitle movie in one click, switched subtitle language/off, retained position on audio change, used both menus fullscreen, fitted1080px, and verified processing controls visible only while running (not paused/complete), no JS errors and no conversion start. The initial local HTTP fixture had too-small module backlog and lacked byte-range seeking; fixed the harness rather than changing media behavior to satisfy it. Not a real Windows or WebKit GUI device acceptance.
+
+Both dist packages updated and signed Mac startup verified. 164 shared Python files and embedded frontend/payload match; privacy5994files/0privateidentifiers. .72 rollback retained under .build/player73/rollback. No GitHub, models or user jobs changed; app left closed.
+
+This release DOES NOT include the new cross-language subtitle-assisted source sentence-boundary analysis. Existing captions can inform translation but do not yet resolve the iPad Ranma030 rapid contiguous turns. Samuel separately authorizes Ranma030 regression plus generic offset/no-caption/OPED cases; that source-segmentation work follows this isolated player release and must not be described as already implemented.

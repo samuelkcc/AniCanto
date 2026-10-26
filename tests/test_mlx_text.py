@@ -5,6 +5,9 @@ from types import SimpleNamespace
 sys.path.insert(0,str(Path(__file__).parents[1]/'Resources'))
 import mlx_text,worker
 class MLXTextTests(unittest.TestCase):
+ def setUp(self):
+  device=patch('compute_policy.mlx_device');device.start();self.addCleanup(device.stop)
+
  def test_explicit_json_constraint_gets_fresh_matcher_after_retry(self):
   with tempfile.TemporaryDirectory() as folder:
    backend=mlx_text.Backend(folder);backend.model=object();backend.loaded_id=mlx_text.MODEL_ID;backend.tokenizer=MagicMock()

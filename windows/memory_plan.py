@@ -26,8 +26,10 @@ def pools(plan):
         else:
             entry=dict(role=role,id=ident,gb=need)
             (system if role=='voice' and plan.get('voiceBackend')=='cpu' or not dedicated else gpu).append(entry)
+    from compute_policy import budgets
+    current=budgets(ram,vram,hardware.get('acceleratorFreeMemoryGB'),dedicated)
     return dict(system=dict(capacity=ram,budget=max(0.,ram-reserve),peak=max((r['gb'] for r in system),default=0.),models=system),
-                gpu=dict(capacity=vram,budget=min(max(0.,ram-reserve),vram*.8) if dedicated else 0.,peak=max((r['gb'] for r in gpu),default=0.),models=gpu),
+                gpu=dict(capacity=vram,budget=min(max(0.,ram-reserve),current['acceleratorBudgetGB']) if dedicated else 0.,peak=max((r['gb'] for r in gpu),default=0.),models=gpu),
                 dedicated=dedicated,backend=hardware.get('backend','cpu'),reserve=reserve)
 
 def fit_model(row,hardware):
@@ -38,7 +40,10 @@ def fit_model(row,hardware):
     if need<=0:return False,'unknown-memory'
     if row.get('engine')=='cosyvoice3' and backend!='cuda':return False,'requires-nvidia'
     if row.get('id')=='drama3-native-q2':return need<=system,'system'
-    if backend in ('cuda','rocm'):return need<=min(system,vram*.8),'gpu'
+    if backend in ('cuda','rocm'):
+        from compute_policy import budgets
+        available=budgets(ram,vram,hardware.get('acceleratorFreeMemoryGB'),True)['acceleratorBudgetGB']
+        return need<=min(system,available),'gpu'
     return need<=system,'system'
 
 def can_attempt_over_budget(row,hardware):

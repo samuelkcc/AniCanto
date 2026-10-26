@@ -95,8 +95,8 @@ class DubbingTests(unittest.TestCase):
   self.assertEqual(dubbing.fit_rate(2,4),(1.0,True))
   for a,b in [(0,2),(2,0),(float('nan'),1),(2,float('inf'))]:
    with self.assertRaises(ValueError): dubbing.fit_rate(a,b)
- def test_only_nonverbal_vocalizations_may_reuse_original_audio(self):
-  self.assertTrue(dubbing.is_vocalization(dict(japanese='あ…',cantonese='啊！')))
+ def test_vowel_text_does_not_authorize_original_audio(self):
+  self.assertFalse(dubbing.is_vocalization(dict(japanese='あ…',cantonese='啊！')))
   for cue in [dict(japanese='はい',cantonese='係'),dict(japanese='あの',cantonese='嗰個'),dict(japanese='あ',cantonese='唔好'),dict(japanese='あ',cantonese='啊',sourceParts=[{},{}])]:
    self.assertFalse(dubbing.is_vocalization(cue))
  def test_short_line_compression_never_squeezes_dense_or_unknown_pronunciation(self):

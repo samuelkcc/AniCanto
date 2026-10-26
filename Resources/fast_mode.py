@@ -152,6 +152,7 @@ def convert(w,cfg):
     if cfg.get('subtitle') and Path(cfg['subtitle']).is_file():identity['subtitleHash']=hashlib.sha256(Path(cfg['subtitle']).read_bytes()).hexdigest()
     from job_identity import resolve
     job=resolve(cfg['storage'],identity,w.emit)
+    __import__('subtitle_snapshot').verify_extracted(job)
     w.atomic_json(job/'processing-preview.json',dict(video=str(video),offset=cfg['startOffset'],duration=cfg['duration']))
     from production_progress import phase
     phase(job,'prepare')
@@ -259,7 +260,7 @@ def synthesize(cfg,job,cues,run,emit):
     timeline=array.array('i',[0])*round(cfg['duration']*sr)
     rows=[];warnings=[];directory=job/'rendered-takes';directory.mkdir(exist_ok=True)
     for i,(cue,path) in enumerate(zip(cues,paths)):
-        natural=cfg.get('speechRatePolicy')=='natural'
+        natural=cfg.get('speechRatePolicy')=='natural' or bool(cue.get('preserveOriginalSpeech'))
         if natural:
             from speech_timing import natural_window
             anchor,deadline=natural_window(cue,cues,cfg['duration'],cfg)
@@ -268,7 +269,7 @@ def synthesize(cfg,job,cues,run,emit):
         # A shifted next turn can start before this turn's old deadline. Check
         # the actual planned starts even when the current take fits its slot.
         following=[(j,window(other,cues,cfg['duration'])[0]) for j,other in enumerate(cues)
-                   if j!=i and other.get('enabled',True) and window(other,cues,cfg['duration'])[0]>window(cue,cues,cfg['duration'])[0]+.001]
+                   if j!=i and (other.get('enabled',True) or other.get('preserveOriginalSpeech')) and window(other,cues,cfg['duration'])[0]>window(cue,cues,cfg['duration'])[0]+.001]
         next_index=min(following,key=lambda item:item[1])[0] if following else None
         source_overlap=0.
         safe_deadline=deadline
@@ -306,7 +307,7 @@ def synthesize(cfg,job,cues,run,emit):
                     end=anchor+len(raw)/2/sr
                     from opening import local_ranges
                     protected=any(anchor<r['end'] and end>r['start'] and deadline<=r['start']+.001 for r in local_ranges(cfg))
-                    preserved=any(c.get('preserveOriginalSpeech') and anchor<c.get('speechEnd',c['end']) and end>c.get('speechStart',c['start']) for j,c in enumerate(cues) if j!=i)
+                    preserved=any(c.get('preserveOriginalSpeech') and anchor<window(c,cues,cfg['duration'])[1] and end>window(c,cues,cfg['duration'])[0] for j,c in enumerate(cues) if j!=i)
                     # A take may use spare time at the end of the video, but
                     # cannot extend beyond the next planned voice start.
                     if retain(cfg) and end<=cfg['duration']+.00001 and not protected and not preserved:

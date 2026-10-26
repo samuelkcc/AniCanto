@@ -25,6 +25,10 @@ def backend(cfg):
         except ValueError:
             if mode=='mlx':raise ValueError('Download Whisper large-v3 · Apple MLX in Preferences before using MLX independent checking.')
     ident=cfg.get('referenceSpeechModel') or 'whisper-large-v3'
+    if sys.platform=='win32':
+        from whisper_accel import selection
+        compute=selection(dict(cfg,speechModel=ident))
+        if compute['backend']=='cuda':return dict(backend='cuda',id=ident,path=str(resolve(cfg['storage'],ident)),revision=choice(ident)['revision'],runtime='speech-runtime')
     return dict(backend='cpu',id=ident,path=str(resolve(cfg['storage'],ident)),revision=choice(ident)['revision'],runtime='runtime')
 
 
@@ -128,7 +132,7 @@ def transcribe_batch(w,cfg,items,auto_language=False):
         check(cfg)
         remaining=deadline-time.monotonic()
         if remaining<=0:break
-        payload=dict(items=pending,model=selected['path'],backend=selected['backend'],modelID=selected['id'],modelRevision=selected['revision'],language=language)
+        payload=dict(items=pending,model=selected['path'],backend=selected['backend'],modelID=selected['id'],modelRevision=selected['revision'],language=language,storage=cfg['storage'])
         if cfg.get('_trackControl'):payload['_trackControl']=cfg['_trackControl']
         w.atomic_json(request,payload)
         def event(value):
@@ -148,7 +152,7 @@ def transcribe_batch(w,cfg,items,auto_language=False):
         if not pending or not failure.get('key') or resumes>=2:break
         resumes+=1;progress(f'接續覆聽剩餘 {len(pending)} 句；跳過本次未完成片段（{resumes}/2）。')
     completed=collect()
-    w.atomic_json(request.with_name('secondary-speech-status.json'),dict(revision=REVISION,backend=selected['backend'],completed=completed,total=len(rows),remaining=[r['index'] for r in rows if results[r['index']] is None],resumes=resumes,qualityCertified=False))
+    w.atomic_json(request.with_name('secondary-speech-status.json'),dict(revision=REVISION,backend=selected['backend'],actualBackends=sorted({r.get('backend','unknown') for r in results if r is not None}),completed=completed,total=len(rows),remaining=[r['index'] for r in rows if results[r['index']] is None],resumes=resumes,qualityCertified=False))
     return results
 
 
@@ -156,17 +160,39 @@ def load_transcriber(request):
     if request['backend']=='mlx':
         import mlx.core as mx
         from mlx_audio.stt import load
-        mx.set_default_device(mx.gpu)
+        from compute_policy import mlx_device
+        mlx_device(request.get('storage'),'independent-whisper')
         model=load(request['model'])
         def infer(audio):
             result=model.generate(whisper_pcm(audio),language=request.get('language'),condition_on_previous_text=False,initial_prompt=None,temperature=0.,verbose=None)
             return dict(heard=result.text.strip(),language=getattr(result,'language','') or '')
         return infer
     from faster_whisper import WhisperModel
-    model=WhisperModel(request['model'],device='cpu',compute_type='int8',local_files_only=True,cpu_threads=8)
+    def cpu():return WhisperModel(request['model'],device='cpu',compute_type='int8',local_files_only=True,cpu_threads=8)
+    if request['backend']=='cuda':
+        try:
+            import torch,os
+            from compute_policy import torch_device
+            dll=Path(torch.__file__).parent/'lib'
+            if hasattr(os,'add_dll_directory'):dll_handle=os.add_dll_directory(str(dll))
+            device=torch_device(torch,request.get('storage'),'independent-whisper',minimum_gb=3.5)
+            if not device.startswith('cuda'):raise ValueError('Insufficient supported CUDA memory')
+            model=WhisperModel(request['model'],device='cuda',compute_type='int8_float16',local_files_only=True)
+        except Exception:
+            request['backend']='cpu';model=cpu()
+    else:model=cpu()
     def infer(audio):
-        segments,info=model.transcribe(whisper_pcm(audio),language=request.get('language'),beam_size=5,vad_filter=False,condition_on_previous_text=False)
-        return dict(heard=''.join(s.text for s in segments),language=info.language)
+        nonlocal model
+        pcm=whisper_pcm(audio)
+        def decode():
+            segments,info=model.transcribe(pcm,language=request.get('language'),beam_size=5,vad_filter=False,condition_on_previous_text=False)
+            return dict(heard=''.join(s.text for s in segments),language=info.language)
+        try:return decode()
+        except Exception:
+            # Lazy CUDA execution can fail while consuming segments. Release
+            # its model before one CPU retry, including for subsequent items.
+            if request['backend']!='cuda':raise
+            model=None;request['backend']='cpu';model=cpu();return decode()
     return infer
 
 

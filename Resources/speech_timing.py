@@ -8,6 +8,11 @@ def text_budget(seconds):
 
 
 def window(cue, cues, duration):
+    if cue.get('preserveOriginalSpeech'):
+        start,end=float(cue['start']),float(cue['end'])
+        if not (math.isfinite(start+end) and 0<=start<end<=float(duration)+.001):
+            raise ValueError('Invalid preserved source timing.')
+        return start,end
     if cue.get('_retryRetained'):
         retained=cue['_retryRetained'];start=float(retained['start']);end=float(retained['end'])
         if not (0<=start<end<=float(duration)+.001):raise ValueError('Invalid retained recording timing.')
@@ -23,12 +28,13 @@ def window(cue, cues, duration):
 def natural_window(cue,cues,duration,cfg=None):
     """Use an empty following gap, without delaying another line or OP/ED."""
     start,end=window(cue,cues,duration)
-    if cue.get('_retryRetained'):return start,end
+    if cue.get('_retryRetained') or cue.get('preserveOriginalSpeech'):return start,end
     following=[window(c,cues,duration)[0] for c in cues
-               if c is not cue and c.get('enabled',True) and window(c,cues,duration)[0]>start+.001]
+               if c is not cue and (c.get('enabled',True) or c.get('preserveOriginalSpeech')) and window(c,cues,duration)[0]>start+.001]
     next_start=min(following,default=float(duration))
     # Existing overlapping Japanese turns retain their own source deadline.
-    if next_start>=end:end=next_start
+    preserved_overlap=any(c is not cue and c.get('preserveOriginalSpeech') and window(c,cues,duration)[0]<end and window(c,cues,duration)[1]>start for c in cues)
+    if next_start>=end and not preserved_overlap:end=next_start
     import opening
     for interval in opening.local_ranges(dict(cfg or {},duration=float(duration))):
         a=float(interval['start']) if isinstance(interval,dict) else float(interval[0])

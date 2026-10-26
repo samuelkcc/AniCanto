@@ -3,14 +3,19 @@ import json
 import hashlib
 import math
 import sys
-import re
 from pathlib import Path
 
 LABELS=('laughter','baby_laughter','belly_laugh','crying_sobbing','sigh','breathing','gasp','screaming','shout','yell')
 
+def event_labels(row):
+    # Missing model classes are unknown, never fabricated zero scores.
+    return LABELS+tuple(k for k in ('moaning_groaning',) if k in row)
+
+SCORE_LABELS=LABELS+('music','singing','choir_singing','speech','rapping')
+
 # Keep the validated model context; raw probabilities are not cross-model calibrated.
 # The one-second AST trial reduced event confidence on public evaluation clips.
-CLASSIFICATION_REVISION='performance-taxonomy-4-validated-context'
+CLASSIFICATION_REVISION='performance-taxonomy-6-paired-tails'
 
 
 def classification_profile(platform=None):
@@ -24,6 +29,8 @@ def validate_classification(rows):
     for row in rows:
         if not isinstance(row,dict) or any(not isinstance(row.get(k),(int,float)) or isinstance(row.get(k),bool) or not math.isfinite(row[k]) for k in ('start','duration')) or row['start']<0 or row['duration']<=0:
             raise ValueError('Invalid nonverbal classification time range')
+        if not set(SCORE_LABELS).issubset(row):
+            raise ValueError('Incomplete nonverbal classification taxonomy')
         if any(not isinstance(v,(int,float)) or isinstance(v,bool) or not math.isfinite(v) or not 0<=v<=1 for k,v in row.items() if k not in ('start','duration')):
             raise ValueError('Invalid nonverbal classification confidence')
 
@@ -54,11 +61,6 @@ def classification(cfg,job,run):
     return rows
 
 
-def source_vocalization(cue):
-    source=re.sub(r'[\s、。！？!?…ーっッ〜～・\-]', '',cue.get('japanese',cue.get('text','')))
-    return bool(cue.get('nonlexicalTail') or source and (re.fullmatch(r'[あぁアァいぃイィうぅウゥえぇエェおぉオォ]+',source) or source in ('はあ','はぁ','ハア','ハァ')))
-
-
 def lexical_ranges(cues,words):
     """Use witnessed word spans to retain pauses inside a long speech turn.
 
@@ -82,16 +84,15 @@ def lexical_ranges(cues,words):
 
 def event_ranges(rows, dialogue, duration):
     """Classifier evidence is required. Subtract recognized lexical speech, including padding."""
+    validate_classification(rows)
     spans=[]
     for row in rows:
-        label=max(LABELS,key=lambda k:row.get(k,0))
-        score=row.get(label,0)
-        if score<.55 or (row.get('speech',0)>.2 and not (label in ('screaming','shout','yell') and score>=.7)) or row.get('singing',0)>.2: continue
+        label=max(event_labels(row),key=row.__getitem__)
+        score=row[label]
+        if score<.55 or (row['speech']>.2 and not (label in ('screaming','shout','yell') and score>=.7)) or row['singing']>.2: continue
         a=max(0,float(row['start']));b=min(duration,a+float(row['duration']))
         pieces=[(a,b)]
         for c in dialogue:
-            utterance=re.sub(r'[\s、。！？!?…ーっッ]', '',c.get('japanese',c.get('text','')))
-            if source_vocalization(c):continue
             left=max(0,c['start']-.12);right=c['end']+.15
             pieces=[p for x,y in pieces for p in ((x,min(y,left)),(max(x,right),y)) if p[1]-p[0]>.12]
         spans.extend(dict(start=x,end=y,label=label,confidence=score) for x,y in pieces if y-x>=.20)
@@ -115,10 +116,11 @@ def duck_events(events, dialogue):
 
 
 def missing_events(rows,events,duration):
+    validate_classification(rows)
     result=[]
     for row in rows:
-        label=max(LABELS,key=lambda k:row.get(k,0));score=row.get(label,0)
-        if score<.55:continue
+        label=max(event_labels(row),key=row.__getitem__);score=row[label]
+        if score<.30:continue
         a=max(0,row['start']);b=min(duration,a+row['duration'])
         ranges=sorted((max(a,e['start']),min(b,e['end'])) for e in events if e['start']<b and e['end']>a)
         covered=0;end=a
@@ -130,25 +132,55 @@ def missing_events(rows,events,duration):
 def restore(cfg,job,cues,voice,run,emit):
     if not cfg.get('dialoguePath') or not cfg.get('executable'):return voice
     emit('原聲表演','偵測叫聲、笑聲、呼吸同哭聲；只補回有把握嘅非語言片段。',.92)
-    rows=classification(cfg,job,run)
+    cfg.pop('_originalSoundRanges',None)
+    try:
+        rows=classification(cfg,job,run)
+        validate_classification(rows)
+    except (ValueError,TypeError,RuntimeError,OSError) as error:
+        from track_control import UserSkipped
+        if isinstance(error,UserSkipped):raise
+        from atomic_files import write_json
+        write_json(job/'nonverbal-report.json',dict(status='unavailable',events=[],originalSoundRanges=[],reviewEvents=[],classificationRevision=CLASSIFICATION_REVISION,error=str(error),action='retain-generated-audio; no-unverified-original-restoration'))
+        emit('原聲表演待覆核','分類資料未能完整核對；保留已生成配音，未用缺失分數當零或混回原聲。',.92)
+        return voice
     source=job/'dual-asr-cues.json'
     lexical=json.loads(source.read_text()) if source.exists() else cues
     analysis=job/'japanese-analysis.json'
     if analysis.exists():
         words=[w for s in json.loads(analysis.read_text()).get('segments',[]) for w in s.get('words',[])]
         lexical=lexical_ranges(lexical,words)
-    lexical=[c for c in lexical if not source_vocalization(c)]
+    refined=[];original_rows=[];refinement_error=None
+    if cfg.get('video') and cfg.get('ffmpeg') and cfg.get('performanceTailChecks',True):
+        try:
+            from performance_refinement import refine
+            refined,original_rows=refine(cfg,job,rows,lexical,run,emit)
+        except (ValueError,TypeError,RuntimeError,OSError) as error:
+            from track_control import UserSkipped
+            if isinstance(error,UserSkipped):raise
+            refinement_error=str(error)
+            emit('原聲表演待覆核','尾段雙重核對未完成；保留原有安全規則：'+str(error)[:160],.92)
     original_ranges=original_sound_ranges(rows,lexical,cfg['duration'])
+    # Only an explicit saved user choice can bypass conservative lexical exclusion.
+    for choice in cfg.get('performanceOverrides',[]):
+        a=choice.get('start');b=choice.get('end')
+        if choice.get('userConfirmed') is not True or not isinstance(a,(int,float)) or not isinstance(b,(int,float)) or not math.isfinite(a+b) or not 0<=a<b<=cfg['duration']:raise ValueError('Invalid explicit source performance interval.')
+        original_ranges.append((a,b))
     cfg['_originalSoundRanges']=original_ranges
-    from dubbing import is_vocalization
-    retained=[(c['start'],c['end']) for c in cues if is_vocalization(c)]
-    events=subtract_restored(event_ranges(rows,lexical,cfg['duration']),original_ranges+retained)
+    from workflow_policy import original_allowed
+    retained=[(c['start'],c['end']) for c in cues if original_allowed(cfg,c)]
+    events=subtract_restored(event_ranges(rows,lexical,cfg['duration'])+refined,original_ranges+retained)
+    merged_events=[]
+    for event in sorted(events,key=lambda e:e['start']):
+        if merged_events and event['start']<=merged_events[-1]['end']:
+            merged_events[-1]['end']=max(event['end'],merged_events[-1]['end'])
+        else:merged_events.append(dict(event))
+    events=merged_events
     # Also protect the new dubbing from an original breath/laugh over a delayed line.
     audible=[dict(start=c.get('subtitleStart',c['start']),end=c.get('subtitleEnd',c['end'])) for c in cues]
     # Already excluded original lexical speech above. Preserve the performance
     # even if the NEW Cantonese line runs across it; duck only that overlap.
     events=duck_events(events,audible)
-    (job/'nonverbal-report.json').write_text(json.dumps(dict(events=events,originalSoundRanges=original_ranges,reviewEvents=missing_events(rows,events+[dict(start=a,end=b) for a,b in original_ranges+retained],cfg['duration']),classificationRevision=CLASSIFICATION_REVISION,**classification_profile(),method='local-sound-classifier; original-lexical-speech-excluded; cantonese-overlap-ducked',limitation='Sounds overlapping original Japanese speech or not confidently classified remain excluded.'),ensure_ascii=False,indent=2))
+    (job/'nonverbal-report.json').write_text(json.dumps(dict(events=events,originalSoundRanges=original_ranges,tailChecks=str(job/'performance-tail-report.json'),tailError=refinement_error,reviewEvents=missing_events(rows+original_rows,events+[dict(start=a,end=b) for a,b in original_ranges+retained],cfg['duration']),classificationRevision=CLASSIFICATION_REVISION,unsupportedCategories=[] if rows and all('moaning_groaning' in row for row in rows) else ['moaning_groaning'],**classification_profile(),method='local-sound-classifier; original-lexical-speech-excluded; cantonese-overlap-ducked',limitation='Sounds overlapping original speech or not confidently classified remain excluded. Apple SoundAnalysis has no independent moaning/groaning class; breath/sigh evidence is not proof of a moan.'),ensure_ascii=False,indent=2))
     if not events:
         emit('原聲表演','未找到可安全獨立補回嘅非語言片段；冇混回整條日語人聲。',.92)
         return voice
@@ -173,10 +205,11 @@ def original_sound_ranges(rows, lexical, duration):
 
     ASR silence alone never authorizes restoring the Japanese track.
     """
+    validate_classification(rows)
     safe=[]; blocked=[(max(0,c['start']-.2),min(duration,c['end']+.2)) for c in lexical]
     for row in rows:
         a=max(0,float(row['start'])); b=min(duration,a+float(row['duration']))
-        if row.get('speech',1) >= .10 or max(row.get('singing',0),row.get('choir_singing',0),row.get('rapping',0)) >= .10:
+        if row['speech'] >= .10 or max(row['singing'],row['choir_singing'],row['rapping']) >= .10:
             blocked.append((a,b))
         else: safe.append((a,b))
     pieces=[]

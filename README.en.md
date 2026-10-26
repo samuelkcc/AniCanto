@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02468) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
+[Download](#download-the-beta--02475) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
 
 ## Why AniCanto exists
 
@@ -26,17 +26,18 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.68
+## Download the Beta · 0.24.75
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto-macOS-0.24.68.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.68-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto-macOS-0.24.75.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.75-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.68-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-- **Preserve original performances in Fast mode too:** the extra laugh, cry and breath restoration pass now remains enabled without adding quality-driven retakes. Windows event-label mapping is corrected.
-- **Keep native delivery rates:** restoring performances no longer forces Drama 3 / GPT V4 mixes down to 24 kHz. Classification evidence is reused across voice tracks.
-- **Shared recovery rules, documented:** first audible takes stay; only missing/damaged audio gets automatic repair, with bounded shortening for measured overlong lines. Mac / Windows differences and the iPad acceptance checklist are explicit.
+- **Appearance from the first frame:** launch follows your saved Light, Dark or System setting, with no forced dark default.
+- **A clearer player:** direct playback, selectable audio/subtitles, subtitle size, translated-line synchronisation and consistent panel controls. External subtitle import is fixed.
+- **Hardware-aware acceleration:** automatic MLX Whisper on supported Apple Silicon setups; supported NVIDIA Whisper acceleration on Windows, with bounded CPU fallback and visible backend decisions.
+- **More useful voice controls:** Drama 3 parameter explanations and saved defaults, plus general source-vocal protection and improved name/term handling. Uncertain results still need listening.
 
 ## Choose your computer setup
 
@@ -49,7 +50,7 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 **Windows now offers NVIDIA CUDA acceleration for full Drama 3 Q2.** In model setup, choose **Drama 3 processing → Automatic** or **NVIDIA · CUDA**. Automatic uses CUDA when the device, memory and deployment checks support it; choose CPU for AMD, Intel or integrated graphics. The app shows system RAM and VRAM separately and downloads the matching acceleration program and libraries. It reuses the same Q2 weights instead of downloading a second model. A compatible NVIDIA driver is required.
 
-The author’s preliminary Windows tests report substantially faster Drama 3 generation with CUDA. This is not a fixed speed multiplier or proof of compatibility with every card. **Some recognition and checking stages still use the CPU; CUDA does not accelerate the entire workflow.**
+The author’s preliminary Windows tests report substantially faster Drama 3 generation with CUDA. This is not a fixed speed multiplier or proof of compatibility with every card. **Recognition and checking use supported acceleration where available and fall back to CPU when required. CUDA does not accelerate every module.**
 
 A 32 GB Mac can attempt a smaller translation-model combination, but Drama 3 may cause swapping, severe slowdown or loading failure. Memory figures are planning estimates. Allow **100 GB+ free storage** for models, runtimes and working files; long videos need more.
 
@@ -183,39 +184,39 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ### Welcome and setup
 
-![Welcome and setup](docs/images/welcome-en.png)
+![Welcome and setup](docs/images/welcome-en.png?v=0.24.75)
 
 Choose the interface language, prepare local models, and enter Basic or Expert mode.
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.64)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.75)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.64)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.75)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
 ### Review report: issues and recording comparison
 
-![Review report: issues and recording comparison](docs/images/review-en.png)
+![Review report: issues and recording comparison](docs/images/review-en.png?v=0.24.75)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.64)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.75)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.64)
+![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.75)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.64)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.75)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 

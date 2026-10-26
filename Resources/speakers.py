@@ -155,7 +155,8 @@ def analyze(cfg, emit):
     torch.set_num_threads(4)
     root, job = Path(cfg['storage']), Path(cfg['job'])
     options = ort.SessionOptions(); options.intra_op_num_threads = 4
-    session = ort.InferenceSession(str(root / 'models/speakers/voxceleb_resnet34_LM.onnx'), sess_options=options, providers=['CPUExecutionProvider'])
+    from onnx_accel import session as accelerated_session
+    session = accelerated_session(root / 'models/speakers/voxceleb_resnet34_LM.onnx',options,root,'speaker-mapping')
     audio, sr = sf.read(cfg['audio'], dtype='float32')
     if audio.ndim == 2: audio = audio.mean(axis=1)
     reference_audio=audio;reference_sr=sr
@@ -264,7 +265,7 @@ def analyze(cfg, emit):
 
 
 def transcribe_profiles(cfg,job,profiles,speech_path,emit):
-    from faster_whisper import WhisperModel
+    from whisper_accel import load as load_whisper
     model = None
     analysis = job/'japanese-analysis.json'
     source_words = [w for s in json.loads(analysis.read_text()).get('segments',[]) for w in s.get('words',[])] if analysis.exists() else []
@@ -279,7 +280,7 @@ def transcribe_profiles(cfg,job,profiles,speech_path,emit):
             if profile['promptText']:
                 profile['transcriptSource']='original-japanese-words'
                 continue
-        if model is None: model = WhisperModel(str(speech_path), device='cpu', compute_type='int8', local_files_only=True)
+        if model is None:model=load_whisper(dict(cfg,speechModel=cfg.get('referenceSpeechModel') or cfg.get('speechModel','whisper-large-v3')),Path(job)/'reference-whisper',emit)
         emit('角色參考', f'自動辨識 {profile["name"]} 嘅日語參考原文。', .29)
         segments, _ = model.transcribe(whisper_pcm(profile['reference']), language=cfg.get('sourceLanguage','ja'), vad_filter=True, condition_on_previous_text=False)
         profile['promptText'] = ''.join(s.text for s in segments).strip()
@@ -296,7 +297,7 @@ def transcribe_profiles(cfg,job,profiles,speech_path,emit):
             ranges=candidate.get('ranges') or ([candidate['range']] if candidate.get('range') else [])
             candidate['promptText']=''.join(w['word'] for w in source_words for a,b in ranges if a<=(w['start']+w['end'])/2<b).strip()
             if not candidate['promptText']:
-                if model is None:model=WhisperModel(str(speech_path),device='cpu',compute_type='int8',local_files_only=True)
+                if model is None:model=load_whisper(dict(cfg,speechModel=cfg.get('referenceSpeechModel') or cfg.get('speechModel','whisper-large-v3')),Path(job)/'reference-whisper',emit)
                 segments,_=model.transcribe(whisper_pcm(candidate['reference']),language=cfg.get('sourceLanguage','ja'),vad_filter=False,condition_on_previous_text=False)
                 candidate['promptText']=''.join(s.text for s in segments).strip()
 

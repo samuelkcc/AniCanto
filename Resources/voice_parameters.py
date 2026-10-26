@@ -7,8 +7,8 @@ import math
 
 SPECS = {
     'drama3': {
-        'dramaTemperature': (.7, .3, 1.2, float),
-        'dramaTopP': (.7, .3, 1., float),
+        'dramaTemperature': (1., .3, 1.2, float),
+        'dramaTopP': (.9, .3, 1., float),
         'dramaTopK': (30, 5, 80, int),
     },
     'gpt-sovits': {
@@ -55,7 +55,7 @@ def effective(settings, engine):
         except (TypeError, ValueError) as error:
             raise ValueError('Invalid voice parameter: ' + key) from error
         if not math.isfinite(value) or not minimum <= value <= maximum or (kind is int and not value.is_integer()):
-            raise ValueError('Voice parameter outside supported range: ' + key)
+            raise ValueError(f'Voice parameter outside supported range: {key} ({minimum:g}–{maximum:g}; default {default:g})')
         result[key] = kind(value)
     if family(engine) == 'gpt-sovits' and result['gsvSampleSteps'] not in (16, 32):
         raise ValueError('GPT-SoVITS steps must be 16 or 32.')

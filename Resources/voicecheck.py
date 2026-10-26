@@ -70,7 +70,8 @@ def verify(cfg):
             else:
                 if session is None:
                     options=ort.SessionOptions();options.intra_op_num_threads=2
-                    session=ort.InferenceSession(str(Path(cfg['storage'])/'models/speakers/voxceleb_resnet34_LM.onnx'),sess_options=options,providers=['CPUExecutionProvider'])
+                    from onnx_accel import session as accelerated_session
+                    session=accelerated_session(Path(cfg['storage'])/'models/speakers/voxceleb_resnet34_LM.onnx',options,cfg['storage'],'voice-comparison')
                 features=torchaudio.compliance.kaldi.fbank(torch.from_numpy(x[:160000]).unsqueeze(0)*32768,num_mel_bins=80,frame_length=25,frame_shift=10,sample_frequency=16000,window_type='hamming',dither=0)
                 features-=features.mean(dim=0,keepdim=True)
                 vector=session.run(None,{session.get_inputs()[0].name:features.unsqueeze(0).numpy()})[0].reshape(-1)

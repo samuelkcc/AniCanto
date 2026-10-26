@@ -28,7 +28,7 @@ def defaults(language='en'):
     return dict(animeTheme='studio',randomAnimeTheme=False,selectedEngines=['drama3'],ttsBackend='drama3',defaultAudioEngine='drama3',
         dubLanguages=['yue','en'] if language=='en' else ['yue'],includeOriginal=True,
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
-        subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',normalRepairPolicy='missing-only',independentAsrBackend='auto',
+        subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=True,continueOnError=True,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,
@@ -82,7 +82,10 @@ class Store:
         self.save()
     def row(self,ident=None):return next((r for r in self.queue if r['id']==(ident or self.selected)),None)
     def submit(self,row):
-        if row.get('request') and row['status']=='paused':return Path(row['request'])
+        if row.get('request') and row['status']=='paused':
+            request=Path(row['request'])
+            from subtitle_snapshot import verify
+            verify(read(request,{}));return request
         settings=validated(self.settings)
         from voice_parameters import validate as validate_voice_parameters
         validate_voice_parameters(settings)
@@ -96,14 +99,20 @@ class Store:
         settings.update(storage=str(self.root),video=row['video'],exportFolder=settings.get('exportFolder') or str(self.root/'exports'),
                         interfaceMode=self.mode,targetLanguage=settings['dubLanguages'][0],
                         defaultDubLanguage=settings['dubLanguages'][0],automaticDurationRewrite=True)
+        from terminology import validate as validate_terms
+        settings['termRules']=validate_terms(row.get('termRules',[]))
         if row.get('externalSubtitle'):
             subtitle=Path(row['externalSubtitle'])
             if not subtitle.is_file():raise ValueError('The imported subtitle file is missing. Choose it again before converting.')
             settings.update(translationSource=COMBINED,subtitleSource='external',subtitle=str(subtitle),
                             batchAutoSubtitles=False,batchExplicitSubtitle=True,ocr=False)
         if self.mode=='basic' and settings.get('roleAnalysisMode')=='audiovisual':settings.update(roleAnalysisMode='independent',visualRoleAnalysisEnabled=False)
+        request_id=uuid.uuid4().hex
+        if settings.get('subtitle') and settings.get('subtitleSource')=='external':
+            from subtitle_snapshot import freeze
+            freeze(settings,self.root,request_id)
         settings['videos']=[dict(id=row['id'],video=row['video'])]
-        path=self.root/'requests'/('submitted-'+uuid.uuid4().hex+'.json');write(path,settings)
+        path=self.root/'requests'/('submitted-'+request_id+'.json');write(path,settings)
         row.update(request=str(path),progress=0,partial=False);self.save();return path
     def event(self,row,event):
         from output_delivery import public_event
@@ -163,12 +172,18 @@ def job_snapshot(row):
             if r['id']=='export':r['state']='complete'
     paths=([root]+sorted((root/'tracks').glob('*'))+sorted((root/'versions').glob('*'))+
            sorted((root/'versions').glob('*/tracks/*'))) if root.is_dir() else []
+    retained_folders=[]
+    if review.get('config',{}).get('_retainedTracks'):
+        from update_plan import retained
+        retained_folders=[f for f,_,_ in retained(review['config'],root).values()]
+        paths=list(dict.fromkeys(paths+retained_folders))
+    candidate_roots=[root.resolve()]+retained_folders
     seen_candidates=set()
     def add_candidate(path,index,engine,language,kind,reason='',created=0,spoken_text=None):
         if type(index) is not int or index<1 or not path:return
         try:
             file=Path(path).resolve()
-            if not file.is_relative_to(root.resolve()) or not file.is_file():return
+            if not any(file.is_relative_to(allowed) for allowed in candidate_roots) or not file.is_file():return
         except (OSError,ValueError):return
         identity=(str(file),index,language)
         if identity in seen_candidates:return

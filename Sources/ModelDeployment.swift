@@ -63,6 +63,7 @@ extension Engine {
         case "voice":try installDubbing(VoiceEngineChoice.all.first {$0.id==option.engine}?.kind ?? "cosy",variant:option.id)
         case "asr":try installDubbing("asr",variant:option.id)
         case "speech":try worker("download-speech",config:["storage":root.path,"speechModel":option.id])
+        case "independent-asr":try worker("download-acceleration",config:["storage":root.path,"modelID":option.id])
         default:throw AppFailure(message:"未支援此模型部署方式。")
         }
     }

@@ -30,7 +30,7 @@ SETTING_KEYS = set(defaults()) | {'model','visualModel','asrModel','speechModel'
     'backgroundGain','backgroundDucking','appearance','animeTheme','controlDensity',
     'subtitle','subtitleStream','ocrRect','ocr','ocrAutoRegion','exportFolder','translationSource','allowCrossEngineRepair',
     'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels',
-    'failedVoicePolicy','dramaBackend','normalRepairPolicy','independentAsrBackend'}
+    'failedVoicePolicy','dramaBackend','normalRepairPolicy','independentAsrBackend','speechAcceleration'}
 from voice_parameters import keys as voice_parameter_keys, validate as validate_voice_parameters
 SETTING_KEYS.update(voice_parameter_keys())
 SETTING_KEYS.add('cosyExpression')
@@ -326,12 +326,46 @@ class Studio:
                 if p['textModel'] not in {r['id'] for r in options}:raise ValueError('Deploy the selected text model before using it in Dubbing studio.')
             path=submit(self.root,cfg,p)
             return dict(self.task('speech-studio',path),speechClipID=path.parent.name)
+        if op=='compute-status':
+            from compute_policy import summary
+            return summary(self.root)
         if op=='state':return self.state()
+        if op=='performance-choice':
+            row=self.row(p.get('id'))
+            if row.get('status')=='running':raise ValueError('Pause before choosing a source performance.')
+            snapshot=job_snapshot(row);event=next((x for x in snapshot.get('performance',{}).get('notes',[]) if x['id']==p.get('eventID')),None)
+            if not event or event['label']=='unavailable':raise ValueError('The source performance evidence changed. Refresh and listen again.')
+            draft=self.draft(row);ranges=draft.setdefault('settings',{}).setdefault('performanceOverrides',[])
+            ranges=[x for x in ranges if x.get('id')!=event['id']]
+            if p.get('keep'):
+                ranges.append(dict(id=event['id'],start=event['start'],end=event['end'],userConfirmed=True))
+            draft['settings']['performanceOverrides']=ranges
+            self.dispatch('save-draft',dict(id=row['id'],draft=draft));return dict(draft=draft,snapshot=job_snapshot(row))
+        if op in ('project-terms','set-project-terms'):
+            row=self.row(p.get('id'))
+            from terminology import validate as validate_terms
+            if op=='set-project-terms':
+                if row.get('status') in ('running','paused'):raise ValueError('Finish this conversion before changing its frozen terminology.')
+                rules=validate_terms(p.get('rules',[]));row['termRules']=rules;self.store.save()
+                if row.get('review'):
+                    draft=self.draft(row);draft.setdefault('settings',{})['termRules']=rules
+                    self.dispatch('save-draft',dict(id=row['id'],draft=draft))
+            suggestions=[]
+            if row.get('review'):
+                base=Path(row['review']).parent
+                for file in [base/'normal-names.json']+list(base.glob('tracks/*/normal-names.json')):
+                    suggestions.extend(read(file,{}).get('names',[]))
+            return dict(rules=row.get('termRules',[]),suggestions=list({t['source']:t for t in suggestions if t.get('source')}.values()))
         if op=='source-language':
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before checking another source language.')
             row=self.row(p.get('id'))
             from source_language import preflight
             settings=copy.deepcopy(self.store.settings)
+            if p.get('stream') is not None:
+                if type(p['stream']) is not int:raise ValueError('Invalid source audio stream.')
+                row['sourceAudioStream']=p['stream']
+            if p.get('language') is not None:row['sourceLanguageOverride']=p['language']
+            settings.update({k:row[k] for k in ('sourceAudioStream','sourceLanguageOverride') if k in row})
             if self.store.mode=='basic':settings['selectedEngines']=[settings['ttsBackend']]
             result=preflight(self.root,row['video'],self.tools(),settings)
             row.update(sourceLanguage=result.get('language'),sourcePreflight=result)
@@ -341,6 +375,7 @@ class Studio:
             if not isinstance(patch,dict) or set(patch)-SETTING_KEYS:raise ValueError('Unsupported production setting.')
             patch=dict(patch)
             if patch.get('normalRepairPolicy','missing-only') not in ('missing-only','verified'):raise ValueError('Unknown normal repair policy.')
+            if patch.get('speechAcceleration','auto') not in ('auto','cpu'):raise ValueError('Unknown speech acceleration mode.')
             if patch.get('independentAsrBackend','auto') not in ('auto','mlx','cpu'):raise ValueError('Unknown independent ASR backend.')
             if ('productionMode' in patch and patch['productionMode']!=self.store.settings.get('productionMode')
                     and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue)):
@@ -514,6 +549,7 @@ class Studio:
                     from source_language import apply
                     apply(cfg,source['language']);cfg['sourceAudioStream']=source.get('stream')
                 cfg.update(self.tools());cfg['storage']=str(self.root)
+                if p.get('reanalyze'):cfg.update(forceRetranslate=True,rebuildDialogue=True,analysisRerunToken=uuid.uuid4().hex)
                 if self.platform!='win32':
                     selected=read(self.root/'model-selections.json',{})
                     for role,key in [('text','model'),('visual','visualModel'),('asr','asrModel'),('speech','speechModel'),('referenceSpeech','referenceSpeechModel'),('drama3','drama3Model'),('cosyvoice3','cosyModel')]:
@@ -539,6 +575,12 @@ class Studio:
             cfg=dict(draft['settings'],storage=str(self.root),submission=str(path),**self.tools())
             request=requests/('review-retry-config-'+draft['id']+'.json');write(request,cfg)
             return self.task('render-project',request,row)
+        if op=='update-recording-plan':
+            row=self.row(p.get('id'))
+            if any(x.get('status')=='running' for x in self.store.queue):raise ValueError('Pause before preparing a recording update.')
+            from update_plan import build
+            draft=copy.deepcopy(p.get('draft') or self.draft(row));self.dispatch('save-draft',dict(id=row['id'],draft=draft))
+            return build(self.review_path(row),draft,p.get('operation'),p.get('engine'),p.get('language'),p.get('replaced'))
         if op=='render':
             row=self.row(p.get('id'));draft=copy.deepcopy(p.get('draft') or self.draft(row));self.dispatch('save-draft',dict(id=row['id'],draft=draft))
             draft['id']=uuid.uuid4().hex;draft['created']=time.time()
@@ -580,12 +622,16 @@ class Studio:
             except (OSError,ValueError,TypeError,KeyError) as error:
                 row['conversionDetailsWarning']=str(error)[:500];self.store.save()
             return self.state()
-        if op in ('media','media-status'):
+        if op=='media-subtitles':
+            from playback_subtitles import read as movie_subtitles
+            return movie_subtitles(self.root,self.row(p.get('id')),self.tools(),p.get('choice','auto'),bool(p.get('output')))
+        if op in ('media','media-status','media-thumbnail'):
             row=self.row(p.get('id'));source=Path((row.get('output') if p.get('output') else row['video']) or '').resolve()
             if not source.is_file():raise ValueError('The selected media file is missing.')
             import studio_preview
-            if op=='media-status':return studio_preview.status(self.root,source,p.get('compatible',False))
-            return studio_preview.prepare(self.root,source,self.tools(),self.platform,p.get('compatible',False))
+            if op=='media-thumbnail':return studio_preview.thumbnail(self.root,source,self.tools(),p.get('seconds',0))
+            if op=='media-status':return studio_preview.status(self.root,source,p.get('compatible',False),p.get('audioStream'))
+            return studio_preview.prepare(self.root,source,self.tools(),self.platform,p.get('compatible',False),p.get('audioStream'))
         if op=='project-cache-status':
             from project_cache import cleanup_status
             return cleanup_status(self.root,p.get('operationID'))

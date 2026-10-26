@@ -44,10 +44,20 @@ def _model_job_impl(cfg, action, request, emit):
   if request.get('items') and all(healthy(i['output']) for i in request['items']):
    emit('配音','全部片段已有完成錄音，跳過模型載入。',workID='tts',workCompleted=len(request['items']),workTotal=len(request['items']),primaryGeneration=bool(request.get('primaryGeneration')))
    return
+ guard=None
+ if action in ('tts','cosy','qwen','voxcpm2','wsyue','drama3') and request.get('items'):
+  from generation_guard import reserve
+  guard=reserve(cfg,request);request=dict(request,items=guard[2])
  preserve_request(cfg,action,request)
+ error=None
  try:
-  return _run_model_job(cfg,action,request,emit)
+  result=_run_model_job(cfg,action,request,emit) if not guard or request['items'] else None
+  if guard and guard[3]:raise ValueError('Some exact inputs reached their saved generation limit or permanent failure. Healthy recordings remain available.')
+  return result
+ except BaseException as caught:
+  error=caught;raise
  finally:
+  if guard:__import__('generation_guard').finish(guard,error)
   preserve_request(cfg,action,request)
 
 
@@ -215,6 +225,10 @@ def generated_dialogue(cfg,job,cues,report=None):
 
 def gsv_audio(cfg,job,cues,run,emit):
  job=Path(job).resolve()
+ cfg.setdefault('_generationGuardRoot',str(job))
+ if cfg.get('editorRender') and cfg.get('audioRerunToken'):cfg['_explicitRetakeToken']=cfg['audioRerunToken']
+ elif cfg.get('_reviewRetryToken'):cfg['_explicitRetakeToken']=cfg['_reviewRetryToken']
+ __import__('terminology').apply(cfg,cues)
  primary_generation=bool(cfg.pop('_primaryGenerationPending',False))
  from natural_voices import prepare_cast
  prepare_cast(cfg,job,cues,run)
@@ -271,7 +285,7 @@ def gsv_audio(cfg,job,cues,run,emit):
    stem=Path(cfg.get('dialoguePath',''))
    from workflow_policy import original_allowed
    if cue.get('preserveOriginalSpeech') and not original_allowed(cfg,cue):cue['preserveOriginalSpeech']=False
-   if original_allowed(cfg,cue) or (is_vocalization(cue) and stem.is_file()):
+   if original_allowed(cfg,cue):
     separated=stem.is_file()
     source=stem if separated else Path(cfg['video'])
     start=cue['start']+(0 if separated else float(cfg.get('startOffset',0)))
@@ -406,11 +420,15 @@ def gsv_audio(cfg,job,cues,run,emit):
 
 
 def is_vocalization(cue):
- if cue.get("nonlexicalTail"):return True
- source=re.sub(r'[\s、。！？!?…ーっッ]', '',cue.get('japanese',''))
- target=re.sub(r'\W','',cue.get('cantonese',''))
- prolonged_vowels=len(source)>=3 and re.fullmatch(r'[あぁアァいぃイィうぅウゥえぇエェおぉオォ]+',source)
- return bool((source in ('あ','ああ','ア','アア','はあ','はぁ','うう','うぅ') or prolonged_vowels) and len(cue.get('sourceParts',[cue]))==1 and (not target or target in ('啊','呀','吓','嗚','哦','噢','唉','啊啊') or bool(target and set(target)<=set('啊呀吓嗚哦噢唉')) or re.fullmatch(r'(?:a+h+|o+h+|u+h+)',target,re.I)))
+ """A text-free tail is a planning hint, never permission to copy source audio.
+
+ Recognized vowels can be real words. Neither their spelling nor a legacy
+ nonlexicalTail flag can exempt spoken text from generation/content checks.
+ Deliberate original preservation uses workflow_policy.original_allowed.
+ """
+ sources=[cue.get(key,'') for key in ('japanese','text')]
+ if any(str(text or '').strip() for text in sources):return False
+ return bool(cue.get('nonlexicalTail') and not cue.get('cantonese','').strip())
 
 
 def candidate_content_matches(cfg,path,text,model=None,evidence=None):
@@ -659,12 +677,13 @@ def render_complete_preview(cfg,job,cues,paths,report,run,emit):
  timeline=array.array('i');warnings=[];intervals=[]
  rendered_dir=Path(job)/'rendered-takes';rendered_dir.mkdir(exist_ok=True)
  for cue,path,row in zip(cues,paths,report):
-  natural=cfg.get('speechRatePolicy')=='natural'
+  natural=cfg.get('speechRatePolicy')=='natural' or bool(cue.get('preserveOriginalSpeech'))
   if Path(path).name.startswith('skipped-'):
    row.update(speakerId=cue.get('speakerId'),text=cue.get('cantonese',''),skipped=True,needsReview=True,renderedStart=cue['start'],renderedEnd=cue['end'],renderedSeconds=0)
    warnings.append(dict(index=row['index'],kind='skipped-voice',message='生成失敗；呢段配音留空，等待手動修正。'))
    continue
-  requested=round(cue.get('speechStart',cue['start'])*sr)
+  from speech_timing import window
+  requested=round((window(cue,cues,cfg['duration'])[0] if cue.get('preserveOriginalSpeech') else cue.get('speechStart',cue['start']))*sr)
   offset=max(0,requested)
   limit=natural_rate_limit(cfg,cue['cantonese'],row['slot'])
   rate=min(limit,max(1.0,row['seconds']/max(.18,cue.get('speechEnd',cue['end'])-cue.get('speechStart',cue['start'])))) if cfg.get('autoFit',True) and not cue.get('_phraseAligned') and not is_vocalization(cue) else 1.0

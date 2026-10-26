@@ -54,6 +54,25 @@ extension Engine {
         let selected=(try? Data(contentsOf:root.appendingPathComponent("model-selections.json"))).flatMap {try? JSONSerialization.jsonObject(with:$0) as? [String:String]} ?? [:]
         var plan=try StudioContract.call(["operation":"deployment","hardware":StudioContract.hardware(resources:resources),"models":models,"engine":engine,"installedModels":installed,"selectedModels":selected,"requestedModels":requested,"singleModelPerCategory":true],resources:resources)
         plan["requestedModels"]=requested
+        #if arch(arm64)
+        func addSpeechAcceleration(_ value:inout [String:Any]) {
+            guard var roles=value["roles"] as? [String:String],roles["speech"]=="whisper-large-v3",
+                  let accelerator=(models as? [[String:Any]])?.first(where:{$0["id"] as? String=="whisper-large-v3-mlx"}) else{return}
+            var downloads=value["downloads"] as? [[String:Any]] ?? []
+            let id="whisper-large-v3-mlx"
+            if !downloads.contains(where:{$0["id"] as? String==id}) {
+                var row=accelerator;row["installed"]=installed.contains(id);row["purposeKey"]="speech-acceleration"
+                downloads.append(row)
+            }
+            roles["speechAccelerator"]=id;value["roles"]=roles;value["downloads"]=downloads
+            value["modelDownloadBytes"]=downloads.filter {$0["installed"] as? Bool != true}.reduce(Int64(0)) {$0+(($1["bytes"] as? NSNumber)?.int64Value ?? 0)}
+        }
+        addSpeechAcceleration(&plan)
+        if var presets=plan["qualityPresets"] as? [[String:Any]] {
+            for i in presets.indices {if var child=presets[i]["plan"] as? [String:Any] {addSpeechAcceleration(&child);presets[i]["plan"]=child}}
+            plan["qualityPresets"]=presets
+        }
+        #endif
         let rows=plan["downloads"] as? [[String:Any]] ?? []
         let runtimeRows=runtimeInventory(engine:plan["engine"] as? String ?? engine)
         let roles=plan["roles"] as? [String:String] ?? [:]

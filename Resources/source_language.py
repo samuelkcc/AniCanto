@@ -66,16 +66,17 @@ def speech_name(cfg):
 
 
 def probe(request):
-    """CPU-only language ID; no translation or TTS is started before consent."""
+    """Use the installed speech backend for language ID; no translation/TTS starts."""
     import os
     os.environ.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1')
-    from faster_whisper import WhisperModel
+    from whisper_accel import load as load_whisper
     import numpy as np
     from model_catalog import resolve,selected
-    model=WhisperModel(str(resolve(request['storage'],request.get('speechModel') or selected(request['storage'],'speech'))),device='cpu',compute_type='int8',local_files_only=True,cpu_threads=4)
+    model=load_whisper(request)
     votes=[];duration=request['duration']
-    for fraction in (.2,.5,.75):
-        start=max(0,min(duration-8,duration*fraction))
+    positions=sorted({max(0,min(duration-12,duration*f)) for f in (.2,.5,.75)})
+    for relative in positions:
+        start=float(request.get('startOffset',0))+relative
         raw=subprocess.check_output([request['ffmpeg'],'-v','error','-ss',str(start),'-i',request['video'],'-map',f"0:{request['stream']}",'-t','12','-ar','16000','-ac','1','-f','f32le','pipe:1'],stderr=subprocess.PIPE,timeout=30)
         samples=np.frombuffer(raw,dtype=np.float32)
         if len(samples)<16000 or np.max(np.abs(samples),initial=0)<.003:continue
@@ -87,40 +88,47 @@ def probe(request):
 
 
 def preflight(root,video,tools,settings):
-    path=Path(video);stat=path.stat()
-    identity=[str(path.resolve()),stat.st_size,stat.st_mtime_ns,'source-audio-1']
+    path=Path(video);stat=path.stat();chosen=settings.get('sourceAudioStream')
+    identity=[str(path.resolve()),stat.st_size,stat.st_mtime_ns,'source-audio-2-audited',chosen,settings.get('startOffset',0),settings.get('limit',0),settings.get('speechModel')]
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()
-    folder=Path(root)/'source-language'/key;folder.mkdir(parents=True,exist_ok=True)
-    saved=folder/'result.json'
-    try:
-        result=json.loads(saved.read_text())
-        if not result.get('language'):raise ValueError('Retry unconfirmed probe after repair')
+    folder=Path(root)/'source-language'/key;folder.mkdir(parents=True,exist_ok=True);saved=folder/'result.json'
+    try:result=json.loads(saved.read_text())
     except (OSError,ValueError):
         if sys.platform=='win32':
             from source_access import accessible
-            media_source,raw=accessible(video,tools['ffprobe'],root)
-            meta=json.loads(raw)
+            media_source,raw=accessible(video,tools['ffprobe'],root);meta=json.loads(raw)
         else:
             media_source=path
             meta=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',video],stderr=subprocess.PIPE,timeout=15))
-        result=metadata(meta)
-        if not result['language'] and result['stream'] is not None:
+        streams=[x for x in meta.get('streams',[]) if x.get('codec_type')=='audio']
+        if chosen is not None:
+            stream=next((x for x in streams if x['index']==chosen),None)
+            if stream is None:raise ValueError('Selected source audio stream no longer exists.')
+            info=metadata(dict(streams=[stream]))
+        else:info=metadata(meta)
+        result=dict(info,metadataLanguage=info.get('language'),streams=[dict(index=x['index'],language=x.get('tags',{}).get('language','und'),title=x.get('tags',{}).get('title',''),channels=x.get('channels')) for x in streams])
+        total=float(meta.get('format',{}).get('duration',0));start=max(0,float(settings.get('startOffset',0)));duration=max(0,total-start)
+        if settings.get('limit',0):duration=min(duration,float(settings['limit']))
+        # A file label is evidence, never a substitute for available listening.
+        if duration>0 and result.get('stream') is not None:
             from runtime_paths import python_for
-            request=folder/'request.json'
-            request.write_text(json.dumps(dict(storage=str(root),video=str(media_source),stream=result['stream'],duration=float(meta['format']['duration']),ffmpeg=tools['ffmpeg'],speechModel=settings.get('speechModel'))))
+            request=folder/'request.json';request.write_text(json.dumps(dict(storage=str(root),video=str(media_source),stream=result['stream'],duration=duration,startOffset=start,ffmpeg=tools['ffmpeg'],speechModel=settings.get('speechModel'))))
             python=python_for(root,'speech-runtime' if sys.platform=='win32' else 'runtime')
             try:
-                output=subprocess.check_output([str(python),str(Path(__file__).resolve()),str(request)],stderr=subprocess.PIPE,timeout=150)
-                result=json.loads(output)
-            except (OSError,ValueError,subprocess.SubprocessError):result.update(language=None,method='unconfirmed-audio',reason='Source language could not be confirmed. Check the audio language or repair speech recognition setup.')
+                heard=json.loads(subprocess.check_output([str(python),str(Path(__file__).resolve()),str(request)],stderr=subprocess.PIPE,timeout=150));result.update(heard);result['metadataConflict']=bool(heard.get('language') and heard['language']!=info.get('language') and info.get('language'))
+            except (OSError,ValueError,subprocess.SubprocessError):result.update(language=None,method='unconfirmed-audio',reason='Source language could not be confirmed. Select the actual spoken language before conversion.')
         from atomic_files import write_json
         write_json(saved,result)
+    override=settings.get('sourceLanguageOverride')
+    if override:
+        if override not in NAMES:raise ValueError('Unknown source language.')
+        result=dict(result,detectedLanguage=result.get('language'),language=override,method='user-selected-source',explicitOverride=True)
     engines=settings.get('selectedEngines') or [settings.get('ttsBackend','drama3')]
     language=result.get('language');available=supported(language,engines)
-    token=hashlib.sha256(json.dumps([key,language,engines],sort_keys=True).encode()).hexdigest()
+    token=hashlib.sha256(json.dumps([key,language,engines,override],sort_keys=True).encode()).hexdigest()
     return dict(result,name=NAMES.get(language,language or 'Unconfirmed'),supported=available,cacheKey=key,
-                needsConfirmation=language!='ja',token=token,
-                reason=result.get('reason') or ('' if available else 'The detected source language is not supported by the selected voice engine.'))
+                needsConfirmation=bool(language!='ja' or result.get('metadataConflict') or override),token=token,
+                reason=result.get('reason') or ('' if available else 'Select a supported source language.'))
 
 
 if __name__=='__main__':print(json.dumps(probe(json.loads(Path(sys.argv[1]).read_text()))))

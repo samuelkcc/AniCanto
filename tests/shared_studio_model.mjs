@@ -12,3 +12,7 @@ assert.equal(esc('<img src=x onerror="x">'),'&lt;img src=x onerror=&quot;x&quot;
 console.log('Shared progress, bilingual captions, exact-engine takes and nine theme contracts passed.');
 
 assert.deepEqual(visibleMilestones(PHASES.map(id=>({id})),true).map(r=>r.id),['prepare','recognition','translation','voice','export']);
+
+import {translatedCaption,hasTranslatedScript,playbackScriptTime} from '../studio/web/playback-policy.js';
+const partial=[{start:0,end:1,text:'已完成',english:'Ready'},{start:1,end:2,text:''},{start:2,end:3,text:'停用',enabled:false},{start:4,end:6,captionStart:4.5,captionEnd:5.5,text:'台詞',captionText:'顯示字幕'}];
+assert.equal(hasTranslatedScript(partial,'yue'),true);assert.equal(translatedCaption(partial,1.2,'yue'),'');assert.equal(translatedCaption(partial,2.2,'yue'),'');assert.equal(translatedCaption(partial,4.1,'yue'),'');assert.equal(translatedCaption(partial,4.8,'yue'),'顯示字幕');assert.equal(translatedCaption(partial,.5,'en'),'Ready');assert.equal(playbackScriptTime(101,false,100),1);assert.equal(playbackScriptTime(1,true,100),1);console.log('Partial translated captions, disabled/gap timing, display override and source/output clocks passed.');
