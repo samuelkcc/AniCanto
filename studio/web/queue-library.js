@@ -1,0 +1,5 @@
+import {esc,filename} from './model.js';
+export function removalHTML(rows,selected,t,button){
+ return `<section class="queue-removal stack"><p>${esc(t('Remove videos from the list. Source videos, exports, recordings and saved work are retained.'))}</p><div class="row wrap">${button('remove-select-all','Select all')}${button('remove-select-none','Select none')}${button('remove-select-completed','Completed only')}</div><div class="removal-items">${rows.map(r=>`<label class="removal-item"><input type="checkbox" data-remove-id="${esc(r.id)}" ${r.status==='running'?'disabled':selected.has(r.id)?'checked':''}><span><strong>${esc(filename(r.video))}</strong><small>${esc(t(r.status==='running'?'Processing · locked':r.status||'Waiting'))}</small></span></label>`).join('')}</div><p id="remove-count" role="status"></p><div class="row">${button('close-drawer','Cancel')}${button('remove-selected-videos','Remove selected from list','trash','danger')}</div></section>`;
+}
+export function removableIDs(rows,mode){return rows.filter(r=>r.status!=='running'&&(mode==='all'||mode==='completed'&&r.status==='complete')).map(r=>r.id);}

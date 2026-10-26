@@ -1,0 +1,36 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const language=process.env.ANICANTO_QA_LANGUAGE||'en';
+const out=path.resolve('.build/product77/ui');fs.mkdirSync(out,{recursive:true});
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CANTOSYNC_QA_BROWSER||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+ const page=await browser.newPage({viewport:{width:1600,height:1050}}),errors=[],calls=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.exposeFunction('fixtureInvoke77',async(name,args={})=>{
+  calls.push([name,args.op]);if(['studio_appearance','studio_ack_finished'].includes(name))return true;
+  if(name==='studio_start')throw Error('Acceptance fixture never generates model audio.');
+  if(name==='studio_pick')return [];
+  const response=await fetch('http://127.0.0.1:18777/api',{method:'POST',body:JSON.stringify({name,args})});const data=await response.json();if(data.error)throw Error(data.error);return data.result;
+ });
+ await page.addInitScript(()=>{const listeners=new Map();window.__TAURI__={core:{convertFileSrc:p=>'http://127.0.0.1:18777/media?path='+encodeURIComponent(p),invoke:(name,args={})=>window.fixtureInvoke77(name,args)},event:{listen:async(name,f)=>{listeners.set(name,f);return()=>listeners.delete(name);}},window:{getCurrentWindow:()=>({close:async()=>{}})}};});
+ const close=async()=>{await page.locator('.drawer button[data-action=close-drawer]').first().click();await page.waitForSelector('.drawer',{state:'detached'});};
+ const click=async(action)=>page.locator(`[data-action="${action}"]`).first().click();
+ await page.goto('http://127.0.0.1:18777');await page.waitForSelector('#welcome-language');await page.selectOption('#welcome-language',language);await click('enter');await page.waitForSelector('.shelf-card');
+ assert.equal(await page.locator('.shelf-card').count(),3);
+ await page.locator('.shelf-card [data-action=remove]:not(:disabled)').first().click();await page.waitForSelector('[data-remove-id]');
+ assert.equal(await page.locator('[data-remove-id]:disabled').count(),1);
+ await click('remove-select-completed');assert.equal(await page.locator('[data-remove-id]:checked').count(),2);
+ await click('remove-select-none');assert.equal(await page.locator('[data-remove-id]:checked').count(),0);assert(await page.locator('[data-action=remove-selected-videos]').isDisabled());
+ await click('remove-select-all');assert.equal(await page.locator('[data-remove-id]:checked').count(),2);
+ await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'bulk-removal-'+language+'.png')});await click('remove-selected-videos');await page.waitForSelector('[data-action=restore-removed-videos]');assert.equal(await page.locator('.shelf-card').count(),1);await click('restore-removed-videos');await page.waitForFunction(()=>document.querySelectorAll('.shelf-card').length===3);
+ await page.locator('.shelf-card').filter({hasText:'fixture.mp4'}).click();await page.waitForSelector('[data-action=inspect-audio]:not(:disabled)');
+ await click('inspect-audio');await page.waitForSelector('.wave-row');assert.equal(await page.locator('.wave-row').count(),3);assert.equal(await page.locator('.wave-row > svg path').count(),3);assert((await page.locator('.wave-row button svg').first().boundingBox()).height<30);assert((await page.locator('.wave-row > svg path').first().getAttribute('d')).length>500);
+ await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'waveforms-'+language+'.png')});await close();
+ await click('source-boundaries');await page.waitForSelector('[data-action=boundary-edit]');await click('boundary-edit');await page.waitForSelector('[data-split-field=original]');
+ assert.equal(await page.locator('[data-split-field]').count(),6);await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'boundary-review-'+language+'.png')});await close();
+ await click('subtitle-source');await page.waitForSelector('[data-action=subtitle-sync]');await click('subtitle-sync');await page.fill('#sync-offset','1');await click('preview-subtitle-sync');await page.waitForSelector('.sync-samples');assert.match(await page.locator('#subtitle-sync-result').innerText(),/1.000s/);
+ await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'subtitle-sync-'+language+'.png')});assert(await page.locator('[data-action=apply-subtitle-sync]').isEnabled());await page.fill('#sync-offset','2');await page.locator('#sync-offset').press('Tab');assert(await page.locator('[data-action=apply-subtitle-sync]').isDisabled());await close();
+ await page.locator('[data-action=page][data-value=produce]').first().click();await click('update-recordings');await page.waitForSelector('.impact-preview');assert.match(await page.locator('.impact-preview').innerText(),new RegExp('1 '+({'en':'dialogue lines','zh-HK':'句對白','zh-CN':'句对白','ja':'件のセリフ'})[language]));assert(await page.locator('[data-action=execute-recording-update]').isEnabled());await page.selectOption('#recording-update-operation','all');await page.waitForFunction(expected=>document.querySelector('.impact-preview')?.textContent.includes(expected), '2 '+({'en':'dialogue lines','zh-HK':'句對白','zh-CN':'句对白','ja':'件のセリフ'})[language]);await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'regeneration-impact-'+language+'.png')});await close();
+ await page.locator('[data-action=page][data-value=review]').first().click();await page.waitForSelector('.coverage-summary');assert.match(await page.locator('.coverage-summary').innerText(),new RegExp(({'en':'Recording presence is not a pronunciation score','zh-HK':'有錄音唔代表','zh-CN':'存在录音不代表','ja':'録音の有無は発音評価'})[language]));await page.waitForTimeout(350);await page.screenshot({path:path.join(out,'coverage-'+language+'.png')});
+ assert.deepEqual(errors,[]);assert(!calls.some(([name])=>name==='studio_start'));
+ fs.writeFileSync(path.join(out,'ui-receipt-'+language+'.json'),JSON.stringify({passed:true,cases:['bulk-all-none-completed-running-protection-undo','three-real-waveforms','word-evidence-source-split-review','subtitle-offset-preview-and-invalidated-apply','regeneration-impact-live-preview','coverage-not-quality-score'],errors,calls},null,2));
+ console.log('PASS six desktop UI workflows with real Python state/audio/subtitle evidence; no model inference.');await browser.close();
+})().catch(error=>{console.error(error);process.exit(1);});

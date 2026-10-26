@@ -1,4 +1,4 @@
-# Inside the current app · 0.24.75
+# Inside the current app · 0.24.79
 
 [← AniCanto](../../README.md)
 
@@ -6,46 +6,52 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ## Welcome
 
-![Welcome](../images/welcome-en.png?v=0.24.75)
+![Welcome](../images/welcome-en.png?v=0.24.79)
 
 ## Models & setup
 
-![Models & setup](../images/models-setup-en.png?v=0.24.75)
+![Models & setup](../images/models-setup-en.png?v=0.24.79)
 
 ## Basic mode
 
-![Basic mode](../images/basic-en.png?v=0.24.75)
+![Basic mode](../images/basic-en.png?v=0.24.79)
 
 ## Expert timeline
 
-![Expert timeline](../images/timeline-en.png?v=0.24.75)
+![Expert timeline](../images/timeline-en.png?v=0.24.79)
 
 ## Review report
 
-![Review report](../images/review-en.png?v=0.24.75)
+![Review report](../images/review-en.png?v=0.24.79)
 
 ## Video queue
 
-![Video queue](../images/batch-en.png?v=0.24.75)
+![Video queue](../images/batch-en.png?v=0.24.79)
 
 ## Model centre
 
-![Model centre](../images/model-centre-en.png?v=0.24.75)
+![Model centre](../images/model-centre-en.png?v=0.24.79)
 
 ## Preferences
 
-![Preferences](../images/preferences-en.png?v=0.24.75)
+![Preferences](../images/preferences-en.png?v=0.24.79)
 
 ## Subtitle source
 
-![Subtitle source](../images/subtitles-en.png?v=0.24.75)
+![Subtitle source](../images/subtitles-en.png?v=0.24.79)
 
 ## Dubbing studio and saved clips
 
-![Dubbing studio](../images/speech-studio-en.png?v=0.24.75)
+![Dubbing studio](../images/speech-studio-en.png?v=0.24.79)
 
-![Saved & learning](../images/speech-player-en.png?v=0.24.75)
+![Saved & learning](../images/speech-player-en.png?v=0.24.79)
 
 ## Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA](../images/nvidia-cuda-en.png?v=0.24.75)
+![NVIDIA CUDA](../images/nvidia-cuda-en.png?v=0.24.79)
+
+## Restart or add a voice track
+
+Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
+
+![Restart or add a voice track](../images/restart-en.png?v=0.24.79)

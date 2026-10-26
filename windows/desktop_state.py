@@ -81,8 +81,8 @@ class Store:
         if self.queue and not any(r['id']==self.selected for r in self.queue):self.selected=self.queue[0]['id']
         self.save()
     def row(self,ident=None):return next((r for r in self.queue if r['id']==(ident or self.selected)),None)
-    def submit(self,row):
-        if row.get('request') and row['status']=='paused':
+    def submit(self,row,force_new=False):
+        if row.get('request') and row['status']=='paused' and not force_new:
             request=Path(row['request'])
             from subtitle_snapshot import verify
             verify(read(request,{}));return request
@@ -101,6 +101,7 @@ class Store:
                         defaultDubLanguage=settings['dubLanguages'][0],automaticDurationRewrite=True)
         from terminology import validate as validate_terms
         settings['termRules']=validate_terms(row.get('termRules',[]))
+        if row.get('subtitleAlignment'):settings['subtitleAlignment']=copy.deepcopy(row['subtitleAlignment'])
         if row.get('externalSubtitle'):
             subtitle=Path(row['externalSubtitle'])
             if not subtitle.is_file():raise ValueError('The imported subtitle file is missing. Choose it again before converting.')

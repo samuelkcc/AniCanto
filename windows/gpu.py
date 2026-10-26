@@ -7,8 +7,11 @@ import subprocess
 import sys
 import time
 
-AMD_ROCM_NAMES = ('RX 9070', 'RX 9070 XT', 'RX 9060 XT', 'RX 7900 XTX', 'RX 7700',
-                  'AI PRO R9700', 'PRO W7900', 'PRO W7900 DUAL SLOT')
+_shared=Path(__file__).resolve().parent/'shared'
+if not _shared.is_dir():_shared=Path(__file__).resolve().parent.parent/'Resources'
+sys.path.insert(0,str(_shared))
+from hardware_runtimes import POLICY,amd_supported,nvidia as nvidia_runtime
+AMD_ROCM_NAMES=tuple(POLICY['amd']['models'])
 
 
 def adapters():
@@ -46,12 +49,6 @@ def recommended(rows):
     return 'cpu'
 
 
-def amd_supported(name):
-    name = re.sub(r'\s+', ' ', name.upper())
-    # Exact model boundaries: RX 7900 XT is not RX 7900 XTX; RX 7700 XT is
-    # not included in the published RX 7700 allowlist for this pinned stack.
-    return any(re.search(r'\b' + re.escape(model) + r'(?:\s+GRAPHICS)?$', name)
-               for model in AMD_ROCM_NAMES)
 
 
 def torch_probe(engine='qwen', requested='auto', index=0):
@@ -82,6 +79,10 @@ def torch_probe(engine='qwen', requested='auto', index=0):
     with torch.inference_mode():
         a = torch.ones((256, 256), device=device, dtype=dtype)
         result = a @ a
+        if backend in ('cuda','rocm'):
+            signal=torch.ones((1,1,64),device=device,dtype=dtype);kernel=torch.ones((1,1,3),device=device,dtype=dtype)
+            conv=torch.nn.functional.conv1d(signal,kernel)
+            if not torch.isfinite(conv).all().item():raise RuntimeError('GPU convolution check failed.')
         if not torch.isfinite(result).all().item() or abs(result[0, 0].item() - 256) > .5:
             raise RuntimeError('GPU calculation check failed.')
         if backend in ('cuda', 'rocm'):
@@ -92,7 +93,7 @@ def torch_probe(engine='qwen', requested='auto', index=0):
     if backend in ('cuda','rocm'):
         try:free_memory=round(torch.cuda.mem_get_info(index)[0]/2**30,2)
         except (RuntimeError,AttributeError):pass
-    return dict(device=device, backend=backend, name=name, memoryGB=round(memory, 2),freeMemoryGB=free_memory,
+    return dict(torchIndex=('cu'+str(torch.version.cuda).replace('.','')) if backend=='cuda' else None,computeCapability=list(torch.cuda.get_device_capability(index)) if backend=='cuda' else None,compiledArchitectures=torch.cuda.get_arch_list() if backend=='cuda' else None,device=device, backend=backend, name=name, memoryGB=round(memory, 2),freeMemoryGB=free_memory,
                 dtype=str(dtype).split('.')[-1], torch=torch.__version__,
                 kernelSeconds=round(time.monotonic()-started, 4), kernelPassed=True,
                 note='Kernel check only; voice quality and model speed require a real inference test.')
@@ -135,6 +136,11 @@ def hardware_snapshot():
         info['adapters']=[{'Name':row.get('name',''), 'PNPDeviceID':f"VEN_{int(row.get('vendorId',0)):04X}"}
                           for row in info.get('displayAdapters',[])]
     info['suggestedSetupBackend']=recommended(info['adapters'])
+    if sys.platform=='win32' and info['suggestedSetupBackend']=='nvidia':
+        try:
+            p=subprocess.run(['nvidia-smi','--query-gpu=name,compute_cap,driver_version','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=8,check=True)
+            info['cudaCapabilities']=[dict(name=name.strip(),computeCapability=float(cc.strip()),driverVersion=driver.strip()) for line in p.stdout.splitlines() if line.count(',')>=2 for name,cc,driver in [line.rsplit(',',2)]]
+        except (OSError,ValueError,subprocess.SubprocessError):info['cudaCapabilities']=[]
     return info
 
 
@@ -168,7 +174,7 @@ def planning_hardware():
             h.update(backend='cuda' if wanted=='nvidia' else 'rocm',
                      acceleratorMemoryGB=float(chosen['dedicatedMemoryGB']),acceleratorName=chosen.get('name',''),
                      inferenceVerified=False,memorySource='DXGI dedicated video memory; kernel not yet tested')
-            return h
+            return apply_runtime_selection(h)
     if sys.platform=='win32' and h['suggestedSetupBackend']=='nvidia':
         try:
             result=subprocess.run(['nvidia-smi','--query-gpu=name,memory.total','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=10,check=True)
@@ -176,4 +182,19 @@ def planning_hardware():
             gib=float(amount.strip())/1024
             h.update(backend='cuda',acceleratorName=name.strip(),acceleratorMemoryGB=gib,inferenceVerified=False,memorySource='nvidia-smi; kernel not yet tested')
         except (OSError,ValueError,subprocess.SubprocessError):pass
+    return apply_runtime_selection(h)
+
+
+def apply_runtime_selection(h):
+    if h.get('backend')!='cuda':return h
+    cap=next((x for x in h.get('cudaCapabilities',[]) if x['name'].upper()==h.get('acceleratorName','').upper()),{})
+    if cap.get('computeCapability') is not None:h['cudaComputeCapability']=cap['computeCapability']
+    if cap.get('driverVersion'):h['cudaDriverVersion']=cap['driverVersion']
+    try:
+        saved=json.loads((data_root()/'gpu-runtime-selection.json').read_text())
+        if saved.get('name')==h.get('acceleratorName') and saved.get('driver')==h.get('cudaDriverVersion'):
+            if saved.get('kernelPassed') is True:h['selectedTorchIndex']=saved['torchIndex']
+            elif saved.get('torchIndex')=='cpu':
+                h.update(backend='cpu',detectedBackend='cuda',suggestedSetupBackend='cpu',gpuCompatibilityReason='The GPU runtime check failed on this card and driver. The verified CPU fallback remains selected.')
+    except (OSError,ValueError,KeyError):pass
     return h

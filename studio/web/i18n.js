@@ -1,5 +1,23 @@
 import {localeData} from './locale-data.js';
 const zh={
+"Restart / update dubbing":"重新製作／更新配音",
+"Restart this video without removing it from the list. Earlier movies, recordings and saved work are kept.":"唔使移除影片再加入；舊成品、錄音同已保存工作會保留。",
+"Restart conversion":"重新開始轉換",
+"Run source recognition, subtitles, translation and dubbing again with the current production settings.":"按目前製作設定，重新辨識原聲、處理字幕、翻譯及配音。",
+"Regenerate voices only":"只重新生成配音",
+"Keep the existing dialogue, translations and timing. Generate new recordings for the current audio tracks, then export a new version.":"保留現有對白、翻譯及時間；重新生成目前聲道嘅錄音，再輸出新版本。",
+"Add a voice track":"新增配音聲道",
+"Choose a language and voice engine. Missing target-language text is prepared for the new track; existing tracks stay unchanged.":"選擇語言及配音引擎；新語言欠缺嘅稿件會先補齊，原有聲道會保留。",
+"Voice updates become available after this video has a translated draft.":"影片有翻譯稿後，就可以更新配音或新增聲道。",
+"The selected video changed. Open the update menu again.":"選取嘅影片已改變，請重新開啟更新選單。",
+
+"Workflow notices":"流程提示",
+"Check the workflow notices above":"請檢查上方流程提示",
+
+"OCR needs attention":"OCR 需要檢查",
+"Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.":"部分畫面字幕未能辨識，已按原聲聽寫處理；現有錄音已保留。",
+"Original performances and songs retained":"已保留原聲表演及歌曲",
+
 "Full Drama 3":"完整 Drama 3",
 "Can try · memory pressure":"可嘗試・記憶體壓力",
 "Apple Silicon: 32 GB unified memory can try full Drama 3 with Qwen 9B; 64 GB is recommended for the tested Drama 3 + Qwen 35B setup.":"Apple Silicon：32 GB 統一記憶體可嘗試完整 Drama 3 配 Qwen 9B；實測 Drama 3 配 Qwen 35B 建議使用 64 GB。",
@@ -557,3 +575,7 @@ Object.assign(zh,{"Ready to play": "可以播放", "Video player": "影片播放
 Object.assign(zh,{"Pause playback": "暫停播放", "Subtitle size": "字幕大小"});
 
 Object.assign(zh,{"Automatic · translated script": "自動 · 已翻譯台詞", "Translation not ready at this position": "呢個位置嘅翻譯尚未完成"});
+
+Object.assign(zh,{"Manage video list": "管理影片清單", "Select all": "全選", "Select none": "全不選", "Completed only": "只選已完成", "Remove selected from list": "移除所選清單項目", "Selected videos": "已選影片", "Processing · locked": "處理中・已鎖定", "Remove videos from the list. Source videos, exports, recordings and saved work are retained.": "只移出清單；原片、成品、錄音同已存工作會保留。", "Videos removed": "已移出清單", "Saved work and recordings were retained.": "已保留工作同錄音。", "Undo removal": "復原移除", "Detect and recommend models": "偵測並建議模型", "The installed CUDA 12.8 Torch build does not include this older GPU architecture. CPU processing is recommended; VRAM capacity alone is insufficient.": "現用 CUDA 12.8 Torch 不支援呢款舊 GPU 架構，建議用 CPU；單靠顯存容量不足以判定兼容。", "Changes before generation": "生成前確認改動", "dialogue lines": "句對白", "Source analysis and scripts retained": "保留原聲分析同台詞稿", "Source analysis and translation will run again": "會重新分析原聲同翻譯", "Previous recordings and exports are retained.": "保留過往錄音同成品。", "Other tracks retained": "保留其他音軌", "Generation parameters": "生成參數", "Recording coverage": "錄音完成概況", "missing recordings": "句缺少錄音", "review notes": "項覆核提示", "recordings need updating": "項錄音需要更新", "Recording presence is not a pronunciation score. Language concerns remain review notes; automatic repair fills missing or corrupt audio.": "有錄音唔代表發音已驗收。語言疑點留作覆核提示；自動修復只補缺聲或損壞錄音。", "Inspect audio": "檢查音訊", "Audio inspection": "音訊檢查", "Source boundaries": "原聲分句", "Compare the original mix, separated voice and generated take. Drag the time controls to audition a precise interval.": "比較原片混音、分離人聲同配音；調整起訖時間試聽指定範圍。", "Generated take": "生成錄音", "Measured audio waveform": "實測音訊波形", "Loading measured waveforms…": "正在讀取實測波形…", "No audio evidence is available for this dialogue yet.": "呢句暫時未有可用錄音。", "Choose a valid interval within this waveform.": "請選擇波形範圍內有效嘅起訖時間。", "Adjust subtitle timing": "調整字幕時間", "Subtitle timing": "字幕時間", "Adjust external subtitle timing without changing the original file. Original speech remains the timing authority.": "調整外掛字幕時間，原檔會保留。對白時間仍以原聲為準。", "Correction method": "校正方法", "Constant offset": "整體時間偏移", "Two-point drift correction": "兩點時間漂移校正", "Offset in seconds · positive delays subtitles": "偏移秒數・正數代表延遲字幕", "First subtitle time": "第一個字幕時間", "First matching video time": "第一個對應影片時間", "Second subtitle time": "第二個字幕時間", "Second matching video time": "第二個對應影片時間", "Preview timing adjustment": "預覽時間調整", "Apply subtitle timing": "套用字幕時間", "subtitles": "段字幕", "Subtitle timing updated. The original file was retained.": "已更新字幕時間，原檔已保留。", "Suggestions use measured source word times and pauses. No timings are invented from subtitle character counts. Review the proposed text before changing the draft.": "建議根據實測原聲字音時間同停頓，唔會按字幕字數估時間；修改草稿前請確認文字。", "Split dialogue": "分開對白", "Merge adjacent dialogue": "合併相鄰對白", "measured pause": "實測停頓", "Review proposed change": "檢視修改建議", "No safe boundary suggestions. Existing analysis may not contain reliable word times.": "暫時未有可靠分句建議；現有分析可能未有可信字音時間。", "Before split": "前半句", "After split": "後半句", "Apply to draft": "套用至草稿", "Only the editable draft changes. Existing exports and recordings are retained. A changed dialogue needs a new take.": "只改編輯草稿，保留成品同舊錄音；改過嘅對白需要重新生成。", "Confirm this video’s source language before starting it.": "請確認呢條影片嘅原聲語言，再開始轉換。"});
+
+Object.assign(zh,{"Compatible runtime": "相容執行環境", "Inference check required": "需要實際運算檢查", "This GPU architecture is not covered by the pinned CUDA runtimes. CPU processing is available.": "目前 CUDA 套件未涵蓋呢款 GPU 架構，可以使用 CPU。", "This Radeon is outside the pinned Windows ROCm support list. CPU processing is available.": "呢款 Radeon 未列入現用 Windows ROCm 支援名單，可以使用 CPU。"});

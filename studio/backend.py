@@ -221,36 +221,8 @@ class Studio:
         except OSError as error:return '[Log unavailable: '+str(error)+']'
 
     def debug_report(self):
-        row=self.store.row() or {};ready=read(self.root/'native-ready.json',{})
-        version=read(BASE/'VERSION.json',{}) or read(self.shared/'version.json',{})
-        header=dict(format='AniCanto debug report v1',created=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),
-            version=version,platform=self.platform,project={k:row.get(k) for k in ('id','video','status','stage','message','lastError','resultSummary','processingSeconds','progress','sourceLanguage')},
-            selectedSettings={k:self.store.settings.get(k) for k in ('ttsBackend','selectedEngines','dubLanguages','productionMode','translationSource','model','drama3Model')},
-            runtime={k:ready.get(k) for k in ('engine','requestedEngine','device','backend','gpu','textModel')})
-        parts=['AniCanto — Debug report',json.dumps(header,ensure_ascii=False,indent=2)]
-        # Explicit evidence files only; no raw settings, credentials, media or
-        # arbitrary user files. Export remains bounded during a live conversion.
-        for source in self.log_sources():
-            parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,512*1024)])
-        for group,names in [('job',('processing-time.json','production-progress.json','report.json','segment-issues.json','normal-script-rescue.json','source-timing-review.json','normal-checks.json','english-overlap.json','concise-dialogue.json','dialogue-delivery-audit.json','translation-brevity.json','natural-repair.json','natural-placement.json','automatic-recovery.json')),('attempt',('attempt.json','conversion-details.json','workflow.jsonl'))]:
-            folder=Path(row.get('job') or self.root/'jobs/nonexistent') if group=='job' else Path(row.get('attempt',{}).get('path',self.root/'attempts/nonexistent'))
-            for name in names:
-                path=(folder/name).resolve()
-                if path.is_relative_to(self.root) and path.is_file():
-                    source=dict(id=str(path.relative_to(self.root)))
-                    parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,512*1024)])
-        # Include bounded native request and recent per-take completion evidence.
-        # These are app-owned allowlisted diagnostics, never model config or audio.
-        job=Path(row.get('job') or self.root/'jobs/nonexistent').resolve()
-        if job.is_relative_to((self.root/'jobs').resolve()) and job.is_dir():
-            files=[]
-            for pattern in ('native-drama-request.json','*.generation.json','*.failure.json'):
-                files.extend(path for path in job.rglob(pattern) if path.resolve().is_relative_to(job))
-            files=sorted(files,key=lambda path:path.stat().st_mtime,reverse=True)[:16]
-            for path in files:
-                source=dict(id=str(path.relative_to(self.root)))
-                parts.extend(['\n===== '+source['id']+' =====',self.log_text(source,32*1024)])
-        return '\n'.join(parts)+'\n'
+        from desktop_debug import report
+        return report(self)
 
     def dispatch(self,op,p):
         if op=='use-terms':
@@ -459,6 +431,56 @@ class Studio:
                 queue.insert(index,row)
                 if queue!=self.store.queue:self.store.queue=queue;self.store.save()
             return self.state()
+        if op in ('queue-arm','queue-next','queue-stop'):
+            from native_queue import dispatch
+            return dispatch(self,op,p)
+        if op in ('recording-impact','audio-waveforms','boundary-proposals','apply-boundary'):
+            from editing_tools import impact,waveform,boundaries,boundary_token,apply_boundary
+            row=self.row(p.get('id'));path=self.review_path(row);review=read(path,{})
+            draft=copy.deepcopy(p.get('draft') or self.draft(row))
+            if draft.get('baseFingerprint')!=review_fingerprint(review):raise ValueError('The source script changed. Reload this project.')
+            if op=='recording-impact':return impact(review,draft,p)
+            if op in ('boundary-proposals','apply-boundary'):
+                analysis=read(path.parent/'japanese-analysis.json',{})
+                if op=='apply-boundary':return dict(draft=apply_boundary(review,analysis,draft,p))
+                return dict(proposals=boundaries(review,analysis),token=boundary_token(review,analysis,draft),wordClocksRequired=True)
+            snapshot=job_snapshot(row);index=p.get('index')
+            if not isinstance(index,int) or not 0<=index<len(review.get('cues',[])):raise ValueError('Select a dialogue.')
+            cue=review['cues'][index];a=max(0,float(cue['start'])-.25);b=min(float(review.get('config',{}).get('duration') or float(cue['end'])+.25),float(cue['end'])+.25)
+            sources=snapshot.get('reviewSources',{});items=[]
+            for label,source in sources.items():
+                file=Path(source).resolve()
+                if file.is_relative_to(self.root) and file.is_file():items.append(dict(label=label,**waveform(file,a,b,self.tools()['ffmpeg'],self.root/'cache/waveforms')))
+            takes=[x for x in snapshot.get('takes',[]) if x.get('index')==index+1 and x.get('engine')==p.get('engine') and x.get('language')==p.get('language')]
+            if takes:
+                file=Path(takes[-1]['audio']).resolve()
+                if file.is_relative_to(self.root) and file.is_file():
+                    measured=subprocess.check_output([self.tools()['ffprobe'],'-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(file)],timeout=15)
+                    seconds=min(180,float(measured.decode().strip()))
+                    items.append(dict(label='generated',**waveform(file,0,seconds,self.tools()['ffmpeg'],self.root/'cache/waveforms')))
+            return dict(rows=items,index=index)
+        if op in ('subtitle-alignment-preview','set-subtitle-alignment'):
+            row=self.row(p.get('id'))
+            if not row.get('externalSubtitle'):raise ValueError('Import a subtitle file first.')
+            from playback_subtitles import read as read_captions
+            from editing_tools import alignment,fingerprint
+            original=dict(row);original.pop('subtitleAlignment',None)
+            evidence=read_captions(self.root,original,self.tools(),choice='external')
+            params=p.get('alignment',{});result=alignment(evidence['cues'],params)
+            sha=hashlib.sha256(Path(row['externalSubtitle']).read_bytes()).hexdigest();token=fingerprint([row['id'],sha,params])
+            if op=='set-subtitle-alignment':
+                if row.get('status') in ('running','paused'):raise ValueError('Finish this saved conversion before changing subtitle timing.')
+                if p.get('token')!=token:raise ValueError('Subtitle timing changed. Preview the adjustment again.')
+                row['subtitleAlignment']=params;self.store.save()
+            return dict(state=self.state(),token=token,scale=result['scale'],offset=result['offset'],count=len(result['cues']),sample=result['cues'][:8]+result['cues'][-2:])
+        if op=='remove-videos':
+            from queue_library import detach
+            result=detach(self.store,p.get('ids'),self.root/'studio'/'removed-videos.json')
+            return dict(state=self.state(),**result)
+        if op=='restore-videos':
+            from queue_library import restore
+            result=restore(self.store,p.get('batch'),self.root/'studio'/'removed-videos.json')
+            return dict(state=self.state(),**result)
         if op=='remove':
             row=self.row(p.get('id'))
             if row['status']=='running':raise ValueError('Pause this video before removing it.')
@@ -496,7 +518,10 @@ class Studio:
                 except ValueError:pass
             snapshot['rowID']=row['id']
             from review_workbench import project
-            return project(snapshot.get('root',str(Path(row.get('review') or row.get('job') or self.root/'jobs/nonexistent').parent)),snapshot)
+            result=project(snapshot.get('root',str(Path(row.get('review') or row.get('job') or self.root/'jobs/nonexistent').parent)),snapshot)
+            from editing_tools import coverage
+            result['coverage']=coverage(result)
+            return result
         if op=='review-triage':
             row=self.row(p.get('id'))
             if row.get('status')=='running':raise ValueError('Pause and save before reviewing a line.')
@@ -523,28 +548,31 @@ class Studio:
             write(path.parent/'editor-draft-studio.json',draft);return dict(saved=True)
         if op=='start':
             row=self.row(p.get('id'))
+            row.pop('queueNotice',None)
+            restart=bool(p.get('freshVersion') and p.get('reanalyze'))
+            resuming=row.get('status')=='paused' and not restart
             if row.get('status')=='running':raise ValueError('This video is already processing.')
-            if row.get('status')!='paused' and Path(row.get('output') or '/nonexistent').is_file() and not p.get('freshVersion'):
+            if not resuming and Path(row.get('output') or '/nonexistent').is_file() and not p.get('freshVersion'):
                 if any(issue.get('status')!='user-choice-saved' for issue in job_snapshot(row).get('issues',[])):
                     return self.dispatch('retry-review',dict(id=row['id'],mode='pending'))
                 raise ValueError('This video already has an output. Choose Produce a new version to rerun the whole video.')
             from engine_availability import require
-            frozen=read(Path(row.get('request') or '/nonexistent'),{}) if row.get('status')=='paused' else {}
+            frozen=read(Path(row.get('request') or '/nonexistent'),{}) if resuming else {}
             selected=frozen or self.store.settings
             engines=selected.get('selectedEngines',[selected.get('ttsBackend')]) if frozen or self.store.mode=='expert' else [selected.get('ttsBackend')]
             for engine in engines:require(engine,self.root,self.platform)
             if not Path(row['video']).is_file():raise ValueError('The source video is missing. Reconnect its drive or import it again.')
             selected_models=read(self.root/'model-selections.json',{})
             selected_voice=self.store.settings.get('drama3Model') or selected_models.get('drama3') or selected_models.get('voice')
-            if row.get('status')!='paused' and 'drama3' in self.store.settings.get('selectedEngines',[self.store.settings.get('ttsBackend')]) and selected_voice=='drama3-small-iq3':raise ValueError('Drama3-small has been retired. Choose a compatible quality preset in Welcome before starting a new conversion.')
+            if not resuming and 'drama3' in self.store.settings.get('selectedEngines',[self.store.settings.get('ttsBackend')]) and selected_voice=='drama3-small-iq3':raise ValueError('Drama3-small has been retired. Choose a compatible quality preset in Welcome before starting a new conversion.')
             source=row.get('sourcePreflight') or {}
-            if row.get('status')!='paused' and source.get('needsConfirmation'):
+            if not resuming and source.get('needsConfirmation'):
                 if not source.get('supported'):raise ValueError(source.get('reason') or 'Unsupported source language.')
                 if p.get('sourceConfirmed')!=source.get('token'):raise ValueError('Confirm the detected source language before conversion.')
             # Keep all frozen requests, including an older audiovisual choice.
-            request=self.store.submit(row)
+            request=self.store.submit(row,force_new=True) if restart else self.store.submit(row)
             cfg=read(request,{})
-            if row.get('status')!='paused':
+            if not resuming:
                 if source.get('language'):
                     from source_language import apply
                     apply(cfg,source['language']);cfg['sourceAudioStream']=source.get('stream')
@@ -579,6 +607,8 @@ class Studio:
             row=self.row(p.get('id'))
             if any(x.get('status')=='running' for x in self.store.queue):raise ValueError('Pause before preparing a recording update.')
             from update_plan import build
+            from editing_tools import impact
+            if p.get('impactToken')!=impact(read(self.review_path(row),{}),p.get('draft') or self.draft(row),p)['token']:raise ValueError('Preview the recording changes before continuing.')
             draft=copy.deepcopy(p.get('draft') or self.draft(row));self.dispatch('save-draft',dict(id=row['id'],draft=draft))
             return build(self.review_path(row),draft,p.get('operation'),p.get('engine'),p.get('language'),p.get('replaced'))
         if op=='render':
@@ -702,12 +732,12 @@ class Studio:
             requested=p.get('models',self.store.settings.get('deploymentModels',{}))
             if engine=='wsyue' and any(l!='yue' for l in self.store.settings.get('dubLanguages',[])):raise ValueError('WenetSpeech-Yue supports Cantonese only. Choose another engine for English or bilingual dubbing.')
             drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto'))
-            plan=self.dispatch('plan',dict(engine=engine,models=requested,dramaBackend=drama_backend))
+            plan=self.dispatch('plan',dict(engine=engine,models=requested,dramaBackend=drama_backend,backend=p.get('backend','auto')))
             from model_switch import begin
             token=begin(self.root,plan,requested,p.get('removeOld',False),self.store.mode=='expert')
             if self.platform=='win32':
                 python=self.root/'runtimes/ui/Scripts/python.exe'
-                return dict(program=str(python),args=[str(WINDOWS/'native_setup.py'),'--engine',engine,'--models-json',json.dumps(requested),'--drama-backend',drama_backend],action='setup',root=str(self.root),modelSwitchToken=token)
+                return dict(program=str(python),args=[str(WINDOWS/'native_setup.py'),'--engine',engine,'--models-json',json.dumps(requested),'--drama-backend',drama_backend,'--backend',p.get('backend',plan.get('setupBackend','auto'))],action='setup',root=str(self.root),modelSwitchToken=token)
             return dict(program=str(self.helper),args=['--studio-setup',engine,json.dumps(requested)],action='setup',root=str(self.root),modelSwitchToken=token)
         if op=='finish-model-switch':
             from model_switch import finish
@@ -725,7 +755,7 @@ class Studio:
                 if roles.get('voice'):settings[{'drama3':'drama3Model','cosyvoice3':'cosyModel','voxcpm2':'voxcpmModel','wsyue':'wsyueModel'}.get(engine,'voiceModel')]=roles['voice']
                 if self.platform=='win32':
                     receipt=read(self.root/'native-ready.json',{})
-                    settings.update(model=receipt.get('textModel',settings.get('model')),dramaBackend=result['plan'].get('dramaBackend','auto'))
+                    settings.update(model=receipt.get('textModel',settings.get('model')),dramaBackend=receipt.get('dramaBackend',result['plan'].get('dramaBackend','auto')))
                 self.store.settings.update(settings);self.store.save()
             return result
         if op=='plan':
@@ -734,7 +764,7 @@ class Studio:
             if not isinstance(requested,dict) or set(requested)-ROLES or any(not isinstance(v,str) for v in requested.values()):raise ValueError('Unknown model choice.')
             if self.platform=='win32':
                 from native_setup import plan
-                return plan(engine,requested=requested,drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto')))
+                return plan(engine,requested=requested,backend=p.get('backend','auto'),drama_backend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto')))
             response=subprocess.check_output([str(self.helper),'--studio-plan',engine,json.dumps(requested)],timeout=60)
             return json.loads(response.decode().strip().splitlines()[-1])
         if op=='log-sources':return self.log_sources()

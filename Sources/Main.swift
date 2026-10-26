@@ -5,43 +5,9 @@ import Vision
 
 // A local OCR helper uses Apple's Vision framework. It never sends frames anywhere.
 func runOCR() {
-    let folder = URL(fileURLWithPath: CommandLine.arguments[2])
-    let files = ((try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)) ?? []).filter { $0.pathExtension == "jpg" }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-    var rows: [[String:Any]] = []
-    let started=Date()
-    func progress(_ completed:Int) {
-        let event:[String:Any] = ["completed":completed,"total":files.count,"seconds":Date().timeIntervalSince(started),"backend":"Apple Vision"]
-        if let data=try? JSONSerialization.data(withJSONObject:event) {try? data.write(to:folder.appendingPathComponent("ocr-progress.json"),options:.atomic)}
-    }
-    progress(0)
-    for (i, file) in files.enumerated() {
-        autoreleasepool {
-        let request = VNRecognizeTextRequest()
-        request.recognitionLevel = .accurate
-        request.recognitionLanguages = ["zh-Hant", "zh-Hans", "ja-JP", "en-US"]
-        request.usesLanguageCorrection = false
-        // Frames have already been physically cropped to the selected subtitle band.
-        request.regionOfInterest = CGRect(x: 0, y: 0, width: 1, height: 1)
-        do { try VNImageRequestHandler(url: file).perform([request]) }
-        catch {
-            FileHandle.standardError.write(Data("字幕辨識失敗：\(error.localizedDescription)".utf8))
-            exit(1)
-        }
-        let results = (request.results ?? []).sorted {
-            let a = Int(($0.boundingBox.midY * 20).rounded()), b = Int(($1.boundingBox.midY * 20).rounded())
-            return a == b ? $0.boundingBox.minX < $1.boundingBox.minX : a > b
-        }
-        let boxes = results.compactMap { observation -> [String:Any]? in
-            guard let best = observation.topCandidates(1).first, best.confidence >= 0.10 else { return nil }
-            let b=observation.boundingBox
-            return ["text":best.string,"confidence":best.confidence,"x":b.minX,"y":1-b.maxY,"width":b.width,"height":b.height]
-        }
-        let text=boxes.compactMap {$0["text"] as? String}.joined(separator:" ")
-        rows.append(["index": i, "text": text, "boxes":boxes])
-        progress(i+1)
-        }
-    }
-    let data = (try? JSONSerialization.data(withJSONObject: rows)) ?? Data("[]".utf8)
+    let folder=URL(fileURLWithPath:CommandLine.arguments[2])
+    let rows=subtitleOCRRows(folder,recognize:recognizeSubtitleFrame)
+    let data=(try? JSONSerialization.data(withJSONObject:rows)) ?? Data("[]".utf8)
     FileHandle.standardOutput.write(data)
 }
 

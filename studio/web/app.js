@@ -1,7 +1,9 @@
+import {impactHTML,wavesHTML,syncHTML,syncResultHTML,boundaryHTML} from './editing-tools.js';
+import {removalHTML,removableIDs} from './queue-library.js';
 import {processingPlayback,subtitleOptions,translatedCaption,hasTranslatedScript,playbackScriptTime} from './playback-policy.js';
 import {hardwareHTML} from './hardware.js';
 import {playerExtras,audioOptions,bindPlayer} from './player-tools.js';
-import {termsHTML,readTerms,sourceHTML,performanceHTML,updateHTML} from './workflow-dialogs.js';
+import {termsHTML,readTerms,sourceHTML,performanceHTML,updateHTML,restartHTML} from './workflow-dialogs.js';
 import {VOICE_PARAMETER_GROUPS,voiceParameterFamily,VOICE_PARAMETER_KEYS,parameterHelpButton,parameterRange,showParameterHelp,parameterCopy} from './voice-parameters.js';
 import {createSpeechStudio} from './speech-studio.js';
 import {initialLanguage,interfaceLanguageOptions} from './interface-language.js';
@@ -13,7 +15,7 @@ import {workerText,projectWarning} from './workflow-text.js';
 import {matchingPreset,presetPlan,setupParameters,presetReasons} from './quality-presets.js';
 import {icon} from './icons.js';
 import {syncAssistantMotion} from './assistant-motion.js';
-import {ConversionQueue,pendingVideos} from './conversion-queue.js';
+import {ConversionQueue,pendingVideos,missedCompletion,restorableCompletion} from './conversion-queue.js';
 import {orderControls,installQueueOrder} from './queue-order.js';
 import {OUTPUT_LANGUAGES,scriptField,languageTitle,ENGINES,THEMES,PHASES,esc,tc,shortTime,bytes,filename,takeAt,cueAt,captionAt,themeAssets,mergeJourney,visibleMilestones,selectableEngines} from './model.js';
 import {translate} from './i18n.js';
@@ -229,9 +231,9 @@ function qualityTemplates(){
  const presets=plan?.qualityPresets?.filter(p=>p.id!=='compact');if(!presets?.length)return '';
  const h=plan.hardware||{},ram=Number(h.memoryGB||0),vram=Number(h.acceleratorMemoryGB||0),isMac=h.platform==='macos';
  const backend=h.backend==='cuda'?'NVIDIA · CUDA':h.backend==='rocm'?'AMD · ROCm':h.backend==='metal'?'Apple Silicon · Metal':t('CPU / GPU acceleration not confirmed');
- return `<section class="quality-templates" aria-labelledby="quality-title"><div class="row spread"><h4 id="quality-title">${esc(t('Conversion quality'))}</h4><small>${esc(t('Detected hardware'))}</small></div><small>${esc(backend)} · ${ram.toFixed(0)} GB ${esc(t(isMac?'unified memory':'system RAM'))}${vram?` · ${vram.toFixed(0)} GB VRAM`:''}</small>
- ${dramaBackendControl(plan)}<p class="quality-expectation">${esc(t('Drama 3 + Qwen 35B gave the best Cantonese listening results so far; other combinations may retain a Japanese accent.'))}</p>
- <div class="quality-options">${presets.map(p=>`<button class="quality-card ${selectedQuality===p.id?'selected':''}" data-action="quality-preset" data-value="${esc(p.id)}" ${!p.available||active?'disabled':''} aria-pressed="${selectedQuality===p.id}"><div class="row spread"><strong>${esc(t(p.id==='quality'?'Full Drama 3':p.id==='balanced'?'Balanced':'Memory saving'))}</strong><small class="quality-badge">${esc(t(!p.available?'Unavailable':p.memoryPressure?'Can try · memory pressure':p.id===plan.recommendedPreset?'Recommended for this computer':'Compatible'))}</small></div><small class="quality-accent-note">${esc(t(p.id==='quality'?'Closer to a Hong Kong Cantonese accent':'May retain a Japanese accent'))}</small><span>${esc(p.modelSummary||'')}</span><small>${esc(t(isMac?'Unified memory':'System memory'))} ≥ ${p.minimumSystemMemoryGB} GB${p.minimumDedicatedVRAMGB?` · VRAM ≥ ${p.minimumDedicatedVRAMGB} GB`:''}</small>${p.memoryPressure?`<span class="voice-memory-warning">${esc(t('Memory pressure: loading may use swap and become very slow.'))}</span>`:''}${presetReasons(p).map(x=>`<span class="quality-reason">${esc(t(x))}</span>`).join('')}</button>`).join('')}</div>
+ return `<section class="quality-templates" aria-labelledby="quality-title"><div class="row spread"><h4 id="quality-title">${esc(t('Conversion quality'))}</h4><small>${esc(t('Detected hardware'))}</small></div>${button('detect-best-models','Detect and recommend models','refresh','',active?'disabled':'')}<small>${esc(backend)} · ${ram.toFixed(0)} GB ${esc(t(isMac?'unified memory':'system RAM'))}${vram?` · ${vram.toFixed(0)} GB VRAM`:''}</small>
+ ${h.gpuRuntime?`<p class="muted">${esc(t('Compatible runtime'))}: PyTorch ${esc(h.gpuRuntime.torchIndex)} · CUDA ${esc(h.gpuRuntime.cuda)} · ${esc(t('Inference check required'))}</p>`:''}${h.gpuCompatibilityReason?`<p class="warning">${esc(t(h.gpuCompatibilityReason))}</p>`:''}${dramaBackendControl(plan)}<p class="quality-expectation">${esc(t('Drama 3 + Qwen 35B gave the best Cantonese listening results so far; other combinations may retain a Japanese accent.'))}</p>
+ <div class="quality-options">${presets.map(p=>`<button class="quality-card ${selectedQuality===p.id?'selected':''}" data-action="quality-preset" data-value="${esc(p.id)}" ${!p.available||active?'disabled':''} aria-pressed="${selectedQuality===p.id}"><div class="row spread"><strong>${esc(t(p.id.startsWith('quality')?'Full Drama 3':p.id.startsWith('balanced')?'Balanced':'Memory saving'))}</strong><small class="quality-badge">${esc(t(!p.available?'Unavailable':p.memoryPressure?'Can try · memory pressure':p.id===plan.recommendedPreset?'Recommended for this computer':'Compatible'))}</small></div><small class="quality-accent-note">${esc(t(p.id==='quality'?'Closer to a Hong Kong Cantonese accent':'May retain a Japanese accent'))}</small><span>${esc(p.modelSummary||'')}${p.executionBackend==='cpu'?' · CPU':''}</span><small>${esc(t(isMac?'Unified memory':'System memory'))} ≥ ${p.minimumSystemMemoryGB} GB${p.minimumDedicatedVRAMGB?` · VRAM ≥ ${p.minimumDedicatedVRAMGB} GB`:''}</small>${p.memoryPressure?`<span class="voice-memory-warning">${esc(t('Memory pressure: loading may use swap and become very slow.'))}</span>`:''}${presetReasons(p).map(x=>`<span class="quality-reason">${esc(t(x))}</span>`).join('')}</button>`).join('')}</div>
  <p class="quality-expectation">${esc(t(isMac?'Apple Silicon: 32 GB unified memory can try full Drama 3 with Qwen 9B; 64 GB is recommended for the tested Drama 3 + Qwen 35B setup.':'Windows: full Drama 3 Q2 supports NVIDIA CUDA with CPU/RAM offload. AMD and integrated graphics use CPU for Drama 3. At least 32 GB system RAM is recommended.'))}</p>
  ${!isMac?modelMemorySummary(plan,{models:plan.roles},[['text','Text translation','text'],['voice','Voice model version','voice'],['asr','Source dialogue recognition','asr'],['speech','Dubbing verification','speech']]).html:''}
  <small>${esc(t(isMac?'Reserve at least 8 GB system memory for the operating system. On a 32 GB Mac, the 28 GB Drama 3 estimate exceeds the remaining 24 GB model budget.':'At least 8 GB RAM is reserved for the operating system.'))}</small>
@@ -239,7 +241,7 @@ function qualityTemplates(){
  <details id="quality-hardware-details" class="quality-hardware-details"><summary>${esc(t('Hardware details'))}</summary><small>${esc(t('Available model budget'))}: ${Number(plan.memoryBudgetGB||0).toFixed(1)} GB · ${esc(t('System reserve'))}: ${Number(plan.systemReserveGB||0).toFixed(1)} GB</small><small>${esc(t('Memory requirements are estimates with system headroom. Models run in sequence. Setup verifies the actual runtime before use.'))}</small>${!isMac?`<small>${esc(t('CUDA is for NVIDIA. AMD acceleration depends on the supported ROCm card and driver; Intel uses CPU in this build. Video encoding support is checked separately.'))}</small>`:''}</details></section>`;
 }
 function packagePanel(){
- if(planError&&!active?.setup)return `<section class="warning setup-check-error" role="alert"><h3>${esc(t('Unable to check local models'))}</h3><p>${esc(t('The setup check failed. This does not mean your models were deleted.'))}</p><details><summary>${esc(t('Error details'))}</summary><p>${esc(planError)}</p></details>${button('retry-plan','Retry setup check','refresh','primary')}</section>`;
+ if(planError&&!active?.setup)return `<section class="warning setup-check-error" role="alert"><h3>${esc(t('Unable to check local models'))}</h3><p>${esc(t('The setup check failed. This does not mean your models were deleted.'))}</p><details><summary>${esc(t('Error details'))}</summary><p>${esc(planError)}</p></details>${button('retry-plan','Retry setup check','refresh','primary')}${button('detect-best-models','Detect and recommend models','settings')}</section>`;
  const raw=setupEvent?.download,transfer=raw?{...raw,bytesReceived:raw.bytesReceived??raw.receivedBytes??0}:null;
  const downloads=[...(plan?.downloads||[]),...(plan?.tools||[])],missing=downloads.filter(r=>!r.installed),ready=runtimeReady&&plan?.setupReady;
  const roles=plan?.roles||{};const label=r=>r.purposeKey?purpose(r.purposeKey):r.id===roles.voice?t('Voice generation'):r.id===roles.text?t('Text translation'):r.id===roles.speech?t('Speech recognition'):r.id===roles.asr?t('Language check'):purpose(r.role||r.category||r.id);
@@ -343,7 +345,7 @@ function studio(){const expert=state.mode==='expert';return `<div class="studio 
  ${page==='edit'&&browserVisible?browser():''}<main class="main"><div class="workspace-title">${page!=='edit'&&!expert?button('back','Back to preview','back','back-prominent'):''}${page!=='edit'||!browserVisible?button('add','Add videos','plus'):''}<h3>${esc(page==='voice'?speechStudio.title(state.language):t(NAV.find(r=>r[0]===page)?.[1]||'Edit'))}</h3><span class="filename ellipsis grow">${esc(filename(row()?.video))}</span>${row()&&['edit','produce'].includes(page)?button('subtitle-source','Subtitle source','subtitles'):''}${page==='edit'&&!inspectorVisible?transportControl():''}</div>${page==='edit'?editor():fullPage()}</main></div>${expert&&page==='edit'?'<section id="timeline" class="timeline"></section>':''}${retryReviewError?`<footer class="statusbar"><span class="retry-launch-error" role="alert" title="${esc(retryReviewError)}">${esc(retryReviewError)}</span></footer>`:''}</div>`}
 function browser(){return `<aside class="browser"><div class="panel-title">${esc(t('Video queue'))}<span class="row queue-actions"><span class="badge">${state.queue.length}</span>${button('add','Add videos','plus','icon-button')}</span></div><div class="shelf" id="shelf" data-queue-list>${shelfCards()}</div><div class="browser-bottom">${state.mode==='basic'?button('page',speechStudio.title(state.language),'sound','',`data-value="voice"`)+button('projects','Projects and exports','folder'):''}</div></aside>`}
 function deliveryLabel(r){return r?.deliveryKind==='preview'&&r.status!=='running'?t('Preview saved — dubbing incomplete'):statusName(r?.status)}
-function shelfCards(){return state.queue.length?state.queue.map((r,i)=>`<article class="shelf-card ${r.id===state.selected?'active':''}" data-action="select" data-value="${esc(r.id)}" data-queue-id="${esc(r.id)}" tabindex="0">${queueControls(i)}<div class="row spread"><span class="badge accent">${String(i+1).padStart(2,'0')}</span><small class="status accent">${esc(deliveryLabel(r))}</small></div><h4>${esc(filename(r.video))}</h4><small>${esc(t('Total processing'))} · ${shortTime(r.processingSeconds||0)}</small><button class="remove icon ghost" data-action="remove" data-value="${r.id}" aria-label="${esc(t('Remove'))}" ${r.status==='running'?'disabled':''}>${icon('close')}</button></article>`).join(''):empty('No videos yet','','folder')}
+function shelfCards(){return state.queue.length?state.queue.map((r,i)=>`<article class="shelf-card ${r.id===state.selected?'active':''}" data-action="select" data-value="${esc(r.id)}" data-queue-id="${esc(r.id)}" tabindex="0">${queueControls(i)}<div class="row spread"><span class="badge accent">${String(i+1).padStart(2,'0')}</span><small class="status accent">${esc(deliveryLabel(r))}</small></div><h4>${esc(filename(r.video))}</h4><div class="row shelf-card-footer"><small class="grow">${esc(t('Total processing'))} · ${shortTime(r.processingSeconds||0)}</small>${ib('restart-video','Restart / update dubbing','restart',`data-value="${esc(r.id)}" ${active||starting||finishingRun||r.status==='running'?'disabled':''}`)}</div>${r.queueNotice?`<small class="warning">${esc(t(r.queueNotice))}</small>`:''}<button class="remove icon ghost" data-action="remove" data-value="${r.id}" aria-label="${esc(t('Remove'))}" ${r.status==='running'?'disabled':''}>${icon('close')}</button></article>`).join(''):empty('No videos yet','','folder')}
 // The same aligned working drawing is continuously skinned at its joints.
 function busyAssistant(key,index=0){const theme=key in THEMES&&key!=='ensemble'?key:'studio';return `<div class="busy-assistant" data-theme="${theme}" data-motion="skeletal-continuous" role="img" aria-label="${esc(t('Your theme assistant is organising the studio'))}"><canvas class="assistant-sprite" data-theme="${theme}" data-offset="${index*4}" width="300" height="300" aria-hidden="true"></canvas></div>`;}
 function waitingScene(){const processing=processingPlayback(row());const cast=themeKey==='ensemble'?['energy','studio','mint']:[themeKey];return `<div class="waiting-scene" aria-live="off"><div class="waiting-stage ${cast.length>1?'ensemble':''}">${cast.map((key,index)=>busyAssistant(key,index)).join('')}<span class="floating-note note-one" aria-hidden="true">♪</span><span class="floating-note note-two" aria-hidden="true">♫</span><div class="waiting-meter" aria-hidden="true">${'<i></i>'.repeat(7)}</div></div><div class="waiting-copy"><strong id="preview-status">${esc(t(previewError?'Preview could not be opened':previewLoading?'Preparing video preview…':processing?'Preview is off':'Ready to play'))}</strong><p>${esc(t(previewError?'Your project is safe. Retry preview or continue with it off.':previewLoading?'Preparing a compatible copy. Conversion continues separately.':processing?'Open preview when you want to watch. Your assistant will keep you company.':'Press Play to watch this movie. Subtitles and audio tracks are available in the player.'))}</p>${previewLoading?`<div class="download-fill ${previewProgress?.progress?'':'indeterminate'}"><i style="width:${previewProgress?.progress?Math.round(previewProgress.progress*100):25}%"></i></div><small>${esc(t(previewProgress?.stage==='copying'?'Copying cloud video into local cache…':previewProgress?.stage==='remux'?'Preparing preview without re-encoding…':previewProgress?.stage==='encode'?'Preparing compatible preview…':'Reading video…'))}${previewProgress?.progress?` · ${Math.round(previewProgress.progress*100)}%`:''}</small>`:''}${button(processing?'toggle-preview':'play',processing?(previewEnabled?'Close preview':'Open preview'):'Play video',processing?'edit':'play','',row()?'':'disabled')}${previewError?button('retry-preview','Retry preview','refresh'):''}</div></div>`;}
@@ -405,7 +407,7 @@ function renderTranscript(){const el=$('#transcript');if(!el)return;const c=curr
  if($('#inspector-content')&&state.mode==='expert')$('#inspector-content').innerHTML=inspectorHTML();}
 function originalCaption(time){return(snapshot.originalCaptions||[]).filter(r=>r.start<=time&&time<r.end).map(r=>r.text).join('\n')}
 function renderTimeline(){if(timelineDragging)return;rememberTimelineViewport();const el=$('#timeline');if(!el)return;const dur=duration||snapshot.review?.config?.duration||1;const scale=zoom;const width=Math.max(el.clientWidth-1,155+dur*scale);const takeRows=snapshot.takes||[];const engines=ENGINES.map(([k])=>k).filter(k=>state.settings.selectedEngines?.includes(k)||takeRows.some(r=>r.engine===k&&r.language===language));const tracks=[['Video','video'],[sourceLanguage()==='en'?'English original':sourceLanguage()==='ja'?'Japanese original':'Original audio','original'],['Music / sound effects','background'],['Subtitles','caption'],['Dubbing window','window'],...engines.map(k=>[engineName(k)+' · '+(OUTPUT_LANGUAGES.find(x=>x[0]===language)?.[2]||language),'voice',k])];
- el.innerHTML=`<div class="timeline-bar"><div class="row"><strong>${esc(t('Timeline'))}</strong>${button('split','Split clip','split','',draft?'':'disabled')}${button('new-dialogue','Add dialogue','plus','',draft?'':'disabled')}</div><div class="row"><small>−</small><input id="zoom" type="range" min="2" max="60" step="2" value="${zoom}" aria-label="Zoom"><small>+</small></div></div><div class="timeline-scroll" data-row-id="${esc(state.selected||'')}"><div style="width:${width}px;position:relative"><div class="timeline-ruler" title="${esc(t('Drag the ruler to browse the timeline'))}">${Array.from({length:Math.ceil(dur/10)},(_,i)=>`<span class="tick" style="left:${155+i*10*scale}px">${tc(i*10)}</span>`).join('')}</div>
+ el.innerHTML=`<div class="timeline-bar"><div class="row"><strong>${esc(t('Timeline'))}</strong>${button('split','Split clip','split','',draft?'':'disabled')}${button('new-dialogue','Add dialogue','plus','',draft?'':'disabled')}${button('inspect-audio','Inspect audio','sound','',draft?'':'disabled')}${button('source-boundaries','Source boundaries','split','',draft?'':'disabled')}</div><div class="row"><small>−</small><input id="zoom" type="range" min="2" max="60" step="2" value="${zoom}" aria-label="Zoom"><small>+</small></div></div><div class="timeline-scroll" data-row-id="${esc(state.selected||'')}"><div style="width:${width}px;position:relative"><div class="timeline-ruler" title="${esc(t('Drag the ruler to browse the timeline'))}">${Array.from({length:Math.ceil(dur/10)},(_,i)=>`<span class="tick" style="left:${155+i*10*scale}px">${tc(i*10)}</span>`).join('')}</div>
  ${tracks.map(([label,key,engine])=>`<div class="track"><div class="track-label">${esc(t(label))}</div>${key==='video'?`<div class="clip video-clip" style="left:155px;width:${dur*scale}px" data-action="seek-timeline" data-start="0">${esc(filename(row()?.video))}</div>`:key==='background'||key==='original'?'':cues().map((c,i)=>{const take=key==='voice'?takeAt(takeRows,i,engine,language):null;const a=key==='caption'?(c.captionStart??c.start):c.start;const b=key==='caption'?(c.captionEnd??c.end):c.end;const missing=key==='voice'&&!take;return `<div class="clip ${i===selectedCue?'selected':''} ${missing?'missing':''}" style="left:${155+a*scale}px;width:${Math.max(4,(b-a)*scale)}px" data-action="cue" data-index="${i}" ${engine?`data-engine="${engine}"`:""} title="${esc(c[scriptField(language)]||c.original)}">${esc(key==='caption'?c[scriptField(language)]:c.speakerId||String(i+1))}</div>`}).join('')}</div>`).join('')}<div class="timeline-head" id="timeline-head" style="left:${155+sourceTime*scale}px"></div></div></div><div class="timeline-navigation"><div class="row">${ib('timeline-left','Scroll timeline left','back')}${button('timeline-playhead','Show playhead',null)}${ib('timeline-right','Scroll timeline right','chevron')}</div><input id="timeline-pan" type="range" min="0" max="1" step="0.01" value="0" aria-label="${esc(t('Browse timeline'))}"><small id="timeline-visible-range"></small></div>`;
  const viewport=$('.timeline-scroll',el);if(timelineViewport.rowID===state.selected){viewport.scrollLeft=timelineViewport.left;viewport.scrollTop=timelineViewport.top;}
  viewport.addEventListener('scroll',()=>{rememberTimelineViewport();updateTimelineNavigation();},{passive:true});
@@ -435,7 +437,7 @@ function fullPage(){let content='';
  else if(page==='roles')content=rolesPage();
  else if(page==='review'){content=reviewPage({snapshot,t,button,engineName,active,sourceLanguage:sourceLanguage(),retryReviewStarting,retryReviewError,filter:reviewListing,categoryFilter:reviewCategory,listPage:reviewListPage});}
  else if(page==='produce'){content=pageHeader('Export a new version','Edits and retakes create a new version. Earlier recordings and exports are retained.')+`<div class="row wrap">${button('update-recordings','Update dubbing','refresh','primary',active||!draft?'disabled':'')}${button('project-terms','Project names and techniques','edit','',active?'disabled':'')}</div>`+(!draft?empty('No project selected','Open a processed video from the list to edit its script.'): `<div class="defaults-grid"><section class="card"><h3>${esc(t('Clips'))}</h3>${(draft.clips.length?draft.clips:[{start:0,end:duration||snapshot.review.config.duration,enabled:true,ripple:true}]).map((c,i)=>`<div class="clip-editor"><span class="badge">${i+1}</span><label>${esc(t('Start'))}<input type="number" data-clip="${i}" data-key="start" step=".1" value="${c.start}"></label><label>${esc(t('End'))}<input type="number" data-clip="${i}" data-key="end" step=".1" value="${c.end}"></label><input type="checkbox" data-clip="${i}" data-key="enabled" ${c.enabled?'checked':''}></div>`).join('')}</section><section class="card"><h3>${esc(t('Production settings'))}</h3>${productionSettings(true)}</section></div>`);}
- else if(page==='queue'||page==='projects'){content=pageHeader(page==='queue'?'Work queue':'Projects and exports','',`<div class="row wrap">${button('clear-cache','Clear temporary files','trash','',active?'disabled':'')}${button('start-all','Resume all unfinished videos','play','primary',active||starting||finishingRun?'disabled':'')}</div>`)+(state.queue.length?`<div class="queue-list" data-queue-list aria-label="${esc(t('Work queue'))}">`+state.queue.map((r,i)=>`<article class="card queue-row" data-queue-id="${esc(r.id)}"><div class="queue-rail">${queueControls(i)}<span class="queue-num">${String(i+1).padStart(2,'0')}</span></div><div><h4>${esc(filename(r.video))}</h4><small>${esc(t('Total processing'))} · ${shortTime(r.processingSeconds||0)}</small>${r.requestedExportFolder?`<small class="queue-destination" title="${esc(r.requestedExportFolder)}">${esc(t('Export destination'))}: ${esc(r.requestedExportFolder)}</small>`:''}${r.deliveryKind==='preview'?`<small class="warning preview-delivery-note">${esc(t('Automatic repair finished. This labelled preview still contains incomplete dialogue.'))}${(r.incompleteDialogue??r.missingDialogue)!=null?` ${r.incompleteDialogue??r.missingDialogue} ${esc(t('Unfinished dialogue lines'))}`:''}</small>`:''}${r.deliveryState==='not-exported'?`<small class="warning">${esc(t('Not exported. Working recordings are retained for repair.'))}</small>`:''}${r.lastError?`<div class="queue-error">${esc(projectWarning(r.lastError.message,state.language))}</div>`:''}</div><div><span class="pill">${esc(deliveryLabel(r))}</span><div class="download-fill" style="margin-top:10px"><i style="width:${100*(r.progress||0)}%"></i></div></div><div class="row wrap">${button('select-project','Edit','edit','',`data-value="${r.id}"`)}${r.output?button('reveal',r.deliveryKind==='preview'?'Show preview':'Show file','folder','',`data-path="${esc(r.output)}"`):`${button('retry','Retry','refresh','',`data-value="${r.id}" ${active?'disabled':''}`)}${r.workingOutput?button('reveal','Working files','folder','',`data-path="${esc(r.job||r.workingOutput)}"`):''}`}${ib('remove','Remove','trash',`data-value="${r.id}" ${active?'disabled':''}`)}</div></article>`).join('')+'</div>':empty('No videos yet','Drop one or more episodes here','folder'));}
+ else if(page==='queue'||page==='projects'){content=pageHeader(page==='queue'?'Work queue':'Projects and exports','',`<div class="row wrap">${button('clear-cache','Clear temporary files','trash','',active?'disabled':'')}${button('start-all','Resume all unfinished videos','play','primary',active||starting||finishingRun?'disabled':'')}</div>`)+(state.queue.length?`<div class="queue-list" data-queue-list aria-label="${esc(t('Work queue'))}">`+state.queue.map((r,i)=>`<article class="card queue-row" data-queue-id="${esc(r.id)}"><div class="queue-rail">${queueControls(i)}<span class="queue-num">${String(i+1).padStart(2,'0')}</span></div><div><h4>${esc(filename(r.video))}</h4><small>${esc(t('Total processing'))} · ${shortTime(r.processingSeconds||0)}</small>${r.requestedExportFolder?`<small class="queue-destination" title="${esc(r.requestedExportFolder)}">${esc(t('Export destination'))}: ${esc(r.requestedExportFolder)}</small>`:''}${r.deliveryKind==='preview'?`<small class="warning preview-delivery-note">${esc(t('Automatic repair finished. This labelled preview still contains incomplete dialogue.'))}${(r.incompleteDialogue??r.missingDialogue)!=null?` ${r.incompleteDialogue??r.missingDialogue} ${esc(t('Unfinished dialogue lines'))}`:''}</small>`:''}${r.deliveryState==='not-exported'?`<small class="warning">${esc(t('Not exported. Working recordings are retained for repair.'))}</small>`:''}${r.queueNotice?`<p class="warning">${esc(t(r.queueNotice))}</p>`:''}${r.lastError?`<div class="queue-error">${esc(projectWarning(r.lastError.message,state.language))}</div>`:''}</div><div><span class="pill">${esc(deliveryLabel(r))}</span><div class="download-fill" style="margin-top:10px"><i style="width:${100*(r.progress||0)}%"></i></div></div><div class="row wrap">${button('select-project','Edit','edit','',`data-value="${r.id}"`)}${r.output?button('reveal',r.deliveryKind==='preview'?'Show preview':'Show file','folder','',`data-path="${esc(r.output)}"`):`${button('retry','Retry','refresh','',`data-value="${r.id}" ${active?'disabled':''}`)}${r.workingOutput?button('reveal','Working files','folder','',`data-path="${esc(r.job||r.workingOutput)}"`):''}`}${ib('remove','Remove','trash',`data-value="${r.id}" ${active?'disabled':''}`)}</div></article>`).join('')+'</div>':empty('No videos yet','Drop one or more episodes here','folder'));}
  else if(page==='terminal')return `<section class="page terminal-page"><div class="row spread terminal-tools"><div class="row wrap"><select id="log-source" aria-label="${esc(t('Log source'))}">${logSources.map(r=>`<option value="${esc(r.id)}" ${logSource===r.id?'selected':''}>${esc(t(r.title))}</option>`).join('')}</select><label class="check"><input id="errors-only" type="checkbox" ${errorsOnly?'checked':''}>${esc(t('Errors only'))}</label><input id="log-search" placeholder="${esc(t('Search logs'))}" value="${esc(logSearch)}"><label class="check"><input id="follow-logs" type="checkbox" ${followLogs?'checked':''}>${esc(t('Follow latest'))}</label></div><div class="row">${button('refresh-logs','Refresh','refresh')}${button('copy-logs','Copy logs','terminal')}${button('export-logs','Export debug report','download')}</div></div><pre id="terminal-output" class="terminal-output"></pre></section>`;
  else if(page==='defaults'){content=pageHeader('Production defaults','Choose Cantonese, Mandarin, English or a combination. Audio and subtitles are configured automatically.')+`<p class="defaults-save-note" role="note">${esc(parameterCopy(state.language).autosave)}</p>`+`<div class="defaults-grid"><div class="card">${productionSettings(true)}</div><div class="card"><h3>${esc(t('Reference strategy'))}</h3><p class="muted">${esc(t('Select a timeline line to edit, audition or retake it. Save your draft and export a new version. Switching modes keeps the same project and settings.'))}</p><div class="warning">${esc(t('High speed skips all quality review and quality-driven retakes. The video may contain dubbing defects.'))}</div></div></div>`;}
  else if(page==='models'){const selected=state.settings.ttsBackend,installed=engineInstalled(selected);content=pageHeader('Model centre','Manage downloads and choose one voice for production.',button('change-models','Change production models','settings','',active?'disabled':''))+`<section class="card stack selected-model-status ${!installed?'warning':''}"><h3>${esc(t('Voice used for new dubbing'))} · ${esc(engineName(selected))}</h3><p>${esc(t(installed?'Downloaded and ready':active?.setup?'Download in progress':setupFailure?'Setup failed; this model is not ready.':'Selected, but not downloaded yet.'))}</p>${setupFailure?`<small>${esc(setupFailure)}</small>`:''}${!installed&&!active?`<div class="row wrap">${button('setup','Retry setup','refresh','',!plan?.canDeployModels||!termsReady()?'disabled':'')}${setupFailure?button('installation-details','View error details','info'):''}</div>`:''}</section><div id="model-maintenance-status">${maintenanceHTML()}</div>${voiceLibrary()}${olderVoiceModels()}${inventory.some(r=>r.category!=='voice')?modelGroups(true,true):''}`;}
@@ -513,7 +515,7 @@ async function loadMedia(output=false,compatible=false){
 }
 function seek(seconds){sourceTime=Math.max(0,Math.min(duration||seconds,seconds));const v=$('#video');if(v&&previewEnabled&&v.getAttribute('src')&&v.readyState>0)v.currentTime=sourceTime;updatePlayer()}
 let audioToken=0;
-function playAudio(path,start=0,end=null){const a=$('#audition'),token=++audioToken;$('#video')?.pause();a.pause();a.onloadedmetadata=null;a.ontimeupdate=null;a.src=asset(path);const play=()=>{if(token!==audioToken)return;a.currentTime=Math.max(0,start);a.play().catch(e=>toast(e.message,true));};a.onloadedmetadata=play;a.ontimeupdate=()=>{if(token===audioToken&&Number.isFinite(end)&&a.currentTime>=end)a.pause();};if(a.readyState>=1)play();}
+function playAudio(path,start=0,end=null,loop=false){const a=$('#audition'),token=++audioToken;$('#video')?.pause();a.pause();a.onloadedmetadata=null;a.ontimeupdate=null;a.src=asset(path);const play=()=>{if(token!==audioToken)return;a.currentTime=Math.max(0,start);a.play().catch(e=>toast(e.message,true));};a.onloadedmetadata=play;a.ontimeupdate=()=>{if(token===audioToken&&Number.isFinite(end)&&a.currentTime>=end){if(loop){a.currentTime=start;a.play().catch(()=>{});}else a.pause();}};if(a.readyState>=1)play();}
 function chooseCue(index,seekTo=true){if(index<0||index>=cues().length)return;rememberTimelineViewport();selectedCue=index;auditionEngine=null;if(seekTo)seek(cues()[index].start);renderTranscript();renderTimeline();updateAudition()}
 function checkpoint(){if(!draft)return;undoStack.push(structuredClone(draft));if(undoStack.length>50)undoStack.shift();redoStack=[];dirty=true}
 async function save(){if(!draft)return;await rpc('save-draft',{id:state.selected,draft});dirty=false;await refreshSnapshot();toast(t('Saved'))}
@@ -549,7 +551,7 @@ async function startConversion(id=state.selected,freshVersion=false){
   }
   render();
   let sourceConfirmed=null;
-  if(state.queue.find(r=>r.id===id)?.status!=='paused'&&!state.queue.find(r=>r.id===id)?.output){
+  if(freshVersion&&forceAnalysisID===id||state.queue.find(r=>r.id===id)?.status!=='paused'&&!state.queue.find(r=>r.id===id)?.output){
    // Automatic detection uses the existing Starting status. A drawer is
    // reserved for a decision, so normal Japanese starts never flash a panel.
    let info=await rpc('source-language',{id});
@@ -563,7 +565,7 @@ async function startConversion(id=state.selected,freshVersion=false){
     sourceConfirmed=accepted?.token||info.token;
    }
   }
-  const spec=await invoke('studio_start',{op:'start',params:{id,sourceConfirmed,freshVersion,reanalyze:forceAnalysisID===id}});
+  const spec=await invoke('studio_start',{op:'start',params:{id,sourceConfirmed,freshVersion,nativeQueue:conversionQueue.enabled,includeAttention:conversionQueue.includeAttention,reanalyze:forceAnalysisID===id}});
   runID=spec.id;journey=null;phaseSample=null;
   if(!finishedRunIDs.has(spec.id))active={id:spec.id,rowID:id,action:'batch',seconds:0};
   // A successful launch must never be treated as a launch failure because an
@@ -598,7 +600,7 @@ async function pauseConversion(){
  // If the click lands while launch is being prepared, wait for the owned child
  // before pausing it, rather than allowing it to start after the pause request.
  await startPromise?.catch(()=>{});
- if(active)await invoke('studio_pause');
+ await invoke('studio_pause');
  try{if(dirty&&draft)await save();}finally{await rememberQueue(false);}
 }
 async function renderVersion(segment=null,submitted=draft){if(active||!submitted)return;const spec=await invoke('studio_start',{op:'render',params:{id:state.selected,draft:submitted,segment,engine:retakeEngine||state.settings.ttsBackend,language}});dirty=false;runID=spec.id;phaseSample=null;active={id:spec.id,rowID:state.selected,seconds:0};await refreshState();render();}
@@ -844,8 +846,10 @@ async function removeProject(id,b){
 async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disabled)return;const a=b.dataset.action,v=b.dataset.value;if(a==='installation-details'){await showDrawer('Installation details',(setupFailure&&!installationActive()?`<section class="warning setup-failure" role="alert"><strong>${esc(t('Setup did not finish'))}</strong><p>${esc(setupFailure)}</p></section>`:installationProgress())+installationDetails()+(installationActive()?button('pause','Pause download','pause'):setupFailure?button('setup','Retry setup','refresh'):''));const details=$('#drawer .installation-details')||$('.drawer .installation-details');if(details)details.open=true;paintInstallation();return;}if(a==='copy-installation'){await navigator.clipboard.writeText(installationLog.text);toast(t('Copied'));return;}if(a==='open-project-link')e.preventDefault();
  if(a==='confirm-source-language'){const params={id:state.selected,language:$('#source-language-select')?.value};const stream=$('#source-stream-select')?.value;if(stream!==undefined&&stream!=='')params.stream=Number(stream);const info=await rpc('source-language',params);if(!info.supported)throw Error(info.reason);state=await rpc('state');const resolve=sourceConfirmation;sourceConfirmation=null;await closeDrawer();resolve?.(info);return}
  if(a==='source-settings'){if(active)return;const info=await rpc('source-language',{id:state.selected});await showDrawer('Source language',sourceHTML(info,t,button));return}
- if(a==='update-recordings'){if(active||!draft)return;if(dirty)await save();await showDrawer('Update dubbing',updateHTML(snapshot,engineChoices().filter(([id])=>engineInstalled(id)),t,button,selectedCue));return}
- if(a==='execute-recording-update'){if(active||!draft)return;const operation=$('#recording-update-operation').value,engine=$('#recording-update-engine').value,target=$('#recording-update-language').value,replaced=$('#recording-update-replaced').value.split(':');if(operation==='selected'){retakeEngine=engine;language=target;await closeDrawer();await renderVersion(current()?.id);return}if(operation==='remix'){await closeDrawer();await renderVersion();return}if(operation==='analysis'){const id=state.selected;forceAnalysisID=id;await closeDrawer();try{await beginConversion(id,false,true,true)}finally{forceAnalysisID=null}return}const submitted=await rpc('update-recording-plan',{id:state.selected,draft,operation,engine,language:target,replaced});await closeDrawer();await renderVersion(null,submitted);return}
+ if(a==='update-recordings'){await openRecordingUpdate('selected');return}
+ if(a==='restart-video'){await openRestartMenu(v||state.selected);return}
+ if(a==='restart-choice'){if(active||starting||finishingRun||restartTargetID!==state.selected)return;if(v==='analysis'){const id=restartTargetID;forceAnalysisID=id;await closeDrawer();try{await beginConversion(id,false,true,true)}finally{forceAnalysisID=null}return}await openRecordingUpdate(v);return}
+ if(a==='execute-recording-update'){if(active||starting||!draft||!recordingImpact)return;if(recordingUpdateID!==state.selected)throw Error('The selected video changed. Open the update menu again.');const operation=$('#recording-update-operation').value,engine=$('#recording-update-engine').value,target=$('#recording-update-language').value,replaced=$('#recording-update-replaced').value.split(':');if(operation==='selected'){retakeEngine=engine;language=target;await closeDrawer();await renderVersion(current()?.id);return}if(operation==='remix'){await closeDrawer();await renderVersion();return}if(operation==='analysis'){const id=state.selected;forceAnalysisID=id;await closeDrawer();try{await beginConversion(id,false,true,true)}finally{forceAnalysisID=null}return}const submitted=await rpc('update-recording-plan',{id:state.selected,draft,operation,engine,language:target,replaced,segment:current()?.id,impactToken:recordingImpact?.token});await closeDrawer();await renderVersion(null,submitted);return}
  if(a==='project-terms'){if(active||!row())return;if(dirty)await save();const data=await rpc('project-terms',{id:state.selected});pendingTermRules=[...data.rules];for(const term of data.suggestions||[])if(!pendingTermRules.some(x=>x.source===term.source))pendingTermRules.push({source:term.source,yue:term.cantonese||'',en:term.english||'',zh:term.mandarin||'',kind:'name',locked:false});await showDrawer('Project names and techniques',termsHTML(pendingTermRules,t,button));return}
  if(a==='term-add'||a==='term-remove'){pendingTermRules=readTerms();if(a==='term-add')pendingTermRules.push({source:'',kind:'name',locked:true});else pendingTermRules.splice(Number(v),1);await showDrawer('Project names and techniques',termsHTML(pendingTermRules,t,button));return}
  if(a==='terms-save'){await rpc('set-project-terms',{id:state.selected,rules:readTerms()});state=await rpc('state');await refreshSnapshot();await closeDrawer();toast(t('Project terms saved'));return}
@@ -868,20 +872,66 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='copy-download-source'){await navigator.clipboard.writeText(v);toast(t('Copied'));return;}
  if(a==='guide'){guide();return}if(a==='help-chapter'){helpChapter=v;helpQuery='';if($('#help-search'))$('#help-search').value='';renderHelp();$('#help-article')?.focus();return}if(a==='retry-licenses'){await loadLicenses();return}if(a==='about'){await about();return}
  if(a==='add'){const paths=await invoke('studio_pick',{kind:'video'});if(paths.length){page='edit';state=await rpc('add',{paths});await selectRow(state.selected);render();if(screen==='studio')await loadMedia()}return}
+ if(a==='inspect-audio'){
+  await showDrawer('Audio inspection',`<p role="status">${esc(t('Loading measured waveforms…'))}</p>`);
+  const id=state.selected,data=await rpc('audio-waveforms',{id,index:selectedCue,engine:auditionEngine||retakeEngine||state.settings.ttsBackend,language});if(id!==state.selected)return;
+  waveEvidence=data;$('.drawer-body').innerHTML=wavesHTML(data,t,button);return;
+ }
+ if(a==='wave-audition'){
+  const i=Number(v),r=waveEvidence?.rows[i],start=Number($(`[data-wave-start="${i}"]`).value),end=Number($(`[data-wave-end="${i}"]`).value);
+  if(!r||!Number.isFinite(start)||!Number.isFinite(end)||start<r.start||end>r.end||end<=start)throw Error(t('Choose a valid interval within this waveform.'));
+  playAudio(r.path,start,end,$(`[data-wave-loop="${i}"]`).checked);return;
+ }
+ if(a==='source-boundaries'){
+  boundaryEvidence=await rpc('boundary-proposals',{id:state.selected,draft});await showDrawer('Source boundaries',boundaryHTML(boundaryEvidence,t,button));return;
+ }
+ if(a==='boundary-listen'){
+  const proposal=boundaryEvidence?.proposals[Number(v)],path=snapshot.reviewSources?.separated||snapshot.reviewSources?.original;if(proposal&&path)playAudio(path,Math.max(0,proposal.seconds-2),proposal.seconds+2);return;
+ }
+ if(a==='boundary-edit'){
+  const proposal=boundaryEvidence?.proposals[Number(v)];if(!proposal)return;const cue=draft.segments.find(s=>s.sources?.length===1&&s.sources[0]===proposal.index);if(!cue)throw Error(t('This dialogue has already been edited. Refresh the source suggestions.'));
+  const fields=proposal.kind==='split'?['original','text','english','mandarin','captionText'].filter(k=>cue[k]?.trim()).map(k=>`<label>${esc(t(({original:'Original dialogue',text:'Cantonese',english:'English',mandarin:'Mandarin',captionText:'Display subtitle'})[k]))} · ${esc(t('Before split'))}<textarea data-split-field="${k}" data-side="left">${esc(cue[k])}</textarea></label><label>${esc(t('After split'))}<textarea data-split-field="${k}" data-side="right"></textarea></label>`).join(''):'';
+  await showDrawer('Review proposed change',`<p>${esc(t('Only the editable draft changes. Existing exports and recordings are retained. A changed dialogue needs a new take.'))}</p><p>${tc(proposal.seconds)}</p>${fields}${button('apply-boundary','Apply to draft','check','primary',`data-value="${v}"`)}`);return;
+ }
+ if(a==='apply-boundary'){
+  const parts={};for(const field of $$('[data-split-field]')){(parts[field.dataset.splitField]??={})[field.dataset.side]=field.value.trim();}
+  const result=await rpc('apply-boundary',{id:state.selected,draft,proposalIndex:Number(v),token:boundaryEvidence.token,parts});checkpoint();draft=result.draft;dirty=true;await closeDrawer();renderTranscript();renderTimeline();return;
+ }
+ if(a==='subtitle-sync'){subtitleSyncPreview=null;await showDrawer('Subtitle timing',syncHTML(row(),t,button));return;}
+ if(a==='preview-subtitle-sync'){
+  const alignment={mode:$('#sync-mode').value,offset:Number($('#sync-offset').value)};for(const key of ['subtitle1','video1','subtitle2','video2'])alignment[key]=Number($('#sync-'+key).value);
+  subtitleSyncPreview=await rpc('subtitle-alignment-preview',{id:state.selected,alignment});subtitleSyncPreview.alignment=alignment;
+  $('#subtitle-sync-result').innerHTML=syncResultHTML(subtitleSyncPreview,t);$('[data-action=apply-subtitle-sync]').disabled=false;return;
+ }
+ if(a==='apply-subtitle-sync'){
+  if(!subtitleSyncPreview)return;const result=await rpc('set-subtitle-alignment',{id:state.selected,alignment:subtitleSyncPreview.alignment,token:subtitleSyncPreview.token});state=result.state;await closeDrawer();await loadPlaybackCaptions();toast(t('Subtitle timing updated. The original file was retained.'));return;
+ }
  if(a==='subtitle-source'){
   const locked=!row()||['running','paused'].includes(row().status);
-  await showDrawer('Subtitle source',`<div class="stack"><div class="row wrap">${button('project-terms','Project names and techniques','edit','',locked?'disabled':'')}${button('source-settings','Source language','sound','',locked?'disabled':'')}</div><h3>${esc(t('External subtitles for this video'))}</h3><p>${esc(row()?.externalSubtitle?filename(row().externalSubtitle):t('Automatic detection'))}</p><p>${esc(t('SRT, ASS, SSA or VTT. This file is used only for the selected video; source speech remains primary.'))}</p>${locked?`<p class="warning">${esc(t('Subtitle selection is locked for this saved conversion. Finish the current version before changing its subtitle source.'))}</p>`:''}<div class="row wrap">${button('import-subtitle',row()?.externalSubtitle?'Replace subtitle file':'Import subtitle file','subtitles','primary',locked?'disabled':'')}${row()?.externalSubtitle?button('remove-subtitle','Remove subtitle file','trash','',locked?'disabled':''):''}</div></div>`);return;
+  await showDrawer('Subtitle source',`<div class="stack"><div class="row wrap">${button('project-terms','Project names and techniques','edit','',locked?'disabled':'')}${button('source-settings','Source language','sound','',locked?'disabled':'')}</div><h3>${esc(t('External subtitles for this video'))}</h3><p>${esc(row()?.externalSubtitle?filename(row().externalSubtitle):t('Automatic detection'))}</p><p>${esc(t('SRT, ASS, SSA or VTT. This file is used only for the selected video; source speech remains primary.'))}</p>${locked?`<p class="warning">${esc(t('Subtitle selection is locked for this saved conversion. Finish the current version before changing its subtitle source.'))}</p>`:''}<div class="row wrap">${button('import-subtitle',row()?.externalSubtitle?'Replace subtitle file':'Import subtitle file','subtitles','primary',locked?'disabled':'')}${row()?.externalSubtitle?button('subtitle-sync','Adjust subtitle timing','settings','',locked?'disabled':''):''}${row()?.externalSubtitle?button('remove-subtitle','Remove subtitle file','trash','',locked?'disabled':''):''}</div></div>`);return;
  }
  if(a==='import-subtitle'){const id=state.selected;if(!id)return;const paths=await invoke('studio_pick',{kind:'subtitle'});if(paths[0]&&state.selected===id){state=await rpc('set-external-subtitle',{id,path:paths[0]});await closeDrawer();render();toast(t('Subtitle file imported for this video.'))}return}
  if(a==='remove-subtitle'){if(!state.selected)return;state=await rpc('set-external-subtitle',{id:state.selected,path:null});render();toast(t('Automatic subtitle detection restored.'));return}
  if(a==='queue-up'||a==='queue-down'){await queueOrder.run(()=>stepQueueRow(v,a==='queue-up'?-1:1));return}
  if(a==='select'||a==='select-project'){if(a==='select-project')page='edit';await selectRow(v);return}
  if(a==='remove'){
-  if(active)throw Error(t('Pause processing before removing a project.'));
-  const target=state.queue.find(r=>r.id===(v||state.selected));if(!target)return;
-  await showDrawer('Remove project',`<h3>${esc(filename(target.video))}</h3><p>${esc(t('Remove processing data? Completed exports and source videos will be kept.'))}</p><div class="row">${button('close-drawer','Cancel',null)}${button('remove-project','Confirm removal','trash','danger',`data-value="${esc(target.id)}"`)}</div>`);return;
+  const selected=new Set([v||state.selected].filter(id=>state.queue.some(r=>r.id===id&&r.status!=='running')));
+  await showDrawer('Manage video list',removalHTML(state.queue,selected,t,button));updateRemovalCount();return;
  }
- if(a==='remove-project'){await removeProject(v,b);return;}
+ if(a.startsWith('remove-select-')){const mode=a.slice('remove-select-'.length),ids=new Set(removableIDs(state.queue,mode));for(const box of $$('[data-remove-id]'))box.checked=!box.disabled&&ids.has(box.dataset.removeId);updateRemovalCount();return;}
+ if(a==='remove-selected-videos'){
+  const ids=$$('[data-remove-id]:checked:not(:disabled)').map(b=>b.dataset.removeId);if(!ids.length)return;
+  b.disabled=true;if(dirty&&ids.includes(state.selected))await save();const previous=state.selected,result=await rpc('remove-videos',{ids});state=result.state;
+  if(previous!==state.selected){++previewToken;$('#video')?.pause();$('#audition')?.pause();snapshot={};draft=null;dirty=false;selectedCue=0;sourceTime=0;duration=0;mediaPath='';}
+  await closeDrawer();render();if(previous!==state.selected&&state.selected){await refreshSnapshot();await loadMedia();}
+  await showDrawer('Videos removed',`<p>${esc(t('Saved work and recordings were retained.'))}</p><div class="row">${button('restore-removed-videos','Undo removal','undo','',`data-value="${esc(result.batch)}"`)}${button('close-drawer','Done',null,'primary')}</div>`);return;
+ }
+ if(a==='restore-removed-videos'){const result=await rpc('restore-videos',{batch:v});state=result.state;await closeDrawer();render();return;}
+ if(a==='detect-best-models'){
+  if(active)return;const detected=await rpc('plan',{engine:'drama3',models:{},dramaBackend:'auto'});acceptSetupPlan(detected);
+  if(detected.recommendedPreset){plan=presetPlan(detected,detected.recommendedPreset);selectedQuality=detected.recommendedPreset;setupSelection=setupParameters(plan);}
+  updateSetup();return;
+ }
  if(a==='change-models'){await changeModels();return;}if(a==='retry-model-plan'){await reviewSwitch();return;}
  if(a==='download-voice-batch'){await startVoiceBatch([...voiceDownloadSelection]);return;}
  if(a==='use-voice-model'){const model=modelChoices.find(r=>r.id===v&&r.category==='voice');if(!model||!voiceChoiceState(model).installed)return;await changeModels(model.engine);if(pendingSwitch){pendingSwitch.models.voice=model.id;await reviewSwitch();}return;}
@@ -1004,7 +1054,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='automatic-subtitles'){await setSettings({subtitleSelection:'automatic'});return}
  if(a==='close-paused'){closing=true;await pauseConversion();return}
  });}
-document.addEventListener('click',action);
+document.addEventListener('click',e=>safely(()=>action(e)));
 document.addEventListener('keydown',async e=>{if(document.querySelector('dialog.parameter-info-dialog[open]'))return;if(e.key==='Escape'&&!switchStarting&&!cacheCleaning&&!packageCleaning){++cacheSession;if(sourceConfirmation){sourceConfirmation(false);sourceConfirmation=null;}++switchSession;++switchRevision;await closeDrawer();}if((e.metaKey||e.ctrlKey)&&e.key==='s'){e.preventDefault();safely(save)}if(e.key==='Enter'&&e.target.matches('.shelf-card'))e.target.click()});
 document.addEventListener('input',e=>{if(e.target.id==='role-search'){roleQuery=e.target.value;filterRoles()}if(e.target.id==='seek')seek(Number(e.target.value));if(e.target.id==='zoom'){rememberTimelineViewport();const leftTime=timelineViewport.left/zoom;zoom=Number(e.target.value);renderTimeline();const el=$('.timeline-scroll');if(el)el.scrollLeft=leftTime*zoom;rememberTimelineViewport();updateTimelineNavigation()}if(e.target.id==='timeline-pan'){const el=$('.timeline-scroll');if(el){el.scrollLeft=Number(e.target.value)*zoom;rememberTimelineViewport();updateTimelineNavigation();}}if(e.target.id==='log-search'){logSearch=e.target.value;updateLogs()}if(e.target.id==='license-search')renderLicenses(e.target.value);if(e.target.id==='help-search'){helpQuery=e.target.value;renderHelp()}});
 document.addEventListener('change',e=>safely(async()=>{const el=e.target;
@@ -1051,7 +1101,7 @@ async function onFinished({payload}){
  // Native completion may arrive before the launch RPC returns for a short job.
  await startPromise?.catch(()=>{});
  if(active&&payload.runID!==active.id)return;
- if(payload.action==='speech-studio'){active=null;await speechStudio.finished(payload);render();return;}
+ if(payload.action==='speech-studio'){active=null;try{await speechStudio.finished(payload);render();}finally{await invoke('studio_ack_finished',{runId:payload.runID}).catch(e=>console.warn(e));}return;}
  finishingRun=true;
  // A short setup can finish before its launch RPC returns. The native finish
  // event still carries its action, so do not lose verification and UI refresh.
@@ -1080,13 +1130,30 @@ async function onFinished({payload}){
   if(payload.code||payload.paused)pendingVoiceDownloadID=null;
   if(payload.code||payload.paused)deployAfterBootstrap=false;
   if(payload.finalizationError){conversionQueue.stop();await rememberQueue(false);toast(t('The task ended, but its queue status could not be saved. Reopen the app to recover saved work. See Terminal for details.'),true);return;}
+  if(payload.nativeQueue){conversionQueue.stop();await rememberQueue(false);}
   if(payload.paused){conversionQueue.stop();await rememberQueue(false)}
+  else if(conversionFinished&&payload.nativeQueue){conversionQueue.stop();}
   else if(conversionFinished&&conversionQueue.enabled)await advanceQueue();
   if(payload.code&&!payload.paused)toast(wasSetup?t('Setup did not finish'):state.queue.find(r=>r.id===failedRow)?.lastError?.message||`Task exited (${payload.code}). See Terminal.`,true);
  }catch(e){conversionQueue.stop();await rememberQueue(false).catch(()=>{});throw e}
- finally{finishingRun=false;render()}
+ finally{finishingRun=false;if(!active&&!conversionQueue.enabled)await invoke('studio_ack_finished',{runId:payload.runID}).catch(e=>console.warn(e));render()}
 }
-async function poll(){if(pollBusy)return;pollBusy=true;try{const status=await invoke('studio_status');runtimeReady=status.runtimeReady;if(status.running&&!finishedRunIDs.has(status.running.id))active={...active,...status.running};if(runtimeReady&&screen==='studio'&&row()){await refreshState();await refreshSnapshot();if(page==='terminal'){await refreshLogs()}}updateProgress();paintInstallation();}catch(e){console.warn(e)}finally{pollBusy=false}}
+async function recoverCompletion(status){
+ const payload=missedCompletion(status,active,finishedRunIDs);
+ if(payload){finishChain=finishChain.then(()=>safely(()=>onFinished({payload})));await finishChain;}
+}
+async function poll(){if(pollBusy||initializing)return;pollBusy=true;try{
+ const status=await invoke('studio_status');runtimeReady=status.runtimeReady;
+ if(status.running&&!finishedRunIDs.has(status.running.id))active={...active,...status.running};
+ await recoverCompletion(status);
+ if(runtimeReady&&screen==='studio'&&row()){await refreshState();await refreshSnapshot();if(page==='terminal'){await refreshLogs()}}
+ updateProgress();paintInstallation();
+}catch(e){console.warn(e)}finally{pollBusy=false}}
+// Reconcile immediately after wake/focus as well as on the regular heartbeat.
+window.addEventListener('focus',()=>safely(poll));
+window.addEventListener('pageshow',()=>safely(poll));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)safely(poll);});
+
 function startupProgress(message){startupMessage=message;const label=$('.welcome-startup-copy small'),bar=$('.welcome-startup [role=progressbar]');if(label)label.textContent=t(message);if(bar)bar.setAttribute('aria-label',t(message));}
 async function boot(){
  render();
@@ -1111,6 +1178,7 @@ async function boot(){
   else localStorage.setItem('anicanto-language',state.language);
   await syncUseTerms().catch(e=>toast(e.message||e,true));
   if(active?.action==='batch'&&(state.ui.autoQueue||state.mode==='basic'))conversionQueue.restore(active.rowID,{includeAttention:state.ui.autoQueueAttention===true});
+  else{const done=status.nativeQueue?null:restorableCompletion(status,state);if(done)conversionQueue.restore(done.rowID,{includeAttention:state.ui.autoQueueAttention===true});}
   const stored=state.settings.animeTheme;
   if(!welcomeThemeTouched){if(state.settings.randomAnimeTheme===true){const keys=Object.keys(THEMES);themeKey=keys[Math.floor(Math.random()*keys.length)];}else if(stored in THEMES)themeKey=stored;}
   localStorage.setItem('anicanto-theme',themeKey);
@@ -1123,8 +1191,36 @@ async function boot(){
  }
  initializing=false;
  render();
+ await recoverCompletion(status);
  setInterval(poll,2500);
  if(runtimeReady){await Promise.allSettled([refreshModels(),refreshSetupPlan()]);}
  else{await refreshSetupPlan();}
 }
 safely(boot);
+
+function updateRemovalCount(){const boxes=$$('[data-remove-id]:checked:not(:disabled)'),el=$('#remove-count');if(el)el.textContent=`${boxes.length} / ${$$('[data-remove-id]:not(:disabled)').length} · ${t('Selected videos')}`;const b=$('[data-action=remove-selected-videos]');if(b)b.disabled=!boxes.length;}
+document.addEventListener('change',e=>{if(e.target.matches('[data-remove-id]'))updateRemovalCount();});
+
+let waveEvidence=null,boundaryEvidence=null,subtitleSyncPreview=null,recordingImpact=null,impactRevision=0;
+let restartTargetID=null,recordingUpdateID=null;
+async function openRestartMenu(id){
+ if(active||starting||finishingRun||!id)return;
+ if(state.selected!==id)await selectRow(id);else if(dirty)await save();
+ restartTargetID=id;
+ const canUpdate=Boolean(draft?.segments?.length&&snapshot.review?.cues?.some(c=>[c.cantonese,c.english,c.mandarin].some(v=>String(v||'').trim())));
+ await showDrawer('Restart / update dubbing',restartHTML(filename(row()?.video),canUpdate,t,button));
+}
+async function openRecordingUpdate(operation='selected'){
+ if(active||starting||finishingRun||!draft)return;if(dirty)await save();recordingUpdateID=state.selected;
+ await showDrawer('Update dubbing',updateHTML(snapshot,engineChoices().filter(([id])=>engineInstalled(id)),t,button,selectedCue,operation));
+ await previewRecordingImpact();
+}
+function updateRecordingFields(){
+ const operation=$('#recording-update-operation')?.value;
+ for(const el of $$('[data-update-engine]'))el.hidden=!['selected','append','replace'].includes(operation);
+ for(const el of $$('[data-update-replace]'))el.hidden=operation!=='replace';
+ for(const el of $$('[data-update-selected]'))el.hidden=operation!=='selected';
+}
+
+async function previewRecordingImpact(){updateRecordingFields();const el=$('#recording-impact');if(!el)return;const revision=++impactRevision;recordingImpact=null;const b=$('[data-action=execute-recording-update]');b.disabled=true;try{const result=await rpc('recording-impact',{id:state.selected,draft,operation:$('#recording-update-operation').value,engine:$('#recording-update-engine').value,language:$('#recording-update-language').value,replaced:$('#recording-update-replaced').value.split(':'),segment:current()?.id});if(revision!==impactRevision||!el.isConnected)return;recordingImpact=result;el.innerHTML=impactHTML(result,t);b.disabled=false;}catch(error){if(el.isConnected)el.textContent=t(error.message||String(error));}}
+document.addEventListener('change',e=>{if(e.target.closest('.recording-update'))safely(previewRecordingImpact);if(e.target.closest('.subtitle-sync')&&!e.target.closest('#subtitle-sync-result')){subtitleSyncPreview=null;const b=$('[data-action=apply-subtitle-sync]');if(b)b.disabled=true;}});

@@ -5,6 +5,10 @@ use serde_json::{json,Value};
 use tauri::{Emitter,Manager,State};
 use fs2::FileExt;
 mod appearance;
+mod task_lifecycle;
+mod native_queue;
+use native_queue::QueueControl;
+use task_lifecycle::TaskLifecycle;
 use appearance::{StartupWindow,studio_appearance};
 
 #[cfg(windows)]
@@ -30,7 +34,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-external-subtitle","review-triage"];
+const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
@@ -52,7 +56,7 @@ impl Host {
             return Err(if op=="source-language"{"Pause processing before checking another source language."}else if op.contains("cache"){"Pause processing before clearing cache."}else{"Pause processing before removing a model."}.into());
         }
         if ["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing saved speech recordings.".into());}
-        if ["review-resolution","review-triage","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
+        if ["review-resolution","review-triage","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan","set-subtitle-alignment"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
         if op=="remove" && self.active.lock().unwrap().is_some(){return Err("Pause processing before deleting a project.".into());}
         if self.python().is_none(){
             if op=="plan" {return self.cold_plan(&params);}
@@ -244,10 +248,35 @@ impl Host {
 async fn studio_rpc(op:String,params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||host.desktop_rpc(&op,params)).await.map_err(|e|e.to_string())?
 }
+fn continue_native_queue(host:Arc<Host>,app:tauri::AppHandle,epoch:u64){
+    std::thread::spawn(move||{
+        let _gate=host.task_lock.lock().unwrap();
+        if !app.state::<QueueControl>().matches(epoch){let _=host.rpc("queue-stop",json!({}));return;}
+        if host.active.lock().unwrap().is_some(){return;}
+        match host.rpc("queue-next",json!({"epoch":epoch})) {
+            Ok(spec) if !spec.is_null()=>{
+                if !app.state::<QueueControl>().matches(epoch){
+                    if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"paused":true,"stderr":"Queue paused before launch"}));}
+                    let _=host.rpc("queue-stop",json!({}));return;
+                }
+                if let Err(error)=launch(host.clone(),app.clone(),spec.clone()){
+                    if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"stderr":error}));}
+                    let _=app.emit("studio-log",format!("Native queue launch failed: {error}"));
+                    continue_native_queue(host.clone(),app.clone(),epoch);
+                }
+            },
+            result=>{app.state::<QueueControl>().finish(epoch);let _=host.rpc("queue-stop",json!({}));if host.active.lock().unwrap().is_none(){if let Some(receipt)=app.state::<TaskLifecycle>().last_finished(){if let Some(id)=receipt["runID"].as_str(){app.state::<TaskLifecycle>().release(id);}}}if let Err(e)=result{let _=app.emit("studio-log",format!("Native queue: {e}"));}}
+        }
+    });
+}
 #[tauri::command]
-async fn studio_status(host:State<'_,Arc<Host>>)->Result<Value,String> {
+async fn studio_status(app:tauri::AppHandle,host:State<'_,Arc<Host>>,lifecycle:State<'_,TaskLifecycle>)->Result<Value,String> {
     let active=host.active.lock().unwrap();
-    Ok(json!({"runtimeReady":host.python().is_some(),"running":active.as_ref().map(|a|json!({"id":a.id,"rowID":a.row,"seconds":a.started.elapsed().as_secs_f64(),"paused":a.paused,"setup":a.setup,"action":a.action,"modelID":a.model_id})),"storage":host.root}))
+    Ok(json!({"lastFinished":lifecycle.last_finished(),"idleSleepInhibited":lifecycle.inhibited(),"nativeQueue":app.state::<QueueControl>().enabled(),"runtimeReady":host.python().is_some(),"running":active.as_ref().map(|a|json!({"id":a.id,"rowID":a.row,"seconds":a.started.elapsed().as_secs_f64(),"paused":a.paused,"setup":a.setup,"action":a.action,"modelID":a.model_id})),"storage":host.root}))
+}
+#[tauri::command]
+fn studio_ack_finished(run_id:String,app:tauri::AppHandle,host:State<'_,Arc<Host>>,lifecycle:State<'_,TaskLifecycle>)->bool{
+    let active=host.active.lock().unwrap();if active.is_some()||app.state::<QueueControl>().enabled(){return false;}lifecycle.release(&run_id)
 }
 #[tauri::command]
 async fn studio_pick(kind:String)->Result<Vec<String>,String> {
@@ -298,11 +327,13 @@ async fn studio_export_logs(language:Option<String>,host:State<'_,Arc<Host>>)->R
 
 fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> {
     let mut active=host.active.lock().unwrap();if active.is_some(){return Err("A task is already running. Pause it before starting another.".into());}
+    if let Some(epoch)=spec["nativeQueue"].as_u64(){if !app.state::<QueueControl>().matches(epoch){return Err("Queue was paused before launch".into());}}
     let program=spec["program"].as_str().ok_or("Missing native adapter")?;
     let args:Vec<&str>=spec["args"].as_array().ok_or("Missing task arguments")?.iter().filter_map(|v|v.as_str()).collect();
     let mut cmd=Command::new(program);cmd.args(args).stdout(Stdio::piped()).stderr(Stdio::piped());host.environment(&mut cmd);
     let mut child=cmd.spawn().map_err(|e|e.to_string())?;
     #[cfg(windows)] let owned_job=match OwnedJob::assign(&child){Ok(job)=>job,Err(error)=>{let _=child.kill();return Err(error)}};
+    if let Err(error)=app.state::<TaskLifecycle>().started(){let _=app.emit("studio-log",format!("Idle-sleep protection unavailable: {error}"));}
     let out=child.stdout.take().unwrap();let err=child.stderr.take().unwrap();let row=spec["rowID"].as_str().map(str::to_owned);
     let id=format!("{}-{}",child.id(),std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos());
     *active=Some(Active{child,id:id.clone(),row:row.clone(),paused:false,setup:["setup","runtime"].contains(&spec["action"].as_str().unwrap_or("")),action:spec["action"].as_str().unwrap_or("").to_owned(),model_id:spec["modelID"].as_str().map(str::to_owned),started:Instant::now(),#[cfg(windows)] _job:Some(owned_job)});drop(active);
@@ -346,8 +377,22 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
                 code=1;finalization_error=Some(error);
             }
         }
-        host.active.lock().unwrap().take();
-        let _=app.emit("studio-finished",json!({"runID":run_id,"rowID":row,"code":code,"paused":paused,"action":spec["action"],"modelID":spec["modelID"],"finalizationError":finalization_error}));
+        let payload=json!({"runID":run_id,"rowID":row,"code":code,"paused":paused,"action":spec["action"],"modelID":spec["modelID"],"finalizationError":finalization_error,"nativeQueue":spec["nativeQueue"]});
+        // Publish status and clear ownership atomically with respect to status
+        // polling. A poll must never see idle without its completion receipt.
+        {let mut active=host.active.lock().unwrap();app.state::<TaskLifecycle>().finished(payload.clone());active.take();}
+        let _=app.emit("studio-finished",payload);
+        if let Some(epoch)=spec["nativeQueue"].as_u64(){
+            if paused || finalization_error.is_some(){app.state::<QueueControl>().stop();let _=host.rpc("queue-stop",json!({}));}
+            else {continue_native_queue(host.clone(),app.clone(),epoch);}
+        }
+        // Hold the assertion across a normal queue hand-off. If the frontend
+        // has failed permanently, do not inhibit sleep forever while idle.
+        let grace_host=host.clone();let grace_app=app.clone();let completed_id=run_id.clone();
+        std::thread::spawn(move||{
+            std::thread::sleep(std::time::Duration::from_secs(120));
+            let active=grace_host.active.lock().unwrap();if active.is_none()&&!grace_app.state::<QueueControl>().enabled(){grace_app.state::<TaskLifecycle>().release(&completed_id);}
+        });
     });
     Ok(json!({"id":id}))
 }
@@ -361,7 +406,13 @@ async fn studio_start(op:String,params:Value,app:tauri::AppHandle,host:State<'_,
         // Reserve across preparation and spawn, without holding a mutex while
         // native callbacks need it. RPC serialization also protects drafts.
         if host.active.lock().unwrap().is_some(){return Err("A task is already running.".into());}
-        let spec=host.rpc(&op,params)?;
+        let queued=op=="start"&&params["nativeQueue"]==true;let include_attention=params["includeAttention"]==true;
+        let mut spec=host.rpc(&op,params)?;
+        if queued {
+            let epoch=app.state::<QueueControl>().arm();
+            if let Err(error)=host.rpc("queue-arm",json!({"id":spec["rowID"],"epoch":epoch,"includeAttention":include_attention})){app.state::<QueueControl>().stop();if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"paused":true,"stderr":error}));}return Err(error);}
+            spec["nativeQueue"]=json!(epoch);
+        }
         match launch(host.clone(),app,spec.clone()) {Ok(v)=>Ok(v),Err(error)=>{
             if let Some(id)=spec["rowID"].as_str(){let _=host.rpc("finish",json!({"id":id,"code":1,"stderr":error}));}
             if let Some(id)=spec["speechClipID"].as_str(){let _=host.rpc("speech-finish",json!({"id":id,"code":1,"stderr":error}));}Err(error)
@@ -369,7 +420,9 @@ async fn studio_start(op:String,params:Value,app:tauri::AppHandle,host:State<'_,
     }).await.map_err(|e|e.to_string())?
 }
 #[tauri::command]
-async fn studio_pause(host:State<'_,Arc<Host>>)->Result<(),String> {
+async fn studio_pause(app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<(),String> {
+    // Cancellation is visible before waiting for slow source preparation.
+    app.state::<QueueControl>().stop();
     let mut active=host.active.lock().unwrap();
     if let Some(ref mut task)=*active{task.paused=true;
         #[cfg(unix)] unsafe {libc::kill(task.child.id() as i32,libc::SIGTERM);}
@@ -478,7 +531,7 @@ fn main(){
         let result=host.rpc("state",json!({})).and_then(|state|host.rpc("models",json!({})).map(|models|json!({"ok":true,"state":state,"installedModels":models,"sharedResources":host.shared,"adapter":host.backend,"interfaceManifest":serde_json::from_str::<Value>(include_str!("../../web/assets/interface-manifest.json")).unwrap()})));
         match result{Ok(value)=>println!("{value}"),Err(error)=>{eprintln!("{error}");std::process::exit(1)}}return;
     }
-    tauri::Builder::default().manage(host).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
+    tauri::Builder::default().manage(host).manage(TaskLifecycle::default()).manage(QueueControl::default()).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
         .setup(|app|{
             let preference=appearance::saved(&app.state::<Arc<Host>>().root);
             let window=tauri::WebviewWindowBuilder::from_config(app.handle(),&app.config().app.windows[0])?
@@ -509,7 +562,7 @@ fn main(){
             }
             #[cfg(not(windows))] let _=(webview,payload);
         })
-        .invoke_handler(tauri::generate_handler![studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
+        .invoke_handler(tauri::generate_handler![studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
             let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
             else {#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}

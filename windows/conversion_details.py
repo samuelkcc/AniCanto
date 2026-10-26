@@ -8,7 +8,7 @@ import json,platform,sys,time
 from pathlib import Path
 
 SETTINGS=('sourceLanguage','sourceAudioStream','speechRatePolicy','naturalTimingPolicy','subtitleSelection','automaticDurationRewrite','automaticRecovery','autoPreviewIncomplete','productionMode','translationSource','ttsBackend','selectedEngines','dubLanguages','subtitleModes','includeOriginal','model','asrModel','speechModel','referenceSpeechModel','drama3Model','drama3Backend','cosyModel','roleAnalysisMode','voiceStyleMode','visualRoleAnalysisEnabled','normalPolicyRevision','fastReferenceRevision','requireCompleteDubbing','fillMissingVoiceScripts','fallbackToRoleVoice','allowCrossEngineRepair','automaticAlternateVoice','preferFirstAudibleTake','autoValidate','aiAutoFix','backgroundGain','backgroundDucking','separateBackground','mixOriginal','startOffset','limit')
-RUNTIME=('engine','requestedEngine','backend','device','gpu','textModel','voiceModel','model','variant','speechInferencePassed','modelLoadPassed')
+RUNTIME=('engine','requestedEngine','backend','device','gpu','textModel','voiceModel','model','variant','speechInferencePassed','modelLoadPassed','voiceBackend','dramaBackend','cudaFailure','hardware','roles','drama3Memory','warnings','analysisFallbackReason')
 
 def read(path,default=None,limit=4*1024*1024):
     try:
@@ -68,7 +68,8 @@ def build(root,row):
     details['sourceMedia']=dict(format=take(meta.get('format',{}),('duration','size','bit_rate','format_name')),streams=[take(s,('index','codec_type','codec_name','pix_fmt','sample_rate','channels','width','height')) for s in meta.get('streams',[])])
     details['result']=take(report,('cues','qualityStatus','qualityChecked','deliveryKind','previewDelivery','automaticRecovery','dialogueDelivery','normalScriptRescue','scriptGapRecovery','failedEngines','trackQuality','normalUnresolved','subtitleTracks','originalSpeechIndices','audioFallbacks','fastModeDefects','processingSeconds','categorySeconds','milestones'))
     details['timing']=read(job/'processing-time.json',{}) or {}
-    details['ocr']=read(job/'ocr-metrics.json',{}) or {}
+    details['ocr']=dict(metrics=read(job/'ocr-metrics.json',{}) or {},status=read(job/'ocr-status.json',{}) or {},source=read(job/'input-source.json',{}) or {},discovery=read(job/'ocr-discovery/ocr-progress.json',{}) or {})
+    details['ocr'].update(details['ocr']['metrics'])
     details['sourceCues']=[dict(index=i+1,**take(c,('start','end','japanese','text','cantonese','english','speakerId','enabled','missingScript','preserveOriginalSpeech','normalDefects','sourceReviewReasons'))) for i,c in enumerate(review.get('cues',[])[:1000])]
     details['issues']=read(job/'segment-issues.json',[]) or []
     details['translationBrevity']=read(job/'translation-brevity.json',{}) or {}

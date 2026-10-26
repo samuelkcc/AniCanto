@@ -162,6 +162,9 @@ def convert(w,cfg):
     phase(job,'recognition',cached=cache.is_file())
     if cache.is_file():
         cues=json.loads(cache.read_text())
+        from translation_source import refresh_saved_evidence
+        cues=refresh_saved_evidence(w,cfg,job,cues,meta)
+        w.atomic_json(cache,cues)
         w.emit('沿用辨識',f'已載入 {len(cues)} 段保存對白；唔重新辨識整集。',.30,workCached=True)
         source_meta=job/'subtitle-context-meta.json'
         if source_meta.is_file():cfg['sourceCaptionLanguage']=json.loads(source_meta.read_text()).get('language','')
@@ -179,6 +182,9 @@ def convert(w,cfg):
         if not cues:raise ValueError('未找到有效對白時段。')
         w.atomic_json(cache,cues)
         w.atomic_json(job/'subtitle-context-meta.json',dict(language=cfg.get('sourceCaptionLanguage','')))
+    from source_performance import apply as preserve_performance
+    cues=preserve_performance(cfg,job,cues,w.run,w.emit)
+    w.atomic_json(cache,cues)
     phase(job,'roles',skipped=True)
     phase(job,'translation')
     translate(w,cfg,job,cues)
@@ -245,7 +251,7 @@ def synthesize(cfg,job,cues,run,emit):
             from natural_delivery import repair
             timing_cfg=dict(cfg,automaticDurationRewrite=True,preferFirstAudibleTake=False,_durationFitRequired=True)
             paths=repair(timing_cfg,job,cues,paths,run,emit,placement=schedule)
-            paths,schedule=finish_retained(cfg,job,cues,paths,run,emit,allow_tempo=False)
+            paths,schedule=finish_retained(cfg,job,cues,paths,run,emit,allow_tempo=True)
     source_fallback=set()
     if cfg.get('productionMode')=='normal' and not cfg.get('editorRender') and not retain(cfg):
         from failed_voice_policy import choose
@@ -310,9 +316,9 @@ def synthesize(cfg,job,cues,run,emit):
                     preserved=any(c.get('preserveOriginalSpeech') and anchor<window(c,cues,cfg['duration'])[1] and end>window(c,cues,cfg['duration'])[0] for j,c in enumerate(cues) if j!=i)
                     # A take may use spare time at the end of the video, but
                     # cannot extend beyond the next planned voice start.
-                    if retain(cfg) and end<=cfg['duration']+.00001 and not protected and not preserved:
+                    if retain(cfg) and next_index is None and end<=cfg['duration']+.00001 and not protected and not preserved:
                         overlap_seconds=round(overrun,3)
-                        warnings.append(dict(index=row['index'],kind='retained-take-overrun',message=f'已保留完整有聲錄音；超出原定時段 {overrun:.2f} 秒，可能同下一句重疊，請試聽。未自動改稿、重錄或加速。'))
+                        warnings.append(dict(index=row['index'],kind='retained-take-overrun',message=f'已保留完整有聲錄音；超出原定時段 {overrun:.2f} 秒，後面冇下一句配音；仍保留時間提示，請試聽。'))
                     elif cfg.get('productionMode')=='normal' and next_index is None and overrun<=2. and end<=cfg['duration']+.00001 and not protected and not preserved:
                         overlap_seconds=round(overrun,3)
                         warnings.append(dict(index=row['index'],kind='bounded-dialogue-overlap',message=f'保留完整目標語言錄音；比原定時段長 {overlap_seconds:.2f} 秒，已確認後面冇下一句配音，請喺校對報告試聽。'))

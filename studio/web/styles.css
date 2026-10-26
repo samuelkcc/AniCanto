@@ -240,3 +240,12 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .player-caption-settings{position:relative;flex:none}.player-caption-settings summary{list-style:none;display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid var(--line);border-radius:7px;cursor:pointer}.player-caption-settings summary::-webkit-details-marker{display:none}.player-caption-settings summary svg{width:16px;height:16px}.player-caption-size-popover{position:absolute;bottom:calc(100% + 10px);right:0;z-index:20;display:grid;grid-template-columns:1fr auto;gap:10px;min-width:220px;padding:14px;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:10px;box-shadow:0 5px 20px #0005}.player-caption-size-popover label{grid-column:1/-1;font-size:12px}.player-controls #player-caption-size{width:160px;min-width:100px;flex:none}.player-caption-size-popover output{font-size:12px;font-variant-numeric:tabular-nums}
 
 .video-caption.pending-caption span{font-size:12px;font-weight:400;opacity:.8}
+
+.removal-items{display:grid;gap:6px;max-height:60vh;overflow:auto}.removal-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:8px}.removal-item span{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}.removal-item:has(input:disabled){opacity:.55}
+
+.wave-row>svg{width:100%;height:80px;color:var(--accent,#7952c2);display:block;margin:8px 0}.wave-row input[type=number]{width:100px}.sync-anchors{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sync-samples{max-height:34vh;overflow:auto}.impact-preview pre{white-space:pre-wrap;overflow-wrap:anywhere}.coverage-summary p{margin:6px 0}
+
+.subtitle-sync:has(#sync-mode option[value="offset"]:checked) .sync-anchors{display:none}
+
+/* Per-video restart stays beside duration, separate from the remove control. */
+.shelf-card-footer{gap:4px;min-width:0}.shelf-card-footer small{min-width:0}.shelf-card-footer .icon{flex:0 0 auto;width:30px;height:30px}.restart-menu .card p{color:var(--muted);line-height:1.55}.restart-menu .card h4{margin-top:0}.recording-update [hidden]{display:none!important}

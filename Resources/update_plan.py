@@ -15,8 +15,12 @@ def build(review_path,draft,operation,engine=None,language=None,replaced=None):
  from engine_policy import pairs
  from dub_languages import selected
  path=Path(review_path).resolve();review=json.loads(path.read_text());root=family(path.parent)
- result=copy.deepcopy(draft);cfg=result.setdefault('settings',{});cfg.pop('_retainedTracks',None);cfg.pop('_trackPairs',None);cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
- if operation=='all':cfg['audioRerunToken']=uuid.uuid4().hex;return result
+ result=copy.deepcopy(draft);cfg=result.setdefault('settings',{});exact_pairs=copy.deepcopy(cfg.get('_trackPairs'));cfg.pop('_retainedTracks',None);cfg.pop('_trackPairs',None);cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
+ if operation=='all':
+  if exact_pairs:cfg['_trackPairs']=exact_pairs
+  cfg['audioRerunToken']=uuid.uuid4().hex
+  cfg['updateRecordingPlan']=dict(operation='all',retainsScripts=True)
+  return result
  if operation not in ('append','replace'):raise ValueError('Unknown recording update operation.')
  if (language,engine) not in pairs([engine],[language]):raise ValueError('This engine does not support the selected language.')
  target=(language,engine);old=saved_track_reports(path);available={(x.get('language','yue'),x['engine']):x for x in old}

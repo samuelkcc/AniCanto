@@ -10,7 +10,7 @@ from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
 
-REVISION = 'speech-first-8-local-word-clock-review'
+REVISION = 'speech-first-9-complete-subwords-short-clock'
 MODEL_REV = 'edaa852ec7e145841d8ffdb056a99866b5f0a478'
 MODEL_SHA = '69f74147e3334731bc3a76048724833325d2ec74642fb52620eda87352e3d4f1'
 
@@ -69,7 +69,8 @@ def build_cues(segments, spans, captions, duration, offset=0):
         for i,w in enumerate(source_words):
             # Whisper sometimes assigns several subword tokens the same instant.
             # Retain internal tokens as text; dropping them changes names/meaning.
-            if w['end']==w['start'] and not (timed[0]<=i<=timed[-1]): continue
+            # Zero-duration edge subwords still carry names/meaning. Keep their
+            # text with the same ASR segment; do not fabricate a new word clock.
             # VAD is corroborating evidence, not a knife through Japanese words.
             # Cartoon voices over music are often rejected by conversational VAD.
             w=dict(w,start=max(0,w['start']),end=min(duration,w['end']),sourceClockUnconfirmed=bool(segment.get('sourceClockUnconfirmed')))
@@ -101,6 +102,9 @@ def build_cues(segments, spans, captions, duration, offset=0):
         if coverage/max(.001,b-a)<.35: note.append('動畫聲線未被人聲偵測器完整捕捉；保留原聲辨識，時間以日語音訊為準。')
         fragment = len(normalized(text)) == 1 and '\u4e00' <= normalized(text) <= '\u9fff'
         if fragment: note.append('只辨識到單個漢字，可能係截斷字／雜聲；保留配音並標記覆核，請聽原聲確認。')
+        if b-a<.12:
+            note.append('原聲字音時間過短，未確認完整發聲；保留原聲，請核對分段。')
+            for w in words:w['sourceClockUnconfirmed']=True
         if score < .55: note.append('日語辨識信心較低，請比較原声同中文字幕參考。')
         if b-a > max(2.5,len(normalized(text))*.65): note.append('辨識文字同聲音長度唔相稱，可能係叫聲／笑聲；請核對。')
         start=max(0,a-.06);end=min(duration,b+.10)

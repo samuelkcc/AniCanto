@@ -1,6 +1,24 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Restart / update dubbing":"再作成・吹き替え更新",
+"Restart this video without removing it from the list. Earlier movies, recordings and saved work are kept.":"一覧から削除せずに再作成できます。以前の動画・録音・保存済み作業は保持されます。",
+"Restart conversion":"変換を最初からやり直す",
+"Run source recognition, subtitles, translation and dubbing again with the current production settings.":"現在の制作設定で音声認識・字幕処理・翻訳・吹き替えをやり直します。",
+"Regenerate voices only":"吹き替え音声のみ再生成",
+"Keep the existing dialogue, translations and timing. Generate new recordings for the current audio tracks, then export a new version.":"既存の台詞・翻訳・タイミングを保持し、現在の音声トラックを再生成して新しい版を書き出します。",
+"Add a voice track":"吹き替えトラックを追加",
+"Choose a language and voice engine. Missing target-language text is prepared for the new track; existing tracks stay unchanged.":"言語と音声エンジンを選びます。必要な翻訳を用意して新トラックを作成し、既存トラックは保持します。",
+"Voice updates become available after this video has a translated draft.":"この動画の翻訳原稿ができると、音声の更新やトラックの追加ができます。",
+"The selected video changed. Open the update menu again.":"選択中の動画が変わりました。更新メニューを開き直してください。",
+
+"Workflow notices":"処理に関するお知らせ",
+"Check the workflow notices above":"上の処理に関するお知らせを確認してください",
+
+"OCR needs attention":"OCRの確認が必要です",
+"Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.":"一部の画面字幕を認識できませんでした。音声の文字起こしを使用し、既存の録音は保持しています。",
+"Original performances and songs retained":"元の演技・歌を保持",
+
     "Choose one model for new dubbing. Download only keeps another model available without switching.": "新しい吹き替えに使うモデルを1つ選びます。「ダウンロードのみ」は制作設定を切り替えずに別のモデルを保存します。",
     "Other production models": "その他の制作モデル",
     "Full Drama 3": "Full Drama 3",
@@ -1161,3 +1179,7 @@ Object.assign(LOCALE.ui,{"Ready to play": "再生できます", "Video player": 
 Object.assign(LOCALE.ui,{"Pause playback": "再生を一時停止", "Subtitle size": "字幕サイズ"});
 
 Object.assign(LOCALE.ui,{"Automatic · translated script": "自動・翻訳済み台本", "Translation not ready at this position": "この位置の翻訳は未完了です"});
+
+Object.assign(LOCALE.ui,{"Manage video list": "動画リスト管理", "Select all": "すべて選択", "Select none": "選択解除", "Completed only": "完了のみ", "Remove selected from list": "選択した動画をリストから削除", "Selected videos": "選択した動画", "Processing · locked": "処理中・ロック", "Remove videos from the list. Source videos, exports, recordings and saved work are retained.": "リストからのみ削除します。元動画・出力・録音・保存済み作業は保持します。", "Videos removed": "リストから削除しました", "Saved work and recordings were retained.": "保存済み作業と録音を保持しました。", "Undo removal": "削除を取り消す", "Detect and recommend models": "構成を検出してモデルを提案", "The installed CUDA 12.8 Torch build does not include this older GPU architecture. CPU processing is recommended; VRAM capacity alone is insufficient.": "現在の CUDA 12.8 Torch はこの旧GPU構成を含みません。CPUを推奨します。VRAM容量だけでは互換性を判断できません。", "Changes before generation": "生成前の変更確認", "dialogue lines": "件のセリフ", "Source analysis and scripts retained": "原音解析と台本を保持", "Source analysis and translation will run again": "原音解析と翻訳を再実行", "Previous recordings and exports are retained.": "以前の録音と出力は保持します。", "Other tracks retained": "保持する他のトラック", "Generation parameters": "生成パラメータ", "Recording coverage": "録音の保存状況", "missing recordings": "件の録音なし", "review notes": "件の確認メモ", "recordings need updating": "件の録音に更新が必要", "Recording presence is not a pronunciation score. Language concerns remain review notes; automatic repair fills missing or corrupt audio.": "録音の有無は発音評価ではありません。言語の疑いは確認メモに残し、自動修復は欠落・破損音声のみ補います。", "Inspect audio": "音声を確認", "Audio inspection": "音声の確認", "Source boundaries": "原音の区切り", "Compare the original mix, separated voice and generated take. Drag the time controls to audition a precise interval.": "元のミックス・分離音声・生成録音を比較できます。開始・終了時刻で試聴区間を指定します。", "Generated take": "生成した録音", "Measured audio waveform": "実測した音声波形", "Loading measured waveforms…": "実測波形を読み込み中…", "No audio evidence is available for this dialogue yet.": "このセリフには利用可能な録音がありません。", "Choose a valid interval within this waveform.": "波形内の有効な開始・終了時刻を指定してください。", "Adjust subtitle timing": "字幕の時刻を調整", "Subtitle timing": "字幕の時刻", "Adjust external subtitle timing without changing the original file. Original speech remains the timing authority.": "元ファイルを変更せず外部字幕の時刻を調整します。セリフの時刻は原音を基準にします。", "Correction method": "補正方法", "Constant offset": "一定の時間ずれ", "Two-point drift correction": "2点による時間ずれ補正", "Offset in seconds · positive delays subtitles": "ずれ秒数・正の値で字幕を遅延", "First subtitle time": "1点目の字幕時刻", "First matching video time": "1点目の対応する動画時刻", "Second subtitle time": "2点目の字幕時刻", "Second matching video time": "2点目の対応する動画時刻", "Preview timing adjustment": "時刻調整をプレビュー", "Apply subtitle timing": "字幕の時刻を適用", "subtitles": "件の字幕", "Subtitle timing updated. The original file was retained.": "字幕の時刻を更新しました。元ファイルは保持しています。", "Suggestions use measured source word times and pauses. No timings are invented from subtitle character counts. Review the proposed text before changing the draft.": "提案には原音の単語時刻と間を使います。字幕文字数から時刻を作りません。台本を確認してから変更してください。", "Split dialogue": "セリフを分割", "Merge adjacent dialogue": "隣接するセリフを結合", "measured pause": "実測した間", "Review proposed change": "変更案を確認", "No safe boundary suggestions. Existing analysis may not contain reliable word times.": "安全な区切り案がありません。信頼できる単語時刻が含まれていない可能性があります。", "Before split": "分割前半", "After split": "分割後半", "Apply to draft": "下書きに適用", "Only the editable draft changes. Existing exports and recordings are retained. A changed dialogue needs a new take.": "編集用の下書きのみ変更します。出力と録音は保持され、変更したセリフには再生成が必要です。", "Confirm this video’s source language before starting it.": "動画の原音言語を確認してから開始してください。"});
+
+Object.assign(LOCALE.ui,{"Compatible runtime": "互換実行環境", "Inference check required": "実際の推論確認が必要", "This GPU architecture is not covered by the pinned CUDA runtimes. CPU processing is available.": "この GPU は固定版 CUDA の対象外です。CPU を使用できます。", "This Radeon is outside the pinned Windows ROCm support list. CPU processing is available.": "この Radeon は固定版 Windows ROCm の対象外です。CPU を使用できます。"});

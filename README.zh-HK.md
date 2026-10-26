@@ -8,7 +8,7 @@
 
 將日本動畫嘅日文對白轉成**香港廣東話、普通話或英文配音**。模型同執行環境準備好後，辨識、翻譯、配音及匯出都喺本機完成。
 
-[下載](#下載-beta--02475) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [技術支援](SUPPORT.zh-HK.md) · [支持計劃](#支持更多人認識廣東話) · [iPad 私隱政策](docs/IPAD-PRIVACY-POLICY.zh-HK.md)
+[下載](#下載-beta--02479) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [技術支援](SUPPORT.zh-HK.md) · [支持計劃](#支持更多人認識廣東話) · [iPad 私隱政策](docs/IPAD-PRIVACY-POLICY.zh-HK.md) · [示範影片](#下載測試原片聽返配音成品比較)
 
 ## 點解會有 AniCanto
 
@@ -22,18 +22,31 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AI 可以協助探索語言同試做配音，但生成結果仍可能有口音、錯字或演繹不足，唔等同專業演出。希望大家享受呢個小作品之餘，繼續欣賞同支持熟悉聲音背後嘅表演者。
 
-## 下載 Beta · 0.24.75
+## 下載 Beta · 0.24.79
 
-**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto-macOS-0.24.75.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.75-beta)
+**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto-macOS-0.24.79.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta)
 
-[下載對應源碼及第三方來源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[下載對應源碼及第三方來源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 
 ## 今個 Beta 新增咗乜
 
-- **啟動直接跟外觀設定：**淺色、深色或跟隨系統，唔強制黑色，修正開窗先白後黑。
-- **播放器操作更一致：**直接播放、揀音軌／字幕、字幕大小、已翻譯對白同步及左右面板控制；修正外掛字幕匯入。
-- **按硬件使用加速：**支援嘅 Apple Silicon 配置自動用 MLX Whisper；Windows 支援 NVIDIA Whisper 加速，失敗可有限回退 CPU，並顯示後端決策。
-- **配音調整更清楚：**Drama 3 參數說明及保存預設，改良通用原聲表演保護、人名及術語處理；疑點仍需試聽確認。
+- **唔使刪片再加入：**每條影片新增圓形重新開始掣，可重新分析全片、沿用稿件重配聲音，或者新增語言／引擎音軌；舊成品繼續保留。
+- **剪輯更方便：**清單可全選、取消全選或只選已完成，移除後可撤銷；提供原聲／分離／配音波形、字幕偏移及漂移校正，同修改影響預覽。
+- **處理更穩定：**改善佇列喚醒，OCR 逐格有限重試及保存進度，清楚列出時間／覆蓋疑點，並補充除錯資料。有聲首錄保留；實際過長對白仍可局部精簡。
+- **部署按硬件建議：**分開顯示 RAM／VRAM，選用支援嘅 NVIDIA CUDA 執行環境，並列明 CPU 回退；偵測到顯示卡唔代表所有模型都有加速。
+
+## 下載測試原片，聽返配音成品比較
+
+只需兩條3分08秒影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
+
+- **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[桌面版輸出示範 · 試聽比較](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
+
+輸出片包含 **廣東話、普通話、英文、日文四條聲道**。兩條片都內嵌 **繁體中文、簡體中文、英文、日文字幕**，可喺支援嘅播放器切換。
+
+示範片由桌面版配合 Fish Audio Drama3 製作，原稿經 Qwen3.6-35B-A3B 4-bit MLX 校對，係經編排嘅比較示範，並非 iPad App 自動轉換成果。Built with Fish Audio.
+
+[測試影片詳情](docs/zh-HK/DEMO.md)
 
 ## 先睇電腦配置
 
@@ -68,7 +81,7 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 
 | 功能 | 可以點用 |
 | --- | --- |
-| **廣東話／英文配音** | 可揀單語或雙語，同一條影片保留獨立音軌及字幕，喺相容播放器切換。 |
+| **廣東話／普通話／英文配音** | 可揀單語、雙語或三語組合，同一條影片保留獨立音軌及字幕，喺相容播放器切換。 |
 | **用中文字幕輔助核對** | 參考內置文字字幕、外掛字幕或畫面 OCR，幫助理解意思同人名；日文聲音仍係主要依據。 |
 | **保留片頭片尾** | 自動偵測 OP／ED，預設保留日文歌曲及原聲。 |
 | **基本及專家模式** | 基本模式自動處理；專家模式提供時間軸、改稿、時間調整及逐句編輯。 |
@@ -82,7 +95,7 @@ AI 可以協助探索語言同試做配音，但生成結果仍可能有口音�
 
 喺 **製作設定 → 配音語言** 揀 **普通話**，可以單獨使用，或者配搭香港廣東話、英文，亦可以三種一齊生成。普通話有獨立稿件同錄音，使用中國大陸口語及簡體字幕；可按選擇保留原聲，再喺相容播放器切換音軌。
 
-基本模式同專家模式嘅影片流程都適用。切換介面語言唔會自動新增配音音軌。**獨立配音器目前仍輸出廣東話**；現有下載示範影片保留廣東話／英文／日文。
+基本模式同專家模式嘅影片流程都適用。切換介面語言唔會自動新增配音音軌。**獨立配音器目前仍輸出廣東話**；現有下載示範影片保留廣東話／普通話／英文／日文。
 
 ### 配音器：由文字或錄音，製作自己嘅片段
 
@@ -161,58 +174,51 @@ AniCanto 以**實際講出嚟嘅對白為主**，字幕協助核對意思同人�
 
 [字幕匯入說明](docs/zh-HK/GETTING-STARTED.md)
 
-## 下載測試原片，聽返配音成品比較
-
-只需兩條3分08秒影片：日文輸入原片，同桌面版輸出示範。所有介面語言共用同一組。
-
-- **[日文輸入原片 · 試吓轉換](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
-- **[桌面版輸出示範 · 試聽比較](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
-
-輸出片包含 **廣東話、普通話、英文、日文四條聲道**。兩條片都內嵌 **繁體中文、簡體中文、英文、日文字幕**，可喺支援嘅播放器切換。
-
-示範片由桌面版配合 Fish Audio Drama3 製作，原稿經 Qwen3.6-35B-A3B 4-bit MLX 校對，係經編排嘅比較示範，並非 iPad App 自動轉換成果。Built with Fish Audio.
-
-[測試影片詳情](docs/zh-HK/DEMO.md)
-
 ## 新版介面
 
-以下係 0.24.63 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
+以下係 0.24.79 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
 
 ### 歡迎及部署
 
-![歡迎及部署](docs/images/welcome-zh-HK.png?v=0.24.75)
+![歡迎及部署](docs/images/welcome-zh-HK.png?v=0.24.79)
 
 揀介面語言，準備本機模型，再選基本或專家模式入工作室。
 
 ### 基本模式：進度及試聽
 
-![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.24.75)
+![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.24.79)
 
 加入影片、揀配音語言同輸出資料夾，再跟進處理及逐句試聽；預覽可以保持關閉，由小助手陪住你。
 
 ### 專家模式：時間軸及逐句編輯
 
-![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.24.75)
+![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.24.79)
 
 用橫跨底部嘅時間軸比較原聲對白同配音稿、調整時間，亦可以為所選一句即時生成另一條錄音。
 
+### 重新開始或新增音軌
+
+撳影片卡嘅圓形箭嘴，可以重做轉換、只重配聲音，或者新增語言／引擎音軌；唔使刪片再匯入。
+
+![ 重新開始或新增音軌 ](docs/images/restart-zh-HK.png?v=0.24.79)
+
 ### 校對報告：疑點及錄音比較
 
-![校對報告：疑點及錄音比較](docs/images/review-zh-HK.png?v=0.24.75)
+![校對報告：疑點及錄音比較](docs/images/review-zh-HK.png?v=0.24.79)
 
 睇返標示咗啲乜、試過點修復，再比較保留錄音。揀好之後匯出另一個版本，原有成品繼續保留。
 
 ### 配音器與已保存片段
 
-![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.24.75)
+![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.24.79)
 
 核對原稿同廣東話譯稿，再生成及保存不同錄音；播放器可對照原聲、配音同兩份文字。
 
-![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.24.75)
+![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.24.79)
 
 ### Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.24.75)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.24.79)
 
 可揀自動偵測、NVIDIA CUDA 或 CPU，分開顯示系統 RAM、VRAM 同額外 CUDA 下載；圖片展示部署選項，唔係速度測試成績。
 

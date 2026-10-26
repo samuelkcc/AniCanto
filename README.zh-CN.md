@@ -8,7 +8,7 @@
 
 将日本动画的日语对白转换成**香港粤语、普通话或英语配音**。安装所需模型和运行环境后，识别、翻译、配音和导出都在本机完成。
 
-[下载](#下载-beta--02475) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md)
+[下载](#下载-beta--02479) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md) · [演示视频](#下载测试原片听配音成品作比较)
 
 ## 为什么会有 AniCanto
 
@@ -22,18 +22,31 @@ AniCanto 最初只是一个简单的心愿：**希望孩子看动画时，可以
 
 AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音、错字或表演不足，不等同于专业演出。希望大家在使用这个项目的同时，继续欣赏和支持熟悉声音背后的表演者。
 
-## 下载 Beta · 0.24.75
+## 下载 Beta · 0.24.79
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto-macOS-0.24.75.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.75-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto-macOS-0.24.79.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta)
 
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 这个 Beta 新增了什么
 
-- **启动直接使用外观设置：**浅色、深色或跟随系统，不强制黑色，修正先白后黑的闪烁。
-- **播放器操作更一致：**直接播放、选择音轨／字幕、字幕大小、已翻译对白同步及左右面板控制；修复外挂字幕导入。
-- **按硬件使用加速：**支持的 Apple Silicon 配置自动使用 MLX Whisper；Windows 支持 NVIDIA Whisper 加速，失败可有限回退 CPU，并显示后端决策。
-- **配音调整更清楚：**Drama 3 参数说明及保存默认设置，改进通用原声表演保护、人名及术语处理；疑点仍需试听确认。
+- **无需删除再导入：**每条视频新增圆形重新开始按钮，可重新分析全片、沿用稿件重配声音，或新增语言／引擎音轨；保留旧成品。
+- **剪辑更方便：**清单可全选、取消全选或只选已完成，移除后可撤销；提供原声／分离／配音波形、字幕偏移与漂移校正，以及修改影响预览。
+- **处理更稳健：**改进队列唤醒，OCR 逐帧有限重试并保存进度，列出时间／覆盖疑点，补充调试信息。有声首录保留；实际过长对白仍可局部精简。
+- **按硬件建议部署：**分别显示 RAM／VRAM，选择支持的 NVIDIA CUDA 运行环境，并说明 CPU 回退；检测到显卡不代表所有模型都有加速。
+
+## 下载测试原片，听配音成品作比较
+
+只需两个3分08秒视频：日文输入原片，以及桌面版输出示范。所有界面语言共用同一组。
+
+- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
+
+输出视频包含 **粤语、普通话、英文、日文四条音轨**。两个视频均内嵌 **繁体中文、简体中文、英文、日文字幕**，可在支持的播放器中切换。
+
+示范视频由桌面版配合 Fish Audio Drama3 制作，原稿经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非 iPad App 自动转换结果。Built with Fish Audio.
+
+[测试视频详情](docs/zh-CN/DEMO.md)
 
 ## 先选择电脑配置
 
@@ -161,58 +174,51 @@ AniCanto 以**实际说出的对白为主**，字幕帮助核对含义和人名�
 
 [字幕导入说明](docs/zh-CN/GETTING-STARTED.md)
 
-## 下载测试原片，听配音成品作比较
-
-只需两个3分08秒视频：日文输入原片，以及桌面版输出示范。所有界面语言共用同一组。
-
-- **[日文输入原片 · 尝试转换](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
-- **[桌面版输出示范 · 试听比较](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
-
-输出视频包含 **粤语、普通话、英文、日文四条音轨**。两个视频均内嵌 **繁体中文、简体中文、英文、日文字幕**，可在支持的播放器中切换。
-
-示范视频由桌面版配合 Fish Audio Drama3 制作，原稿经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非 iPad App 自动转换结果。Built with Fish Audio.
-
-[测试视频详情](docs/zh-CN/DEMO.md)
-
 ## 新版界面
 
-以下为 0.24.63 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
+以下为 0.24.79 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
 
 ### 欢迎与部署
 
-![欢迎与部署](docs/images/welcome-zh-CN.png?v=0.24.75)
+![欢迎与部署](docs/images/welcome-zh-CN.png?v=0.24.79)
 
 选择界面语言，准备本地模型，再进入基本或专家模式。
 
 ### 基本模式：进度与试听
 
-![基本模式：进度与试听](docs/images/basic-zh-CN.png?v=0.24.75)
+![基本模式：进度与试听](docs/images/basic-zh-CN.png?v=0.24.79)
 
 添加视频、选择配音语言和输出文件夹，再跟进处理与逐句试听；预览可保持关闭，由小助手陪伴。
 
 ### 专家模式：时间轴与逐句编辑
 
-![专家模式：时间轴与逐句编辑](docs/images/timeline-zh-CN.png?v=0.24.75)
+![专家模式：时间轴与逐句编辑](docs/images/timeline-zh-CN.png?v=0.24.79)
 
 通过底部全宽时间轴比较原声对白和配音稿、调整时间，也能为所选一句生成另一段录音。
 
+### 重新开始或新增音轨
+
+点击视频卡的圆形箭头，可重新转换、只重配声音，或新增语言／引擎音轨，无需删除再导入。
+
+![ 重新开始或新增音轨 ](docs/images/restart-zh-CN.png?v=0.24.79)
+
 ### 校对报告：问题与录音比较
 
-![校对报告：问题与录音比较](docs/images/review-zh-CN.png?v=0.24.75)
+![校对报告：问题与录音比较](docs/images/review-zh-CN.png?v=0.24.79)
 
 查看标记和修复尝试，再比较保留录音。选好后导出另一版本，原有成品继续保留。
 
 ### 配音器与已保存片段
 
-![Dubbing studio](docs/images/speech-studio-zh-CN.png?v=0.24.75)
+![Dubbing studio](docs/images/speech-studio-zh-CN.png?v=0.24.79)
 
 核对原稿和广东话译稿，再生成并保存不同录音；播放器可对照原声、配音及两份文字。
 
-![Saved clips and learning](docs/images/speech-player-zh-CN.png?v=0.24.75)
+![Saved clips and learning](docs/images/speech-player-zh-CN.png?v=0.24.79)
 
 ### Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-CN.png?v=0.24.75)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-CN.png?v=0.24.79)
 
 可选自动检测、NVIDIA CUDA 或 CPU，分别显示系统 RAM、VRAM 及额外 CUDA 下载；图片展示部署选项，并非速度测试成绩。
 

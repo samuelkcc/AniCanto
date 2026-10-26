@@ -4,11 +4,11 @@ export function matchingPreset(plan){return (plan?.qualityPresets||[]).find(p=>p
 export function presetPlan(base,id){
  const p=base?.qualityPresets?.find(p=>p.id===id);
  if(!p?.available||!p.plan?.canDeployModels)throw Error('This quality preset is unavailable on this computer.');
- return {...base,...p.plan,qualityPresets:base.qualityPresets,recommendedPreset:base.recommendedPreset,hardware:base.hardware,inventory:base.inventory,setupReady:!!base.setupReady&&Object.entries(p.requestedModels||{}).every(([k,v])=>v===base.roles?.[k]),qualityPreset:id,requestedModels:{...p.requestedModels}};
+ return {...base,...p.plan,qualityPresets:base.qualityPresets,recommendedPreset:base.recommendedPreset,hardware:p.plan.hardware||base.hardware,inventory:base.inventory,setupReady:!!base.setupReady&&Object.entries(p.requestedModels||{}).every(([k,v])=>v===base.roles?.[k]),qualityPreset:id,requestedModels:{...p.requestedModels}};
 }
 export function setupParameters(plan){
  if(!plan?.canDeployModels||(plan.qualityPresets?.length&&!plan.qualityPresets.some(p=>p.available)))throw Error('Choose a compatible quality preset before downloading.');
- return {engine:plan.engine,models:{...(plan.requestedModels||{})},removeOld:true,...(plan.dramaBackend?{dramaBackend:plan.dramaBackend}:{})};
+ return {...(plan.setupBackend?{backend:plan.setupBackend}:{}),engine:plan.engine,models:{...(plan.requestedModels||{})},removeOld:true,...(plan.dramaBackend?{dramaBackend:plan.dramaBackend}:{})};
 }
 export function presetReasons(p){
  const reasons=[];

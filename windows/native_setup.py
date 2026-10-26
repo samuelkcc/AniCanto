@@ -36,6 +36,13 @@ def available(root,row):return complete(root,row) or any(complete(base.parent.pa
 def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requested=None,drama_backend='auto'):
  from studio_core import call as core
  root=data_root();rows=catalog();installed=[r['id'] for r in rows if r.get('nativeFormat') and available(root,r)]
+ # Keep a verified model-specific CPU fallback usable after a CUDA speech
+ # failure; refreshing the welcome page must not force a redeploy loop.
+ if drama_backend=='auto':
+  try:
+   previous=json.loads((root/'drama3-windows-ready.json').read_text())
+   if previous.get('backend')=='cpu' and previous.get('cudaFailure') and previous.get('speechInferencePassed'):drama_backend='cpu'
+  except (OSError,ValueError):pass
  from gpu import planning_hardware
  from drama_cuda import capable
  h=hardware or planning_hardware();h=dict(h,nativeDramaCUDA=True,nativeWorkflowVersion=1,nativeDramaSmallCPU=(HERE/'tools/audiocpp_small_server.exe').is_file(),nativeDramaSmallCUDA=capable())
@@ -44,6 +51,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  try:selected=json.loads((root/'model-selections.json').read_text())
  except (OSError,ValueError):selected={}
  result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama,dramaBackend=drama_backend)
+ h=result.get('hardware',h)
+ if h.get('backend')=='cpu':result['setupBackend']='cpu'
  from memory_plan import pools
  from drama_full_cuda import components,ready as cuda_ready
  classifier=next(r for r in rows if r['id']=='audio-classifier-native')
@@ -74,12 +83,18 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
    result['warnings']=[w for w in result['warnings'] if w!='native-drama-small-cuda-planned']
  except (OSError,ValueError):pass
  return result
-def environment(name,backend=None):
+def environment(name,backend=None,cuda_index=None):
  emit('Checking / installing '+name+' runtime',setupStep='runtime')
  python=env_python(name)
  requirements=HERE/f'requirements-{name}.lock'
  if not python.is_file():ensure_env(data_root(),python.parent.parent)
- identity=hashlib.sha256(requirements.read_bytes()+str(backend).encode()).hexdigest()
+ if backend=='nvidia' and cuda_index is None:
+  from gpu import planning_hardware
+  from hardware_runtimes import nvidia
+  hardware=planning_hardware();profile=nvidia(hardware.get('acceleratorName',''),hardware.get('cudaComputeCapability'),hardware.get('cudaDriverVersion'),hardware.get('selectedTorchIndex'))
+  cuda_index=profile['torchIndex']
+  if cuda_index=='cpu':raise ValueError('This NVIDIA GPU is not covered by the pinned CUDA runtimes. Choose CPU.')
+ identity=hashlib.sha256(requirements.read_bytes()+str([backend,cuda_index]).encode()).hexdigest()
  stamp=data_root()/f'{name}-runtime-ready.json'
  try:previous=json.loads(stamp.read_text()) if stamp.is_file() else {}
  except ValueError:previous={}
@@ -91,7 +106,7 @@ def environment(name,backend=None):
   absent=missing(python,requirements)
  backend_missing=backend and (previous.get('identity')!=identity or any(n not in state(python)['packages'] for n in ('torch','torchaudio')))
  if backend_missing:
-  install_torch(python,backend)
+  install_torch(python,backend,repair=bool(previous.get('identity') and previous.get('identity')!=identity),cuda_index=cuda_index)
  if backend:
   versions=json.loads(subprocess.check_output([str(python),'-c','import importlib.metadata as m,json; print(json.dumps([m.version("torch"),m.version("torchaudio")]))'],text=True))
   constraints=data_root()/f'{name}-torch-constraints.txt';constraints.write_text('torch=='+versions[0]+'\ntorchaudio=='+versions[1]+'\n')
@@ -105,7 +120,7 @@ def environment(name,backend=None):
  except subprocess.CalledProcessError:
   broken=damaged(python,requirements,backend)
   if not broken:raise RuntimeError(name+' import check failed but package files are intact. No healthy packages were reinstalled.')
-  if backend and any(p in ('torch','torchaudio') for p in broken):install_torch(python,backend,repair=True,packages=[p for p in broken if p in ('torch','torchaudio')])
+  if backend and any(p in ('torch','torchaudio') for p in broken):install_torch(python,backend,repair=True,packages=[p for p in broken if p in ('torch','torchaudio')],cuda_index=cuda_index)
   from mac_runtime import requirements as pins
   expected=pins(requirements);broken=[p for p in broken if p not in ('torch','torchaudio')] if backend else broken
   if broken:call(repair_command(python,data_root(),broken,expected,links=[SHARED/'wheels',HERE/'wheels'],constraints=constraints if backend else None))
@@ -198,14 +213,53 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
  root=data_root();root.mkdir(parents=True,exist_ok=True)
  (root/'native-ready.json').unlink(missing_ok=True)
  (root/'setup-invalidated.json').write_text(json.dumps(dict(reason='setup-in-progress')))
- if backend=='auto':backend=recommended(adapters())
+ if backend=='auto':
+  advice=plan(engine,requested=requested,drama_backend=drama_backend)
+  backend=advice.get('setupBackend') or advice.get('hardware',{}).get('suggestedSetupBackend') or recommended(adapters())
+  if not advice.get('canDeployModels'):
+   alternative=next((p for p in advice.get('qualityPresets',[]) if p.get('available') and p.get('id')==advice.get('recommendedPreset')),None)
+   if alternative and not requested:
+    emit('Available GPU memory cannot fit the requested combination; applying the compatible recommended model plan.')
+    engine=alternative['engine'];requested=alternative['requestedModels'];backend=alternative['plan'].get('setupBackend',backend)
+   elif backend!='cpu':
+    cpu=plan(engine,backend='cpu',requested=requested,drama_backend='cpu')
+    if cpu.get('canDeployModels'):backend='cpu';drama_backend='cpu';emit('Available GPU memory cannot fit this plan. Using the same selected models on CPU.')
+
  if engine=='cosyvoice3':
   from engine_availability import require
   require(engine,root,sys.platform,backend)
  if backend=='intel':backend='cpu';emit('This native voice stack uses CPU on Intel; hardware video export remains available.')
  if backend=='amd' and not any(vendor(r)=='amd' and amd_supported(r.get('Name','')) for r in adapters()):raise ValueError('Use CPU for this Radeon; the selected native ROCm build does not support this model.')
- worker=environment('worker');analysis=environment('analysis',backend)
- probe=probe_runtime(analysis,backend);h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],acceleratorFreeMemoryGB=probe.get('freeMemoryGB'),acceleratorName=probe.get('name',''),nativeWorkflowVersion=1)
+ worker=environment('worker')
+ analysis_fallback=None
+ try:
+  analysis=environment('analysis',backend);probe=probe_runtime(analysis,backend)
+ except (RuntimeError,ValueError,OSError,subprocess.SubprocessError) as error:
+  analysis_fallback=str(error)[-1000:]
+  if backend=='cpu':raise
+  fallback_ok=False
+  if backend=='nvidia':
+   from gpu import planning_hardware
+   from hardware_runtimes import nvidia
+   detected=planning_hardware();profile=nvidia(detected.get('acceleratorName',''),detected.get('cudaComputeCapability'),detected.get('cudaDriverVersion'),detected.get('selectedTorchIndex'))
+   if profile['torchIndex']=='cu130':
+    emit('CUDA 13 runtime check failed; trying the compatible CUDA 12.8 profile.')
+    try:
+     analysis=environment('analysis','nvidia',cuda_index='cu128');probe=probe_runtime(analysis,'nvidia');fallback_ok=True
+    except (RuntimeError,ValueError,OSError,subprocess.SubprocessError) as fallback_error:emit('CUDA 12 runtime check failed: '+str(fallback_error)[-300:])
+  if not fallback_ok:
+   emit('GPU runtime check failed; continuing with CPU: '+str(error)[-400:])
+   backend='cpu';drama_backend='cpu';analysis=environment('analysis','cpu');probe=probe_runtime(analysis,'cpu')
+   if 'detected' not in locals():
+    from gpu import planning_hardware
+    detected=planning_hardware()
+   (root/'gpu-runtime-selection.json').write_text(json.dumps(dict(name=detected.get('acceleratorName'),driver=detected.get('cudaDriverVersion'),torchIndex='cpu',kernelPassed=False,fallbackReason=analysis_fallback)))
+ h=hardware_snapshot();h.update(backend=probe['backend'],acceleratorMemoryGB=probe['memoryGB'],acceleratorFreeMemoryGB=probe.get('freeMemoryGB'),acceleratorName=probe.get('name',''),nativeWorkflowVersion=1)
+ if probe.get('computeCapability'):h['cudaComputeCapability']=probe['computeCapability'][0]+probe['computeCapability'][1]/10
+ if probe.get('torchIndex'):
+  detected=next((x for x in h.get('cudaCapabilities',[]) if x['name'].upper()==h.get('acceleratorName','').upper()),{})
+  h['selectedTorchIndex']=probe['torchIndex'];h['cudaDriverVersion']=detected.get('driverVersion')
+  (root/'gpu-runtime-selection.json').write_text(json.dumps(dict(name=h.get('acceleratorName'),driver=h.get('cudaDriverVersion'),torchIndex=probe['torchIndex'],kernelPassed=True,fallbackReason=analysis_fallback)))
  deployment=plan(engine,h,allow_cpu_drama,requested=requested,drama_backend=drama_backend)
  if deployment['blockers']:raise ValueError('; '.join(deployment['blockers']))
  emit('Deployment plan',deployment=deployment)
@@ -264,13 +318,10 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
   (root/'local-windows-ready.json').write_text(json.dumps(dict(backend=backend,engines=list(dict.fromkeys(previous.get('engines',[])+[chosen])),verifiedEngines=[e for e in previous.get('verifiedEngines',[]) if e!=chosen],variants=dict(previous.get('variants',{}),**{chosen:selected['voice']}),modelLoadPassed=True,speechInferencePassed=False)))
  elif chosen=='drama3':
   voice_backend=deployment.get('voiceBackend','cpu');fallback_reason=None
-  if voice_backend=='cuda':
-   from drama_full_cuda import prepare
-   prepare(root,h,deployment['voiceMemory'],emit)
-   try:call([worker,HERE/'setup_checks.py','drama3',root,'cuda'])
-   except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
-    raise RuntimeError('Full Drama 3 CUDA verification failed. Existing selections were retained. Update the NVIDIA driver or select CPU and retry. '+str(error)) from error
-  if voice_backend=='cpu':call([worker,HERE/'setup_checks.py','drama3',root,'cpu'])
+  from drama_full_cuda import checked_deployment
+  voice_backend,fallback_reason=checked_deployment(root,h,deployment.get('voiceMemory') or {},worker,voice_backend,emit)
+  if voice_backend=='cpu' and fallback_reason:
+   drama_backend='cpu';deployment['voiceMemory']=dict(deployment.get('voiceMemory') or {},backend='cpu',gpuGB=0,cpuExpertLayers=0,contextLength=4096)
   (root/'drama3-windows-ready.json').write_text(json.dumps(dict(backend=voice_backend,modelLoadPassed=True,nativeFormat='gguf',variant=selected['voice'],memory=deployment.get('voiceMemory'),cudaFailure=fallback_reason)))
  from native_service import service,request as model_request
  with service(root):
@@ -298,7 +349,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
   from drama_full_cuda import MARKER,read
   cuda_receipt=read(root/MARKER,{});cuda_receipt['speechInferencePassed']=True
   (root/MARKER).write_text(json.dumps(cuda_receipt))
- receipt=dict(schemaVersion=1,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,dramaBackend=drama_backend,drama3Memory=deployment.get('voiceMemory'),cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=chosen=='drama3' and voice_backend=='cpu',modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
+ receipt=dict(schemaVersion=1,analysisFallbackReason=analysis_fallback,requestedEngine=engine,engine=chosen,textModel=text_alias,backend=backend,hardware=h,ffmpeg=str(ffmpeg),ffprobe=str(ffprobe),roles=selected,voiceBackend=voice_backend if chosen=='drama3' else backend,dramaBackend=drama_backend,drama3Memory=deployment.get('voiceMemory'),cudaFailure=fallback_reason if chosen=='drama3' else None,allowDramaCPU=chosen=='drama3' and voice_backend=='cpu',modelLoadPassed=True,speechInferencePassed=True,speechQualityCertified=False,warnings=deployment['warnings'])
  (root/'native-ready.json').write_text(json.dumps(receipt,indent=2))
  (root/'setup-invalidated.json').unlink(missing_ok=True)
  emit('Native setup completed. The first conversion will validate speech and output on this PC.',ready=receipt,setupStep='ready')

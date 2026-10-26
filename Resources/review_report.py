@@ -43,8 +43,8 @@ def project(root,review,row):
         if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script','name-term-mismatch'):item['kind']=value['kind']
         if status=='repairing':item['status']='repairing'
     for index,cue in enumerate(cues,1):
-        if cue.get('sourceClockUnconfirmed'):
-            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-clock-unconfirmed',message='Source word timing could not be confirmed; original speech is retained.'),origin='source-timing-review.json')
+        if cue.get('sourceClockUnconfirmed') or 0<cue.get('end',0)-cue.get('start',0)<.12:
+            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-clock-unconfirmed',message='Source word timing could not be confirmed. Compare the original audio; preservation and current delivery are shown separately.'),origin='source-timing-review.json')
     # Explicit current-track records avoid merging every obsolete render hash.
     folders={root};progress=read(root/'track-progress.json',{}).get('tracks',[])
     for t in progress:
@@ -149,4 +149,10 @@ def project(root,review,row):
     for key in items:resolved.pop(key,None)
     summary=dict(processing=active,pending=sum(x['status']!='voice-fallback' for x in items.values()),voiceFallbacks=sum(x['status']=='voice-fallback' for x in items.values()),repairing=sum(x['status']=='repairing' for x in items.values()),repaired=len(resolved),userChoices=sum(x['status']=='user-choice-saved' for x in items.values()),qualityChecked=not active and report.get('qualityStatus')=='automatic-checks-passed',hasReport=bool(report or coverage or items or resolved))
     if not items and row.get('status')=='attention':summary['projectProblem']=(row.get('lastError') or {}).get('message') or row.get('message') or 'The last attempt needs attention; no line-level verdict is available yet.'
-    return dict(performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)
+    notices=[]
+    ocr=read(root/'ocr-status.json',{});source=read(root/'input-source.json',{})
+    if ocr.get('status') in ('failed','partial') or source.get('ocrError'):
+        notices.append(dict(code='ocr-incomplete',title='OCR needs attention',message='Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.',detail=ocr.get('error') or source.get('ocrError') or str(ocr.get('failedFrames',0))))
+    preserved=[dict(index=n+1,start=c['start'],end=c['end'],reason=c.get('originalSpeechReason')) for n,c in enumerate(cues) if c.get('preserveOriginalSpeech') and c.get('originalSpeechReason') in ('confirmed-source-song','confirmed-nonlexical-performance')]
+    summary.update(workflowNotices=len(notices),preservedPerformances=len(preserved))
+    return dict(workflowNotices=notices,preservedPerformances=preserved,performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)

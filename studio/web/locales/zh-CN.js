@@ -1,6 +1,24 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Restart / update dubbing":"重新制作／更新配音",
+"Restart this video without removing it from the list. Earlier movies, recordings and saved work are kept.":"无需移除影片再加入；旧成品、录音和已保存工作会保留。",
+"Restart conversion":"重新开始转换",
+"Run source recognition, subtitles, translation and dubbing again with the current production settings.":"按当前制作设置，重新识别原声、处理字幕、翻译及配音。",
+"Regenerate voices only":"仅重新生成配音",
+"Keep the existing dialogue, translations and timing. Generate new recordings for the current audio tracks, then export a new version.":"保留现有对白、翻译及时间；重新生成当前声道的录音，再输出新版本。",
+"Add a voice track":"新增配音声道",
+"Choose a language and voice engine. Missing target-language text is prepared for the new track; existing tracks stay unchanged.":"选择语言及配音引擎；新语言缺少的稿件会先补齐，原有声道会保留。",
+"Voice updates become available after this video has a translated draft.":"影片有翻译稿后，即可更新配音或新增声道。",
+"The selected video changed. Open the update menu again.":"所选影片已改变，请重新打开更新菜单。",
+
+"Workflow notices":"流程提示",
+"Check the workflow notices above":"请检查上方流程提示",
+
+"OCR needs attention":"OCR 需要检查",
+"Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.":"部分画面字幕未能识别，已按原声听写处理；现有录音已保留。",
+"Original performances and songs retained":"已保留原声表演及歌曲",
+
     "Choose one model for new dubbing. Download only keeps another model available without switching.": "选择一个用于新配音的模型。仅下载其他模型不会切换制作设置。",
     "Other production models": "其他制作模型",
     "Full Drama 3": "Full Drama 3",
@@ -1161,3 +1179,7 @@ Object.assign(LOCALE.ui,{"Ready to play": "可以播放", "Video player": "影�
 Object.assign(LOCALE.ui,{"Pause playback": "暂停播放", "Subtitle size": "字幕大小"});
 
 Object.assign(LOCALE.ui,{"Automatic · translated script": "自动 · 已翻译台词", "Translation not ready at this position": "当前位置的翻译尚未完成"});
+
+Object.assign(LOCALE.ui,{"Manage video list": "管理视频列表", "Select all": "全选", "Select none": "全不选", "Completed only": "只选已完成", "Remove selected from list": "移除所选列表项目", "Selected videos": "已选视频", "Processing · locked": "处理中・已锁定", "Remove videos from the list. Source videos, exports, recordings and saved work are retained.": "仅移出列表；原片、成品、录音与已保存工作会保留。", "Videos removed": "已移出列表", "Saved work and recordings were retained.": "已保留工作与录音。", "Undo removal": "撤销移除", "Detect and recommend models": "检测并推荐模型", "The installed CUDA 12.8 Torch build does not include this older GPU architecture. CPU processing is recommended; VRAM capacity alone is insufficient.": "当前 CUDA 12.8 Torch 不支持此旧 GPU 架构，建议使用 CPU；仅凭显存容量无法判定兼容。", "Changes before generation": "生成前确认更改", "dialogue lines": "句对白", "Source analysis and scripts retained": "保留原声分析与台词稿", "Source analysis and translation will run again": "将重新分析原声与翻译", "Previous recordings and exports are retained.": "保留以往录音与成品。", "Other tracks retained": "保留其他音轨", "Generation parameters": "生成参数", "Recording coverage": "录音完成概况", "missing recordings": "句缺少录音", "review notes": "项复核提示", "recordings need updating": "项录音需要更新", "Recording presence is not a pronunciation score. Language concerns remain review notes; automatic repair fills missing or corrupt audio.": "存在录音不代表发音已验收。语言疑点留作复核提示；自动修复仅补缺声或损坏录音。", "Inspect audio": "检查音频", "Audio inspection": "音频检查", "Source boundaries": "原声分句", "Compare the original mix, separated voice and generated take. Drag the time controls to audition a precise interval.": "比较原片混音、分离人声与配音；调整起止时间试听指定范围。", "Generated take": "生成录音", "Measured audio waveform": "实测音频波形", "Loading measured waveforms…": "正在读取实测波形…", "No audio evidence is available for this dialogue yet.": "此句暂时没有可用录音。", "Choose a valid interval within this waveform.": "请选择波形范围内有效的起止时间。", "Adjust subtitle timing": "调整字幕时间", "Subtitle timing": "字幕时间", "Adjust external subtitle timing without changing the original file. Original speech remains the timing authority.": "调整外挂字幕时间，保留原文件。对白时间仍以原声为准。", "Correction method": "校正方法", "Constant offset": "整体时间偏移", "Two-point drift correction": "两点时间漂移校正", "Offset in seconds · positive delays subtitles": "偏移秒数・正数代表延迟字幕", "First subtitle time": "第一个字幕时间", "First matching video time": "第一个对应视频时间", "Second subtitle time": "第二个字幕时间", "Second matching video time": "第二个对应视频时间", "Preview timing adjustment": "预览时间调整", "Apply subtitle timing": "应用字幕时间", "subtitles": "段字幕", "Subtitle timing updated. The original file was retained.": "已更新字幕时间，原文件已保留。", "Suggestions use measured source word times and pauses. No timings are invented from subtitle character counts. Review the proposed text before changing the draft.": "建议依据实测原声字音时间与停顿，不按字幕字数估算时间；修改草稿前请确认文字。", "Split dialogue": "拆分对白", "Merge adjacent dialogue": "合并相邻对白", "measured pause": "实测停顿", "Review proposed change": "查看修改建议", "No safe boundary suggestions. Existing analysis may not contain reliable word times.": "暂时没有可靠分句建议；现有分析可能没有可信字音时间。", "Before split": "前半句", "After split": "后半句", "Apply to draft": "应用至草稿", "Only the editable draft changes. Existing exports and recordings are retained. A changed dialogue needs a new take.": "仅修改编辑草稿，保留成品与旧录音；修改后的对白需要重新生成。", "Confirm this video’s source language before starting it.": "请确认此视频的原声语言后再开始转换。"});
+
+Object.assign(LOCALE.ui,{"Compatible runtime": "兼容运行环境", "Inference check required": "需要实际运算检查", "This GPU architecture is not covered by the pinned CUDA runtimes. CPU processing is available.": "当前 CUDA 套件未涵盖此 GPU 架构，可以使用 CPU。", "This Radeon is outside the pinned Windows ROCm support list. CPU processing is available.": "此 Radeon 不在当前 Windows ROCm 支持列表中，可以使用 CPU。"});

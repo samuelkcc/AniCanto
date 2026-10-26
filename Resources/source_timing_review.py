@@ -1,10 +1,11 @@
 """Bounded source-ASR anomaly repair; never derive speech clocks from OCR."""
 import hashlib,json,math,re,time
 from pathlib import Path
-REVISION='source-word-clock-1'
+REVISION='source-word-clock-2-short-turns'
 
 def abnormal(row,spans):
     words=row.get('words',[]);a=row.get('start',0);b=row.get('end',0)
+    if 0<b-a<.12 and row.get('text','').strip():return True
     if b-a<7:return False
     units=sum(c.isalnum() for c in row.get('text',''))
     stretched=any(w.get('end',0)-w.get('start',0)>max(3.5,1.2*sum(c.isalnum() for c in w.get('word',''))) for w in words)
@@ -27,6 +28,10 @@ def repair(model,audio,spans,rows,cfg,job,emit):
         if not abnormal(row,spans):result.append(row);continue
         a,b=row['start'],row['end'];others=[r for r in rows if r is not row]
         windows=merge_spans([dict(start=max(0,s['start']-.18),end=min(cfg['duration'],s['end']+.18)) for s in spans if min(b,s['end'])-max(a,s['start'])>.2])
+        if b-a<.12:
+            # Re-listen only an independently free local interval. Neighbouring
+            # good rows below have priority; never stretch OCR/characters to fit.
+            windows=[dict(start=max(0,a-.25),end=min(cfg['duration'],b+.25))]
         replacements=[]
         for window in windows:
             start,end=window['start'],window['end']

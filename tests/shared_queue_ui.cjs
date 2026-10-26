@@ -13,14 +13,17 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
    const source=id=>`/fixtures/episode-${id}.mkv`;
    f.state={useTermsAccepted:true,language:options.language||'en',mode:options.mode||'basic',selected:options.selected||'a',settings:{ttsBackend:'drama3',selectedEngines:['drama3'],dubLanguages:['yue'],subtitleModes:['yue'],includeOriginal:true,productionMode:'normal',appearance:'light'},ui:{autoQueue:!!options.restore,autoQueueAttention:!!options.restoreAttention},queue:(options.rows||[['a','waiting'],['b','waiting']]).map(([id,status])=>({id,video:source(id),status,progress:status==='complete'?1:0,...(status==='complete'?{output:`/exports/${id}.mp4`}:{})})),storage:'/fixture'};
    f.running=options.restore?{id:'restored-run',rowID:'a',action:'batch'}:null;
-   f.finish=async({code=0,paused=false,duplicate=false,preview=false}={})=>{
+   if(options.completed){f.running=null;f.state.ui.autoQueue=options.autoQueue!==false;f.state.queue[0].status='complete';f.state.queue[0].output='/exports/a.mp4';f.last={runID:'completed-before-reload',rowID:'a',action:'batch',code:0,paused:!!options.completedPaused};if(options.completedPaused)f.state.queue[0].status='paused';}
+   f.finish=async({code=0,paused=false,duplicate=false,preview=false,dropEvent=false}={})=>{
     let payload;
     if(duplicate)payload=f.last;
-    else{if(!f.running)throw Error('No active fixture run');const r=f.running;payload={runID:r.id,rowID:r.rowID,action:'batch',code,paused};const row=f.state.queue.find(x=>x.id===r.rowID);row.status=paused?'paused':code||preview?'attention':'complete';if(preview){row.deliveryKind='preview';row.incompleteDialogue=2;}if(!code&&!paused){row.output=`/exports/${row.id}.mp4`;row.progress=1;}f.running=null;f.last=payload;}
-    await f.listeners.get('studio-finished')({payload});
+    else{if(!f.running)throw Error('No active fixture run');const r=f.running;payload={runID:r.id,rowID:r.rowID,action:'batch',code,paused};const row=f.state.queue.find(x=>x.id===r.rowID);row.status=paused?'paused':code||preview?'attention':'complete';if(preview){row.deliveryKind='preview';row.incompleteDialogue=2;}if(!code&&!paused){row.output=`/exports/${row.id}.mp4`;row.progress=1;}f.running=null;f.last=payload;if(options.nativeOwned){payload.nativeQueue=1;if(!paused){const next=f.state.queue.find(x=>x.status==='waiting');if(next){f.nativeStarts??=[];f.nativeStarts.push(next.id);next.status='running';f.state.selected=next.id;f.running={id:'native-'+next.id,rowID:next.id,action:'batch'};}}}}
+    if(!dropEvent)await f.listeners.get('studio-finished')({payload});
    };
    window.__TAURI__={core:{convertFileSrc:p=>p,invoke:async(name,args={})=>{
-    if(name==='studio_status')return {runtimeReady:true,running:structuredClone(f.running)};
+    if(name==='studio_status')return {runtimeReady:true,nativeQueue:!!options.nativeOwned&&!!f.running,running:structuredClone(f.running),lastFinished:structuredClone(f.last)};
+    if(name==='studio_appearance')return null;
+    if(name==='studio_ack_finished'){f.acks=(f.acks||0)+1;return true;}
     if(name==='studio_pick')return ['/fixtures/episode-c.mkv'];
     if(name==='studio_pause'){f.pauses=(f.pauses||0)+1;setTimeout(()=>f.finish({paused:true}),0);return;}
     if(name==='studio_media'){f.media++;throw Error('Preview must stay off');}
@@ -55,20 +58,76 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
       if(options.badSnapshot===p.id)throw Error('Fixture snapshot unavailable');
       return {root:'/jobs/'+p.id,takes:[],review:{config:{duration:6}},issues:p.id==='a'?(options.reviewIssues||[]):[],reviewState:{pending:p.id==='a'?(options.reviewIssues||[]).length:0}};
      }
-     if(args.op==='speech-library')return {folder:{id:'speech-studio',name:'Dubbing studio'},clips:[],parameters:{},draft:{}};
+     if(args.op==='speech-library')return {folder:{id:'speech-studio',name:'Dubbing studio'},clips:[],projects:[],engines:[],textModels:[],parameters:{},draft:{}};
      if(args.op==='models'||args.op==='model-choices'||args.op==='licenses')return [];
-     if(args.op==='plan')return {setupReady:true,downloads:[],roles:{}};
+     if(args.op==='plan'){(f.planRequests??=[]).push(structuredClone(p));if(options.failedPlan&&!p.engine)throw Error('Previously selected models do not fit this computer');return {setupReady:true,canDeployModels:true,downloads:[],roles:{}};}
      if(args.op==='save-draft')return {};
     }
     throw Error('Unexpected fixture IPC '+name+' '+args.op);
    }},event:{listen:async(name,fn)=>{f.listeners.set(name,fn);return ()=>f.listeners.delete(name)}},window:{getCurrentWindow:()=>({close:async()=>{f.closed=true}})}};
   },options);
-  await page.goto(process.env.ANICANTO_QA_URL||'http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');
+  await page.goto(process.env.ANICANTO_QA_URL||'http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');if(!options.stayWelcome){await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');}
   async function count(n){await page.waitForFunction(n=>window.queueFixture.starts.length===n,n);await page.waitForFunction(()=>!document.querySelector('[data-action=start]')?.textContent.includes('Starting'));const pause=page.locator('button[data-action=pause]').first();if(await pause.count()){const color=await pause.evaluate(e=>getComputedStyle(e).backgroundColor);assert(['rgb(189, 48, 61)','rgb(159, 35, 48)'].includes(color),'Pause & save must be red on the shared Mac/Windows UI: '+color);}}
   async function finish(opts){await page.evaluate(opts=>window.queueFixture.finish(opts),opts);}
   async function end(name){assert.deepEqual(errors,[],name);if(!options.sourceLanguage)assert.equal(await page.evaluate(()=>window.queueFixture.drawers),0,'Automatic Japanese detection flashed a drawer');assert.equal(await page.evaluate(()=>window.queueFixture.media),0,'Preview decoder was started');console.log('PASS '+name);results.push({name,starts:await page.evaluate(()=>window.queueFixture.starts),errors});await page.close();}
   return {page,count,finish,end};
  }
+
+ if(process.env.ANICANTO_NATIVE_QUEUE_ONLY){
+  const {page,count,finish,end}=await fixture({nativeOwned:true,rows:[['a','waiting'],['b','waiting']]});
+  await page.locator('[data-action=start]').first().click();await count(1);await finish();
+  await page.waitForFunction(()=>window.queueFixture.nativeStarts?.includes('b'));
+  assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a'],'The browser must not launch a second task owned by the native queue');
+  await finish();await page.waitForFunction(()=>window.queueFixture.state.queue.every(x=>x.status==='complete'));
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.ui.autoQueue),false);
+  await end('Native handoff owns the next worker; UI does not double-launch or retain stale queue intent');
+  {
+   const recovery=await fixture({failedPlan:true,stayWelcome:true});await recovery.page.locator('#setup-details').evaluate(el=>el.open=true);await recovery.page.waitForSelector('.setup-check-error');
+   await recovery.page.locator('[data-action=detect-best-models]').click();await recovery.page.waitForSelector('.setup-check-error',{state:'detached'});
+   assert(await recovery.page.evaluate(()=>window.queueFixture.planRequests.some(p=>p.engine==='drama3'&&Object.keys(p.models).length===0)));
+   await recovery.end('Incompatible saved models retain an accessible automatic hardware recommendation recovery');
+  }
+  await browser.close();fs.writeFileSync(path.join(out,'native-owner-acceptance.json'),JSON.stringify({fixtureOnly:true,results},null,2));return;
+ }
+ if(!process.env.ANICANTO_QUEUE_TAIL_ONLY){
+ {
+  const {page,count,finish,end}=await fixture({rows:[['a','waiting'],['b','waiting']]});
+  await page.locator('[data-action=start]').click();await count(1);
+  await finish({dropEvent:true});await page.evaluate(()=>window.dispatchEvent(new Event('focus')));await count(2);
+  assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a','b']);
+  await page.evaluate(()=>window.dispatchEvent(new Event('focus')));assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),2);
+  await finish();await end('Dropped native event recovered after wake without duplicate conversion');
+ }
+ {
+  const {page,count,finish,end}=await fixture({rows:[['a','complete'],['b','waiting']],completed:true});
+  await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['b']);await finish();await end('Webview reload restores enabled queue from native completion receipt');
+ }
+ for(const options of [{completed:true,autoQueue:false},{completed:true,completedPaused:true}]){
+  const {page,end}=await fixture({rows:[['a','complete'],['b','waiting']],...options});
+  await page.evaluate(()=>window.dispatchEvent(new Event('focus')));await page.waitForTimeout(150);
+  assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),0);await end('Completion receipt respects explicit stop or paused work '+JSON.stringify(options));
+ }
+
+
+ }
+ if(!process.env.ANICANTO_QUEUE_WAKE_ONLY){
+ if(process.env.ANICANTO_NATIVE_QUEUE_ONLY){
+  const {page,count,finish,end}=await fixture({nativeOwned:true,rows:[['a','waiting'],['b','waiting']]});
+  await page.locator('[data-action=start]').first().click();await count(1);await finish();
+  await page.waitForFunction(()=>window.queueFixture.nativeStarts?.includes('b'));
+  assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a'],'The browser must not launch a second task owned by the native queue');
+  await finish();await page.waitForFunction(()=>window.queueFixture.state.queue.every(x=>x.status==='complete'));
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.ui.autoQueue),false);
+  await end('Native handoff owns the next worker; UI does not double-launch or retain stale queue intent');
+  {
+   const recovery=await fixture({failedPlan:true,stayWelcome:true});await recovery.page.locator('#setup-details').evaluate(el=>el.open=true);await recovery.page.waitForSelector('.setup-check-error');
+   await recovery.page.locator('[data-action=detect-best-models]').click();await recovery.page.waitForSelector('.setup-check-error',{state:'detached'});
+   assert(await recovery.page.evaluate(()=>window.queueFixture.planRequests.some(p=>p.engine==='drama3'&&Object.keys(p.models).length===0)));
+   await recovery.end('Incompatible saved models retain an accessible automatic hardware recommendation recovery');
+  }
+  await browser.close();fs.writeFileSync(path.join(out,'native-owner-acceptance.json'),JSON.stringify({fixtureOnly:true,results},null,2));return;
+ }
+ if(!process.env.ANICANTO_QUEUE_TAIL_ONLY){
  {
   const {page,count,finish,end}=await fixture({selected:'b'});
   await page.locator('[data-action=start]').evaluate(b=>{b.click();b.click()});await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a']);
@@ -173,14 +232,16 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   await page.locator('.drawer button[data-action=close-drawer]').first().click();await page.waitForTimeout(100);
   assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),0);assert.equal(await page.evaluate(()=>window.queueFixture.state.ui.autoQueue),false);
   await page.locator('[data-action=start]').click();await page.waitForSelector('[data-action=confirm-source-language]');await page.locator('[data-action=confirm-source-language]').click();await count(1);
-  if(sourceLanguage==='en'){assert.equal(await page.locator('[data-setting=dubLanguages] option').count(),1);assert.equal(await page.locator('[data-setting=dubLanguages]').inputValue(),'yue');assert(await page.locator('[data-setting=dubLanguages]').isDisabled());}
+  if(sourceLanguage==='en'){assert.equal(await page.locator('[data-setting=dubLanguages] option[value=yue]').count(),1);assert.equal(await page.locator('[data-setting=dubLanguages]').inputValue(),'yue');}
   await end('Detected '+sourceLanguage+' requires confirmation; Cancel starts nothing');
  }
  {
   const {page,end}=await fixture({sourceLanguage:'fr',sourceSupported:false,rows:[['a','waiting']]});
   await page.locator('[data-action=start]').click();await page.waitForSelector('.drawer');await page.waitForTimeout(100);
-  assert.equal(await page.locator('[data-action=confirm-source-language]').count(),0);assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),0);
-  await page.locator('.drawer button[data-action=close-drawer]').first().click();await end('Unsupported source shows explanation and cannot start');
+  await page.locator('[data-action=confirm-source-language]').click();await page.waitForFunction(()=>document.querySelector('#toast')?.textContent.includes('not supported'));assert.equal(await page.evaluate(()=>window.queueFixture.starts.length),0);assert(await page.locator('.drawer').isVisible());
+  await page.locator('.drawer button[data-action=close-drawer]').first().click();await end('Unsupported source cannot launch; manual source correction remains available');
+ }
+
  }
 
  for(const language of ['en','zh-HK']){
@@ -195,7 +256,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   await page.waitForFunction(()=>window.queueFixture.moves===1);
   assert.deepEqual(await ids(),['a','c','b']);assert.equal(await page.evaluate(()=>window.queueFixture.state.selected),'a');
   assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['a']);
-  await page.locator('[data-action=projects]').click();assert.deepEqual(await page.locator('.queue-row').evaluateAll(es=>es.map(e=>e.dataset.queueId)),['a','c','b']);
+  await page.locator('[data-action=projects]').click();await page.waitForSelector('.queue-row');assert.deepEqual(await page.locator('.queue-row').evaluateAll(es=>es.map(e=>e.dataset.queueId)),['a','c','b']);
   await page.locator('[data-queue-id=b] [data-action=queue-up]').click();await page.waitForFunction(()=>window.queueFixture.moves===2);
   assert.deepEqual(await page.locator('.queue-row').evaluateAll(es=>es.map(e=>e.dataset.queueId)),['a','b','c']);
   await page.locator('[data-queue-handle=c]').focus();await page.keyboard.press('ArrowUp');await page.waitForFunction(()=>window.queueFixture.moves===3);
@@ -243,7 +304,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   assert.equal(await page.locator('.workspace-title [data-action=pause]').count(),1,'Hidden inspector keeps Pause in the Edit header');
   assert.equal(await page.locator('.statusbar.has-transport').count(),0);
   for(const destination of ['review','produce','queue','models','preferences']){
-   await page.locator(`[data-action=page][data-value=${destination}]`).click();
+   await page.locator(`[data-action=page][data-value=${destination}]`).first().click();
    assert.equal(await page.locator('[data-action=pause]').count(),0,'Pause must only appear in Edit');
    assert.equal(await page.locator('.statusbar .transport-control').count(),0,'No global transport footer');
   }
@@ -251,6 +312,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
   await page.locator('[data-action=toggle-inspector]').click();assert.equal(await page.locator('.inspector-footer [data-action=pause]').count(),1);assert.equal(await page.locator('[data-action=pause]').count(),1);
   await page.locator('[data-action=pause]').click();await page.waitForSelector('[data-action=start]');
   await end('Pause only in Edit, including hidden inspector; no full-width transport footer: '+language);
+ }
  }
  await browser.close();fs.writeFileSync(path.join(out,'acceptance.json'),JSON.stringify({fixtureOnly:true,realUIActions:true,previewOff:true,results},null,2));console.log(JSON.stringify(results));
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -38,6 +38,9 @@ def read(root,row,tools,choice='auto',output=False):
   cues=parse_srt(p.stdout.decode('utf-8-sig'));write_json(cached,cues)
  # External subtitles use source clocks. Translate only the playback clock
  # when viewing an exported excerpt; never alter the imported file or job.
+ if choice=='external' and row.get('subtitleAlignment'):
+  from editing_tools import alignment
+  cues=alignment(cues,row['subtitleAlignment'])['cues']
  if output and choice=='external':
   review_path=Path(row.get('review') or Path(root)/'nonexistent')
   review=json.loads(review_path.read_text()) if review_path.is_file() else {}

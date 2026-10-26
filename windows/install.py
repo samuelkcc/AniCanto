@@ -31,7 +31,7 @@ def env_python(name):
 
 
 
-def install_torch(python, backend, repair=False, packages=None):
+def install_torch(python, backend, repair=False, packages=None, cuda_index=None):
     root=data_root()
     extra=['--force-reinstall','--no-deps'] if repair else []
     selected=set(packages or ('torch','torchaudio'))
@@ -46,7 +46,12 @@ def install_torch(python, backend, repair=False, packages=None):
                'torchaudio-2.9.1%2Brocm7.2.1-cp312-cp312-win_amd64.whl',
                'torchvision-0.24.1%2Brocm7.2.1-cp312-cp312-win_amd64.whl'] if not repair or name.split('-',1)[0] in selected])
     else:
-        index = {'nvidia': 'cu128', 'intel': 'xpu', 'cpu': 'cpu'}[backend]
+        if backend=='nvidia' and cuda_index is None:
+            from gpu import planning_hardware
+            from hardware_runtimes import nvidia
+            h=planning_hardware();cuda_index=nvidia(h.get('acceleratorName',''),h.get('cudaComputeCapability'),h.get('cudaDriverVersion'),h.get('selectedTorchIndex'))['torchIndex']
+        if backend=='nvidia' and cuda_index not in ('cu126','cu128','cu130'):raise ValueError('Detect a supported GPU runtime before installing CUDA.')
+        index = {'nvidia': cuda_index, 'intel': 'xpu', 'cpu': 'cpu'}[backend]
         call(pip_command(python,root,'install',*extra,'--index-url',
               'https://download.pytorch.org/whl/' + index,
               *[name+'==2.9.1' for name in ('torch','torchaudio') if not repair or name in selected]))

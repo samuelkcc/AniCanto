@@ -100,7 +100,14 @@ def ocr(folder):
   digest=hashlib.sha256(path.read_bytes()).hexdigest()
   if digest in cache:
    rows.append(dict(index=index,**cache[digest]));progress(index+1);continue
-  found,_=engine(str(path));inferences+=1
+  failure=[];found=[]
+  for attempt in range(2):
+   try:
+    found,_=engine(str(path));inferences+=1;break
+   except Exception as error:
+    failure.append(str(error)[:500])
+  else:
+   rows.append(dict(index=index,text='',boxes=[],status='failed',attempts=2,errors=failure,file=path.name));progress(index+1);continue
   accepted=[r for r in (found or []) if float(r[2])>=.5]
   with Image.open(path) as image:width,height=image.size
   boxes=[]
@@ -109,7 +116,7 @@ def ocr(folder):
    boxes.append(dict(text=str(text),confidence=float(confidence),x=max(0,min(xs)/width),
                      y=max(0,min(ys)/height),width=(max(xs)-min(xs))/width,height=(max(ys)-min(ys))/height))
   boxes.sort(key=lambda b:(round((b['y']+b['height']/2)*20),b['x']))
-  result=dict(text=' '.join(b['text'] for b in boxes),boxes=boxes)
+  result=dict(text=' '.join(b['text'] for b in boxes),boxes=boxes,status='complete')
   rows.append(dict(index=index,**result));cache[digest]=result
   if len(cache)>256:cache.pop(next(iter(cache)))
   progress(index+1)

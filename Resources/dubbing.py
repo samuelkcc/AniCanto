@@ -428,7 +428,7 @@ def is_vocalization(cue):
  """
  sources=[cue.get(key,'') for key in ('japanese','text')]
  if any(str(text or '').strip() for text in sources):return False
- return bool(cue.get('nonlexicalTail') and not cue.get('cantonese','').strip())
+ return bool(cue.get('nonlexicalTail') and not any(c.isalnum() for c in cue.get('cantonese','')))
 
 
 def candidate_content_matches(cfg,path,text,model=None,evidence=None):

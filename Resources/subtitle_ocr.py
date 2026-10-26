@@ -63,6 +63,7 @@ def discover(w,cfg,job):
         w.run([cfg['ffmpeg'],'-v','error','-y','-ss',str(cfg.get('startOffset',0)+point),
                '-i',cfg['video'],'-frames:v','1','-vf',w.ocr_filter(scan,False),folder/f'{i:03d}.jpg'])
     rows=run_ocr(w,cfg,folder)
+    if rows and all(r.get('status')=='failed' for r in rows):raise ValueError('OCR discovery failed on every frame; saved frame errors retained')
     region,detected=choose_region(rows)
     cfg.update(ocrRect=region,ocrEvidenceOnly=True)
     w.atomic_json(Path(job)/'ocr-region.json',dict(revision=1,region=region,detected=detected,
@@ -73,7 +74,7 @@ def discover(w,cfg,job):
            workID='ocr-discovery',workCompleted=len(points),workTotal=len(points))
 
 
-SCAN_REVISION=3
+SCAN_REVISION=4
 
 
 def select_speech_frames(files,speech,duration):
@@ -117,7 +118,7 @@ def run_ocr(w,cfg,folder):
                            ocrProgress=event)
             except (OSError,ValueError,KeyError,TypeError):pass
     thread=threading.Thread(target=report,daemon=True);thread.start()
-    try:return json.loads(w.run([cfg['executable'],'--ocr',folder]).decode())
+    try:return json.loads(getattr(w,'run_ocr_tool',w.run)([cfg['executable'],'--ocr',folder]).decode())
     finally:done.set();thread.join(timeout=2)
 
 
@@ -138,10 +139,13 @@ def scan(w,cfg,job):
         previous=json.loads(cache.read_text())
         if previous.get('identity')==key and isinstance(previous.get('cues'),list):
             cfg.update(ocrRect=previous['region'],ocrEvidenceOnly=previous['evidenceOnly'])
+            w.atomic_json(job/'ocr-status.json',dict(status='complete' if previous['cues'] else 'empty',cached=True,captionCount=len(previous['cues'])))
             w.emit('OCR','沿用已完成嘅畫面字幕辨識，唔需要重複掃描。',.28,ocrCacheReused=True)
             return previous['cues']
     except (OSError,ValueError,KeyError,TypeError):pass
-    started=time.monotonic();discover(w,cfg,job)
+    started=time.monotonic()
+    w.atomic_json(job/'ocr-status.json',dict(status='running',phase='discovery',startedAt=time.time()))
+    discover(w,cfg,job)
     interval=.4 if guided else .2
     folder=job/'frames-pts';folder.mkdir(exist_ok=True)
     # This directory is owned by this job. Remove old PTS images before a
@@ -164,6 +168,8 @@ def scan(w,cfg,job):
     rows=run_ocr(w,cfg,folder) if files else []
     if len(rows)!=len(files) or any(row.get('index')!=i for i,row in enumerate(rows)):
         raise ValueError('OCR helper returned incomplete frame coverage')
+    failures=[dict(index=r['index'],file=files[r['index']].name,errors=r.get('errors',[])) for r in rows if r.get('status')=='failed']
+    if rows and len(failures)==len(rows):raise ValueError('OCR failed on every sampled frame; saved frame errors retained')
     if guided:rows=subtitle_rows(rows)
     for row in rows:row['time']=int(files[row['index']].stem)/1000
     # Sparse auxiliary samples may be single hits in a fast utterance. They
@@ -180,7 +186,9 @@ def scan(w,cfg,job):
         metrics['helper']={k:helper[k] for k in ('inferences','reused','backend','engine','seconds') if k in helper}
     except (OSError,ValueError,TypeError):pass
     w.atomic_json(job/'ocr-metrics.json',metrics)
-    w.atomic_json(cache,dict(identity=key,cues=cues,region=cfg.get('ocrRect'),
+    w.atomic_json(job/'ocr-status.json',dict(status='partial' if failures else 'complete' if cues else 'empty',finishedAt=time.time(),frames=len(files),failedFrames=len(failures),failures=failures[:40],captionCount=len(cues)))
+    if failures:w.emit('OCR 提示',f'{len(failures)} 張畫面辨識失敗；已保留其餘字幕，失敗範圍按原聲處理，詳見校對報告。',.29,warningCode='ocr-partial')
+    if not failures:w.atomic_json(cache,dict(identity=key,cues=cues,region=cfg.get('ocrRect'),
                             evidenceOnly=bool(cfg.get('ocrEvidenceOnly')),metrics=metrics))
     w.emit('OCR',f"OCR: {len(files)}/{len(files)} · {metrics['totalSeconds']:.1f}s",.29,
            workID='ocr-scan',workCompleted=len(files),workTotal=len(files),ocrMetrics=metrics)

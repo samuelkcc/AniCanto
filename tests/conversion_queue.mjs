@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {ConversionQueue,pendingVideos} from '../studio/web/conversion-queue.js';
+import {ConversionQueue,pendingVideos,missedCompletion,restorableCompletion} from '../studio/web/conversion-queue.js';
 const rows=[{id:'done',status:'complete'},{id:'a',status:'waiting'},{id:'b',status:'waiting'},{id:'bad',status:'attention'}];
 const q=new ConversionQueue();
 q.begin(rows,{selected:'done',all:true});assert.equal(q.next(rows),'a');assert.equal(q.next(rows),'b');assert.equal(q.next(rows),null,'Never rerun completed or attention items automatically');
@@ -27,3 +27,14 @@ const reordered=[live[2],live[0],live[1]];q.reorder(reordered);
 assert.equal(q.next(reordered),'c');assert.equal(q.next(reordered),'b');assert.equal(q.next(reordered),null);
 q.restore('a');q.reorder(reordered);assert.equal(q.next(reordered),'c');assert.equal(q.next(reordered),'b');
 live[0].status='waiting';q.begin(live,{selected:'a'});q.reorder(reordered);assert.equal(q.next(reordered),'a');assert.equal(q.next(reordered),null,'Reorder cannot turn a explicit single-video job into a batch');
+
+const completed={runID:'r1',rowID:'a',action:'batch',code:0,paused:false};
+assert.deepEqual(missedCompletion({lastFinished:completed,running:null},{id:'r1'},new Set()),completed);
+assert.equal(missedCompletion({lastFinished:completed,running:{id:'r2'}},{id:'r2'},new Set()),null);
+assert.equal(missedCompletion({lastFinished:completed},{id:'r2'},new Set()),null);
+assert.equal(missedCompletion({lastFinished:completed},null,new Set(['r1'])),null);
+assert.equal(missedCompletion({running:null},null,new Set()),null,'Quiet or missing worker is not proof of completion');
+assert.equal(restorableCompletion({lastFinished:completed,running:null},{ui:{autoQueue:false}}),null);
+assert.deepEqual(restorableCompletion({lastFinished:completed,running:null},{ui:{autoQueue:true}}),completed);
+for(const patch of [{paused:true},{finalizationError:'write failed'},{action:'speech-studio'}])assert.equal(restorableCompletion({lastFinished:{...completed,...patch}},{ui:{autoQueue:true}}),null);
+console.log('Native completion recovery: missed/duplicate/stale events, active ownership, pause and explicit queue intent passed.');

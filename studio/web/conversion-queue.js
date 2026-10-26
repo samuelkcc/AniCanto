@@ -29,3 +29,16 @@ export class ConversionQueue {
  }
  stop(){this.enabled=false;this.includeAttention=false;this.pending=[];this.attempted=new Set();this.explicit=new Set()}
 }
+
+// Only a native receipt can turn a missed transient event into completion.
+// Never infer success from a quiet progress bar, timeout or row percentage.
+export function missedCompletion(status,active,seen){
+ const done=status.lastFinished;
+ if(!done?.runID||seen.has(done.runID)||status.running)return null;
+ if(active&&active.id!==done.runID)return null;
+ return done;
+}
+export function restorableCompletion(status,state){
+ const done=status.lastFinished;
+ return !status.running&&state.ui?.autoQueue&&done?.action==='batch'&&!done.paused&&!done.finalizationError?done:null;
+}

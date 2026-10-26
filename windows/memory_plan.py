@@ -11,6 +11,8 @@ def pools(plan):
     dedicated=hardware.get('backend') in ('cuda','rocm') and float(hardware.get('acceleratorMemoryGB') or 0)>0
     vram=float(hardware.get('acceleratorMemoryGB') or 0) if dedicated else 0.0
     reserve=float(plan.get('systemReserveGB') or max(8.,ram*.15))
+    from compute_policy import budgets
+    current=budgets(ram,vram,hardware.get('acceleratorFreeMemoryGB'),dedicated)
     rows={row['id']:row for row in plan.get('downloads',[]) if row.get('id')}
     system=[];gpu=[]
     for role,ident in (plan.get('roles') or {}).items():
@@ -25,9 +27,7 @@ def pools(plan):
                 gpu.append(dict(role=role,id=ident,gb=float(memory.get('gpuGB') or 0)))
         else:
             entry=dict(role=role,id=ident,gb=need)
-            (system if role=='voice' and plan.get('voiceBackend')=='cpu' or not dedicated else gpu).append(entry)
-    from compute_policy import budgets
-    current=budgets(ram,vram,hardware.get('acceleratorFreeMemoryGB'),dedicated)
+            (system if role=='voice' and plan.get('voiceBackend')=='cpu' or not dedicated or need>current['acceleratorBudgetGB'] else gpu).append(entry)
     return dict(system=dict(capacity=ram,budget=max(0.,ram-reserve),peak=max((r['gb'] for r in system),default=0.),models=system),
                 gpu=dict(capacity=vram,budget=min(max(0.,ram-reserve),current['acceleratorBudgetGB']) if dedicated else 0.,peak=max((r['gb'] for r in gpu),default=0.),models=gpu),
                 dedicated=dedicated,backend=hardware.get('backend','cpu'),reserve=reserve)
@@ -43,7 +43,9 @@ def fit_model(row,hardware):
     if backend in ('cuda','rocm'):
         from compute_policy import budgets
         available=budgets(ram,vram,hardware.get('acceleratorFreeMemoryGB'),True)['acceleratorBudgetGB']
-        return need<=min(system,available),'gpu'
+        if need<=min(system,available):return True,'gpu'
+        if row.get('engine')!='cosyvoice3' and row.get('category') in ('text','speech','asr','voice') and need<=system:return True,'system'
+        return False,'gpu'
     return need<=system,'system'
 
 def can_attempt_over_budget(row,hardware):

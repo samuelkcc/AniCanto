@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "torchVersion": "2.9.1",
+  "nvidia": [
+    {
+      "id": "legacy-cu126",
+      "torchIndex": "cu126",
+      "cuda": "12.6",
+      "minimumCC": 5,
+      "maximumCC": 6.9,
+      "nameHints": [
+        "GTX 9",
+        "GTX 10",
+        "TITAN X",
+        "QUADRO P"
+      ],
+      "nativeDramaCUDA": "12"
+    },
+    {
+      "id": "newer-cu130",
+      "torchIndex": "cu130",
+      "cuda": "13.0",
+      "minimumCC": 8.9,
+      "maximumCC": 12.9,
+      "minimumDriverMajor": 580,
+      "nameHints": [
+        "RTX 40",
+        "RTX 50",
+        "RTX PRO",
+        "B200",
+        "H100"
+      ],
+      "nativeDramaCUDA": "13",
+      "fallbackIndices": [
+        "cu128"
+      ]
+    },
+    {
+      "id": "modern-cu128",
+      "torchIndex": "cu128",
+      "cuda": "12.8",
+      "minimumCC": 7,
+      "maximumCC": 12.9,
+      "nameHints": [
+        "RTX 20",
+        "RTX 30",
+        "RTX 40",
+        "RTX 50",
+        "GTX 16",
+        "RTX A",
+        "RTX PRO",
+        "QUADRO RTX",
+        "TESLA V",
+        "A100",
+        "H100",
+        "B200"
+      ],
+      "nativeDramaCUDA": "12-or-13"
+    }
+  ],
+  "amd": {
+    "runtime": "rocm7.2.1",
+    "windows": "11",
+    "python": "3.12",
+    "models": {
+      "RX 9070": "gfx1201",
+      "RX 9070 XT": "gfx1201",
+      "RX 9060 XT": "gfx1200",
+      "AI PRO R9700": "gfx1201",
+      "RX 7900 XTX": "gfx1100",
+      "PRO W7900": "gfx1100",
+      "PRO W7900 DUAL SLOT": "gfx1100",
+      "RX 7700": "gfx1101"
+    },
+    "unsupportedAction": "cpu"
+  },
+  "sources": [
+    "https://pytorch.org/get-started/previous-versions/",
+    "https://raw.githubusercontent.com/pytorch/pytorch/release/2.9/.ci/pytorch/windows/cuda126.bat",
+    "https://raw.githubusercontent.com/pytorch/pytorch/release/2.9/.ci/pytorch/windows/cuda128.bat",
+    "https://rocm.docs.amd.com/projects/radeon-ryzen/en/docs-7.2.1/docs/compatibility/compatibilityrad/windows/windows_compatibility.html",
+    "https://raw.githubusercontent.com/pytorch/pytorch/release/2.9/.ci/pytorch/windows/cuda130.bat",
+    "https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html"
+  ],
+  "notes": "Planning only. Actual kernel, model loading and speech probes remain mandatory; no Windows physical GPU acceptance is claimed."
+}

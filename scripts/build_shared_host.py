@@ -1,10 +1,23 @@
 """Build release hosts with pinned dependencies and anonymised compiler paths."""
-import argparse,os,subprocess
+import argparse,json,os,re,subprocess
 from pathlib import Path
 from build_environment import rust_environment
 ROOT=Path(__file__).resolve().parents[1]
 
+def sync_version():
+ version=json.loads((ROOT/'VERSION.json').read_text())['version']
+ for name in ('Cargo.toml','Cargo.lock'):
+  path=ROOT/'studio/src-tauri'/name;text=path.read_text()
+  pattern=r'(name = "anicanto-studio"\nversion = ")[^"]+("|$)'
+  updated,count=re.subn(pattern,lambda m:m.group(1)+version+m.group(2),text,count=1)
+  if count!=1:raise RuntimeError('Missing native host package identity: '+name)
+  if updated!=text:path.write_text(updated)
+ path=ROOT/'studio/src-tauri/tauri.conf.json';config=json.loads(path.read_text())
+ if config['version']!=version:config['version']=version;path.write_text(json.dumps(config,indent=2)+'\n')
+
+
 def build(target=None):
+ sync_version()
  # Refresh versioned web resources before embedding them in either native host.
  from prepare_shared_studio import prepare
  prepare()

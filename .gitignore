@@ -29,3 +29,11 @@ studio/src-tauri/gen/
 /Resources/drama3-small-server
 /docs/archive/
 /studio/web/assets/
+
+# The independently developed iPad application is private and is never part of
+# the public desktop repository or release source archives.
+/mobile/
+/ipad/
+/iOS/
+*.ipa
+*.xcarchive/

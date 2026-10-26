@@ -131,7 +131,12 @@ pub fn plan(cfg: &Value) -> Result<Value, String> {
 /// Conservative planning estimates. A real native speech probe is required.
 fn drama_memory(h:&Value,preference:&str)->Value {
     let vram=h["acceleratorMemoryGB"].as_f64().unwrap_or(0.);
-    let cuda=preference!="cpu" && h["backend"]=="cuda" && h["nativeDramaCUDA"]==true && vram>=7.5;
+    let free=h["acceleratorFreeMemoryGB"].as_f64().unwrap_or(vram);
+    let need=if vram>=23.5 {18.}else if vram>=15.5 {12.}else if vram>=11.5 {9.}else{6.};
+    let name=h["acceleratorName"].as_str().unwrap_or("").to_uppercase();
+    let driver=h["cudaDriverVersion"].as_str().and_then(|v|v.split('.').next()).and_then(|v|v.parse::<u64>().ok());
+    let needs_new_driver=(name.contains("RTX 50")||name.contains("BLACKWELL"))&&driver.is_some_and(|v|v<580);
+    let cuda=!needs_new_driver && preference!="cpu" && h["backend"]=="cuda" && h["nativeDramaCUDA"]==true && vram>=7.5 && (free-(vram*0.1).max(0.5)).min(vram*0.8)>=need;
     let (layers,gpu)=if vram>=23.5 {(0,18.)} else if vram>=15.5 {(16,12.)} else if vram>=11.5 {(24,9.)} else {(32,6.)};
     json!({"backend":if cuda {"cuda"}else{"cpu"},"systemGB":22.,"gpuGB":if cuda {gpu}else{0.},
         "cpuExpertLayers":if cuda {layers}else{0},"contextLength":if cuda {2048}else{4096},
@@ -144,7 +149,9 @@ fn windows_deployment(req:&Value)->Result<Value,String> {
     let ram=h["memoryGB"].as_f64().filter(|x|x.is_finite() && *x>0.).ok_or("memory-undetected")?;
     let reserve=(ram*0.15).max(8.);let host_budget=(ram-reserve).max(0.);
     let backend=h["backend"].as_str().unwrap_or("cpu");
-    let budget=if ["cuda","rocm"].contains(&backend) {host_budget.min(h["acceleratorMemoryGB"].as_f64().unwrap_or(0.)*0.8)} else {host_budget};
+    let gpu=h["acceleratorMemoryGB"].as_f64().unwrap_or(0.);
+    let free=h["acceleratorFreeMemoryGB"].as_f64().unwrap_or(gpu);
+    let budget=if ["cuda","rocm"].contains(&backend) {host_budget.min((gpu*0.8).min((free-(gpu*0.1).max(0.5)).max(0.)))} else {host_budget};
     let models=req["models"].as_array().ok_or("missing-model-catalog")?;
     let preference=req["dramaBackend"].as_str().unwrap_or("auto");
     if !["auto","cuda","cpu"].contains(&preference){return Err("invalid-drama-backend".into());}
@@ -155,7 +162,7 @@ fn windows_deployment(req:&Value)->Result<Value,String> {
     let valid=|m:&&Value| m["retired"]!=true && m["licenseReviewRequired"]!=true && m["nativeFormat"].is_string() && m["bytes"].as_u64().unwrap_or(0)>0 && m["files"].as_array().is_some_and(|f|!f.is_empty());
     let explicitly_requested=|m:&Value|req["requestedModels"].as_object().is_some_and(|roles|roles.values().any(|id|id==&m["id"]));
     let fits=|m:&&Value| valid(m) && m["estimatedMemoryGB"].as_f64().is_some_and(|n|{
-        let cpu=m["id"]=="drama3-native-q2";
+        let cpu=m["engine"]!="cosyvoice3";
         let advised=if cpu {host_budget} else {budget};
         let physical=if cpu || !["cuda","rocm"].contains(&backend) {ram} else {ram.min(h["acceleratorMemoryGB"].as_f64().unwrap_or(0.))};
         n>0. && (n<=advised || explicitly_requested(m) && n<=physical)
@@ -303,6 +310,34 @@ fn deployment_inner(req: &Value) -> Result<Value,String> {
 /// Quality choices use the SAME real hardware and feasibility policy as installation.
 /// Unavailable templates never borrow a different engine or relax the memory guard.
 pub fn deployment(req:&Value)->Result<Value,String> {
+    // Runtime generation is chosen independently from model-memory fit.
+    let mut normalized=req.clone();
+    if normalized["hardware"]["platform"]=="windows" && normalized["hardware"]["backend"]=="cuda" {
+        let name=normalized["hardware"]["acceleratorName"].as_str().unwrap_or("").to_uppercase();
+        let cc=normalized["hardware"]["cudaComputeCapability"].as_f64();
+        let policy:Value=serde_json::from_str(include_str!("../../Resources/hardware-runtimes.json")).unwrap();
+        let driver=normalized["hardware"]["cudaDriverVersion"].as_str().and_then(|v|v.split('.').next()).and_then(|v|v.parse::<u64>().ok()).unwrap_or(0);
+        let preferred=normalized["hardware"]["selectedTorchIndex"].as_str();
+        let mut options=policy["nvidia"].as_array().unwrap().iter().filter(|p|driver>=p["minimumDriverMajor"].as_u64().unwrap_or(0)).collect::<Vec<_>>();
+        options.sort_by_key(|p|if preferred.is_some_and(|index|p["torchIndex"]==index){0}else{1});
+        let profile=options.into_iter().find(|p|{
+            if let Some(cc)=cc {cc>=p["minimumCC"].as_f64().unwrap()&&cc<=p["maximumCC"].as_f64().unwrap()}
+            else{p["nameHints"].as_array().unwrap().iter().any(|h|name.contains(h.as_str().unwrap()))}
+        });
+        if let Some(p)=profile {normalized["hardware"]["gpuRuntime"]=p.clone();normalized["hardware"]["torchIndex"]=p["torchIndex"].clone();}
+        else if !name.is_empty(){
+            normalized["hardware"]["detectedBackend"]=json!("cuda");normalized["hardware"]["backend"]=json!("cpu");normalized["hardware"]["suggestedSetupBackend"]=json!("cpu");
+            normalized["hardware"]["gpuCompatibilityReason"]=json!("This GPU architecture is not covered by the pinned CUDA runtimes. CPU processing is available.");
+        }
+    }
+    if normalized["hardware"]["platform"]=="windows" && normalized["hardware"]["backend"]=="rocm" {
+        let name=normalized["hardware"]["acceleratorName"].as_str().unwrap_or("").to_uppercase();
+        let name=name.strip_suffix(" GRAPHICS").unwrap_or(&name);
+        let policy:Value=serde_json::from_str(include_str!("../../Resources/hardware-runtimes.json")).unwrap();
+        let supported=name.is_empty()||policy["amd"]["models"].as_object().unwrap().keys().any(|m|name==m || name.ends_with(&format!(" {m}")));
+        if !supported {normalized["hardware"]["detectedBackend"]=json!("rocm");normalized["hardware"]["backend"]=json!("cpu");normalized["hardware"]["suggestedSetupBackend"]=json!("cpu");normalized["hardware"]["gpuCompatibilityReason"]=json!("This Radeon is outside the pinned Windows ROCm support list. CPU processing is available.");}
+    }
+    let req=&normalized;
     let mut result=deployment_inner(req)?;
     let h=&req["hardware"];let apple=h["platform"]=="macos" && h["architecture"]=="aarch64";
     let windows=h["platform"]=="windows" && h["architecture"]=="x86_64";
@@ -335,7 +370,7 @@ pub fn deployment(req:&Value)->Result<Value,String> {
                     let memory=drama_memory(h,req["dramaBackend"].as_str().unwrap_or("auto"));
                     host_peak=host_peak.max(memory["systemGB"].as_f64().unwrap_or(22.));
                     gpu_peak=gpu_peak.max(memory["gpuGB"].as_f64().unwrap_or(0.));
-                } else if windows && ["cuda","rocm"].contains(&backend) && ident!=voice {gpu_peak=gpu_peak.max(need);} else {host_peak=host_peak.max(need);}
+                } else if windows && ["cuda","rocm"].contains(&backend) && need<=budget {gpu_peak=gpu_peak.max(need);} else {host_peak=host_peak.max(need);}
                 if model["licenseReviewRequired"]==true {blockers.push("model-license-review-required".into());}
             } else {blockers.push("model-package-unavailable".into());}
         }
@@ -356,6 +391,30 @@ pub fn deployment(req:&Value)->Result<Value,String> {
             "minimumDedicatedVRAMGB":if windows && ["cuda","rocm"].contains(&backend){Some((gpu_peak/0.8).ceil())}else{None},
             "estimatedSystemPeakGB":host_peak,"estimatedAcceleratorPeakGB":gpu_peak,
             "available":blockers.is_empty(),"blockers":blockers,"plan":plan}));
+    }
+    if windows {
+        for original in presets.clone() {
+            if backend=="cpu" {break;}
+            let mut proposal=req.clone();proposal["hardware"]["backend"]=json!("cpu");proposal["hardware"]["suggestedSetupBackend"]=json!("cpu");
+            proposal["engine"]=original["engine"].clone();proposal["requestedModels"]=original["requestedModels"].clone();proposal["dramaBackend"]=json!("cpu");proposal["allowDramaCPU"]=json!(true);
+            if let Ok(mut cpu)=deployment_inner(&proposal){
+                let available=cpu["canDeployModels"]==true && ram>=original["minimumSystemMemoryGB"].as_f64().unwrap_or(0.)-2.;
+                cpu["setupBackend"]=json!("cpu");
+                let mut preset=original.clone();preset["id"]=json!(format!("{}-cpu",original["id"].as_str().unwrap()));preset["title"]=json!(format!("{} · CPU",original["title"].as_str().unwrap()));
+                preset["available"]=json!(available);preset["blockers"]=cpu["blockers"].clone();preset["minimumDedicatedVRAMGB"]=Value::Null;preset["executionBackend"]=json!("cpu");preset["plan"]=cpu;
+                if !available && preset["blockers"].as_array().is_some_and(|x|x.is_empty()){preset["blockers"]=json!(["insufficient-system-memory"]);}
+                presets.push(preset);
+            }
+        }
+        if backend=="cpu" {
+            for p in &mut presets {p["executionBackend"]=json!("cpu");p["plan"]["setupBackend"]=json!("cpu");}
+            presets.sort_by_key(|p|if p["id"]=="balanced" {0}else{1});
+        }
+        // GPU profile first; when it does not fit, offer the faster lower-memory
+        // CPU voice alternative before the much larger full Drama CPU model.
+        if !presets.iter().any(|p|p["available"]==true && !p["id"].as_str().unwrap_or("").ends_with("-cpu")) && backend!="cpu" {
+            presets.sort_by_key(|p|match p["id"].as_str().unwrap_or(""){"balanced-cpu"=>0,"quality-cpu"=>1,_=>2});
+        }
     }
     result["recommendedPreset"]=presets.iter().find(|p|p["available"]==true).map(|p|p["id"].clone()).unwrap_or(Value::Null);
     result["qualityPresets"]=json!(presets);
@@ -383,7 +442,7 @@ pub fn hardware() -> Value {
     #[cfg(not(any(target_os="windows",target_os="macos")))]
     fn memory()->Option<u64>{None}
     let result=json!({"platform":std::env::consts::OS,"architecture":std::env::consts::ARCH,
-        "memoryGB":memory().map(|n|n as f64/1073741824.),"backend":"unprobed", "inferenceVerified":false});
+        "cpuThreads":std::thread::available_parallelism().map(|n|n.get()).ok(),"memoryGB":memory().map(|n|n as f64/1073741824.),"backend":"unprobed", "inferenceVerified":false});
     #[cfg(target_os="windows")]
     {
         let mut result=result;

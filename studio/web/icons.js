@@ -13,6 +13,7 @@ const paths={
  sound:'m11 5-6 4H2v6h3l6 4zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14',subtitles:'M3 4h18v14h-6l-4 4v-4H3zM7 9h10M7 13h7',
  undo:'M9 5 4 10l5 5M4 10h10a6 6 0 0 1 0 12',redo:'m15 5 5 5-5 5m5-5H10a6 6 0 0 0 0 12',save:'M4 3h13l4 4v14H3V3zM7 3v6h10V3M7 21v-7h10v7',
  nav:'M3 4h18v16H3zM8 4v16',browser:'M3 4h18v16H3zM3 9h18',inspector:'M3 4h18v16H3zM16 4v16',trash:'M4 7h16M9 3h6l1 4H8zM6 7l1 14h10l1-14M10 11v6m4-6v6',
+ restart:'M21 3v9h-9M21 12a9 9 0 1 0-3.2 6.9',
  refresh:'M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 3M5 15a8 8 0 0 0 13 3',clock:'M12 7v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
  check:'m5 12 4 4L19 6',warning:'m12 3 10 18H2zM12 9v5m0 3h.01',download:'M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5',spark:'m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z',
  split:'M12 3v18M3 8h5v8H3zM16 8h5v8h-5z',moon:'M20 14A9 9 0 0 1 10 3a9 9 0 1 0 10 11',sun:'M12 3v2m0 14v2M3 12h2m14 0h2M6 6l1 1m10 10 1 1M6 18l1-1M17 7l1-1M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0'

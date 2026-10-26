@@ -40,6 +40,31 @@ def emit(stage, message, progress=None, **extra):
 EDITOR_REVISION = 5
 
 
+def run_ocr_tool(args):
+    """Watch helper progress; never let one stalled OCR block a conversion forever."""
+    folder=Path(args[-1]);progress=folder/'ocr-progress.json'
+    proc=subprocess.Popen([str(x) for x in args],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    started=time.monotonic();changed=started;stamp=None
+    try:
+        while True:
+            try:out,error=proc.communicate(timeout=1);break
+            except subprocess.TimeoutExpired:
+                now=time.monotonic()
+                try:current=progress.stat().st_mtime_ns
+                except OSError:current=None
+                if current!=stamp:stamp=current;changed=now
+                if now-changed>90 or now-started>1800:
+                    raise TimeoutError('OCR helper exceeded 90 seconds without progress or its 30 minute total budget; checkpoints retained')
+        if proc.returncode:
+            raise RuntimeError(error.decode(errors='replace')[-4000:] or f'OCR helper exited {proc.returncode}')
+        return out
+    except (TimeoutError,RuntimeError) as error:
+        (folder/'ocr-helper-error.log').write_text(str(error))
+        raise RuntimeError(str(error)) from error
+    finally:
+        if proc.poll() is None:proc.kill();proc.communicate()
+
+
 def run(args):
     p = subprocess.run([str(x) for x in args], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if p.returncode:
@@ -724,7 +749,9 @@ def extract_cues(cfg, job, meta):
     if subtitle:
         run([ffmpeg, "-v", "error", "-y", "-i", subtitle, srt])
         __import__("subtitle_snapshot").record_extracted(cfg,job,srt)
-        return window_subtitles(parse_srt(srt.read_text(encoding="utf-8-sig")), cfg.get("startOffset",0), cfg["duration"])
+        captions=parse_srt(srt.read_text(encoding="utf-8-sig"))
+        if cfg.get('subtitleAlignment'):captions=__import__('editing_tools').alignment(captions,cfg['subtitleAlignment'])['cues']
+        return window_subtitles(captions, cfg.get("startOffset",0), cfg["duration"])
     if cfg.get("ocr"):
         from subtitle_ocr import scan
         return scan(sys.modules[__name__],cfg,job)
@@ -850,6 +877,9 @@ def convert(cfg):
         evidence_meta=job/'subtitle-context-meta.json'
         if evidence_meta.exists():cfg['sourceCaptionLanguage']=json.loads(evidence_meta.read_text()).get('language','')
         cues = json.loads(cache.read_text())
+        from translation_source import refresh_saved_evidence
+        cues=refresh_saved_evidence(sys.modules[__name__],cfg,job,cues,meta)
+        atomic_json(cache,cues)
         emit("續做", "已載入上次保存嘅字幕。", 0.3)
     else:
         if cfg.get('speechTiming'):
@@ -895,6 +925,8 @@ def convert(cfg):
         import acoustics
         acoustics.align(cfg,cues,run)
         atomic_json(cache, cues)
+    from source_performance import apply as preserve_performance
+    cues=preserve_performance(cfg,job,cues,run,emit)
     phase(job,"roles",cached=cached_cues)
     phase(job,"translation")
     from translation_source import remove_caption_evidence

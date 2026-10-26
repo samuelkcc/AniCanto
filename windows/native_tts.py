@@ -45,6 +45,9 @@ def load_model(engine, root, cfg):
     audio_compatibility()
     torch.set_num_threads(max(1, min(8, (os.cpu_count() or 4)//2)))
     requested = cfg.get('device', 'auto')
+    if requested!='cpu':
+        from compute_policy import torch_device
+        requested=torch_device(torch,root,'gpt-sovits' if engine=='gpt' else 'cosyvoice3',requested=requested,minimum_gb=8. if engine=='gpt' else 4.8 if engine=='cosy' else 8.)
     if requested == 'cpu':
         # CosyVoice internally chooses cuda from is_available(). This child
         # owns that policy; no monkey-patch leaks into another task.

@@ -59,6 +59,7 @@ def build():
         copy_binary(Path(shutil.which(name)), BIN / name)
     shutil.rmtree(RES / "__pycache__", ignore_errors=True)
     shutil.copy2(ROOT / "Resources/worker.py", RES / "worker.py")
+    for name in ("editing_tools.py","native_queue.py","queue_library.py","hardware_runtimes.py","hardware-runtimes.json"):shutil.copy2(ROOT/"Resources"/name,RES/name)
     shutil.copy2(ROOT / "Resources/audio_format.py", RES / "audio_format.py")
     shutil.copy2(ROOT / "Resources/audio_manifest.py", RES / "audio_manifest.py")
     for name in ("soft_subtitles.py", "drama3.py", "role_reanalysis.py", "ai_result_repair.py", "signal_quality.py", "visual_identity.py", "character_observations.py","portrait_validation.py", "appearance_reconcile.py", "reference_quality.py", "source_reference.py", "gsv_reference.py", "cantonese_pronunciation.py", "script_revision.py", "voice_samples.py", "independent_voices.py", "natural_voices.py", "audio_audition.py", "voice_expression.py", "gsv_versions.py", "reference_recovery.py", "prosody_experiment.py", "pcm_mix.py", "video_acceleration.py"):

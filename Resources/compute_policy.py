@@ -50,10 +50,19 @@ def torch_device(torch,root=None,stage='torch',requested='auto',minimum_gb=0):
  elif torch.cuda.is_available():
   index=int(requested.split(':')[1]) if ':' in requested else 0
   free,total=torch.cuda.mem_get_info(index);pool=budgets(system_memory_gb(),total/GIB,free/GIB,True)
-  if pool['acceleratorBudgetGB']>=minimum_gb:
+  compatible=True
+  if not getattr(torch.version,'hip',None):
+   try:
+    major,minor=torch.cuda.get_device_capability(index);arches=torch.cuda.get_arch_list()
+    # CUDA cubin forward compatibility applies within one major architecture;
+    # PTX availability is not assumed from a driver reporting CUDA support.
+    compatible=any(a.startswith('sm_') and a[3:].isdigit() and int(a[3:])//10==major and int(a[3:])<=major*10+minor for a in arches)
+   except (AttributeError,RuntimeError,ValueError):compatible=False
+  if not compatible:reason='GPU architecture is absent from this pinned runtime; CPU fallback'
+  if compatible and pool['acceleratorBudgetGB']>=minimum_gb:
    device=f'cuda:{index}';reason='ROCm runtime' if getattr(torch.version,'hip',None) else 'NVIDIA CUDA runtime'
    if not getattr(torch.version,'hip',None):torch.cuda.set_per_process_memory_fraction(max(.05,min(.8,pool['acceleratorBudgetGB']*GIB/total)),index)
-  else:reason='Available VRAM is below this stage estimate; CPU fallback'
+  elif compatible:reason='Available VRAM is below this stage estimate; CPU fallback'
  elif sys.platform=='darwin' and hasattr(torch.backends,'mps') and torch.backends.mps.is_available():device='mps';reason='Apple Metal MPS'
  value=dict(backend='metal-mps' if device=='mps' else 'rocm' if device.startswith('cuda') and getattr(torch.version,'hip',None) else 'cuda' if device.startswith('cuda') else 'cpu',device=device,reason=reason,memoryEstimateGB=minimum_gb,memory=pool,configured=True,modelInferencePassed=False)
  record(root,stage,value);return device

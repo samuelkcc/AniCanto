@@ -12,7 +12,7 @@ TREES={'Sources','Resources','core','scripts','studio','windows','tests','licens
 SUFFIXES={'.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mjs','.cjs',
           '.html','.css','.md','.txt','.srt','.strings','.ps1','.cmd','.sh','.svg','.png','.otf','.icns','.ico','.patch','.h','.c','.cpp','.hpp','.cmake','.in','.cfg','.rst','.pyx','.pxd','.tiktoken','.plist','.entitlements'}
 SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels','archive'}
-DOCS={'DESKTOP-PARAMETERS-0.24.69.md','DESKTOP-WORKFLOW-0.24.70.md','DESKTOP-ACCELERATION-0.24.71.md','DESKTOP-SUBTITLE-IMPORT-0.24.72.md','DESKTOP-APPEARANCE-0.24.75.md','DESKTOP-PLAYBACK-0.24.74.md','DESKTOP-PLAYER-0.24.73.md','DESKTOP-IPAD-RECOVERY-WORKFLOW.md','RECOVERY-WORKFLOW-CONTRACT.json','DESKTOP-RECOVERY-PARITY.md','BUILD-AND-RECOVERY.md','IPAD-PRIVACY-POLICY.md','IPAD-PRIVACY-POLICY.zh-HK.md','IPAD-PRIVACY-POLICY.zh-CN.md','IPAD-PRIVACY-POLICY.ja.md','DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
+DOCS={'DESKTOP-RESTART-0.24.79.md','DESKTOP-RELIABILITY-0.24.78.md','DESKTOP-IMPROVEMENTS-0.24.77.md','DESKTOP-QUEUE-WAKE-0.24.76.md','PUBLIC-DESKTOP-PRIVATE-IPAD.md','DESKTOP-PARAMETERS-0.24.69.md','DESKTOP-WORKFLOW-0.24.70.md','DESKTOP-ACCELERATION-0.24.71.md','DESKTOP-SUBTITLE-IMPORT-0.24.72.md','DESKTOP-APPEARANCE-0.24.75.md','DESKTOP-PLAYBACK-0.24.74.md','DESKTOP-PLAYER-0.24.73.md','DESKTOP-IPAD-RECOVERY-WORKFLOW.md','RECOVERY-WORKFLOW-CONTRACT.json','DESKTOP-RECOVERY-PARITY.md','BUILD-AND-RECOVERY.md','IPAD-PRIVACY-POLICY.md','IPAD-PRIVACY-POLICY.zh-HK.md','IPAD-PRIVACY-POLICY.zh-CN.md','IPAD-PRIVACY-POLICY.ja.md','DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
       'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)
@@ -28,6 +28,11 @@ REVIEWED_SYNTHETIC_VOICES={'Resources/natural-voices/yue-low.wav': '31a0e62d885c
 
 def selected(relative):
     p=Path(relative)
+    # Public privacy-policy pages and third-party attribution can mention iPad;
+    # the private application, Xcode project and device validation cannot ship.
+    if p.parts and p.parts[0]!='licenses' and any(part.lower() in {'mobile','ipad','ios','devicevalidation','validation-private'} or part.lower().endswith(('.xcodeproj','.xcworkspace','.xcarchive')) for part in p.parts):return False
+    if p.suffix.lower() in {'.ipa','.mobileprovision'}:return False
+    if p.parts and p.parts[0]!='licenses' and p.suffix=='.swift' and p.name.lower().startswith(('ipad','ios','storekit','iap')):return False
     if len(p.parts)==1:return p.name in TOP
     if p.parts[0] not in TREES or any(x in SKIP_PARTS for x in p.parts):return False
     if p.name.startswith('.') or p.name in {'VLC-COPYING.txt'}:return False

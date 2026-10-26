@@ -39,3 +39,10 @@ The searchable bilingual **Help centre** inside AniCanto is the current user man
 - [Hardware acceleration and CPU exceptions](DESKTOP-ACCELERATION-0.24.71.md)
 - [General dialogue and source-vocal workflow](DESKTOP-WORKFLOW-0.24.70.md)
 - [Drama 3 sampling controls](DESKTOP-PARAMETERS-0.24.69.md)
+
+## Desktop 0.24.79 update
+
+- [Per-video restart and voice updates](DESKTOP-RESTART-0.24.79.md)
+- [OCR, timing and diagnostic reliability](DESKTOP-RELIABILITY-0.24.78.md)
+- [Editing, queue tools and hardware setup](DESKTOP-IMPROVEMENTS-0.24.77.md)
+- [Queue wake and continuation](DESKTOP-QUEUE-WAKE-0.24.76.md)

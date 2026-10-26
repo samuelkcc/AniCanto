@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02475) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
+[Download](#download-the-beta--02479) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 
@@ -26,18 +26,31 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.75
+## Download the Beta · 0.24.79
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto-macOS-0.24.75.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.75-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto-macOS-0.24.79.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.75-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-- **Appearance from the first frame:** launch follows your saved Light, Dark or System setting, with no forced dark default.
-- **A clearer player:** direct playback, selectable audio/subtitles, subtitle size, translated-line synchronisation and consistent panel controls. External subtitle import is fixed.
-- **Hardware-aware acceleration:** automatic MLX Whisper on supported Apple Silicon setups; supported NVIDIA Whisper acceleration on Windows, with bounded CPU fallback and visible backend decisions.
-- **More useful voice controls:** Drama 3 parameter explanations and saved defaults, plus general source-vocal protection and improved name/term handling. Uncertain results still need listening.
+- **Restart without re-importing:** each video has a circular restart button. Rerun the whole conversion, regenerate voices from the saved script, or add a language / voice-engine track. Earlier exports remain available.
+- **Faster editing:** queue selection for all / none / completed, removal with Undo, original / separated / generated waveforms, subtitle offset and drift correction, and a preview of which recordings a change affects.
+- **More resilient processing:** queue wake handling, bounded OCR frame retries and saved checkpoints, clearer timing and coverage reports, and a more useful debug export. Audible first takes are preserved; measured overlong lines can still receive local shortening.
+- **Hardware-aware setup:** separate RAM / VRAM guidance and supported NVIDIA CUDA runtime choices, with explicit CPU fallback. Detection is not a guarantee that every model or graphics card is accelerated.
+
+## Try the original demo and compare the voices
+
+One 3-minute 8-second Japanese input and one desktop reference output, shared across all interface languages.
+
+- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
+- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
+
+The output contains **Cantonese, Mandarin, English and Japanese audio**. Both movies include **Traditional Chinese, Simplified Chinese, English and Japanese subtitles**; choose tracks in a compatible player.
+
+The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
+
+[Demo details](docs/en/DEMO.md)
 
 ## Choose your computer setup
 
@@ -62,7 +75,7 @@ In the author’s repeated scene-by-scene listening tests, **full Drama 3 has gi
 
 ### Tested computers and realistic expectations
 
-The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified memory**, and a **Windows laptop with an NVIDIA graphics card with 16 GB VRAM and 32 GB system RAM**. The release-validation standard is to complete an end-to-end conversion on both machines. Check each release’s notes for outstanding platform checks; The latest Windows NVIDIA CUDA update has passed the author’s preliminary desktop test with a clear speed improvement; this remains limited to the tested configuration and workload. Testing these two configurations does not establish compatibility with every computer.
+The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified memory**, and a **Windows laptop with an NVIDIA graphics card with 16 GB VRAM and 32 GB system RAM**. The release-validation standard is to complete an end-to-end conversion on both machines. Check each release’s notes for outstanding platform checks; the latest Windows NVIDIA CUDA update has passed the author’s preliminary desktop test with a clear speed improvement; this remains limited to the tested configuration and workload. Testing these two configurations does not establish compatibility with every computer.
 
 **Author-reported timing with full Drama 3 on the M2 Max: approximately 1:2 video-to-processing time** — a 30-minute video takes about 60 minutes to convert, including automatic AI repair for roughly 8–10% of dialogue lines in those tests. This is an example from the author’s workload, not a promised speed or a Windows estimate. Scene complexity, model settings, repairs, storage and memory pressure can change the total substantially.
 
@@ -86,7 +99,7 @@ If your configuration behaves differently, please [report the problem](https://g
 
 In **Production settings → Dubbing languages**, choose **Mainland Mandarin** alone or combine it with Hong Kong Cantonese and English, including all three. Mandarin has its own script and recording, with Mainland wording and Simplified Chinese subtitles. Keep the original audio too if selected, then switch tracks in a compatible player.
 
-Available in Basic and Expert video workflows. Changing the interface language does not add dubbing tracks. **Standalone Dubbing studio currently outputs Cantonese**, and the downloadable comparison demo remains Cantonese / English / Japanese.
+Available in Basic and Expert video workflows. Changing the interface language does not add dubbing tracks. **Standalone Dubbing studio currently outputs Cantonese**, and the downloadable comparison demo remains Cantonese / Mandarin / English / Japanese.
 
 ### Dubbing studio: from text or your recording to a saved clip
 
@@ -165,58 +178,51 @@ Recordings and previous exports are retained. New languages, models or changed s
 
 [Subtitle import guide](docs/en/GETTING-STARTED.md)
 
-## Try the original demo and compare the voices
-
-One 3-minute 8-second Japanese input and one desktop reference output, shared across all interface languages.
-
-- **[Japanese input · try converting](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-input.mp4)**
-- **[Desktop output · listen and compare](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)**
-
-The output contains **Cantonese, Mandarin, English and Japanese audio**. Both movies include **Traditional Chinese, Simplified Chinese, English and Japanese subtitles**; choose tracks in a compatible player.
-
-The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
-
-[Demo details](docs/en/DEMO.md)
-
 ## Inside the current app
 
 Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
 
 ### Welcome and setup
 
-![Welcome and setup](docs/images/welcome-en.png?v=0.24.75)
+![Welcome and setup](docs/images/welcome-en.png?v=0.24.79)
 
 Choose the interface language, prepare local models, and enter Basic or Expert mode.
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.75)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.79)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.75)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.79)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
+### Restart or add a voice track
+
+Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
+
+![ Restart or add a voice track ](docs/images/restart-en.png?v=0.24.79)
+
 ### Review report: issues and recording comparison
 
-![Review report: issues and recording comparison](docs/images/review-en.png?v=0.24.75)
+![Review report: issues and recording comparison](docs/images/review-en.png?v=0.24.79)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.75)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.79)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.75)
+![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.79)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.75)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.79)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 

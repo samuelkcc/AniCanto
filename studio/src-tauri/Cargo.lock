@@ -53,7 +53,7 @@ dependencies = [
 
 [[package]]
 name = "anicanto-studio"
-version = "0.24.75"
+version = "0.24.79"
 dependencies = [
  "anicanto-core",
  "fs2",

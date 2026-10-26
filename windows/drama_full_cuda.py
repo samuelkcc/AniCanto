@@ -6,8 +6,10 @@ TOOLS=('drama-full-cuda12','drama-full-cudart12','drama-full-cuda13','drama-full
 MARKER='drama-full-cuda-ready.json'
 
 def cuda_version(hardware):
+ if hardware.get('nativeDramaRuntimeVersion') in ('12','13'):return hardware['nativeDramaRuntimeVersion']
  # CUDA 12.4 predates Blackwell. The matching 13.3 bundle includes that architecture.
  names=' '.join([str(hardware.get('acceleratorName',''))]+[str(a.get('name',a.get('Name',''))) for a in hardware.get('displayAdapters',[])])
+ if hardware.get('gpuRuntime',{}).get('torchIndex')=='cu130':return '13'
  return '13' if re.search(r'Blackwell|\bRTX\s*(?:50\d\d|PRO\s*\d+)|\b[BR]200\b',names,re.I) else '12'
 
 def components(root,hardware):
@@ -62,3 +64,28 @@ def prepare(root,hardware,memory,emit):
  from atomic_files import write_json
  write_json(marker,dict(runtimeTool=runtime_id,cudartTool=cudart_id,deviceProbePassed=True,speechInferencePassed=False,memory=memory,cudaVersion=version))
  return dict(runtimeTool=runtime_id,cudartTool=cudart_id,memory=memory)
+
+
+def checked_deployment(root,hardware,memory,worker,backend,emit):
+ """Try registered native runtimes, then CPU, with actual loading each time."""
+ import copy
+ from native_setup import call
+ checks=HERE/'setup_checks.py';errors=[]
+ if backend=='cuda':
+  choices=[dict(hardware)]
+  cc=hardware.get('cudaComputeCapability');name=str(hardware.get('acceleratorName','')).upper()
+  # The registered CUDA12 native bundle includes Pascal through Ada; it is
+  # never offered as a Blackwell substitute merely because CUDA13 failed.
+  older_compatible=(isinstance(cc,(int,float)) and 6.1<=cc<10) or ('RTX 40' in name and 'BLACKWELL' not in name)
+  if cuda_version(hardware)=='13' and older_compatible:choices.append(dict(hardware,nativeDramaRuntimeVersion='12'))
+  for candidate in choices:
+   version=cuda_version(candidate)
+   try:
+    prepare(root,candidate,memory,emit)
+    call([worker,checks,'drama3',root,'cuda'])
+    return 'cuda','; '.join(errors) or None
+   except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
+    errors.append('CUDA '+version+': '+str(error)[-400:]);emit('Drama 3 CUDA '+version+' did not pass; trying the next compatible path.')
+  emit('Drama 3 GPU checks did not pass. Verifying the same full model on CPU.')
+ call([worker,checks,'drama3',root,'cpu'])
+ return 'cpu','; '.join(errors) or None
