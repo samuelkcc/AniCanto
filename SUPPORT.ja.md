@@ -2,7 +2,7 @@
 
 [繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [English](SUPPORT.md) · **日本語**
 
-[AniCanto ホーム](README.ja.md) · [iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)
+[AniCanto ホーム](README.ja.md) · [iPad プライバシーポリシー](http://anicanto.com/privacy.html?lang=ja)
 
 ## 日本語
 
@@ -10,7 +10,7 @@ AniCanto は **SCKC** が個人で開発しているプロジェクトです。�
 
 ### お問い合わせ
 
-- [iPad の不具合を報告する](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BiPad%5D%20)。
+- [iPad の不具合を報告する](https://github.com/samuelkcc/AniCanto-Support/issues/new?template=technical-issue.yml&title=%5BiPad%5D%20)。
 - [Mac／Windows の不具合を報告する](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20)。
 - [既存の報告を確認する・ご意見を送る](https://github.com/samuelkcc/AniCanto/issues)。
 
@@ -45,4 +45,4 @@ AniCanto は **SCKC** が個人で開発しているプロジェクトです。�
 
 ### プライバシーとコンテンツ
 
-[iPad プライバシーポリシー](docs/IPAD-PRIVACY-POLICY.ja.md)には、端末内での処理、モデルのダウンロード接続、共有、バックアップ、削除について記載しています。対象は iPad アプリです。このサポートページと公開の報告は GitHub 上で提供され、閲覧・投稿には [GitHub のプライバシーに関する声明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)が適用されます。動画、字幕、参照音声は、利用する権利があるものだけをお使いください。
+[iPad プライバシーポリシー](http://anicanto.com/privacy.html?lang=ja)には、端末内での処理、モデルのダウンロード接続、共有、バックアップ、削除について記載しています。対象は iPad アプリです。このサポートページと公開の報告は GitHub 上で提供され、閲覧・投稿には [GitHub のプライバシーに関する声明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)が適用されます。動画、字幕、参照音声は、利用する権利があるものだけをお使いください。

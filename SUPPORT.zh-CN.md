@@ -2,7 +2,7 @@
 
 [繁體中文](SUPPORT.zh-HK.md) · **简体中文** · [English](SUPPORT.md) · [日本語](SUPPORT.ja.md)
 
-[AniCanto 主页](README.zh-CN.md) · [iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md)
+[AniCanto 主页](README.zh-CN.md) · [iPad 隐私政策](http://anicanto.com/privacy.html?lang=zh-Hans)
 
 ## 简体中文
 
@@ -10,7 +10,7 @@ AniCanto 由 **SCKC** 独立开发。本页提供 iPad、Mac 和 Windows 的使�
 
 ### 联系 SCKC
 
-- [反馈 iPad 问题](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BiPad%5D%20)。
+- [反馈 iPad 问题](https://github.com/samuelkcc/AniCanto-Support/issues/new?template=technical-issue.yml&title=%5BiPad%5D%20)。
 - [反馈 Mac／Windows 问题](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20)。
 - [查看已有问题或提出一般意见](https://github.com/samuelkcc/AniCanto/issues)。
 
@@ -45,4 +45,4 @@ AniCanto 由 **SCKC** 独立开发。本页提供 iPad、Mac 和 Windows 的使�
 
 ### 隐私及内容
 
-[iPad 隐私政策](docs/IPAD-PRIVACY-POLICY.zh-CN.md)说明本地处理、模型连接、分享、备份和删除方式，适用范围为 iPad 应用。本支持页和公开反馈由 GitHub 托管；浏览或发布内容时适用 [GitHub 隐私声明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。请只处理你有权使用的视频、字幕和声音参考。
+[iPad 隐私政策](http://anicanto.com/privacy.html?lang=zh-Hans)说明本地处理、模型连接、分享、备份和删除方式，适用范围为 iPad 应用。本支持页和公开反馈由 GitHub 托管；浏览或发布内容时适用 [GitHub 隐私声明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。请只处理你有权使用的视频、字幕和声音参考。

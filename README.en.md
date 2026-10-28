@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02479) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md) · [Demo](#try-the-original-demo-and-compare-the-voices)
+[Download](#download-the-beta--02479) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 

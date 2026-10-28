@@ -2,7 +2,7 @@
 
 [繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [English](SUPPORT.md) · [日本語](SUPPORT.ja.md)
 
-[AniCanto home](README.md) · [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md)
+[AniCanto home](README.md) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en)
 
 ## English
 
@@ -10,7 +10,7 @@ AniCanto is an independent project by **SCKC**. This page covers help, bug repor
 
 ### Contact SCKC
 
-- [Report an iPad issue](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BiPad%5D%20).
+- [Report an iPad issue](https://github.com/samuelkcc/AniCanto-Support/issues/new?template=technical-issue.yml&title=%5BiPad%5D%20).
 - [Report a Mac or Windows issue](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20).
 - [Read existing reports or send general feedback](https://github.com/samuelkcc/AniCanto/issues).
 
@@ -45,7 +45,7 @@ See the [desktop setup, model requirements and workflow](README.md). Desktop and
 
 ### Privacy and content
 
-Read the [iPad privacy policy](docs/IPAD-PRIVACY-POLICY.md) for local processing, model connections, sharing, backups and deletion. That policy describes the iPad app. This support page and its public issue tracker are hosted by GitHub, whose [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) applies when you visit or post there. Only use video, subtitles and voice references you have permission to process.
+Read the [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) for local processing, model connections, sharing, backups and deletion. That policy describes the iPad app. This support page and its public issue tracker are hosted by GitHub, whose [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) applies when you visit or post there. Only use video, subtitles and voice references you have permission to process.
 
 ## 繁體中文
 
