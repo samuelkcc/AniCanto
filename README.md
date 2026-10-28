@@ -41,7 +41,7 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 ## Try the original demo and compare the voices
 
-[![A frame from the downloadable output demo](docs/images/demo-output-sample.jpg)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
+[![A frame from the downloadable output demo](docs/images/demo-output-sample.jpg?v=desktop-hair2)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
 
 Click the image to open the output video, then choose an audio and subtitle track in your player.
 

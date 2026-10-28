@@ -37,7 +37,7 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 ## 下载测试原片，听配音成品作比较
 
-[![可下载输出演示的实际画面](docs/images/demo-output-sample.jpg)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
+[![可下载输出演示的实际画面](docs/images/demo-output-sample.jpg?v=desktop-hair2)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
 
 点击图片打开输出演示视频，再在播放器选择音轨和字幕。
 
