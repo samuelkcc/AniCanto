@@ -37,7 +37,7 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 ## 元のデモを変換して、声を比較する
 
-[![ダウンロードできる出力デモの実際の画面](docs/images/demo-output-sample.jpg?v=desktop-hair2)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
+[![ダウンロードできる出力デモの実際の画面](docs/images/demo-output-sample.jpg?v=desktop-higher3)](https://github.com/samuelkcc/AniCanto/releases/download/demo-v19/AniCanto-demo-output.mp4)
 
 画像をクリックすると出力デモを開けます。プレーヤーで音声・字幕トラックを選んでください。
 
