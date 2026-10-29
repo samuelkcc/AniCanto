@@ -1,56 +1,33 @@
-# AniCanto Support
+# AniCanto desktop support
 
-[繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [English](SUPPORT.md) · [日本語](SUPPORT.ja.md)
+[English](SUPPORT.md) · [繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [日本語](SUPPORT.ja.md)
 
-[AniCanto home](README.md) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en)
+[Home and setup](README.md) · [Current workflow](docs/DESKTOP-WORKFLOW-0.25.0.md)
 
-## English
+This repository provides the open-source **macOS and Windows desktop edition** by SCKC. Use its public [issue tracker](https://github.com/samuelkcc/AniCanto/issues) for desktop bugs, setup problems, and feedback.
 
-AniCanto is an independent project by **SCKC**. This page covers help, bug reports and feedback for iPad, Mac and Windows. The iPad edition is currently in development; these instructions also apply to development testers. Availability and supported features follow the release announcements for your platform.
+## Report a desktop problem
 
-### Contact SCKC
+[Open a report](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20). Include:
 
-- [Report an iPad issue](https://github.com/samuelkcc/AniCanto-Support/issues/new?template=technical-issue.yml&title=%5BiPad%5D%20).
-- [Report a Mac or Windows issue](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20).
-- [Read existing reports or send general feedback](https://github.com/samuelkcc/AniCanto/issues).
+1. AniCanto version/build and operating-system version.
+2. CPU, system RAM, graphics card and VRAM. State the selected CPU, Apple Metal/MLX, or NVIDIA CUDA path.
+3. Selected translation, recognition, and voice models; source subtitle type; and enabled repair options.
+4. Steps to reproduce, expected result, actual error, and the last stage or line count. State how long it remained there.
+5. A sanitised diagnostic excerpt or screenshot, if useful.
 
-GitHub Issues is the current contact channel. Reading this page does not require an account; posting an issue requires a GitHub account. Reports are **public**. Do not post private videos, voice recordings, scripts, account details, purchase receipts or unedited diagnostic logs. For a general privacy question, describe the concern without including personal data.
+Check existing issues first and keep replies in the same report. Support does not require a donation.
 
-Please include:
+## Common checks
 
-1. Platform, device model, operating-system version, and AniCanto version/build.
-2. What you were trying to do and the steps that reproduce the problem.
-3. What you expected and what actually happened, including the exact error text.
-4. Selected translation/voice models and the stage where processing stopped, if relevant.
-5. An optional screenshot or short diagnostic excerpt with personal information removed.
+- **Setup:** Check free storage, memory estimates, runtime readiness, and the affected model download. Hardware detection does not certify every GPU or model.
+- **Slow or paused conversion:** Check the latest stage and line count. Use Pause and save before closing; resume the saved job. An unchanged percentage alone does not prove a hang.
+- **Subtitle or voice problem:** State whether the source uses embedded text, an external SRT/ASS/SSA/VTT, or burned-in OCR. Add a timestamp. Compare source, separated, and generated speech in the line editor.
+- **New workflow test:** Frozen paused jobs keep their saved policy. Reset a test video or create a new conversion to test current defaults.
+- **Saved output:** Verify the exported file in the chosen folder before deleting a project or recording.
 
-Support and bug reporting do not require a donation. Please keep replies about the same problem in the same issue.
+## Public reports and content
 
-### iPad help
+Reports are public. Remove private paths, account details, videos, recordings, scripts, and personal information from diagnostics before posting. Do not upload full private media to report a bug.
 
-| Question | What to check |
-| --- | --- |
-| Can my iPad enter the studio? | The current development edition requires an M1 or newer M-series iPad with at least 8 GB RAM and supported GPU capabilities. Check **About & Licenses → iPad compatibility** in the app. Meeting the requirements does not mean every model or workload has been tested on that device. |
-| Why does initial setup need the internet? | AI models and Apple-managed speech resources may need downloading. Download size and storage needs depend on your selection; check the model manager before starting. Recognition, translation and dubbing run on the iPad after the required resources are ready. |
-| A download or model check failed. | Check the connection and available storage, then retry or repair the affected model in model management. Report the model name and error if it keeps failing. Avoid deleting the app to troubleshoot: this can remove local projects and recordings. |
-| Processing paused or is taking a long time. | Keep the app in the foreground. Use its pause/save and resume controls; backgrounding can interrupt or pause work. Processing time depends on the video, selected models, memory and temperature. Include the last visible stage in a report. |
-| Recording is unavailable or silent. | Check AniCanto's microphone permission in iPad Settings and the connected microphone/audio accessory. Permission is needed for recording, not for typing text or importing an existing file. Report your device, audio route and error if the problem persists. |
-| Where are my finished files? | Open the saved-output player and use **Save video to Files…**, **Save subtitles to Files…** or the audio export/share action. Verify the saved copy in Files or your chosen cloud provider before removing the app or deleting a project. |
-| How do I restore Expert? | When App Store purchasing is available for your build, open the Expert introduction and choose **Restore purchases**, using the Apple Account that made the purchase. A development-test entitlement is separate from a real App Store purchase. Never post a receipt or account information in a public issue. |
-| The translation or voice sounds wrong. | Listen to the output and check the text. AI can mistranslate, omit words or change pronunciation and voice character. Where available, use Expert review and retained takes to revise a line. Automated checks do not certify translation or performance quality. |
-
-### Mac and Windows help
-
-See the [desktop setup, model requirements and workflow](README.md). Desktop and iPad requirements are different; desktop installation instructions, downloadable runtimes and model recommendations do not apply automatically to iPad. For a desktop report, also include CPU, system RAM, graphics card/VRAM and whether you selected CPU, MLX or NVIDIA CUDA processing.
-
-### Privacy and content
-
-Read the [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) for local processing, model connections, sharing, backups and deletion. That policy describes the iPad app. This support page and its public issue tracker are hosted by GitHub, whose [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) applies when you visit or post there. Only use video, subtitles and voice references you have permission to process.
-
-## 繁體中文
-
-[繁體中文技術支援](SUPPORT.zh-HK.md)
-
-### 聯絡 SCKC
-
-[前往繁體中文聯絡及問題回報說明](SUPPORT.zh-HK.md#聯絡-sckc)。
+Default conversion runs locally after the required models and runtimes are ready. Downloads and updates need internet access. Cloud-folder synchronisation follows the storage service you choose. GitHub hosts this support page and issue tracker under its [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). Process only media, subtitles, and voice references you have permission to use.

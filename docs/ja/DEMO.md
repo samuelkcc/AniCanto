@@ -13,7 +13,7 @@
 2. 字幕ソースを指定する場合は、内蔵の日本語字幕を選びます。
 3. 音声・字幕切り替えに対応するプレーヤーでデスクトップ版出力を開き、4音声を比較します。
 
-出力デモはデスクトップ版と Fish Audio Drama3 で制作し、元の台本を Qwen3.6-35B-A3B 4-bit MLX で確認しました。編集済みの比較用デモであり、iPad アプリの自動変換結果ではありません。Built with Fish Audio.
+出力デモはデスクトップ版と Fish Audio Drama3 で制作し、元の台本を Qwen3.6-35B-A3B 4-bit MLX で確認しました。編集済みの比較用デモであり、未編集のワンクリック変換結果ではありません。Built with Fish Audio.
 
 [Fish Audio Community License 1.0](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE) · [Licences](LICENSING.md)
 

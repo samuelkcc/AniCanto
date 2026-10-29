@@ -13,7 +13,7 @@ The output contains **Cantonese, Mandarin, English and Japanese audio**. Both mo
 2. Select the Japanese embedded subtitles as the source when needed.
 3. Open the desktop output in a player with audio and subtitle selection to compare the four audio tracks.
 
-The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
+The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, not an unedited one-click conversion. Built with Fish Audio.
 
 [Fish Audio Community License 1.0](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE) · [Licences](LICENSING.md)
 

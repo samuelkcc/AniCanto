@@ -1,48 +1,33 @@
-# AniCanto 技術支援
+# AniCanto 桌面版技術支援
 
-[繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [English](SUPPORT.md) · [日本語](SUPPORT.ja.md)
+[English](SUPPORT.md) · [繁體中文](SUPPORT.zh-HK.md) · [简体中文](SUPPORT.zh-CN.md) · [日本語](SUPPORT.ja.md)
 
-[AniCanto 主頁](README.zh-HK.md) · [iPad 私隱政策](http://anicanto.com/privacy.html?lang=zh-HK)
+[主頁及部署](README.zh-HK.md) · [現行流程](docs/DESKTOP-WORKFLOW-0.25.0.md)
 
-## 繁體中文
+呢個倉庫由 SCKC 提供 **macOS／Windows 桌面開源版本**。桌面使用、部署問題及意見請到[問題列表](https://github.com/samuelkcc/AniCanto/issues)回報。
 
-AniCanto 由 **SCKC** 獨立開發。呢頁提供 iPad、Mac 同 Windows 嘅使用支援、問題回報及意見入口。iPad 版目前仍在開發，以下亦適用於開發測試用戶；實際供應情況及功能以各平台發佈公告為準。
+## 回報桌面問題
 
-### 聯絡 SCKC
+[建立回報](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20)，請提供：
 
-- [回報 iPad 問題](https://github.com/samuelkcc/AniCanto-Support/issues/new?template=technical-issue.yml&title=%5BiPad%5D%20)。
-- [回報 Mac／Windows 問題](https://github.com/samuelkcc/AniCanto/issues/new?title=%5BDesktop%5D%20)。
-- [查看已有回報或提出一般意見](https://github.com/samuelkcc/AniCanto/issues)。
+1. AniCanto 版本／build、作業系統版本。
+2. CPU、系統 RAM、顯示卡及 VRAM，並註明使用 CPU、Apple Metal／MLX 定 NVIDIA CUDA。
+3. 翻譯、辨識及配音模型、字幕來源類型，同已開啟嘅修復選項。
+4. 重現步驟、預期結果、實際錯誤、最後處理階段／句數，以及停留咗幾耐。
+5. 有需要可附上已移除私人資料嘅診斷片段或截圖。
 
-現時透過 GitHub Issues 聯絡。閱讀呢頁毋須帳戶，發表回報需要 GitHub 帳戶。**所有回報都係公開嘅**，請勿上載私人影片、錄音、文字稿、帳戶資料、購買收據或未移除私人資料嘅完整記錄。一般私隱問題只需概括描述，唔好附上個人資料。
+請先搜尋已有回報，同一問題喺原有 issue 繼續回覆。求助毋須贊助。
 
-回報時請提供：
+## 常見檢查
 
-1. 平台、裝置型號、系統版本，以及 AniCanto 版本／build。
-2. 想完成嘅操作，同可以重現問題嘅步驟。
-3. 預期結果、實際情況及完整錯誤文字。
-4. 如有關，列出翻譯／配音模型及停喺邊個處理階段。
-5. 可選擇附上已移除私人資料嘅截圖或短段診斷記錄。
+- **部署失敗：** 檢查儲存空間、記憶體估算、執行環境及相關模型下載。偵測到硬件唔代表所有顯示卡及模型都已驗證。
+- **轉換慢或暫停：** 睇最新階段同句數；關閉前先「暫停並保存」，之後續跑。百分比冇變唔一定係卡住。
+- **字幕／配音問題：** 註明內置文字字幕、外掛 SRT／ASS／SSA／VTT，定燒入畫面 OCR，並提供時間位置；喺逐句編輯比較原聲、分離聲及配音。
+- **測試新流程：** 舊暫停工作保留原設定。請重設測試影片或建立新轉換，先會使用新預設。
+- **成品：** 刪除專案或錄音前，先確認所選輸出資料夾嘅影片可以正常播放。
 
-求助同回報問題毋須贊助。同一問題請喺原有 issue 繼續回覆，方便追蹤。
+## 公開回報及內容
 
-### iPad 常見問題
+所有回報都係公開嘅。上載記錄前請移除私人路徑、帳戶、影片、錄音、文字稿及個人資料，唔需要提供完整私人媒體。
 
-| 問題 | 可以先檢查 |
-| --- | --- |
-| 呢部 iPad 可唔可以進入工作室？ | 目前開發版需要 M1 或更新 M 系列 iPad、至少 8GB RAM 及所需 GPU 能力。請查看 App **關於及授權 → iPad 相容性**。符合規格唔代表每個模型或工作量都已喺該機型實測。 |
-| 點解第一次準備需要上網？ | AI 模型及 Apple 管理嘅辨識資源可能需要下載。容量同儲存空間按所選模型而定，開始前請查看模型管理。所需資源準備好後，辨識、翻譯及配音喺 iPad 本機執行。 |
-| 模型下載或檢查失敗點算？ | 檢查網絡同剩餘空間，再喺模型管理重試或修復相關模型。持續失敗請回報模型名及錯誤。唔好為排查而直接刪 App，否則可能移除本機專案及錄音。 |
-| 處理暫停咗，或者好慢。 | 保持 App 喺前景，使用 App 內暫停／保存及繼續功能；轉到背景可能令工作暫停或中斷。速度視乎影片、模型、記憶體及溫度。回報時請提供最後顯示嘅處理階段。 |
-| 錄唔到音，或者錄音無聲。 | 檢查 iPad 設定內 AniCanto 嘅咪高峰權限，同已接駁嘅咪高峰／音訊配件。錄音先需要咪高峰權限，輸入文字或匯入現有檔案毋須呢項權限。持續有問題請回報裝置、收音來源及錯誤。 |
-| 去邊度搵成品？ | 喺成品播放器使用「儲存影片到檔案…」、「儲存字幕到檔案…」或音訊匯出／分享。移除 App 或刪專案前，先喺「檔案」或所選雲端服務確認副本已保存。 |
-| 點樣恢復專家模式？ | 當所用版本已提供 App Store 購買，喺專家模式介紹按「恢復購買」，並使用原先購買嘅 Apple 帳戶。開發測試權限同正式購買係分開嘅。請勿喺公開 issue 貼收據或帳戶資料。 |
-| 翻譯或配音有錯。 | 請試聽並核對文字；AI 可能錯譯、漏字或改變口音及音色。版本提供相關功能時，可用專家校對及保留錄音逐句修訂。自動檢查唔等於翻譯或聲演品質認證。 |
-
-### Mac／Windows 支援
-
-請參閱[桌面版設定、模型要求及操作流程](README.zh-HK.md)。桌面同 iPad 嘅硬件及安裝方式不同，桌面執行環境下載及模型建議唔會自動適用於 iPad。回報桌面問題時，請另外列出 CPU、系統 RAM、顯示卡／VRAM，同使用 CPU、MLX 定 NVIDIA CUDA。
-
-### 私隱及內容
-
-[iPad 私隱政策](http://anicanto.com/privacy.html?lang=zh-HK)說明本機處理、模型連線、分享、備份及刪除方式，適用範圍係 iPad App。呢個支援頁同公開回報由 GitHub 託管；瀏覽或發表內容時適用 [GitHub 私隱聲明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。請只處理你有權使用嘅影片、字幕及聲線參考。
+模型及執行環境準備好後，預設轉換喺本機完成；下載同更新需要上網。雲端資料夾同步按你所選儲存服務處理。支援頁及問題列表由 GitHub 託管，適用 [GitHub 私隱聲明](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)。請只處理有權使用嘅影片、字幕及聲線參考。

@@ -13,7 +13,7 @@
 2. 需要指定字幕来源时，选择内嵌日文字幕。
 3. 使用支持音轨和字幕选择的播放器打开桌面版输出，比较四条音轨。
 
-示范视频由桌面版配合 Fish Audio Drama3 制作，原稿经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非 iPad App 自动转换结果。Built with Fish Audio.
+示范视频由桌面版配合 Fish Audio Drama3 制作，原稿经 Qwen3.6-35B-A3B 4-bit MLX 校对，是经过编排的比较示范，并非未经编辑的一键转换结果。Built with Fish Audio.
 
 [Fish Audio Community License 1.0](https://huggingface.co/fishaudio/drama-3/blob/main/LICENSE) · [Licences](LICENSING.md)
 

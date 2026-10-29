@@ -4,11 +4,13 @@
 
 # AniCanto
 
+**macOS / Windows · Open-source desktop edition**
+
 **Your anime. A whole new voice.**
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--0250) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) · [Demo](#try-the-original-demo-and-compare-the-voices)
+[Download](#download-the-beta--0250) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 
@@ -54,7 +56,7 @@ One 3-minute 8-second Japanese input and one desktop reference output, shared ac
 
 The output contains **Cantonese, Mandarin, English and Japanese audio**. Both movies include **Traditional Chinese, Simplified Chinese, English and Japanese subtitles**; choose tracks in a compatible player.
 
-The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, rather than an automatic result from the iPad app. Built with Fish Audio.
+The reference was authored with the desktop version using Fish Audio Drama3. Qwen3.6-35B-A3B 4-bit MLX reviewed the base script. It is an edited comparison demo, not an unedited one-click conversion. Built with Fish Audio.
 
 [Demo details](docs/en/DEMO.md)
 
