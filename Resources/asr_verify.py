@@ -29,9 +29,9 @@ def recheck(cfg,job,cues,run,emit):
     clean=lambda t:''.join(c for c in t if c.isalnum())
     for i,row in zip(selected,saved['rows']):
         c=cues[i];c['japaneseRecheck']=row['text']
-        agreement=SequenceMatcher(None,clean(c.get('japanese',c['text'])),clean(row['text'])).ratio()
+        agreement=SequenceMatcher(None,clean(c.get('japanese',c.get('text',''))),clean(row['text'])).ratio()
         c['sourceReviewReasons']=[] if row['text'] and agreement>=.75 else ['日語聽寫有分歧；第三份係分離人聲假設，未認證正確原文。']
-    atomic_json(job/'source-confidence.json',dict(rows=[dict(index=i+1,japanese=c.get('japanese',c['text']),independent=c.get('japaneseAlt',''),isolated=c.get('japaneseRecheck',''),reasons=c.get('sourceReviewReasons',[])) for i,c in enumerate(cues)],method='original and isolated local ASR; timing unchanged'))
+    atomic_json(job/'source-confidence.json',dict(rows=[dict(index=i+1,japanese=c.get('japanese',c.get('text','')),independent=c.get('japaneseAlt',''),isolated=c.get('japaneseRecheck',''),reasons=c.get('sourceReviewReasons',[])) for i,c in enumerate(cues)],method='original and isolated local ASR; timing unchanged'))
 
 
 def install(root,variant=None):
@@ -109,7 +109,7 @@ def verify(request):
                 result=model.generate(audio_array(clip),language='Japanese',max_tokens=min(256,max(32,round(len(clip)/sr*24))),verbose=False)
             text=result.text.strip()
             if len(text)>len(clip)/sr*25+10 or re.search(r'(.{2,8})\1{3,}',text):text=''
-        agreement=SequenceMatcher(None,normalized(c.get('japanese',c['text'])),normalized(text)).ratio() if text else 0
+        agreement=SequenceMatcher(None,normalized(c.get('japanese',c.get('text',''))),normalized(text)).ratio() if text else 0
         rows.append(dict(text=text,agreement=round(agreement,3)))
         emit(f'已核對第 {i+1}/{len(request["cues"])} 句日語。')
     from model_catalog import selected

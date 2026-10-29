@@ -10,4 +10,5 @@ def requested(control):
     except (OSError,ValueError,KeyError):return False
 
 def check(cfg):
+    __import__('repair_limits').check(cfg)
     if requested(cfg.get('_trackControl')):raise UserSkipped('使用者跳過本音軌餘下生成；已完成錄音保留。')

@@ -1,3 +1,4 @@
+from primary_source import content as primary_content
 """Targeted pre-TTS verbosity checks; captions are hints, never a hard limit.
 
 Only anomalous turns spend one cached rewrite/semantic-check batch. This is not
@@ -90,6 +91,7 @@ def assess(cfg,cues,index,language):
 
 
 def review(w,cfg,job,cues,languages):
+    if __import__('delivery_policy').enabled(cfg):return []
     if cfg.get('editorRender') or cfg.get('repairOnly') or (cfg.get('scriptLocked') and not cfg.get('automaticDurationRewrite')):return []
     from concise_dialogue import compact
     from normal_mode import valid
@@ -106,7 +108,7 @@ def review(w,cfg,job,cues,languages):
             if not evidence['reasons']:continue
             # Exclude the current draft from the identity: a resume or later
             # duration edit must not start a fresh verbosity-review loop.
-            identity=[REVISION,cfg.get('model'),language,cue.get('reviewIndex',i),cue['start'],cue['end'],cue.get('japanese') or cue.get('text',''),evidence['reference']]
+            identity=[REVISION,cfg.get('model'),language,cue.get('reviewIndex',i),cue['start'],cue['end'],primary_content(cue),evidence['reference']]
             key=hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest();keys[i]=key
             if key in cache:
                 record=cache[key]

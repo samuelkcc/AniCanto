@@ -9,6 +9,7 @@ from pathlib import Path
 
 REVISION='whisper-no-prompt-2-checkpointed'
 MLX_MODEL='whisper-large-v3-mlx'
+ENDPOINT_REVISION='whisper-word-endpoints-1'
 
 
 def backend(cfg):
@@ -103,12 +104,13 @@ def transcribe_batch(w,cfg,items,auto_language=False):
     from execution_timing import measure
     from track_control import check
     selected=backend(cfg);language=None if auto_language else 'zh';results=[None]*len(items)
+    words=bool(cfg.get('_endpointWordTimestamps'));revision=ENDPOINT_REVISION if words else REVISION
     store=Path(cfg['storage'])/'cache/independent-asr';store.mkdir(parents=True,exist_ok=True)
     emit=getattr(w,'emit',None);stage=getattr(w,'secondaryStage','獨立覆聽');rows=[]
     def progress(message,**fields):
         if callable(emit):emit(stage,message,**fields)
     for index,(folder,audio) in enumerate(items):
-        identity=[REVISION,hashlib.sha256(Path(audio).read_bytes()).hexdigest(),selected['id'],selected['revision'],selected['backend'],language]
+        identity=[revision,hashlib.sha256(Path(audio).read_bytes()).hexdigest(),selected['id'],selected['revision'],selected['backend'],language]
         key=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()
         folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
         row=dict(index=index,key=key,audio=str(audio),cache=str(store/(key+'.json')),localCache=str(folder/'secondary-speech.json'))
@@ -120,7 +122,12 @@ def transcribe_batch(w,cfg,items,auto_language=False):
             if saved is not None:
                 # Cross-stage reuse never supplies the approved words as a prompt.
                 if cfg.get('executable') and not saved.get('traditionalConverted'):
-                    saved=dict(saved,heard=subprocess.check_output([cfg['executable'],'--traditional-text'],input=saved['heard'].encode(),timeout=30).decode(),traditionalConverted=True)
+                    if words and saved.get('words'):
+                        packet='\n'.join([saved['heard'].replace('\n',' ')]+[str(x.get('word','')).replace('\n',' ') for x in saved['words']])
+                        converted=subprocess.check_output([cfg['executable'],'--traditional-text'],input=packet.encode(),timeout=30).decode().split('\n')
+                        if len(converted)!=len(saved['words'])+1:raise ValueError('Word spelling conversion changed endpoint row count')
+                        saved=dict(saved,heard=converted[0],words=[dict(w,word=t) for w,t in zip(saved['words'],converted[1:])],traditionalConverted=True)
+                    else:saved=dict(saved,heard=subprocess.check_output([cfg['executable'],'--traditional-text'],input=saved['heard'].encode(),timeout=30).decode(),traditionalConverted=True)
                 w.atomic_json(row['localCache'],saved);results[row['index']]=saved
         return sum(r is not None for r in results)
     completed=collect();pending=list({r['key']:r for r in rows if results[r['index']] is None}.values())
@@ -133,6 +140,12 @@ def transcribe_batch(w,cfg,items,auto_language=False):
         remaining=deadline-time.monotonic()
         if remaining<=0:break
         payload=dict(items=pending,model=selected['path'],backend=selected['backend'],modelID=selected['id'],modelRevision=selected['revision'],language=language,storage=cfg['storage'])
+        if words:
+            payload['wordTimestamps']=True
+            # Only endpoint requests add the new deadline/word contract. Old
+            # frozen readback requests retain their cache and inference policy.
+            deadline_utc=__import__('repair_limits').deadline()
+            if deadline_utc is not None:payload['_repairDeadlineUTC']=deadline_utc
         if cfg.get('_trackControl'):payload['_trackControl']=cfg['_trackControl']
         w.atomic_json(request,payload)
         def event(value):
@@ -156,6 +169,21 @@ def transcribe_batch(w,cfg,items,auto_language=False):
     return results
 
 
+def endpoint_words(segments):
+    """Normalize native MLX dicts and faster-whisper word objects, without text hints."""
+    import math
+    result=[]
+    def get(obj,key,default=None):return obj.get(key,default) if isinstance(obj,dict) else getattr(obj,key,default)
+    for segment in segments or []:
+        for row in get(segment,'words',[]) or []:
+            try:
+                a,b=float(get(row,'start')),float(get(row,'end'));prob=float(get(row,'probability',0))
+                text=str(get(row,'word',''))
+                if math.isfinite(a+b+prob) and 0<=a<b and text:result.append(dict(word=text,start=a,end=b,probability=prob))
+            except (ValueError,TypeError):continue
+    return result
+
+
 def load_transcriber(request):
     if request['backend']=='mlx':
         import mlx.core as mx
@@ -164,8 +192,11 @@ def load_transcriber(request):
         mlx_device(request.get('storage'),'independent-whisper')
         model=load(request['model'])
         def infer(audio):
-            result=model.generate(whisper_pcm(audio),language=request.get('language'),condition_on_previous_text=False,initial_prompt=None,temperature=0.,verbose=None)
-            return dict(heard=result.text.strip(),language=getattr(result,'language','') or '')
+            options=dict(word_timestamps=True,return_timestamps=True) if request.get('wordTimestamps') else {}
+            result=model.generate(whisper_pcm(audio),language=request.get('language'),condition_on_previous_text=False,initial_prompt=None,temperature=0.,verbose=None,**options)
+            answer=dict(heard=result.text.strip(),language=getattr(result,'language','') or '')
+            if request.get('wordTimestamps'):answer['words']=endpoint_words(getattr(result,'segments',[]))
+            return answer
         return infer
     from faster_whisper import WhisperModel
     def cpu():return WhisperModel(request['model'],device='cpu',compute_type='int8',local_files_only=True,cpu_threads=8)
@@ -185,8 +216,11 @@ def load_transcriber(request):
         nonlocal model
         pcm=whisper_pcm(audio)
         def decode():
-            segments,info=model.transcribe(pcm,language=request.get('language'),beam_size=5,vad_filter=False,condition_on_previous_text=False)
-            return dict(heard=''.join(s.text for s in segments),language=info.language)
+            options=dict(word_timestamps=True) if request.get('wordTimestamps') else {}
+            segments,info=model.transcribe(pcm,language=request.get('language'),beam_size=5,vad_filter=False,condition_on_previous_text=False,**options)
+            segments=list(segments);answer=dict(heard=''.join(s.text for s in segments),language=info.language)
+            if request.get('wordTimestamps'):answer['words']=endpoint_words(segments)
+            return answer
         try:return decode()
         except Exception:
             # Lazy CUDA execution can fail while consuming segments. Release
@@ -205,7 +239,7 @@ def process_request(request,infer,send):
         try:
             with contextlib.redirect_stdout(sys.stderr):result=infer(item['audio'])
             if not isinstance(result.get('heard'),str) or not isinstance(result.get('language'),str):raise ValueError('Incomplete independent speech evidence')
-            result.update(key=item['key'],status='completed',method=REVISION,backend=request['backend'],model=request['modelID'],modelRevision=request['modelRevision'],languageMode='automatic' if request.get('language') is None else 'zh',conditioning='No expected text, prompt or vocabulary supplied')
+            result.update(key=item['key'],status='completed',method=ENDPOINT_REVISION if request.get('wordTimestamps') else REVISION,backend=request['backend'],model=request['modelID'],modelRevision=request['modelRevision'],languageMode='automatic' if request.get('language') is None else 'zh',conditioning='No expected text, prompt or vocabulary supplied')
             write_json(item['cache'],result);send(dict(event='completed',key=item['key']))
         except UserSkipped:raise
         except Exception as error:

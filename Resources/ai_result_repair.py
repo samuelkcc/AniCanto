@@ -298,6 +298,7 @@ def retake(w, cfg, track, row, folder):
 
 def run(w, cfg, job, tracks, target_keys=None, missing_only=False):
     """Complete all selected track decisions before final fallback/mux."""
+    if __import__('repair_permissions').enabled(cfg) and not __import__('repair_permissions').ai(cfg):return [],None
     root = Path(job)/'ai-result-repair'
     root.mkdir(parents=True, exist_ok=True)
     state_path = root/'attempts.json'
@@ -377,7 +378,7 @@ def run(w, cfg, job, tracks, target_keys=None, missing_only=False):
                     donors.append(donor);track.setdefault('aiRepairIndices',[]).append(row['index'])
                     record.update(status='verified',audioSHA=donor['audioSHA'],originalVoiceRecovered=True,asrVariation=bool(donor.get('asrVariation')))
             if (record['status']=='unresolved' and requires_delivery_repair(row) and row.get('approvedText','').strip()
-                    and cfg.get('fallbackToRoleVoice') and not track.get('report',{}).get('userSkipped')):
+                    and not __import__('repair_permissions').enabled(cfg) and cfg.get('fallbackToRoleVoice') and not track.get('report',{}).get('userSkipped')):
                 # A second, distinct conditioning strategy is useful; asking the
                 # decision model again or retrying the broken reference is not.
                 # Keep verified work across resume, but a single stochastic ASR

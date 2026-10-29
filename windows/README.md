@@ -48,7 +48,7 @@ its reason and can use the same model on CPU, labelled explicitly. An explicit
 CPU selection does not download CUDA. When the model cannot fit system memory,
 the GPT fallback remains available. The full native CPU model remains an Expert
 option. GPT, Cosy and Vox have native Torch adapters; WenetSpeech-Yue uses CPU.
-See [Drama3-small / CUDA details](../docs/WINDOWS-PORT-2026-10-17.md).
+See [Drama3-small / CUDA details](../docs/DRAMA3-SMALL-NVIDIA.md).
 
 Welcome shows installed/reused components, download purposes and sizes, byte
 progress, first-load progress and the actual verified voice backend. Expand

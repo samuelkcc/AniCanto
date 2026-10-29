@@ -66,3 +66,9 @@ export function installQueueOrder({move,step,updated,error}){
  },true);
  return {get busy(){return !!drag||saving},idle:()=>idle,run:async(work)=>{if(drag||saving)return;startBusy();await save(work)}};
 }
+
+export function reorderedRows(rows,id,beforeID){
+ if(!rows.some(r=>r.id===id)||beforeID!==null&&!rows.some(r=>r.id===beforeID))throw Error('The video list changed. Try moving the video again.');
+ if(id===beforeID)return [...rows];
+ const moved=rows.find(r=>r.id===id),rest=rows.filter(r=>r.id!==id),index=beforeID===null?rest.length:rest.findIndex(r=>r.id===beforeID);rest.splice(index,0,moved);return rest;
+}

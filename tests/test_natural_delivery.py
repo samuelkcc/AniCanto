@@ -87,6 +87,12 @@ class NaturalDeliveryTests(unittest.TestCase):
   self.assertEqual(speech_timing.natural_window(cues[0],cues,2,cfg),(0,1.))
   overlapping=[dict(start=0,end=2),dict(start=1,end=3)]
   self.assertEqual(speech_timing.natural_window(overlapping[0],overlapping,3),(0,2))
+ def test_caption_tail_absorbs_an_overrun_without_crossing_the_next_line(self):
+  cues=[dict(start=.3,end=3.7,speechStart=.3,speechEnd=1.16),dict(start=5.,end=6.,speechStart=5.,speechEnd=6.)]
+  cfg=dict(sourceMatchedScriptRevision='source-matched-script-245',duration=8)
+  self.assertEqual(speech_timing.natural_window(cues[0],cues,8,cfg),(.3,3.7))
+  cues[1].update(start=2.2,end=3.,speechStart=2.2,speechEnd=3.)
+  self.assertEqual(speech_timing.natural_window(cues[0],cues,8,cfg),(.3,2.2))
  def test_human_editor_never_gets_automatic_wording_changes(self):
   with patch('dubbing.gsv_audio') as tts:
    self.assertEqual(natural_delivery.repair(dict(editorRender=True,automaticDurationRewrite=True),Path('.'),[],['take'],Mock(),Mock()),['take'])
@@ -167,7 +173,7 @@ class NaturalDeliveryTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    job=Path(d);long=audio(job/'long.wav',1.3);short=audio(job/'short.wav',.6)
    cues=[dict(start=0,end=1,cantonese='Hello.'),dict(start=1,end=2,cantonese='Yes.')]
-   cfg=dict(duration=3,speechRatePolicy='natural',normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ffmpeg=shutil.which('ffmpeg'))
+   cfg=dict(naturalTimingPolicy='micro-shift',duration=3,speechRatePolicy='natural',normalRepairPolicy='verified',productionMode='normal',targetLanguage='en',ffmpeg=shutil.which('ffmpeg'))
    calls=[]
    def run(args):calls.append(args);return subprocess.check_output([str(a) for a in args],stderr=subprocess.PIPE)
    with patch('dubbing.gsv_audio',return_value=[long,short]),patch('normal_mode.repair_paths',side_effect=lambda c,j,cs,ps,*args:ps),patch('natural_delivery.repair',side_effect=lambda c,j,cs,ps,*args,**kwargs:ps),patch('natural_schedule.scene_boundaries',return_value=dict(status='detected',cuts=[])):

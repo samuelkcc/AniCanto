@@ -165,6 +165,7 @@ def repair(cfg,job,tracks,run,emit,target_keys=None,donor_tracks=None):
             # merely because its written characters resemble the approved script.
             wrong_language_track=track_language_failure(evidence)
             if wrong_language_track:target['report']['trackLanguageFailure']=True
+            if __import__('repair_permissions').enabled(cfg) and not __import__('repair_permissions').ai(cfg):evidence=[]
             for cue in timing:
                 check=next((r for r in evidence if r.get('index')==cue.get('index')),None)
                 strong=check and needs_repair({'cantonese':check.get('expected','')},check,target['language'])
@@ -192,6 +193,9 @@ def repair(cfg,job,tracks,run,emit,target_keys=None,donor_tracks=None):
                 uses_full_source=False
                 decision=target.get('aiRepairActions', {}).get(cue['index'])
                 available=[r for r in (donor_tracks or [])+tracks if r['engine'] in cfg.get('selectedEngines',[cfg.get('ttsBackend','')])]
+                if __import__('repair_permissions').enabled(cfg):
+                    permissions=__import__('repair_permissions')
+                    available=[r for r in available if permissions.ai(cfg) and (r['engine']==target['engine'] or permissions.alternate(cfg)) and (not r.get('roleVoiceFallback') or permissions.generic(cfg))]
                 permitted=decision not in ('keep','needs-reference')
                 selected=(target,cue,Path(cue['renderedAudio'])) if cue.get('restoreNative') and cue.get('renderedAudio') and healthy(cue['renderedAudio']) else (choose(cue,target,available,require_verified=bool(cfg.get('aiAutoFix'))) if permitted and (cfg.get('allowCrossEngineRepair',False) or cue['index'] in target.get('aiRepairIndices', [])) else None)
                 if selected is None:

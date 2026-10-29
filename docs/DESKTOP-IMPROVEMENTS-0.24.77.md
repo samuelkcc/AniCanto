@@ -1,6 +1,6 @@
-# Desktop workflow improvements · 0.24.77 (included in 0.24.79)
+# Desktop workflow improvements · 0.24.77 candidate
 
-Independently authored AniCanto implementation; study product behaviour only. No external app code imported. Desktop source and binaries published with 0.24.79; private iPad implementation excluded.
+Independently authored AniCanto implementation; study product behaviour only. No external app code imported. No GitHub publication authorised.
 
 ## Implementation checklist
 - [x] Native-owned durable queue and resume/pause boundary

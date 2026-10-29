@@ -14,7 +14,7 @@ Expose actual working controls: speech speed, bounded pitch shift, supported Cos
 
 Voice references use complete 3–10 second recordings. Allow import, recording, preview, automatic recognition and transcript editing. Keep original typed text and reference transcript separate. Save clips in the stable speech-studio player category with their required own audio; deleting a video import must not remove them. Audio preview must explicitly activate a playback audio session after microphone use.
 
-Desktop handover: apply this UX/data contract using actual desktop engine capabilities; keep its existing workflow and adapters, do not copy iPad MLX implementation or claim untested prosody parity. Do not advertise the now-free Dubbing studio as an Expert purchase benefit. See latest HERMES-CODEX-HANDOVER entry for concrete implementation / validation state.
+Desktop handover: apply this UX/data contract using actual desktop engine capabilities; keep its existing workflow and adapters, do not copy iPad MLX implementation or claim untested prosody parity. Do not advertise the now-free Dubbing studio as an Expert purchase benefit. See latest CODEX-HANDOVER entry for concrete implementation / validation state.
 
 ## Entry and language
 

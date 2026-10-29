@@ -28,11 +28,13 @@ def defaults(language='en'):
     return dict(animeTheme='studio',randomAnimeTheme=False,selectedEngines=['drama3'],ttsBackend='drama3',defaultAudioEngine='drama3',
         dubLanguages=['yue','en'] if language=='en' else ['yue'],includeOriginal=True,
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
-        subtitleSource='embedded',batchAutoSubtitles=True,productionMode='normal',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
+        subtitleSource='embedded',batchAutoSubtitles=True,sourceWorkflow='auto',defaultSubtitleWorkflow='subtitles-speech',defaultOCRWorkflow='ocr-speech',workMode='performance',workModeRevision=__import__('work_modes').REVISION,fullAIReview=False,productionMode='fast',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
-        speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=True,continueOnError=True,
+        speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
+        speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
+        repairExcessiveAudibleOverlap=False,contentChecks=0,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,
-        failedVoicePolicy='generic',
+        failedVoicePolicy='first-take',automaticSystemVoice=True,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
         cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,
         burnOutputCaptions=False,startOffset=0,limit=0,mixOriginal=0,subtitleOutput='none')
@@ -64,10 +66,24 @@ class Store:
             if recover_running and row.get('status')=='running':row['status']='paused'
         self.selected=saved.get('selected');self.ui=saved.get('ui',{})
         self.ui.setdefault('interfaceLanguageInitialized',saved.get('language') in ('en','zh-HK','zh-CN','ja'))
+        # Older builds forced AI repair on; the switch is opt-in from build 245.
+        self.retire_forced_ai_repair(saved.get('settings',{}))
         if not self.ui.get('aniCantoThemeDefaultApplied'):
             self.settings.update(animeTheme='studio',randomAnimeTheme=False)
             self.ui['aniCantoThemeDefaultApplied']=True
+    def settings_for(self,row):return __import__('production_scope').effective(self.settings,row)
     def save(self):write(self.path,dict(language=self.language,mode=self.mode,settings=self.settings,queue=self.queue,selected=self.selected,ui=self.ui))
+    def retire_forced_ai_repair(self,saved):
+        """Turn one old forced value off; the repair switch is opt-in from build 245.
+
+        Earlier builds set aiAutoFix on inside a work mode, so a stored True is not
+        a user choice. The marker is written once, so a later switch stays.
+        """
+        marker=self.root/'migrations/ai-repair-default-off-v1.json'
+        if marker.exists() or not saved.get('aiAutoFix'):return False
+        self.settings['aiAutoFix']=False
+        self.save();write(marker,dict(previous=True,reason='AI repair became a user switch with default off'))
+        return True
     def language_default(self,language):
         # Welcome selection changes defaults for future jobs, never submissions.
         self.language=language
@@ -86,7 +102,21 @@ class Store:
             request=Path(row['request'])
             from subtitle_snapshot import verify
             verify(read(request,{}));return request
-        settings=validated(self.settings)
+        settings=validated(self.settings_for(row))
+        from primary_source import REVISION as source_revision, ALLOCATION_REVISION as allocation_revision
+        settings['sourcePolicyRevision']=source_revision
+        settings['sourceAllocationRevision']=allocation_revision
+        settings['deliveryPolicyRevision']=__import__('delivery_policy').REVISION
+        settings['workModeRevision']=__import__('work_modes').REVISION
+        settings['speechDurationRevision']=__import__('speech_duration').REVISION
+        settings['repairPermissionsRevision']=__import__('repair_permissions').REVISION
+        settings['basicFlowRevision']=__import__('basic_flow').REVISION
+        settings['forcedDubbingRevision']=__import__('delivery_policy').FORCED_TTS_REVISION
+        __import__('work_modes').configure(settings)
+        from source_workflow import REVISION as workflow_revision,validate as validate_workflow
+        validate_workflow(settings)
+        settings['sourceWorkflowRevision']=workflow_revision
+        if self.mode=='basic':settings['sourceWorkflow']='auto'
         from voice_parameters import validate as validate_voice_parameters
         validate_voice_parameters(settings)
         if settings.get('failedVoicePolicy') not in ('first-take','source','generic'):
@@ -98,17 +128,30 @@ class Store:
         configure(settings,basic=self.mode=='basic')
         settings.update(storage=str(self.root),video=row['video'],exportFolder=settings.get('exportFolder') or str(self.root/'exports'),
                         interfaceMode=self.mode,targetLanguage=settings['dubLanguages'][0],
-                        defaultDubLanguage=settings['dubLanguages'][0],automaticDurationRewrite=True)
+                        defaultDubLanguage=settings['dubLanguages'][0])
         from terminology import validate as validate_terms
         settings['termRules']=validate_terms(row.get('termRules',[]))
         if row.get('subtitleAlignment'):settings['subtitleAlignment']=copy.deepcopy(row['subtitleAlignment'])
-        if row.get('externalSubtitle'):
+        choice=row.get('conversionSubtitleChoice','auto')
+        if choice=='auto':settings.update(translationSource=COMBINED,subtitleSource='embedded',subtitle=None,ocr=False,batchAutoSubtitles=True,batchExplicitStream=False)
+        if choice.startswith('embedded:'):
+            settings.update(translationSource=COMBINED,subtitleSource='embedded',subtitleStream=int(choice.split(':')[1]),batchExplicitStream=True,batchAutoSubtitles=False,subtitle=None,ocr=False)
+        elif choice=='audio-only':settings.update(translationSource='audio-only',subtitleSource='none',subtitle=None,ocr=False,batchAutoSubtitles=False)
+        elif choice=='ocr':settings.update(translationSource='audio-and-ocr',subtitleSource='burned',subtitle=None,ocr=True,batchAutoSubtitles=False)
+        if row.get('externalSubtitle') and choice!='audio-only':
             subtitle=Path(row['externalSubtitle'])
             if not subtitle.is_file():raise ValueError('The imported subtitle file is missing. Choose it again before converting.')
             settings.update(translationSource=COMBINED,subtitleSource='external',subtitle=str(subtitle),
                             batchAutoSubtitles=False,batchExplicitSubtitle=True,ocr=False)
         if self.mode=='basic' and settings.get('roleAnalysisMode')=='audiovisual':settings.update(roleAnalysisMode='independent',visualRoleAnalysisEnabled=False)
+        if row.get('resetToken'):
+            settings.update(analysisRerunToken=row['resetToken'],rebuildDialogue=True)
         request_id=uuid.uuid4().hex
+        if choice=='auto' and not row.get('externalSubtitle') and settings.get('translationSource')=='audio-and-subtitles':
+            sidecar=next((Path(row['video']).with_suffix(ext) for ext in ('.srt','.ass','.ssa','.vtt') if Path(row['video']).with_suffix(ext).is_file()),None)
+            if sidecar:settings.update(subtitleSource='external',subtitle=str(sidecar),batchExplicitSubtitle=True,batchAutoSubtitles=False,ocr=False)
+        media=Path(row['video']);stat=media.stat()
+        settings['sourceVideoSnapshot']=dict(path=str(media),bytes=stat.st_size,mtimeNS=stat.st_mtime_ns)
         if settings.get('subtitle') and settings.get('subtitleSource')=='external':
             from subtitle_snapshot import freeze
             freeze(settings,self.root,request_id)

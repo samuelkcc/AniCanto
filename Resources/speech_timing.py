@@ -29,12 +29,25 @@ def natural_window(cue,cues,duration,cfg=None):
     """Use an empty following gap, without delaying another line or OP/ED."""
     start,end=window(cue,cues,duration)
     if cue.get('_retryRetained') or cue.get('preserveOriginalSpeech'):return start,end
+    if __import__('speech_duration').enabled(cfg):return __import__('speech_duration').deadline(cfg,cue,cues,duration)
     following=[window(c,cues,duration)[0] for c in cues
-               if c is not cue and (c.get('enabled',True) or c.get('preserveOriginalSpeech')) and window(c,cues,duration)[0]>start+.001]
+               if c is not cue and __import__('safe_vocal_capacity').is_barrier(c,cues,cfg) and (c.get('enabled',True) or c.get('preserveOriginalSpeech')) and window(c,cues,duration)[0]>start+.001]
     next_start=min(following,default=float(duration))
     # Existing overlapping Japanese turns retain their own source deadline.
-    preserved_overlap=any(c is not cue and c.get('preserveOriginalSpeech') and window(c,cues,duration)[0]<end and window(c,cues,duration)[1]>start for c in cues)
-    if next_start>=end and not preserved_overlap:end=next_start
+    preserved_overlap=any(c is not cue and c.get('preserveOriginalSpeech') and __import__('safe_vocal_capacity').is_barrier(c,cues,cfg) and window(c,cues,duration)[0]<end and window(c,cues,duration)[1]>start for c in cues)
+    if next_start>=end and not preserved_overlap:
+        end=next_start
+        # The collapsed desktop mode keeps the take inside the witnessed Japanese
+        # speech window. A spare tail over an untranscribed source line is what
+        # Samuel hears as a second voice, so it is not used to absorb an overrun.
+        if __import__('source_mora').cap_requested(cfg):
+            cap=float(cue.get('speechEnd',cue['end']))+__import__('source_mora').END_GRACE_SECONDS
+            # The caption of this same line can run past the witnessed speech span.
+            # The take may use that tail, but never past its own caption end, so a
+            # Chinese subtitle window is never left without Cantonese audio.
+            caption_end=min(float(cue['end']),float(cue.get('deliveryEnd',cue['end'])))
+            end=min(end,max(cap,caption_end))
+        end=min(end,next_start)
     import opening
     for interval in opening.local_ranges(dict(cfg or {},duration=float(duration))):
         a=float(interval['start']) if isinstance(interval,dict) else float(interval[0])

@@ -20,9 +20,9 @@ def take(path):
 
 
 class FailedVoicePolicyTests(unittest.TestCase):
-    def test_both_interface_modes_default_to_generic_target_language_voice(self):
-        self.assertEqual(defaults('en')['failedVoicePolicy'], 'generic')
-        self.assertEqual(defaults('zh-HK')['failedVoicePolicy'], 'generic')
+    def test_both_interface_modes_default_to_first_take_target_fallback(self):
+        self.assertEqual(defaults('en')['failedVoicePolicy'], 'first-take')
+        self.assertEqual(defaults('zh-HK')['failedVoicePolicy'], 'first-take')
 
     def test_generic_take_is_used_only_when_a_saved_bank_attempt_was_selected(self):
         with tempfile.TemporaryDirectory() as directory:

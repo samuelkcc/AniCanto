@@ -16,7 +16,7 @@ AniCanto is a personal project for language learning and creative experimentatio
 
 - [Application licence](../../LICENSE) and [distribution notice](../../NOTICE.txt).
 - [Model licence evidence](../../licenses/model-evidence.json), [full model notices](../../licenses/models/) and [component notices](../../licenses/).
-- [Release downloads and matching source materials](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta). Each binary release provides the accompanying source/build materials for its selected components. Keep the materials belonging to that exact release.
+- [Release downloads and matching source materials](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.0-beta). Each binary release provides the accompanying source/build materials for its selected components. Keep the materials belonging to that exact release.
 - In the app, open **About → Licences** to search the packaged notices.
 
 FFmpeg and other native tools retain the obligations of their actual build. See the [FFmpeg distribution guidance](https://ffmpeg.org/legal.html) and the corresponding materials supplied with the release.

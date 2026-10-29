@@ -15,7 +15,7 @@ PRESENTATION_FIELDS = frozenset(('animeTheme', 'themeSession', 'randomAnimeTheme
     '_standardProductionSettings'))
 # These alter final delivery, not recognition, translation or voice references.
 # Downstream track/mix identities continue to include the relevant actual values.
-DELIVERY_FIELDS = frozenset(('exportFolder', 'backgroundGain', 'backgroundDucking', 'mixOriginal'))
+DELIVERY_FIELDS = frozenset(('exportFolder', 'backgroundGain', 'backgroundDucking', 'mixOriginal', 'naturalTimingPolicy'))
 REUSABLE_FIELDS = PRESENTATION_FIELDS | DELIVERY_FIELDS
 SCHEMA = 1
 

@@ -30,7 +30,7 @@ SETTING_KEYS = set(defaults()) | {'model','visualModel','asrModel','speechModel'
     'backgroundGain','backgroundDucking','appearance','animeTheme','controlDensity',
     'subtitle','subtitleStream','ocrRect','ocr','ocrAutoRegion','exportFolder','translationSource','allowCrossEngineRepair',
     'randomAnimeTheme','themeSession','voiceStyleMode','roleAnalysisMode','visualRoleAnalysisEnabled','deploymentModels',
-    'failedVoicePolicy','dramaBackend','normalRepairPolicy','independentAsrBackend','speechAcceleration'}
+    'sourceWorkflow','defaultSubtitleWorkflow','defaultOCRWorkflow','failedVoicePolicy','dramaBackend','normalRepairPolicy','independentAsrBackend','speechAcceleration'}
 from voice_parameters import keys as voice_parameter_keys, validate as validate_voice_parameters
 SETTING_KEYS.update(voice_parameter_keys())
 SETTING_KEYS.add('cosyExpression')
@@ -48,7 +48,9 @@ class Studio:
         self.import_existing()
         normal_marker=self.root/'studio/normal-workflow-v1.json'
         if not normal_marker.exists():
-            self.store.settings.update(productionMode='normal',roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,autoSkipOP=True,translateOPED=False)
+            # This one-time pass never chose the work mode. Since work-modes
+            # revision 2 the stored work mode is always the single standard mode.
+            self.store.settings.update(roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,autoSkipOP=True,translateOPED=False)
             self.store.save();write(normal_marker,dict(futureSubmissionsOnly=True))
 
     def recover_orphans(self):
@@ -113,7 +115,8 @@ class Studio:
     def state(self):
         from use_terms import accepted
         from output_delivery import presentation
-        return dict(schemaVersion=1,language=self.store.language,mode=self.store.mode,settings=self.store.settings,
+        selected=next((r for r in self.store.queue if r['id']==self.store.selected),None)
+        return dict(schemaVersion=1,language=self.store.language,mode=self.store.mode,settings=self.store.settings,productionSettings=self.store.settings_for(selected),
             queue=[presentation(self.root,r,self.store.settings.get('exportFolder','')) for r in self.store.queue],selected=self.store.selected,ui=self.store.ui,storage=str(self.root),platform=self.platform,useTermsAccepted=accepted(self.root))
 
     def review_path(self,row):
@@ -332,7 +335,7 @@ class Studio:
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before checking another source language.')
             row=self.row(p.get('id'))
             from source_language import preflight
-            settings=copy.deepcopy(self.store.settings)
+            settings=self.store.settings_for(row)
             if p.get('stream') is not None:
                 if type(p['stream']) is not int:raise ValueError('Invalid source audio stream.')
                 row['sourceAudioStream']=p['stream']
@@ -343,23 +346,44 @@ class Studio:
             row.update(sourceLanguage=result.get('language'),sourcePreflight=result)
             self.store.save();return result
         if op=='configure':
+            scope=p.get('scope','global')
+            if scope not in ('global','video'):raise ValueError('Unknown production settings scope.')
+            target=self.row(p.get('id')) if scope=='video' else None
+            if target and target.get('status')=='running':raise ValueError('Pause processing before changing this video settings.')
+            if target and any(k in p for k in ('mode','language','ui')):raise ValueError('Interface settings are global.')
+            if 'useGlobalSettings' in p:
+                if target is None or not isinstance(p['useGlobalSettings'],bool) or p.get('settings'):raise ValueError('Invalid production scope change.')
+                if p['useGlobalSettings']:
+                    target.pop('productionSettings',None);target['useGlobalSettings']=True
+                elif target.get('useGlobalSettings',True):
+                    target['productionSettings']=__import__('production_scope').snapshot(self.store.settings);target['useGlobalSettings']=False
+                self.store.save();return self.state()
+            if target and not __import__('production_scope').individual(target):raise ValueError('Turn off Global settings before editing individual settings.')
+            base=self.store.settings_for(target) if target else self.store.settings
             patch=p.get('settings',{})
             if not isinstance(patch,dict) or set(patch)-SETTING_KEYS:raise ValueError('Unsupported production setting.')
             patch=dict(patch)
+            if target and set(patch)&__import__('production_scope').GLOBAL_ONLY:raise ValueError('This setting applies globally.')
+            # Since work_modes revision 2 there is one work mode. Basic and Expert
+            # differ only in which controls are shown.
+            # Saved paused requests are immutable snapshots, not a global lock.
             if patch.get('normalRepairPolicy','missing-only') not in ('missing-only','verified'):raise ValueError('Unknown normal repair policy.')
             if patch.get('speechAcceleration','auto') not in ('auto','cpu'):raise ValueError('Unknown speech acceleration mode.')
             if patch.get('independentAsrBackend','auto') not in ('auto','mlx','cpu'):raise ValueError('Unknown independent ASR backend.')
-            if ('productionMode' in patch and patch['productionMode']!=self.store.settings.get('productionMode')
-                    and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue)):
+            if (any(k in patch and patch[k]!=base.get(k) for k in ('productionMode','workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap'))
+                    and any(r.get('status')=='running' and r.get('request') for r in self.store.queue)):
                 raise ValueError('Production mode is locked until processing finishes.')
-            if 'failedVoicePolicy' in patch and any(r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue):
+            if 'failedVoicePolicy' in patch and any(r.get('status')=='running' and r.get('request') for r in self.store.queue):
                 raise ValueError('Failed voice fallback is locked until processing finishes.')
             if set(patch).intersection(voice_parameter_keys() | {'cosyExpression'}) and any(
-                    r.get('status') in ('running','paused') and r.get('request') for r in self.store.queue):
+                    r.get('status')=='running' and r.get('request') for r in self.store.queue):
                 raise ValueError('Voice parameters are locked until processing finishes.')
             if 'subtitleModes' in patch and 'subtitleSelection' not in patch:patch['subtitleSelection']='custom'
             if patch.get('subtitleSelection','automatic') not in ('automatic','custom'):raise ValueError('Unknown subtitle selection policy.')
-            cfg=validated(dict(self.store.settings,**patch))
+            cfg=validated(dict(base,**patch))
+            if set(patch)&{'workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap'}:
+                cfg['workModeRevision']=__import__('work_modes').REVISION
+                __import__('work_modes').configure(cfg)
             if cfg.get('failedVoicePolicy') not in ('first-take','source','generic'):
                 raise ValueError('Unknown failed voice fallback policy.')
             validate_voice_parameters(cfg)
@@ -391,7 +415,8 @@ class Studio:
                 self.store.ui['interfaceLanguageInitialized']=True
             from subtitle_policy import configure as subtitle_policy
             subtitle_policy(cfg)
-            self.store.settings=cfg
+            if target:target['productionSettings']=__import__('production_scope').snapshot(cfg)
+            else:self.store.settings=cfg
             if isinstance(p.get('ui'),dict):self.store.ui.update(p['ui'])
             self.store.save();return self.state()
         if op=='add':
@@ -401,6 +426,18 @@ class Studio:
                 f=Path(path)
                 if not f.is_file() or f.suffix.lower() not in VIDEO_TYPES:raise ValueError('Unsupported or missing video: '+str(f))
             self.store.add(paths);return self.state()
+        if op=='set-subtitle-source':
+            row=self.row(p.get('id'))
+            if row.get('status') in ('running','paused'):raise ValueError('Finish this saved conversion before changing its subtitle source.')
+            choice=p.get('choice','auto')
+            if choice not in ('auto','external','audio-only','ocr') and not (isinstance(choice,str) and choice.startswith('embedded:') and choice[9:].isdigit()):raise ValueError('Invalid conversion subtitle source.')
+            if choice=='external' and not row.get('externalSubtitle'):raise ValueError('Import a subtitle file first.')
+            if choice=='ocr' and self.store.mode!='expert':raise ValueError('OCR is an Expert mode option.')
+            if choice.startswith('embedded:'):
+                from playback_subtitles import read as subtitle_tracks
+                available=subtitle_tracks(self.root,row,self.tools(),'list')['tracks']
+                if not any(t['id']==choice and t['supported'] for t in available):raise ValueError('This subtitle track is unavailable or uses image subtitles unsupported by this player.')
+            row['conversionSubtitleChoice']=choice;self.store.save();return self.state()
         if op=='set-external-subtitle':
             row=self.row(p.get('id'))
             if row.get('status') in ('running','paused'):
@@ -412,11 +449,16 @@ class Studio:
                 if subtitle.suffix.lower() not in SUBTITLE_TYPES or not subtitle.is_file():
                     raise ValueError('Choose an existing SRT, ASS, SSA or VTT subtitle file.')
                 if not subtitle.stat().st_size:raise ValueError('The subtitle file is empty.')
-                row['externalSubtitle']=str(subtitle)
+                row['externalSubtitle']=str(subtitle);row['conversionSubtitleChoice']='external'
             else:
                 row.pop('externalSubtitle',None)
+                if row.get('conversionSubtitleChoice')=='external':row['conversionSubtitleChoice']='auto'
             self.store.save();return self.state()
         if op=='select':self.row(p['id']);self.store.selected=p['id'];self.store.save();return self.state()
+        if op in ('reset-video-plan','reset-video'):
+            from project_reset import preview,reset
+            row=self.row(p.get('id'))
+            return preview(row) if op=='reset-video-plan' else reset(self,row,p.get('token'))
         if op=='move-video':
             # Native RPCs serialize this write with progress/finalization. Move
             # by identity rather than accepting a stale replacement queue.
@@ -553,18 +595,18 @@ class Studio:
             resuming=row.get('status')=='paused' and not restart
             if row.get('status')=='running':raise ValueError('This video is already processing.')
             if not resuming and Path(row.get('output') or '/nonexistent').is_file() and not p.get('freshVersion'):
-                if any(issue.get('status')!='user-choice-saved' for issue in job_snapshot(row).get('issues',[])):
+                if any(issue.get('status')!='user-choice-saved' and issue.get('repairEligible') is not False for issue in job_snapshot(row).get('issues',[])):
                     return self.dispatch('retry-review',dict(id=row['id'],mode='pending'))
                 raise ValueError('This video already has an output. Choose Produce a new version to rerun the whole video.')
             from engine_availability import require
             frozen=read(Path(row.get('request') or '/nonexistent'),{}) if resuming else {}
-            selected=frozen or self.store.settings
+            selected=frozen or self.store.settings_for(row)
             engines=selected.get('selectedEngines',[selected.get('ttsBackend')]) if frozen or self.store.mode=='expert' else [selected.get('ttsBackend')]
             for engine in engines:require(engine,self.root,self.platform)
             if not Path(row['video']).is_file():raise ValueError('The source video is missing. Reconnect its drive or import it again.')
             selected_models=read(self.root/'model-selections.json',{})
-            selected_voice=self.store.settings.get('drama3Model') or selected_models.get('drama3') or selected_models.get('voice')
-            if not resuming and 'drama3' in self.store.settings.get('selectedEngines',[self.store.settings.get('ttsBackend')]) and selected_voice=='drama3-small-iq3':raise ValueError('Drama3-small has been retired. Choose a compatible quality preset in Welcome before starting a new conversion.')
+            selected_voice=selected.get('drama3Model') or selected_models.get('drama3') or selected_models.get('voice')
+            if not resuming and 'drama3' in selected.get('selectedEngines',[selected.get('ttsBackend')]) and selected_voice=='drama3-small-iq3':raise ValueError('Drama3-small has been retired. Choose a compatible quality preset in Welcome before starting a new conversion.')
             source=row.get('sourcePreflight') or {}
             if not resuming and source.get('needsConfirmation'):
                 if not source.get('supported'):raise ValueError(source.get('reason') or 'Unsupported source language.')

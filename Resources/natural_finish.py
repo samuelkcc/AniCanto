@@ -89,7 +89,7 @@ def finish(cfg,job,cues,paths,run,emit,allow_tempo=True):
     for i,(cue,p) in enumerate(zip(cues,selected)):
         path=Path(p)
         if protected(cue) or not path.is_file() or path.name.startswith('skipped-'):continue
-        measured=padding(path)
+        measured=padding(path,digital_only=True) if __import__('speech_duration').enabled(cfg) else padding(path)
         if not measured:continue
         params,samples,a,b=measured;key=hashlib.sha256(path.read_bytes()+REVISION.encode()).hexdigest()[:24]
         target=job/'natural-finishing'/key/'silent-edges.wav';target.parent.mkdir(parents=True,exist_ok=True)
@@ -99,6 +99,7 @@ def finish(cfg,job,cues,paths,run,emit,allow_tempo=True):
         previous=next((x for x in reversed(audit) if x.get('output')==str(path) and x.get('status')=='adopted'),{})
         record=dict(totalRate=previous.get('totalRate',previous.get('rate',1.)),index=cue.get('reviewIndex',i)+1,action='trim-padding',input=str(path),output=str(target),status='adopted',beforeSeconds=params.nframes/params.framerate,candidateSeconds=(b-a)/params.framerate,rate=1.,preservedPaddingSeconds=.08)
         if not any(x.get('output')==str(target) for x in audit):audit.append(record)
+    selected=__import__('safe_audio_endpoint').apply(cfg,job,cues,selected,run,emit)
     placement=prepare(cfg,job,cues,selected,run,emit)
     if placement is None:return selected,None
     def save():atomic_json(job/'natural-finishing.json',dict(revision=REVISION,maximumTempo=MAX_RATE,maximumTimeSavedSeconds=MAX_SAVED_SECONDS,shortNearMiss=dict(maximumTempo=SHORT_MAX_RATE,maximumRecordingSeconds=SHORT_MAX_SECONDS,maximumOverrunSeconds=SHORT_MAX_OVERRUN),sourceClocksUnchanged=True,qualityCertified=False,operations=audit))
@@ -106,7 +107,7 @@ def finish(cfg,job,cues,paths,run,emit,allow_tempo=True):
     if allow_tempo and cfg.get('automaticMicroTempo',True):
         planning=read(job/'natural-placement.json',{});base=job.parent.parent if job.parent.name=='tracks' else job
         boundaries=read(base/'natural-scene-boundaries.json',{})
-        use_cuts=cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift'
+        use_cuts=cfg.get('naturalTimingPolicy','source-locked')=='micro-shift'
         lengths=[row.get('seconds') for row in placement]
         def simulate(lengths):
             if use_cuts:return plan(cfg,cues,lengths,boundaries.get('cuts',[]))

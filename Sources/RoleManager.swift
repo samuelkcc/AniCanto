@@ -262,7 +262,7 @@ struct RoleManager:View {
                 if let p=profile,let i=profileIndex {
                     Text(localizedRoleName(p.name)).font(.title2.bold())
                     Text(L(editor.voiceStyleMode=="natural" ? "本句獨立自然聲線":"本句獨立原聲參考")).font(.caption).foregroundStyle(.secondary)
-                    if editor.voiceStyleMode=="clone",p.shortReference==true {Text(L("只補靜音達到引擎所需錄音長度，未借用相鄰對白；有效語音太短時需重新試聽或換參考。")).font(.caption).foregroundStyle(.orange)}
+                    if editor.voiceStyleMode=="clone",p.shortReference==true {Text(L("短於 3 秒：以同場環境音補足引擎所需錄音長度，並先核對音量；唔借相鄰對白。有效語音太短時需重新試聽或換參考。")).font(.caption).foregroundStyle(.orange)}
                     ForEach(rows) {row in
                         Text(studioTimecode(row.start)+" – "+studioTimecode(row.end)).font(.caption.monospacedDigit())
                         Text(row.original).foregroundStyle(.secondary).textSelection(.enabled)

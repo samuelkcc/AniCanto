@@ -52,6 +52,7 @@ def apply(cfg,language):
 
 
 def instruction(cfg):
+    if __import__('primary_source').enabled(cfg):return __import__('primary_source').rules(cfg)
     language=cfg.get('sourceLanguage','ja')
     if language=='ja':return ''
     return (' The actual source audio language is '+NAMES.get(language,language)+'. '

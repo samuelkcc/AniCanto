@@ -53,6 +53,11 @@ def materialize(review, draft):
             for key in ('deliveryPlan','deliveryParts','speechRegions','acousticParts','recognitionParts','sourceParts','nonlexicalTail'):
                 cue.pop(key, None)
             cue.update(speechStart=a, speechEnd=b, deliveryEnd=b)
+        if len(indices)>1 and all(__import__('primary_source').current(originals[i]) for i in indices):
+            primary=copy.deepcopy(originals[indices[0]]['primarySource'])
+            primary['text']=' '.join(__import__('primary_source').content(originals[i]) for i in indices)
+            primary['captionIDs']=list(dict.fromkeys(cid for i in indices for cid in originals[i]['primarySource'].get('captionIDs',[])))
+            cue['primarySource']=primary
         cue['_seed'] = int(number(row.get('take', 42), 0, 2147483647, '配音版本'))
         if row.get('preserveOriginalSpeech') is not None:
             cue.update(preserveOriginalSpeech=bool(row['preserveOriginalSpeech']),overlapReviewed=True)
@@ -254,6 +259,12 @@ def render(w, request):
         if request.get('aiDecisionUnavailable'):cfg['aiDecisionUnavailable']=True
         if request.get('aiRepairModel'):cfg['aiRepairModel']=request['aiRepairModel']
         cfg.update(scriptLocked=True,autoApprove=False,exportFolder='',editorRender=True,_editorSourceRoot=str(root))
+        if cfg.get('updateRecordingPlan') and not draft.get('previewSegment') and not cfg.get('voiceSamplesOnly'):
+            from delivery_policy import new_execution
+            new_execution(cfg,folder)
+            cfg.update(editorRender=False,autoApprove=True)
+            for key,value in source_review['config'].items():
+                if key.startswith(('sourceWorkflow','sourcePolicy','sourceAllocation','sourceContent')):cfg[key]=value
         if cfg.get('ttsBackend','').startswith('gpt-sovits'):cfg['gsvVersion']=__import__('gsv_versions').version(cfg)
         from cantonese_pronunciation import rules as pronunciation_rules
         pronunciation_rules(cfg.get('cantonesePronunciationText',''))

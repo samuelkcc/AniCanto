@@ -26,6 +26,9 @@ class Drama3Tests(unittest.TestCase):
     self.assertTrue(args['text'].endswith('Approved dialogue'))
     self.assertEqual(len(args['ref_audio']),44100);self.assertEqual(args['ref_audio'].ndim,1)
     self.assertEqual(args['ref_text'],'Exact reference transcript');self.assertEqual(len(result),30)
+   # The strict cue must keep asking for the reference pitch movement, not a flat read.
+   self.assertIn('唔好平讀',drama3.language_hint('yue','cantonese-strict'))
+   self.assertIn('用香港廣東話講',drama3.language_hint('yue','cantonese-strict'))
  def test_failure_is_not_a_take_and_completed_take_survives_retry(self):
   with tempfile.TemporaryDirectory() as d:
    bad=Path(d)/'bad.wav';good=Path(d)/'good.wav'
@@ -135,7 +138,8 @@ class DecoderRecoveryTests(unittest.TestCase):
    with patch.object(drama3,'generate',side_effect=generated):
     result=drama3.generate_complete(None,item,cfg,Mock())
    self.assertEqual(len(result),44100)
-   self.assertEqual([c['deliveryStyle'] for c in calls],['normal','plain-whole'])
+   # Recovery keeps the Hong Kong delivery cue, so a repaired take still carries the emotion instruction.
+   self.assertEqual([c['deliveryStyle'] for c in calls],['normal','cantonese-strict'])
    self.assertEqual([c['text'] for c in calls],[item['text']]*2)
    self.assertTrue(all(c['profile']==profile for c in calls))
    self.assertNotEqual(calls[0]['seed'],calls[1]['seed'])

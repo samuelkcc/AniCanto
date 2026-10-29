@@ -1,0 +1,10 @@
+# Desktop 0.24.81 / build 234
+
+- The selected video has a stronger accent border, inset stripe and tinted background. Selection is acknowledged immediately with a loading status; stale editor actions are blocked until its snapshot is ready. A newer selection supersedes an older response.
+- Reordering paints the proposed order before waiting for storage. The backend remains authoritative, failures restore the displayed order, and queue progression still waits for order persistence. Running conversion is unchanged.
+- Import selects the first newly added video instead of reloading the previously selected completed project. The duplicate preview load is removed. Loading feedback remains visible; cloud-file access may still take time.
+- **Restart / update dubbing → Reset state** is the first action. A separate confirmation explains that source media, recordings, exports and installed models remain. Previous queue-row metadata is archived under `studio/reset-history`; only the selected row's working links, subtitle choices, project terms, request and delivery state are detached. Row identity, source path and position remain. Current production defaults apply on the next explicit start. An analysis reset token prevents reuse of the abandoned source checkpoint. No conversion starts automatically.
+- Native task ownership and backend status checks protect reset during processing. A stale confirmation is rejected. Other rows and global preferences are unchanged. This operation is shared by Mac and Windows.
+- Foreign-script ASR output for Cantonese is now a reason for independent listening, not proof of wrong-language speech. This follows a real short-clip experiment where Qwen labelled a sample Korean while Whisper recovered Chinese words. Uncertainty remains in the report; no change to the default voice sampling values is included.
+
+Verification: backend archival/fresh-request/running/stale-token tests, cross-platform policy, real browser delayed selection/reorder/rollback/import and four-language reset flows, existing conversion queue regressions. Windows device inference and full-film quality remain separate acceptance tasks.

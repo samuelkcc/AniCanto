@@ -11,7 +11,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
    const f=window.queueFixture={listeners:new Map(),starts:[],media:0,drawers:0,options};
    new MutationObserver(records=>{for(const r of records)for(const n of r.addedNodes)if(n.nodeType===1&&(n.matches('.drawer-shade')||n.querySelector('.drawer-shade')))f.drawers++;}).observe(document,{childList:true,subtree:true});
    const source=id=>`/fixtures/episode-${id}.mkv`;
-   f.state={useTermsAccepted:true,language:options.language||'en',mode:options.mode||'basic',selected:options.selected||'a',settings:{ttsBackend:'drama3',selectedEngines:['drama3'],dubLanguages:['yue'],subtitleModes:['yue'],includeOriginal:true,productionMode:'normal',appearance:'light'},ui:{autoQueue:!!options.restore,autoQueueAttention:!!options.restoreAttention},queue:(options.rows||[['a','waiting'],['b','waiting']]).map(([id,status])=>({id,video:source(id),status,progress:status==='complete'?1:0,...(status==='complete'?{output:`/exports/${id}.mp4`}:{})})),storage:'/fixture'};
+   f.state={useTermsAccepted:true,language:options.language||'en',mode:options.mode||'basic',selected:options.selected||'a',settings:{ttsBackend:'drama3',selectedEngines:['drama3'],dubLanguages:['yue'],subtitleModes:['yue'],includeOriginal:true,productionMode:'normal',workMode:'balanced',fullAIReview:false,appearance:'light'},ui:{autoQueue:!!options.restore,autoQueueAttention:!!options.restoreAttention},queue:(options.rows||[['a','waiting'],['b','waiting']]).map(([id,status])=>({id,video:source(id),status,progress:status==='complete'?1:0,...(status==='complete'?{output:`/exports/${id}.mp4`}:{})})),storage:'/fixture'};
    f.running=options.restore?{id:'restored-run',rowID:'a',action:'batch'}:null;
    if(options.completed){f.running=null;f.state.ui.autoQueue=options.autoQueue!==false;f.state.queue[0].status='complete';f.state.queue[0].output='/exports/a.mp4';f.last={runID:'completed-before-reload',rowID:'a',action:'batch',code:0,paused:!!options.completedPaused};if(options.completedPaused)f.state.queue[0].status='paused';}
    f.finish=async({code=0,paused=false,duplicate=false,preview=false,dropEvent=false}={})=>{
@@ -186,17 +186,19 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
  }
  {
   const {page,count,finish,end}=await fixture({mode:'expert',rows:[['a','waiting']]});
-  await page.locator('[data-action=inspector][data-value=production]').click();
-  const mode=page.locator('[data-setting=productionMode]');
-  await mode.locator('xpath=ancestor::details').evaluate(el=>el.open=true);
-  assert.equal(await mode.isDisabled(),false);
+  assert.equal((await page.locator('.inspector .panel-title').innerText()).trim(),'Production settings','The right panel is named after production settings');
+  assert.equal(await page.locator('[data-action=inspector][data-value=production]').evaluate(el=>el.classList.contains('active')),true,'Production must be the selected tab at open');
+  assert.equal(await page.locator('[data-setting=workMode]').count(),0,'The removed speed selector must not render');
+  const repair=page.locator('[data-setting=aiAutoFix]');
+  assert.equal(await repair.isDisabled(),false,'AI repair must be editable before a run starts');
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.settings.aiAutoFix),undefined,'AI repair stays off until the user turns it on');
   await page.locator('[data-action=start]').click();await count(1);
-  await mode.locator('xpath=ancestor::details').evaluate(el=>el.open=true);
-  assert.equal(await mode.isDisabled(),true,'Production mode must lock while conversion runs');
-  await mode.evaluate(el=>{el.value='fast';el.dispatchEvent(new Event('change',{bubbles:true}))});
-  assert.equal(await page.evaluate(()=>window.queueFixture.state.settings.productionMode),'normal','Synthetic change must not bypass the lock');
-  await finish();await page.waitForFunction(()=>!document.querySelector('[data-setting=productionMode]')?.disabled);
-  await end('Production mode unlocks only after conversion finishes');
+  assert.equal(await repair.isDisabled(),true,'AI repair must lock while conversion runs');
+  assert.equal(await page.locator('[data-setting=fullAIReview]').isDisabled(),true,'Full AI review must lock too');
+  await repair.evaluate(el=>{el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}))});
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.settings.aiAutoFix),undefined,'Synthetic change must not bypass the lock');
+  await finish();await page.waitForFunction(()=>!document.querySelector('[data-setting=aiAutoFix]')?.disabled);
+  await end('Panel title, default tab and repair switch lock hold');
  }
  {
   const {page,count,finish,end}=await fixture({mode:'expert',rows:[['a','running'],['b','waiting']],restore:true});await finish();await count(1);assert.deepEqual(await page.evaluate(()=>window.queueFixture.starts),['b']);await finish();await end('Restore live batch intent after UI reload');

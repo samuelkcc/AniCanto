@@ -50,6 +50,14 @@ def apply_caption_policy(cfg,captions,cues):
     No Chinese captions at all retains the subtitle-free ASR workflow. Source
     captions keep their own timestamps, independently of recognized word bounds.
     """
+    if __import__('primary_source').enabled(cfg):
+        for c in cues:
+            if c.get('captionPolicyExcluded')=='outside-original-chinese':
+                c.pop('captionPolicyExcluded',None);c['enabled']=c.pop('captionPolicyWasEnabled',True)
+            c['captionRecords']=[r for r in captions if min(c['end'],r['end'])>max(c['start'],r['start'])]
+        cfg['_captionPreserveRanges']=[]
+        cfg['captionPolicy']=dict(revision=5,mode='subtitle-first-with-audio-gaps',captionCount=len(captions))
+        return dict(**cfg['captionPolicy'],excluded=[],preservedRanges=[])
     # OCR misses must not suppress independently heard Japanese dialogue.
     # Its text remains available below as context, not a permission mask.
     chinese=[] if cfg.get('ocrEvidenceOnly') or cfg.get('ocr') else chinese_captions(captions,cfg)

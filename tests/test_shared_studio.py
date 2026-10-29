@@ -32,15 +32,13 @@ class SharedStudioTests(unittest.TestCase):
         ident=self.add();write(self.root/'model-selections.json',dict(voice='drama3-small-iq3'))
         with self.assertRaisesRegex(ValueError,'retired'):self.app.dispatch('start',dict(id=ident))
         self.assertFalse(self.app.row(ident).get('request'))
-    def test_production_mode_is_locked_during_running_and_paused_job(self):
+    def test_production_mode_is_locked_only_during_running_job(self):
         ident=self.add();row=self.app.row(ident);original=self.app.store.settings['productionMode']
         row.update(status='running',request='frozen-request.json');self.app.store.save()
-        for status in ('running','paused'):
-            row['status']=status
-            with self.assertRaisesRegex(ValueError,'locked'):
-                self.app.dispatch('configure',dict(settings=dict(productionMode='fast')))
-            self.assertEqual(self.app.store.settings['productionMode'],original)
-        row['status']='complete';self.app.store.save()
+        with self.assertRaisesRegex(ValueError,'locked'):
+            self.app.dispatch('configure',dict(settings=dict(productionMode='normal')))
+        self.assertEqual(self.app.store.settings['productionMode'],original)
+        row['status']='paused';self.app.store.save()
         self.app.dispatch('configure',dict(settings=dict(productionMode='fast')))
         self.assertEqual(self.app.store.settings['productionMode'],'fast')
     def test_existing_output_retries_only_reported_lines_unless_new_version_requested(self):
@@ -68,7 +66,7 @@ class SharedStudioTests(unittest.TestCase):
         self.assertNotEqual(cfg['roleAnalysisMode'],'audiovisual')
     def test_basic_and_expert_can_both_choose_failed_voice_fallback(self):
         ident=self.add()
-        self.assertEqual(self.app.store.settings['failedVoicePolicy'],'generic')
+        self.assertEqual(self.app.store.settings['failedVoicePolicy'],'first-take')
         self.app.dispatch('configure',dict(mode='basic',settings={'failedVoicePolicy':'source'}))
         self.assertEqual(self.app.store.settings['failedVoicePolicy'],'source')
         request=self.app.store.submit(self.app.row(ident))

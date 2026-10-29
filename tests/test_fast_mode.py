@@ -2,7 +2,7 @@ import array,copy,json,math,shutil,subprocess,sys,tempfile,unittest,wave
 from pathlib import Path
 from unittest.mock import patch,Mock
 sys.path.insert(0,str(Path(__file__).parents[1]/'Resources'))
-import fast_mode,worker,dubbing,quality
+import drama3,fast_mode,worker,dubbing,quality
 
 HERE=Path(__file__).parents[1]
 FF=shutil.which('ffmpeg') or str(HERE/'dist/AniCanto.app/Contents/Resources/bin/ffmpeg')
@@ -207,5 +207,11 @@ class FastModeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             with self.assertRaises(ValueError):
                 fast_mode.validation(dict(duration=1,ffprobe='probe'),Path(folder),[],'invalid',lambda x:json.dumps(dict(streams=[],format=dict(duration=1))),Mock())
+    def test_recovery_styles_keep_the_hong_kong_delivery_instruction(self):
+        # A capped take must not lose the emotion cue: the plain styles are the last resort only.
+        self.assertEqual(drama3.recovery_styles(dict(productionMode='fast',targetLanguage='yue')),('cantonese-strict','cantonese-strict-clauses'))
+        self.assertEqual(drama3.recovery_styles(dict(productionMode='standard',targetLanguage='yue')),('cantonese-strict','cantonese-strict-clauses'))
+        self.assertEqual(drama3.recovery_styles(dict(productionMode='fast',targetLanguage='en')),('plain-whole','plain-clauses'))
+        self.assertEqual(drama3.recovery_styles(dict(productionMode='normal',targetLanguage='yue')),('cantonese-strict','cantonese-strict-clauses'))
 
 if __name__=='__main__':unittest.main()

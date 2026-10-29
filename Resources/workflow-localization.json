@@ -178,9 +178,14 @@
     "一般錄音保留": "Retaining audible recordings",
     "一般補回缺聲": "Restoring missing audio",
     "獨立覆聽": "Independent listening",
-    "有聲錄音保留；語言及漏句疑點供人工覆聽，未標為檢查通過。": "Audible recordings retained; language and missing-word concerns remain for review, not certified as passed."
+    "有聲錄音保留；語言及漏句疑點供人工覆聽，未標為檢查通過。": "Audible recordings retained; language and missing-word concerns remain for review, not certified as passed.",
+    "安全時長檢查": "Safe duration check"
   },
   "patterns": [
+    [
+      "^只核對 (\\d+) 段疑似尾噪；保護末字，未確認唔裁尾或縮稿。$",
+      "Check only $1 suspected noisy tails; protect final words and retain uncertain recordings without trimming or shortening."
+    ],
     [
       "^已修正 (\\d+) 句連續數字被同一句字幕重複覆蓋嘅譯稿。$",
       "Repaired $1 consecutive spoken numbers that had incorrectly reused the same caption translation."

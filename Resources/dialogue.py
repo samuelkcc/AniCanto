@@ -10,7 +10,7 @@ from collections import Counter
 from difflib import SequenceMatcher
 from pathlib import Path
 
-REVISION = 'speech-first-9-complete-subwords-short-clock'
+REVISION = 'speech-first-10-context-fragments'
 MODEL_REV = 'edaa852ec7e145841d8ffdb056a99866b5f0a478'
 MODEL_SHA = '69f74147e3334731bc3a76048724833325d2ec74642fb52620eda87352e3d4f1'
 
@@ -278,6 +278,8 @@ def analyze(cfg,job,captions,run,emit):
         # Corroborate the abnormal original word clock against that same
         # original waveform; separation may itself truncate quiet speech.
         rows=repair_source_clock(model,audio,spans,rows,cfg,job,emit)
+        from source_fragment_repair import repair as repair_fragments
+        rows=repair_fragments(model,audio,rows,cfg,job,emit)
         saved=dict(key=key,segments=rows,spans=spans,actualCompute=getattr(model,'chosen',dict(backend='cpu',id=variant)));atomic_json(cache,saved)
         del model
     cues=build_cues(saved['segments'],saved['spans'],captions,cfg['duration'],cfg.get('startOffset',0))

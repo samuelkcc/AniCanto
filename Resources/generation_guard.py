@@ -21,10 +21,21 @@ def reserve(cfg,request):
   except (OSError,ValueError) as error:raise ValueError('Saved generation budget is unreadable; existing takes were kept. Use an explicit new version.') from error
   if not isinstance(ledger,dict):raise ValueError('Invalid saved generation budget.')
  else:ledger={}
+ presence_path=root/'presence-call-ledger.json'
+ presence=json.loads(presence_path.read_text()) if presence_path.exists() else {}
+ modern=__import__('basic_flow').enabled(cfg) and not cfg.get('editorRender') and cfg.get('_generationPurpose') not in ('timing','content')
  selected=[];blocked=[];reserved=[]
  for item in request['items']:
-  if Path(item['output']).is_file():selected.append(item);continue
+  if Path(item['output']).is_file() and (not modern or __import__('audio_fallback').healthy(item['output'])):selected.append(item);continue
   ident=key(cfg,item);row=ledger.setdefault(ident,dict(attempts=0,maximumAttempts=3,failures=[]))
+  if modern:
+   line=str(item.get('reviewIndex',len(selected)+len(blocked)))
+   identity=json.dumps([cfg.get('ttsBackend'),cfg.get('targetLanguage','yue'),line])
+   total=presence.setdefault(identity,dict(calls=0,genericCalls=0,maximumCalls=3))
+   if total['calls']>=3 or (cfg.get('_mandatoryPresence') and total['genericCalls']>=1):
+    write_json(Path(item['output']).with_suffix('.failure.json'),dict(error='Saved per-line presence allowance exhausted; keep existing takes.'));blocked.append(item);continue
+   total['calls']+=1
+   if cfg.get('_mandatoryPresence'):total['genericCalls']+=1
   row['indices']=sorted(set(row.get('indices',[])+([item['reviewIndex']+1] if type(item.get('reviewIndex')) is int else [])))
   if row.get('permanent') or row['attempts']>=3:
    reason='Deterministic input failure; change the script/reference before retrying.' if row.get('permanent') else 'Exact-input automatic generation budget exhausted (3 attempts including first generation).'
@@ -32,6 +43,7 @@ def reserve(cfg,request):
    blocked.append(item);continue
   row['attempts']+=1;row['lastReservedAt']=time.time();selected.append(item);reserved.append((ident,item))
  write_json(path,ledger)
+ if modern:write_json(presence_path,presence)
  return path,ledger,selected,blocked,reserved
 
 def finish(state,error=None):

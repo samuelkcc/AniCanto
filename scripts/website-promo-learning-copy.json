@@ -1,0 +1,47 @@
+{
+  "revision": "20261028-learning-v2",
+  "theme": "anime-language-learning",
+  "speaker": "Shion",
+  "segments": [
+    {
+      "language": "ja",
+      "text": "こんにちは、紫音です。大好きなアニメで、香港の言葉と文化を一緒に学びませんか？",
+      "translations": {
+        "zh-HK": "你好，我是紫音。想透過喜歡的動畫，和我一起認識香港的語言與文化嗎？",
+        "zh-Hans": "你好，我是紫音。想通过喜欢的动画，和我一起认识香港的语言与文化吗？",
+        "en": "Hi, I'm Shion. Shall we explore Hong Kong's language and culture together through the anime you love?",
+        "ja": "こんにちは、紫音です。大好きなアニメで、香港の言葉と文化を一緒に学びませんか？"
+      }
+    },
+    {
+      "language": "yue",
+      "text": "聽對白，認識粵語用字。唔明就逐句翻譯，再聽多次，慢慢學。",
+      "translations": {
+        "zh-HK": "聆聽對白，認識粵語用字。不明白就逐句翻譯，再聽一次，慢慢學習。",
+        "zh-Hans": "聆听对白，认识粤语用字。不明白就逐句翻译，再听一次，慢慢学习。",
+        "en": "Listen to dialogue and discover written Cantonese. Translate each line, listen again, and learn at your own pace.",
+        "ja": "セリフを聴いて、広東語の文字を知ろう。わからないところはひと言ずつ訳して、もう一度、ゆっくり聴いてみて。"
+      }
+    },
+    {
+      "language": "en",
+      "text": "Switch between Cantonese, English, and Mandarin dubbing. In learning mode, translate one line at a time.",
+      "translations": {
+        "zh-HK": "切換廣東話、英文與普通話配音。在學習模式中，逐句翻譯、逐句學習。",
+        "zh-Hans": "切换粤语、英文与普通话配音。在学习模式中，逐句翻译、逐句学习。",
+        "en": "Switch between Cantonese, English, and Mandarin dubbing. In learning mode, translate one line at a time.",
+        "ja": "広東語、英語、標準中国語の吹き替えを切り替えて。学習モードでは、セリフをひと言ずつ訳して学べます。"
+      }
+    },
+    {
+      "language": "zh",
+      "text": "从你喜欢的日本动画开始，听广东话，了解香港文化。",
+      "translations": {
+        "zh-HK": "由你喜歡的日本動畫開始，聽廣東話，了解香港文化。",
+        "zh-Hans": "从你喜欢的日本动画开始，听广东话，了解香港文化。",
+        "en": "Begin with the Japanese anime you love. Listen to Cantonese and discover Hong Kong culture.",
+        "ja": "大好きな日本のアニメからはじめよう。広東語を聴いて、香港の文化に触れてみて。"
+      }
+    }
+  ]
+}

@@ -8,4 +8,7 @@
 
 字幕只绑定所选视频。自动选择依次检查匹配的外挂文件、内置文字字幕和画面 OCR。专家模式也可选择只用音频。运行中或暂停的任务保留已保存的字幕来源；更换来源请用于新转换。解除绑定不会删除原字幕文件。图片字幕不保证能作为文字轨读取。界面语言不代表新增配音语言。
 
-![字幕来源](../images/subtitles-zh-CN.png?v=0.24.79?v=preview-off)
+![字幕来源](../images/subtitles-zh-CN.png?v=0.25.0)
+
+
+Current desktop workflow: [0.25.0 rules and validation limits](../DESKTOP-WORKFLOW-0.25.0.md). Optional checks default to zero; selected readable subtitles provide meaning by default.

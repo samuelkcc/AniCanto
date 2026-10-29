@@ -1,3 +1,4 @@
+from repair_limits import bounded as bounded_repair
 """Rewrite measured overlong automatic dialogue, never speed it up or crop it."""
 import hashlib
 import json
@@ -29,19 +30,24 @@ def recover_batch(saved,cue,cfg,job):
     return saved
 
 
+@bounded_repair('natural_delivery.repair')
 def repair(cfg,job,cues,paths,run,emit,placement=None):
     # Child tracks are frozen for reproducibility; only an automatically
     # generated job authorises a wording edit. Human editor scripts stay locked.
     if cfg.get('editorRender') or not cfg.get('automaticDurationRewrite') or cfg.get('preferFirstAudibleTake',True):return paths
+    if __import__('speech_duration').enabled(cfg) and cfg.get('scriptLocked'):return paths
     from types import SimpleNamespace
     from worker import atomic_json,ollama_chat
     from concise_dialogue import compact,units
     from speech_timing import natural_window
     from dubbing import gsv_audio,is_vocalization
+    paths=__import__('speech_duration').prepare(cfg,job,cues,paths)
+    paths=__import__('safe_audio_endpoint').apply(cfg,job,cues,paths,run,emit)
     selected=list(paths);job=Path(job);language=cfg.get('targetLanguage','yue')
     w=SimpleNamespace(atomic_json=atomic_json,ollama_chat=ollama_chat)
     audit=[]
-    for attempt in range(2):
+    maximum=cfg.get('_maximumTimingOperations',__import__('work_modes').timing_passes(cfg))
+    for attempt in range(maximum):
         from normal_policy import finish_requested
         if finish_requested(cfg):break
         if placement is not None:
@@ -51,15 +57,21 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
         for i,(cue,path) in enumerate(zip(cues,selected)):
             if cue.get('editorAudio') or cue.get('preserveOriginalSpeech') or is_vocalization(cue) or Path(path).name.startswith('skipped-') or not Path(path).is_file():continue
             if placement is not None and placement[i]['fit']:continue
+            if not __import__('safe_audio_endpoint').rewrite_allowed(cfg,job,cue,path):continue
             a,b=(placement[i]['start'],placement[i]['deadline']) if placement is not None else natural_window(cue,cues,cfg['duration'],cfg);length=seconds(path,cfg,run)
             if length<=b-a+.005:continue
             targets[i]=max(1,int(units(cue.get('cantonese',''),language)*(b-a)/length*.92))
             pending.append(i)
         if not pending:break
+        if __import__('delivery_policy').bounded_delivery(cfg):
+            from recovery_attempts import reserve
+            pending=[i for i in pending if reserve(job,'generic-compact' if cfg.get('_genericTiming') else 'actor-timing',cues[i].get('reviewIndex',i)+1,maximum)]
+            if not pending:break
         drafts=[dict(c) for c in cues]
-        changed=compact(w,cfg,job,drafts,pending,targets,field='cantonese',alternative_index=attempt)
+        measured={str(i):dict(seconds=seconds(selected[i],cfg,run),availableSeconds=(placement[i]['deadline']-placement[i]['start']) if placement is not None else natural_window(cues[i],cues,cfg['duration'],cfg)[1]-natural_window(cues[i],cues,cfg['duration'],cfg)[0]) for i in pending}
+        changed=compact(w,dict(cfg,_measuredOverruns=measured),job,drafts,pending,targets,field='cantonese',alternative_index=attempt)
         if not changed:break
-        emit('精簡重配',f'只重配 {len(changed)} 句偏長台詞（{attempt+1}/2），保持自然語速同本句原聲參考。',.85)
+        emit('精簡重配',f'只重配 {len(changed)} 句偏長台詞（{attempt+1}/{maximum}），保持自然語速同本句原聲參考。',.85)
         records=[];fresh=[]
         for i in changed:
             cue=drafts[i]
@@ -102,6 +114,7 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
             saved=record['saved'] or {};i=record['position']
             candidate=Path(saved['paths'][0]) if saved.get('paths') else None
             if candidate and candidate.is_file() and not candidate.name.startswith('skipped-'):
+                candidate=__import__('speech_duration').trim(cfg,job,candidate)
                 if 0<seconds(candidate,cfg,run)<seconds(selected[i],cfg,run):candidates.append((i,candidate))
         # A rewritten take is new speech too. Listen to the changed subset once
         # per bounded pass; never restart the full language-repair loop here.
@@ -112,6 +125,7 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
         for i,candidate in candidates:
             evidence=checks.get(cues[i].get('reviewIndex',i)+1,{})
             rejected=bool(evidence.get('languageFailure') or evidence.get('decision') in tuple(v for v in ('mandarin','cantonese','english','japanese') if v!=__import__('output_language').decision(language)) or evidence.get('contentFailure'))
+            if __import__('delivery_policy').bounded_delivery(cfg):rejected=bool(evidence.get('languageFailure') or evidence.get('contentFailure'))
             available=(placement[i]['deadline']-placement[i]['start']) if placement is not None else natural_window(cues[i],cues,cfg['duration'],cfg)[1]-natural_window(cues[i],cues,cfg['duration'],cfg)[0]
             duration=seconds(candidate,cfg,run)
             too_long=bool(cfg.get('_durationFitRequired') and duration>available+.005)
@@ -144,6 +158,6 @@ def repair(cfg,job,cues,paths,run,emit,placement=None):
         if fixed:
             from project_store import resolve_issues
             resolve_issues(cfg,job,fixed);atomic_json(checkfile,normal)
-    atomic_json(job/'natural-repair.json',dict(maximumRewritePasses=2,batchedEngineLoads=True,
+    atomic_json(job/'natural-repair.json',dict(maximumRewritePasses=maximum,batchedEngineLoads=True,
         sameSourceReference=True,qualityCertified=False,candidates=audit))
     return selected

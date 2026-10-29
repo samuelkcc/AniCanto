@@ -1,3 +1,4 @@
+from repair_limits import bounded as bounded_repair
 """Try installed, compatible voice engines for failed Normal-mode dialogue.
 
 This is a bounded last actor-clone attempt.  It never downloads a model, changes
@@ -65,7 +66,10 @@ def installed(cfg):
     return choices
 
 
+@bounded_repair('normal_engine_fallback.repair')
 def repair(cfg, job, cues, paths, placement, run, emit):
+    permissions=__import__('repair_permissions')
+    if permissions.enabled(cfg) and (not permissions.alternate(cfg) or cfg.get('_genericTargetVoice') and not permissions.generic(cfg)):return paths
     if cfg.get('editorRender') or cfg.get('productionMode') != 'normal' or not placement or cfg.get('automaticAlternateVoice', True) is False:
         return paths
     from dubbing import gsv_audio, is_vocalization, profile_for
@@ -79,6 +83,7 @@ def repair(cfg, job, cues, paths, placement, run, emit):
 
     job = Path(job)
     pending = set(read(job / 'normal-checks.json', {}).get('unresolved', []))
+    if __import__('delivery_policy').bounded_delivery(cfg):pending=__import__('delivery_policy').confirmed_indices(cfg,job)
     selected = list(paths)
     root = job.parent.parent if job.parent.name == 'tracks' else job
     cuts = read(root / 'natural-scene-boundaries.json', {}).get('cuts', [])
@@ -98,7 +103,9 @@ def repair(cfg, job, cues, paths, placement, run, emit):
             rows.append(dict(fit=length is not None and length <= deadline-start, start=start, deadline=deadline))
         return rows
 
-    for engine, variant in installed(cfg):
+    choices=installed(cfg)
+    for engine, variant in choices[:cfg.get('_maximumAlternateEngines',len(choices))]:
+        generic_profiles={}
         alternate = dict(cfg, ttsBackend=engine, selectedEngines=[engine], voiceStyleMode='clone')
         if engine in ('drama3', 'voxcpm2', 'wsyue'):
             from local_tts import ENGINES
@@ -118,33 +125,51 @@ def repair(cfg, job, cues, paths, placement, run, emit):
             if cue.get('editorAudio') or cue.get('preserveOriginalSpeech') or not cue.get('enabled', True) or is_vocalization(cue) or not cue.get('cantonese', '').strip():
                 continue
             try:
-                reference = profile_for(cue, alternate)
+                if cfg.get('_genericTargetVoice'):
+                    try:original=profile_for(cue,alternate)
+                    except (OSError,ValueError):original=dict(id=cue.get('speakerId') or f'generic-{index}',language='',reference='',promptText='')
+                    from natural_voices import resolve
+                    reference=resolve(dict(original,engineReferences={},promptText=''),dict(alternate,voiceStyleMode='natural'))
+                    generic_profiles[reference['id']]=reference
+                else:reference = profile_for(cue, alternate)
                 reference_hash = hashlib.sha256(Path(reference['reference']).read_bytes()).hexdigest()
             except (OSError, ValueError, KeyError):
                 continue
-            identity = [REVISION, engine, variant, language, index, cue.get('start'), cue.get('end'), cue['cantonese'], cue.get('speakerId'), reference_hash, reference.get('promptText')]
+            identity = [REVISION, bool(cfg.get('_genericTargetVoice')), engine, variant, language, index, cue.get('start'), cue.get('end'), cue['cantonese'], cue.get('speakerId'), reference_hash, reference.get('promptText')]
             key = hashlib.sha256(json.dumps(identity, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:24]
             old = ledger.get(key, {})
-            if old.get('status') in ('not-verified', 'timing-not-fit', 'generation-failed'):
+            if old and any(__import__('delivery_policy').rejected_audio(cfg,job,index,old.get(k)) for k in ('audio','selectedAudio')):
+                old.update(status='not-verified',reason='confirmed-on-selected-audio')
+                atomic_json(ledger_path,ledger)
+                continue
+            if __import__('delivery_policy').bounded_delivery(cfg) and old.get('generationAttempts',0)>=1 and not audio_present(old.get('audio','')):continue
+            if old.get('status') in ('not-verified', 'timing-not-fit', 'generation-failed') or cfg.get('_genericTargetVoice') and old.get('generationAttempts',0)>=2 and not audio_present(old.get('audio')):
                 continue
             if old.get('status') == 'adopted' and audio_present(old.get('selectedAudio')):
                 selected[i] = Path(old['selectedAudio'])
                 confirmed.add(index)
                 continue
-            draft = dict(cue, reviewIndex=index-1, _seed=781433, _targetSeconds=placement[i]['deadline']-placement[i]['start'], _deliveryStyle='cantonese-strict-clauses' if language == 'yue' else 'complete-clauses')
+            draft = dict(cue, speakerId=reference['id'], reviewIndex=index-1, _seed=781433, _targetSeconds=placement[i]['deadline']-placement[i]['start'], _deliveryStyle='cantonese-strict-clauses' if language == 'yue' else 'complete-clauses')
             records.append((i, index, key, draft))
-            ledger.setdefault(key, dict(index=index, engine=engine, variant=variant, action='alternate-engine', status='reserved', text=cue['cantonese'], voiceSimilarityCertified=False))
+            ledger.setdefault(key, dict(index=index, engine=engine, variant=variant, action='alternate-engine', status='reserved', text=cue['cantonese'], voiceSimilarityCertified=False,genericTargetReference=bool(cfg.get('_genericTargetVoice'))))
         if not records:
             continue
+        if generic_profiles:
+            alternate['voiceProfiles']=list(generic_profiles.values())
+            alternate['_voiceManifest']={p['id']:hashlib.sha256(Path(p['reference']).read_bytes()).hexdigest() for p in generic_profiles.values()}
         atomic_json(ledger_path, ledger)
         folder = job / 'alternate-engine-recovery' / engine
         folder.mkdir(parents=True, exist_ok=True)
         alternate.update(editorCache=str(folder), audioRerunToken=REVISION + '-' + engine)
         fresh = [r for r in records if not ledger[r[2]].get('audio') or not audio_present(ledger[r[2]]['audio'])]
+        if fresh and __import__('delivery_policy').repair_first(cfg):
+            from recovery_attempts import reserve
+            fresh=[r for r in fresh if reserve(job,'alternate-generation',r[1],1)]
         if fresh:
             emit('其他模型補聲', f'{engine}：試用已下載配音模型補救 {len(fresh)} 句，原本錄音會保留。', .90)
             for _, _, key, _ in fresh:
                 ledger[key]['status'] = 'generating'
+                ledger[key]['generationAttempts']=ledger[key].get('generationAttempts',0)+1
             atomic_json(ledger_path, ledger)
             try:
                 check(cfg)
@@ -163,7 +188,7 @@ def repair(cfg, job, cues, paths, placement, run, emit):
         if not candidates:
             continue
         try:
-            proof = inspect(alternate, folder, [r[3] for r in candidates], [Path(ledger[r[2]]['audio']) for r in candidates], emit)
+            proof = {} if cfg.get('workMode')=='performance' and __import__('delivery_policy').bounded_delivery(cfg) else inspect(alternate, folder, [r[3] for r in candidates], [Path(ledger[r[2]]['audio']) for r in candidates], emit)
         except UserSkipped:
             raise
         except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
@@ -174,10 +199,12 @@ def repair(cfg, job, cues, paths, placement, run, emit):
         for i, index, key, _ in candidates:
             record = ledger[key]
             evidence = proof.get(index, {})
-            if not verified_check(evidence, cues[i]['cantonese'], language):
+            if (bool(evidence.get('languageFailure') or evidence.get('contentFailure')) if __import__('delivery_policy').bounded_delivery(cfg) else not verified_check(evidence, cues[i]['cantonese'], language)):
                 record.update(status='not-verified', check=evidence)
                 continue
             candidate = Path(record['audio'])
+            if __import__('delivery_policy').rejected_audio(cfg,job,index,candidate):
+                record.update(status='not-verified',reason='confirmed-audio-fingerprint');continue
             try:
                 trial = list(lengths)
                 trial[i] = seconds(candidate, alternate, run)
@@ -191,7 +218,7 @@ def repair(cfg, job, cues, paths, placement, run, emit):
             selected[i] = candidate
             lengths, placement = trial, scheduled
             confirmed.add(index)
-            record.update(status='adopted', selectedAudio=str(candidate), candidateSeconds=trial[i], check=evidence)
+            record.update(status='adopted', qualityCertified=False, contentVerified=verified_check(evidence,cues[i]['cantonese'],language), selectedAudio=str(candidate), candidateSeconds=trial[i], check=evidence)
         atomic_json(ledger_path, ledger)
     clear_confirmed(cfg, job, confirmed, atomic_json)
     return selected

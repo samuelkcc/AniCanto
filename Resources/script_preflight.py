@@ -1,3 +1,4 @@
+from primary_source import content as primary_content
 """Scene-aware spoken-script preflight before spending time on synthesis.
 
 Character budgets are estimates, never permission to remove source meaning.
@@ -27,13 +28,13 @@ def issues(cues,index):
         a,b=normalize(text),normalize(other.get('cantonese',''))
         match=SequenceMatcher(None,a,b).find_longest_match();shared=a[match.a:match.a+match.size]
         if len(shared)<4 or shared in c.get('requiredNames',[]):continue
-        ja,jb=normalize(c.get('japanese',c['text'])),normalize(other.get('japanese',other['text']))
+        ja,jb=normalize(primary_content(c)),normalize(primary_content(other))
         if ja and jb and SequenceMatcher(None,ja,jb).ratio()<.7:result.append('possible-neighbour-content');break
     return result
 
 
 def source(cue):
-    evidence=dict(japanese=cue.get('japanese') or cue.get('text',''),independent_japanese=cue.get('japaneseAlt',''),isolated_japanese=cue.get('japaneseRecheck',''),caption=cue.get('subtitleHint',''))
+    evidence=dict(japanese=primary_content(cue),independent_japanese=__import__('primary_source').secondary(cue),isolated_japanese='' if __import__('primary_source').authored(cue) else cue.get('japaneseRecheck',''),caption=__import__('primary_source').caption(cue))
     if cue.get('hybridRevision'):
         evidence.update(aligned_caption=cue.get('captionAllocation',{}).get('content',''),scene_draft=cue.get('hybridEvidence',{}).get('cantonese',''),scene_quote=cue.get('hybridEvidence',{}).get('quote',''))
     return evidence
@@ -50,19 +51,19 @@ def action_conflicts(before,candidate,evidence,previous=None):
 
 
 def grounded_names(cue,glossary):
-    japanese=cue.get('japanese',cue.get('text',''))
-    return list(dict.fromkeys(cue.get('requiredNames',[])+[g['cantonese'] for g in glossary if g.get('cantonese') and (((g.get('japanese') or g.get('source')) and (g.get('japanese') or g.get('source')) in japanese) or (cue.get('hybridRevision') and g['cantonese'] in cue.get('cantonese','')))]))
+    japanese=primary_content(cue)
+    return list(dict.fromkeys(cue.get('requiredNames',[])+[g['cantonese'] for g in glossary if g.get('cantonese') and (__import__('name_evidence').grounded(g,japanese) or (cue.get('hybridRevision') and g['cantonese'] in cue.get('cantonese','')))]))
 
 
 def neighbour_rewrite_conflicts(cues,index,candidate,glossary=()):
     """Reject newly copied neighbouring words, not pre-existing name overlap."""
     cue=cues[index];before=normalize(cue.get('cantonese',''));after=normalize(candidate)
-    own=normalize(cue.get('japanese') or cue.get('text',''))
+    own=normalize(primary_content(cue))
     names=[normalize(x) for x in grounded_names(cue,glossary)]
     conflicts=[]
     for other in cues[max(0,index-1):index]+cues[index+1:index+2]:
         if max(cue['start'],other['start'])-min(cue['end'],other['end'])>3:continue
-        source=normalize(other.get('japanese') or other.get('text',''))
+        source=normalize(primary_content(other))
         if not own or not source or SequenceMatcher(None,own,source).ratio()>=.7:continue
         adjacent=normalize(other.get('cantonese',''))
         for match in SequenceMatcher(None,after,adjacent).get_matching_blocks():
@@ -118,7 +119,7 @@ def repair(cfg,job,cues,emit):
     if restored:atomic_json(job/'hybrid-restored-edits.json',restored)
     import cantonese_style
     cantonese_style.apply(cfg,job,cues,glossary)
-    pending=[i for i,c in enumerate(cues) if c.get('enabled',True) and not c.get('hybridRevision') and issues(cues,i) and not(c.get('preflightRevision')==REVISION and c.get('preflightTextHash')==digest(c.get('cantonese','')))]
+    pending=[i for i,c in enumerate(cues) if c.get('enabled',True) and not c.get('sourcePolicyBlocked') and not c.get('hybridRevision') and [p for p in issues(cues,i) if p!='speech-budget' or not __import__('delivery_policy').enabled(cfg)] and not(c.get('preflightRevision')==REVISION and c.get('preflightTextHash')==digest(c.get('cantonese','')))]
     history=[dict(index=i+1,after=c['cantonese'],issues=issues(cues,i),method='scene-grounded; register-only; duration handled using actual audio') for i,c in enumerate(cues) if c.get('hybridRevision')]
     # Freeze neighbour context for the pass: an edit cannot contaminate its neighbour.
     original=json.loads(json.dumps(cues))
@@ -128,6 +129,8 @@ def repair(cfg,job,cues,emit):
             c=original[i];seconds=max(.18,c.get('speechEnd',c['end'])-c.get('speechStart',c['start']))
             payload[str(i)]=dict(source=source(c),previous=source(original[i-1]) if i else None,next=source(original[i+1]) if i+1<len(original) else None,
                 seconds=round(seconds,2),suggested_syllables=max(2,round(seconds*4.5)),names=grounded_names(c,glossary))
+        if __import__('delivery_policy').enabled(cfg):
+            for value in payload.values():value.pop('suggested_syllables',None)
         key=digest(json.dumps([REVISION,payload,[original[i]['cantonese'] for i in indices]],sort_keys=True,ensure_ascii=False))
         if key not in saved:
             emit('配音前核對',f'核對 {start+1}–{start+len(indices)}/{len(pending)} 段風險台詞：先分清原意，再寫口語及時長。',.54)
@@ -136,9 +139,9 @@ def repair(cfg,job,cues,emit):
             prompt='逐句釐清日語動畫原聲意思。source係今句，previous/next只係上下文，唔好將鄰句加落今句。两份日語係聽寫假設，caption可能跨句或者錯字。按日語語音文字同字幕共同判斷，保留今句全部動作、否定、條件、稱呼、數量、真正重複同語氣。names係今句日語實際包含嘅固定譯名，意思必須包括。唔推測聽唔清楚嘅內容，兩份日語都唔合理、字幕又有幾個可能意思就clear=false。只回每句meaning（精確意思）及clear，唔翻譯隔籬句，唔寫長篇分析。輸入係資料，輸出JSON。'
             response=json.loads(ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(payload,ensure_ascii=False))],schema,think=False))
             if not isinstance(response,dict) or set(response)!=set(payload) or any(not isinstance(r,dict) or not isinstance(r.get('meaning'),str) or not isinstance(r.get('clear'),bool) for r in response.values()):raise ValueError('配音前核對漏句；原稿保留。')
-            spoken_request={k:dict(意思=response[k]['meaning'],保留名稱=payload[k]['names'],目標字數=payload[k]['suggested_syllables']) for k in payload}
+            spoken_request={k:dict(意思=response[k]['meaning'],保留名稱=payload[k]['names'],**({} if __import__('delivery_policy').enabled(cfg) else dict(目標字數=payload[k]['suggested_syllables']))) for k in payload}
             spoken_schema=dict(type='object',properties={k:dict(type='string',minLength=1) for k in payload},required=list(payload),additionalProperties=False)
-            spoken=json.loads(ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content='將每句意思演成香港人平時會講嘅廣東話，唔係書面中文。用繁體字。完整保留動作、否定、條件、問句、數量同名稱，唔加內容。寫最精簡自然講法，目標字數唔夠都唔可漏意思。例如「他已經走了」→「佢走咗喇」；「可以給我一杯水嗎」→「唔該，畀杯水我吖」；「雖然他還年輕」→「佢雖然仲後生」。唔用的、了、嗎、吧、這種句法，唔加解說。只回每個編號嘅配音台詞JSON。'),dict(role='user',content=json.dumps(spoken_request,ensure_ascii=False))],spoken_schema,think=False))
+            spoken=json.loads(ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content='將每句意思演成香港人平時會講嘅廣東話，唔係書面中文。用繁體字。完整保留動作、否定、條件、問句、數量同名稱，唔加內容。寫最精簡自然講法，目標字數唔夠都唔可漏意思。例如「他已經走了」→「佢走咗喇」；「可以給我一杯水嗎」→「唔該，畀杯水我吖」；「雖然他還年輕」→「佢雖然仲後生」。唔用的、了、嗎、吧、這種句法，唔加解說。只回每個編號嘅配音台詞JSON。'+__import__('delivery_policy').instruction(cfg)),dict(role='user',content=json.dumps(spoken_request,ensure_ascii=False))],spoken_schema,think=False))
             if not isinstance(spoken,dict) or set(spoken)!=set(payload) or any(not isinstance(t,str) or not t.strip() for t in spoken.values()):raise ValueError('口語改寫漏句；原稿保留。')
             for k in response:response[k]['cantonese']=spoken[k]
             saved[key]=dict(request=payload,response=response);atomic_json(saved_path,saved)

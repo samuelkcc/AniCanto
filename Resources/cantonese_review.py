@@ -81,7 +81,7 @@ def review(cfg,job,cues,paths,checks,emit):
         try:saved=json.loads(cache.read_text())
         except (OSError,ValueError):saved=None
         if saved is not None:
-            prepared.append(dict(row=saved,raw=raw));continue
+            prepared.append(dict(row=__import__('repair_permissions').advisory(saved) if __import__('repair_permissions').enabled(cfg) else saved,raw=raw));continue
         row=annotate(raw,'retain-with-note','single-ASR-difference-is-advisory')
         alignment=phonetic(w,cfg,folder,dict(cue,cantonese=expected),raw,audio=path)
         entry=dict(row=row,raw=raw,expected=expected,folder=folder,audio=path,cache=cache)
@@ -117,6 +117,7 @@ def review(cfg,job,cues,paths,checks,emit):
                 else:
                     reason=corroborated(expected,raw,witness)
                     if reason:row=annotate(row,'repair',reason)
+                    if __import__('repair_permissions').enabled(cfg):row=__import__('repair_permissions').advisory(row)
             else:row['reviewReason']='independent-ASR-unavailable-retain-original'
             entry['row']=row
     result=[]

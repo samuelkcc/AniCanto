@@ -1,23 +1,355 @@
 {
-  "schemaVersion": 1,
-  "id": "anicanto-recovery-workflow-1",
-  "status": "shared-requirements; implementations must record their own acceptance",
+  "schemaVersion": 4,
+  "id": "anicanto-recovery-workflow-4",
+  "updated": "2026-10-28",
+  "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
+  "alignmentGovernance": {
+    "revision": "shared-workflow-controls-4-language-budget-overlap",
+    "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
+    "scope": "every macOS, Windows, iPad, and iPhone workflow or AI-control change",
+    "beforeChange": [
+      "read active shared rules and alignment register",
+      "read newest three handover entries",
+      "check affected platform source and acceptance evidence"
+    ],
+    "closeout": [
+      "update the common rule and this mirror",
+      "update all affected platform mappings and open counterpart work",
+      "record source, test, installed and whole-film acceptance states separately",
+      "update guides and handover"
+    ],
+    "ruleIDs": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-04",
+      "WF-05",
+      "WF-06",
+      "WF-07",
+      "WF-08",
+      "WF-09",
+      "WF-10",
+      "WF-11",
+      "WF-12",
+      "WF-13",
+      "WF-14",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "sharedDefaults": "one standard flow; optional AI controls off or zero; bounded missing or silent audio fill always active",
+    "controlIndependence": "initializers preserve requests; review alone reports findings; optional recording mutation requires explicit repair permission; content and timing permissions remain separate",
+    "reviewRepairMatrix": {
+      "offOff": "required missing-audio fill only; keep audible takes",
+      "onOff": "bounded inspection and reports; no automatic replacement for review findings",
+      "offOn": "preserve repair permission; use confirmed evidence or bounded targeted checks; no implicit whole-film review",
+      "onOn": "bounded inspection and authorized repair of confirmed defects; preserve uncertainty and history"
+    },
+    "verification": "exercise real initializer, generation, recovery, resume and export boundaries; configuration projections and UI screenshots alone do not prove parity",
+    "allowedStatuses": [
+      "pending",
+      "defect",
+      "intentional difference",
+      "verified"
+    ],
+    "intentionalDifferences": "Samuel approves behaviour differences; record hardware and model limits explicitly",
+    "knownOpenItems": {
+      "desktop": "Mac249 installs repair-fallback-permissions-249 and primary-name-evidence-249; synthetic execution and browser evidence are in .build/product96. Whole-film listening, complete first-take overlap across protected source intervals, held-frame video-tail extension, and mobile report-level mapping remain pending. Windows stays244.",
+      "iPad": "Build 191 implements independent content repair and explicit duration controls with M4 synthetic execution evidence. Real-model repair, full fallback paths, whole-film timing, and desktop audiovisual role-analysis equivalence are not certified.",
+      "captionPackaging": "iPad overlap fix has actual MP4 fixture evidence; desktop overlap preservation not verified in this task",
+      "wholeFilm": "each platform must separately test embedded captions, external SRT and screen OCR"
+    },
+    "status": "shared requirements and current platform mappings; source, installation and whole-film evidence stay separate",
+    "speechDurationControl": "WF-15: desktop speech-duration-246 and iPad independent-duration-controls-191 map explicit overlap/strict choices; actual PCM precedes one timing rewrite; each platform retains its own whole-film acceptance.",
+    "finalFallbackPermissions": {
+      "revision": "repair-fallback-permissions-249",
+      "requiredMissingRetries": 2,
+      "firstTake": "retain usable initial audio; no generic or native generation",
+      "source": "final source continuity after allowed repair; no generic or native generation",
+      "generic": "one final selected-engine generic attempt; this explicit choice works with AI repair off",
+      "alternate": "AI repair and explicit alternate permission; generic alternate also needs generic selection",
+      "native": "AI repair, generic selection and explicit installed-native permission",
+      "strictDuration": "never bypass the original window during first-take fallback",
+      "uncertainty": "empty recognition is advisory, not confirmed silence",
+      "evidence": "bind rejection to current audio hash",
+      "resume": "keep frozen revisions and consumed budgets",
+      "desktop": "Mac0.24.96/build249 installed; 24 injected switch combinations, actual generation-count resume tests, and related regression pass; whole-film acceptance pending",
+      "iPad": "rules and findings sent to iPad Build (Open AI); counterpart implementation and acceptance not certified"
+    },
+    "japaneseNameAudio": {
+      "status": "proposed; not shipped",
+      "default": false,
+      "off": "whole target-language TTS including names",
+      "on": "splice only reliable isolated name spans; otherwise retain complete TTS",
+      "contentValidation": "separate primary-language alias matching; never infer speaker or timing from dictionary",
+      "index": "external/prebuilt index cancelled by Samuel; no AniList or fixed franchise table",
+      "acceptance": "short-clip insertion and listening required on each platform",
+      "recognition": "primary-name-evidence-249: existing cached AI call; quote primary cue; same-row Chinese spelling; no model plot or filename guesses; store evidence indices; nonblocking empty glossary"
+    },
+    "desktopAssistantActivities": {
+      "activities": [
+        "computer",
+        "listening",
+        "translation",
+        "dubbing"
+      ],
+      "art": "nine generated full illustrated work scenes; original desktop faces and eyes; transparent 2x2 atlases",
+      "preview": "same animation-only renderer; no caption, percent, step meter or overall assistant bar; does not change settings",
+      "live": "animation only; main conversion progress card unchanged",
+      "status": "Mac0.24.98/build251 installed; 48 browser cases, two renderer paths, 576 fixed-hand samples and isolated installed startup pass",
+      "revision": "desktop-hand-safe-animation-251",
+      "renderer": "independent desktop WebGL mesh; Canvas2D fallback; measured detached-fragment exclusion regions",
+      "idle": "original desktop character animation; no work progress",
+      "manifest": "studio/web/assets/assistant-activities/manifest.json",
+      "handCorrection": "Shion listening-cell override; original other cells preserved; separate per-character dubbing hand guards",
+      "progressAlignment": "Desktop direct request removes embedded step progress too. Current iPad proposal retains it. Presentation parity is not claimed."
+    }
+  },
   "platforms": [
     "macOS",
     "Windows",
-    "iPadOS"
+    "iPadOS",
+    "iOS"
   ],
-  "normal": {
-    "retainFirstAudible": true,
-    "languageAccentOrSpellingAlone": "report-only",
-    "additionalMissingOrDamagedRepairAttempts": 2,
-    "overlongDialogue": "measure-safe-gaps-then-bounded-meaning-preserving-shortening",
-    "maximumLocalDurationRewritePasses": 2
+  "defaults": {
+    "workMode": "balanced",
+    "failedVoicePolicy": "first-take",
+    "systemTargetLanguageFallback": true
   },
-  "fast": {
-    "qualityReview": false,
-    "qualityDrivenRetakes": false,
-    "preserveNonverbal": true
+  "iPadStandardMode": {
+    "revision": "independent-duration-controls-191",
+    "appliesTo": "new UI conversion and explicit dubbing requests; saved resumes retain their frozen policy",
+    "storedMode": "performance",
+    "defaults": {
+      "contentChecks": 0,
+      "autoRepair": false,
+      "limitSpeechDuration": false,
+      "alternateEngine": false,
+      "systemVoice": false,
+      "safeEndpoint": false,
+      "borrowGaps": false,
+      "translationReview": false
+    },
+    "limits": {
+      "contentChecksPerRecording": 2,
+      "timingOperationsPerCue": 1,
+      "silentOnlyRetries": 2
+    },
+    "alwaysActive": [
+      "check missing or silent audio",
+      "retain first audible take",
+      "attempt export and report missing dubs"
+    ],
+    "systemSubstitution": "requires AI auto repair, explicit system-voice fallback choice, installed supported voice and preflight consent",
+    "embeddedCaptions": "split overlapping caption intervals and display all active lines; never discard a contained shorter caption",
+    "independentControls": "content inspection is report-only without autoRepair; autoRepair can use bounded targeted evidence without full-video review; duration limiting is independent and authorizes one measured timing repair",
+    "translationStyleMemory": {
+      "revision": "hk-spoken-memory-190",
+      "originalExamples": 29,
+      "maximumRetrievedExamples": 4,
+      "method": "bounded lexical retrieval; no external corpus copied"
+    },
+    "purchase": "all in-app features are free; existing entitlement gates external media export and sharing only",
+    "acceptance": "8 final targeted M4 tests pass, including an eight-combination execution matrix; no real-model or whole-film acceptance for revision 191",
+    "duration": {
+      "off": "first audible take in full at fixed source onset; overlap; original sound retained; held final frame for an output tail; source range unchanged",
+      "on": "actual PCM; exact digital edge silence only; 80 ms padding; quiet samples and internal pauses retained; one faithful rewrite and same-reference retake; no tempo acceleration",
+      "sourceCaptions": "unchanged",
+      "measurementBeforeRewrite": true
+    },
+    "legacy": "nil new fields in build 190 jobs retain their saved behaviour; no budget or control migration on resume",
+    "guideCopy": {
+      "path": "docs/WORKFLOW-CONTROLS-GUIDE.json",
+      "revision": "workflow-controls-guide-4-first-audible",
+      "locales": [
+        "zh-HK",
+        "zh-CN",
+        "en",
+        "ja"
+      ],
+      "iPadConsumer": "bundled exact source JSON; guide and setting explanations use the same product copy",
+      "desktopConsumer": "notified to reuse; confirm integration in desktop handover",
+      "items": 14,
+      "presentation": "iPad build 193 uses plain icon selectors for separate production and AI repair pages, including production defaults",
+      "warning": "extra review/repair may take 2–3 times as long or longer, without guaranteed improvement over the optimized defaults; conditional advisory, not a benchmark"
+    }
+  },
+  "desktopStandardMode": {
+    "status": "implemented in source 0.24.94 / build 247; local Mac installed; Windows package deferred",
+    "appliesTo": "new desktop (macOS and Windows) jobs only",
+    "workModeRevision": "desktop-work-modes-2",
+    "storedWorkMode": "performance",
+    "singlePipeline": "the former fast pipeline; performance, balanced and quality are not offered for new desktop jobs",
+    "legacyModes": "balanced and quality stay readable for older desktop jobs and for iPad jobs; each job keeps its own frozen revision",
+    "separateSwitches": {
+      "aiAutoFix": false,
+      "fullAIReview": false
+    },
+    "alwaysActiveRegardlessOfSwitches": {
+      "fillMissingAudio": true,
+      "maximumMissingRepairAttempts": 2,
+      "firstAudibleTakeRetained": true
+    },
+    "timeBudget": {
+      "sourceMatchedScriptRevision": "source-matched-script-245",
+      "scriptFitRevision": "script-fit-245c",
+      "scriptFitHardCeiling": "candidate character count must be at most targetCharacters; one extra call states the ceiling as a hard rule; the audit row records attempts",
+      "scriptFitCopiedNeighbourContent": "a neighbour within 3 seconds whose whole target line sits inside this line, and whose source this cue does not carry, is sent as removeDuplicated and removed from the line",
+      "recoveryStyles": "cantonese-strict then cantonese-strict-clauses for yue recovery; plain styles only for other target languages",
+      "windowSource": "speech_timing.natural_window (mora end cap, END_GRACE_SECONDS, next spoken barrier, protected opening and ending ranges)",
+      "captionWindowFloor": "when the source mora cap is active, the take may also use the tail up to its own caption end, so a Chinese subtitle window is never left without Cantonese audio; the take still stops at the next spoken barrier",
+      "endGraceSeconds": 0.35,
+      "maximumTimingRewritePasses": 0,
+      "automaticDurationRewrite": false,
+      "measuredTakeCharactersPerSecond": {
+        "median": 3.88,
+        "p25": 3.08,
+        "p75": 4.46,
+        "sample": "job 45a87d47cfa4851b, 84 take audit rows"
+      },
+      "scope": "Source-matched drafting values below describe frozen build-245 jobs. New build-246 jobs use desktopSpeechDurationControl and do not pre-shorten from estimates."
+    },
+    "acceptanceTarget": {
+      "missingSegments": 0,
+      "overlapRows": 0,
+      "note": "a required subtitle segment that keeps the original audio is a defect, not normal behaviour"
+    },
+    "deliveryCue": "cantonese-strict for yue; a bare language tag produced a flat reading voice",
+    "deployment": {
+      "macOS": {
+        "version": "0.24.95",
+        "build": "248",
+        "status": "installed; presentation-only patch; scope and conversion policies unchanged"
+      },
+      "Windows": {
+        "version": "0.24.91",
+        "build": "244",
+        "status": "local executable unchanged; 0.24.92 packaging deferred by Samuel"
+      }
+    }
+  },
+  "sourceAuthority": {
+    "subtitles-speech": {
+      "translationSource": "selected authored embedded/external subtitles ONLY",
+      "speechUse": [
+        "speech clock",
+        "original voice reference"
+      ],
+      "unsubtitledGaps": "preserve original audio; no translation/TTS/repair; not missing dubbing",
+      "missingASR": "retain subtitle; use exact authored display clock with explicit timing fallback"
+    },
+    "otherWorkflows": "A determines content; B auxiliary, missing A may use B with review flag",
+    "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes"
+  },
+  "workModes": {
+    "performance": {
+      "initialGenerationPerCue": 1,
+      "contentReadback": false,
+      "sameActorTimingOperationsPerCue": 0,
+      "sameActorTimingWithFirstTake": 0,
+      "genericGenerationPerCue": 1,
+      "estimatedPrevoiceShortening": false,
+      "measuredGenericRewritePerCue": 0,
+      "perCueBudgetsAreSeparateStages": true,
+      "repairBaseSeconds": 60,
+      "repairCapSeconds": 300,
+      "independentListeningSeconds": 0,
+      "listeningSelection": "none",
+      "independentEndpointSeconds": 0,
+      "endpointBatchCueCap": 0,
+      "endpointAttemptsPerCueEngineLanguage": 0
+    },
+    "balanced": {
+      "initialGenerationPerCue": 1,
+      "contentReadback": true,
+      "sameActorTimingOperationsPerCue": 1,
+      "sameActorTimingWithFirstTake": 1,
+      "genericGenerationPerCue": 1,
+      "estimatedPrevoiceShortening": false,
+      "measuredGenericRewritePerCue": 1,
+      "perCueBudgetsAreSeparateStages": true,
+      "repairBaseSeconds": 180,
+      "repairCapSeconds": 900,
+      "independentListeningSeconds": 60,
+      "listeningSelection": "up to 24 changed or suspect cues",
+      "independentEndpointSeconds": 60,
+      "endpointBatchCueCap": 32,
+      "endpointAttemptsPerCueEngineLanguage": 1
+    },
+    "quality": {
+      "initialGenerationPerCue": 3,
+      "contentReadback": true,
+      "sameActorTimingOperationsPerCue": 2,
+      "sameActorTimingWithFirstTake": 2,
+      "genericGenerationPerCue": 2,
+      "estimatedPrevoiceShortening": false,
+      "measuredGenericRewritePerCue": 1,
+      "perCueBudgetsAreSeparateStages": true,
+      "repairBaseSeconds": 600,
+      "repairCapSeconds": 1800,
+      "independentListeningSeconds": 180,
+      "listeningSelection": "broader required audible cues",
+      "independentEndpointSeconds": 180,
+      "endpointBatchCueCap": 96,
+      "endpointAttemptsPerCueEngineLanguage": 2
+    }
+  },
+  "delivery": {
+    "sequence": [
+      "retain fitting first recording",
+      "bounded same-actor measured timing repair",
+      "selected-engine generic reference and measured fit",
+      "at most one installed supported alternate AI engine",
+      "installed target-language system voice",
+      "optional listening with separate allowance",
+      "confirmed content defects use remaining repair allowance and existing per-cue counters",
+      "original audio last"
+    ],
+    "unconfirmed": "warning, not confirmed failure or certification",
+    "confirmedWrongContent": "bounded target-language fallback in every mode",
+    "sourcePolicy": "explicit Original audio failure policy may go straight to source",
+    "systemGenerationPerCue": 2,
+    "alternateEngineGenerationPerCue": 1,
+    "nativeAssets": "installed public target-language voices only; no automatic download",
+    "nativeDisclosure": "preflight before unattended processing",
+    "automaticCoverageFailure": "deliver available dubbing plus source continuity; preserve truthful report; never hold merely for review",
+    "zeroTarget": "source-only output explicitly not completed target-language dubbing",
+    "exceptionPath": "same finalization coordinator and fallback chain",
+    "exportRetry": 1,
+    "resumeFinalization": "saved scripts/takes; no full translation/generation restart",
+    "persistentBudgets": true,
+    "timeBudget": "Separate persisted repair and optional-listening clocks. Necessary delivery first. Repair = min(mode cap, max(mode base, pending measured failures * estimated operation seconds)); estimated operation seconds = clamp(2 * observed median first-generation seconds + 8, 8, 90), or 24 without observations. Reserve 25 percent for native ONLY when consent enabled. Freeze on first recovery, share across tracks. No refill on resume; one in-flight operation may finish; export excluded.",
+    "manualPauseAndChoices": "protected; cancellation never treated as repair",
+    "unrecoverableInputOrStorage": "explicit resumable failure, not fabricated successful output",
+    "explicitNewDubbingRevision": "fresh recovery/export budgets only on explicit new conversion or dubbing revision; retain frozen source rule and parent",
+    "listeningEvidence": "Evidence fingerprinted to selected audio; changed audio invalidates old verdict. Undecided ASR is not confirmed failure. Model-language labels alone do not authorize replacement.",
+    "capacityBeforeRewrite": {
+      "order": [
+        "verify complete speech and safely exclude non-speech tails",
+        "borrow verified non-vocal time before next actual speech or protected performance",
+        "bounded faithful rewrite and full re-generation only if still measured overlong"
+      ],
+      "subtitleEndIsNotAudioDeadline": true,
+      "noSubtitleIsNotNoSpeech": true,
+      "backgroundMusicAndOrdinaryEffectsDoNotBlockBorrowing": true,
+      "sourcePreservationAndVocalTimingBarrierAreSeparateConcepts": true,
+      "neverHardCodeDiagnosticEnergyThresholdAsSpeechBoundary": true,
+      "iPad186Implementation": "generic gap borrowing exists but all source-preserved gaps are barriers; finer evidence-backed gap classification pending",
+      "desktopExecutionRevision": "safe-capacity-delivery-4",
+      "endpointEvidence": "continuous frame activity + local sensitive Silero VAD + prompt-free Whisper complete text and word timestamps; undecided results never license trimming or shortening",
+      "endpointWrite": "new native-rate/channel/subtype PCM prefix, 240ms guard after latest lexical/activity/VAD endpoint; original immutable",
+      "endpointScope": "only measured overlong suspect tails; no new endpoint ASR in Performance; exact-SHA cached evidence; finite batch/per-cue counts and separate persisted clock",
+      "endpointClock": "0/60/180 seconds; nested AI/native clocks suspended and persisted, no refund or full-film restart",
+      "backgroundWitness": "only automatic subtitle gaps without recognized words and with SHA-bound near-digital-quiet separated vocal stem; unknown/faint/performance/OPED/manual stays protected",
+      "rewriteUncertainty": "uncertain tail blocks shortening; retain complete script and bounded delivery fallback"
+    },
+    "genericBudgetProtection": "Earlier same-actor timing/rewrite stage must leave executable allowance for selected-engine generic dubbing, within the existing frozen whole-job budget. Substage allocation persists; no refill on resume. Explicit native fallback remains later and AI generic must not silently masquerade as native.",
+    "cantoneseCaptionScript": "Target Cantonese captions are Traditional Chinese regardless of interface language; preserve separately selectable original authored caption script. Player default selection indexes the filtered complete-caption catalogue and follows target audio."
+  },
+  "audio": {
+    "preserveEngineDeliveryRate": true,
+    "analysisRateIsNotDeliveryRate": true,
+    "originalCaptionTimingIndependent": true
   },
   "nonverbal": {
     "preserveOriginalPerformance": true,
@@ -36,17 +368,899 @@
     },
     "exactClassifierParity": "pending; same decision policy is not same model calibration"
   },
-  "audio": {
-    "preserveEngineDeliveryRate": true,
-    "analysisRateIsNotDeliveryRate": true,
-    "originalCaptionTimingIndependent": true
+  "platformAcceptance": {
+    "iPad": "v3 shared requirement only, implementation and private device acceptance not verified here; consult private handover",
+    "desktop": "0.24.91/build244 installed locally for Mac and Windows. Adds forced-tts-dubbing-desktop-244 to new performance jobs, mirroring iPad build 189; balanced/quality and saved frozen jobs unchanged. Windows physical inference, whole-film audio listening, the second-video startup complaint and the 12 undelivered 821 cues remain unverified/open. See handover."
   },
-  "checkpoints": {
-    "perRecording": true,
-    "persistentAttemptBudgets": true,
-    "timeoutStopsOnlyOwnedProcess": true,
-    "uncertaintyIsNotCertification": true
+  "ipadOnlyExperiments": {
+    "forcedTtsDubbingAlwaysExport": {
+      "revision": "forced-tts-dubbing-always-export-189",
+      "platforms": [
+        "iPadOS"
+      ],
+      "mode": "performance (High speed) only, new jobs from this build",
+      "rule": "every subtitled dialogue cue must be dubbed by the selected TTS engine; system voice and the source language are never accepted as dubbing; the first audible take is used and the dub starts at the source-language onset; a flawed or missing take still exports and is reported in export-coverage.json and the job log",
+      "notAdoptedBy": [
+        "macOS",
+        "Windows"
+      ],
+      "singleTakePolicyRevision": "single-take-dubbing-189",
+      "singleTakeAppliesTo": [
+        "performance",
+        "balanced"
+      ],
+      "receipt": "mobile/Validation/forced-tts-dubbing-build189-2026-10-27.json",
+      "notAdoptedByNote": "macOS and Windows adopted an equivalent rule at a different revision on 2026-10-28; see desktopExperiments.forcedTtsPerformanceDubbing"
+    }
   },
-  "desktopCandidate": "0.24.68",
-  "ipadAcceptance": "pending-this-workflow-audit"
+  "desktopExperiments": {
+    "forcedTtsPerformanceDubbing": {
+      "revision": "forced-tts-dubbing-desktop-244",
+      "platforms": [
+        "macOS",
+        "Windows"
+      ],
+      "mode": "performance (High speed) only, new jobs stamped with this revision; older frozen jobs keep their saved policies",
+      "rule": "mirrors iPad forced-tts-dubbing-always-export-189 for performance jobs: only fully silent takes are re-recorded, capped at 2 attempts per cue; alternate-voice and system-voice substitution are hard-frozen off even if the stored switches say otherwise; the first audible take is kept and no timing rewrite runs in performance mode; desktop already always exports source-only cues with unresolvedAction continue-to-delivery-policy-and-export",
+      "notAdoptedBy": [],
+      "adoptedFrom": "forced-tts-dubbing-always-export-189 (iPad build 189)",
+      "receipt": "tests/test_forced_desktop91.py plus .build/product91 verification receipts"
+    }
+  },
+  "legacyV1": {
+    "schemaVersion": 1,
+    "id": "anicanto-recovery-workflow-1",
+    "status": "shared-requirements; implementations must record their own acceptance",
+    "platforms": [
+      "macOS",
+      "Windows",
+      "iPadOS"
+    ],
+    "normal": {
+      "retainFirstAudible": true,
+      "languageAccentOrSpellingAlone": "report-only",
+      "additionalMissingOrDamagedRepairAttempts": 2,
+      "overlongDialogue": "measure-safe-gaps-then-bounded-meaning-preserving-shortening",
+      "maximumLocalDurationRewritePasses": 2
+    },
+    "fast": {
+      "qualityReview": false,
+      "qualityDrivenRetakes": false,
+      "preserveNonverbal": true
+    },
+    "nonverbal": {
+      "preserveOriginalPerformance": true,
+      "lexicalSpeechExclusion": true,
+      "neverRestoreWholeVocalStem": true,
+      "avoidDuplicateRestoration": true,
+      "duckOnlyNewDialogueOverlap": true,
+      "targetWindowSeconds": 1,
+      "targetHopSeconds": 0.5,
+      "contextAndAccuracyMustBeValidatedPerClassifier": true,
+      "reuseAcrossTracks": true,
+      "shortWindowTrial": "Windows AST one-second direct cropping rejected on three public evaluation clips",
+      "validatedClassifierContextSeconds": {
+        "macOSSoundAnalysis": 1,
+        "WindowsAudioSetAST": 5
+      },
+      "exactClassifierParity": "pending; same decision policy is not same model calibration"
+    },
+    "audio": {
+      "preserveEngineDeliveryRate": true,
+      "analysisRateIsNotDeliveryRate": true,
+      "originalCaptionTimingIndependent": true
+    },
+    "checkpoints": {
+      "perRecording": true,
+      "persistentAttemptBudgets": true,
+      "timeoutStopsOnlyOwnedProcess": true,
+      "uncertaintyIsNotCertification": true
+    },
+    "desktopCandidate": "0.24.68",
+    "ipadAcceptance": "pending-this-workflow-audit"
+  },
+  "legacyV2": {
+    "schemaVersion": 2,
+    "id": "anicanto-recovery-workflow-2",
+    "updated": "2026-10-27",
+    "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
+    "platforms": [
+      "macOS",
+      "Windows",
+      "iPadOS"
+    ],
+    "defaults": {
+      "workMode": "balanced",
+      "failedVoicePolicy": "first-take",
+      "systemTargetLanguageFallback": true
+    },
+    "sourceAuthority": {
+      "subtitles-speech": {
+        "translationSource": "selected authored embedded/external subtitles ONLY",
+        "speechUse": [
+          "speech clock",
+          "original voice reference"
+        ],
+        "unsubtitledGaps": "preserve original audio; no translation/TTS/repair; not missing dubbing",
+        "missingASR": "retain subtitle; use exact authored display clock with explicit timing fallback"
+      },
+      "otherWorkflows": "A determines content; B auxiliary, missing A may use B with review flag",
+      "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes"
+    },
+    "workModes": {
+      "performance": {
+        "initialGenerationPerCue": 1,
+        "contentReadback": false,
+        "sameActorTimingOperationsPerCue": 0,
+        "sameActorTimingWithFirstTake": 0,
+        "genericGenerationPerCue": 1,
+        "wholeJobRecoverySeconds": 60,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 0,
+        "perCueBudgetsAreSeparateStages": true
+      },
+      "balanced": {
+        "initialGenerationPerCue": 1,
+        "contentReadback": true,
+        "sameActorTimingOperationsPerCue": 1,
+        "sameActorTimingWithFirstTake": 0,
+        "genericGenerationPerCue": 1,
+        "wholeJobRecoverySeconds": 180,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 1,
+        "perCueBudgetsAreSeparateStages": true
+      },
+      "quality": {
+        "initialGenerationPerCue": 3,
+        "contentReadback": true,
+        "sameActorTimingOperationsPerCue": 2,
+        "sameActorTimingWithFirstTake": 2,
+        "genericGenerationPerCue": 2,
+        "wholeJobRecoverySeconds": 600,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 1,
+        "perCueBudgetsAreSeparateStages": true
+      }
+    },
+    "delivery": {
+      "sequence": [
+        "retain usable first recording",
+        "selected-engine generic reference",
+        "at most one installed supported alternate AI engine",
+        "installed target-language system voice",
+        "original audio last"
+      ],
+      "unconfirmed": "warning, not confirmed failure or certification",
+      "confirmedWrongContent": "bounded target-language fallback in every mode",
+      "sourcePolicy": "explicit Original audio failure policy may go straight to source",
+      "systemGenerationPerCue": 2,
+      "alternateEngineGenerationPerCue": 1,
+      "nativeAssets": "installed public target-language voices only; no automatic download",
+      "nativeDisclosure": "preflight before unattended processing",
+      "automaticCoverageFailure": "deliver available dubbing plus source continuity; preserve truthful report; never hold merely for review",
+      "zeroTarget": "source-only output explicitly not completed target-language dubbing",
+      "exceptionPath": "same finalization coordinator and fallback chain",
+      "exportRetry": 1,
+      "resumeFinalization": "saved scripts/takes; no full translation/generation restart",
+      "persistentBudgets": true,
+      "timeBudget": "whole-job content readback and automatic repair; last 25 percent reserved for native; in-flight operation may finish, no new operation after deadline; export excluded",
+      "manualPauseAndChoices": "protected; cancellation never treated as repair",
+      "unrecoverableInputOrStorage": "explicit resumable failure, not fabricated successful output",
+      "explicitNewDubbingRevision": "fresh recovery/export budgets only on explicit new conversion or dubbing revision; retain frozen source rule and parent"
+    },
+    "audio": {
+      "preserveEngineDeliveryRate": true,
+      "analysisRateIsNotDeliveryRate": true,
+      "originalCaptionTimingIndependent": true
+    },
+    "nonverbal": {
+      "preserveOriginalPerformance": true,
+      "lexicalSpeechExclusion": true,
+      "neverRestoreWholeVocalStem": true,
+      "avoidDuplicateRestoration": true,
+      "duckOnlyNewDialogueOverlap": true,
+      "targetWindowSeconds": 1,
+      "targetHopSeconds": 0.5,
+      "contextAndAccuracyMustBeValidatedPerClassifier": true,
+      "reuseAcrossTracks": true,
+      "shortWindowTrial": "Windows AST one-second direct cropping rejected on three public evaluation clips",
+      "validatedClassifierContextSeconds": {
+        "macOSSoundAnalysis": 1,
+        "WindowsAudioSetAST": 5
+      },
+      "exactClassifierParity": "pending; same decision policy is not same model calibration"
+    },
+    "platformAcceptance": {
+      "iPad": "Implementation and device acceptance are private; consult private handover. This shared requirement is not deployment evidence.",
+      "desktop": "alignment requested; not declared deployed by this iPad change"
+    }
+  },
+  "legacyV3": {
+    "schemaVersion": 3,
+    "id": "anicanto-recovery-workflow-3",
+    "updated": "2026-10-27",
+    "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
+    "platforms": [
+      "macOS",
+      "Windows",
+      "iPadOS"
+    ],
+    "defaults": {
+      "workMode": "balanced",
+      "failedVoicePolicy": "first-take",
+      "systemTargetLanguageFallback": true
+    },
+    "sourceAuthority": {
+      "subtitles-speech": {
+        "translationSource": "selected authored embedded/external subtitles ONLY",
+        "speechUse": [
+          "speech clock",
+          "original voice reference"
+        ],
+        "unsubtitledGaps": "preserve original audio; no translation/TTS/repair; not missing dubbing",
+        "missingASR": "retain subtitle; use exact authored display clock with explicit timing fallback"
+      },
+      "otherWorkflows": "A determines content; B auxiliary, missing A may use B with review flag",
+      "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes"
+    },
+    "workModes": {
+      "performance": {
+        "initialGenerationPerCue": 1,
+        "contentReadback": false,
+        "sameActorTimingOperationsPerCue": 0,
+        "sameActorTimingWithFirstTake": 0,
+        "genericGenerationPerCue": 1,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 0,
+        "perCueBudgetsAreSeparateStages": true,
+        "repairBaseSeconds": 60,
+        "repairCapSeconds": 300,
+        "independentListeningSeconds": 0,
+        "listeningSelection": "none"
+      },
+      "balanced": {
+        "initialGenerationPerCue": 1,
+        "contentReadback": true,
+        "sameActorTimingOperationsPerCue": 1,
+        "sameActorTimingWithFirstTake": 1,
+        "genericGenerationPerCue": 1,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 1,
+        "perCueBudgetsAreSeparateStages": true,
+        "repairBaseSeconds": 180,
+        "repairCapSeconds": 900,
+        "independentListeningSeconds": 60,
+        "listeningSelection": "up to 24 changed or suspect cues"
+      },
+      "quality": {
+        "initialGenerationPerCue": 3,
+        "contentReadback": true,
+        "sameActorTimingOperationsPerCue": 2,
+        "sameActorTimingWithFirstTake": 2,
+        "genericGenerationPerCue": 2,
+        "estimatedPrevoiceShortening": false,
+        "measuredGenericRewritePerCue": 1,
+        "perCueBudgetsAreSeparateStages": true,
+        "repairBaseSeconds": 600,
+        "repairCapSeconds": 1800,
+        "independentListeningSeconds": 180,
+        "listeningSelection": "broader required audible cues"
+      }
+    },
+    "delivery": {
+      "sequence": [
+        "retain fitting first recording",
+        "bounded same-actor measured timing repair",
+        "selected-engine generic reference and measured fit",
+        "at most one installed supported alternate AI engine",
+        "installed target-language system voice",
+        "optional listening with separate allowance",
+        "confirmed content defects use remaining repair allowance and existing per-cue counters",
+        "original audio last"
+      ],
+      "unconfirmed": "warning, not confirmed failure or certification",
+      "confirmedWrongContent": "bounded target-language fallback in every mode",
+      "sourcePolicy": "explicit Original audio failure policy may go straight to source",
+      "systemGenerationPerCue": 2,
+      "alternateEngineGenerationPerCue": 1,
+      "nativeAssets": "installed public target-language voices only; no automatic download",
+      "nativeDisclosure": "preflight before unattended processing",
+      "automaticCoverageFailure": "deliver available dubbing plus source continuity; preserve truthful report; never hold merely for review",
+      "zeroTarget": "source-only output explicitly not completed target-language dubbing",
+      "exceptionPath": "same finalization coordinator and fallback chain",
+      "exportRetry": 1,
+      "resumeFinalization": "saved scripts/takes; no full translation/generation restart",
+      "persistentBudgets": true,
+      "timeBudget": "Separate persisted repair and optional-listening clocks. Necessary delivery first. Repair = min(mode cap, max(mode base, pending measured failures * estimated operation seconds)); estimated operation seconds = clamp(2 * observed median first-generation seconds + 8, 8, 90), or 24 without observations. Reserve 25 percent for native ONLY when consent enabled. Freeze on first recovery, share across tracks. No refill on resume; one in-flight operation may finish; export excluded.",
+      "manualPauseAndChoices": "protected; cancellation never treated as repair",
+      "unrecoverableInputOrStorage": "explicit resumable failure, not fabricated successful output",
+      "explicitNewDubbingRevision": "fresh recovery/export budgets only on explicit new conversion or dubbing revision; retain frozen source rule and parent",
+      "listeningEvidence": "Evidence fingerprinted to selected audio; changed audio invalidates old verdict. Undecided ASR is not confirmed failure. Model-language labels alone do not authorize replacement.",
+      "capacityBeforeRewrite": {
+        "order": [
+          "verify complete speech and safely exclude non-speech tails",
+          "borrow verified non-vocal time before next actual speech or protected performance",
+          "bounded faithful rewrite and full re-generation only if still measured overlong"
+        ],
+        "subtitleEndIsNotAudioDeadline": true,
+        "noSubtitleIsNotNoSpeech": true,
+        "backgroundMusicAndOrdinaryEffectsDoNotBlockBorrowing": true,
+        "sourcePreservationAndVocalTimingBarrierAreSeparateConcepts": true,
+        "neverHardCodeDiagnosticEnergyThresholdAsSpeechBoundary": true,
+        "iPad186Implementation": "generic gap borrowing exists but all source-preserved gaps are barriers; finer evidence-backed gap classification pending"
+      }
+    },
+    "audio": {
+      "preserveEngineDeliveryRate": true,
+      "analysisRateIsNotDeliveryRate": true,
+      "originalCaptionTimingIndependent": true
+    },
+    "nonverbal": {
+      "preserveOriginalPerformance": true,
+      "lexicalSpeechExclusion": true,
+      "neverRestoreWholeVocalStem": true,
+      "avoidDuplicateRestoration": true,
+      "duckOnlyNewDialogueOverlap": true,
+      "targetWindowSeconds": 1,
+      "targetHopSeconds": 0.5,
+      "contextAndAccuracyMustBeValidatedPerClassifier": true,
+      "reuseAcrossTracks": true,
+      "shortWindowTrial": "Windows AST one-second direct cropping rejected on three public evaluation clips",
+      "validatedClassifierContextSeconds": {
+        "macOSSoundAnalysis": 1,
+        "WindowsAudioSetAST": 5
+      },
+      "exactClassifierParity": "pending; same decision policy is not same model calibration"
+    },
+    "platformAcceptance": {
+      "iPad": "v3 shared requirement only, implementation and private device acceptance not verified here; consult private handover",
+      "desktop": "0.24.88/build241 installed; historical v3 repair-before-listening workflow. See prior handover for its verification and limits."
+    }
+  },
+  "reporting": {
+    "recordingCheckpointIsNotIssue": true,
+    "floatingPointTimingMarginSeconds": 0.005,
+    "advisoryIsNotConfirmedFailure": true,
+    "pendingManualRetry": "repairEligible delivery/confirmed defects plus changed recordings; preserve explicit choices",
+    "intentionalCaptionGapsAreNotMissingTTS": true,
+    "sourcePerformanceCounts": "deduplicate actual intervals across parent and current tracks",
+    "rawEvidence": "saved job/debug retained; human-localized summary in main interface",
+    "desktopStatus": "0.24.91/build244 installed in local dist; performance-mode jobs adopt the iPad forced-TTS rules at forced-tts-dubbing-desktop-244 (new jobs only): silent-only re-record capped at 2, alternate and system voice substitution frozen off, first audible take kept, always-export retained. 151 focused regressions pass; deployment-plan shared_core tests remain red at this contract (pre-existing)."
+  },
+  "desktopSpeechDurationControl": {
+    "status": "ships unchanged in local Mac 0.24.94 / build 247; first implemented in 0.24.93; Windows deferred; whole-film acceptance pending",
+    "revision": "speech-duration-246",
+    "newJobsOnly": true,
+    "defaultLimitSpeechDuration": false,
+    "off": "keep source start and natural speed; allow overlap with later generated dialogue",
+    "on": "use original speech interval; measure actual audio before one meaning-preserving rewrite and retake",
+    "protected": "opening/ending ranges, retained source intervals, video end, locked scripts",
+    "measurement": "remove exact digital silence at edges only; keep 80 ms padding and all internal pauses; retain originals",
+    "uncertainNoise": "not silence; retain independent endpoint evidence gate",
+    "preSynthesisShortening": false,
+    "automaticTempo": false,
+    "maximumTimingRewritePasses": 1,
+    "budgets": "reuse persistent attempt counts and spent time; no refund on resume",
+    "sourceSubtitles": "authored embedded, external and OCR evidence stays unchanged",
+    "independentAIControls": "full review with repair off does not perform content or voice retakes; auto repair survives fast initialization",
+    "acceptance": "synthetic PCM, bounded coordinator and render tests; real-film inference pending",
+    "evidence": {
+      "targetedTests": 20,
+      "relatedTests": 154,
+      "browserLanguages": 4,
+      "receipt": ".build/product93/verification.json",
+      "installedReceipt": ".build/product93/install-receipt.json",
+      "realFilmInference": false
+    }
+  },
+  "desktopProductionSettingsScope": {
+    "status": "implemented; local Mac ships 0.24.95 / build 248; scope behaviour unchanged from build 247; Windows packaging deferred",
+    "default": "global",
+    "individual": "snapshot current production defaults per video; later global changes cannot replace it",
+    "backToGlobal": "remove individual override for future work",
+    "preferences": "appearance, deployment and hardware choices stay global",
+    "submission": "effective settings frozen per video",
+    "resume": "existing submitted request and spent budgets unchanged",
+    "scopeMutationWhileRunning": "rejected",
+    "tabs": [
+      "production",
+      "automation"
+    ],
+    "aiCostWarning": "shared guide repairCostWarning; conditional advisory, not benchmark",
+    "sharedGuideRevision": "workflow-controls-guide-2",
+    "sharedGuideSHA256": "28b331d62a27d190ada07db2a9dfb8e04b8154c6ecf6f79d8ebd718538e63866",
+    "guideConsumer": "studio/web/workflow-guide.js generated from the exact common JSON",
+    "iPadMapping": "build 192 AI Repair tab and shared guide recorded by iPad line; per-video global-scope mapping pending",
+    "acceptance": "real settings RPC, submission/resume fixtures and four-language browser checks; no model inference",
+    "evidence": {
+      "scopeTests": 13,
+      "relatedTests": 174,
+      "operationContractTests": 2,
+      "browserLanguages": 4,
+      "receipt": ".build/product94/verification.json",
+      "installedReceipt": ".build/product94/install-receipt.json",
+      "realModelInference": false
+    },
+    "presentation248": {
+      "status": "installed in local Mac 0.24.95 / build 248; four-language layout and startup checks passed",
+      "globalControl": "single row with name and switch; no inline scope description",
+      "scopeHelp": "globalScope in workflow-controls-guide-3; desktop only",
+      "costWarning": "repairCostWarning remains visible",
+      "policyChanged": false,
+      "iPadConsumer": "common guide item is desktop-labelled; iPad scope mapping not verified",
+      "evidence": {
+        "scopeHeightPixels": 57,
+        "sameHeightInBothStates": true,
+        "browserLanguages": 4,
+        "existingScopeTests": 13,
+        "receipt": ".build/product95/verification.json"
+      }
+    }
+  },
+  "desktopSharedGuideConsumer": {
+    "revision": "workflow-controls-guide-6-source-fallback",
+    "source": "docs/WORKFLOW-CONTROLS-GUIDE.json",
+    "sha256": "e5293510328611b31ae29147982c40b7f1f880c801a1cd65701dc9a1dba6cd16",
+    "consumer": "studio/web/workflow-guide.js",
+    "installedMacBuild": "252",
+    "includesCostWarning": true,
+    "windowsInstalled": false,
+    "sourceRevision": "workflow-controls-guide-6-source-fallback",
+    "sourceSHA256": "e5293510328611b31ae29147982c40b7f1f880c801a1cd65701dc9a1dba6cd16",
+    "candidateMacBuild": "252",
+    "candidateState": "Mac252 installed with guarded replacement. Isolated startup and 114 embedded interface hashes pass. Compact control header is implemented.",
+    "mobileOnlyControls": "not advertised as desktop controls; retain their exact common source copy",
+    "heldFrameTail": "not implemented in this desktop build; Help records the limitation",
+    "sourceFallback": "The guide describes the new iPad203 missing-text fallback. Desktop source_workflow.py does not implement it in this patch. Help states the limitation. Counterpart work remains pending."
+  },
+  "iPhoneFeasibility": {
+    "revision": "iphone-standard-first-take-196",
+    "targetDevice": "iPhone 17 Pro (iPhone18,1)",
+    "authorized": "2026-10-28; Standard-only app and original three-minute sample test",
+    "interface": [
+      "swipe-theme welcome",
+      "Standard and Expert entries",
+      "Speech entry",
+      "leading navigation drawer",
+      "contextual production mode switch",
+      "Viewer and Learning",
+      "reading workspace",
+      "Settings model management and app-icon selection",
+      "Welcome themed information icon",
+      "workspace header production options",
+      "About and licences in left drawer",
+      "Learning opens playlist first"
+    ],
+    "deferred": [
+      "cross-device project synchronization"
+    ],
+    "pipeline": "same shared Standard first-non-silent rule; optional report-only checks default off; no phone-only voice policy",
+    "models": "Gemma E4B, CosyVoice3-8bit, Whisper, HTDemucs; neural conversion is the test target",
+    "preservation": "saved jobs keep frozen settings, chosen engine, recordings, and spent recovery budgets",
+    "purchase": "existing non-consumable identity; no new phone SKU; production cross-device restoration not verified",
+    "status": "Normal224 installed on iPhone17Pro. Completed223 workflow, guide9, bounded215 MLX, and phone UI changes have separate native evidence.",
+    "counterpartWork": "M4223 has its own installation receipt. Desktop253 remains separately owned and is not inferred installed from phone evidence.",
+    "guide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
+    "evidence": "mobile/Validation/iphone-standard-build196-2026-10-28.json",
+    "interfaceRevision": "iphone-smooth-themes-duo-preview-213",
+    "uiStatus": "Normal224 Welcome and drawer inspected. Final native320/402 Basic/Expert editing layouts pass. Normal editing screenshot and human touch acceptance remain open.",
+    "uiEvidence": "mobile/Validation/iphone-workflow-build224-2026-10-28.json",
+    "workflowLimit": "Whole-film and listening acceptance remain open. One older failed Whisper source window still fails bounded short recovery. Old jobs are unchanged.",
+    "firstUse": "Introduction first; an explicit eligible AI entry opens existing default-model consent if needed; Reading needs no model setup; approval precedes transfer.",
+    "queue": "shared build 201 completion and cleanup gates; active phone conversion workspace only; no cold-launch start",
+    "welcome204": {
+      "state": "Implemented, tested with fixtures, installed, and visually inspected. Human acceptance pending.",
+      "design": "Header-free Welcome; top-right brand; small theme page dots; drawer after entry; shared DEBUG purchase/memory simulation.",
+      "capability": "Existing iPad reading-only policy. Paid simulation cannot raise hardware capability.",
+      "guideRevision": "workflow-controls-guide-6-source-fallback",
+      "guideSHA256": "e5293510328611b31ae29147982c40b7f1f880c801a1cd65701dc9a1dba6cd16"
+    },
+    "welcome208": {
+      "eligible": "Two direct translucent rounded entries: Basic and Expert. Reading is in the drawer. No Enter button.",
+      "fallback": "Unsupported or unknown devices show one Reading entry and the appropriate notice.",
+      "chrome": "Left brand, large title/art, side arrows, no visible character name; developer controls and replay are in About. Settings is in the workspace.",
+      "duo": "Known model identification with unchanged memory/GPU gates; Simulator-native layout rendering only; physical fold and neural acceptance pending.",
+      "privateCore": "Completed 203; completed iPad205 workflow adoption and phone validation pending."
+    },
+    "interface211": {
+      "welcome": "Larger purple angled mode buttons; Basic wand and Expert sliders; smaller art; information icon follows theme.",
+      "basic": "Target language below Preview; existing Cantonese default and saved preferences; top-right Basic options sheet; progress collapsed.",
+      "language": "Existing request language binding. Active and resumed jobs disable the new control. Saved job language and spent budgets remain unchanged.",
+      "status": "Interim package installed. Early captures were not accepted. Superseded by final revision212 navigation.",
+      "workflow": "Presentation only. Common205 rules and shared AI-control guide7 remain unchanged. Private phone conversion core is completed203 with guide6."
+    },
+    "interface212": {
+      "welcome": "Retains revision211 angled purple mode cards, smaller art, corrected icons, and themed information icon.",
+      "workspace": "Header options replace the information icon. Basic opens Basic options; Expert opens existing production settings. About and licences are in the left drawer.",
+      "basic": "Target language below Preview; existing Cantonese default and saved preferences; collapsed progress; no appended production settings.",
+      "learning": "Open playlist first on phone. No automatic video selection or playback. Selection uses the existing study handler. iPad entry is unchanged.",
+      "language": "Existing request language state. Active and resumed jobs disable the new row. No saved job language or budget migration.",
+      "state": "Implemented, compiled, installed on iPhone 17 Pro, and visually inspected. Human acceptance pending.",
+      "workflow": "Presentation only. Completed203 phone core and guide6 remain; common205 rules and guide7 remain unchanged.",
+      "evidence": "mobile/Validation/iphone-compact-interface-build212-2026-10-28.json"
+    },
+    "interface213": {
+      "welcome": "Raised page dots, no arrows, swipe themes, optional 420ms crossfade, and Reduce Motion support.",
+      "duo": "Native Welcome preview harness installed on the Duo runtime. Folded/open layout controls represent 466x678 and 626x890 points. Local browser comparison uses Simulator-native renders.",
+      "limit": "Later audit confirms DeviceHub GUI is available. Static213 previews are not full-App or fold certification. Preview214 uses actual window geometry; see the adaptive assessment.",
+      "state": "Implemented, compiled, installed, and visually inspected. Transition race/cleanup checks pass in Chromium with production mobile HTML/JS. Human acceptance pending."
+    },
+    "adaptiveAssessment": {
+      "date": "2026-10-28",
+      "status": "Assessed, not full-App implementation. Active capability allowlist unchanged.",
+      "layoutProposal": "Compact phone interface in narrow windows; expanded iPad-style interface in sufficiently wide windows. Preserve one live job and playback state.",
+      "hardwareProposal": "A17Pro or supported newer chip, advertised8GB class, passing GPU checks, then actual model-memory validation. Unsupported and unknown hardware retain Reading only.",
+      "matrix": "docs/IPHONE-HARDWARE-CANDIDATES-2026-10-28.json",
+      "evidence": "mobile/Validation/iphone-adaptive-assessment-2026-10-28.json",
+      "gui": "DeviceHub is available. Only Duo pose control was used; no M4 input.",
+      "remaining": "Full workspace resize,8GB inference validation, inner/outer transition acceptance, and candidate allowlist review."
+    },
+    "brand218": {
+      "state": "Implemented, compiled, installed on iPhone17Pro, and inspected.",
+      "inline": "Website a-plus-note native outline follows theme color.",
+      "primary": "Completed shared IconComposer resources consumed. Final decoded compiled primary icon has the a-plus-note mark.",
+      "preservation": "Alternate character icon sources and user sample checkpoint remain unchanged.",
+      "evidence": "mobile/Validation/iphone-website-mark-build218-2026-10-28.json",
+      "workflow": "Brand-only package. No new shared workflow,guide8,or MLX implementation is claimed."
+    },
+    "brand219": {
+      "state": "Compiled, installed, and visually measured on iPhone17Pro. Human acceptance pending.",
+      "inline": "20point mark and4point gap scale relative to headline. Measured ink ratio1.35 matches the supplied website reference approximately.",
+      "preservation": "Theme color, outline, primary HomeScreen icon, and sample checkpoint remain unchanged.",
+      "evidence": "mobile/Validation/iphone-inline-logo-build219-2026-10-28.json"
+    },
+    "brand220": {
+      "status": "Installed on iPhone17Pro. The compiled primary icon contains the prior Shion character. Physical HomeScreen cache acceptance remains open.",
+      "scope": "Primary AppIcon, BrandIcon, and IconComposer assets only. All private Swift source and alternate PNGs are unchanged.",
+      "evidence": "mobile/Validation/iphone-original-app-icon-build220-2026-10-28.json"
+    },
+    "interface222": {
+      "state": "Compiled, signed, installed, and visually inspected on iPhone17Pro. Six focused native cases pass. Four final portrait cases retain identical bottom button positions. Human touch and real neural batch acceptance remain open.",
+      "entry": "Multiple Files documents import sequentially in picker order. Failures retain valid imports. Cancellation stops remaining files.",
+      "layout": "Moon saver button in the workspace header. Vertical shelf above Preview. Existing bottom transport remains outside scrolling.",
+      "queue": "Existing foreground full-video completion and cleanup gates. Import never starts conversion. Pause, failure, and background stop continuation.",
+      "preservation": "Frozen requests, first takes, selected engines, and spent budgets remain unchanged.",
+      "counterpart": "Shared optional APIs available. iPad single-file entry and desktop entry remain unchanged.",
+      "evidence": "mobile/Validation/iphone-multiple-video-build222-2026-10-28.json"
+    },
+    "workflow224": {
+      "state": "Implemented, physically tested within recorded fixture scope, signed, installed, and launched. Whole-film and human acceptance remain open.",
+      "firstPickup": "Completed205 required-target/exact-reference rules and215 bounded MLX.",
+      "completedPickup": "Final M4223 core and exact shared guide9. Phone222 interface/import and newer capability profiles remain.",
+      "preservation": "Three real checkpoints remain byte-identical after installation. Frozen rules, engine choices, first takes, and spent allowances remain.",
+      "engineCorrection": "Explicit v4 and Cosy choices remain. Final phone and M4 picker cases pass. MLX cannot silently remap these preferences.",
+      "evidence": "mobile/Validation/iphone-workflow-build224-2026-10-28.json"
+    },
+    "interface224": {
+      "state": "Normal224 Welcome and drawer inspected. Final native320/402 Basic/Expert editing layouts pass. Normal editing screenshot and human touch acceptance remain open.",
+      "sourceEditing": "Long press, gentle jiggle, minus actions, Done, next-source selection, and archive-before-delete. Reduce Motion disables jiggle.",
+      "menu": "Aligned content-edge hamburger and24point drawer symbol column.",
+      "welcome": "Both angled mode buttons follow the selected theme. Eighteen RGB samples across9themes pass.",
+      "evidence": "mobile/Validation/iphone-workflow-build224-2026-10-28.json"
+    },
+    "interface225": {
+      "build": 225,
+      "state": "Normal225 installed, launched, and visually inspected. Five focused cases plus one final portrait rerun pass.",
+      "purchase": "Existing universal non-consumable unlocks export only. Eligible unpaid Welcome shows the banner. Unsupported hardware cannot purchase.",
+      "reading": "Uses shared introduction and saved skip choice with a phone-specific restriction reason.",
+      "menu": "Mode switch first. Imported videos, then Output videos. Remove log/projects/queue/timeline/start/reset duplicates.",
+      "editing": "Done stops motion. Source reset opens existing choices. Phone track controls show symbols.",
+      "evidence": "mobile/Validation/iphone-interface-build225-2026-10-29.json",
+      "next": "Samuel requests full-screen portrait Meet AniCanto. Phone227 will replace interim225 introduction styling."
+    }
+  },
+  "sourceReferenceDefect196": {
+    "revision": "source-reference-clock-failure-196",
+    "phoneStatus": "The original196 sample remains rejected for speaker consistency and emotion. Normal224 consumes205 exact-reference rules and passes one real bounded Whisper/Cosy case. No new whole-film listening acceptance.",
+    "evidence": "mobile/Validation/iphone-voice-reference-build196-2026-10-28.json",
+    "confirmed": "25 local-clock failures clear original Whisper evidence; Cosy reference guard blocks those lines; all 25 use yue-bright generic fill",
+    "target": "Follow the build 170 Whisper source-provider decision for text, sentence clocks, and bounded source-reference checks. Keep uncertain timing and mandatory presence checks separate. No hidden Apple source dependency.",
+    "native": "Same shared code structure; correction and short listening validation pending",
+    "desktop": "Separate inspection pending",
+    "appleResourceStatus": "Startup installedLocales and runtime module status disagree; underlying reason not established"
+  },
+  "standardFirstAudible": {
+    "revision": "standard-first-audible-196",
+    "scope": [
+      "macOS",
+      "Windows",
+      "iPadOS",
+      "iOS"
+    ],
+    "rule": "Standard retains the first non-silent TTS recording; only missing or silent audio permits bounded fill",
+    "defaultOverlap": true,
+    "timing": "fixed source onset; full take; source audio remains in preserved intervals; hold the final selected frame for an overrun; source and output duration stay distinct",
+    "strictDuration": "separate explicit permission; retain existing bounded measured rewrite policy",
+    "aiAsrReview": "optional, off by default, report-only in Standard; independent from mandatory presence checks",
+    "reportBands": [
+      "no obvious issue",
+      "listen suggested",
+      "listen first"
+    ],
+    "unknownEvidence": "separate unchecked/inconclusive/stale state; never label as poor",
+    "selection": "report band does not change a take; human listening decides acceptability",
+    "preservation": "no recording deletion, generation replay, frozen-setting migration, or budget renewal on resume",
+    "guide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
+    "guideRevision": "workflow-controls-guide-4-first-audible",
+    "native": "shared iPad/iPhone implementation; phone build 196 installed; 27/27 saved first takes delivered; full decode and increasing frame timestamps pass; Samuel rejected voice consistency and emotion",
+    "desktop": "repair-fallback-permissions-249 source still has fit/rejection gates; counterpart implementation and installed acceptance pending",
+    "iPad197": {
+      "source": "shared native build 197; regular video frame clock also covers held final frames",
+      "tests": "M4 isolated tail export passes full frame decoding with strictly increasing presentation timestamps, complete audio and unchanged first recording",
+      "installed": true,
+      "wholeEpisodeAccepted": false,
+      "evidence": ".build/activity196/tail197.xcresult"
+    },
+    "optionalTimingException": "WF-17 permits one explicitly enabled overlap-timing repair after more than two seconds of confirmed simultaneous speech; default zero/off keeps the first audible take."
+  },
+  "controlPresentation": {
+    "revision": "compact-optional-ai-controls-200",
+    "copyRevision": "workflow-controls-guide-6-source-fallback",
+    "interfaceLanguageStyle": "Written Traditional Chinese (Hong Kong). Generated Cantonese dialogue retains spoken Hong Kong grammar.",
+    "header": "Production slider and additional-repair wand icons.",
+    "controlRows": "Labels, switches and values only. Full descriptions stay in the guide.",
+    "warning": "One short cost and quality warning above the controls.",
+    "workspaceAssistant": "No caption or duplicate overall progress bar. Embedded work-step progress remains.",
+    "screenSaver": "Overall progress bar is visible during conversion. Settings may preview it.",
+    "policyEffect": "None. Keep settings, saved permissions and consumed budgets unchanged.",
+    "iPad": "Compact interface delivered in normal build 201 on M4. Compile, locale, guide and browser checks pass. Native compact-panel visual acceptance pending.",
+    "desktop": "Implemented and installed in Mac 0.24.99/build252. Four-locale browser checks pass at two widths. Two header icons, one common warning, and label-only switches. Line editing and export mix use context drawers. Windows packaging and native visual acceptance remain pending.",
+    "desktopAssistant": "Animation only. Desktop removes embedded work-step meters under the direct user request. Do not claim exact iPad artwork parity."
+  },
+  "foregroundVideoQueue": {
+    "revision": "ipad-foreground-queue-201",
+    "rules": [
+      "WF-04",
+      "WF-07",
+      "WF-09"
+    ],
+    "trigger": "User-started or user-resumed full-video automatic conversion, after final save and model cleanup.",
+    "order": "Later items in visible library order. No wrap. Skip introduction and completed jobs.",
+    "savedJobs": "Resume frozen settings and spent budgets. Never renew allowances.",
+    "newJobs": "Inherit dubbing settings. Resolve source workflow for each subtitle type with saved defaults.",
+    "stop": "Pause, background, errors, missing resources, or conflicting work. No automatic retry of failed handoff.",
+    "exclusions": "Clip tests, single-line retakes and manual exports do not start the next video.",
+    "coldLaunch": "Welcome only. User must continue.",
+    "iPad": "Normal build 201 installed and launched on M4. Three isolated native tests pass, including actual pipeline cleanup and callback. Ranma checkpoint unchanged. Full-film batch acceptance pending.",
+    "desktop": "Separate scheduling. Not changed or certified by this iPad task.",
+    "iPhone202": "Normal phone 202 installed. Three native queue cases and active-workspace layout gates pass. No real multi-video phone run. Cold Welcome never starts the next video."
+  },
+  "sourceSelectionFallback": {
+    "revision": "missing-text-speech-ocr-203",
+    "rules": [
+      "WF-04",
+      "WF-07",
+      "WF-10"
+    ],
+    "when": "Explicit subtitle/speech flow with no readable selected text subtitles.",
+    "effective": "speech-ocr",
+    "notice": "Record the fallback reason and show the effective flow. Burned-in captions require OCR.",
+    "defaults": "Automatic subtitles-speech / ocr-speech preferences remain unchanged.",
+    "readErrors": "Do not replace explicit selected-file read errors with an absence result.",
+    "unfinishedInitialization": "Finish selection only if no source workflow, source policy, translation or recording is finalized.",
+    "preservation": "Frozen workflows and consumed allowances remain unchanged.",
+    "iPad": "Normal build 203 installed and launched on M4. Five native checks pass, including actual failed-window quarter recovery. Original Ninja Cat checkpoint and attempt ledger unchanged.",
+    "desktop": "Owner notified. Counterpart inspection pending."
+  },
+  "whisperSourceRecovery203": {
+    "policy": "bounded-four-quarter-windows-203",
+    "newJobs": "One full-window round, then four fixed quarter-windows. At most two reserved rounds.",
+    "legacy": "Keep two half-windows and existing ledger identity. No renewal after exhaustion.",
+    "cache": "Bind new cache identity to the saved recovery policy.",
+    "error": "Show actual window, cause and saved limit. Retain English technical details.",
+    "status": "Normal build 203 installed. Five native checks pass. The isolated failed 30-second window succeeds with four quarter decodes in 87.092 seconds. Original allowances remain unchanged. Whole-film acceptance pending."
+  },
+  "desktopContextEditor252": {
+    "state": "Mac0.24.99/build252 installed; Windows package deferred",
+    "productionHeader": [
+      "production",
+      "automation"
+    ],
+    "selectedLine": [
+      "listen",
+      "record",
+      "adjust"
+    ],
+    "captionOnlyEdit": "Preserve selected audioTake and reviewDecisions. Script, transcript and role changes invalidate the current selection.",
+    "mix": "Use productionConfig scope. Default gain 0.8, ducking false. Range 0 to 1.5. Save visible values. Preview volume is separate.",
+    "nativeAudioRequest": "Single-line retake sets previewNativeAudio on a cloned submission. No actual TTS inference was performed in this task.",
+    "tests": {
+      "browserLocales": 4,
+      "viewportCases": 8,
+      "focusedBackend": 3,
+      "projectEdit": 17,
+      "scope": 13,
+      "broaderPassed": 79,
+      "broaderTotal": 81,
+      "baselineFailures": 2,
+      "AACExports": 3,
+      "actualModelInference": false
+    },
+    "evidence": "docs/DESKTOP-INSPECTOR-CONSOLIDATION.md; .build/inspector99/",
+    "policyEffect": "No conversion mode, source selection, automatic repair or export worker changes. The first-take duration/fallback defect and held-tail work remain open."
+  },
+  "requiredCaptionTarget205": {
+    "revision": "subtitle-target-presence-205",
+    "freeze": "new jobs only; legacy policy and spent allowances stay unchanged",
+    "script": "retain readable draft; content findings remain advisory; Chinese primary can supply Traditional Chinese wording after bounded translation failure",
+    "names": "priority-source prompts bypass the legacy fixed franchise table; universal primary-name extraction remains a separate open item",
+    "missingAudio": "keep first audible take; at most three total generation calls per line; one selected-engine generic fill for an unavailable clone reference within that total",
+    "permissions": "no implicit other-engine or native voice; no replacement of audible takes",
+    "reference": "Whisper local caption clocks once per exact cached window; exact transcript for truncated source reference",
+    "mix": "separated music under allowed target tails in uncaptioned source intervals; original outside overlap; protected OP/ED unchanged",
+    "sourceRecovery": "one full round then eight fixed parts; no third round; legacy half/quarter policies preserved",
+    "state": {
+      "iPad": "Normal205 installed and launched on M4; nine focused cases pass, including native late Ninja recognition and caption-to-Cosy generation. Whole-film acceptance remains pending.",
+      "iPhone": "Normal224 installed. Completed205 core retained. Actual5.25second exact-reference Whisper/Gemma/Cosy passes. Older failed30second source window still fails at the first3.75second part. No old-job migration or budget reset.",
+      "desktop": "0.25.0/build253 installed in dist. Aggregate three-call presence guard, first-audible selection, and full-tail export have isolated execution evidence. Guide9 is exact. Whole-film and Windows native execution remain open.",
+      "wholeFilm": "not accepted"
+    },
+    "evidence": "mobile/Validation/required-caption-target-build205-2026-10-28.json",
+    "guideRevision": "workflow-controls-guide-7-required-caption-target",
+    "desktopReviewClarification": "Samuel reaffirmed zero optional content checks and preservation of the first audible take. The iPad0–2 content-check stepper is separate from mandatory missing/damaged-audio recovery. Desktop252 has an AI switch but no matching count control. The exact-input/per-line three-call comparison is an internal recovery distinction, not a request to regenerate voiced lines three times. No app change in this clarification."
+  },
+  "gptMLXDeployment": {
+    "decisionDate": "2026-10-28",
+    "priority": "Speed first",
+    "targetOrder": [
+      "iPad",
+      "iPhone after iPad acceptance"
+    ],
+    "runtime": "Reuse one shared MLX runtime with CosyVoice",
+    "frontend": "Keep verified Cantonese preprocessing until equivalent replacement evidence exists",
+    "mandatoryAudioCheck": "Always on; preserve existing first-take and recovery budgets",
+    "guide": "M4223 and phone224 bundle exact shared guide9. Desktop consumer records its own installed revision.",
+    "states": {
+      "MacCandidate": "Short listening comparison accepted. Timing boundaries differ. No speed factor established.",
+      "iPad": "Normal223 retains tested215 MLX, restores the character icon, preserves explicit engine choices, and implements the new workflow. Backend whole-film acceptance remains open.",
+      "iPhone": "Normal224 installed. Six fresh native MLX calls, cancellation/recovery subchecks, memory bounds, and retained-take export pass. Whole-film and listening acceptance remain open.",
+      "desktop": "Application backend unchanged"
+    },
+    "acceptance": [
+      "Equal-boundary timing",
+      "Repeated real-device output",
+      "Memory bounds",
+      "Cancellation",
+      "Saved job and budget preservation",
+      "Whole-film validation"
+    ],
+    "model": "v2ProPlus; saved v4 F5/CFM jobs retain their model and engine",
+    "referencePreprocessing": "Pinned native frontends and ONNX SSL/speaker encoders; neural semantic and VITS generation use shared MLX Metal",
+    "evidence": "mobile/Validation/gpt-mlx-deployment-build215-2026-10-28.json",
+    "brandScopeCorrection": {
+      "date": "2026-10-28",
+      "target": "Use the website mark in-app. Preserve the original Shion HomeScreen App icon.",
+      "iPad": "Implemented, package-verified, installed, and visually inspected on221.",
+      "iPhone": "Normal224 retains the original Shion App icon. The20point in-app website mark follows the theme. Physical HomeScreen cache acceptance remains open.",
+      "evidence": "mobile/Validation/ipad-original-app-icon-build221-2026-10-28.json"
+    }
+  },
+  "historicalFieldScope": {
+    "defaults": "The balanced workMode field below is historical V1/V2 configuration, not the active untouched Basic default.",
+    "workModes": "Historical performance/balanced/quality tables stay readable for frozen jobs. They do not select new Basic or Expert behaviour.",
+    "delivery": "Historical recovery sequence; active baseline and explicit new-job permissions take precedence. Do not run this sequence unconditionally for an audible take."
+  },
+  "activeStandardFlow": {
+    "revision": "shared-workflow-controls-4-language-budget-overlap",
+    "platforms": [
+      "macOS",
+      "Windows",
+      "iPadOS",
+      "iOS"
+    ],
+    "languages": [
+      "yue",
+      "zh",
+      "en"
+    ],
+    "baseline": "One fast first generation with language-aware first-draft length guidance. Retain the first audible take.",
+    "optionalDefaults": {
+      "contentChecks": 0,
+      "autoRepair": false,
+      "fullAIReview": false,
+      "limitSpeechDuration": false,
+      "repairExcessiveAudibleOverlap": false
+    },
+    "mandatoryPresence": "Missing, silent, or damaged required audio receives bounded fill independent of optional zero. At most three total calls under the new shared presence rule, including one selected-engine generic fill if needed. Never retry a voiced take just to use this allowance.",
+    "expert": "Same baseline plus explicit optional controls; changing UI does not change a frozen job.",
+    "sourcePriority": "Readable authored subtitles are primary by default. Source speech supplies onset/end; OCR does not set the speech clock.",
+    "draftBudget": {
+      "revision": "language-aware-first-draft-budget-1",
+      "target": "Original speech interval; do not enlarge the draft for an allowed overlap.",
+      "units": {
+        "yue": "spoken syllable estimate; Chinese characters are a proxy",
+        "zh": "Mandarin spoken syllable estimate with its own rate",
+        "en": "spoken words and syllables including expanded numbers, abbreviations and names"
+      },
+      "rateProfile": "versioned target-language, engine and reference-voice estimate from usable existing recordings; documented conservative prior when absent",
+      "extraCalibrationGeneration": false,
+      "preserveMeaning": true,
+      "numericHardTruncation": false,
+      "extraTranslationPassByDefault": false,
+      "followingGap": "natural tail tolerance only; not extra text allowance",
+      "record": [
+        "estimatorRevision",
+        "language",
+        "engine",
+        "referenceIdentity",
+        "rateSource",
+        "sourceSeconds",
+        "plannedRange",
+        "generatedSeconds"
+      ]
+    },
+    "audibleOverlapRepair": {
+      "revision": "optional-audible-overlap-repair-1",
+      "uiPlacement": "Expert additional AI repair",
+      "default": false,
+      "thresholdSeconds": 2,
+      "comparison": "strictly greater than threshold; exactly two seconds does not trigger",
+      "measure": "union of confirmed simultaneously audible target-speech intervals on the same language track, against subsequent takes; no double-counting",
+      "notEquivalentTo": "file duration overrun, subtitle overlap, source-versus-target track comparison, or a silent overlap",
+      "uncertainty": "report only; PCM energy alone is not speech or language evidence; retain quiet endings",
+      "maximumRewriteRetakeOperationsPerLine": 1,
+      "reference": "same speaker reference and target language",
+      "permissions": "independent timing mutation permission; no implicit content checks, general repair, full review, other engine or system voice",
+      "strictDurationInteraction": "do not add a second timing rewrite when strict-duration handling already owns this line",
+      "failedCandidate": "retain original audible take and report unresolved overlap",
+      "tempoAcceleration": false,
+      "wordCutting": false,
+      "reserveBeforeInference": true,
+      "resumeRefund": false
+    },
+    "platformStates": {
+      "desktop": {
+        "implemented": true,
+        "executionTested": true,
+        "installed": true,
+        "wholeFilmAccepted": false,
+        "note": "Mac and Windows packages installed in dist. 206 focused checks and four-language browser controls pass. Real FFmpeg full-tail export passes with synthetic PCM. Actual Windows execution, optional ASR plus neural retake, and whole-film listening remain open.",
+        "build": 253,
+        "version": "0.25.0",
+        "frozenRevision": "basic-first-audible-253",
+        "evidence": "docs/DESKTOP-WORKFLOW-0.25.0.md"
+      },
+      "iPad": {
+        "implemented": true,
+        "executionTested": true,
+        "installed": true,
+        "wholeFilmAccepted": false,
+        "build": 223,
+        "frozenRevision": "standard-first-audible-223",
+        "note": "Local-AI first-request guidance and optional overlap coordinator are implemented. Fourteen native cases pass. Real E4B requests and synthetic export pass. Production overlap ASR plus TTS and Apple system-translation duration guidance remain open.",
+        "evidence": "mobile/Validation/ipad-workflow-build223-2026-10-28.json"
+      },
+      "iPhone": {
+        "implemented": true,
+        "executionTested": true,
+        "installed": true,
+        "wholeFilmAccepted": false,
+        "build": 225,
+        "frozenRevision": "standard-first-audible-223",
+        "note": "Eighteen native cases and final three boundary cases pass. Actual E4B, Whisper/Cosy, MLX, and native export have bounded evidence. Real optional overlap ASR/TTS, Apple system-translation guidance, and whole-film acceptance remain open.",
+        "evidence": "mobile/Validation/iphone-workflow-build224-2026-10-28.json",
+        "executionEvidenceBuild": 224,
+        "interfaceEvidence": "mobile/Validation/iphone-interface-build225-2026-10-29.json"
+      }
+    },
+    "evidence": "Per-platform receipts separate implementation, execution tests, installation, and whole-film acceptance. Desktop253 has bounded execution evidence; whole-film acceptance remains open."
+  },
+  "mobileWorkflow223": {
+    "revision": "standard-first-audible-223",
+    "build": 223,
+    "implemented": true,
+    "installed": true,
+    "firstDraftEstimator": "language-aware-first-draft-budget-1",
+    "overlapRevision": "optional-audible-overlap-repair-1",
+    "detector": "Installed Apple audio-only attributed lexical ranges. Broad or unavailable timing remains unconfirmed.",
+    "mandatoryPresence": "First clone plus one missing retry, then at most one selected-engine generic fill. Three calls total. Existing voiced takes do not enter this path.",
+    "resume": "No restamp, counter refund, engine swap, or first-recording replacement.",
+    "guideRevision": "workflow-controls-guide-9-mobile-language-budget-overlap",
+    "guideSHA256": "204aa2c22c705648ed5ae5d0e1160218b4c2c26bf55a1476a93d6c74fb4b97bd",
+    "guideItems": 25,
+    "testedUniqueCases": 14,
+    "evidence": "mobile/Validation/ipad-workflow-build223-2026-10-28.json",
+    "desktopPickup": "Use shared guide9 and review AAC parameter bounds. Desktop253 installation remains separately owned.",
+    "phonePickup": "Consumed in normal phone224 with exact guide9. Hardware, explicit engine preferences, and three saved checkpoints remain. Native execution evidence is separate from whole-film acceptance."
+  }
 }

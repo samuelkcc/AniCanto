@@ -37,12 +37,24 @@ def project(root,review,row):
         if type(index) is not int or index<1:return
         e=value.get('engine') or engine or cfg.get('ttsBackend','');lang=value.get('language') or language or cfg.get('targetLanguage','yue')
         key=f'{lang}:{e}:{index}';cue=cues[index-1] if index<=len(cues) else {}
+        # Deliberately untranslated subtitle gaps/continuations are source
+        # evidence, not failed TTS. Keep actual clock/allocation concerns.
+        if cue.get('subtitleContentOnlyGap') and value.get('kind')=='subtitle-allocation-unconfirmed' and not cue.get('sourceAllocationReview'):return
+        preserved=cue.get('preserveOriginalSpeech') and cue.get('originalSpeechReason') in ('subtitle-content-only-gap','subtitle-continuation')
+        if preserved and (value.get('kind') in ('missing-script','normal-unresolved','preview-original-fallback','failed-voice-choice') or value.get('reason')=='missing-script'):
+            if cue.get('sourceAllocationReview'):value=dict(value,kind='subtitle-allocation-unconfirmed');status='source-review'
+            elif cue.get('sourceClockUnconfirmed'):value=dict(value,kind='source-clock-unconfirmed');status='source-review'
+            else:return
         target=resolved if status=='repaired' else items
         item=target.setdefault(key,dict(id=hashlib.sha256(key.encode()).hexdigest()[:20],index=index,engine=e,language=lang,start=value.get('start',cue.get('start')),end=value.get('end',cue.get('end')),kind=value.get('kind') or value.get('reason') or 'verification-unresolved',status=status,evidence=[],attempts=[]))
         item['evidence'].append(dict(file=origin,**value));item['text']=cue.get(__import__('output_language').field(lang),'')
         if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script','name-term-mismatch'):item['kind']=value['kind']
         if status=='repairing':item['status']='repairing'
     for index,cue in enumerate(cues,1):
+        if cue.get('sourcePrimaryFallback'):
+            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-primary-fallback',message='The selected primary source had no readable content here. The auxiliary source supplied this line; compare the recording and source text.'),origin='source-policy.json')
+        if cue.get('sourcePolicyBlocked') or cue.get('sourceAllocationReview'):
+            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='subtitle-allocation-unconfirmed',message='Source subtitles were read. The split between spoken turns needs review; inspect the source caption and recording before regenerating.'),origin='source-policy.json')
         if cue.get('sourceClockUnconfirmed') or 0<cue.get('end',0)-cue.get('start',0)<.12:
             insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-clock-unconfirmed',message='Source word timing could not be confirmed. Compare the original audio; preservation and current delivery are shown separately.'),origin='source-timing-review.json')
     # Explicit current-track records avoid merging every obsolete render hash.
@@ -74,6 +86,11 @@ def project(root,review,row):
         for v in read(folder/'failed-voice-choices.json',{}).get('decisions',[]):
             insert(dict(v,kind='failed-voice-choice'),engine,language,origin=origin+'/failed-voice-choices.json')
         for v in checks.get('repairs',[]):
+            # v3/v4 persist every audible take to support resume. This is not
+            # an instruction to present every uninspected recording as broken.
+            evidence=v.get('check') or {}
+            no_op=v.get('reason')=='uncertain-or-usable' and not v.get('attempts') and not v.get('repaired') and v.get('index') not in checks.get('unresolved',[])
+            if no_op and not any(evidence.get(k) for k in ('contentFailure','languageFailure','requiresReview','requiresLanguageReview','needsReview','requiresTimingReview')):continue
             insert(dict(v,kind='targeted-language-or-integrity'),engine,language,'repaired' if v.get('repaired') else 'repairing' if active else 'unresolved',origin+'/normal-checks.json')
         for v in checks.get('advisories',[]):
             insert(dict(v,kind='first-audible-take-retained'),engine,language,'language-unconfirmed',origin+'/normal-checks.json')
@@ -81,7 +98,10 @@ def project(root,review,row):
         for index in checks.get('unresolved',[]):insert(dict(index=index,kind='targeted-language-or-integrity'),engine,language,origin=origin+'/normal-checks.json')
         placement=read(folder/'natural-placement.json',{})
         for v in placement.get('rows',[]):
-            if v.get('seconds') is not None and not v.get('fit'):insert(dict(v,kind='timing-overrun'),engine,language,'repairing' if active else 'unresolved',origin+'/natural-placement.json')
+            measured=v.get('seconds');limit=v.get('deadline',0)-v.get('start',0) if isinstance(v.get('deadline'),(int,float)) and isinstance(v.get('start'),(int,float)) else None
+            # Match the measured delivery margin; decimal subtraction alone
+            # (2.7 > 2.699999999999) must never manufacture an overrun notice.
+            if measured is not None and not v.get('fit') and (limit is None or measured>limit+.005):insert(dict(v,kind='timing-overrun'),engine,language,'repairing' if active else 'unresolved',origin+'/natural-placement.json')
         for v in read(folder/'target-reference-recovery.json',{}).values():
             fit=next((p.get('fit') for p in placement.get('rows',[]) if p.get('index')==v.get('index')),False)
             status='repaired' if v.get('status')=='adopted' and fit else 'repairing' if active and v.get('status') in ('reserved','generating','generated') else 'unresolved'
@@ -147,12 +167,23 @@ def project(root,review,row):
                 item=items.get(f'{lang}:{engine}:{n+1}')
                 if item:item.update(status='user-choice-saved',userDecision=decision)
     for key in items:resolved.pop(key,None)
+    # A listening/alignment advisory is not permission to regenerate a line.
+    # Delivery coverage and explicit content-failure evidence remain separate.
+    for item in items.values():
+        folder,local_review=contexts.get((item['language'],item['engine']),(root,review))
+        local_cues=local_review.get('cues') or cues
+        cue=next((c for n,c in enumerate(local_cues) if c.get('reviewIndex',n)+1==item['index']),{})
+        missing=any(t.get('engine')==item['engine'] and t.get('language','yue')==item['language'] and any(r.get('index')==item['index'] and r.get('available') is False for r in t.get('rows',[])) for t in coverage.get('tracks',[]))
+        explicit=item['index'] in __import__('delivery_policy').confirmed_indices(local_review.get('config',cfg),folder)
+        required=bool(cue.get('enabled',True) and not cue.get('preserveOriginalSpeech'))
+        physical=item['kind'] in ('missing-script','missing-audio','fast-generation-failed','tts-generation','reference-blocked')
+        item['repairEligible']=bool(required and (missing or explicit or physical))
+        item['reviewLevel']='delivery' if item['repairEligible'] else 'advisory'
     summary=dict(processing=active,pending=sum(x['status']!='voice-fallback' for x in items.values()),voiceFallbacks=sum(x['status']=='voice-fallback' for x in items.values()),repairing=sum(x['status']=='repairing' for x in items.values()),repaired=len(resolved),userChoices=sum(x['status']=='user-choice-saved' for x in items.values()),qualityChecked=not active and report.get('qualityStatus')=='automatic-checks-passed',hasReport=bool(report or coverage or items or resolved))
+    summary.update(repairEligible=sum(x['repairEligible'] for x in items.values()),advisory=sum(not x['repairEligible'] for x in items.values()))
     if not items and row.get('status')=='attention':summary['projectProblem']=(row.get('lastError') or {}).get('message') or row.get('message') or 'The last attempt needs attention; no line-level verdict is available yet.'
-    notices=[]
-    ocr=read(root/'ocr-status.json',{});source=read(root/'input-source.json',{})
-    if ocr.get('status') in ('failed','partial') or source.get('ocrError'):
-        notices.append(dict(code='ocr-incomplete',title='OCR needs attention',message='Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.',detail=ocr.get('error') or source.get('ocrError') or str(ocr.get('failedFrames',0))))
+    from review_notices import project as notice_projection
+    notices=notice_projection(root)
     preserved=[dict(index=n+1,start=c['start'],end=c['end'],reason=c.get('originalSpeechReason')) for n,c in enumerate(cues) if c.get('preserveOriginalSpeech') and c.get('originalSpeechReason') in ('confirmed-source-song','confirmed-nonlexical-performance')]
     summary.update(workflowNotices=len(notices),preservedPerformances=len(preserved))
     return dict(workflowNotices=notices,preservedPerformances=preserved,performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)

@@ -1634,7 +1634,7 @@
 "本句獨立原聲參考" = "Independent original reference for this line";
 "短句參考，需試聽" = "Short reference; audition required";
 "參考未完成" = "Reference incomplete";
-"只補靜音達到引擎所需錄音長度，未借用相鄰對白；有效語音太短時需重新試聽或換參考。" = "Silence padding meets the engine duration requirement. No neighbouring dialogue is borrowed. Audition or replace references with too little speech.";
+"只補靜音達到引擎所需錄音長度，未借用相鄰對白；有效語音太短時需重新試聽或換參考。" = "Below 3 seconds: quiet room tone from the same scene fills the engine length after a level check. Neighbouring dialogue is never borrowed. Audition or replace references with too little speech.";
 "第 %d 句原聲" = "Original voice for line %d";
 "選擇一句檢視原聲參考。" = "Select a line to inspect its original reference.";
 "%d 個逐句參考 · %d 段對白" = "%d per-line references · %d dialogue lines";

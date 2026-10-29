@@ -16,7 +16,7 @@ AniCanto は、プロの声優への敬意を持って作られた言語学習�
 
 - [アプリのライセンス](../../LICENSE)と[配布通知](../../NOTICE.txt)。
 - [モデルのライセンス根拠](../../licenses/model-evidence.json)、[モデル通知全文](../../licenses/models/)、[部品通知](../../licenses/)。
-- [リリースと対応ソース資料](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta)。選択された部品の関連ソースとビルド資料をバイナリに併せて提供します。同じリリースの資料を保持してください。
+- [リリースと対応ソース資料](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.0-beta)。選択された部品の関連ソースとビルド資料をバイナリに併せて提供します。同じリリースの資料を保持してください。
 - アプリの **About → Licences** で同梱通知を検索できます。
 
 FFmpeg などには実際のビルドの条件が適用されます。[FFmpeg 配布ガイド](https://ffmpeg.org/legal.html)と同梱資料を参照してください。

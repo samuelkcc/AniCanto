@@ -81,7 +81,7 @@ def inspect_rendered_voice(cfg,job,cues,timing,emit):
 
 def validate_export(cfg,job,cues,target,run,emit):
     import fast_mode
-    if fast_mode.enabled(cfg):return fast_mode.validation(cfg,job,cues,target,run,emit)
+    if fast_mode.enabled(cfg) or __import__('delivery_policy').bounded_delivery(cfg):return fast_mode.validation(dict(cfg,productionMode='fast' if cfg.get('workMode')=='performance' else 'normal') if __import__('delivery_policy').bounded_delivery(cfg) else cfg,job,cues,target,run,emit)
     emit('輸出驗證','檢查每句可聽見人聲、音軌、字幕同整條影片解碼；未通過唔標記完成。',.97)
     job=Path(job);timing=json.loads((job/'timing.json').read_text())
     rows=check_voice(job,cues,timing,cfg.get('continueOnError',True))
@@ -101,7 +101,7 @@ def validate_export(cfg,job,cues,target,run,emit):
     if audio[0].get('tags',{}).get('language')!=__import__('output_language').LANGUAGES[cfg.get('targetLanguage','yue')][2] or not audio[0].get('disposition',{}).get('default'):
         raise ValueError('輸出驗證失敗：預設音軌同所選配音語言不符。')
     if cfg.get('separateBackground') and audio[0].get('channels')!=2:raise ValueError('輸出驗證失敗：背景立體聲缺失。')
-    if not cfg.get('burnOutputCaptions') and not any(s.get('codec_type')=='subtitle' for s in meta['streams']):
+    if not cfg.get('burnOutputCaptions') and any(c.get('enabled',True) and c.get('captionText',c.get('cantonese','')).strip() for c in cues) and not any(s.get('codec_type')=='subtitle' for s in meta['streams']):
         raise ValueError('輸出驗證失敗：字幕軌缺失。')
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     can_check=cfg.get('autoValidate',True) and not cfg.get('_userSkipped') and (Path(cfg.get('storage',''))/'asr-ready.json').is_file()

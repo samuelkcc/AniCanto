@@ -21,14 +21,27 @@ def audible(path):
 
 def choose(cfg, job, cues, paths):
     """Return selected TTS paths and indices whose source speech is preferred."""
+    if __import__('repair_permissions').enabled(cfg):
+        return __import__('repair_permissions').choose(cfg,job,cues,paths)
     job = Path(job)
     checks = read(job / 'normal-checks.json', {})
     unresolved = set(checks.get('unresolved', []))
+    placement=read(job/'natural-placement.json',{})
+    unresolved.update(r['index'] for r in placement.get('rows',[]) if not r.get('fit') and r.get('seconds') is not None)
     repairs = {r.get('index'): r for r in checks.get('repairs', [])}
     generic = read(job / 'target-reference-recovery.json', {})
     generic_available = {r.get('index') for r in generic.values()
                          if r.get('status') in ('adopted', 'selected-unverified')
                          and audible(r.get('selectedAudio') or r.get('audio'))}
+    if __import__('delivery_policy').enabled(cfg):
+        alternate=read(job/'alternate-engine-recovery.json',{})
+        generic_available.update(r.get('index') for r in alternate.values() if r.get('genericTargetReference') and r.get('status')=='adopted' and audible(r.get('selectedAudio')))
+    from delivery_policy import bounded_delivery,confirmed_indices
+    confirmed=confirmed_indices(cfg,job)
+    if bounded_delivery(cfg):
+        unresolved=confirmed | {r['index'] for r in placement.get('rows',[]) if not r.get('fit')} | {c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if not audible(paths[i]) and c.get('cantonese','').strip()}
+        native=read(job/'system-voice-fallback.json',{}).get('records',{})
+        generic_available.update(r.get('index') for r in native.values() if r.get('status')=='adopted' and audible(r.get('selectedAudio')))
     policy = cfg.get('failedVoicePolicy', 'generic')
     if policy not in ('generic', 'first-take', 'source'):
         policy = 'generic'
@@ -47,7 +60,14 @@ def choose(cfg, job, cues, paths):
             first = record.get('originalAudio')
             alternatives = [a.get('candidateAudio') for a in record.get('attempts', [])]
             candidate = next((p for p in [first, *alternatives] if audible(p)), None)
-            if candidate:
+            if bounded_delivery(cfg) and index in confirmed:
+                if index in generic_available and audible(selected[i]):
+                    action='confirmed-error-replaced-with-target-fallback'
+                else:
+                    source.add(i);action='source-after-confirmed-error-and-fallback-failure'
+            elif bounded_delivery(cfg) and any(r.get('index')==index and not r.get('fit') for r in placement.get('rows',[])):
+                source.add(i);action='source-after-measured-overrun-and-fallback-failure'
+            elif candidate:
                 selected[i] = Path(candidate)
                 action = 'first-audible-take'
             elif audible(selected[i]):

@@ -7,8 +7,10 @@ export class ConversionQueue {
   this.enabled=all;this.includeAttention=includeAttention;this.attempted=new Set();this.explicit=new Set();
   this.pending=(all?rows.filter(r=>['waiting','paused',...(includeAttention?['attention']:[])].includes(r.status)):[]).map(r=>r.id);
   if(includeAttention)for(const r of rows)if(r.status==='attention')this.explicit.add(r.id);
+  // Batch Start follows the visible order, including paused/review items.
+  // Selection only overrides order for an explicit single-video action.
   const chosen=rows.find(r=>r.id===selected);
-  if(chosen&&(!all||chosen.status==='paused'||chosen.status==='attention')){
+  if(chosen&&!all){
    this.pending=[chosen.id,...this.pending.filter(id=>id!==chosen.id)];
    this.explicit.add(chosen.id);
   }

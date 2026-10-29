@@ -43,8 +43,19 @@ def language_hint(language,style):
     if style in ('cantonese-yue','cantonese-yue-clauses'):
         return '請用粵語讀出以下台詞，唔好用普通話或日文。完整讀出每個字，保留原聲語氣，唔好加字或重複。'
     if style in ('cantonese-strict','cantonese-strict-clauses'):
-        return '用香港廣東話講，唔好日文或普通話。完整讀出指定台詞，唔好加字、重複、拖長尾音或額外停頓，保留自然情緒'
+        return ('用香港廣東話講，唔好日文或普通話。完整讀出指定台詞，唔好加字、重複、拖長尾音或額外停頓。'
+                '跟住參考錄音嘅音高起伏、速度同情緒講，唔好平讀，唔好照稿唸書')
     return '用香港廣東話講，自然語氣'
+
+
+def recovery_styles(cfg):
+    """Styles tried after a capped take. Cantonese recovery keeps the Hong Kong cue.
+
+    The plain styles drop the delivery instruction, which is the reason a repaired
+    line reads flat. They stay only as the last resort for non-Cantonese work.
+    """
+    if str(cfg.get('targetLanguage','yue'))=='yue':return ('cantonese-strict','cantonese-strict-clauses')
+    return ('plain-whole','plain-clauses')
 
 
 CLAUSE_STYLES=('complete-clauses','plain-clauses','cantonese-strict-clauses','cantonese-yue-clauses')
@@ -187,7 +198,7 @@ def generate_complete(model,item,cfg,emit):
     from acoustics import activity
     attempts=[]
     styles=[item.get('deliveryStyle','normal')]
-    alternatives=('cantonese-strict','cantonese-strict-clauses') if cfg.get('productionMode')=='normal' and cfg.get('targetLanguage','yue')=='yue' else ('plain-whole','plain-clauses')
+    alternatives=recovery_styles(cfg)
     styles += [style for style in alternatives if style not in styles]
     for number,style in enumerate(styles):
         fresh=dict(item,deliveryStyle=style,seed=int(item.get('seed',42))+number*104729)

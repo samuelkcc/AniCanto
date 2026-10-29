@@ -8,7 +8,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--02479) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) · [Demo](#try-the-original-demo-and-compare-the-voices)
+[Download](#download-the-beta--0250) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [iPad privacy policy](http://anicanto.com/privacy.html?lang=en) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 
@@ -26,18 +26,20 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.24.79
+## Download the Beta · 0.25.0
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto-macOS-0.24.79.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.24.79-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto-macOS-0.25.0.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.0-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.24.79-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-- **Restart without re-importing:** each video has a circular restart button. Rerun the whole conversion, regenerate voices from the saved script, or add a language / voice-engine track. Earlier exports remain available.
-- **Faster editing:** queue selection for all / none / completed, removal with Undo, original / separated / generated waveforms, subtitle offset and drift correction, and a preview of which recordings a change affects.
-- **More resilient processing:** queue wake handling, bounded OCR frame retries and saved checkpoints, clearer timing and coverage reports, and a more useful debug export. Audible first takes are preserved; measured overlong lines can still receive local shortening.
-- **Hardware-aware setup:** separate RAM / VRAM guidance and supported NVIDIA CUDA runtime choices, with explicit CPU fallback. Detection is not a guarantee that every model or graphics card is accelerated.
+- **One fast baseline:** Basic and Expert keep the first audible recording. The first Cantonese, Mandarin or English translation receives soft source-time guidance.
+- **Optional AI Repair:** content checks start at 0. Missing/silent audio still receives bounded fill. Strict duration and repair of audible overlap over 2 seconds are separate, default-off choices.
+- **Clearer editing:** compact Production and AI Repair tabs, Global/individual settings, line-level listening and retakes, and a separate mixer drawer. The Welcome mark follows the theme; the Shion App icon stays.
+- **Matching desktop packages:** Mac and Windows share the workflow and interface. NVIDIA CUDA setup remains available. This Windows build is cross-compiled; native PC testing is still required.
+
+[Workflow, test evidence and limits](docs/DESKTOP-WORKFLOW-0.25.0.md). Old paused jobs keep their frozen settings; reset a test video or create a new conversion to test the new policy.
 
 ## Try the original demo and compare the voices
 
@@ -83,6 +85,8 @@ The author’s test machines are a **MacBook Pro with M2 Max and 64 GB unified m
 
 **Author-reported timing with full Drama 3 on the M2 Max: approximately 1:2 video-to-processing time** — a 30-minute video takes about 60 minutes to convert, including automatic AI repair for roughly 8–10% of dialogue lines in those tests. This is an example from the author’s workload, not a promised speed or a Windows estimate. Scene complexity, model settings, repairs, storage and memory pressure can change the total substantially.
 
+The timing example above used an earlier repair policy. Version0.25.0 leaves optional checks off by default.
+
 If your configuration behaves differently, please [report the problem](https://github.com/samuelkcc/AniCanto/issues) with the app version, operating system, CPU, RAM, graphics card/VRAM, selected models and the stage that stopped or slowed down. Include a sanitised diagnostic log where possible; private videos or recordings are not needed.
 
 ## What the app does
@@ -90,7 +94,7 @@ If your configuration behaves differently, please [report the problem](https://g
 | Feature | How you can use it |
 | --- | --- |
 | **Cantonese / Mandarin / English dubbing** | Choose one language or a combination, with separate audio and subtitle tracks in one movie, switchable in a compatible player. |
-| **Chinese subtitles as context** | Use embedded text tracks, external subtitles or screen OCR to help check names and meaning. Japanese speech remains the primary source. |
+| **Chinese subtitles as context** | Selected readable text subtitles provide meaning by default; source speech provides timing. Without text tracks, compare OCR and recognised speech. |
 | **Opening and ending preservation** | Automatically detect OP / ED regions and keep their original Japanese songs and audio by default. |
 | **Basic and Expert modes** | Start with automatic processing, or use the timeline to edit scripts, adjust timing and work on individual lines. |
 | **Audition, retake and review** | Compare original, separated and generated speech; retake a line or choose a saved recording, then export another version while retaining the previous movie. |
@@ -117,11 +121,13 @@ Independent listening checks flag uncertain words and language problems. Optiona
 
 ### AI automatic repair
 
-Normal mode now prioritises preserving the first audible recording:
+The standard flow keeps the first audible take. Extra checks default to zero.
 
-1. **Keep** — Retain audible recordings; language, accent and missing-word concerns remain review notes.
-2. **Restore missing audio** — Only missing or damaged recordings receive up to two additional attempts. Measured overlong lines are shortened locally, with meaning checked and duration measured before adoption. Language doubts do not trigger retakes.
-3. **Review when needed** — Audition a line, choose a saved take or regenerate manually. Detailed automatic checking is an explicit Preferences choice.
+1. **Translate once** with soft source-time guidance in Cantonese, Mandarin or English. Preserve meaning.
+2. **Fill missing audio** with a saved allowance of at most three calls per line in total, including the initial clone and one selected-engine generic fill. Audible takes do not use this retry allowance.
+3. **Optional Expert controls** independently enable content checks, content repair, strict duration or repair of more than two seconds of confirmed audible overlap. Silence does not count as overlap. Failed optional retakes keep the first take.
+
+Default output permits overlapping dialogue and retains complete takes at source onsets, extending the final frame if needed. Old paused jobs retain their saved policy.
 
 Apple Silicon offers optional **MLX Whisper** checking (about 3.1 GB). Each completed check is saved and reused; timeouts retain completed work. On the same 102-recording test, CPU took 18m16s and MLX 2m45s. This measures only the checking stage; recognition results can differ.
 
@@ -133,7 +139,7 @@ Beyond Japanese animation, AniCanto can try converting other detected source lan
 
 ## Your subtitles, your language tracks
 
-AniCanto uses **spoken dialogue as the primary source**, with subtitles helping it check meaning and names. A Chinese subtitle track is reference material, not a promise that the same wording will be read verbatim.
+By default, **selected readable embedded or external subtitles provide the meaning** and recognised speech supplies the start/end times. Chinese subtitles are adapted into spoken Cantonese, Mandarin or English. Without usable text subtitles, OCR and speech are compared under the selected policy. Expert mode can change source priority; OCR does not set the speech clock.
 
 | Source or output | What happens |
 | --- | --- |
@@ -188,19 +194,21 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ### Welcome and setup
 
-![Welcome and setup](docs/images/welcome-en.png?v=0.24.79)
+![Welcome and setup](docs/images/welcome-en.png?v=0.25.0)
 
 Choose the interface language, prepare local models, and enter Basic or Expert mode.
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.24.79)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.0)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.24.79)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.0)
+
+![AI Repair](docs/images/ai-repair-en.png?v=0.25.0)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
@@ -208,25 +216,25 @@ Use the full-width timeline to compare source dialogue and dubbing scripts, adju
 
 Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
 
-![ Restart or add a voice track ](docs/images/restart-en.png?v=0.24.79)
+![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.0)
 
 ### Review report: issues and recording comparison
 
-![Review report: issues and recording comparison](docs/images/review-en.png?v=0.24.79)
+![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.0)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.24.79)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.0)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips and learning](docs/images/speech-player-en.png?v=0.24.79)
+![Saved clips and learning](docs/images/speech-player-en.png?v=0.25.0)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.24.79)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.0)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 
@@ -261,7 +269,7 @@ No cloud translation or dubbing service is required for this workflow. Once mode
 
 ## Before you start
 
-AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Subtitles help check meaning; Japanese speech remains the primary source. The app supports separate original, Cantonese, Mandarin and English tracks and OP / ED preservation; results vary by scene.
+AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Selected readable authored subtitles are primary by default; source speech supplies timing. Without usable text subtitles, OCR and recognised speech supply evidence under the selected source policy. Separate original, Cantonese, Mandarin and English tracks and protected OP/ED are supported; results vary by scene.
 
 A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 

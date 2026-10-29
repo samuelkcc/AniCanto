@@ -5,7 +5,11 @@ import {ASSISTANT_RIGS} from './assets/assistant-rigs.js';
 export const CYCLE=12;
 const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
 const band=(a,b,c,d,x)=>smooth(a,b,x)*(1-smooth(c,d,x));
-export function joints(seconds){const t=seconds*2*Math.PI;return {left:.105*Math.sin(t/3),right:.065*Math.sin(t/4),head:.028*Math.sin(t/6),ankle:.07*(1-Math.cos(t/4)),tap:.007*Math.sin(t/1.5),breath:.0035*Math.sin(t/3)}};
+export function joints(seconds,activity='idle'){
+ const t=seconds*2*Math.PI;
+ const work={computer:[.035,.04,1.3],listening:[.09,.035,2.3],translation:[.035,.065,2],dubbing:[.07,.11,1.5]}[activity];
+ return {left:(work?.[0]??.105)*Math.sin(t/(work?.[2]??3)),right:(work?.[1]??.065)*Math.sin(t/(work?.[2]??4)),head:.028*Math.sin(t/(activity==='listening'?3:6)),ankle:activity==='idle'?.07*(1-Math.cos(t/4)):.008*(1-Math.cos(t/4)),tap:.007*Math.sin(t/(activity==='translation'?1:1.5)),breath:.0035*Math.sin(t/3)};
+};
 export function deform(u,v,pose,rig){
  const aspect=rig.rect[2]/rig.rect[3],center=(rig.anchorX+.5)/2;
  let dx=0,dy=0;
@@ -39,20 +43,21 @@ function makeGL(canvas,image,rig){
  gl.bindBuffer(gl.ARRAY_BUFFER,texBuffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(uv),gl.STATIC_DRAW);const t=gl.getAttribLocation(program,'uv');gl.enableVertexAttribArray(t);gl.vertexAttribPointer(t,2,gl.FLOAT,false,0,0);
  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,indexBuffer);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(indices),gl.STATIC_DRAW);
  gl.bindTexture(gl.TEXTURE_2D,texture);gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
- return {draw(seconds){const pose=joints(seconds);for(let i=0;i<rest.length;i+=2){const xy=deform(rest[i],rest[i+1],pose,rig);positions[i]=xy[0];positions[i+1]=xy[1];}gl.viewport(0,0,canvas.width,canvas.height);gl.clear(gl.COLOR_BUFFER_BIT);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferSubData(gl.ARRAY_BUFFER,0,positions);gl.drawElements(gl.TRIANGLES,indices.length,gl.UNSIGNED_SHORT,0);},dispose(){gl.deleteTexture(texture);gl.deleteBuffer(buffer);gl.deleteBuffer(texBuffer);gl.deleteBuffer(indexBuffer);gl.deleteProgram(program);gl.deleteShader(vs);gl.deleteShader(fs);gl.getExtension('WEBGL_lose_context')?.loseContext()}};
+ return {draw(seconds){const pose=joints(seconds,canvas.dataset.activity||'idle');for(let i=0;i<rest.length;i+=2){const xy=deform(rest[i],rest[i+1],pose,rig);positions[i]=xy[0];positions[i+1]=xy[1];}gl.viewport(0,0,canvas.width,canvas.height);gl.clear(gl.COLOR_BUFFER_BIT);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferSubData(gl.ARRAY_BUFFER,0,positions);gl.drawElements(gl.TRIANGLES,indices.length,gl.UNSIGNED_SHORT,0);},dispose(){gl.deleteTexture(texture);gl.deleteBuffer(buffer);gl.deleteBuffer(texBuffer);gl.deleteBuffer(indexBuffer);gl.deleteProgram(program);gl.deleteShader(vs);gl.deleteShader(fs);gl.getExtension('WEBGL_lose_context')?.loseContext()}};
 }
 function make2D(canvas,image,rig){
  const ctx=canvas.getContext('2d'),columns=8,rows=12;if(!ctx)return null;
  function triangle(src,dst){const [a,b,c]=src,[p,q,r]=dst;const det=a[0]*(b[1]-c[1])+b[0]*(c[1]-a[1])+c[0]*(a[1]-b[1]);if(Math.abs(det)<1e-7)return;
  const solve=values=>[(values[0]*(b[1]-c[1])+values[1]*(c[1]-a[1])+values[2]*(a[1]-b[1]))/det,(values[0]*(c[0]-b[0])+values[1]*(a[0]-c[0])+values[2]*(b[0]-a[0]))/det,(values[0]*(b[0]*c[1]-c[0]*b[1])+values[1]*(c[0]*a[1]-a[0]*c[1])+values[2]*(a[0]*b[1]-b[0]*a[1]))/det];
  const x=solve([p[0],q[0],r[0]]),y=solve([p[1],q[1],r[1]]);ctx.save();ctx.beginPath();ctx.moveTo(...p);ctx.lineTo(...q);ctx.lineTo(...r);ctx.closePath();ctx.clip();ctx.setTransform(x[0],y[0],x[1],y[1],x[2],y[2]);ctx.drawImage(image,0,0);ctx.restore();}
- return {draw(seconds){ctx.clearRect(0,0,canvas.width,canvas.height);const pose=joints(seconds),point=(u,v)=>{const xy=deform(u,v,pose,rig);return [xy[0]*canvas.width,xy[1]*canvas.height]},source=(u,v)=>[rig.rect[0]+u*rig.rect[2],rig.rect[1]+v*rig.rect[3]];
+ return {draw(seconds){ctx.clearRect(0,0,canvas.width,canvas.height);const pose=joints(seconds,canvas.dataset.activity||'idle'),point=(u,v)=>{const xy=deform(u,v,pose,rig);return [xy[0]*canvas.width,xy[1]*canvas.height]},source=(u,v)=>[rig.rect[0]+u*rig.rect[2],rig.rect[1]+v*rig.rect[3]];
  for(let y=0;y<rows;y++)for(let x=0;x<columns;x++){const uv=[[x/columns,y/rows],[(x+1)/columns,y/rows],[x/columns,(y+1)/rows],[(x+1)/columns,(y+1)/rows]],s=uv.map(p=>source(...p)),d=uv.map(p=>point(...p));triangle([s[0],s[1],s[2]],[d[0],d[1],d[2]]);triangle([s[1],s[3],s[2]],[d[1],d[3],d[2]]);}},dispose(){ctx.clearRect(0,0,canvas.width,canvas.height)}};
 }
-function visible(actor){return actor.ready&&actor.visible&&actor.canvas.isConnected&&(actor.canvas.closest('.video-stage')?.classList.contains('preview-off')||!!actor.canvas.closest('.welcome-startup'))&&!document.hidden}
-function schedule(){if(!timer&&!motion.matches&&[...actors.values()].some(visible))timer=requestAnimationFrame(tick)}
-function tick(now){timer=0;if(now-lastFrame>=1000/24){lastFrame=now;for(const actor of actors.values())if(visible(actor)){actor.renderer.draw(now/1000+actor.offset);actor.canvas.dataset.draws=String(++actor.draws);}}schedule()}
-function resize(actor){const size=Math.min(640,Math.max(1,Math.round(actor.canvas.clientWidth*Math.min(2,devicePixelRatio||1))));if(actor.canvas.width!==size){actor.canvas.width=size;actor.canvas.height=size;}if(actor.ready)actor.renderer.draw(motion.matches?0:performance.now()/1000+actor.offset)}
+function visible(actor){return actor.ready&&actor.visible&&actor.canvas.isConnected&&(actor.canvas.closest('.video-stage')?.classList.contains('preview-off')||!!actor.canvas.closest('.welcome-startup')||!!actor.canvas.closest('.assistant-preview'))&&!document.hidden}
+function animated(actor){return visible(actor)&&!actor.canvas.closest('.assistant-workflow.is-resting')}
+function schedule(){if(!timer&&!motion.matches&&[...actors.values()].some(animated))timer=requestAnimationFrame(tick)}
+function tick(now){timer=0;if(now-lastFrame>=1000/24){lastFrame=now;for(const actor of actors.values())if(animated(actor)){actor.renderer.draw(actor.canvas.closest('.assistant-workflow.is-resting')?0:now/1000+actor.offset);actor.canvas.dataset.draws=String(++actor.draws);}}schedule()}
+function resize(actor){const size=Math.min(640,Math.max(1,Math.round(actor.canvas.clientWidth*Math.min(2,devicePixelRatio||1))));if(actor.canvas.width!==size){actor.canvas.width=size;actor.canvas.height=size;}if(actor.ready)actor.renderer.draw(motion.matches||actor.canvas.closest('.assistant-workflow.is-resting')?0:performance.now()/1000+actor.offset)}
 export function syncAssistantMotion(){
  for(const [canvas,actor] of actors)if(!canvas.isConnected){actor.observer.disconnect();actor.resize.disconnect();actor.renderer?.dispose();actors.delete(canvas)}
  for(const canvas of document.querySelectorAll('canvas.assistant-sprite'))if(!actors.has(canvas)){

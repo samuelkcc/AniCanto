@@ -4,6 +4,11 @@ import shutil
 RETIRED_PATTERNS=('scene-*.png','theme-*-poses.png','theme-characters.png','studio-character.png','workspace-guide.png','assistant-busy-atlas.png','assistant-busy-provenance.json','companion-*.png','guide-*.png')
 def prune(resources):
     root=Path(resources)
+    # Local verification can create bytecode that embeds absolute build paths.
+    # A refreshed candidate must be as clean as a newly staged source bundle.
+    for cache in root.rglob('__pycache__'):
+        if cache.is_symlink():cache.unlink()
+        elif cache.is_dir():shutil.rmtree(cache)
     for pattern in RETIRED_PATTERNS:
         for path in root.glob(pattern):
             if path.is_file():path.unlink()

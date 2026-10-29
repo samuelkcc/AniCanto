@@ -1,3 +1,4 @@
+from primary_source import content as primary_content
 """Repair probable neighbour leakage without deleting legitimate repeated speech."""
 import hashlib
 import json
@@ -10,7 +11,7 @@ from difflib import SequenceMatcher
 def suspect(previous,current):
     before=re.findall(r"[\w]+(?:['’][\w]+)*",previous.get('english','').casefold())
     after=re.findall(r"[\w]+(?:['’][\w]+)*",current.get('english','').casefold())
-    source=lambda c:''.join(x.casefold() for x in (c.get('japanese') or c.get('text','')) if x.isalnum())
+    source=lambda c:''.join(x.casefold() for x in (primary_content(c)) if x.isalnum())
     a,b=source(previous),source(current)
     # Real repeated source lines and common short reactions are not defects.
     if not a or not b or SequenceMatcher(None,a,b).ratio()>=.72:return False
@@ -33,7 +34,7 @@ def repair(w,cfg,job,cues):
         if suspect(original[i-1],original[i]):indices.update((i-1,i))
     from concise_dialogue import budget
     for i,c in enumerate(original):
-        speech=''.join(x for x in (c.get('japanese') or c.get('text','')) if x.isalnum())
+        speech=''.join(x for x in (primary_content(c)) if x.isalnum())
         seconds=c.get('speechEnd',c['end'])-c.get('speechStart',c['start'])
         # The E11 failure also paraphrased neighbours: a short name / apology
         # became a whole earlier sentence, with no exact prefix to match.
@@ -43,8 +44,8 @@ def repair(w,cfg,job,cues):
         cue=cues[i];previous=original[i-1] if i else {}
         if not cue.get('enabled',True):continue
         before=cue['english']
-        source=dict(japanese=cue.get('japanese') or cue.get('text',''),caption=cue.get('captionAllocation',{}).get('content',''))
-        request=dict(source=source,draft=before,previousContext=dict(source=previous.get('japanese',previous.get('text','')),english=previous.get('english','')))
+        source=dict(japanese=primary_content(cue),caption=cue.get('captionAllocation',{}).get('content',''))
+        request=dict(source=source,draft=before,previousContext=dict(source=primary_content(previous),english=previous.get('english','')))
         key=hashlib.sha256(json.dumps([request,cfg.get('model'),'own-turn-1'],sort_keys=True,ensure_ascii=False).encode()).hexdigest()
         if key not in cache:
             cache[key]=dict(index=i+1,before=before,status='attempted');w.atomic_json(path,cache)

@@ -37,6 +37,11 @@ def bundle():
     prepare();version=json.loads((ROOT/'VERSION.json').read_text())
     base=ROOT/'.build/releases'/version['version']/'AniCanto.app'
     target=ROOT/'.build/shared-release'/version['version']/'AniCanto.app'
+    # Never clone a half-built stage: the copied previous host/plist would
+    # masquerade as the new native worker until Swift compilation finishes.
+    with (base/'Contents/Info.plist').open('rb') as f:base_info=plistlib.load(f)
+    if (base_info.get('CFBundleShortVersionString'),base_info.get('CFBundleVersion'))!=(version['version'],version['build']):
+        raise RuntimeError('Native stage is incomplete; finish stage_release.py before packaging this version.')
     refresh='--refresh' in sys.argv
     if target.exists() and not refresh:raise SystemExit('A staged shared candidate exists. Use --refresh to refresh only that build stage.')
     target.parent.mkdir(parents=True,exist_ok=True)
@@ -72,6 +77,7 @@ def bundle():
     records=generate(resources);records+=notices(resources);records+=extra
     (resources/'license-inventory.json').write_text(json.dumps(records,ensure_ascii=False,indent=2))
     with (contents/'Info.plist').open('rb') as f:info=plistlib.load(f)
+    info.update(CFBundleShortVersionString=version['version'],CFBundleVersion=version['build'])
     info.update(CFBundleIdentifier='com.sckc.cantosync.studio',CFBundleDisplayName='AniCanto',CFBundleName='AniCanto',CFBundleExecutable='AniCanto',CFBundleIconFile='AniCanto.icns',NSHighResolutionCapable=True,NSHumanReadableCopyright='Copyright © 2026 SCKC')
     info['NSMicrophoneUsageDescription']='Record your voice for local Cantonese dubbing in Dubbing studio.'
     with (contents/'Info.plist').open('wb') as f:plistlib.dump(info,f)
@@ -101,6 +107,7 @@ def bundle():
         result=subprocess.run([str(contents/'MacOS/AniCanto-worker'),'--studio-validate-contract'],env=env,capture_output=True,text=True,timeout=30)
         if result.returncode:
             raise RuntimeError('Packaged Swift/core contract verification failed: '+(result.stdout+result.stderr)[-2000:])
+        if not result.stdout.strip():raise RuntimeError('Packaged native worker returned no contract; native stage may still be compiling.')
         probe=json.loads(result.stdout.strip().splitlines()[-1])
         if probe.get('languages')!=['yue','zh','en']:
             raise RuntimeError('Packaged native language plan does not match the release contract')

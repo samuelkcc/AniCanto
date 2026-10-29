@@ -23,6 +23,7 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
  if mode not in ('pending','all'):raise ValueError('Unknown review retry mode.')
  targets={}
  for issue in snapshot.get('issues',[]):
+  if mode=='pending' and issue.get('repairEligible') is False:continue
   if issue.get('kind')=='name-term-mismatch':continue
   if issue.get('status')=='user-choice-saved' or (mode=='pending' and issue.get('triage') in ('checked','deferred')):continue
   if type(issue.get('index')) is int:targets.setdefault(issue.get('language','yue')+':'+issue.get('engine',''),[]).append(issue['index'])

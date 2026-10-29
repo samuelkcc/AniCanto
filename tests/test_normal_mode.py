@@ -83,7 +83,7 @@ class NormalModeTests(unittest.TestCase):
             normal_mode.translate(w,dict(dubLanguages=['yue'],subtitleModes=[],model='qwen',port=1),Path(d),cues)
         self.assertEqual([c['cantonese'] for c in cues],['出發啦。','係呀。'])
         self.assertEqual(w.ollama_chat.call_count,2)
-        self.assertEqual(set(json.loads(w.ollama_chat.call_args.args[2][1]['content'])),{'1'})
+        self.assertEqual(set(json.loads(w.ollama_chat.call_args.args[2][1]['content'])['requested']),{'1'})
 
     def test_repair_is_same_source_bounded_persistent_and_never_replaces_audible_with_silence(self):
         from worker import atomic_json

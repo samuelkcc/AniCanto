@@ -1,14 +1,18 @@
 """Per-line original references without speaker embeddings, clustering or vision.
 
-Each reference is bounded to its own source utterance. Short recordings receive
-silence only; neighbouring voices are never borrowed to satisfy TTS duration.
+Each reference is bounded to its own source utterance. When a line is shorter
+than the engine floor, the fill comes from quiet room tone in the same scene and
+is checked for level first; other speakers, music and effects are never borrowed.
+Digital silence remains the fallback when no gap is quiet enough.
 """
 from fast_mode import enabled as one_pass
+
+import reference_padding as padding
 
 import hashlib,json,math,time
 from pathlib import Path
 
-REVISION='independent-source-lines-native-1'
+REVISION='independent-source-lines-native-2-scene-tone'
 
 
 def prepare(cfg, emit):
@@ -20,7 +24,7 @@ def prepare(cfg, emit):
     with sf.SoundFile(source) as stream:
         sr=stream.samplerate;duration=stream.frames/sr
         for index,cue in enumerate(cfg['cues']):
-            if not cue.get('enabled',True):continue
+            if not cue.get('enabled',True) or cue.get('subtitleContentOnlyGap'):continue
             ident=f'line-{job.name}-{index+1}'
             profile=dict(id=ident,name=f'第 {index+1} 句原聲',reference='',promptText='',language=cfg.get('sourceLanguage','ja'),referenceCandidates=[],referenceRanges=[],identityStatus='independent',sourceIndex=index)
             a=float(cue.get('speechStart',cue['start']));b=min(float(cue.get('speechEnd',cue['end'])),a+8,duration)
@@ -31,7 +35,12 @@ def prepare(cfg, emit):
                 quality=dict(warnings=[],qualityChecked=False) if one_pass(cfg) else measure(clip,sr)
                 actual=len(clip)/sr;short=actual<3
                 # Keep source-bandwidth PCM and expose actual speech length.
-                padded=np.pad(clip,(0,max(0,round(3.1*sr)-len(clip)))) if short else clip
+                need=max(0,round(padding.MINIMUM_SECONDS*sr)-len(clip)) if short else 0
+                if need:
+                    def reader(fill_start,fill_end,stream=stream,sr=sr):
+                        stream.seek(round(fill_start*sr));return stream.read(max(1,round(fill_end*sr)-round(fill_start*sr)),dtype='float32',always_2d=True).mean(axis=1)
+                    padded,padding_method,padding_range=padding.pad(clip,sr,b,need,reader,cfg['cues'],duration)
+                else:padded,padding_method,padding_range=clip,'none',None
                 key=hashlib.sha256(json.dumps([REVISION,str(source),source.stat().st_size,source.stat().st_mtime_ns,index,a,b]).encode()).hexdigest()[:20]
                 folder=job/'line-references'/key;folder.mkdir(parents=True,exist_ok=True)
                 target=folder/'reference.wav'
@@ -39,8 +48,9 @@ def prepare(cfg, emit):
                     temporary=target.with_suffix('.partial.wav');sf.write(temporary,padded,sr,subtype='PCM_16');temporary.replace(target)
                 warnings=list(quality.get('warnings',[]))
                 if short:warnings.append('short-source-reference')
-                profile.update(reference=str(target),referenceRanges=[[a,a+actual]],shortReference=short,mixedReference=bool(cue.get('mixedVoices',False)),referenceQuality=dict(quality,warnings=warnings),originalReferenceSeconds=actual,paddedSeconds=len(padded)/sr-actual)
-                (folder/'source.json').write_text(json.dumps(dict(source=str(source),sourceIndex=index,range=profile['referenceRanges'][0],sampleRate=sr,originalSeconds=actual,silencePaddingSeconds=profile['paddedSeconds'],speakerGrouped=False,visualAnalysis=False,method=REVISION),ensure_ascii=False,indent=2))
+                profile.update(reference=str(target),referenceRanges=[[a,a+actual]],shortReference=short,mixedReference=bool(cue.get('mixedVoices',False)),referenceQuality=dict(quality,warnings=warnings),originalReferenceSeconds=actual,paddedSeconds=len(padded)/sr-actual,
+                               paddingSeconds=round(len(padded)/sr-actual,3),paddingMethod=padding_method,paddingRange=padding_range)
+                (folder/'source.json').write_text(json.dumps(dict(source=str(source),sourceIndex=index,range=profile['referenceRanges'][0],sampleRate=sr,originalSeconds=actual,paddingSeconds=profile['paddingSeconds'],paddingMethod=padding_method,paddingRange=padding_range,silencePaddingSeconds=profile['paddingSeconds'] if padding_method=='silence' else 0.,speakerGrouped=False,visualAnalysis=False,method=REVISION),ensure_ascii=False,indent=2))
             except (ValueError,OSError,RuntimeError) as error:
                 profile['referenceIssue']=str(error)
                 if not cfg.get('continueOnError',True):raise
@@ -61,6 +71,7 @@ def assign(cfg,job,cues,emit):
     analysis=job/'japanese-analysis.json'
     text_hash=hashlib.sha256(analysis.read_bytes()).hexdigest() if analysis.exists() else ''
     identity=[REVISION,cfg.get('productionMode','standard'),str(source),source.stat().st_size,source.stat().st_mtime_ns,cfg.get('referenceSpeechModel'),text_hash,[(c['start'],c['end'],c.get('speechStart'),c.get('speechEnd'),c.get('enabled',True)) for c in cues]]
+    if __import__('source_workflow').subtitle_content_only(cfg):identity.append(['subtitle-content-only',[bool(c.get('subtitleContentOnlyGap')) for c in cues]])
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest();cache=job/'independent-voices.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}
     reused=saved.get('key')==key and all(not p['reference'] or Path(p['reference']).is_file() for p in saved.get('profiles',[]))
@@ -77,7 +88,7 @@ def assign(cfg,job,cues,emit):
         cue=cues[row['index']]
         cue.update({k:v for k,v in row.items() if k!='index'})
     cfg.update(voiceProfiles=saved['profiles'],defaultSpeaker='',independentVoiceMapping=True)
-    result=dict(status='complete',requested='independent',actual='independent',analyzed=len(saved['profiles']),total=sum(c.get('enabled',True) for c in cues),shortReferences=sum(bool(p.get('shortReference')) for p in saved['profiles']),missingReferences=sum(not p.get('reference') or not p.get('promptText') for p in saved['profiles']),speakerGrouped=False,visualAnalysis=False,method=REVISION,elapsedSeconds=round(time.monotonic()-started,3),cacheReused=reused)
+    result=dict(status='complete',requested='independent',actual='independent',analyzed=len(saved['profiles']),total=sum(c.get('enabled',True) for c in cues),shortReferences=sum(bool(p.get('shortReference')) for p in saved['profiles']),sceneToneReferences=sum(p.get('paddingMethod')=='scene-tone' for p in saved['profiles']),silencePaddedReferences=sum(p.get('paddingMethod')=='silence' for p in saved['profiles']),missingReferences=sum(not p.get('reference') or not p.get('promptText') for p in saved['profiles']),speakerGrouped=False,visualAnalysis=False,method=REVISION,elapsedSeconds=round(time.monotonic()-started,3),cacheReused=reused)
     cfg['roleAnalysisResult']=result
     from worker import atomic_json
     atomic_json(job/'voice-mapping.json',dict(result,profiles=saved['profiles']))

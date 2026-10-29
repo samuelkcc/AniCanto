@@ -8,4 +8,7 @@
 
 字幕匯入只套用到所選影片。自動選擇先搵配對外掛檔，再讀內置文字字幕，最後嘗試畫面 OCR。專家模式亦可揀只用聲音。處理中或已暫停嘅工作會沿用已保存嘅字幕來源；要改來源請用新轉換。解除配對唔會刪除原字幕檔。圖片字幕唔保證可以當文字軌讀取。介面語言唔代表新增配音語言。
 
-![字幕來源](../images/subtitles-zh-HK.png?v=0.24.79?v=preview-off)
+![字幕來源](../images/subtitles-zh-HK.png?v=0.25.0)
+
+
+Current desktop workflow: [0.25.0 rules and validation limits](../DESKTOP-WORKFLOW-0.25.0.md). Optional checks default to zero; selected readable subtitles provide meaning by default.

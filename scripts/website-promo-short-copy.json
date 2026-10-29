@@ -1,0 +1,46 @@
+{
+  "revision": "20261028-short-v1",
+  "speaker": "Shion",
+  "segments": [
+    {
+      "language": "ja",
+      "text": "こんにちは、紫音です。大好きな物語を、もっと身近な言葉で聴いてみませんか？",
+      "translations": {
+        "zh-HK": "你好，我是紫音。想用更親切的語言，聆聽你喜愛的故事嗎？",
+        "zh-Hans": "你好，我是紫音。想用更亲切的语言，聆听你喜爱的故事吗？",
+        "en": "Hi, I'm Shion. Would you like to hear a story you love in words that feel closer to home?",
+        "ja": "こんにちは、紫音です。大好きな物語を、もっと身近な言葉で聴いてみませんか？"
+      }
+    },
+    {
+      "language": "yue",
+      "text": "我係紫音。想聽廣東話故事？同我一齊，試吓配音啦！",
+      "translations": {
+        "zh-HK": "我是紫音。想聽廣東話故事嗎？和我一起試試配音吧！",
+        "zh-Hans": "我是紫音。想听粤语故事吗？和我一起试试配音吧！",
+        "en": "I'm Shion. Want to hear a story in Cantonese? Come and try dubbing with me!",
+        "ja": "私は紫音。広東語の物語を聴いてみたい？一緒に吹き替えを試してみよう！"
+      }
+    },
+    {
+      "language": "en",
+      "text": "Your words. Your voice. Make a little dub, listen again, and find the feeling you love.",
+      "translations": {
+        "zh-HK": "你的文字，你的聲音。試做一段配音，再聽一次，找到你喜歡的感覺。",
+        "zh-Hans": "你的文字，你的声音。试做一段配音，再听一次，找到你喜欢的感觉。",
+        "en": "Your words. Your voice. Make a little dub, listen again, and find the feeling you love.",
+        "ja": "あなたの言葉、あなたの声。小さな吹き替えをつくって、もう一度聴いて、好きな気持ちを見つけよう。"
+      }
+    },
+    {
+      "language": "zh",
+      "text": "喜欢哪一句，就再听一遍。我是紫音，在这里，陪你开始新的声音故事。",
+      "translations": {
+        "zh-HK": "喜歡哪一句，就再聽一遍。我是紫音，在這裏陪你展開新的聲音故事。",
+        "zh-Hans": "喜欢哪一句，就再听一遍。我是紫音，在这里，陪你开始新的声音故事。",
+        "en": "Hear a line you love? Listen once more. I'm Shion, here to begin a new voice story with you.",
+        "ja": "好きなひと言を、もう一度。私は紫音。ここで一緒に、新しい声の物語をはじめよう。"
+      }
+    }
+  ]
+}

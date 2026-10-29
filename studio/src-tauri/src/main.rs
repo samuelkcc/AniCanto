@@ -34,7 +34,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
+const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
@@ -51,12 +51,14 @@ impl Host {
         }
         let removing_model=["model-removal-plan","remove-model","remove-retired-model","project-cache-plan","clear-project-cache","source-language"].contains(&op);
         let speech_mutation=["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op);
-        let _task=if removing_model || speech_mutation {Some(self.task_lock.lock().unwrap())} else {None};
+        let reset_mutation=["reset-video-plan","reset-video"].contains(&op);
+        let _task=if removing_model || speech_mutation || reset_mutation {Some(self.task_lock.lock().unwrap())} else {None};
         if removing_model && (self.active.lock().unwrap().is_some() || self.older_app_open()){
             return Err(if op=="source-language"{"Pause processing before checking another source language."}else if op.contains("cache"){"Pause processing before clearing cache."}else{"Pause processing before removing a model."}.into());
         }
         if ["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing saved speech recordings.".into());}
-        if ["review-resolution","review-triage","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan","set-subtitle-alignment"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
+        if ["review-resolution","review-triage","set-subtitle-source","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan","set-subtitle-alignment"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
+        if reset_mutation && (self.active.lock().unwrap().is_some() || self.older_app_open()){return Err("Pause processing before resetting a video.".into());}
         if op=="remove" && self.active.lock().unwrap().is_some(){return Err("Pause processing before deleting a project.".into());}
         if self.python().is_none(){
             if op=="plan" {return self.cold_plan(&params);}
@@ -583,6 +585,7 @@ mod cleanup_progress_tests {
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
         let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(Some(Active{child,id:"owned".into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()})),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
         assert_eq!(host.desktop_rpc("source-language",json!({"id":"next"})).unwrap_err(),"Pause processing before checking another source language.");
+        assert_eq!(host.desktop_rpc("reset-video",json!({"id":"next"})).unwrap_err(),"Pause processing before resetting a video.");
         assert_eq!(host.desktop_rpc("remove-model",json!({"id":"unused"})).unwrap_err(),"Pause processing before removing a model.");
         let mut task=host.active.lock().unwrap().take().unwrap();task.child.kill().unwrap();let _=task.child.wait();
         drop(host);std::fs::remove_dir_all(root).unwrap();

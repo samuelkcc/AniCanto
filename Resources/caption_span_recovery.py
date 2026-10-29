@@ -134,6 +134,9 @@ def draft_fragments(w,cfg,group):
     return answer,checks
 
 def recover(w,cfg,job,cues):
+    # New source ownership is already explicit; this legacy fragment pass has
+    # a pre-TTS character budget and must not reinterpret it.
+    if __import__('delivery_policy').bounded_delivery(cfg):return []
     from translation_source import audio_only
     if audio_only(cfg):return []
     if cfg.get('editorRender') or cfg.get('_singleEngine') or ('dubLanguages' in cfg and 'yue' not in cfg['dubLanguages']):return []

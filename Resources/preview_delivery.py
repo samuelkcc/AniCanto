@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 
-def allowed(cfg):return cfg.get('productionMode')=='normal' and not cfg.get('editorRender')
+def allowed(cfg):return (cfg.get('productionMode')=='normal' or __import__('delivery_policy').enabled(cfg)) and not cfg.get('editorRender')
 
 
 def needed(cfg,coverage,failures,tracks):

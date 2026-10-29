@@ -20,7 +20,7 @@ class NaturalFinishingTests(unittest.TestCase):
    job=Path(d);p=wav(job/'long.wav',3.343);next=wav(job/'next.wav',1.);before=p.read_bytes()
    # The full take needs 23% acceleration at the original start; a safe early
    # start plus <=5% avoids that large change without moving the next sentence.
-   cfg=dict(productionMode='normal',duration=15.,ffmpeg=shutil.which('ffmpeg'))
+   cfg=dict(productionMode='normal',naturalTimingPolicy='micro-shift',duration=15.,ffmpeg=shutil.which('ffmpeg'))
    cues=[dict(start=5,end=6.9,cantonese='完整測試對白'),dict(start=7.72,end=9.,cantonese='下一句',editorAudio=str(next))]
    with patch('natural_schedule.scene_boundaries',return_value=dict(status='detected',cuts=[])):
     # Match the cached boundary receipt used by the pure tempo simulation.

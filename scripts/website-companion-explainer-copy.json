@@ -1,0 +1,167 @@
+{
+  "purpose": "Nine companions explain learning features and realistic product expectations.",
+  "characters": [
+    {
+      "id": "shion",
+      "speaker": "studio",
+      "role": {
+        "zh-HK": "從喜歡的故事，學一句廣東話。",
+        "zh-Hans": "从喜欢的故事，学一句粤语。",
+        "en": "Let a story begin your Cantonese journey.",
+        "ja": "好きな物語から、広東語をひと言。"
+      },
+      "dialogue": {
+        "zh-HK": "鍾意日本動畫？由熟悉嘅對白開始，聽廣東話、認識粵語用字同香港文化。每日一句，興趣都可以變成學習嘅起點。",
+        "zh-Hans": "喜欢日本动画吗？从熟悉的对白开始，听粤语，认识粤语文字和香港文化。每天一句，让兴趣成为学习的起点。",
+        "en": "Love Japanese anime? Start with familiar dialogue to explore Cantonese sounds, written words, and Hong Kong culture. One line a day can turn your interests into a way to learn.",
+        "ja": "日本のアニメが好き？なじみのあるセリフから、広東語の音や文字、香港の文化に触れてみよう。一日ひと言、好きなことを学びの入口にしよう。"
+      },
+      "romanizedName": "Shion",
+      "japaneseReading": "しおん"
+    },
+    {
+      "id": "mio",
+      "speaker": "ocean",
+      "role": {
+        "zh-HK": "你的影片，在自己的裝置處理。",
+        "zh-Hans": "你的视频，在自己的设备处理。",
+        "en": "Your media stays on your device for processing.",
+        "ja": "動画の処理は、自分のデバイスで。"
+      },
+      "dialogue": {
+        "zh-HK": "準備好模型同語言資源，就可以喺自己部機處理影片同聲音，唔使上傳去雲端，放心啦！第一次下載同更新，記得上網就得喇。",
+        "zh-Hans": "模型和语言资源准备好，就能在自己的设备处理视频和声音。不用上传云端转换，放心吧！首次下载和更新，记得联网就好啦。",
+        "en": "Once the models and language resources are ready, your own device handles your video and audio. No cloud upload for conversion, so you can relax! Just connect for the first downloads and updates.",
+        "ja": "モデルと言語データがそろったら、動画も音声も自分のデバイスで処理できるよ。変換のためにクラウドへ送らなくていいから、安心してね！初回のダウンロードや更新には、ネットにつないでね。"
+      },
+      "romanizedName": "Mio",
+      "japaneseReading": "みお"
+    },
+    {
+      "id": "himari",
+      "speaker": "energy",
+      "role": {
+        "zh-HK": "每次生成，都可能有不同表達。",
+        "zh-Hans": "每次生成，都可能有不同表达。",
+        "en": "Each take can sound a little different.",
+        "ja": "生成するたび、表現が変わることも。"
+      },
+      "dialogue": {
+        "zh-HK": "同一段對白再生成，語氣同停頓都可能唔同。唔係每次都會更好；先聽清楚，再揀你鍾意嘅版本。",
+        "zh-Hans": "同一段对白重新生成，语气和停顿也可能不同。新版本不一定更好，先仔细听，再选你喜欢的版本。",
+        "en": "Generate the same line again, and its tone or pauses may change. A new take is not always better. Listen first, then choose the version you prefer.",
+        "ja": "同じセリフでも、生成し直すと声の調子や間が変わることがあるよ。新しいテイクが必ず良いとは限らないから、聴き比べて好きなほうを選ぼう。"
+      },
+      "romanizedName": "Himari",
+      "japaneseReading": "ひまり"
+    },
+    {
+      "id": "saya",
+      "speaker": "ninja",
+      "role": {
+        "zh-HK": "細心對照，聽見 AI 的限制。",
+        "zh-Hans": "仔细对照，听见 AI 的局限。",
+        "en": "A careful listen helps you spot mistakes.",
+        "ja": "聴き比べて、間違いにも気づこう。"
+      },
+      "dialogue": {
+        "zh-HK": "AI 都可能聽錯、譯錯，或者讀錯字。睇返原句、對照譯文，再聽吓個語氣。重要嘅意思，記得自己核對。",
+        "zh-Hans": "AI 也可能听错、译错或读错字。查看原句，对照译文，再听听语气。重要的意思，请自己核对。",
+        "en": "AI can mishear, mistranslate, or mispronounce a word. Compare the original and translation, then listen to the delivery. Check important meanings yourself.",
+        "ja": "AIも聞き間違えたり、誤訳したり、読み方を間違えたりするよ。原文と訳文を見比べて、声の調子も確認しよう。大切な意味は、自分でも確かめてね。"
+      },
+      "romanizedName": "Saya",
+      "japaneseReading": "さや"
+    },
+    {
+      "id": "kohaku",
+      "speaker": "retro",
+      "role": {
+        "zh-HK": "切換三種配音，留意每種語氣。",
+        "zh-Hans": "切换三种配音，留意每种语气。",
+        "en": "Three dubbing languages, different expressions.",
+        "ja": "3つの吹き替えで、表現を聴き比べよう。"
+      },
+      "dialogue": {
+        "zh-HK": "試吓廣東話、英文同普通話，聽吓同一句嘅唔同感覺啦！內置翻譯未必係口語廣東話，記得睇返粵語用字同語氣呀。",
+        "zh-Hans": "粤语、英文，再听听普通话，同一句也会有不同感觉呢！内置翻译的中文不一定是口语粤语，记得留意粤语用字和语气呀。",
+        "en": "Try the same line in Cantonese, English, then Mandarin. Hear how the feeling changes! Apple's Chinese translation may not sound like everyday Cantonese, so check the local wording and tone.",
+        "ja": "同じセリフを、カントン語、英語、標準中国語で聴いてみて。あれ、雰囲気が変わるね！アップルの中国語訳は、自然なカントン語になるとは限らないから、言葉づかいも確かめよう。"
+      },
+      "romanizedName": "Kohaku",
+      "japaneseReading": "こはく"
+    },
+    {
+      "id": "wakaba",
+      "speaker": "forest",
+      "role": {
+        "zh-HK": "一句一句，對照文字學習。",
+        "zh-Hans": "一句一句，对照文字学习。",
+        "en": "Read and learn, one line at a time.",
+        "ja": "ひと言ずつ、文字を見ながら学ぼう。"
+      },
+      "dialogue": {
+        "zh-HK": "嘩，呢句聽得明喇！學習模式可以逐句翻譯，對住原文同譯文再聽。今日學一個粵語字，聽日再多一句，我哋一齊慢慢嚟呀！",
+        "zh-Hans": "哇，这句听懂啦！学习模式可以逐句翻译，对照原文和译文再听。今天学一个粤语字，明天再多一句，我们一起慢慢来呀！",
+        "en": "Oh, that line makes sense now! In learning mode, translate one line and listen with both texts. One Cantonese word today, another line tomorrow. Let's learn together!",
+        "ja": "わあ、このセリフ、わかった！学習モードでひと言ずつ訳して、原文と訳文を見ながら聴いてみよう。今日はカントン語の文字をひとつ、明日はもうひと言。一緒に少しずつ覚えようね！"
+      },
+      "romanizedName": "Wakaba",
+      "japaneseReading": "わかば"
+    },
+    {
+      "id": "hikari",
+      "speaker": "future",
+      "role": {
+        "zh-HK": "先理解外語，再選模型配音。",
+        "zh-Hans": "先理解外语，再选模型配音。",
+        "en": "Translate first, then choose a voice model.",
+        "ja": "まず翻訳してから、音声モデルを選ぼう。"
+      },
+      "dialogue": {
+        "zh-HK": "iPhone 同 iPad 版本開發中。喺支援嘅裝置，內置翻譯會優先用 Apple Intelligence，再由所選 AI 模型配音。翻譯同配音，各有語言限制。",
+        "zh-Hans": "iPhone 和 iPad 版本正在开发。在支持的设备上，内置翻译优先使用 Apple Intelligence，再由所选 AI 模型配音。翻译和配音各有语言限制。",
+        "en": "The iPhone and iPad versions are in development. On supported devices, built-in translation prefers Apple Intelligence, then your selected AI model voices the translation. Translation and dubbing each have their own language limits.",
+        "ja": "iPhoneとiPad版は開発中だよ。対応するデバイスでは、内蔵翻訳がApple Intelligenceを優先し、選んだAIモデルが訳文を読み上げるよ。翻訳と音声生成では、対応言語がそれぞれ違うんだ。"
+      },
+      "romanizedName": "Hikari",
+      "japaneseReading": "ひかり"
+    },
+    {
+      "id": "kiyone",
+      "speaker": "mint",
+      "role": {
+        "zh-HK": "重聽一小段，找到自己的步伐。",
+        "zh-Hans": "重听一小段，找到自己的节奏。",
+        "en": "Repeat a small passage, at your pace.",
+        "ja": "短い区間を繰り返し、自分のペースで。"
+      },
+      "dialogue": {
+        "zh-HK": "聽唔明，唔使急住跳下一句。揀一小段循環播放，留意語尾、節奏同字幕，慢慢聽出熟悉嘅意思。",
+        "zh-Hans": "没听懂，不必急着跳到下一句。选一小段循环播放，留意句尾、节奏和字幕，慢慢听懂其中的意思。",
+        "en": "If a line is unclear, there is no need to rush ahead. Loop a short passage, notice its endings, rhythm, and subtitles, and let the meaning become familiar.",
+        "ja": "聞き取れなくても、次へ急がなくていいよ。短い区間を繰り返して、語尾やリズム、字幕に目を向けてみよう。少しずつ、意味がなじんでくるよ。"
+      },
+      "romanizedName": "Kiyone",
+      "japaneseReading": "きよね"
+    },
+    {
+      "id": "tsukino",
+      "speaker": "moonflower",
+      "role": {
+        "zh-HK": "先試一小段，再開始長故事。",
+        "zh-Hans": "先试一小段，再开始长故事。",
+        "en": "Try a short clip before a longer story.",
+        "ja": "長い物語の前に、短い動画で試そう。"
+      },
+      "dialogue": {
+        "zh-HK": "處理要幾耐，會受裝置、模型同影片長度影響。先用短片試吓，揀適合自己嘅設定，再留返時間覆聽成品。",
+        "zh-Hans": "处理时间会受设备、模型和视频长度影响。先用短片试试，选择适合自己的设置，再留出时间听一听成品。",
+        "en": "Processing time depends on your device, model, and video length. Try a short clip first, find settings that suit you, and leave time to listen to the result.",
+        "ja": "処理にかかる時間は、デバイスやモデル、動画の長さで変わるよ。まず短い動画で試して、自分に合う設定を見つけよう。完成した音声を聴く時間も、忘れずにね。"
+      },
+      "romanizedName": "Tsukino",
+      "japaneseReading": "つきの"
+    }
+  ]
+}

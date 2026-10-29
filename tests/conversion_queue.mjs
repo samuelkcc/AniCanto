@@ -4,10 +4,11 @@ const rows=[{id:'done',status:'complete'},{id:'a',status:'waiting'},{id:'b',stat
 const q=new ConversionQueue();
 q.begin(rows,{selected:'done',all:true});assert.equal(q.next(rows),'a');assert.equal(q.next(rows),'b');assert.equal(q.next(rows),null,'Never rerun completed or attention items automatically');
 q.begin(rows,{selected:'b',all:true});assert.equal(q.next(rows),'a','Queue order, not selected waiting row');assert.equal(q.next(rows),'b');assert.equal(q.next(rows),null,'Failed launch left waiting cannot loop');
-q.begin(rows,{selected:'bad',all:true});assert.equal(q.next(rows),'bad');assert.equal(q.next(rows),'a');q.stop();assert.equal(q.next(rows),null);
+q.begin(rows,{selected:'bad',all:true});assert.equal(q.next(rows),'a','Batch order does not prioritize the selected attention item');assert.equal(q.next(rows),'b');assert.equal(q.next(rows),null);q.stop();assert.equal(q.next(rows),null);
 q.begin(rows,{selected:'b'});assert.equal(q.next(rows),'b');assert.equal(q.next(rows),null,'Explicit selected-video action only');
 q.begin(rows,{all:true,includeAttention:true});assert.equal(q.next(rows),'a');assert.equal(q.next(rows),'b');assert.equal(q.next(rows),'bad');assert.equal(q.next(rows),null);
-const paused=rows.map(r=>({...r,...(r.id==='b'?{status:'paused'}:{})}));q.begin(paused,{selected:'b',all:true});assert.equal(q.next(paused),'b','Resume paused selected first');assert.equal(q.next(paused),'a');
+const paused=rows.map(r=>({...r,...(r.id==='b'?{status:'paused'}:{})}));q.begin(paused,{selected:'b',all:true});assert.equal(q.next(paused),'a','Batch resume follows queue order even if another paused item is selected');assert.equal(q.next(paused),'b');
+q.begin(paused,{selected:'b'});assert.equal(q.next(paused),'b','Explicit single-video resume retains its target');assert.equal(q.next(paused),null);
 q.restore('a');assert.equal(q.next(rows),'b','Restore live session without repeating active item');
 q.begin([{id:'done',status:'complete'}],{selected:'done',all:true});assert.equal(q.next([{id:'done',status:'complete'}]),null,'Batch action never reruns a completed output');
 q.begin([{id:'done',status:'complete'}],{selected:'done'});assert.equal(q.next([{id:'done',status:'complete'}]),'done','Explicit new version remains a single-video action');

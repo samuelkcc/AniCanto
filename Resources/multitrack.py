@@ -294,6 +294,7 @@ def render(w, request):
             render_cfg['qwenModel']=cfg.get('qwenModel','qwen-0.6b-4bit')
             render_cfg['qwenReferenceMode']=cfg.get('qwenReferenceMode','original')
             if language=='yue' and render_cfg['qwenReferenceMode']=='cantonese-bridge':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-native-0.5b')
+        if __import__('repair_permissions').enabled(cfg):render_cfg['aiAutoFix']=cfg.get('aiAutoFix',False)
         if engine=='cosyvoice3':render_cfg['cosyModel']=cfg.get('cosyModel','cosy-native-0.5b')
         if engine in ('voxcpm2','wsyue','drama3'):
             from local_tts import ENGINES as local_engines,selection
@@ -408,7 +409,7 @@ def render(w, request):
     target_keys={scope.get('engine','')+':'+scope.get('language','')} if repair_only else ({p[1]+':'+p[0] for p in pairs if p not in reuse} if cfg.get('_retainedTracks') else None)
     from mixed_speech_check import inspect_tracks
     encoded_checks=[]
-    if not fast:
+    if not fast or (__import__('speech_duration').enabled(cfg) and cfg.get('aiAutoFix')):
         if cfg.get('aiAutoFix') or (repair_only and request.get('repairGenerate')):
             if repair_only:cfg['aiAutoFix']=True
             if any(t['report'].get('audioFallbacks') or cfg.get('captionPolicy',{}).get('revision',4)<4 for t in successes):
@@ -418,11 +419,11 @@ def render(w, request):
             if repair_only:cfg['aiAutoFix']=True
             from ai_result_repair import run as repair_results
             ai_donors,ai_result=repair_results(w,cfg,job,successes,target_keys=target_keys,missing_only=repair_only or not cfg.get('aiAutoFix'))
-        fill_missing_audio(dict(cfg,aiAutoFix=True,allowCrossEngineRepair=True) if ai_result else cfg,job,successes,w.run,original_emit,target_keys=target_keys,donor_tracks=ai_donors)
+        fill_missing_audio(dict(cfg,aiAutoFix=True,allowCrossEngineRepair=True) if ai_result and not __import__('repair_permissions').enabled(cfg) else cfg,job,successes,w.run,original_emit,target_keys=target_keys,donor_tracks=ai_donors)
         encoded_checks=inspect_tracks(w,cfg,successes,target_keys=target_keys)
         from mixed_speech_check import recover_background
         if recover_background(w,cfg,job,successes,target_keys=target_keys):
-            fill_missing_audio(dict(cfg,allowCrossEngineRepair=True),job,successes,w.run,original_emit,target_keys=target_keys,donor_tracks=ai_donors)
+            fill_missing_audio(cfg if __import__('repair_permissions').enabled(cfg) else dict(cfg,allowCrossEngineRepair=True),job,successes,w.run,original_emit,target_keys=target_keys,donor_tracks=ai_donors)
             encoded_checks=inspect_tracks(w,cfg,successes,target_keys=target_keys)
         if ai_result:
             from ai_result_repair import finish
@@ -451,6 +452,10 @@ def render(w, request):
         count=dubbing.generated_dialogue(saved.get('config',cfg),row['folder'],saved.get('cues',submitted),row['report'])
         if count is not None:spoken_counts.append(count)
     original_only_fallback=bool(incomplete_delivery and spoken_counts and not any(spoken_counts) and cfg.get('includeOriginal',True) and any(s.get('codec_type')=='audio' for s in review['meta'].get('streams',[])))
+    if __import__('delivery_policy').enabled(cfg) and spoken_counts and not any(spoken_counts):
+        # includeOriginal controls an extra selectable track, not whether the
+        # final mix may use documented audible continuity after repair fails.
+        original_only_fallback=bool(successes and all((row['folder']/'source-only-delivery.json').is_file() for row in successes))
     if spoken_counts and not any(spoken_counts) and not original_only_fallback:
         message='全部所選音軌成功配音 0 段；未輸出只有背景／空白配音的成品。角色參考或生成失敗紀錄已保留。'
         (job/'result-summary.txt').write_text(message)
@@ -542,7 +547,7 @@ def render(w, request):
     target = job / (Path(cfg['video']).stem + '-AniCanto.mp4')
     # MP4 players display handler_name; title alone is discarded by this muxer.
     for i,row in enumerate(successes):
-        cmd += [f'-metadata:s:a:{i}', f'handler_name={dub_languages.LANGUAGES[row["language"]][1]} · {ENGINES[row["engine"]]}'+(' (mixed fallback)' if row['report'].get('audioFallbacks') or row['report'].get('originalSpeechIndices') else '')]
+        cmd += [f'-metadata:s:a:{i}', f'handler_name={dub_languages.LANGUAGES[row["language"]][1]} · {ENGINES[row["engine"]]}'+(' (mixed fallback)' if row['report'].get('audioFallbacks') or row['report'].get('originalSpeechIndices') or row['report'].get('systemVoiceFallbacks') else '')]
     if cfg.get('includeOriginal', True):
         cmd += [f'-metadata:s:a:{len(successes)}', 'handler_name='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original']
     for i,track in enumerate(tracks):
@@ -550,13 +555,15 @@ def render(w, request):
     if incomplete_delivery:cmd += ['-metadata','comment=AniCanto final export; some dialogue needs review. See the accompanying report.']
     temp = job/'multitrack.partial.mp4' 
     w.emit('合成',f'封裝 {len(successes)} 條配音音軌、{len(tracks)} 條字幕。',.96)
-    from video_acceleration import encode
-    encode(w.run,cmd+[temp],cfg,original_emit)
-    w.run([cfg['ffmpeg'],'-v','error','-i',temp,'-map','0:v','-map','0:a','-f','null','-'])
-    meta = json.loads(w.run([cfg['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',temp]))
-    expected_audio = len(successes) + (int(any(s.get('codec_type') == 'audio' for s in review['meta']['streams'])) if cfg.get('includeOriginal',True) else 0)
-    if sum(s['codec_type']=='audio' for s in meta['streams']) != expected_audio or sum(s['codec_type']=='subtitle' for s in meta['streams']) != len(tracks):
-        raise RuntimeError('封裝音軌／字幕數目唔正確，未交付成品。')
+    def validate_mux():
+        w.run([cfg['ffmpeg'],'-v','error','-i',temp,'-map','0:v','-map','0:a','-f','null','-'])
+        actual = json.loads(w.run([cfg['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',temp]))
+        expected_audio = len(successes) + (int(any(s.get('codec_type') == 'audio' for s in review['meta']['streams'])) if cfg.get('includeOriginal',True) else 0)
+        if sum(s['codec_type']=='audio' for s in actual['streams']) != expected_audio or sum(s['codec_type']=='subtitle' for s in actual['streams']) != len(tracks):
+            raise RuntimeError('封裝音軌／字幕數目唔正確，未交付成品。')
+        return actual
+    from export_retry import run as export_with_retry
+    meta=export_with_retry(cfg,job,cmd+[temp],w.run,original_emit,validate_mux)
     temp.replace(target)
     # Keep legacy report consumers working, with full per-engine reports linked.
     primary = successes[0]
@@ -666,9 +673,13 @@ def render(w, request):
         (job/'result-summary.txt').write_text(summary)
         w.atomic_json(job/'report.json',report)
     if incomplete_delivery:
-        summary='自動修復已完成；正式成品已保存，仍有需要覆核嘅缺聲／原聲後備位置。\n'+delivery_summary(delivery_coverage)+'\n成品：'+str(destination)+'\n原聲音軌：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'。錄音、缺聲位置及 AI 修復紀錄已保留。'
+        summary='自動處理已收尾；正式成品已保存，未能交付嘅目標配音及原聲後備位置見下方。\n'+delivery_summary(delivery_coverage)+'\n成品：'+str(destination)+'\n原聲音軌：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'。錄音、缺聲位置及 AI 修復紀錄已保留。'
         report.update(deliveryKind='complete',incompleteDelivery=preview_details(delivery_coverage,successes),qualityStatus='needs-review')
         w.atomic_json(job/'report.json',report);(job/'result-summary.txt').write_text(summary)
+    if __import__('delivery_policy').bounded_delivery(cfg):
+        from repair_limits import read as recovery_read,root as recovery_root
+        report['systemVoiceFallbacks']=[dict(engine=row['engine'],language=row['language'],**item) for row in successes for item in row['report'].get('systemVoiceFallbacks',[])]
+        report['repairTimeBudget']=recovery_read(recovery_root(cfg,job)/'repair-time-budget.json')
     report['qualityDefects']=bool(partial or incomplete_delivery)
     w.atomic_json(job/'report.json',report)
     # A finished, playable export is a final version. Quality findings remain

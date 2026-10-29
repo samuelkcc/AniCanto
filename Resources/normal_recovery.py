@@ -1,3 +1,4 @@
+from primary_source import content as primary_content
 """Bounded automatic recovery for normal production; the model selects tools.
 
 No generated code or arbitrary commands are executable. Only enumerated local
@@ -23,7 +24,7 @@ def read(path,default):
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def padding(path):
+def padding(path,digital_only=False):
     """Only near-digital-silence edges; retain 80 ms around every audible sample."""
     try:
         with wave.open(str(path)) as f:
@@ -31,7 +32,7 @@ def padding(path):
             if params.sampwidth!=2:return None
             samples=array.array('h');samples.frombytes(f.readframes(f.getnframes()))
         if not samples:return None
-        peak=max(abs(x) for x in samples);threshold=max(1,int(peak*.001))
+        peak=max(abs(x) for x in samples);threshold=0 if digital_only else max(1,int(peak*.001))
         first=next((i for i,x in enumerate(samples) if abs(x)>threshold),None)
         if first is None:return None
         last=len(samples)-1-next(i for i,x in enumerate(reversed(samples)) if abs(x)>threshold)
@@ -42,7 +43,7 @@ def padding(path):
 
 
 def identity_key(cfg,c,index):
-    identity=[REVISION,cfg.get('model'),cfg.get('ttsBackend'),cfg.get('targetLanguage','yue'),cfg.get('drama3Model'),cfg.get('gsvVersion'),cfg.get('_voiceManifest',{}),index,c['start'],c['end'],c.get('speakerId'),c.get('japanese') or c.get('text','')]
+    identity=[REVISION,cfg.get('model'),cfg.get('ttsBackend'),cfg.get('targetLanguage','yue'),cfg.get('drama3Model'),cfg.get('gsvVersion'),cfg.get('_voiceManifest',{}),index,c['start'],c['end'],c.get('speakerId'),primary_content(c)]
     return hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
 
 
@@ -67,7 +68,7 @@ def collect(cfg,job,cues,paths,placement,ledger):
         profile=profiles.get(c.get('speakerId'),{})
         allowed=[]
         if reason=='timing' and padding(path):allowed.append('trim-padding')
-        if (c.get('japanese') or c.get('text','')).strip() and reason in ('timing','missing-script') and (not cfg.get('scriptLocked') or cfg.get('automaticDurationRewrite')):allowed.append('adapt-source')
+        if (primary_content(c)).strip() and reason in ('timing','missing-script') and (not cfg.get('scriptLocked') or cfg.get('automaticDurationRewrite')):allowed.append('adapt-source')
         if c.get('cantonese','').strip() and reason!='reference':allowed.append('retry-clauses')
         if profile and Path(profile.get('reference','')).is_file() and not profile.get('mixedReference'):allowed.append('condition-reference')
         allowed=[a for a in allowed if a not in attempted]
@@ -76,7 +77,7 @@ def collect(cfg,job,cues,paths,placement,ledger):
         measured_padding=padding(path) if audio_present(path) else None
         source_seconds=float(c.get('speechEnd',c['end']))-float(c.get('speechStart',c['start']))
         from review_diagnostics import duration as wav_seconds
-        result.append(dict(key=key,position=i,index=index,reason=reason,source=c.get('japanese') or c.get('text',''),caption=c.get('subtitleHint',''),draft=c.get('cantonese',''),seconds=placed.get('seconds'),availableSeconds=placed['deadline']-placed['start'],errors=errors if reason in ('reference','generation') else [],previousErrors=errors,sourceSeconds=source_seconds,referenceSeconds=wav_seconds(profile.get('reference','')),referenceLanguage=profile.get('language'),targetLanguage=cfg.get('targetLanguage','yue'),timingShiftSeconds=placed.get('shift',0),sourceUnits=len(re.sub(r'\W','',c.get('japanese') or c.get('text',''))),draftUnits=len(re.sub(r'\W','',c.get('cantonese',''))),silentEdgesSeconds=round((measured_padding[0].nframes-(measured_padding[3]-measured_padding[2]))/measured_padding[0].framerate,4) if measured_padding else 0,maximumAutomaticTempo=1.10 if (placed.get('seconds') or float('inf'))<=2 and 0<(placed.get('seconds') or 0)-(placed['deadline']-placed['start'])<=.12 else 1.05,attempted=sorted(attempted),allowedActions=allowed+['retain']))
+        result.append(dict(key=key,position=i,index=index,reason=reason,source=primary_content(c),caption=__import__('primary_source').caption(c),draft=c.get('cantonese',''),seconds=placed.get('seconds'),availableSeconds=placed['deadline']-placed['start'],errors=errors if reason in ('reference','generation') else [],previousErrors=errors,sourceSeconds=source_seconds,referenceSeconds=wav_seconds(profile.get('reference','')),referenceLanguage=profile.get('language'),targetLanguage=cfg.get('targetLanguage','yue'),timingShiftSeconds=placed.get('shift',0),sourceUnits=len(re.sub(r'\W','',primary_content(c))),draftUnits=len(re.sub(r'\W','',c.get('cantonese',''))),silentEdgesSeconds=round((measured_padding[0].nframes-(measured_padding[3]-measured_padding[2]))/measured_padding[0].framerate,4) if measured_padding else 0,maximumAutomaticTempo=1.10 if (placed.get('seconds') or float('inf'))<=2 and 0<(placed.get('seconds') or 0)-(placed['deadline']-placed['start'])<=.12 else 1.05,attempted=sorted(attempted),allowedActions=allowed+['retain']))
     return result
 
 
@@ -85,6 +86,10 @@ def collect(cfg,job,cues,paths,placement,ledger):
 # twenty-minute request or fills the local server queue after it stops replying.
 def request_options(cfg,maximum=120,tokens=1536):
     if cfg.get('_recoveryAIUnavailable'):raise TimeoutError('Recovery text model unavailable; use existing local mechanisms.')
+    if __import__('delivery_policy').bounded_delivery(cfg):
+        from repair_limits import check,remaining
+        check();left=remaining()
+        return dict(request_timeout=maximum,max_attempts=1,max_tokens=tokens,strict_model=True)
     deadline=cfg.setdefault('_recoveryAIDeadline',time.monotonic()+300)
     remaining=deadline-time.monotonic()
     if remaining<=0:raise TimeoutError('Additional recovery text-AI budget exhausted.')

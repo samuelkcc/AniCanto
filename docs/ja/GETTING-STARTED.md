@@ -8,4 +8,7 @@
 
 字幕は選択中の動画に関連付けられます。自動選択では外部字幕、内蔵テキスト字幕、画面 OCR の順に確認します。エキスパートモードでは音声のみも選べます。実行中・一時停止中の処理は保存済みの字幕ソースを保持します。変更は新しい変換に適用してください。関連付けを外しても字幕ファイルは削除されません。画像字幕をテキストとして読めるとは限りません。UI の言語を変えても吹き替え言語は増えません。
 
-![字幕ソース](../images/subtitles-ja.png?v=0.24.79?v=preview-off)
+![字幕ソース](../images/subtitles-ja.png?v=0.25.0)
+
+
+Current desktop workflow: [0.25.0 rules and validation limits](../DESKTOP-WORKFLOW-0.25.0.md). Optional checks default to zero; selected readable subtitles provide meaning by default.

@@ -13,19 +13,27 @@ import os
 import subprocess
 import time
 
-REVISION='natural-dialogue-capacity-5-preserved-source'
+REVISION='natural-dialogue-capacity-6-source-locked'
 MAX_SHIFT=.5
 
 
 def plan(cfg,cues,lengths,cuts=()):
     from speech_timing import window,natural_window
     from dubbing import is_vocalization
+    if cfg.get('naturalTimingPolicy','source-locked')!='micro-shift':
+        rows=[]
+        for i,c in enumerate(cues):
+            a,b=natural_window(c,cues,cfg['duration'],cfg);length=lengths[i] if i<len(lengths) else None
+            if c.get('preserveOriginalSpeech'):a,b=window(c,cues,cfg['duration'])
+            rows.append(dict(index=c.get('reviewIndex',i)+1,sourceStart=a,sourceEnd=c.get('speechEnd',c['end']),start=a,deadline=b,
+                seconds=length,shift=0.,method='source-preserved' if c.get('preserveOriginalSpeech') else 'source-locked',originalSource=bool(c.get('preserveOriginalSpeech')),fit=bool(length is not None and math.isfinite(length) and 0<length<=b-a)))
+        return rows
     import opening
     duration=float(cfg['duration'])
     # Never move speech into deliberately preserved source/OP/ED ranges.
     protected=opening.local_ranges(cfg)
     for cue in cues:
-        if cue.get('preserveOriginalSpeech'):
+        if cue.get('preserveOriginalSpeech') and __import__('safe_vocal_capacity').is_barrier(cue,cues,cfg):
             start,end=window(cue,cues,duration)
             protected.append(dict(start=start,end=end))
     # Anime motion/camera cuts do not establish a spoken scene boundary.
@@ -42,6 +50,7 @@ def plan(cfg,cues,lengths,cuts=()):
         preserved=bool(c.get('preserveOriginalSpeech'))
         if preserved:
             row.update(deadline=end,method='source-preserved',originalSource=True,fit=bool(valid and length<=end-start+.001))
+        if preserved and not __import__('safe_vocal_capacity').is_barrier(c,cues,cfg):continue
         if not c.get('enabled',True) and not preserved:continue
         locked=bool(c.get('editorAudio') or c.get('preserveOriginalSpeech') or is_vocalization(c) or not valid)
         if any(start<r['end'] and end>r['start'] for r in protected):locked=True
@@ -184,7 +193,7 @@ def prepare(cfg,job,cues,paths,run,emit):
         except (OSError,RuntimeError,ValueError):lengths.append(None)
     overlong=[i for i,(c,length) in enumerate(zip(cues,lengths)) if c.get('enabled',True) and length is not None and length>natural_window(c,cues,cfg['duration'],cfg)[1]-natural_window(c,cues,cfg['duration'],cfg)[0]]
     boundaries=dict(status='not-required',cuts=[])
-    enabled=cfg.get('naturalTimingPolicy','micro-shift')=='micro-shift' and not cfg.get('editorRender')
+    enabled=cfg.get('naturalTimingPolicy','source-locked')=='micro-shift' and not cfg.get('editorRender')
     # Dialogue clocks and protected audio constrain safe placement directly.
     # The old visual-cut scan could time out after two minutes and disable all
     # placement, creating dozens of overlaps; cuts are not a hard constraint.
@@ -196,7 +205,7 @@ def prepare(cfg,job,cues,paths,run,emit):
             rows.append(dict(index=c.get('reviewIndex',i)+1,sourceStart=a,sourceEnd=c.get('speechEnd',c['end']),start=a,deadline=b,
                 seconds=length,shift=0.,fit=bool(length is not None and length<=b-a),method='source-clock'))
     moved=sum(abs(r['shift'])>.00001 for r in rows)
-    report=dict(revision=REVISION,maximumShiftSeconds=MAX_SHIFT,sceneBoundaryStatus=boundaries['status'],
+    report=dict(revision=REVISION,maximumShiftSeconds=MAX_SHIFT if enabled else 0.,timingPolicy=cfg.get('naturalTimingPolicy','source-locked'),sceneBoundaryStatus=boundaries['status'],
         sceneMethod=boundaries.get('method'),moved=moved,overlongBefore=len(overlong),
         unresolved=[r['index'] for r in rows if r['seconds'] is not None and not r['fit']],
         rate=1.,sourceClocksUnchanged=True,qualityCertified=False,rows=rows)

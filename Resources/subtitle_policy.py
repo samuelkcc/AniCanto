@@ -14,7 +14,7 @@ def configure(settings, basic=False):
     if basic:
         settings.update(subtitleSelection='automatic',includeOriginal=True,
                         separateBackground=True,mixOriginal=0,backgroundDucking=True,
-                        burnOutputCaptions=False,productionMode='normal',
+                        burnOutputCaptions=False,
                         autoSkipOP=True,translateOPED=False)
         settings.pop('originalSubtitleStreams',None)
     return settings

@@ -13,7 +13,9 @@ def original_tracks(w,cfg,job):
         from worker import window_subtitles
         path=Path(job)/'original-external.srt'
         w.run([cfg['ffmpeg'],'-v','error','-y','-i',cfg['subtitle'],path])
-        cues=window_subtitles(w.parse_srt(path.read_text(encoding='utf-8-sig')),cfg.get('startOffset',0),cfg['duration'])
+        captions=w.parse_srt(path.read_text(encoding='utf-8-sig'))
+        if cfg.get('subtitleAlignment'):captions=__import__('editing_tools').alignment(captions,cfg['subtitleAlignment'])['cues']
+        cues=window_subtitles(captions,cfg.get('startOffset',0),cfg['duration'])
         if not cues:return []
         w.save_srt(path,cues)
         return [dict(path=path,cues=cues,mode='original',sourceLanguage=cfg.get('sourceCaptionLanguage') or 'und',sourceTitle=Path(cfg['subtitle']).stem)]

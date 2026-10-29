@@ -5,6 +5,9 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def prepare():
     target=ROOT/'studio/web/assets';target.mkdir(parents=True,exist_ok=True)
+    guide=(ROOT/'docs/WORKFLOW-CONTROLS-GUIDE.json').read_bytes()
+    (target/'workflow-controls-guide.json').write_bytes(guide)
+    (target/'workflow-controls-guide.js').write_text('export const WORKFLOW_GUIDE='+guide.decode()+';\nexport const WORKFLOW_GUIDE_SHA='+json.dumps(hashlib.sha256(guide).hexdigest())+';\n')
     for path in target.glob('welcome-*.png'):path.unlink()
     for path in (ROOT/'Resources/welcome-art').glob('welcome-*.png'):shutil.copy2(path,target/path.name)
     for path in (ROOT/'Resources').glob('pet-*.png'):shutil.copy2(path,target/path.name)

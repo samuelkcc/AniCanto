@@ -33,6 +33,7 @@ def _model_job(cfg, action, request, emit):
 
 
 def _model_job_impl(cfg, action, request, emit):
+ __import__('repair_limits').check()
  from recording_history import preserve_request
  if action in ('tts','cosy','qwen','voxcpm2','wsyue','drama3') and request.get('items'):
   from take_reuse import recover,archive
@@ -64,6 +65,9 @@ def _model_job_impl(cfg, action, request, emit):
 def _run_model_job(cfg, action, request, emit):
  from runtime_paths import python_for
  request=dict(request,asrModel=cfg.get('asrModel'))
+ from repair_limits import deadline
+ recovery_deadline=deadline()
+ if recovery_deadline is not None:request['_repairDeadlineUTC']=recovery_deadline
  if action in ('tts','cosy','qwen','voxcpm2','wsyue','drama3') and cfg.get('_trackControl'):
   request['_trackControl']=cfg['_trackControl']
   from track_control import check
@@ -101,7 +105,7 @@ def _run_model_job(cfg, action, request, emit):
    try:
     event=json.loads(line)
     if event.get('stage')=='錯誤': error=event['message']
-    fields={key:event[key] for key in ('cueIndex','workID','workCompleted','workTotal','componentProgress') if event.get(key) is not None}
+    fields={key:event[key] for key in ('cueIndex','workID','workCompleted','workTotal','componentProgress','seconds') if event.get(key) is not None}
     if fields.get('workID')=='tts' and 'primaryGeneration' in request:fields['primaryGeneration']=bool(request['primaryGeneration'])
     emit(event['stage'],event['message'],event.get('progress'),**fields)
    except (json.JSONDecodeError,KeyError): pass
@@ -210,6 +214,7 @@ def require_profiles(cfg,cues):
  for _,cue in required:
   try:profile_for(cue,cfg);return
   except (ValueError,OSError):pass
+ if __import__('delivery_policy').enabled(cfg) and not cfg.get('editorRender'):return
  raise ValueError('全部對白未有可用角色參考；請先自動配對角色或設定參考聲音。未生成配音，未交付無聲配音軌。')
 
 
@@ -225,6 +230,7 @@ def generated_dialogue(cfg,job,cues,report=None):
 
 def gsv_audio(cfg,job,cues,run,emit):
  job=Path(job).resolve()
+ __import__('safe_vocal_capacity').configure(cfg,job,cues)
  cfg.setdefault('_generationGuardRoot',str(job))
  if cfg.get('editorRender') and cfg.get('audioRerunToken'):cfg['_explicitRetakeToken']=cfg['audioRerunToken']
  elif cfg.get('_reviewRetryToken'):cfg['_explicitRetakeToken']=cfg['_reviewRetryToken']
@@ -330,6 +336,11 @@ def gsv_audio(cfg,job,cues,run,emit):
    expression=expression_settings(cfg)
    from voice_parameters import overrides as voice_parameter_overrides
    parameter_overrides=voice_parameter_overrides(cfg,backend)
+   # A plain language tag produced a level, reading-aloud performance. The Hong
+   # Kong instruction also asks for the natural emotion of the source recording
+   # and forbids added words, repeats and extra pauses. The resolved style is
+   # part of the take cache key, so an old flat take cannot be reused.
+   defaultStyle='cantonese-strict' if cfg.get('targetLanguage','yue')=='yue' else 'normal'
    identity=[REVISION,cfg.get('productionMode','standard'),backend,"cosy-yue-instruct-trim-1",cfg.get('gsvDevice','mps'),cue['cantonese'],{k:profile.get(k) for k in ('id','promptText','language')},fingerprint]
    if backend in ('gpt-sovits','gpt-sovits-v2','gpt-sovits-v3','cosyvoice3'):identity.append(['expression-settings-1',expression])
    if backend=='qwen-tts':identity.append('qwen-auto-dialect-verified-4')
@@ -348,7 +359,7 @@ def gsv_audio(cfg,job,cues,run,emit):
    if cfg.get('audioRerunToken'):identity.extend(['audio-rerun',cfg['audioRerunToken']])
    if spoken_text!=cue['cantonese']:identity.extend(['spoken-alias',spoken_text])
    if readings:identity.extend(['v4-jyutping-1',readings])
-   if cue.get('_deliveryStyle'): identity.append(cue['_deliveryStyle'])
+   identity.append(cue.get('_deliveryStyle',defaultStyle))
    if cue.get('_seed'): identity.extend([cue['_seed'],cue.get('_targetSeconds')])
    key=hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:24]
    cache=Path(cfg.get('editorCache',job));cache.mkdir(parents=True,exist_ok=True)
@@ -359,7 +370,7 @@ def gsv_audio(cfg,job,cues,run,emit):
     with wave.open(str(path)) as f:
      health=problems(np.frombuffer(f.readframes(f.getnframes()),dtype='<i2'),f.getframerate(),spoken_text)
     if health:path.rename(path.with_suffix('.rejected.wav'))
-   items.append(dict(profile=profile,text=spoken_text,cantoneseReadings=readings,approvedText=cue.get('_approvedText',cue['cantonese']),output=str(path),reviewIndex=cue.get('reviewIndex'),deliveryStyle=cue.get('_deliveryStyle','cantonese-strict' if cfg.get('productionMode')=='normal' and cfg.get('targetLanguage','yue')=='yue' else 'normal'),seed=cue.get('_seed',42),targetSeconds=cue.get('_targetSeconds'),expressionSettings=expression))
+   items.append(dict(profile=profile,text=spoken_text,cantoneseReadings=readings,approvedText=cue.get('_approvedText',cue['cantonese']),output=str(path),reviewIndex=cue.get('reviewIndex'),deliveryStyle=cue.get('_deliveryStyle',defaultStyle),seed=cue.get('_seed',42),targetSeconds=cue.get('_targetSeconds'),expressionSettings=expression))
   except (ValueError,RuntimeError) as error:
    if not cfg.get('continueOnError',True):raise
    from project_store import record_issue
@@ -402,6 +413,9 @@ def gsv_audio(cfg,job,cues,run,emit):
      f.setparams((1,2,24000,0,'NONE','not compressed'));f.writeframes(bytes(round(max(.1,cue['end']-cue['start'])*24000)*2))
     paths[i]=silence
  resolved=[Path(cfg.get('_runtimeReplacements',{}).get(str(p),str(p))) for p in paths]
+ if __import__('delivery_policy').safe_capacity(cfg) and not cfg.get('_userSkipped'):
+  resolved=__import__('safe_audio_endpoint').apply(cfg,job,cues,resolved,run,emit)
+  publish(job,backend,cfg.get('targetLanguage','yue'),cues,resolved)
  if cfg.get('_userSkipped') or one_pass(cfg):return resolved
  from speech_level import prepare_file
  levels=[];leveled=[]
@@ -472,7 +486,7 @@ def natural_rate_limit(cfg,text,slot):
 
 def synthesize(cfg,job,cues,run,emit):
  cfg['_primaryGenerationPending']=True
- if one_pass(cfg):
+ if one_pass(cfg) or __import__('delivery_policy').bounded_delivery(cfg):
   from fast_mode import synthesize as fast_synthesize
   return fast_synthesize(cfg,job,cues,run,emit)
  natural=cfg.get('speechRatePolicy')=='natural'
@@ -518,7 +532,7 @@ def synthesize(cfg,job,cues,run,emit):
    remember_takes(job,cues,originals,paths)
   if cfg.get('autoFit') and not natural:
    paths=delivery.match_natural_delivery(cfg,job,cues,paths,gsv_audio,run,emit)
-  if natural:
+  if natural and not __import__('work_modes').enabled(cfg):
    from natural_delivery import repair
    paths=repair(cfg,job,cues,paths,run,emit)
   lengths=[seconds(path) for path in paths]
@@ -550,7 +564,7 @@ def synthesize(cfg,job,cues,run,emit):
    report.append(dict(index=cue.get('reviewIndex',i)+1,start=cue['start'],end=cue['end'],speaker=next((p.get('name','未指定') for p in cfg.get('voiceProfiles',[]) if p.get('id')==cue.get('speakerId',cfg.get('defaultSpeaker'))),'未指定'),seconds=length,slot=slot,rate=rate,maxRate=natural_rate_limit(cfg,cue['cantonese'],slot),needsReview=not valid,audio=str(path)))
    if not valid: bad.append(str(cue.get('reviewIndex',i)+1))
   (job/'timing.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
-  if natural:break
+  if natural or __import__('work_modes').enabled(cfg):break
   if not bad: break
   if (cfg.get('previewLooseTiming') and not cfg.get('autoApprove')) or attempt >= 2 or not (cfg.get('autoFit') and cfg.get('speechTiming') and cfg.get('translate')): break
   from duration_fit import shorten
@@ -596,6 +610,12 @@ def synthesize(cfg,job,cues,run,emit):
     emit('語速調整',f'校稿第 {row["index"]} 句保留完整台詞，以 {row["rate"]:.2f} 倍調整慢讀短句；唔截尾、唔推遲下一句。',.9)
   bad=[str(r['index']) for r in report if r['needsReview']]
   (job/'timing.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+ if __import__('work_modes').enabled(cfg) and not cfg.get('editorRender'):
+  from fast_mode import synthesize as final_delivery
+  # Full AI review has already generated/checked these paths. Finalisation
+  # shares the bounded delivery/fallback path without regenerating the batch.
+  local=dict(cfg,productionMode='fast' if __import__('work_modes').mode(cfg)=='performance' else 'normal',normalRepairPolicy='missing-only',speechRatePolicy='natural')
+  return final_delivery(local,job,cues,run,emit,generated_paths=paths)
  if cfg.get('previewLooseTiming') or natural:
   return render_complete_preview(cfg,job,cues,paths,report,run,emit)
  if bad:

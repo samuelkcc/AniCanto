@@ -8,6 +8,10 @@ def audit(cfg,items,request_options=None):
     from worker import ollama_chat,parse_editor_response
     defect=dict(type='object',properties=dict(kind=dict(type='string',enum=KINDS),source_quote=dict(type='string'),candidate_quote=dict(type='string'),explanation=dict(type='string')),required=['kind','source_quote','candidate_quote','explanation'],additionalProperties=False)
     item=dict(type='object',properties=dict(faithful=dict(type='boolean'),reason=dict(type='string'),defects=dict(type='array',items=defect)),required=['faithful','reason','defects'],additionalProperties=False)
+    if cfg.get('_requireNaturalSpoken'):
+        item['properties']['naturalSpoken']=dict(type='boolean');item['required'].append('naturalSpoken')
+        item['properties']['reason']['maxLength']=240
+        defect['properties']['explanation']['maxLength']=240
     schema=dict(type='object',properties={k:item for k in items},required=list(items),additionalProperties=False)
     prompt='''你係日語／香港廣東話語意校對員。只比較 source 今句同 candidate 實際台詞；previous/next只係上下文，caption可能跨句。唔以舊稿為正確答案。
 呢個係配音改編，唔係字幕逐字翻譯。允許同義意譯、香港慣用語、句式重組、刪冗餘主語同無資訊客套／重複；只因字面唔同唔算omission。必須保留劇情資訊、人物意圖、關鍵情緒同笑點。
@@ -21,6 +25,7 @@ def audit(cfg,items,request_options=None):
     if cfg.get('targetLanguage')=='zh':prompt+=' The candidate is Mainland Mandarin in Simplified Chinese; Mandarin is the intended target, not a defect. Preserve meaning, names and negation. Cantonese style is not required.'
     if cfg.get('targetLanguage')=='en':prompt+=' The candidate is English dubbing. Apply the same meaning checks to natural spoken English; Cantonese style is not required.'
     prompt+=' When source.approved_translation is supplied, this is a shortening task: preserve its entire meaning as well. Removing redundant wording is allowed, losing a substantive clause is not.'
+    if cfg.get('_requireNaturalSpoken'):prompt+=' Keep each reason/explanation to one short sentence, at most 240 characters. Return verdicts only; do not reason aloud or debate inside a JSON string. Also judge naturalSpoken independently: the candidate must be a grammatical spoken utterance in the target language. Reject telegraphic headline fragments or strings of nouns/verbs with missing necessary relationships (e.g. 甚平娜美城堡奔). Concision is allowed; optional particles are not mandatory. Meaning alone is insufficient. If uncertain, naturalSpoken=false. Do not approve a broken sentence merely because its keywords match.'
     response=parse_editor_response(ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(items,ensure_ascii=False))],schema,think=False,**(request_options or {})))
     # Missing/broken verdicts are NOT permission to edit. Keep valid verdicts
     # for other cues and reject only the unverified candidates.

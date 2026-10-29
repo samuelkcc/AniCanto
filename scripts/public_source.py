@@ -7,17 +7,17 @@ import argparse,hashlib,json,os,re,shutil
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-TOP={'LICENSE','NOTICE.txt','README.md','VERSION.json','.gitignore','SUPPORT.md','SUPPORT.zh-HK.md','SUPPORT.zh-CN.md','SUPPORT.ja.md'}
-TREES={'Sources','Resources','core','scripts','studio','windows','tests','licenses','docs'}
-SUFFIXES={'.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mjs','.cjs',
+TOP={'README.en.md','README.zh-HK.md','README.zh-CN.md','README.ja.md','LICENSE','NOTICE.txt','README.md','VERSION.json','.gitignore','SUPPORT.md','SUPPORT.zh-HK.md','SUPPORT.zh-CN.md','SUPPORT.ja.md'}
+TREES={'.github','Sources','Resources','core','scripts','studio','windows','tests','licenses','docs'}
+SUFFIXES={'.jpg','.py','.rs','.toml','.lock','.json','.yaml','.yml','.swift','.js','.mjs','.cjs',
           '.html','.css','.md','.txt','.srt','.strings','.ps1','.cmd','.sh','.svg','.png','.otf','.icns','.ico','.patch','.h','.c','.cpp','.hpp','.cmake','.in','.cfg','.rst','.pyx','.pxd','.tiktoken','.plist','.entitlements'}
 SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels','archive'}
-DOCS={'DESKTOP-RESTART-0.24.79.md','DESKTOP-RELIABILITY-0.24.78.md','DESKTOP-IMPROVEMENTS-0.24.77.md','DESKTOP-QUEUE-WAKE-0.24.76.md','PUBLIC-DESKTOP-PRIVATE-IPAD.md','DESKTOP-PARAMETERS-0.24.69.md','DESKTOP-WORKFLOW-0.24.70.md','DESKTOP-ACCELERATION-0.24.71.md','DESKTOP-SUBTITLE-IMPORT-0.24.72.md','DESKTOP-APPEARANCE-0.24.75.md','DESKTOP-PLAYBACK-0.24.74.md','DESKTOP-PLAYER-0.24.73.md','DESKTOP-IPAD-RECOVERY-WORKFLOW.md','RECOVERY-WORKFLOW-CONTRACT.json','DESKTOP-RECOVERY-PARITY.md','BUILD-AND-RECOVERY.md','IPAD-PRIVACY-POLICY.md','IPAD-PRIVACY-POLICY.zh-HK.md','IPAD-PRIVACY-POLICY.zh-CN.md','IPAD-PRIVACY-POLICY.ja.md','DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
+DOCS={'GETTING-STARTED.md','LICENSING.md','SCREENSHOTS.md','VOICE-MODELS.md','en/DEMO.md','en/GETTING-STARTED.md','en/LICENSING.md','en/SCREENSHOTS.md','ja/DEMO.md','ja/GETTING-STARTED.md','ja/LICENSING.md','ja/SCREENSHOTS.md','zh-CN/DEMO.md','zh-CN/GETTING-STARTED.md','zh-CN/LICENSING.md','zh-CN/SCREENSHOTS.md','zh-HK/DEMO.md','zh-HK/GETTING-STARTED.md','zh-HK/LICENSING.md','zh-HK/SCREENSHOTS.md','DESKTOP-WORKFLOW-0.25.0.md','WORKFLOW-CONTROLS-GUIDE.json','DOCUMENTATION-STANDARD.md','DESKTOP-WORKFLOW.md','DESKTOP-DELIVERY-0.24.85.md','DESKTOP-DELIVERY-0.24.86.md','DESKTOP-SUBTITLE-IMPORT-0.24.84.md','DESKTOP-SUBTITLE-FIRST-0.24.83.md','DESKTOP-RESET-TARGET-0.24.82.md','DESKTOP-QUEUE-RESET-0.24.81.md','DESKTOP-WORKFLOW-0.24.80.md','DESKTOP-RESTART-0.24.79.md','DESKTOP-RELIABILITY-0.24.78.md','DESKTOP-IMPROVEMENTS-0.24.77.md','DESKTOP-QUEUE-WAKE-0.24.76.md','PUBLIC-DESKTOP-PRIVATE-IPAD.md','DESKTOP-PARAMETERS-0.24.69.md','DESKTOP-WORKFLOW-0.24.70.md','DESKTOP-ACCELERATION-0.24.71.md','DESKTOP-SUBTITLE-IMPORT-0.24.72.md','DESKTOP-APPEARANCE-0.24.75.md','DESKTOP-PLAYBACK-0.24.74.md','DESKTOP-PLAYER-0.24.73.md','DESKTOP-IPAD-RECOVERY-WORKFLOW.md','RECOVERY-WORKFLOW-CONTRACT.json','DESKTOP-RECOVERY-PARITY.md','BUILD-AND-RECOVERY.md','IPAD-PRIVACY-POLICY.md','IPAD-PRIVACY-POLICY.zh-HK.md','IPAD-PRIVACY-POLICY.zh-CN.md','IPAD-PRIVACY-POLICY.ja.md','DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
       'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)
 SECRET=re.compile(rb'(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{35,}|AKIA[0-9A-Z]{16})')
-IMAGE_SUFFIXES={'.png','.otf','.icns','.ico'}
+IMAGE_SUFFIXES={'.jpg','.png','.otf','.icns','.ico'}
 THEMES={'studio','energy','ocean','ninja','retro','forest','future','mint','moonflower'}
 REVIEWED_ASSETS={'Resources/AniCanto.icns','Resources/app-icon-art.png','Resources/AniCanto-icon.png',
                  'Resources/fonts/NotoSansCJKtc-Regular.otf','studio/src-tauri/icons/icon.ico','studio/src-tauri/icons/icon.png'}
@@ -33,12 +33,15 @@ def selected(relative):
     if p.parts and p.parts[0]!='licenses' and any(part.lower() in {'mobile','ipad','ios','devicevalidation','validation-private'} or part.lower().endswith(('.xcodeproj','.xcworkspace','.xcarchive')) for part in p.parts):return False
     if p.suffix.lower() in {'.ipa','.mobileprovision'}:return False
     if p.parts and p.parts[0]!='licenses' and p.suffix=='.swift' and p.name.lower().startswith(('ipad','ios','storekit','iap')):return False
+    if p.as_posix()=='.github/FUNDING.yml':return True
+    if p.parts[:2]==('docs','images'):
+        return p.name in {'anicanto-cantonese-cover.png','demo-output-sample.jpg'} or bool(re.fullmatch(r'(welcome|basic|timeline|review|ai-repair|speech-studio|speech-player|nvidia-cuda|model-centre|models-setup|preferences|restart|subtitles|batch)-(en|zh-HK|zh-CN|ja)\.png',p.name))
     if len(p.parts)==1:return p.name in TOP
     if p.parts[0] not in TREES or any(x in SKIP_PARTS for x in p.parts):return False
     if p.name.startswith('.') or p.name in {'VLC-COPYING.txt'}:return False
     if p.parts[:2]==('windows','tools'):return False
     if p.parts[:2]==('licenses','tools') and p.parts[2:3] and p.parts[2].startswith('uv'):return False
-    if p.parts[0]=='docs' and (len(p.parts)!=2 or p.name not in DOCS):return False
+    if p.parts[0]=='docs' and p.relative_to('docs').as_posix() not in DOCS:return False
     # Generated UI assets are rebuilt from the reviewed Resources originals.
     if p.parts[:3]==('studio','web','assets'):return False
     if p.suffix=='.wav':return p.as_posix() in REVIEWED_SYNTHETIC_VOICES

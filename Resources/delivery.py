@@ -1,3 +1,4 @@
+from repair_limits import bounded as bounded_repair
 """Preserve evidenced within-turn pauses without editing approved Cantonese words."""
 import array,hashlib,json,math,re,wave
 from repair_budget import claim,clear_content_problem,retained_takes,remember_takes
@@ -59,8 +60,9 @@ def synthesize(cfg,job,cues,generate,run,emit):
     from dubbing import is_vocalization
     paths=[raw if is_vocalization(c) or c.get('preserveOriginalSpeech') or c.get('editorAudio') else trimmed for c,raw,trimmed in zip(flat,generated,paths)]
     originals=list(paths)
+    __import__('repair_permissions').capture(cfg,job,flat,paths)
     paths=retained_takes(job,flat,originals)
-    if cfg.get('autoFit') and cfg.get('ttsBackend')=='cosyvoice3':
+    if cfg.get('autoFit') and cfg.get('ttsBackend')=='cosyvoice3' and not __import__('speech_duration').enabled(cfg):
         try:
             paths=match_short_delivery(cfg,job,flat,paths,generate,run,emit)
         except (RuntimeError,ValueError,ImportError) as error:
@@ -124,8 +126,8 @@ def stabilize_voices(cfg,job,cues,paths,generate,run,emit):
     vectors=embeddings(cfg,job,paths)
     vectors=[None if is_vocalization(c) or c.get('preserveOriginalSpeech') or c.get("editorAudio") else v for c,v in zip(cues,vectors)]
     pending=inconsistent_takes(cues,vectors);decisions=[]
-    pending=[r for r in pending if claim(cfg,job,cues[r["index"]],"voice")] if cfg.get("autoFit") else pending
-    if pending and cfg.get('autoFit'):
+    pending=[r for r in pending if claim(cfg,job,cues[r["index"]],"voice")] if cfg.get("autoFit") and cfg.get('autoVoiceRepair',True) else pending
+    if pending and cfg.get('autoFit') and cfg.get('autoVoiceRepair',True):
         emit('聲線一致性',f'{len(pending)} 段同角色聲線有明顯差異，沿用固定參考重錄一次再核對。',.89)
         takes=prepare_audio(cfg,job,generate(cfg,job,[dict(cues[r['index']],_seed=223) for r in pending],run,emit),run)
         fresh=embeddings(cfg,job,takes)
@@ -142,6 +144,7 @@ def stabilize_voices(cfg,job,cues,paths,generate,run,emit):
     return paths
 
 
+@bounded_repair('delivery.check_content')
 def check_content(cfg,job,cues,paths,generate,run,emit):
     """One automatic same-script repair; keep the original if evidence is worse."""
     from speechcheck import inspect
@@ -149,6 +152,7 @@ def check_content(cfg,job,cues,paths,generate,run,emit):
     indices=[i for i,c in enumerate(cues) if not is_vocalization(c) and not c.get('preserveOriginalSpeech') and not c.get('editorAudio') and not Path(paths[i]).name.startswith('skipped-')]
     if not indices:return paths
     checks=inspect(cfg,job,[cues[i] for i in indices],[paths[i] for i in indices],emit)
+    if __import__('repair_permissions').enabled(cfg):checks=[__import__('repair_permissions').advisory(c) for c in checks]
     pending=[(i,r) for i,r in zip(indices,checks) if r['requiresReview']]
     from cantonese_review import needs_repair
     pending=[(i,r) for i,r in pending if needs_repair(cues[i],r,cfg.get('targetLanguage','yue'))]
@@ -184,7 +188,7 @@ def check_content(cfg,job,cues,paths,generate,run,emit):
     # A lexical cue with both near-minimum duration and no recognized words
     # cannot be approved merely because its waveform passes a level check.
     for i,check in zip(indices,checks):
-        if needs_repair(cues[i],check,cfg.get('targetLanguage','yue')) and not str(check.get('heard','')).strip() and check.get('languageUnverified') and len(''.join(c for c in cues[i]['cantonese'] if c.isalnum()))>=3:
+        if (repair or not __import__('normal_mode').audio_present(paths[i])) and needs_repair(cues[i],check,cfg.get('targetLanguage','yue')) and not str(check.get('heard','')).strip() and check.get('languageUnverified') and len(''.join(c for c in cues[i]['cantonese'] if c.isalnum()))>=3:
             import wave
             try:
                 with wave.open(str(paths[i])) as audio: duration=audio.getnframes()/audio.getframerate()
@@ -199,7 +203,7 @@ def check_content(cfg,job,cues,paths,generate,run,emit):
                 paths[i]=path
                 decisions.append(dict(index=cues[i].get('reviewIndex',i)+1,quarantined=str(rejected),reason='short-unrecognized-speech',accepted=False))
     rows=[dict(r,index=cues[i].get('reviewIndex',i)+1) for i,r in zip(indices,checks)]
-    (Path(job)/'speech-check.json').write_text(json.dumps(dict(rows=rows,repairs=decisions,maxRepairAttempts=1),ensure_ascii=False,indent=2))
+    (Path(job)/'speech-check.json').write_text(json.dumps(dict(rows=rows,repairs=decisions,maxRepairAttempts=1 if repair else 0,automaticRepairEnabled=repair),ensure_ascii=False,indent=2))
     return paths
 
 
@@ -363,6 +367,7 @@ def prepare_audio(cfg,job,paths,run):
     from audio_format import delivery_rate
     sr=delivery_rate(cfg)
     """Trim cached takes too; retain originals and avoid generating new speech."""
+    if __import__('speech_duration').enabled(cfg):return [__import__('speech_duration').trim(cfg,job,p) if Path(p).is_file() and not Path(p).name.startswith('skipped-') else Path(p) for p in paths]
     import numpy as np
     from acoustics import trim_generated
     out=[]

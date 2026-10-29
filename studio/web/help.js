@@ -1,3 +1,4 @@
+import {WORKFLOW_GUIDE} from './workflow-guide.js';
 import {parameterCopy} from './voice-parameters.js';
 import {esc} from './model.js';
 import {localeData} from './locale-data.js';
@@ -418,63 +419,79 @@ export const CHAPTERS=[
     ]
   },
   {
-    "id": "modes",
-    "title": {
-      "en": "Normal, High speed and Full AI review",
-      "zh-HK": "一般、高速與完整 AI 模式"
-    },
-    "summary": {
-      "en": "Understand what each production mode checks and why time differs.",
-      "zh-HK": "了解不同製作模式的檢查範圍與時間差異。"
-    },
-    "sections": [
-      {
-        "title": {
-          "en": "Normal mode — recommended",
-          "zh-HK": "一般模式：日常建議"
-        },
-        "body": [
-          {
-            "en": "Normal mode defaults to retaining the first audible recordings. Only missing or damaged audio is automatically regenerated, with at most two persistent extra attempts. Language labels and suspected missing words do not trigger retakes. Measured overlong lines still receive local meaning-preserving shortening, at most two passes, without restarting language review; only healthy recordings that fit are adopted, and originals remain saved. These recordings are not certified as correct; use the report and per-line audition. Detailed checking and repair remains an explicit Preferences option.",
-            "zh-HK": "一般模式預設保留首輪有聲錄音，只自動補無聲或損壞，最多兩次額外嘗試並保存進度。語言標籤及懷疑漏句唔會再觸發重錄；實際超出安全時段嘅對白仍會局部保留意思改短，最多兩輪，唔重啟語言覆聽；新錄音有聲兼適合時段先採用，原錄音保留。唔代表已認證正確，請用報告同逐句試聽核對。偏好設定仍可明確選擇詳細檢查及修復。",
-            "zh-CN": "一般模式默认保留首轮有声录音，只自动补无声或损坏，最多两次额外尝试并保存进度。语言标签及疑似漏句不再触发重录；实际超出安全时段的对白仍会局部保留意思改短，最多两轮，不重启语言复听；新录音有声且适合时段才采用，原录音保留。这不代表已认证正确，请使用报告和逐句试听核对。偏好设置仍可明确选择详细检查及修复。",
-            "ja": "通常モードは最初の有声音声を保持し、無音・破損だけ最大2回追加生成します。言語ラベルや語の欠落の疑いでは再生成しません。実測で長すぎる台詞は意味を保って最大2回局所的に短縮し、言語確認を再開しません。正常で時間内に収まる録音のみ採用し、元音声も保持します。正しさの認証ではなく、レポートと行ごとの試聴で確認してください。詳細な自動確認と修復は環境設定で明示的に選べます。"
-          }
-        ],
-        "steps": false
-      },
-      {
-        "title": {
-          "en": "High speed",
-          "zh-HK": "高速模式"
-        },
-        "body": [
-          {
-            "en": "Skips quality review and quality-driven retakes. It still needs speech recognition, translation, speech generation and movie encoding. It can be faster, but may leave missing, incomplete, incorrectly pronounced or mismatched voices. Choose it when you want an unreviewed first pass.",
-            "zh-HK": "跳過品質覆核及因品質問題觸發的重錄，但仍需辨識、翻譯、生成配音及封裝影片。速度較快，惟可能有缺句、不完整、讀音或聲線不符，適合試看未經覆核的初稿。"
-          }
-        ],
-        "steps": false
-      },
-      {
-        "title": {
-          "en": "Full AI review",
-          "zh-HK": "完整 AI 檢測模式"
-        },
-        "body": [
-          {
-            "en": "Expert mode exposes fuller review, audio grouping and optional visual role analysis. Expect roughly three times Normal conversion time as a planning guide; actual time varies with hardware, episode length, model sizes and retries. Visual analysis is optional and off by default.",
-            "zh-HK": "專家模式提供較完整的覆核、聲音分組及可選的角色影像分析。規劃時可估約一般轉換的三倍時間；實際仍視硬件、片長、模型與重試次數而定。影像分析為選項，預設關閉。"
-          },
-          {
-            "en": "Changing the interface to Expert does not automatically enable Full AI review. Select the production mode before starting a new conversion.",
-            "zh-HK": "切換到專家介面不會自動啟用完整 AI 檢測，須在新轉換前另選製作模式。"
-          }
-        ],
-        "steps": false
-      }
-    ]
+  "id": "modes",
+  "title": {
+    "en": "Production controls",
+    "zh-HK": "製作控制",
+    "zh-CN": "制作控制",
+    "ja": "制作設定"
   },
+  "summary": {
+    "en": "One standard pipeline with independent review, repair and duration controls.",
+    "zh-HK": "同一個標準流程，覆核、修復同時長限制分開控制。",
+    "zh-CN": "同一个标准流程，复核、修复和时长限制分别控制。",
+    "ja": "標準処理で検査・修復・時間制限を個別に設定します。"
+  },
+  "sections": [
+    {
+      "title": {
+        "en": "Standard conversion",
+        "zh-HK": "標準轉換",
+        "zh-CN": "标准转换",
+        "ja": "標準変換"
+      },
+      "body": [
+        {
+          "en": "New desktop jobs record each line once. Missing or damaged audio can be recorded up to two extra times. These checks do not certify pronunciation. Paused jobs keep their saved policy.",
+          "zh-HK": "新桌面工作每句先生成一次；無聲或損壞錄音最多額外補錄兩次，唔代表讀音已認證。已暫停工作保留原設定。",
+          "zh-CN": "新桌面任务每句先生成一次；无声或损坏录音最多额外补录两次，不代表读音已认证。已暂停任务保留原设置。",
+          "ja": "新しいデスクトップ処理では各台詞を1回生成します。無音・破損時は最大2回追加生成します。発音の保証ではありません。一時停止中の処理は保存済み設定を保持します。"
+        }
+      ],
+      "steps": false
+    },
+    {
+      "title": {
+        "en": "Independent AI switches",
+        "zh-HK": "獨立 AI 開關",
+        "zh-CN": "独立 AI 开关",
+        "ja": "個別のAI設定"
+      },
+      "body": [
+        {
+          "en": "Full AI review adds visual role analysis and ASR checks when the required models exist. With AI auto repair off, content and voice checks retain findings without a retake. AI auto repair enables bounded retries and the selected fallback options. Full review can take much longer.",
+          "zh-HK": "完整 AI 覆核會在所需模型可用時加入角色畫面分析及語音覆聽。關閉 AI 自動修復時，內容及聲線檢查只保留結果，唔重錄。AI 自動修復會啟用有限重試及所選後備方法。完整覆核可能明顯增加時間。",
+          "zh-CN": "完整 AI 复核会在所需模型可用时加入角色画面分析及语音复听。关闭 AI 自动修复时，内容及声线检查只保留结果，不重录。AI 自动修复会启用有限重试及所选后备方法。完整复核可能明显增加时间。",
+          "ja": "完全AI検査は必要なモデルがある場合に画像による人物解析と音声検査を追加します。自動修復がオフの場合、内容・声質の検査結果だけ記録し、再生成しません。自動修復は回数制限付き再試行と選択した代替音声を有効にします。完全検査には時間がかかる場合があります。"
+        }
+      ],
+      "steps": false
+    },
+    {
+      "title": {
+        "en": "Speech duration and overlap",
+        "zh-HK": "配音時長及重疊",
+        "zh-CN": "配音时长及重叠",
+        "ja": "吹替時間と重複"
+      },
+      "body": [
+        {
+          "en": "Limit dubbing to original speech duration is off by default. Each recording starts at its source speech time and plays at natural speed. A long take can overlap the next generated line. Protected opening/ending ranges, manual source keeps and the video end remain limits.",
+          "zh-HK": "「限制配音至原聲時長」預設關閉。配音按原聲起點，以自然速度播放；較長錄音可同下一句配音重疊。片頭片尾保護區、手動保留原聲區間及影片結尾仍受保護。",
+          "zh-CN": "“限制配音至原声时长”默认关闭。配音按原声起点，以自然速度播放；较长录音可与下一句配音重叠。片头片尾保护区、手动保留原声区间及影片结尾仍受保护。",
+          "ja": "時間制限は既定でオフです。原音の開始時刻から自然な速度で再生し、長い音声は次の吹替と重複できます。保護されたOP/ED、原音保持区間、動画の終端は越えません。"
+        },
+        {
+          "en": "When enabled, measure the actual recording first. Remove only exact digital silence at the edges, with 80 ms padding. Retain internal pauses and quiet sounds. Only a measured overrun permits one meaning-preserving rewrite and retake with the same reference. Retain the first take if the new take does not fit. Record unresolved delivery in the report and continue export. Original embedded, external and OCR subtitle evidence stays unchanged.",
+          "zh-HK": "開啟後先量度實際錄音，只移除首尾完全數碼靜音，保留 80 毫秒緩衝、句中停頓及微弱聲音。只有實測超時先容許按相同參考、保留意思縮稿重配一次。新錄音仍唔合適就保留首輪錄音供比較；未解決交付記入報告並繼續輸出。原裝內置、外掛及 OCR 字幕證據不變。",
+          "zh-CN": "开启后先测量实际录音，只移除首尾完全数字静音，保留 80 毫秒缓冲、句中停顿及微弱声音。只有实测超时才允许按相同参考、保留意思缩稿重配一次。新录音仍不合适则保留首轮录音供比较；未解决的交付记入报告并继续输出。原始内置、外挂及 OCR 字幕证据不变。",
+          "ja": "オンの場合は実際の録音を先に測定します。前後の完全なデジタル無音だけを除き、80msの余白、文中の間、弱い音を残します。実測で超過した台詞だけ、意味と同じ参照音声を保って1回短縮・再生成します。収まらない候補は採用せず、初回音声を比較用に保持します。未解決の箇所を記録して出力を続けます。元の内蔵・外部・OCR字幕は変更しません。"
+        }
+      ],
+      "steps": false
+    }
+  ]
+},
   {
     "id": "preview",
     "title": {
@@ -1262,3 +1279,181 @@ CHAPTERS.find(c=>c.id==='playback73').sections[0].body.push({"en": "The playback
 CHAPTERS.find(c=>c.id==='playback73').sections[0].body.push({"en": "While converting, Automatic subtitles prioritises translated lines at the current source position. Unfinished lines are labelled; original subtitles remain a manual choice. The dialogue inspector follows playback, without moving away while you are typing. Basic mode includes left/right panel toggles and Preferences in the top-right. The duplicate header Save icon is removed; Pause & save also saves pending script edits. Keyboard Save and saves on navigation remain available.", "zh-HK": "轉換中，自動字幕優先顯示目前原聲位置已翻譯嘅台詞，未完成會標示；仍可手動揀原裝字幕。對白面板跟隨播放，輸入改稿期間唔會跳去另一句。基本模式右上有左右面板開關及偏好設定。移除頂欄重複磁碟圖示；暫停並保存亦保存未提交稿件，鍵盤保存及離開頁面時保存繼續保留。", "zh-CN": "转换中自动字幕优先显示当前位置已翻译台词，未完成将标示；可手动选择原装字幕。对白面板跟随播放，输入期间不跳句。基本模式右上提供左右面板开关及偏好设置。移除顶部重复保存图标；暂停并保存也保存稿件修改，键盘保存和页面切换保存保留。", "ja": "変換中の自動字幕は現在の原音位置の翻訳済み台詞を優先し、未完了を明示します。元字幕も手動選択できます。台詞パネルは再生に追従しますが、入力中は移動しません。基本モード右上にも左右パネルと環境設定を追加し、重複保存アイコンを削除します。一時停止・保存は編集中の台本も保存します。キーボード保存とページ移動時保存は維持します。"});
 
 CHAPTERS.find(c=>c.id==='playback73').sections[0].body.push({"en":"While a desktop task runs, AniCanto requests protection from automatic idle sleep; the display may still turn off. Completion and pause release it, with a bounded idle fallback if the interface stops responding. Closing a laptop lid or deliberately putting the computer to sleep can still suspend conversion. Keep the computer awake for unattended work. Background queue hand-offs also reconcile saved native completion receipts after wake or a missed event; paused work is never silently restarted.","zh-HK":"桌面處理期間會請求防止自動閒置睡眠，螢幕仍可熄。完成或暫停後釋放；介面無回應時亦有有限閒置保底。合蓋或手動睡眠仍可令轉換暫停，無人看管時請保持電腦醒住。背景佇列喺喚醒或漏通知後會核對原生完成記錄接續；唔會偷偷重啟已暫停工作。","zh-CN":"桌面处理期间请求防止自动闲置睡眠，屏幕仍可关闭。完成或暂停后释放，界面无响应时也有有限闲置兜底。合盖或手动睡眠仍可能暂停转换，无人看管时请保持电脑唤醒。后台队列在唤醒或漏通知后核对原生完成记录接续，不会自动重启已暂停工作。","ja":"デスクトップで処理中は自動アイドルスリープを抑止しますが、画面は消灯できます。完了・一時停止後に解除し、画面が応答しない場合も待機時間に上限があります。蓋を閉じたり手動でスリープしたりすると変換は中断され得ます。無人処理中はコンピューターを起動状態にしてください。復帰や通知の欠落後はネイティブの完了記録を確認してキューを継続し、一時停止した作業は自動再開しません。"});
+
+// Source-clock and bounded fallback workflow, desktop 0.24.80.
+CHAPTERS.push({"id": "workflow80", "title": {"en": "Source timing, captions and fallback voices", "zh-HK": "原聲時間、字幕配對與後備聲線", "zh-CN": "原声时间、字幕匹配与备用声线", "ja": "原音時刻・字幕対応・代替音声"}, "summary": {"en": "New conversions use selected embedded/external subtitles as the primary dialogue content; Chinese subtitles are adapted directly into spoken Cantonese. Original speech recognition provides speech timing. Without usable subtitles, translate the recognized speech. Expert OCR compares OCR and speech at matching times and is opt-in. Choose the conversion source in Subtitle source above the preview; the player subtitle selector affects playback only. Shared subtitle clauses are allocated without duplicate or missing text; unresolved ownership or missing speech clocks appear in the review report. Original audio transcripts remain separate for voice references. Names, translation, shortening and missing-script recovery use the same primary text. Existing paused requests retain their old source policy and recordings. To test this workflow on an old item, reset its state, select/import subtitles, then Start. First audible takes and bounded voice repairs remain unchanged.", "zh-HK": "新轉換以已選內置／外掛字幕作主要內容，中文字幕直接改成廣東話口語；原聲辨識提供發聲時間。冇可用字幕先翻譯語音稿。OCR 係專家模式明確選項，按時間合併比較 OCR 同語音。喺預覽上方「字幕來源」選轉換來源；播放器揀字幕只影響播放。共用字幕先分配內容，檢查漏字、重複同次序；未確認分配或缺發聲時鐘會列入校對報告。原音逐字稿獨立保留作聲線參考。名稱、翻譯、精簡同補稿使用同一份主要文字。舊暫停工作保留原政策及錄音；要用舊片測新流程，先重設狀態，再選／匯入字幕及開始。保留首錄同有界補聲規則不變。", "zh-CN": "新转换以已选内置／外挂字幕为主要内容，中文字幕直接改成粤语口语；原声识别提供发声时间。无可用字幕才翻译语音稿。OCR 是专家模式明确选项，按时间合并比较 OCR 与语音。在预览上方“字幕来源”选择转换来源；播放器选择字幕只影响播放。共享字幕先分配内容，检查漏字、重复和顺序，未确认分配或缺少发声时钟列入校对报告。原音逐字稿独立保留作声线参考。名称、翻译、精简和补稿使用同一主要文字。旧暂停任务保留原政策和录音；用旧片测试新流程前先重设状态，再选择／导入字幕并开始。首录和有限补录规则不变。", "ja": "新規変換は選択した内蔵／外部字幕を内容の主な根拠とし、中国語字幕を直接広東語口語へ変換します。音声認識は発声時刻を提供し、字幕がない場合に認識文を翻訳します。OCRは上級モードで明示的に選び、時刻に沿って音声と比較します。プレビュー上の字幕ソースで変換用を指定し、プレーヤー側の字幕選択は再生だけを変更します。共有字幕の割当は重複・欠落・順序を検査し、未確定の割当と発声時刻の欠落は確認レポートに表示します。声の参照には別保存の原音認識文を使います。名前・翻訳・短縮・補完は同じ主要テキストを使用します。既存の一時停止中タスクと録音は維持し、新方式で試す場合は状態をリセットして字幕を選び直してください。"}, "sections": [{"title": {"en": "Source timing, captions and fallback voices", "zh-HK": "原聲時間、字幕配對與後備聲線", "zh-CN": "原声时间、字幕匹配与备用声线", "ja": "原音時刻・字幕対応・代替音声"}, "body": [{"en": "New conversions use selected embedded/external subtitles as the primary dialogue content; Chinese subtitles are adapted directly into spoken Cantonese. Original speech recognition provides speech timing. Without usable subtitles, translate the recognized speech. Expert OCR compares OCR and speech at matching times and is opt-in. Choose the conversion source in Subtitle source above the preview; the player subtitle selector affects playback only. Shared subtitle clauses are allocated without duplicate or missing text; unresolved ownership or missing speech clocks appear in the review report. Original audio transcripts remain separate for voice references. Names, translation, shortening and missing-script recovery use the same primary text. Existing paused requests retain their old source policy and recordings. To test this workflow on an old item, reset its state, select/import subtitles, then Start. First audible takes and bounded voice repairs remain unchanged.", "zh-HK": "新轉換以已選內置／外掛字幕作主要內容，中文字幕直接改成廣東話口語；原聲辨識提供發聲時間。冇可用字幕先翻譯語音稿。OCR 係專家模式明確選項，按時間合併比較 OCR 同語音。喺預覽上方「字幕來源」選轉換來源；播放器揀字幕只影響播放。共用字幕先分配內容，檢查漏字、重複同次序；未確認分配或缺發聲時鐘會列入校對報告。原音逐字稿獨立保留作聲線參考。名稱、翻譯、精簡同補稿使用同一份主要文字。舊暫停工作保留原政策及錄音；要用舊片測新流程，先重設狀態，再選／匯入字幕及開始。保留首錄同有界補聲規則不變。", "zh-CN": "新转换以已选内置／外挂字幕为主要内容，中文字幕直接改成粤语口语；原声识别提供发声时间。无可用字幕才翻译语音稿。OCR 是专家模式明确选项，按时间合并比较 OCR 与语音。在预览上方“字幕来源”选择转换来源；播放器选择字幕只影响播放。共享字幕先分配内容，检查漏字、重复和顺序，未确认分配或缺少发声时钟列入校对报告。原音逐字稿独立保留作声线参考。名称、翻译、精简和补稿使用同一主要文字。旧暂停任务保留原政策和录音；用旧片测试新流程前先重设状态，再选择／导入字幕并开始。首录和有限补录规则不变。", "ja": "新規変換は選択した内蔵／外部字幕を内容の主な根拠とし、中国語字幕を直接広東語口語へ変換します。音声認識は発声時刻を提供し、字幕がない場合に認識文を翻訳します。OCRは上級モードで明示的に選び、時刻に沿って音声と比較します。プレビュー上の字幕ソースで変換用を指定し、プレーヤー側の字幕選択は再生だけを変更します。共有字幕の割当は重複・欠落・順序を検査し、未確定の割当と発声時刻の欠落は確認レポートに表示します。声の参照には別保存の原音認識文を使います。名前・翻訳・短縮・補完は同じ主要テキストを使用します。既存の一時停止中タスクと録音は維持し、新方式で試す場合は状態をリセットして字幕を選び直してください。"}], "steps": false}]});
+for (const c of CHAPTERS) for (const s of c.sections || []) {
+ if (['When the original voice keeps producing the wrong language','An audible incomplete preview'].includes(s.title?.en)) s.body=CHAPTERS.find(c=>c.id==='workflow80').sections[0].body;
+}
+
+CHAPTERS.push({"id": "queue81", "title": {"en": "Video list and reset", "zh-HK": "影片清單與重設狀態", "zh-CN": "影片列表与重设状态", "ja": "動画リストと状態リセット"}, "summary": {"en": "Selecting a video highlights it while loading. Reordering is shown immediately; failed saves restore the displayed order. Adding a video selects the first newly added item. Restart / update dubbing → Reset state returns only that queue item to waiting, using current production defaults on its next start. Confirm before resetting. Existing media, recordings, exports and installed models remain on disk; earlier row metadata is archived. Imported subtitle choices, project terms, draft links and frozen requests are detached. Other videos and global preferences are unchanged. Reset does not start conversion. Pause active processing before resetting.", "zh-HK": "揀選影片時會即時加深選中框，載入期間顯示提示。調次序即時反映，保存失敗會還原顯示次序；加入影片會選中新加入嘅第一條。「重新製作／更新配音 → 重設狀態」只將呢條影片回復等待，下次使用目前製作預設；重設前需確認。原影片、錄音、舊成品及模型檔保留，舊清單資料會備存。影片嘅外掛字幕選擇、人名招式、草稿連結及鎖定工作設定會解除，其他影片及全域偏好不變。重設唔會自動開始轉換，處理中需先暫停。", "zh-CN": "选择影片时立即加深选中框，加载期间显示提示。调整顺序立即反映，保存失败则还原显示顺序；加入影片会选中新加入的第一条。“重新制作／更新配音 → 重设状态”只将此影片恢复为等待，下次使用当前制作默认设置，重设前需确认。源影片、录音、旧成品及模型保留，旧列表资料会备份。外挂字幕选择、项目术语、草稿链接及锁定任务设置会解除，其他影片及全局偏好不变。不自动开始转换，处理时需先暂停。", "ja": "動画の選択は読み込み中も強調表示します。並べ替えは即時表示し、保存失敗時は元に戻します。追加時は最初の新規動画を選択します。「再開始／吹替更新 → 状態をリセット」は確認後、この項目を待機状態に戻し、次回は現在の制作設定を使います。元動画・録音・既存出力・モデルは保持し、以前の項目データを保存します。外部字幕選択・用語・下書きリンク・固定リクエストは解除します。他の動画と環境設定は変更せず、自動変換も開始しません。処理中は先に一時停止してください。"}, "sections": [{"title": {"en": "Video list and reset", "zh-HK": "影片清單與重設狀態", "zh-CN": "影片列表与重设状态", "ja": "動画リストと状態リセット"}, "body": [{"en": "Selecting a video highlights it while loading. Reordering is shown immediately; failed saves restore the displayed order. Adding a video selects the first newly added item. Restart / update dubbing → Reset state returns only that queue item to waiting, using current production defaults on its next start. Confirm before resetting. Existing media, recordings, exports and installed models remain on disk; earlier row metadata is archived. Imported subtitle choices, project terms, draft links and frozen requests are detached. Other videos and global preferences are unchanged. Reset does not start conversion. Pause active processing before resetting.", "zh-HK": "揀選影片時會即時加深選中框，載入期間顯示提示。調次序即時反映，保存失敗會還原顯示次序；加入影片會選中新加入嘅第一條。「重新製作／更新配音 → 重設狀態」只將呢條影片回復等待，下次使用目前製作預設；重設前需確認。原影片、錄音、舊成品及模型檔保留，舊清單資料會備存。影片嘅外掛字幕選擇、人名招式、草稿連結及鎖定工作設定會解除，其他影片及全域偏好不變。重設唔會自動開始轉換，處理中需先暫停。", "zh-CN": "选择影片时立即加深选中框，加载期间显示提示。调整顺序立即反映，保存失败则还原显示顺序；加入影片会选中新加入的第一条。“重新制作／更新配音 → 重设状态”只将此影片恢复为等待，下次使用当前制作默认设置，重设前需确认。源影片、录音、旧成品及模型保留，旧列表资料会备份。外挂字幕选择、项目术语、草稿链接及锁定任务设置会解除，其他影片及全局偏好不变。不自动开始转换，处理时需先暂停。", "ja": "動画の選択は読み込み中も強調表示します。並べ替えは即時表示し、保存失敗時は元に戻します。追加時は最初の新規動画を選択します。「再開始／吹替更新 → 状態をリセット」は確認後、この項目を待機状態に戻し、次回は現在の制作設定を使います。元動画・録音・既存出力・モデルは保持し、以前の項目データを保存します。外部字幕選択・用語・下書きリンク・固定リクエストは解除します。他の動画と環境設定は変更せず、自動変換も開始しません。処理中は先に一時停止してください。"}], "steps": false}, {"title": {"en": "Confirmed target and queue order", "zh-HK": "確認目標與清單次序", "zh-CN": "确认目标与列表顺序", "ja": "確認対象と処理順"}, "body": [{"en": "The reset confirmation names the video chosen when the menu opened, even if the background selection changes. Preparing and resetting show progress; errors stay visible with a retry. Confirm reset closes the menu and selects that video. Start all follows the visible list order, including paused videos; selecting a video only changes what you inspect. Use its restart menu for an explicit single-video restart.", "zh-HK": "重設確認會清楚列出開選單時指定嘅影片，即使背景選中項目改變，目標都唔會變。準備及重設期間會顯示提示，失敗可見原因並重試；確認成功後會關閉選單並選中該片。「開始全部」依清單次序處理，包括暫停影片；揀選影片只影響檢視。要單獨重做某片，請用該片嘅重新製作選單。", "zh-CN": "重设确认会明确显示打开菜单时指定的影片，后台选择变化不会改变目标。准备和重设期间显示进度，失败显示原因并允许重试；成功后关闭菜单并选中该影片。“开始全部”按列表顺序处理，包括暂停影片；选择只影响查看。单独重做某片请使用该影片的重新制作菜单。", "ja": "リセット確認にはメニューを開いた動画名を表示し、背景の選択が変わっても対象を保持します。準備中と実行中の状態を表示し、エラーは再試行できる形で残します。成功後はメニューを閉じ、対象動画を選択します。一括開始は一時停止中の動画も含め、表示順に処理します。選択は閲覧対象のみを変更します。特定の動画だけを再開する場合は、その動画の再開始メニューを使ってください。"}], "steps": false}]});
+
+CHAPTERS.push({id:'subtitle84',title:{en:'Source subtitle visible, dubbing missing','zh-HK':'睇到原字幕，但配音稿留白','zh-CN':'有原字幕，但配音稿为空',ja:'元字幕はあるのに台本が空'},summary:{en:'A source caption is separate from a generated dubbing script.','zh-HK':'原裝字幕同已生成配音稿係兩樣資料。','zh-CN':'原字幕与已生成配音稿是不同资料。',ja:'元字幕と生成済み吹き替え台本は別の情報です。'},sections:[{title:{en:'Check the source notice','zh-HK':'先睇原因提示','zh-CN':'先查看原因提示',ja:'理由を確認'},body:[{en:'If a source subtitle was read but its spoken-turn allocation was not confirmed, the editor now labels it explicitly and displays the source caption in a dashed timeline clip. This does not mean target-language dubbing was generated. New conversions ignore incidental subtitle display tails when assigning speech turns. If a shared-caption split still fails its bounded checks, the full caption is kept once at the main corroborated speech interval; uncertain fragments keep original audio and are listed for review. Check timing and speaker. Existing saved jobs retain their frozen policy. For an old blank script, use Reset state, select/import the subtitle source and start a new conversion. A voice-only update keeps the existing script. Earlier recordings and exports are retained.','zh-HK':'原字幕已讀入，但未確認屬於邊段原聲時，編輯器會顯示原因，時間線用虛線框顯示原字幕；呢個唔代表已生成廣東話配音。新轉換會忽略字幕尾部輕微重疊，避免串錯幾段原聲。共用字幕經有界檢查仍無法拆開時，完整文字會喺主要原聲時段保留一次，其餘不確定碎段保留原音並列入覆核，請比較時間同講者。舊保存工作沿用凍結規則；要修正舊空白稿，先重設狀態、選／匯入字幕再重新開始。只更新配音會沿用舊稿。舊錄音及成品保留。','zh-CN':'原字幕已读入但未确认对应的原声片段时，编辑器会显示原因，时间线以虚线框显示原字幕；这不代表已生成配音。新转换忽略字幕尾部轻微重叠。共享字幕经有限检查仍无法拆分时，全文在主要原声时段保留一次，其余不确定片段保留原音并列入复核，请比较时间与说话人。旧保存任务沿用冻结规则；修正旧空白稿需重设状态、选择／导入字幕并重新开始。仅更新配音会沿用旧稿，旧录音和成品保留。',ja:'元字幕を取得しても発話との対応が未確定の場合は理由を表示し、タイムラインに元字幕を破線で示します。吹き替え生成済みという意味ではありません。新規変換は字幕の短い表示の余韻で発話を誤結合しません。共有字幕の分割が検査を通らない場合、全文を主な発話区間へ一度だけ残し、不確定な断片は元音声を保持して確認対象にします。時刻と話者を確認してください。保存済みの処理は以前の規則を維持します。空の台本を修正するには状態をリセットし、字幕を選んで変換し直してください。音声のみの更新では古い台本が残ります。以前の録音と出力は保持します。'}]}]});
+
+// Current priority defaults replace the historical .83 OCR opt-in description.
+{const c=CHAPTERS.find(c=>c.id==='workflow80');c.summary={"en": "Content priority is configurable. Factory defaults: with usable selected embedded/external text subtitles, Subtitles > speech; otherwise OCR > speech. Basic mode applies Preferences → Default content priority automatically. Expert mode offers Use preference defaults, Speech > subtitles, Subtitles > speech, Speech > OCR and OCR > speech in Production settings. The first source determines meaning; the second assists. OCR paths only apply without usable text subtitles; speech timestamps always come from original audio. An incompatible manual path shows an actionable error instead of silently changing the chosen source. The effective path is recorded in source-workflow.json. No usable OCR text falls back locally to speech. A source-only caption is not a generated dubbing script. Old saved requests retain their frozen settings; reset/restart translation to test a new source workflow. Voice-only updates keep existing scripts. Earlier recordings and outputs remain on disk.", "zh-HK": "內容優先權可以設定。出廠預設：有已選內置／外掛文字字幕用「字幕 > 語音」，冇可用文字字幕用「OCR > 語音」。一般模式自動跟「偏好設定 → 預設內容優先流程」。專家模式喺製作設定可選跟隨預設、語音 > 字幕、字幕 > 語音、語音 > OCR、OCR > 語音。前者決定意思，後者輔助；OCR 只喺冇文字字幕時使用，發聲時間一律跟原音。手動選咗唔適用路徑會清楚報錯，唔會靜默改來源；實際路徑存喺 source-workflow.json；個別時段 OCR 冇可用文字則用原聲稿。原字幕唔等於已生成配音稿。舊工作沿用凍結設定；要試新流程需重設／重新開始翻譯，只更新配音會保留舊稿。舊錄音及成品檔保留。", "zh-CN": "内容优先权可设置。出厂默认：有已选内置／外挂文字字幕用“字幕 > 语音”，无可用文字字幕用“OCR > 语音”。一般模式自动遵循“偏好设置 → 默认内容优先流程”。专家模式在制作设置可选择跟随默认、语音 > 字幕、字幕 > 语音、语音 > OCR、OCR > 语音。前者决定含义，后者辅助；OCR 仅在无文字字幕时使用，发声时间始终跟随原音。不适用的手动路径会明确报错，不会静默更改来源；实际路径存入 source-workflow.json；个别时段无可用 OCR 文字则用原声稿。原字幕不等于已生成配音稿。旧任务沿用冻结设置；测试新流程需重设／重新开始翻译，仅更新配音保留旧稿。旧录音与成品保留。", "ja": "内容の優先度を設定できます。初期値はテキスト字幕ありなら「字幕 > 音声」、なしなら「OCR > 音声」です。基本モードは環境設定の既定値を自動使用し、上級モードは制作設定で四つの優先順または既定値を選べます。先頭を内容の主な根拠、後方を補助とします。OCRはテキスト字幕がない場合だけ使用し、発声時刻は原音に従います。適用できない手動選択は明確なエラーを表示し、黙って変更しません。実際の設定をsource-workflow.jsonに記録します。OCRが使えない区間は音声認識へ戻ります。元字幕は生成済み台本とは異なります。保存済み処理は以前の設定を保持し、新設定の確認には翻訳から再実行してください。音声のみ更新では以前の台本が残ります。録音と出力は保持します。"};c.sections[0].body=[c.summary];}
+
+// Canonical desktop workflow: .85 new submissions; historical saved jobs remain frozen.
+CHAPTERS.splice(1,0,{"id": "work85", "title": {"en": "Work modes and automatic completion", "zh-HK": "工作模式與自動完成", "zh-CN": "工作模式与自动完成", "ja": "作業モードと自動出力"}, "summary": {"en": "Balanced is the default. Full AI review is a separate switch, off by default. Review notes do not hold a usable output for approval.", "zh-HK": "預設平衡；完整 AI 覆核獨立開關、預設關閉。有疑點照樣保存可用成品，唔等逐句批准。", "zh-CN": "默认平衡；完整 AI 复核独立开关、默认关闭。有疑点仍保存可用成品，不等待逐句批准。", "ja": "既定はバランス。完全AI検査は独立した任意設定で、既定ではオフ。確認事項は報告し、出力を承認待ちにしません。"}, "sections": [{"title": {"en": "Three work modes", "zh-HK": "三種工作模式", "zh-CN": "三种工作模式", "ja": "3つの作業モード"}, "body": [{"en": "Performance: one baseline plus bounded missing-audio recovery and a generic fallback; no voice listening or shortening. Balanced: retain audible first takes, repair missing/damaged clips, and shorten only measured overruns in one local pass per repair stage. Quality: voice listening and up to two local repair/shortening passes. Only Full AI review enables deeper frame/character analysis. Model-deployment presets are separate.", "zh-HK": "效能：一輪基準、有限補聲及通用後備，唔覆聽或縮稿。平衡：優先保留有聲首錄，只補缺聲／損壞，實測超時先局部縮稿，各修復階段最多一輪。品質：覆聽配音，局部修復／縮稿最多兩輪。畫面／角色深入分析由「完整 AI 覆核」開關控制；部署頁模型推薦係另一項設定。", "zh-CN": "性能：一轮基准、有限补声及通用后备，不回听或缩稿。平衡：优先保留有声首录，只补缺声／损坏，实测超时才局部缩稿，各修复阶段最多一轮。质量：回听配音，局部修复／缩稿最多两轮。画面／角色深入分析由完整 AI 复核开关控制；模型推荐是另一项设置。", "ja": "パフォーマンスは初回生成と欠落復旧・汎用音声のみで、再認識検査や短縮を省略。バランスは初回音声を優先し、欠落と実測超過だけを各修復段階で最大1回修復。品質は音声を検査し最大2回の局所修復。画像・人物の詳しい分析は完全AI検査で有効化。モデル推奨プリセットとは独立です。"}], "steps": false}, {"title": {"en": "Content and timing", "zh-HK": "內容與時間", "zh-CN": "内容与时间", "ja": "内容と時刻"}, "body": [{"en": "With selected usable text subtitles, the factory priority is Subtitles > speech; without them it is OCR > speech. The first source determines meaning, the second assists. Original speech supplies timing. A completely missing primary may use the auxiliary with a report note; conflicting readable primary text is retained. New requests freeze the effective workflow before work starts.", "zh-HK": "有已選可用文字字幕，預設「字幕 > 語音」；冇文字字幕則「OCR > 語音」。前者決定意思，後者輔助；發聲時間跟原聲。主要內容完全缺失先用輔助並記錄，唔會用輔助推翻有字嘅主要來源。新工作開始前凍結實際流程。", "zh-CN": "有已选可用文字字幕，默认“字幕 > 语音”；没有则“OCR > 语音”。前者决定意思，后者辅助；发声时间跟原声。主要内容完全缺失才用辅助并记录，不会用辅助推翻有字的主要来源。新工作开始前冻结实际流程。", "ja": "選択済みテキスト字幕があれば「字幕 > 音声」、なければ「OCR > 音声」が既定。先頭が内容の根拠、後方は補助で、時刻は原音に従います。主資料が完全に欠落した場合だけ補助を使用し記録。新規処理開始前に実効設定を固定します。"}], "steps": false}, {"title": {"en": "Fallback and finished output", "zh-HK": "後備與正式輸出", "zh-CN": "后备与正式输出", "ja": "代替音声と完成ファイル"}, "body": [{"en": "Try a generic voice in the target language before source speech. Balanced/Quality can shorten a measured overlong generic take and try at most one other installed engine. If repair still cannot deliver, retain audible source continuity, export, and report untranslated intervals honestly. Laughs, cries and deliberately preserved OP/ED are separate original performances. A file with review notes is still exported; it is not a claim that every line passed. Unreadable media, missing required resources or output/storage errors remain real blockers. Old paused requests keep their frozen policy; voice-only updates retain old scripts.", "zh-HK": "先試通用目標語配音，再到原聲。平衡／品質可處理實測過長通用錄音，再試最多一款已安裝引擎；仍交付唔到先保留可聽原聲、輸出並列出未翻譯時段。笑喊及保留 OP／ED 另計。有覆核提示仍保存成品，唔代表每句已通過。媒體讀唔到、缺必要資源、磁碟／編碼錯誤仍會阻礙輸出。舊暫停工作沿用凍結規則；只更新配音會保留舊稿。", "zh-CN": "先试通用目标语配音，再到原声。平衡／质量可处理实测过长通用录音，再试最多一款已安装引擎；仍无法交付才保留可听原声、输出并列出未翻译时段。笑哭及保留 OP／ED 单独计算。有复核提示仍保存成品，不代表每句已通过。媒体不可读、缺必要资源、磁盘／编码错误仍会阻碍输出。旧暂停任务沿用冻结规则；只更新配音保留旧稿。", "ja": "原音より先に目的言語の汎用音声を試します。バランス・品質は実測超過の汎用音声を修復し、別の導入済みエンジンを最大1種類試行。失敗時は可聴原音を残し、未翻訳区間を報告して出力。笑い・泣き声や保持したOP/EDは別扱い。注意事項があっても出力しますが全台詞合格の保証ではありません。読めない素材・必要資源の不足・保存／エンコード障害は実際の停止要因です。保存済み処理は旧方針を維持し、音声のみ更新では旧台本を使用します。"}], "steps": false}]});
+
+// Current new-job contract; historical paused requests keep their frozen rules.
+CHAPTERS.find(c=>c.id==='work85').sections=[{"title": {"en": "Modes and attempts", "zh-HK": "模式與次數", "zh-CN": "模式与次数", "ja": "モードと回数"}, "body": [{"en": "Initial attempts per line: Performance 1, Balanced 1, Quality up to 3, stopping when audio is usable. Performance skips all content listening and shortening, including fallback. Balanced/Quality perform bounded listening: uncertainty is a warning, not a confirmed error. Same-actor measured timing operations: 0 / 0 with first-take policy (otherwise 1) / 2. Generic attempts: 1 / 1 / 2. Only a measured overrun may receive one faithful generic compact in Balanced/Quality. No pre-generation character-budget shortening.", "zh-HK": "每句首次生成上限：效能 1、平衡 1、品質 3 次，有可用錄音即停。效能所有後備亦唔覆聽或縮稿；平衡／品質有限覆聽，未確認只提示。實測同角色對時上限：0／首錄策略 0（其他 1）／2。通用聲線上限：1／1／2。平衡／品質只有實測過長先可作一次保義通用縮稿，禁止生成前按估算字數縮稿。", "zh-CN": "每句首次生成上限：性能 1、平衡 1、质量 3 次，有可用录音即停。性能所有备用也不回听或缩稿；平衡／质量有限回听，未确认只提示。同角色实测对时上限：0／首录策略 0（其他 1）／2。通用声线上限：1／1／2。平衡／质量只有实测过长才可作一次保义通用缩稿，禁止生成前按估算字数缩稿。", "ja": "初回生成は各台詞につきパフォーマンス1回、バランス1回、品質は最大3回で、可用音声があれば終了。パフォーマンスは全代替段階でも再認識・短縮なし。バランスと品質は限定的に検査し、不確かな結果は注意扱い。同役の実測時間調整は0／初回優先時0（他は1）／2回。汎用音声は1／1／2回。バランス・品質の汎用台詞短縮は実測超過時だけ最大1回。生成前の文字数推測で短縮しません。"}]}, {"title": {"en": "Translation source", "zh-HK": "翻譯來源", "zh-CN": "翻译来源", "ja": "翻訳元"}, "body": [{"en": "Subtitles > speech translates ONLY the selected embedded/external subtitles. Speech supplies timing and the reference voice. All gaps without subtitles keep original audio: no invented ASR script, no TTS, not missing dubbing. If ASR misses authored text, retain it with the original subtitle display clock and a timing warning. The other three routes use A for meaning, B as auxiliary. Saved source workflows stay frozen.", "zh-HK": "字幕 > 語音只翻譯已選內置／外掛字幕；語音只提供時間及聲線。所有冇字幕嘅空隙保留原音，唔用 ASR 補稿、唔配音，亦唔當漏配。有字幕但 ASR 漏認，保留原字幕時間並標示對時後備。另三路以 A 為主、B 輔助；舊工作來源規則維持凍結。", "zh-CN": "字幕 > 语音只翻译已选内置／外挂字幕；语音只提供时间及声线。所有无字幕空隙保留原音，不用 ASR 补稿、不配音，也不算漏配。有字幕但 ASR 漏识别，保留原字幕显示时间并提示。另三路以 A 为主、B 辅助；旧任务来源规则保持冻结。", "ja": "字幕 > 音声は選択済み内蔵・外部字幕だけを翻訳します。原音は発声時刻と参照声質に使用。字幕のない区間は原音を残し、ASRから台本を補わず、欠落配音と数えません。字幕をASRが見落とした場合は字幕の表示時刻を使用し注意事項を表示。他の3経路はAを主、Bを補助とし、保存済み方針は維持します。"}]}, {"title": {"en": "Time allowance and installed fallback", "zh-HK": "時間預算與已安裝後備", "zh-CN": "时间预算与已安装备用", "ja": "時間予算と導入済み代替"}, "body": [{"en": "Whole-film listening and repair allowance: 60 / 180 / 600 seconds. AI uses the first 75%; installed target-language system voices have the final 25%. The current inference may finish, but no new item/chunk starts after its deadline. Counters and spent time survive pause/restart; export is separate. One installed alternate AI engine is tried at most once, then installed system speech at most twice per line. No automatic voice/model download. The system fallback switch is shown before starting.", "zh-HK": "全片覆聽及修復預算：60／180／600 秒，前 75% 供 AI，最後 25% 留俾系統目標語聲線。當次推理可完成，到期後唔開新項目／分塊。暫停、重開唔重置已用時間及次數，匯出另計。另一已安裝 AI 引擎最多一次，系統目標語聲線每句最多兩次；唔自動下載模型或聲線，開始前可關閉系統後備。", "zh-CN": "全片回听及修复预算：60／180／600 秒，前 75% 供 AI，最后 25% 留给系统目标语声线。当前推理可完成，到期后不启动新项目／分块。暂停、重开不重置时间及次数，导出另计。另一已安装 AI 引擎最多一次，系统目标语声线每句最多两次；不自动下载，开始前可关闭系统备用。", "ja": "全編の検査・復旧予算は60／180／600秒。75%をAI、最後の25%をシステム目的言語音声に確保。進行中の推論は完了できますが期限後は次の項目・チャンクを開始しません。一時停止・再開で時間と回数はリセットされず、出力時間は別。別の導入済みAIは最大1回、システム音声は各台詞最大2回。自動ダウンロードせず、開始前に設定をオフにできます。"}]}, {"title": {"en": "Automatic completion and limits", "zh-HK": "自動完成與限制", "zh-CN": "自动完成与限制", "ja": "自動出力と制限"}, "body": [{"en": "Keep a usable first recording, then try generic target speech, one installed alternate AI engine, installed system speech, and original audio last. An explicit Original audio failure policy may go directly to source. Confirmed wrong content never revives merely because its first take is audible. Uncertainty remains a report warning. Ordinary AI/native failures still reach export; an all-source output explicitly reports zero target-language speech. Encode/subtitle packaging has one persistent retry, using saved takes; final-only resume does not regenerate the film. Unreadable input, storage errors, persistent encode errors and user cancellation remain real boundaries.", "zh-HK": "可用首錄 → 通用目標語 → 一個已安裝其他 AI → 系統目標語 → 原聲最後；明確選原聲策略可直接用原聲。確認錯內容唔會因首錄有聲就重新採用，未確認留報告。一般 AI／系統後備失敗仍嘗試交付；整片只得原音會明示目標語配音為 0。編碼／字幕包裝最多重試一次並保存次數，只續匯出唔重配整片；來源壞、儲存錯、持續編碼失敗及用戶取消仍如實處理。", "zh-CN": "可用首录 → 通用目标语 → 一个已安装其他 AI → 系统目标语 → 原声最后；明确原声策略可直接用原声。确认错误内容不会因首录有声就重新采用，未确认留报告。一般 AI／系统备用失败仍尝试交付；全片只有原音会明示目标语配音为 0。编码／字幕包装最多重试一次并保存次数，只续导出不重配整片；损坏来源、存储错误、持续编码失败及用户取消仍如实处理。", "ja": "可用な初回音声→汎用目的言語→別の導入済みAI→システム目的言語→最後に原音。明示した原音方針は直接原音を使用可能。確認済みの誤った初回音声を有音だけで復活させません。不確かな結果は報告。AI・システムの通常エラーでも出力に進み、全編原音なら目的言語配音0を明記。出力・字幕結合は保存済み音声で最大1回再試行し、出力だけの再開で全編を再生成しません。壊れた入力・保存障害・継続する出力エラー・キャンセルは明示します。"}]}];
+CHAPTERS.find(c=>c.id==='automatic-recovery').sections=[{"title": {"en": "Time allowance and installed fallback", "zh-HK": "時間預算與已安裝後備", "zh-CN": "时间预算与已安装备用", "ja": "時間予算と導入済み代替"}, "body": [{"en": "Whole-film listening and repair allowance: 60 / 180 / 600 seconds. AI uses the first 75%; installed target-language system voices have the final 25%. The current inference may finish, but no new item/chunk starts after its deadline. Counters and spent time survive pause/restart; export is separate. One installed alternate AI engine is tried at most once, then installed system speech at most twice per line. No automatic voice/model download. The system fallback switch is shown before starting.", "zh-HK": "全片覆聽及修復預算：60／180／600 秒，前 75% 供 AI，最後 25% 留俾系統目標語聲線。當次推理可完成，到期後唔開新項目／分塊。暫停、重開唔重置已用時間及次數，匯出另計。另一已安裝 AI 引擎最多一次，系統目標語聲線每句最多兩次；唔自動下載模型或聲線，開始前可關閉系統後備。", "zh-CN": "全片回听及修复预算：60／180／600 秒，前 75% 供 AI，最后 25% 留给系统目标语声线。当前推理可完成，到期后不启动新项目／分块。暂停、重开不重置时间及次数，导出另计。另一已安装 AI 引擎最多一次，系统目标语声线每句最多两次；不自动下载，开始前可关闭系统备用。", "ja": "全編の検査・復旧予算は60／180／600秒。75%をAI、最後の25%をシステム目的言語音声に確保。進行中の推論は完了できますが期限後は次の項目・チャンクを開始しません。一時停止・再開で時間と回数はリセットされず、出力時間は別。別の導入済みAIは最大1回、システム音声は各台詞最大2回。自動ダウンロードせず、開始前に設定をオフにできます。"}]}, {"title": {"en": "Automatic completion and limits", "zh-HK": "自動完成與限制", "zh-CN": "自动完成与限制", "ja": "自動出力と制限"}, "body": [{"en": "Keep a usable first recording, then try generic target speech, one installed alternate AI engine, installed system speech, and original audio last. An explicit Original audio failure policy may go directly to source. Confirmed wrong content never revives merely because its first take is audible. Uncertainty remains a report warning. Ordinary AI/native failures still reach export; an all-source output explicitly reports zero target-language speech. Encode/subtitle packaging has one persistent retry, using saved takes; final-only resume does not regenerate the film. Unreadable input, storage errors, persistent encode errors and user cancellation remain real boundaries.", "zh-HK": "可用首錄 → 通用目標語 → 一個已安裝其他 AI → 系統目標語 → 原聲最後；明確選原聲策略可直接用原聲。確認錯內容唔會因首錄有聲就重新採用，未確認留報告。一般 AI／系統後備失敗仍嘗試交付；整片只得原音會明示目標語配音為 0。編碼／字幕包裝最多重試一次並保存次數，只續匯出唔重配整片；來源壞、儲存錯、持續編碼失敗及用戶取消仍如實處理。", "zh-CN": "可用首录 → 通用目标语 → 一个已安装其他 AI → 系统目标语 → 原声最后；明确原声策略可直接用原声。确认错误内容不会因首录有声就重新采用，未确认留报告。一般 AI／系统备用失败仍尝试交付；全片只有原音会明示目标语配音为 0。编码／字幕包装最多重试一次并保存次数，只续导出不重配整片；损坏来源、存储错误、持续编码失败及用户取消仍如实处理。", "ja": "可用な初回音声→汎用目的言語→別の導入済みAI→システム目的言語→最後に原音。明示した原音方針は直接原音を使用可能。確認済みの誤った初回音声を有音だけで復活させません。不確かな結果は報告。AI・システムの通常エラーでも出力に進み、全編原音なら目的言語配音0を明記。出力・字幕結合は保存済み音声で最大1回再試行し、出力だけの再開で全編を再生成しません。壊れた入力・保存障害・継続する出力エラー・キャンセルは明示します。"}]}];
+CHAPTERS.find(c=>c.id==='modes').sections=[{"title": {"en": "Modes and attempts", "zh-HK": "模式與次數", "zh-CN": "模式与次数", "ja": "モードと回数"}, "body": [{"en": "Initial attempts per line: Performance 1, Balanced 1, Quality up to 3, stopping when audio is usable. Performance skips all content listening and shortening, including fallback. Balanced/Quality perform bounded listening: uncertainty is a warning, not a confirmed error. Same-actor measured timing operations: 0 / 0 with first-take policy (otherwise 1) / 2. Generic attempts: 1 / 1 / 2. Only a measured overrun may receive one faithful generic compact in Balanced/Quality. No pre-generation character-budget shortening.", "zh-HK": "每句首次生成上限：效能 1、平衡 1、品質 3 次，有可用錄音即停。效能所有後備亦唔覆聽或縮稿；平衡／品質有限覆聽，未確認只提示。實測同角色對時上限：0／首錄策略 0（其他 1）／2。通用聲線上限：1／1／2。平衡／品質只有實測過長先可作一次保義通用縮稿，禁止生成前按估算字數縮稿。", "zh-CN": "每句首次生成上限：性能 1、平衡 1、质量 3 次，有可用录音即停。性能所有备用也不回听或缩稿；平衡／质量有限回听，未确认只提示。同角色实测对时上限：0／首录策略 0（其他 1）／2。通用声线上限：1／1／2。平衡／质量只有实测过长才可作一次保义通用缩稿，禁止生成前按估算字数缩稿。", "ja": "初回生成は各台詞につきパフォーマンス1回、バランス1回、品質は最大3回で、可用音声があれば終了。パフォーマンスは全代替段階でも再認識・短縮なし。バランスと品質は限定的に検査し、不確かな結果は注意扱い。同役の実測時間調整は0／初回優先時0（他は1）／2回。汎用音声は1／1／2回。バランス・品質の汎用台詞短縮は実測超過時だけ最大1回。生成前の文字数推測で短縮しません。"}]}, {"title": {"en": "Full AI review", "zh-HK": "完整 AI 覆核", "zh-CN": "完整 AI 复核", "ja": "完全AI検査"}, "body": [{"en": "Full AI review is separate, off by default. It adds source and character/frame analysis; the selected work mode still limits voice recovery. Balanced is the default.", "zh-HK": "完整 AI 覆核係獨立開關，預設關閉。額外分析原意、角色／畫面；配音修復仍受所選模式限制。預設平衡。", "zh-CN": "完整 AI 复核是独立开关，默认关闭。额外分析原意、角色／画面；配音修复仍受所选模式限制。默认平衡。", "ja": "完全AI検査は独立設定で既定はオフ。原意・人物・画像を追加分析しますが音声復旧は選択モードの上限を維持。既定はバランス。"}]}];
+CHAPTERS.find(c=>c.id==='workflow80').sections[0].body=[{"en": "Subtitles > speech translates ONLY the selected embedded/external subtitles. Speech supplies timing and the reference voice. All gaps without subtitles keep original audio: no invented ASR script, no TTS, not missing dubbing. If ASR misses authored text, retain it with the original subtitle display clock and a timing warning. The other three routes use A for meaning, B as auxiliary. Saved source workflows stay frozen.", "zh-HK": "字幕 > 語音只翻譯已選內置／外掛字幕；語音只提供時間及聲線。所有冇字幕嘅空隙保留原音，唔用 ASR 補稿、唔配音，亦唔當漏配。有字幕但 ASR 漏認，保留原字幕時間並標示對時後備。另三路以 A 為主、B 輔助；舊工作來源規則維持凍結。", "zh-CN": "字幕 > 语音只翻译已选内置／外挂字幕；语音只提供时间及声线。所有无字幕空隙保留原音，不用 ASR 补稿、不配音，也不算漏配。有字幕但 ASR 漏识别，保留原字幕显示时间并提示。另三路以 A 为主、B 辅助；旧任务来源规则保持冻结。", "ja": "字幕 > 音声は選択済み内蔵・外部字幕だけを翻訳します。原音は発声時刻と参照声質に使用。字幕のない区間は原音を残し、ASRから台本を補わず、欠落配音と数えません。字幕をASRが見落とした場合は字幕の表示時刻を使用し注意事項を表示。他の3経路はAを主、Bを補助とし、保存済み方針は維持します。"}];
+
+CHAPTERS.find(c=>c.id==='work85').sections[0].body.push({"en": "Entering Basic mode without an explicit work-mode choice starts in Balanced. You can choose another mode before starting. Automatic processing groups the AI, OP/ED and fallback switches. A paused conversion no longer locks new-job settings; resuming it still uses its saved snapshot.", "zh-HK": "由開始畫面進入基本模式，未另選時用平衡；開始前可自行改模式。「自動處理」集中 AI、OP／ED 同後備左右開關。暫停影片唔再鎖死新工作設定；暫停續跑仍沿用已儲存流程。", "zh-CN": "从开始画面进入基本模式，未另选时用平衡；开始前可自行修改。「自动处理」集中 AI、OP／ED 和备用开关。暂停影片不再锁定新任务设置；暂停续跑仍沿用已保存流程。", "ja": "基本モードに入る際、作業モードを明示しなければバランスを使用し、開始前に変更できます。自動処理にAI・OP/ED・代替音声スイッチを集約。一時停止した変換は新しい設定をロックしませんが、再開時は保存済み設定を維持します。"});
+
+// v3: repair and listening have independent persisted clocks.
+CHAPTERS.find(c=>c.id==='work85').sections[0].body=[{"en": "All modes preserve authored subtitle authority and source clocks. Performance generates once and skips content listening and AI shortening; in new High-speed jobs only fully silent takes are re-recorded, at most twice, and alternate or system voice substitution is switched off. Balanced is the default: keep fitting first takes and permit one same-voice faithful timing rewrite only after measured audio overrun. Quality allows up to three initial attempts and two same-voice timing operations. Full AI frame review remains a separate switch, off by default. Older saved jobs keep their frozen policies.", "zh-HK": "三種模式都保留已選字幕內容及原聲時鐘。高速首錄一次，唔覆聽內容或 AI 縮稿；新建高速工作只有完全冇聲先補錄，最多兩次，並關閉後備／系統聲線替換。平衡預設保留合時首錄；只有真正音訊過長，先可用同聲線保義縮稿重配一次。品質首次最多三次，同聲線實測對時最多兩次。完整 AI 畫面覆核仍係獨立開關，預設關閉；舊工作沿用凍結規則。", "zh-CN": "三种模式都保留已选字幕内容及原声时钟。高速首录一次，不回听内容或 AI 缩稿；新建高速任务只有完全无声才补录，最多两次，并关闭后备／系统声线替换。平衡默认保留合时首录；只有实测音频过长，才可同声线保义缩稿重配一次。品质首次最多三次，同声线实测对时最多两次。完整 AI 画面复核仍是独立开关，默认关闭；旧任务沿用冻结规则。", "ja": "全モードで選択字幕の内容と原音時刻を保持。高速は初回1回で内容検査・AI短縮なし。新規の高速処理では完全な無音のみ最大2回再生成し、代替・システム音声への切替は無効。既定のバランスは時刻に合う初回を保持し、実測超過時だけ同声質で意味を保持した短縮・再生成を最大1回。品質は初回最大3回、同声質の時刻修復最大2回。完全AI画像検査は独立設定で既定オフ。保存済み旧処理は旧方針を維持します。"}];
+CHAPTERS.find(c=>c.id==='automatic-recovery').sections[0].body=[{"en": "Required silence/corruption and measured timing repairs run before optional listening. A frozen plan uses the pending repair count and measured first-generation seconds per line; repair allowance starts at 60 / 180 / 600 seconds and is capped at 5 / 15 / 30 minutes for Performance / Balanced / Quality. Optional listening has separate 0 / 60 / 180-second clocks; Balanced inspects up to 24 suspect or changed lines, Quality a broader set. Listening cannot spend repair time. Native voices reserve 25% of repair time only when enabled. An in-flight operation may finish beyond the clock; no new operation starts after expiry. These are limits, not a promised delay or success rate.", "zh-HK": "先補無聲／損壞及修實測過長，再做額外覆聽。開始修復時按待修句數、首輪實測每句生成秒數凍結預算：高速／平衡／品質由 60／180／600 秒起，上限 5／15／30 分鐘。覆聽另有 0／60／180 秒；平衡最多選 24 句疑點或改動，品質較全面。覆聽唔會用補聲時間。只有開啟系統聲線後備先留 25% 修復時間俾佢；關閉時全部供 AI。當次操作可完成而超時，到期唔開新操作。上限唔等於必須等待或保證修好。", "zh-CN": "先补无声／损坏及修实测过长，再额外回听。按待修句数、首轮实测生成耗时冻结预算：高速／平衡／品质由 60／180／600 秒起，上限 5／15／30 分钟。回听另限 0／60／180 秒；平衡最多选 24 句疑点或改动，品质较全面。回听不能使用补声时间。仅开启系统声线备用时为它预留 25% 修复时间；关闭时全部供 AI。当前操作可完成而超时，到期不开始新操作。上限不是必须等待或保证修好。", "ja": "無音・破損と実測超過の復旧を先に行い、追加検査は後。待機台詞数と初回生成の実測時間で予算を固定。高速／バランス／品質は60／180／600秒から、上限5／15／30分。追加検査は別枠0／60／180秒で、バランスは変更・疑義の最大24台詞、品質は広範囲。検査は復旧時間を消費しません。システム音声が有効な場合だけ25%を確保。進行中の処理は期限を超えて完了可能ですが新規処理は開始しません。上限は待ち時間や成功の保証ではありません。"}, {"en": "Pause/resume keeps all spent clocks and per-line operation counts. A later confirmed listening defect can use only remaining repair allowance; uncertain ASR stays a warning. New settings apply to newly reset conversions; frozen old jobs retain their workflow. Output reports actual source fallback and incomplete target speech. Unreadable input, storage or persistent encoding failures still report an error.", "zh-HK": "暫停續跑唔退還時間及逐句次數；後續覆聽真係確認有錯，只可用剩餘修復額度，未確認 ASR 只留提示。新設定適用重設後新工作，舊凍結工作保持舊流程。報告如實列原聲後備、未完成目標語片段；來源損壞、儲存不足或持續編碼失敗仍會報錯。", "zh-CN": "暂停续跑不返还时间及逐句次数；后续回听确认有错，仅用剩余修复额度，未确认 ASR 只留提示。新设置适用重设后的新任务，旧冻结任务保持旧流程。报告如实列原声备用、未完成目标语片段；损坏来源、存储不足或持续编码失败仍报错。", "ja": "一時停止・再開で時間や台詞ごとの回数は戻りません。後の検査で確認した不具合は残り復旧枠だけを使用し、不確かなASRは警告。新規リセットした変換に新方針を適用し、旧保存済み方針は維持。実際の原音代替と目的言語未完成区間を報告。入力破損・保存障害・継続する出力エラーは報告します。"}];
+
+CHAPTERS.push({"id": "safe-capacity89", "title": {"en": "Safe duration repair", "zh-HK": "安全時長修復", "zh-CN": "安全时长修复", "ja": "安全な長さ調整"}, "summary": {"en": "Keep complete speech; use verified gaps before shortening.", "zh-HK": "保留完整對白，先用有證據嘅空檔，真超時先縮稿。", "zh-CN": "保留完整对白，先用有证据的空档，真超时才缩稿。", "ja": "完全な台詞を保ち、確認済みの空きを先に利用。"}, "sections": [{"title": {"en": "What happens automatically", "zh-HK": "自動處理次序", "zh-CN": "自动处理顺序", "ja": "自動処理の順序"}, "steps": false, "body": [{"en": "For a measured overlong recording with a suspect noise tail, word-timed Whisper checks without a script prompt and local vocal detection must agree with complete text before a separate trimmed candidate is saved. Original recordings and native delivery rate are retained. Uncertain words or endings are not trimmed or shortened to hide missing speech. They use the existing bounded full-script fallback. This is conservative evidence, not pronunciation certification.", "zh-HK": "實測過長而疑似尾噪嘅錄音，須由無台詞提示嘅 Whisper 全文／末字時間同本機人聲檢查共同支持，先另存裁尾候選；保留原錄音及原取樣率。字詞／尾音未確認唔裁，亦唔用縮稿掩蓋漏讀，改用既有完整稿有界後備。呢個係保守證據，唔係發音認證。", "zh-CN": "实测过长且疑似尾噪的录音，须由无台词提示的 Whisper 全文／末字时间与本机人声检查共同支持，才另存裁尾候选；保留原录音及采样率。未确认不裁，也不用缩稿掩盖漏读，使用完整稿有界备用。这是保守证据，不是发音认证。", "ja": "実測超過と疑わしいノイズ末尾に限り、台詞を提示しないWhisperの全文・最終語時刻と音声検出が一致した場合のみ別候補を保存。元録音とサンプルレートを保持します。不確かな末尾は切らず、省略を短縮で隠さず、完全な台詞の有限代替を使います。発音の保証ではありません。"}, {"en": "The next verified non-vocal gap may accommodate complete speech. Missing subtitles alone do not prove silence. Music stays in the original mix once; other speech, laughter, crying, breaths, protected passages and OP/ED remain barriers. Only a genuinely overlong complete recording then receives a faithful rewrite and full regeneration: none in Performance, one same-actor pass in Balanced, two in Quality.", "zh-HK": "下一段有證據嘅無人聲空檔可容納完整配音；冇字幕唔等於冇人聲。背景保留原混音一次，其他對白、笑喊喘氣、保護段同 OP／ED 仍不可跨越。之後真係放唔落先保義縮稿、完整重配：高速不縮，平衡同聲線最多一次，品質兩次。", "zh-CN": "下一段有证据的无人声空档可容纳完整配音；无字幕不等于无人声。背景只混入一次，其他对白、笑哭喘气、保护段和 OP／ED 不可跨越。仍放不下才保义缩稿、完整重配：高速不缩，平衡同声线最多一次，品质两次。", "ja": "確認済みの無発声区間に完全な音声を延ばせます。字幕なしは無音の証拠ではありません。背景は一度だけ混合し、他の台詞・笑い・泣き・息・保護区間・OP/EDは守ります。それでも長い場合のみ意味を保持して全文再生成。高速は短縮なし、バランスは同声の1回、品質は2回。"}, {"en": "Extra endpoint checks have their own film-wide allowance: none in Performance, 60 seconds in Balanced, 180 in Quality. They cannot spend necessary repair time, start a whole-film recheck or download a missing model. Pausing keeps spent time and attempt counts. New/reset jobs use this workflow; saved old jobs remain frozen. Counts and unresolved passages appear in the review report.", "zh-HK": "端點額外檢查有全片獨立時間：高速不新增，平衡60秒，品質180秒；唔會用必要補聲時間、重開整集覆聽或自動下載缺少模型。暫停保留已用時間同次數。新／重設工作先用新流程，舊工作維持凍結；校對報告列裁尾同未確認數目。", "zh-CN": "端点额外检查有全片独立时间：高速不新增，平衡60秒，品质180秒；不消耗必要补声时间、不重开整片回听或自动下载缺失模型。暂停保留已用时间和次数。新／重设任务使用新流程，旧任务维持冻结；校对报告列裁尾和未确认数量。", "ja": "追加の末尾検査は映画全体で別枠。高速は追加なし、バランス60秒、品質180秒。必要な復旧時間を消費せず、全編再検査やモデルの自動ダウンロードをしません。停止・再開で時間や回数は戻りません。新規・リセット時のみ適用し、旧ジョブは維持。確認レポートに件数と未確認区間を残します。"}]}]});
+
+CHAPTERS.push({"id": "report90", "title": {"en": "Understanding the review report", "zh-HK": "點睇校對報告", "zh-CN": "怎样查看校对报告", "ja": "確認レポートの見方"}, "summary": {"en": "Delivery problems and optional listening notes are different.", "zh-HK": "未交付目標配音同可選試聽提示係兩回事。", "zh-CN": "未交付目标配音与可选试听提示是两回事。", "ja": "音声の要対応と任意の試聴メモは別です。"}, "sections": [{"title": {"en": "Which lines are retried", "zh-HK": "邊啲對白會再補配", "zh-CN": "哪些对白会再补配", "ja": "再試行する台詞"}, "steps": false, "body": [{"en": "Saving an audible recording, an uncertain source boundary or an ASR spelling difference does not confirm a broken voice. The report separates undelivered target speech and confirmed defects from optional listening, subtitle allocation and earlier attempt notes. Repair delivery issues retries eligible lines and changed recordings, respecting manual choices. Original diagnostics remain in the debug report. Regenerating one line is still available when you choose it.", "zh-HK": "已保存錄音、原聲分句未確認，或者辨識器寫錯字，都唔等於配音已證實有問題。報告會將未交付目標配音／已確認缺陷，同可選試聽、字幕配對及舊嘗試提示分開。「補配需要處理嘅對白」只處理合資格項目同已改動錄音，保護人手選擇。原始診斷保留喺除錯報告；你仍可自行逐句重錄。", "zh-CN": "已保存录音、原声分句未确认，或识别器写错字，都不等于配音已证实有问题。报告将未交付目标配音／已确认缺陷与可选试听、字幕配对及旧尝试提示分开。补配仅处理合资格项与已更改录音，并保护手动选择。原始诊断保留在调试报告；仍可自行逐句重录。", "ja": "録音の保存、原音の未確認区切り、ASRの表記差だけで吹き替えの不具合は確定しません。目的言語音声の未完成・確認済み不具合と、任意の試聴・字幕対応・過去の試行メモを分けます。復旧は対象台詞と変更済み録音に限定し手動選択を守ります。元の診断はデバッグレポートに残り、個別再録音も選べます。"}, {"en": "Reaction sounds are a separate optional listening list, collapsed by default. Preserved intervals are counted once across the parent job and audio tracks. More notes do not mean more missed voices; a completed export is not a full pronunciation or meaning certification.", "zh-HK": "反應聲另有可選試聽清單，預設收起；同一原聲區間唔會因主工作同音軌各有記錄就重複計數。提示多唔等於漏配多；匯出完成亦唔代表全部讀音同原意已認證。", "zh-CN": "反应声另设可选试听列表，默认收起；同一原声区间不会因主任务和音轨分别有记录而重复计数。提示多不等于漏配多；导出完成不代表全部读音和原意已认证。", "ja": "反応音は別の任意試聴リストで、既定では折りたたみます。同一区間を親ジョブと各トラックで重複集計しません。メモ数は音声欠落数ではなく、出力完了は全発音や意味の保証ではありません。"}]}]});
+// Build 245: one standard mode. Full AI review and AI auto repair are separate switches.
+{const modes=CHAPTERS.find(c=>c.id==='modes');
+modes.title={en:'Standard mode and the two switches',"zh-HK":'標準模式與兩個開關',"zh-CN":'标准模式与两个开关',ja:'標準モードと2つのスイッチ'};
+modes.summary={en:'Every new job runs the standard mode. Full AI review and AI auto repair are separate switches, and both start off.',"zh-HK":'所有新工作都用標準模式。完整 AI 覆核同 AI 自動修復係兩個獨立開關，預設都關閉。',"zh-CN":'所有新任务都使用标准模式。完整 AI 复核与 AI 自动修复是两个独立开关，默认均关闭。',ja:'新規処理はすべて標準モードで実行します。完全AI検査とAI自動修復は独立したスイッチで、既定はオフです。'};
+modes.sections=[
+{title:{en:'What the standard mode does',"zh-HK":'標準模式做乜',"zh-CN":'标准模式做什么',ja:'標準モードの動作'},body:[{
+en:'The app records each line once. It keeps the first recording that has audible speech. It records again only when a line has no sound at all or the file is damaged, and it makes at most two more attempts. It does not re-listen to a line to decide whether the words are correct, and it does not shorten a script that already fits the time window. Uncertain results stay as report notes. Review each line with the report and by listening.',
+"zh-HK":'標準模式每句錄一次。有聲嘅第一條錄音會保留。只有完全冇聲或者檔案損壞先會再錄，最多再多試兩次。唔會因為懷疑用字而覆聽重錄，亦唔會改短已經啱時段嘅稿。唔確定嘅結果會留喺報告，請用報告同逐句試聽核對。',
+"zh-CN":'标准模式每句录制一次。第一条有声音的录音会保留。只有完全无声或文件损坏才会重录，最多再试两次。不会因怀疑用词而回听重录，也不会缩短已经符合时段的台词。不确定的结果会记在报告中，请通过报告和逐句试听核对。',
+ja:'標準モードは各台詞を1回録音します。音声がある最初の録音を保持します。音が全くない場合かファイルが壊れている場合だけ再録し、追加は最大2回です。言葉が正しいか確認する為の聞き返しや、時間に収まる台本の短縮は行いません。不確実な項目は報告に記録します。報告と試聴で確認してください。'}],steps:false},
+{title:{en:'Script length follows the original speech',"zh-HK":'對白長短跟原聲',"zh-CN":'台词长度跟随原声',ja:'台本の長さは原音声に合わせる'},body:[{
+en:'The app measures when the original Japanese line starts and ends. It counts the spoken units in that line and writes a Cantonese line with a similar number of characters. When the speaking speed is close, the new recording ends inside the same window, so lines do not run over into the next line. A small allowance of 0.35 seconds is added after the original end.',
+"zh-HK":'程式會計日文原聲嘅開始同結束時間，再數嗰句嘅音節，寫字數接近嘅廣東話對白。語速相近時，新錄音會喺同一時段內完成，唔會疊落下一句。原本結束之後會預留 0.35 秒。',
+"zh-CN":'程序会计算日文原声的开始与结束时间，并统计该句的音节数，据此撰写字数接近的粤语台词。语速接近时，新录音会在同一时段内结束，不会压到下一句。原声结束后预留 0.35 秒。',
+ja:'アプリは元の日本語台詞の開始と終了を測定し、拍数を数えて同程度の文字数の広東語台詞を作成します。話す速さが近い場合、新しい録音は同じ区間で終わり、次の台詞に重がりません。元の終了後に0.35秒の余裕を置きます。'}],steps:false},
+{title:{en:'Hong Kong wording',"zh-HK":'香港用字',"zh-CN":'香港用字',ja:'香港の表記'},body:[{
+en:'The dialogue uses Hong Kong spoken Cantonese characters and particles, not written Chinese. This makes the lines sound natural and keeps the character count close to the original.',
+"zh-HK":'對白用香港口語廣東話嘅字同語氣詞，唔係書面中文，聽落自然，字數亦接近原文。',
+"zh-CN":'台词使用港式口语粤语用字和语气词，而非书面中文，听来更自然，字数也更接近原文。',
+ja:'台詞は書き言葉ではなく香港の口語広東語の文字や助詞を使います。自然に聞こえ、文字数も原文に近づきます。'}],steps:false},
+{title:{en:'Full AI review and AI auto repair',"zh-HK":'完整 AI 覆核同 AI 自動修復',"zh-CN":'完整 AI 复核与 AI 自动修复',ja:'完全AI検査とAI自動修復'},body:[{
+en:'Full AI review adds frame and character analysis and allows one timing rewrite pass. AI auto repair lets the app try another installed voice model or a system voice when a line fails. Both switches are off by default, and both lock while a job runs. Saved jobs keep the settings they started with.',
+"zh-HK":'「完整 AI 覆核」會加入畫格同角色分析，並容許一次時段改寫。「AI 自動修復」容許喺某句失敗時改用另一個已安裝語音模型或系統語音。兩個開關預設關閉，運行期間會鎖定；開始咗嘅工作會保留佢開始時嘅設定。',
+"zh-CN":'“完整 AI 复核”会加入画面与角色分析，并允许一次时段改写。“AI 自动修复”允许在某句失败时改用另一个已安装的语音模型或系统语音。两个开关默认关闭，运行期间锁定；已启动的任务保留启动时的设置。',
+ja:'完全AI検査はコマとキャラクター分析を追加し、タイミング書き換えを1回許可します。AI自動修復は、失敗した台詞で他の導入済み音声モデルまたはシステム音声を使うことを許可します。両スイッチは既定でオフで、処理中はロックされます。開始済みのジョブは開始時の設定を保持します。'}],steps:false}];
+const work85=CHAPTERS.find(c=>c.id==='work85');if(work85){work85.title={en:'Standard mode and automatic completion',"zh-HK":'標準模式與自動完成',"zh-CN":'标准模式与自动完成',ja:'標準モードと自動完了'};
+work85.summary={en:'One standard mode runs every new job. Review and repair options are separate switches, and both start off.',"zh-HK":'一個標準模式跑所有新工作；覆核同修復係獨立開關，預設關閉。',"zh-CN":'一个标准模式运行所有新任务；复核与修复是独立开关，默认关闭。',ja:'一つの標準モードが全ての新規処理を実行します。検査と修復は独立スイッチで既定オフです。'};
+work85.sections=[
+{title:{en:'Attempts',"zh-HK":'嘗試次數',"zh-CN":'尝试次数',ja:'試行回数'},body:[{
+en:'Each line gets one recording. A line with no sound or a damaged file gets at most two more attempts. Same-actor timing rewrites: 0. Full AI review allows 1. Another installed voice model and a system voice are tried only when AI auto repair is on. The app never shortens a script by character estimate before recording.',
+"zh-HK":'每句錄一次；完全冇聲或檔案損壞最多再多兩次。同角色時段改寫：0 次；開「完整 AI 覆核」先容許 1 次。只有開「AI 自動修復」先會試另一個已安裝語音模型或系統語音。錄音前唔會估算字數改短稿。',
+"zh-CN":'每句录制一次；完全无声或文件损坏最多再试两次。同角色时段改写：0 次；开启“完整 AI 复核”才允许 1 次。只有开启“AI 自动修复”才会尝试另一个已安装语音模型或系统语音。录音前不会按字数估算缩短台词。',
+ja:'各台詞は1回録音します。音がない場合やファイル破損時は最大2回追加します。同一キャラクターのタイミング書き換えは0回、完全AI検査時は1回です。他の導入済み音声モデルやシステム音声はAI自動修復がオンの時のみ試します。録音前の文字数見積もりによる短縮は行いません。'}],steps:false},
+{title:{en:'Translation source and clocks',"zh-HK":'翻譯來源與時間',"zh-CN":'翻译来源与时间',ja:'翻訳元と時刻'},body:[{
+en:'With usable selected embedded or external text subtitles, the priority is Subtitles > speech. Without them, it is OCR > speech. The first source decides the meaning, the second assists. Speech timing always comes from the original audio. New requests freeze the effective path before work starts.',
+"zh-HK":'有已選可用內置／外掛文字字幕，優先順序係「字幕 > 語音」；冇文字字幕則係「OCR > 語音」。前者決定意思，後者輔助；發聲時間一律跟原聲。新工作開始前會凍結實際路徑。',
+"zh-CN":'有可用的已选内置或外挂文字字幕时，优先级为“字幕 > 语音”；没有文字字幕时为“OCR > 语音”。前者决定含义，后者辅助。发声时间始终取自原声。新任务在开始前冻结实际路径。',
+ja:'選択済みの利用可能なテキスト字幕がある場合は「字幕 > 音声」、ない場合は「OCR > 音声」が優先順位です。先頭が内容を決定し、後方は補助です。発声時刻は常に原音声から取得します。新規処理は開始前に実効パスを固定します。'}],steps:false},
+{title:{en:'Finished output',"zh-HK":'正式輸出',"zh-CN":'最终输出',ja:'最終出力'},body:[{
+en:'If a line still has no usable recording, the app exports the file anyway and lists the lines that are not dubbed. Laughs, cries and a preserved opening or ending song are separate original performances. A finished file with report notes is not a claim that every line passed. Unreadable media, missing required resources, disk errors and user cancellation still stop the job.',
+"zh-HK":'如果某句仍然冇可用錄音，程式照樣輸出成品，並列出未配音嘅句子。笑聲、喊聲同保留嘅主題曲係獨立嘅原聲表演。有報告提示嘅成品唔代表每句已通過。媒體讀唔到、缺必要資源、磁碟錯誤同用戶取消仍會停止工作。',
+"zh-CN":'如果某句仍没有可用录音，程序仍会输出成品，并列出未配音的句子。笑声、哭声和保留的主题曲是独立的原声表演。带报告提示的成品不代表每句都已通过。媒体不可读、缺少必要资源、磁盘错误和用户取消仍会停止任务。',
+ja:'利用可能な録音がない台詞が残っていてもファイルは出力され、未配音の台詞が一覧に表示されます。笑い声、泣き声、保持された主題歌は別の原音声演技です。報告メモがある出力が全ての台詞の合格を示すものではありません。読めないメディア、必要な資源の欠落、ディスクエラー、ユーザーのキャンセルは処理を停止します。'}],steps:false}];}
+}
+{const SWEEP=[["none in Performance, one same-actor pass in Balanced, two in Quality","one same-actor pass in Standard mode"],["none in Performance, 60 seconds in Balanced, 180 in Quality","none in Standard mode"],["Balanced inspects up to 24 suspect or changed lines, Quality a broader set","Standard mode adds no extra listening pass"],["Performance / Balanced / Quality","Standard mode"],["Performance","Standard mode"],["Balanced","Standard mode"],["高速不縮，平衡同聲線最多一次，品質兩次","標準模式最多一次同聲線重配"],["高速不新增，平衡60秒，品質180秒","標準模式不新增"],["平衡最多選 24 句疑點或改動，品質較全面","標準模式不設額外覆聽"],["高速／平衡／品質","標準模式"],["高速不缩，平衡同声线最多一次，品质两次","标准模式最多一次同声线重配"],["高速不新增，平衡60秒，品质180秒","标准模式不新增"],["平衡最多选 24 句疑点或改动，品质较全面","标准模式不设额外回听"],["高速／平衡／品质","标准模式"],["高速は短縮なし、バランスは同声の1回、品質は2回","標準モードは同声の1回まで"],["高速は追加なし、バランス60秒、品質180秒","標準モードは追加なし"],["バランスは変更・疑義の最大24台詞、品質は広範囲","標準モードは追加検査なし"],["高速／バランス／品質","標準モード"],["60／180／600","600"],["5／15／30","30"],["0／60／180","0"],["60 / 180 / 600","600"],["5 / 15 / 30","30"],["0 / 60 / 180","0"]];
+const sweep=s=>{for(const [a,b] of SWEEP)s=s.split(a).join(b);return s;};
+const walk=v=>{if(typeof v==='string')return sweep(v);if(Array.isArray(v))return v.map(walk);if(v&&typeof v==='object'){const o={};for(const k in v)o[k]=walk(v[k]);return o;}return v;};
+for(let i=0;i<CHAPTERS.length;i++)CHAPTERS[i]=walk(CHAPTERS[i]);
+const modes=CHAPTERS.find(c=>c.id==='modes');
+if(modes)modes.sections.push({"title":{"en":"Before recording starts","zh-HK":"錄音開始之前","zh-CN":"录音开始之前","ja":"録音開始の前"},"steps":false,"body":[{"en":"After translation and before the voice engine runs, one bounded pass rewrites only the lines whose estimated take would end after the original Japanese speech. The limit comes from the measured window and the Japanese mora count. A candidate is rejected when it drops a name grounded in the source, an explicit count, a negation, or when it reads as written Mandarin. Every accepted and rejected line is listed in the report, so nothing disappears without a record.","zh-HK":"翻譯之後、配音引擎開始之前，會做一次有界改寫，只處理估計會讀過日語原聲時段嘅句子。上限用實測時段同日語摩拉數計。候補如果少咗原聲佐證嘅名稱、明確數量、否定，或者讀落似書面語，就會拒絕，保留原稿。接納同拒絕嘅句子全部喺報告列明。","zh-CN":"翻译之后、配音引擎开始之前，进行一次有界改写，只处理估计会读超过日语原声时段的句子。上限由实测时段与日语 mora 数计算。候选若缺少原声佐证的名字、明确数量、否定，或读起来像书面语，则拒绝并保留原稿。接受与拒绝的句子均在报告中列出。","ja":"翻訳の後、音声エンジン開始前に一度だけ有限の書き直しを行い、日本語音声の区間を越えると推定される台詞だけを扱います。上限は実測区間と日本語モーラ数から算出。根拠のある名前、明確な数量、否定が消える場合や書き言葉に読める場合は候補を却下し原稿を保持します。採用・却下は全てレポートに記載します。"},{"en":"A line shorter than three seconds needs a longer reference before the engine can copy the voice. The fill now comes from quiet room tone in the same scene, and it is accepted only when its level is far below the speech in the reference. Music, sound effects and another speaker are never used. If no gap in the scene is quiet enough, silence is used as before.","zh-HK":"少於三秒嘅句子需要較長嘅參考先可以複製聲線。而家會用同一場環境嘅安靜環境音補足，而且只有音量明顯低於句內人聲先會用。音樂、音效同其他人嘅聲音一概唔會借用。如果該場冇足够靜嘅空檔，就用返以前嘅靜音。","zh-CN":"少于三秒的句子需要更长的参考才能复制声线。现在用同一场景的安静环境音补足，只有音量明显低于句内人声时才采用。音乐、音效与其他人的声音不会被借用。若该场景没有足够安静的空档，则照旧使用静音。","ja":"3秒未満の台詞は音声複製により長い参考が必要です。今は同じ場面の実環境音を使い、レベルが音声より十分に低い場合だけ採用します。音楽・効果音・他の話者は使用しません。十分に静かな間がなければ従来通り無音を使います。"}]});}
+
+// The shared product copy is authoritative after historical mode migrations.
+{const chapter=CHAPTERS.find(c=>c.id==='modes');if(chapter){chapter.title=WORKFLOW_GUIDE.title;chapter.sections=WORKFLOW_GUIDE.items.map(item=>({title:item.title,body:[item.body],steps:false}));}}
+// Repair Help uses the same product rules as the controls. Historical copy above
+// cannot leave a second, conflicting definition of the final fallback selector.
+{const chapter=CHAPTERS.find(c=>c.id==='automatic-recovery');if(chapter){const ids=new Set(['repairCostWarning','contentReview','autoRepair','missingAudio','durationLimit','durationOff','durationOn','alternateEngine','systemVoice','resume','failedVoiceFallback']);chapter.sections=WORKFLOW_GUIDE.items.filter(item=>ids.has(item.id)).map(item=>({title:item.title,body:[item.body],steps:false}));}}
+// These new mobile report controls have no desktop execution mapping yet.
+// Keep their common source copy, but do not advertise unsupported desktop controls.
+{const chapter=CHAPTERS.find(c=>c.id==='modes');if(chapter){const pending=new Set(['standardReviewOnly','voiceReviewLevels','reviewLow','reviewMedium','reviewHigh','reviewUnchecked','reviewAll','durationOff']);chapter.sections=WORKFLOW_GUIDE.items.filter(item=>!pending.has(item.id)).map(item=>({title:item.title,body:[item.body],steps:false}));chapter.sections.unshift({title:{en:'Desktop implementation status','zh-HK':'桌面版實作狀態','zh-CN':'桌面版实现状态',ja:'デスクトップ版の実装状況'},body:[{en:'This desktop build allows dialogue overlap when duration limiting is off. Retained source intervals, OP/ED and the selected video end still constrain delivery. Extending the video by holding its last frame is not implemented here. Original recordings remain available; unresolved delivery appears in the report. Mobile listening-report levels are not desktop controls yet. These are pending implementation items, not verified platform alignment.','zh-HK':'本桌面版本關閉時長限制後容許對白重疊，但保留原聲區間、片頭／片尾及所選影片終點仍然限制交付。以定格最後畫面延長影片尚未接駁。原始錄音會保留，未能交付嘅項目會列入報告。手機版新增覆聽評級亦未成為桌面控制。呢啲屬待實作項目，唔代表兩邊已完全對齊。','zh-CN':'本桌面版本关闭时长限制后允许对白重叠，但保留原声区间、片头片尾及所选视频终点仍限制交付。定格最后画面以延长视频尚未接入。原始录音会保留，未能交付的项目列入报告。手机版新增复听评级也尚未成为桌面控制。这些属于待实现项目，不代表两端已完全对齐。',ja:'このデスクトップ版は長さ制限がオフなら台詞の重なりを許可します。ただし原音保持区間、OP/ED、選択した動画の終端は引き続き出力の境界です。最終フレームの静止による動画延長は未実装です。元の録音は保持し、未出力の項目を報告します。モバイル版の新しい聴き取り評価もデスクトップの設定ではありません。これらは未実装の対応項目で、プラットフォームの一致を保証しません。'}],steps:false});}}
+
+// Context editing keeps production controls separate from selected media.
+CHAPTERS.push({
+  "id": "context-editing-252",
+  "title": {
+    "en": "Dialogue, captions and mix",
+    "zh-HK": "對白、字幕與混音",
+    "zh-CN": "对白、字幕与混音",
+    "ja": "台詞・字幕・ミックス"
+  },
+  "summary": {
+    "en": "Production and optional repair stay in the right panel. Editing tools open beside the selected content.",
+    "zh-HK": "右側集中製作與額外修復；編輯工具按選取內容開啟。",
+    "zh-CN": "右侧集中制作与额外修复；编辑工具按所选内容打开。",
+    "ja": "右パネルは制作と追加修復に集中し、編集ツールは選択した内容から開きます。"
+  },
+  "sections": [
+    {
+      "title": {
+        "en": "Edit one dialogue line",
+        "zh-HK": "編輯單句對白",
+        "zh-CN": "编辑单句对白",
+        "ja": "台詞を1行ずつ編集"
+      },
+      "steps": false,
+      "body": [
+        {
+          "en": "Select a dialogue clip in the timeline, then use Edit dialogue beside the dialogue playback buttons. Listen compares original and saved takes. Retake edits the source transcript and target script, then generates one native-rate audio sample. Adjust contains timing, rate, trim, seed and display-caption controls. The editor keeps its selected line while you listen. Save and close stores the changes. New recordings remain available for comparison; choose Use recording to adopt one.",
+          "zh-HK": "在時間軸選取對白，再按對白播放按鈕旁的「編輯對白」。試聽可比較原聲與已保存錄音；重錄可修改原聲文字及配音台詞，再生成一段原取樣率音訊；調整包含時間、語速、裁剪、種子及顯示字幕。試聽期間，編輯器會固定所選對白。「保存並關閉」會儲存修改；新錄音會保留供比較，請按「採用錄音」選取。",
+          "zh-CN": "在时间轴选择对白，再按对白播放按钮旁的“编辑对白”。试听可比较原声与已保存录音；重录可修改原声文字和配音台词，再生成一段原采样率音频；调整包含时间、语速、裁剪、种子及显示字幕。试听期间，编辑器会固定所选对白。“保存并关闭”会保存修改；新录音会保留供比较，请按“采用录音”选择。",
+          "ja": "タイムラインで台詞を選び、再生ボタン横の「台詞を編集」を押します。試聴では原音と保存済み音声を比較できます。再録音では原文と台詞を編集し、元のサンプルレートで音声だけを生成します。調整には時刻、速度、トリム、シード、表示字幕があります。試聴中も選択行を保持します。「保存して閉じる」で保存し、新しい音声は採用操作で選びます。"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Preview and display captions",
+        "zh-HK": "預覽與顯示字幕",
+        "zh-CN": "预览与显示字幕",
+        "ja": "プレビューと表示字幕"
+      },
+      "steps": false,
+      "body": [
+        {
+          "en": "Use the player subtitle menu to choose a track and its adjacent settings icon to change preview subtitle size. Preview size and playback volume do not change exported media. A display-caption edit in the line editor keeps the selected recording and review choices. A spoken-script, source-transcript or role change requires a new recording choice. Save the draft, then export a new version from Produce to apply media changes.",
+          "zh-HK": "使用播放器字幕選單選擇字幕軌，旁邊的設定圖示可調整預覽字幕大小。預覽字體大小及播放音量不會改變成品。在逐句編輯器只修改顯示字幕，會保留所選錄音及覆核選擇；更改配音台詞、原聲文字或角色則需要重新選擇錄音。保存草稿後，從「製作匯出」輸出新版本，才會套用至影片。",
+          "zh-CN": "使用播放器字幕菜单选择字幕轨，旁边的设置图标可调整预览字幕大小。预览字号和播放音量不会改变成品。在逐句编辑器只修改显示字幕，会保留所选录音和复核选择；更改配音台词、原声文字或角色则需要重新选择录音。保存草稿后，从“制作导出”输出新版本，才会应用到视频。",
+          "ja": "プレーヤーの字幕メニューでトラックを選び、横の設定アイコンでプレビューの文字サイズを変えます。プレビューのサイズと再生音量は出力に影響しません。表示字幕だけの変更では採用音声を保持します。台詞、原文、役を変えた場合は音声を選び直してください。下書きを保存し、制作・書き出しから新版を出力します。"
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Export mix",
+        "zh-HK": "成品混音",
+        "zh-CN": "成品混音",
+        "ja": "出力ミックス"
+      },
+      "steps": false,
+      "body": [
+        {
+          "en": "Open the mixer icon in the timeline toolbar. Export background level supports 0–150%. Lower background while speaking reduces music and effects during dialogue; it is not the source-separation switch. Mixer values follow the current Global or Individual settings scope. Save and close, then export a new version. Keep original audio track is available once in Production. This task does not regenerate or overwrite existing recordings.",
+          "zh-HK": "按時間軸工具列的混音圖示。成品背景音量支援 0–150%；「對白時降低背景音」會在說話期間降低音樂與音效，並不是原聲分離開關。混音值會沿用目前的全域或個別影片設定範圍。保存並關閉後，請輸出新版本。「保留原聲音軌」集中在製作設定；調整混音不會重新生成或覆寫現有錄音。",
+          "zh-CN": "按时间轴工具栏的混音图标。成品背景音量支持 0–150%；“对白时降低背景音”会在说话期间降低音乐和音效，并不是原声分离开关。混音值会沿用当前的全局或单独视频设置范围。保存并关闭后，请输出新版本。“保留原声音轨”集中在制作设置；调整混音不会重新生成或覆盖现有录音。",
+          "ja": "タイムラインのミックスアイコンを開きます。背景音量は0〜150%です。「台詞中は背景音を下げる」は音楽・効果音の低減で、音源分離の切り替えではありません。全体・個別設定の範囲に従います。保存後に新版を書き出してください。原音トラックの保持は制作設定に集約されます。既存音声は再生成・上書きされません。"
+        }
+      ]
+    },
+{
+    "title": {
+        "en": "Source workflow availability",
+        "zh-HK": "來源流程支援範圍",
+        "zh-CN": "来源流程支持范围",
+        "ja": "入力フローの対応範囲"
+    },
+    "steps": false,
+    "body": [
+        {
+            "en": "This desktop update changes editing controls. It does not add the newer iPad automatic fallback for an explicitly selected subtitle workflow with no text subtitle. If the video has only burned-in captions, choose OCR > speech or Automatic before starting. A selected subtitle file that cannot be read must be corrected separately.",
+            "zh-HK": "這次桌面更新調整編輯介面，尚未加入 iPad 新增的自動後備：明確選擇字幕流程但沒有文字字幕時，桌面版不會自動改選其他來源。只有畫面字幕的影片，請在開始前選擇「OCR > 語音」或自動。已選字幕檔無法讀取的問題，仍須另行處理。",
+            "zh-CN": "本次桌面更新调整编辑界面，尚未加入 iPad 新增的自动后备：明确选择字幕流程但没有文字字幕时，桌面版不会自动改选其他来源。只有画面字幕的视频，请在开始前选择“OCR > 语音”或自动。已选字幕文件无法读取的问题，仍须另行处理。",
+            "ja": "今回のデスクトップ更新は編集操作の変更です。字幕フローを明示的に選び、テキスト字幕がない場合の新しいiPad版の自動切り替えは未対応です。焼き込み字幕のみの動画は、開始前に「OCR > 音声」または自動を選んでください。選択した字幕ファイルの読み取りエラーは別途修正が必要です。"
+        }
+    ]
+}
+  ]
+});
