@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
   "alignmentGovernance": {
     "revision": "shared-workflow-controls-4-language-budget-overlap",
@@ -1262,5 +1262,40 @@
     "evidence": "mobile/Validation/ipad-workflow-build223-2026-10-28.json",
     "desktopPickup": "Use shared guide9 and review AAC parameter bounds. Desktop253 installation remains separately owned.",
     "phonePickup": "Consumed in normal phone224 with exact guide9. Hardware, explicit engine preferences, and three saved checkpoints remain. Native execution evidence is separate from whole-film acceptance."
+  },
+  "manualLearningLineActions": {
+    "revision": "manual-learning-line-228",
+    "translation": "Selected original line only; merge other same-language lines; clear stale target-language results; reject cancelled responses.",
+    "recording": "Selected translated line only; explicit engine, language and saved sampling; separate candidate; preserve original outputs.",
+    "shortReference": "Use the hash-verified same-cue audio with existing opt-in silence padding. No repeated speech, other speaker, or implicit engine change.",
+    "automaticBoundary": "WF-01/02/03/15/16/17, frozen requests and spent recovery budgets stay unchanged.",
+    "guideRevision": "workflow-controls-guide-10-learning-line-actions",
+    "guideItem": "learningLineActions",
+    "platforms": {
+      "iPad": "Normal228 installed and launched on M4. Five native cases pass. Actual Cosy English and GPT MLX Cantonese use the same0.392375second source reference. Apple translation quality and human gesture acceptance remain open.",
+      "iPhone": "Shared source updated; phone owner pickup and separate acceptance pending.",
+      "desktop": "Review and alignment pending. No desktop behaviour or installation claim."
+    }
+  },
+  "initialModelPreparation227": {
+    "revision": "mobile-all-downloadable-setup-227",
+    "default": "Select all five directly downloadable groups. Obtain one scoped approval before connecting.",
+    "groups": [
+      "Gemma",
+      "Qwen",
+      "CosyVoice",
+      "Whisper",
+      "HTDemucs"
+    ],
+    "order": "Sequential. Pause cancels the current transfer and prevents later groups from starting.",
+    "preservation": "Reuse verified and partial files. Preserve resume data, selected engines, frozen jobs, and spent budgets.",
+    "gpt": "Installed or imported packages only. The model release is an unpublished draft. Source and notice checks remain pending.",
+    "platforms": {
+      "iPhone": "Source implemented. Consent passes. Final queue tests and normal227 install pending.",
+      "iPad": "Shared source implemented. Adoption and installation pending after normal228.",
+      "desktop": "No change. Separate platform deployment remains."
+    },
+    "wholeDownloadAccepted": false,
+    "evidence": "docs/IPHONE-PORTRAIT-INTRO-227.md"
   }
 }

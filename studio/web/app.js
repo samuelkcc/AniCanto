@@ -148,12 +148,14 @@ const speechStudio=createSpeechStudio({rpc,invoke,state:()=>state,active:()=>act
 function render(){
  if(selectionPending){markSelection();return;}
  if(queueOrder.busy){queueRenderPending=true;return;}
+ const navigationScroll=$('.navigation')?.scrollTop||0;
  const speechPlayer=page==='voice'?speechStudio.capturePlayer():null;
  const reviewViewport=captureReviewViewport();
  rememberTimelineViewport();
  const previousScene=$('.waiting-scene');const previousTheme=previousScene?.querySelector('.assistant-workflow')?.dataset.theme;
  const video=$('#video');const wasPlaying=video&&!video.paused,position=video?.currentTime||0;
  applyTheme();$('#app').innerHTML=screen==='welcome'?welcome():studio();
+ if($('.navigation'))$('.navigation').scrollTop=navigationScroll;
  if(screen==='studio'&&page==='edit'){
   if(video){$('#video').replaceWith(video);video.currentTime=position;if(wasPlaying)video.play().catch(()=>{});}
   if(previousScene&&previousTheme===(themeKey==='ensemble'?'energy':themeKey)&&previousScene.querySelectorAll('.assistant-workflow').length===1)$('.waiting-scene')?.replaceWith(previousScene);
@@ -352,7 +354,7 @@ function appbar(){const expert=state.mode==='expert';return `<header class="appb
  <div class="group">${ib('guide','Help centre','help')}${ib('welcome','Welcome','home')}</div></div></header>`}
 const NAV=[['edit','Edit','edit'],['voice','Dubbing studio','sound'],['roles','Roles','roles'],['review','Review report','review'],['produce','Produce','export'],['queue','Work queue','queue'],['terminal','Terminal','terminal'],['defaults','Production defaults','settings'],['models','Model centre','model'],['projects','Projects and exports','folder'],['preferences','Preferences','settings']];
 function studio(){const expert=state.mode==='expert';return `<div class="studio ${expert?'expert':'basic'}">${appbar()}
- <div class="workspace">${expert&&navVisible?`<nav class="navigation">${NAV.map(([k,label,ico],i)=>`${i===6?'<div class="rule"></div>':''}<button title="${esc(k==='voice'?speechStudio.title(state.language):t(label))}" class="${page===k?'active':''}" data-action="page" data-value="${k}">${icon(ico)}<span>${esc(k==='voice'?speechStudio.title(state.language):t(label))}</span></button>`).join('')}</nav>`:''}
+ <div class="workspace">${expert&&navVisible?`<nav class="navigation">${NAV.map(([k,label,ico],i)=>`${i===6?'<div class="rule"></div>':''}<button title="${esc(k==='voice'?speechStudio.title(state.language):t(label))}" aria-label="${esc(k==='voice'?speechStudio.title(state.language):t(label))}" class="${page===k?'active':''}" data-action="page" data-value="${k}">${icon(ico)}<span>${esc(k==='voice'?speechStudio.title(state.language):t(label))}</span></button>`).join('')}</nav>`:''}
  ${page==='edit'&&browserVisible?browser():''}<main class="main"><div class="workspace-title">${page!=='edit'&&!expert?button('back','Back to preview','back','back-prominent'):''}${page!=='edit'||!browserVisible?button('add','Add videos','plus'):''}<h3>${esc(page==='voice'?speechStudio.title(state.language):t(NAV.find(r=>r[0]===page)?.[1]||'Edit'))}</h3><span class="filename ellipsis grow">${esc(filename(row()?.video))}</span>${row()&&['edit','produce'].includes(page)?button('subtitle-source','Subtitle source','subtitles'):''}${page==='edit'&&!inspectorVisible?transportControl():''}</div>${page==='edit'?editor():fullPage()}</main></div>${expert&&page==='edit'?'<section id="timeline" class="timeline"></section>':''}${retryReviewError?`<footer class="statusbar"><span class="retry-launch-error" role="alert" title="${esc(retryReviewError)}">${esc(retryReviewError)}</span></footer>`:''}</div>`}
 function browser(){return `<aside class="browser"><div class="panel-title">${esc(t('Video queue'))}<span class="row queue-actions"><span class="badge">${state.queue.length}</span>${button('add',addingVideos?'Adding videos…':'Add videos','plus','icon-button',addingVideos?'disabled':'')}</span></div><div class="shelf" id="shelf" data-queue-list>${shelfCards()}</div><div class="browser-bottom">${state.mode==='basic'?button('page',speechStudio.title(state.language),'sound','',`data-value="voice"`)+button('projects','Projects and exports','folder'):''}</div></aside>`}
 function deliveryLabel(r){return r?.deliveryKind==='preview'&&r.status!=='running'?t('Preview saved — dubbing incomplete'):statusName(r?.status)}

@@ -136,6 +136,20 @@ Samuel confirms manual removal of the old sample. The remaining One Piece checkp
 The new full-screen portrait introduction request replaces225's interim border/backdrop target. Phone227 work follows.
 See `mobile/Validation/iphone-interface-build225-2026-10-29.json`.
 
+### Phone introduction227 and initial model preparation
+
+Phone227 uses a real portrait introduction movie with original audio and subtitle clocks.
+Its unpaid Expert card opens the shared purchase introduction. The separate Welcome banner is removed.
+Shared first setup selects all five direct-download groups: Gemma, Qwen, CosyVoice, Whisper, and HTDemucs.
+The user approves one combined plan before connection. Preparation runs sequentially.
+Pause cancels the active transfer and prevents the next group from starting.
+Reuse verified files and partial downloads. Keep selected engines, saved requests, and spent counts.
+GPT packages remain installed/imported resources until a verified public artifact exists.
+The iPad owner checks provenance and notices. The dedicated model release remains an unpublished draft.
+Phone227 final queue tests and normal installation remain pending. M4228 does not yet include the setup change.
+No desktop deployment change or clean-user whole-download acceptance is claimed.
+See `docs/IPHONE-PORTRAIT-INTRO-227.md`. WF-01/02/03/15/16/17 remain unchanged.
+
 ## GPT MLX deployment decision, 2026-10-28
 
 Samuel selected MLX for GPT-SoVITS deployment. Speed is the first deployment priority.
@@ -150,6 +164,18 @@ Do not call a backend installed until its actual app package and device executio
 Measure equal-boundary generation, model loading, memory, cancellation, and repeated recordings on each device.
 Record desktop, iPad, and iPhone evidence separately. No speed factor transfers between devices.
 No new workflow control is added. Use the shared control guide. Record each installed consumer revision separately.
+
+## Manual Learning line actions, confirmed 2026-10-29
+
+Translate only the source line selected by the user. Preserve other line translations for the same target language.
+A target-language change clears stale translations. Cancellation cannot publish a late response.
+Record only the selected translated line with the explicitly selected supported engine and parameters.
+Store it as an independent candidate. Do not overwrite the original dub, project, output, or automatic repair budget.
+A hash-verified short cue can use the existing short-reference adapter. It adds only silence for encoder context.
+Never repeat words, borrow another speaker, or switch engines solely because a reference is shorter than three seconds.
+This manual action does not change WF-01/02/03/15/16/17 or frozen automatic requests.
+Use guide10 item `learningLineActions` for product help. Normal iPad228 is installed. Five native cases pass, including two actual engines and live assistant frames.
+Shared phone source is available. Phone installation and desktop line-action review remain pending.
 
 ## Active shared baseline: `shared-workflow-controls-4-language-budget-overlap`
 
@@ -531,6 +557,7 @@ Update the affected rows every time either line changes a workflow.
 
 | Item | Desktop evidence or mapping | iPad evidence or mapping | Alignment and next action |
 | --- | --- | --- | --- |
+| Manual Learning line actions228 | Pending review of desktop line actions and short-reference handling. | Normal228 is installed. Five native cases cover one-line translation/recording and valid short-reference silence padding. | Phone shared source is available; no phone install claim. Preserve original outputs and automatic budgets. |
 | WF-16 three-language first-draft length |253 is installed on desktop. Real submission snapshots and first-request payload tests pass for three languages. Model replies are isolated fixtures; whole-film acceptance remains open. | Normal223 is installed. Three real E4B first requests contain language-aware soft guidance. Clock fallback and original data retention pass. | Default local-AI mapping is tested on M4 and installed phone224. Three actual phone E4B requests pass. Apple system-translation guidance and whole-film acceptance remain pending. |
 | WF-17 optional audible overlap over two seconds |253 is installed. Local Silero sample detection and bounded one-operation coordinator fixtures pass. Real optional neural retake and Windows inference remain open. | Normal223 has a default-off independent switch. Native coordinator fixtures cover thresholds, gaps, uncertainty, strict interaction, failed takes, and resume. | M4 and installed phone224 use conservative attributed lexical ranges. Native permission/resume fixtures pass. Real recognition plus retake acceptance and full-film tests remain open. |
 | GPT MLX deployment | Mac short comparison accepted; desktop app backend unchanged. | Normal223 retains tested215 MLX and the character App icon. Explicit engine preferences and the legacy picker are preserved. | Normal phone224 is installed. Six fresh MLX calls, memory/cancel subchecks, and retained-take export have bounded evidence. Whole-film acceptance remains open. This is not a v4 MLX port. |

@@ -10,7 +10,7 @@
 
 日本のアニメのセリフを**香港広東語・中国本土普通話・英語の吹き替え**に変換します。モデルと実行環境の準備後は、認識・翻訳・音声生成・書き出しをすべてローカルで実行します。
 
-[ダウンロード](#beta-をダウンロード--0250) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [デモ](#元のデモを変換して声を比較する)
+[ダウンロード](#beta-をダウンロード--0251) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [デモ](#元のデモを変換して声を比較する)
 
 ## AniCanto を作った理由
 
@@ -24,20 +24,19 @@ SCKC が趣味と学びのために作っているこのプロジェクトは、
 
 AI の生成音声には、アクセント、読み間違い、演技の不足などが残る場合があります。作品を楽しむとともに、その声を届けるプロの演技を、これからも大切にし、応援してください。
 
-## Beta をダウンロード · 0.25.0
+## Beta をダウンロード · 0.25.1
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto-macOS-0.25.0.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.0-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto-macOS-0.25.1.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.1-beta)
 
-[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## 今回の Beta の変更点
 
-- **共通の高速フロー：** 基本／エキスパートモードは最初の有声音声を保持。広東語・普通話・英語の初回翻訳に原音の発話時間を目安として渡し、意味を保ちます。
-- **独立したAI修復：** 追加の内容確認は初期値0回。無音・破損音声は回数を制限して補完します。原音の長さ制限と、2秒を超える有声重複の修正は別設定で、初期値はオフです。
-- **編集操作の集約：** 制作／AI修復タブ、全体／動画別設定、台詞ごとの試聴と再生成、専用ミキサー。Welcomeロゴはテーマ色に連動し、Appアイコンは紫音を維持します。
-- **Mac／Windowsパッケージ：** 共通の処理とUIを使用し、NVIDIA CUDA設定を維持。Windows版はクロスコンパイル済みですが、実機テストが必要です。
+- **左ツール列の安定化：** ヘッダー下に固定し、標準サイズでは全ツールを表示。低いウィンドウでは名前付きアイコンを使用します。ページ切替で位置を変えず、極端に低い画面では再描画後もスクロール位置を保持します。
+- **変換フローは維持：** 0.25.0の最初の有声音声保持、字幕優先、3言語の初稿長さ目安、回数制限付き欠落音声補完、独立した修復設定を引き継ぎます。
+- **Mac／Windows共通修正：** 4言語の画面画像を更新。Windowsはクロスコンパイル済みですがPC実機試験が必要です。
 
-[処理仕様・検証範囲・制限](docs/DESKTOP-WORKFLOW-0.25.0.md)。中断済みの旧ジョブは保存設定を維持します。新フローの試験は動画をリセットするか、新規変換で行ってください。
+[レイアウト修正と検証](docs/DESKTOP-NAVIGATION-0.25.1.md) · [変換フローと制限](docs/DESKTOP-WORKFLOW-0.25.0.md)。
 
 ## 元のデモを変換して、声を比較する
 
@@ -192,21 +191,21 @@ Apple Silicon では任意の **MLX Whisper**（約3.1 GB）で高速確認で�
 
 ### ようこそ・セットアップ
 
-![ようこそ・セットアップ](docs/images/welcome-ja.png?v=0.25.0)
+![ようこそ・セットアップ](docs/images/welcome-ja.png?v=0.25.1)
 
 UI 言語を選び、ローカルモデルを準備して基本・エキスパートモードへ。
 
 ### 基本モード：進捗と試聴
 
-![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.25.0)
+![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.25.1)
 
 動画、吹き替え言語、出力先を選び、進捗と各台詞の音声を確認。プレビューを閉じたままアシスタントを表示できます。
 
 ### エキスパートモード：タイムラインと編集
 
-![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.25.0)
+![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.25.1)
 
-![AI Repair](docs/images/ai-repair-ja.png?v=0.25.0)
+![AI Repair](docs/images/ai-repair-ja.png?v=0.25.1)
 
 下部全幅のタイムラインで原文と吹き替え台詞を比較し、時刻を調整して選択した台詞を再生成。
 
@@ -214,25 +213,25 @@ UI 言語を選び、ローカルモデルを準備して基本・エキスパ�
 
 動画カードの円形矢印から、全体の再変換、音声のみの再生成、言語・エンジンの追加を選べます。再読み込みは不要です。
 
-![ 再変換と音声トラックの追加 ](docs/images/restart-ja.png?v=0.25.0)
+![ 再変換と音声トラックの追加 ](docs/images/restart-ja.png?v=0.25.1)
 
 ### 校正レポート：問題と録音の比較
 
-![校正レポート：問題と録音の比較](docs/images/review-ja.png?v=0.25.0)
+![校正レポート：問題と録音の比較](docs/images/review-ja.png?v=0.25.1)
 
 指摘された問題と修復の試行を確認し、保存済み録音を比較。以前の動画を残したまま新版を書き出せます。
 
 ### 吹き替えスタジオと保存した録音
 
-![Dubbing studio](docs/images/speech-studio-ja.png?v=0.25.0)
+![Dubbing studio](docs/images/speech-studio-ja.png?v=0.25.1)
 
 原文と広東語の台詞を確認し、生成した各版を保存。元音声・生成音声・対訳をプレーヤーで比較できます。
 
-![Saved clips and learning](docs/images/speech-player-ja.png?v=0.25.0)
+![Saved clips and learning](docs/images/speech-player-ja.png?v=0.25.1)
 
 ### Windows：NVIDIA CUDA の設定
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.25.0)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.25.1)
 
 自動・NVIDIA CUDA・CPU を選択。システム RAM、VRAM、追加の CUDA ダウンロードを別表示します。設定画面の例であり、速度の測定結果ではありません。
 

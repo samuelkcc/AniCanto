@@ -10,7 +10,7 @@
 
 将日本动画的日语对白转换成**香港粤语、普通话或英语配音**。安装所需模型和运行环境后，识别、翻译、配音和导出都在本机完成。
 
-[下载](#下载-beta--0250) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [演示视频](#下载测试原片听配音成品作比较)
+[下载](#下载-beta--0251) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [演示视频](#下载测试原片听配音成品作比较)
 
 ## 为什么会有 AniCanto
 
@@ -24,20 +24,19 @@ AniCanto 最初只是一个简单的心愿：**希望孩子看动画时，可以
 
 AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音、错字或表演不足，不等同于专业演出。希望大家在使用这个项目的同时，继续欣赏和支持熟悉声音背后的表演者。
 
-## 下载 Beta · 0.25.0
+## 下载 Beta · 0.25.1
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto-macOS-0.25.0.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.0-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto-macOS-0.25.1.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.1-beta)
 
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.0-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 这个 Beta 新增了什么
 
-- **统一的快捷流程：** 基本／专家模式保留首轮有声录音；粤语、普通话及英语首次翻译参考原声时长，同时保留完整意思。
-- **独立 AI 修复：** 额外内容核对默认0次；无声／损坏录音仍会有限补录。限制原声时长、修正超过2秒有声重叠为独立选项，默认关闭。
-- **集中的编辑控件：** 制作／AI修复分页、全局／单片设置、逐句试听重录，以及独立混音面板。欢迎标志跟随主题颜色，App图标保留紫音。
-- **两款桌面安装包：** Mac／Windows共用流程及界面，保留NVIDIA CUDA部署。Windows包通过交叉编译生成，仍需实际PC测试。
+- **稳定的左侧工具栏：** 工具固定在顶栏下方，紧凑间距让正常窗口显示全部功能。小窗口使用带名称提示的图标；切换页面位置一致，极矮窗口刷新后保留滚动位置。
+- **转换流程不变：** 沿用0.25.0的首轮有声保留、字幕优先、三语初稿长度提示、有限缺声补录，以及独立修复选项。
+- **Mac／Windows共用修正：** 四语界面图片已更新；Windows通过交叉编译生成，仍需PC实机测试。
 
-[流程、验证范围及限制](docs/DESKTOP-WORKFLOW-0.25.0.md)。暂停的旧任务保留冻结设置；测试新流程请重置测试视频或创建新转换。
+[布局修正与验证](docs/DESKTOP-NAVIGATION-0.25.1.md) · [转换流程与限制](docs/DESKTOP-WORKFLOW-0.25.0.md)。
 
 ## 下载测试原片，听配音成品作比较
 
@@ -192,21 +191,21 @@ Apple Silicon 可选 **MLX Whisper** 加速复听（模型约 3.1 GB）；每句
 
 ### 欢迎与部署
 
-![欢迎与部署](docs/images/welcome-zh-CN.png?v=0.25.0)
+![欢迎与部署](docs/images/welcome-zh-CN.png?v=0.25.1)
 
 选择界面语言，准备本地模型，再进入基本或专家模式。
 
 ### 基本模式：进度与试听
 
-![基本模式：进度与试听](docs/images/basic-zh-CN.png?v=0.25.0)
+![基本模式：进度与试听](docs/images/basic-zh-CN.png?v=0.25.1)
 
 添加视频、选择配音语言和输出文件夹，再跟进处理与逐句试听；预览可保持关闭，由小助手陪伴。
 
 ### 专家模式：时间轴与逐句编辑
 
-![专家模式：时间轴与逐句编辑](docs/images/timeline-zh-CN.png?v=0.25.0)
+![专家模式：时间轴与逐句编辑](docs/images/timeline-zh-CN.png?v=0.25.1)
 
-![AI Repair](docs/images/ai-repair-zh-CN.png?v=0.25.0)
+![AI Repair](docs/images/ai-repair-zh-CN.png?v=0.25.1)
 
 通过底部全宽时间轴比较原声对白和配音稿、调整时间，也能为所选一句生成另一段录音。
 
@@ -214,25 +213,25 @@ Apple Silicon 可选 **MLX Whisper** 加速复听（模型约 3.1 GB）；每句
 
 点击视频卡的圆形箭头，可重新转换、只重配声音，或新增语言／引擎音轨，无需删除再导入。
 
-![ 重新开始或新增音轨 ](docs/images/restart-zh-CN.png?v=0.25.0)
+![ 重新开始或新增音轨 ](docs/images/restart-zh-CN.png?v=0.25.1)
 
 ### 校对报告：问题与录音比较
 
-![校对报告：问题与录音比较](docs/images/review-zh-CN.png?v=0.25.0)
+![校对报告：问题与录音比较](docs/images/review-zh-CN.png?v=0.25.1)
 
 查看标记和修复尝试，再比较保留录音。选好后导出另一版本，原有成品继续保留。
 
 ### 配音器与已保存片段
 
-![Dubbing studio](docs/images/speech-studio-zh-CN.png?v=0.25.0)
+![Dubbing studio](docs/images/speech-studio-zh-CN.png?v=0.25.1)
 
 核对原稿和广东话译稿，再生成并保存不同录音；播放器可对照原声、配音及两份文字。
 
-![Saved clips and learning](docs/images/speech-player-zh-CN.png?v=0.25.0)
+![Saved clips and learning](docs/images/speech-player-zh-CN.png?v=0.25.1)
 
 ### Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-CN.png?v=0.25.0)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-CN.png?v=0.25.1)
 
 可选自动检测、NVIDIA CUDA 或 CPU，分别显示系统 RAM、VRAM 及额外 CUDA 下载；图片展示部署选项，并非速度测试成绩。
 

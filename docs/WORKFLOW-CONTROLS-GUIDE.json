@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-9-mobile-language-budget-overlap",
+  "revision": "workflow-controls-guide-10-learning-line-actions",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -389,6 +389,21 @@
         "zh-CN": "专家选项，默认关闭。仅在同语言配音实际同时发声超过 2 秒时，才保义缩稿并用同一声音重录一次；静音、空档及未确认的轻声不会直接触发。未改善则保留首轮录音并列入报告，不反复重录。此选项独立于内容核对及原声时长限制，",
         "en": "Expert option, off by default. More than two seconds of confirmed simultaneous target speech permits one faithful rewrite and same-voice retake. Silence, free gaps, and uncertain quiet tails do not directly trigger it. Keep the first take and report an unsuccessful repair. This is separate from content checks and strict original duration.",
         "ja": "エキスパート設定で、初期状態はオフです。同じ言語の吹き替えが実際に同時発声する時間が2秒を超えた場合だけ、意味を保って短くし、同じ声で1回再録音します。無音・空き時間・不確かな小声だけでは実行しません。改善しなければ初回音声を保持して報告します。内容確認・原音声の長さ制限とは独立しています。"
+      }
+    },
+    {
+      "id": "learningLineActions",
+      "title": {
+        "zh-HK": "逐句翻譯及錄製譯文",
+        "zh-CN": "逐句翻译及录制译文",
+        "en": "Translate and record one line",
+        "ja": "一文ずつ翻訳・録音"
+      },
+      "body": {
+        "zh-HK": "在學習模式每句按「翻譯原文」，只翻譯該句原文，其他句子的同語言譯文會保留。更改輸出語言後重新翻譯。譯文旁可選配音引擎及參數，再按「錄製譯文」建立獨立試錄。短句沿用已驗證的原角色參考，僅補靜音以符合編碼器長度；不重複說話或借用其他角色。原配音、成品及轉換進度保持不變。",
+        "zh-CN": "在学习模式每句按“翻译原文”，只翻译该句原文，其他句子的同语言译文会保留。更改输出语言后重新翻译。译文旁可选配音引擎和参数，再按“录制译文”建立独立试录。短句沿用已验证的原角色参考，仅补静音以符合编码器长度；不重复说话或借用其他角色。原配音、成品和转换进度保持不变。",
+        "en": "Select Translate original on a Learning line to translate only that source line. Other translations in the same language remain. Translate again after changing the target language. Choose an engine and settings beside the translation, then record a separate take. Short lines keep their verified original speaker reference; only silence is added for encoder context. No repeated words or other speaker is added. Original dubbing, outputs and conversion progress remain.",
+        "ja": "学習モードの各行で「原文を翻訳」を押すと、その行だけを翻訳します。同じ言語のほかの翻訳は保持します。出力言語を変えた後は再翻訳してください。訳文の横でエンジンと設定を選び、独立した録音を作成できます。短い台詞も検証済みの元話者の参照音声を使用し、エンコーダーの長さに合わせて無音だけを追加します。台詞の繰り返しや別の話者は追加しません。元の吹替、完成品、変換の進行状況は保持します。"
       }
     }
   ],

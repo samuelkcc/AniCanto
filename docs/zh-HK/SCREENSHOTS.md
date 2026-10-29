@@ -6,52 +6,52 @@
 
 ## 歡迎畫面
 
-![歡迎畫面](../images/welcome-zh-HK.png?v=0.25.0)
+![歡迎畫面](../images/welcome-zh-HK.png?v=0.25.1)
 
 ## 模型及部署
 
-![模型及部署](../images/models-setup-zh-HK.png?v=0.25.0)
+![模型及部署](../images/models-setup-zh-HK.png?v=0.25.1)
 
 ## 基本模式
 
-![基本模式](../images/basic-zh-HK.png?v=0.25.0)
+![基本模式](../images/basic-zh-HK.png?v=0.25.1)
 
 ## 專家時間軸
 
-![專家時間軸](../images/timeline-zh-HK.png?v=0.25.0)
+![專家時間軸](../images/timeline-zh-HK.png?v=0.25.1)
 
 ## 校對報告
 
-![校對報告](../images/review-zh-HK.png?v=0.25.0)
+![校對報告](../images/review-zh-HK.png?v=0.25.1)
 
 ## 影片清單
 
-![影片清單](../images/batch-zh-HK.png?v=0.25.0)
+![影片清單](../images/batch-zh-HK.png?v=0.25.1)
 
 ## 模型中心
 
-![模型中心](../images/model-centre-zh-HK.png?v=0.25.0)
+![模型中心](../images/model-centre-zh-HK.png?v=0.25.1)
 
 ## 偏好設定
 
-![偏好設定](../images/preferences-zh-HK.png?v=0.25.0)
+![偏好設定](../images/preferences-zh-HK.png?v=0.25.1)
 
 ## 字幕來源
 
-![字幕來源](../images/subtitles-zh-HK.png?v=0.25.0)
+![字幕來源](../images/subtitles-zh-HK.png?v=0.25.1)
 
 ## 配音器與已保存片段
 
-![Dubbing studio](../images/speech-studio-zh-HK.png?v=0.25.0)
+![Dubbing studio](../images/speech-studio-zh-HK.png?v=0.25.1)
 
-![Saved & learning](../images/speech-player-zh-HK.png?v=0.25.0)
+![Saved & learning](../images/speech-player-zh-HK.png?v=0.25.1)
 
 ## Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA](../images/nvidia-cuda-zh-HK.png?v=0.25.0)
+![NVIDIA CUDA](../images/nvidia-cuda-zh-HK.png?v=0.25.1)
 
 ## 重新開始或新增音軌
 
 撳影片卡嘅圓形箭嘴，可以重做轉換、只重配聲音，或者新增語言／引擎音軌；唔使刪片再匯入。
 
-![重新開始或新增音軌](../images/restart-zh-HK.png?v=0.25.0)
+![重新開始或新增音軌](../images/restart-zh-HK.png?v=0.25.1)

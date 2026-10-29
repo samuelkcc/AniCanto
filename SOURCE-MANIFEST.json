@@ -26,28 +26,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "a7ab8ee573ee621cacfdf9a819a3588e707b03b070804e2ca73f75d673eb4f09",
-      "bytes": 24154
+      "sha256": "120a3e8fde84522a645fc5e121a312004f8e9b144d43dfe438644f66f4113f1e",
+      "bytes": 23963
     },
     {
       "path": "README.ja.md",
-      "sha256": "af72c098b283b0f645489800a20f140ba27e835b3c595f5d5e40c53ffc2d4492",
-      "bytes": 26750
+      "sha256": "a16aaaa42ca741400b13f2132855eec29c2e06b98c54d9a3f163f145a4ba7a47",
+      "bytes": 26425
     },
     {
       "path": "README.md",
-      "sha256": "a7ab8ee573ee621cacfdf9a819a3588e707b03b070804e2ca73f75d673eb4f09",
-      "bytes": 24154
+      "sha256": "120a3e8fde84522a645fc5e121a312004f8e9b144d43dfe438644f66f4113f1e",
+      "bytes": 23963
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "3e08fe044b8d16b0f2cd7f4c86a5239817b982cccb306fa23b2f052f546b3d42",
-      "bytes": 20825
+      "sha256": "4c3a113eadeef1d2e1d6eca8d7db951bb006f74fe03d80fce120f379ccaada48",
+      "bytes": 20593
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "dd00abb8fcc077ec7e4389ae2229c61ff14e176e9fd3454bc821478c0c187424",
-      "bytes": 20929
+      "sha256": "d4c1236d964247d2caee19cfedef3f5f9503e6e57cdc3c4f9bed6e25fefaf219",
+      "bytes": 20694
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -1635,46 +1635,6 @@
       "bytes": 9740
     },
     {
-      "path": "Resources/tts-vendor/drama3-small/LICENSE",
-      "sha256": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
-      "bytes": 19685
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/NOTICE",
-      "sha256": "080fd69d078ccd97c6890852390413a81dfe0d9fe770eabf9a1980b73e4b982d",
-      "bytes": 1601
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/README.md",
-      "sha256": "fc66500c3d6cf985574fec68f2dd539a83e47fb81798da3d80a6d4aea478ac56",
-      "bytes": 12140
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/SOURCE.json",
-      "sha256": "a86ebf4257634f46754c8091836a4d8dada57eb017c5c2a9ff5771f06e643326",
-      "bytes": 629
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/audio.cpp-LICENSE",
-      "sha256": "8f0b762d062e1ec79a3e73189b29474051c0e957973f43146aefeb03f2e11581",
-      "bytes": 10276
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/cantosync-loader.patch",
-      "sha256": "6001d44e515cdc918eb925cae00db7e73f44efa34da9bfff137ebcb4e3e3ab7c",
-      "bytes": 1103
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/drama3-small-audiocpp.patch",
-      "sha256": "cb71f86c81158db43e29a93626ae383c1b2f1d957304e700d7e0a174f6334119",
-      "bytes": 42948
-    },
-    {
-      "path": "Resources/tts-vendor/drama3-small/silence_codes.json",
-      "sha256": "1e5a21fbf687a2373b2a7510059a52839a975e5c9ca7d6d12ba820e603d15c4f",
-      "bytes": 813
-    },
-    {
       "path": "Resources/tts-vendor/drama3/LICENSE",
       "sha256": "11d27e0259dec3a323fa6c04c330621d0950ab96c6760d5aac3e2e97229e6f22",
       "bytes": 1070
@@ -1738,6 +1698,46 @@
       "path": "Resources/tts-vendor/drama3/mlx_audio/tts/models/fish_drama3/tower.py",
       "sha256": "2b05e74ef1b63a0acda681ba0a00329eccb0e4f1e6c4d6e9258ee5a92aede6d5",
       "bytes": 9070
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/LICENSE",
+      "sha256": "733a32442087acbda12ecafe8e71eb8ee5890c89b50ce7ac4ea3777faa3c823e",
+      "bytes": 19685
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/NOTICE",
+      "sha256": "080fd69d078ccd97c6890852390413a81dfe0d9fe770eabf9a1980b73e4b982d",
+      "bytes": 1601
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/README.md",
+      "sha256": "fc66500c3d6cf985574fec68f2dd539a83e47fb81798da3d80a6d4aea478ac56",
+      "bytes": 12140
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/SOURCE.json",
+      "sha256": "a86ebf4257634f46754c8091836a4d8dada57eb017c5c2a9ff5771f06e643326",
+      "bytes": 629
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/audio.cpp-LICENSE",
+      "sha256": "8f0b762d062e1ec79a3e73189b29474051c0e957973f43146aefeb03f2e11581",
+      "bytes": 10276
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/cantosync-loader.patch",
+      "sha256": "6001d44e515cdc918eb925cae00db7e73f44efa34da9bfff137ebcb4e3e3ab7c",
+      "bytes": 1103
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/drama3-small-audiocpp.patch",
+      "sha256": "cb71f86c81158db43e29a93626ae383c1b2f1d957304e700d7e0a174f6334119",
+      "bytes": 42948
+    },
+    {
+      "path": "Resources/tts-vendor/drama3-small/silence_codes.json",
+      "sha256": "1e5a21fbf687a2373b2a7510059a52839a975e5c9ca7d6d12ba820e603d15c4f",
+      "bytes": 813
     },
     {
       "path": "Resources/tts-vendor/provenance.json",
@@ -3231,7 +3231,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "9e4cb555b965c11e3b94394814120b5103df2f961542b8118b17855a6eb8c7f6",
+      "sha256": "8f926bdfa27027b349c0a7b621c86b815891b47f8dabe5bca2a215570544d726",
       "bytes": 65
     },
     {
@@ -3306,13 +3306,18 @@
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "921a05bcf8e0b97d2cfcd47936d98cc499e26e23483908eab2d30702cefa587f",
-      "bytes": 108210
+      "sha256": "ea83fd623bd1f8814d3b0e0ac4919d4f19ec6b96e4fab8e2e9f67ee0c7f34784",
+      "bytes": 110715
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
       "sha256": "d3cfaeaf73bed4dc1747d23b055ea085232dbdeb8822fb5dd5e929815af72c75",
       "bytes": 3162
+    },
+    {
+      "path": "docs/DESKTOP-NAVIGATION-0.25.1.md",
+      "sha256": "016741cb52a89dea4ff817945a728c6dac247624eadeb84ff4065980eb49aaa6",
+      "bytes": 2011
     },
     {
       "path": "docs/DESKTOP-PARAMETERS-0.24.69.md",
@@ -3436,13 +3441,13 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "70254c6508e1984f449007932ed23fd5b8d04be681bba68ef3032ad6a14d64c6",
-      "bytes": 980
+      "sha256": "b00ce23f256e101e369bde1fc05d0f0088af51beb70e234f319a3728354a3b1f",
+      "bytes": 1036
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "fdee7e7c425c920cf2f533d098a5914856d31c214ea276af1924c16468b59a99",
-      "bytes": 76837
+      "sha256": "e5b5daa837c4c2fbb4e592ea6317fef379c4a0719b6e16ad6d465335ec700be5",
+      "bytes": 79100
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -3496,8 +3501,8 @@
     },
     {
       "path": "docs/WORKFLOW-CONTROLS-GUIDE.json",
-      "sha256": "204aa2c22c705648ed5ae5d0e1160218b4c2c26bf55a1476a93d6c74fb4b97bd",
-      "bytes": 34034
+      "sha256": "ab077216d6ccbe6b3be16f53db7c29d18088afc1420633627492262316726081",
+      "bytes": 36228
     },
     {
       "path": "docs/en/DEMO.md",
@@ -3516,28 +3521,28 @@
     },
     {
       "path": "docs/en/SCREENSHOTS.md",
-      "sha256": "ddd0b3e14dd4875fe171af9aba9987babfcf16b04bede44f72f9a21a14dd54df",
+      "sha256": "1e9e5a1a0f9cbeaa6e200cb7f35196c811aedf2dc9cc5076d834adeace2f1504",
       "bytes": 1387
     },
     {
       "path": "docs/images/ai-repair-en.png",
-      "sha256": "d50763b8ba4f3de392fd19aa4867341f82a35fc5eca5bbda239b86e792326096",
-      "bytes": 216590
+      "sha256": "f1a80673c9e655ef0b8cb56b90559f39f69a22071e52e47dead4822dcae36076",
+      "bytes": 216941
     },
     {
       "path": "docs/images/ai-repair-ja.png",
-      "sha256": "dc55f436e9b86316a87cc4f1c10f149cc2981991ba9cfbce8c7e23585162e7fc",
-      "bytes": 224610
+      "sha256": "c583733c6fceb688462953a9d435f1f018ea701100511d438b466f6ac2cafc4a",
+      "bytes": 224535
     },
     {
       "path": "docs/images/ai-repair-zh-CN.png",
-      "sha256": "912126fb3037ab176a28c1625b32c978ef1eabae100651d339b726775a8781f6",
-      "bytes": 202367
+      "sha256": "b24f986c0b1d0a58ee97c95d85a63591c898c1979e7e2129c2e85ca64a7ad74d",
+      "bytes": 202318
     },
     {
       "path": "docs/images/ai-repair-zh-HK.png",
-      "sha256": "cce3ed8a1b8808350788fc61361b6c85235d5ece68730178dd91462c0612382e",
-      "bytes": 209692
+      "sha256": "507d927cef2a322b7a2119fbbb9654b3babe7e437bf2182ab06079b8e8938e50",
+      "bytes": 210029
     },
     {
       "path": "docs/images/basic-en.png",
@@ -3561,23 +3566,23 @@
     },
     {
       "path": "docs/images/batch-en.png",
-      "sha256": "5a084fe96b8d8d21b3da137d0125aa1d7a1f44b75ae597314bc4415705bae0e9",
-      "bytes": 71915
+      "sha256": "5c758e1638b5fa047aeede4ef60e323d0e2857b439320a1b247f0321bdd2d1b7",
+      "bytes": 71698
     },
     {
       "path": "docs/images/batch-ja.png",
-      "sha256": "ce3e65958876800f8a67ce49971da8c2f37f4c30085f902c942b5cd96ed49353",
-      "bytes": 73205
+      "sha256": "686be1a7250101295646f55374fccad312f296053ecf4559ee6c9827a4e97e74",
+      "bytes": 73074
     },
     {
       "path": "docs/images/batch-zh-CN.png",
-      "sha256": "87b5f738b6b355b7242758c15e3391eb2db021f780b637833ecd86475ccbc249",
-      "bytes": 69066
+      "sha256": "ca67ad8878fc28ff4feddfdfe3f04476442e5655f2ace547a72dea49fcb9b4b8",
+      "bytes": 68655
     },
     {
       "path": "docs/images/batch-zh-HK.png",
-      "sha256": "af8273eee9b5a8877815375e49b7d4893643403cd3836e077f51db9549c97dfc",
-      "bytes": 69619
+      "sha256": "93923e762075ffa742db16feb6521ff03555149acd7a6cc96c83ca0327153016",
+      "bytes": 69294
     },
     {
       "path": "docs/images/demo-output-sample.jpg",
@@ -3586,223 +3591,223 @@
     },
     {
       "path": "docs/images/model-centre-en.png",
-      "sha256": "96df882590ce6a2f544203e8274d9f73da9a7f7fcb6fd6049f445f16179a7f7c",
-      "bytes": 147704
+      "sha256": "5ceae81ae78bc8b208791c734681213ca11bed0aadcaf2a377125a9da356adc9",
+      "bytes": 147855
     },
     {
       "path": "docs/images/model-centre-ja.png",
-      "sha256": "b17359fbb6f0b071894c175febd5c76d2a7404823978f33c082909dcd6907b55",
-      "bytes": 178458
+      "sha256": "3077b3edcb86fc474ef25debfad544e099d64828bcc51850d05b6685a17cc385",
+      "bytes": 178397
     },
     {
       "path": "docs/images/model-centre-zh-CN.png",
-      "sha256": "870b897a8bb120e26824de012bb89f800c1cb16c1a7d4a5f5d1a908e05b763b8",
-      "bytes": 142714
+      "sha256": "71491b3960d30bbae137859e241c75064a43502de68f23041a024735b3e867dd",
+      "bytes": 142683
     },
     {
       "path": "docs/images/model-centre-zh-HK.png",
-      "sha256": "30a829bd09a75ca221198a1fde3f5692da0d513c88a6f086f5037aa14ba72e80",
-      "bytes": 159905
+      "sha256": "e24a5eb5dbfe6dd0d28ef1ed904a7abad718173dce76d44003765d04213505b3",
+      "bytes": 159975
     },
     {
       "path": "docs/images/models-setup-en.png",
-      "sha256": "df1bdfdfa88a7a9a5995d47df61f1c3075be9916b53fead99bed5b5c8692b46e",
-      "bytes": 248452
+      "sha256": "b1f77c5514a3af47c69832347f3fb005fc20f192481949f15dfe2b13a4c0c1b4",
+      "bytes": 248628
     },
     {
       "path": "docs/images/models-setup-ja.png",
-      "sha256": "dcdfe072f2d52e2244d9b32e949b11b63fbfb17da266c83d2bafe5967612e5a7",
-      "bytes": 281356
+      "sha256": "b15ca7a030f7b640f069892c82f8cd2848b1bdb3c2ac33ddb4a89136fc82f4d0",
+      "bytes": 281009
     },
     {
       "path": "docs/images/models-setup-zh-CN.png",
-      "sha256": "31f151ac9c391b01eb2769319231836dcf7321b416800d79a61b0a861e7fe5c6",
-      "bytes": 232387
+      "sha256": "7debe6b25913601ababdafad59d5af2777132525096e8a3086c1599408623d51",
+      "bytes": 232214
     },
     {
       "path": "docs/images/models-setup-zh-HK.png",
-      "sha256": "ec28b74262be398c27b345d63001e29200e262e6cade8f4d7b844a3b6bcc7d10",
-      "bytes": 255607
+      "sha256": "c643b95c3856201f829de0848de53752dc3216e6c90b4e03b6f08661ed444d7a",
+      "bytes": 255414
     },
     {
       "path": "docs/images/nvidia-cuda-en.png",
-      "sha256": "f99ff6beecb64f3b01a633e90a779d06d46547c3242da2d5617f7c324932185a",
-      "bytes": 256806
+      "sha256": "6d7c44f238c8a90456069e09dc40e8b5f61d6a1f3d1144a5ec844d0c0e4b39b8",
+      "bytes": 256486
     },
     {
       "path": "docs/images/nvidia-cuda-ja.png",
-      "sha256": "eb3433ca6c98b153481ef340e69ce0dcd3d5426ade6b0eac10beeb00ddb3c097",
-      "bytes": 298464
+      "sha256": "2e249862daba11f2fc2e0ffd21f27dc4e38d775a2af224f0f1f6985abaddc7ce",
+      "bytes": 297897
     },
     {
       "path": "docs/images/nvidia-cuda-zh-CN.png",
-      "sha256": "80cf2466aae08ad04dd92ec25970b68b651db07344b6e7583e2ae35e9fe18b49",
-      "bytes": 248940
+      "sha256": "549723948485eb9fd0256b30b7ffe03cb851e724e5e4d3522245d9d3de464538",
+      "bytes": 248866
     },
     {
       "path": "docs/images/nvidia-cuda-zh-HK.png",
-      "sha256": "f9727e367b2bbfa365ca47dd81f45ed66456e39a705e1851329b1e045216deb7",
-      "bytes": 277023
+      "sha256": "2c55b9208c088d1827b9df507e0097dc318b9a72388f6053207a30fc3f46743a",
+      "bytes": 276896
     },
     {
       "path": "docs/images/preferences-en.png",
-      "sha256": "bf9451951c0fd9c14f421db90c015fb0a653d59e01dd6b1f1152ec689f66e4ff",
-      "bytes": 223498
+      "sha256": "60fe4dbe6780e14e34d38b421072c199e447451fe33666bafc01dde1a0a0fe50",
+      "bytes": 223448
     },
     {
       "path": "docs/images/preferences-ja.png",
-      "sha256": "f47afee689faf2f1267570d99546f84b75417df4fa2012f1e9efb9d5b60b1b1c",
-      "bytes": 222943
+      "sha256": "74a2f9a65081604ebce61e9ac755823250fe34adb27f3e1884b632c11d8ced99",
+      "bytes": 223130
     },
     {
       "path": "docs/images/preferences-zh-CN.png",
-      "sha256": "b2d8d99305dc027e6fcda1bbc6cc0436d1306daa40857fbd149fd426f4ba5345",
-      "bytes": 218037
+      "sha256": "a730dd48764b3ed18325a51f3c37519b81673d6818be2a0b73344aadb4c762a1",
+      "bytes": 218183
     },
     {
       "path": "docs/images/preferences-zh-HK.png",
-      "sha256": "7c2a51908aa973d30d2ce9da49a616424241720e09a8b699c14975bae5644bd1",
-      "bytes": 222198
+      "sha256": "bac27e0e6a1ce7e103c3117f424adf8d7a598a6eeaa83c56f23dd45c14d32e73",
+      "bytes": 222196
     },
     {
       "path": "docs/images/restart-en.png",
-      "sha256": "4f8aa3e0f9a9cbec166c002f2340409c6a87b308bc08d5e0d767a598e28b7629",
-      "bytes": 228129
+      "sha256": "7760a1a30cb355e55d28413f8f3b742dd14f99ae8b53433e3137e9d75d56ed8f",
+      "bytes": 228716
     },
     {
       "path": "docs/images/restart-ja.png",
-      "sha256": "232da99d127d76779a365605224d4f2a0b205986d3660c8a5fe599dd0cc6b87f",
-      "bytes": 242957
+      "sha256": "c5387b94beb164e78e2a74d6018de84324da14309123566ada7975263f26e88d",
+      "bytes": 242789
     },
     {
       "path": "docs/images/restart-zh-CN.png",
-      "sha256": "5da6d6cdd708ebb90ee2b9ac6b0761d8c61621ae2dc21a2357c6a288fe90e43f",
-      "bytes": 212038
+      "sha256": "2934472acf2800037dffc1b06b62a88e944e9af37f78be7e98381df4672279f4",
+      "bytes": 212067
     },
     {
       "path": "docs/images/restart-zh-HK.png",
-      "sha256": "0112628aab842ce2b33143999e3a9a49f4a07a815ab989b04aee96f03575569e",
-      "bytes": 220188
+      "sha256": "e613232d0daf7bded5c872e313b7d0973a9e966c62db2e4725eecdb6477811db",
+      "bytes": 220598
     },
     {
       "path": "docs/images/review-en.png",
-      "sha256": "2e8ab37ccd35aa9ca17bfcfd0fedbad095ebdb5065375596619980f47e455fc7",
-      "bytes": 175988
+      "sha256": "d1b5970cedb6ae223ac258e723174181d82c99e6f43568ed501ff32d2f0725c4",
+      "bytes": 173191
     },
     {
       "path": "docs/images/review-ja.png",
-      "sha256": "00e025c0b29cbbc8f1add92abce6287e8e60f98a4ee3ff30e86d4c07acdea900",
-      "bytes": 205500
+      "sha256": "8aef194a6e1974a8d188862595363cba7faf48f06c21c0b3af45a3f40614c727",
+      "bytes": 201637
     },
     {
       "path": "docs/images/review-zh-CN.png",
-      "sha256": "b06985bd97a133bf698031e9b86a731077396c72fc6037501dfbf4f31cd2e0a6",
-      "bytes": 168543
+      "sha256": "76cfa0b02ca2ebb152e2287616191d7eda74b195f8ef00ef8e67f92b3d40518d",
+      "bytes": 165814
     },
     {
       "path": "docs/images/review-zh-HK.png",
-      "sha256": "b67a7b422651b98205885ead2bac9b7bdb68c475110227374ffd64799c0605a4",
-      "bytes": 182354
+      "sha256": "399266c35b8762fd33228660937d2bb8973f66a201a6468e263b3344eee5a8f7",
+      "bytes": 179098
     },
     {
       "path": "docs/images/speech-player-en.png",
-      "sha256": "4ab69669385fbf23a63c4436eaa02b7319eff7e5e3db19e15d163fb89150f862",
-      "bytes": 137785
+      "sha256": "37708414a2dd233f0eae6baf89aa9bbfa6eb8a8271d790a10fc68ff9973a9da8",
+      "bytes": 138074
     },
     {
       "path": "docs/images/speech-player-ja.png",
-      "sha256": "fc29411a2539d6ce5a22bf6d648436206ac9523c57e9b309b56793b47f375f39",
-      "bytes": 155086
+      "sha256": "660218794b7c234fe5bdc3f5778d36432bd9a5638907b678ae59f10211ef88ac",
+      "bytes": 154678
     },
     {
       "path": "docs/images/speech-player-zh-CN.png",
-      "sha256": "d7263ef57656c2b5e06ff27989b809901c6dbdad5cf6a886c1663a0809f13be3",
-      "bytes": 133244
+      "sha256": "df0504e073bfd389e40d3c253ccceb8c42252fea6a028dd63ec9d0120d751fcb",
+      "bytes": 133326
     },
     {
       "path": "docs/images/speech-player-zh-HK.png",
-      "sha256": "9462e977faa7790162f29343187ef8ef93a2ec8ce9e669bdb215dff2f3306d4a",
-      "bytes": 138485
+      "sha256": "c024edb97fc2ec3ad445165d6e65533bed9508870d3e88e9e4aac219dcc337d5",
+      "bytes": 138393
     },
     {
       "path": "docs/images/speech-studio-en.png",
-      "sha256": "7ce2c28304fee55503e32a64644ccbf7af5739a888429f4bf7aa88431c9a8f88",
-      "bytes": 131473
+      "sha256": "73730f1a589d022388b5472d6bded52cd22e3140581b1f9c4e5a21422ce7198e",
+      "bytes": 131647
     },
     {
       "path": "docs/images/speech-studio-ja.png",
-      "sha256": "555e8578a3787c34ef705f4d6ad630c052bcac488befa112f9bbee520b67acdf",
-      "bytes": 139607
+      "sha256": "88b8942e103330e680ec86068b365e0b153a38f05409cf3f49e647c6f86eb9f5",
+      "bytes": 139626
     },
     {
       "path": "docs/images/speech-studio-zh-CN.png",
-      "sha256": "398d7e5d70b21d6a4a0f756ddc581b50ae7a4a2d8ff6853c6fc3d778bdd65629",
-      "bytes": 125640
+      "sha256": "86dfc31b581e570b81cc03aa33f79ba7c413d3f832aa666f41a0913d8a2f12b3",
+      "bytes": 125915
     },
     {
       "path": "docs/images/speech-studio-zh-HK.png",
-      "sha256": "a687a71070696c08cca97b6c08a10b0bdb3eacd6260079055b74d2be110095b3",
-      "bytes": 130887
+      "sha256": "f593624ceff5203b48852e40073c029506007fc64fe725368d46cd7fb5ad263e",
+      "bytes": 131082
     },
     {
       "path": "docs/images/subtitles-en.png",
-      "sha256": "4e8fd7416edef767417b7a6bb2300c85adf9521c4aac15d5e626c48b4715cd5c",
-      "bytes": 210709
+      "sha256": "7eeb3e6a8520ad90f8a1522e0ae2ba72bc49ad862c7a0537179ced255cb04a41",
+      "bytes": 211148
     },
     {
       "path": "docs/images/subtitles-ja.png",
-      "sha256": "525a511734f56824a08ca90ca528dbec4b938b0f4975654f8f1f74da08324d82",
-      "bytes": 213648
+      "sha256": "b9cf743e36e0ca68d3fbab8f14661c64330b832a94d86f8a933f1d0ba1e1724c",
+      "bytes": 213775
     },
     {
       "path": "docs/images/subtitles-zh-CN.png",
-      "sha256": "a73db879f41935681f6bd277a9a88a1ef3b473b6e0e65893a474097a12593107",
-      "bytes": 194041
+      "sha256": "0282fefb9a246d70daa8fb03423a077005d89f1e56a9d98d92e52c35dc1618a3",
+      "bytes": 194006
     },
     {
       "path": "docs/images/subtitles-zh-HK.png",
-      "sha256": "2c28f0f977c284b79a927f0bef00f3696184be13a50473a4c11157e96b72e5b6",
-      "bytes": 198020
+      "sha256": "b589e01351b32b8178c64ce48a665c8654fcbdc7185ef090112fca9c6cd5cd5e",
+      "bytes": 198216
     },
     {
       "path": "docs/images/timeline-en.png",
-      "sha256": "9f83e0922f9eff368f11093b051098aebe6b7ab3b8fa7e92bc141c9d48f865d2",
-      "bytes": 218604
+      "sha256": "3c5210a6d8f5d28ad23f5ac4a56eeca779e59abf0909091d9bf3dba78a48c960",
+      "bytes": 219129
     },
     {
       "path": "docs/images/timeline-ja.png",
-      "sha256": "a1a529631e4780e4585f6565877d0036ca0e2cc4d30ed8e89b6d8545728aced1",
-      "bytes": 213174
+      "sha256": "8c9faa41b048f936c4a90362af791fb5033361a9e62d76955c2a0f1c0933ed7b",
+      "bytes": 213140
     },
     {
       "path": "docs/images/timeline-zh-CN.png",
-      "sha256": "71ac2a7ed9749b02e8fd125f739b5cc91363b2d4aaa07cf4aa1ddcac596d2378",
-      "bytes": 192163
+      "sha256": "f9b3cb2d1a6022cd56b894573f0dd81e6fb6cbaf69f6285f3604e12487b056c2",
+      "bytes": 192488
     },
     {
       "path": "docs/images/timeline-zh-HK.png",
-      "sha256": "4256c31730b815d2cbb7793597d581946d740bf10d722da6b645c08985cd2241",
-      "bytes": 203666
+      "sha256": "d2b1c33eef706cc225948350735d95a0b24c72362abf3fab5546054c5f3d0340",
+      "bytes": 204163
     },
     {
       "path": "docs/images/welcome-en.png",
-      "sha256": "d788bcde7439d9bcbea5f79edcae3ba9af909ddf99bcf6b97fefc6cadda3b60c",
-      "bytes": 647283
+      "sha256": "a8febfd7c9c6e6756a1c69be517e417d53bcadd42ffa55685e547846b3b410a9",
+      "bytes": 611567
     },
     {
       "path": "docs/images/welcome-ja.png",
-      "sha256": "3dd492c4d16c2518f1a004def417fb05dd7ba7ab3eebbe0728ccbfc2791f05d1",
-      "bytes": 668993
+      "sha256": "56d71a0a1793832a1aec28ac3e81d62d837da1cc0cf11b79f8ef0bfebeecd6cd",
+      "bytes": 609808
     },
     {
       "path": "docs/images/welcome-zh-CN.png",
-      "sha256": "07fc01ce33747d6cab1dd8f0689815baeffce0b0554c9d853263e0df4d7d6737",
-      "bytes": 651666
+      "sha256": "9aedd327ad055aa5312c7a543524ca6e009c0f6088cf3443ab298567eb7e5c5a",
+      "bytes": 639701
     },
     {
       "path": "docs/images/welcome-zh-HK.png",
-      "sha256": "e91e75a8d8cf585f2bed94f60703c524e61a1b318db149aeee96a64b176bddf0",
-      "bytes": 609514
+      "sha256": "77cca0b232a4b9f8ff0e09d893dcf01a4629bcafb546682abaaf20d3d2dc47dd",
+      "bytes": 656349
     },
     {
       "path": "docs/ja/DEMO.md",
@@ -3821,7 +3826,7 @@
     },
     {
       "path": "docs/ja/SCREENSHOTS.md",
-      "sha256": "07bb34aa00525d269408492ac97bfb74a060dca1868cc3ca4fc1491991a37256",
+      "sha256": "bf6716dcf68e21ad78e44add007ad852dec45cd5e67cc8fbdf53e1cd6a31ed33",
       "bytes": 1666
     },
     {
@@ -3841,7 +3846,7 @@
     },
     {
       "path": "docs/zh-CN/SCREENSHOTS.md",
-      "sha256": "8013aa8358ebe6b9dd870a8b5b79c573cb26a1670228d39ac4b51f5f226d5275",
+      "sha256": "40f12e3585b45504399135b360ffe59cc91a80aae9d63347251958caecf9cfc8",
       "bytes": 1408
     },
     {
@@ -3861,7 +3866,7 @@
     },
     {
       "path": "docs/zh-HK/SCREENSHOTS.md",
-      "sha256": "4913b0af386c419334cdb67e15dd725a9814d5999891bfc624228450c1ccb8a6",
+      "sha256": "d132a3be2efa82d951716d30c2e2d834fbf5ce2200d2ed7c1dd6da597c737078",
       "bytes": 1405
     },
     {
@@ -3873,11 +3878,6 @@
       "path": "licenses/INTERFACE-NOTICE.txt",
       "sha256": "99f3c7229607e14bd159aad6a7fffc6578467eb8de56c4ebe78e412cac67c69f",
       "bytes": 763
-    },
-    {
-      "path": "licenses/auxiliary-models.json",
-      "sha256": "c1cb025cea5a8b1a6bc37c1c7ff009def294bbd2a98ff086cd85e0ca79dd5cad",
-      "bytes": 8685
     },
     {
       "path": "licenses/auxiliary/KimberleyJSN--melbandroformer/README.md",
@@ -3923,6 +3923,11 @@
       "path": "licenses/auxiliary/nvidia--bigvgan_v2_24khz_100band_256x/README.md",
       "sha256": "1ab4fe827dc65913b6745cb0fa7a96fb0a4a89ff32ec143a0eecfac079e03d1e",
       "bytes": 8041
+    },
+    {
+      "path": "licenses/auxiliary-models.json",
+      "sha256": "c1cb025cea5a8b1a6bc37c1c7ff009def294bbd2a98ff086cd85e0ca79dd5cad",
+      "bytes": 8685
     },
     {
       "path": "licenses/build-path-remapping.json",
@@ -4215,14 +4220,14 @@
       "bytes": 884
     },
     {
-      "path": "licenses/ffmpeg/dependency-notices/SDL-b90ac95029d801c5abc59472ba8e2200dff31e1e/Xcode-iOS/Demos/data/bitmapfont/license.txt",
-      "sha256": "5059bc9c2f37b7e7a557685ae9330ecfd798537bdfde94de63a9c721c92a8856",
-      "bytes": 13091
-    },
-    {
       "path": "licenses/ffmpeg/dependency-notices/SDL-b90ac95029d801c5abc59472ba8e2200dff31e1e/Xcode/SDL/pkg-support/resources/License.txt",
       "sha256": "30e349158ffdcb06b9bb2ec406df66758161ad1efa75a368243a6d0b50b43784",
       "bytes": 909
+    },
+    {
+      "path": "licenses/ffmpeg/dependency-notices/SDL-b90ac95029d801c5abc59472ba8e2200dff31e1e/Xcode-iOS/Demos/data/bitmapfont/license.txt",
+      "sha256": "5059bc9c2f37b7e7a557685ae9330ecfd798537bdfde94de63a9c721c92a8856",
+      "bytes": 13091
     },
     {
       "path": "licenses/ffmpeg/dependency-notices/SDL-b90ac95029d801c5abc59472ba8e2200dff31e1e/src/hidapi/AUTHORS.txt",
@@ -7465,12 +7470,12 @@
       "bytes": 1052
     },
     {
-      "path": "licenses/ffmpeg/dependency-notices/libvpl-674d015bcb294bc39fa276e99a652ea045423e82/examples/api2x/hello-encode-jpeg/License.txt",
+      "path": "licenses/ffmpeg/dependency-notices/libvpl-674d015bcb294bc39fa276e99a652ea045423e82/examples/api2x/hello-encode/License.txt",
       "sha256": "2e35006c345787f7205bdaa86920c8fac86abd19b95d7b4c1ba5531853ea3938",
       "bytes": 1052
     },
     {
-      "path": "licenses/ffmpeg/dependency-notices/libvpl-674d015bcb294bc39fa276e99a652ea045423e82/examples/api2x/hello-encode/License.txt",
+      "path": "licenses/ffmpeg/dependency-notices/libvpl-674d015bcb294bc39fa276e99a652ea045423e82/examples/api2x/hello-encode-jpeg/License.txt",
       "sha256": "2e35006c345787f7205bdaa86920c8fac86abd19b95d7b4c1ba5531853ea3938",
       "bytes": 1052
     },
@@ -7590,11 +7595,6 @@
       "bytes": 1090
     },
     {
-      "path": "licenses/ffmpeg/dependency-notices/libz-sys-1.1.22/src/zlib-ng/LICENSE.md",
-      "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee",
-      "bytes": 867
-    },
-    {
       "path": "licenses/ffmpeg/dependency-notices/libz-sys-1.1.22/src/zlib/LICENSE",
       "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
       "bytes": 1002
@@ -7603,6 +7603,11 @@
       "path": "licenses/ffmpeg/dependency-notices/libz-sys-1.1.22/src/zlib/contrib/dotzlib/LICENSE_1_0.txt",
       "sha256": "36266a8fd073568394cb81cdb2b124f7fdae2c64c1a7ed09db34b4d22efa2951",
       "bytes": 1359
+    },
+    {
+      "path": "licenses/ffmpeg/dependency-notices/libz-sys-1.1.22/src/zlib-ng/LICENSE.md",
+      "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee",
+      "bytes": 867
     },
     {
       "path": "licenses/ffmpeg/dependency-notices/libzmq-46493370217ac135246617fa2f6ac819d8b61bfc/AUTHORS",
@@ -7855,14 +7860,14 @@
       "bytes": 2326
     },
     {
-      "path": "licenses/ffmpeg/dependency-notices/mingw-w64-57b595039040eaa15bece85b7cc71d952281b269/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
-      "sha256": "1db8da07b436c68833c0673ffee3d9fcb2526047f3820b81661865dfedc79a1f",
-      "bytes": 12155
-    },
-    {
       "path": "licenses/ffmpeg/dependency-notices/mingw-w64-57b595039040eaa15bece85b7cc71d952281b269/COPYING.MinGW-w64/COPYING.MinGW-w64.txt",
       "sha256": "f38e6194bd3bfa1b654f118e5acefe0aead437bbe669eee43957ccc65a7127f1",
       "bytes": 5905
+    },
+    {
+      "path": "licenses/ffmpeg/dependency-notices/mingw-w64-57b595039040eaa15bece85b7cc71d952281b269/COPYING.MinGW-w64-runtime/COPYING.MinGW-w64-runtime.txt",
+      "sha256": "1db8da07b436c68833c0673ffee3d9fcb2526047f3820b81661865dfedc79a1f",
+      "bytes": 12155
     },
     {
       "path": "licenses/ffmpeg/dependency-notices/mingw-w64-57b595039040eaa15bece85b7cc71d952281b269/mingw-w64-crt/profile/COPYING",
@@ -12225,11 +12230,6 @@
       "bytes": 8148
     },
     {
-      "path": "licenses/ocr-models.json",
-      "sha256": "a8aac1e1988471a5237b9ed6aaa9b2f01b558d8341f3e3b2867406f32d21e0cb",
-      "bytes": 3084
-    },
-    {
       "path": "licenses/ocr/PaddleOCR-Apache-2.0.txt",
       "sha256": "ff6311c56c1b22c9209c96cc8afc16da91c24ee55a15e14ebc46fe1960dbd856",
       "bytes": 11438
@@ -12263,6 +12263,11 @@
       "path": "licenses/ocr/paddle-v4-rec-card.md",
       "sha256": "32ed8e4453fbf39ef330df5535c5a8bcb0d738f164ac26ef9c4e1a4b85d60a23",
       "bytes": 7793
+    },
+    {
+      "path": "licenses/ocr-models.json",
+      "sha256": "a8aac1e1988471a5237b9ed6aaa9b2f01b558d8341f3e3b2867406f32d21e0cb",
+      "bytes": 3084
     },
     {
       "path": "licenses/python-installer/macos-arm64/build/BUILD-EVIDENCE.json",
@@ -12375,116 +12380,6 @@
       "bytes": 13936
     },
     {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/AUTHORS.txt",
-      "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2",
-      "bytes": 12139
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/LICENSE.txt",
-      "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104",
-      "bytes": 1093
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
-      "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
-      "bytes": 558
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
-      "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
-      "bytes": 989
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
-      "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d",
-      "bytes": 14531
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
-      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
-      "bytes": 11325
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
-      "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
-      "bytes": 1541
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
-      "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427",
-      "bytes": 614
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
-      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
-      "bytes": 197
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
-      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
-      "bytes": 10174
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
-      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
-      "bytes": 1344
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
-      "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
-      "bytes": 1023
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
-      "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
-      "bytes": 1089
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
-      "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
-      "bytes": 1331
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
-      "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
-      "bytes": 1081
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
-      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
-      "bytes": 10142
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
-      "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
-      "bytes": 751
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
-      "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15",
-      "bytes": 1056
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
-      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
-      "bytes": 1072
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
-      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
-      "bytes": 1072
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
-      "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
-      "bytes": 1086
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
-      "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
-      "bytes": 1093
-    },
-    {
       "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip/_vendor/cachecontrol/LICENSE.txt",
       "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
       "bytes": 558
@@ -12595,9 +12490,114 @@
       "bytes": 1093
     },
     {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools-84.0.0.dist-info/licenses/LICENSE",
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/AUTHORS.txt",
+      "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2",
+      "bytes": 12139
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/LICENSE.txt",
+      "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104",
+      "bytes": 1093
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
+      "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
+      "bytes": 558
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
+      "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+      "bytes": 989
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
+      "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d",
+      "bytes": 14531
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "bytes": 11325
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+      "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
+      "bytes": 1541
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
+      "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427",
+      "bytes": 614
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "bytes": 197
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "bytes": 10174
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "bytes": 1344
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
       "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
       "bytes": 1023
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
+      "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+      "bytes": 1089
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
+      "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
+      "bytes": 1331
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
+      "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
+      "bytes": 1081
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
+      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+      "bytes": 10142
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
+      "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
+      "bytes": 751
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
+      "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15",
+      "bytes": 1056
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
+      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
+      "bytes": 1072
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
+      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
+      "bytes": 1072
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
+      "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
+      "bytes": 1086
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
+      "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
+      "bytes": 1093
     },
     {
       "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
@@ -12635,6 +12635,16 @@
       "bytes": 1053
     },
     {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging/licenses/__init__.py",
+      "sha256": "4f05cb1d9097c1281d17044b3f15bad364fa99289eba74851cce9fa7ca605bbf",
+      "bytes": 5819
+    },
+    {
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging/licenses/_spdx.py",
+      "sha256": "596ec35e2ca0ebcba9fd8343ff0a51625af548786257815f24b41f7e08613314",
+      "bytes": 51122
+    },
+    {
       "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE",
       "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
       "bytes": 197
@@ -12648,16 +12658,6 @@
       "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.BSD",
       "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
       "bytes": 1344
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging/licenses/__init__.py",
-      "sha256": "4f05cb1d9097c1281d17044b3f15bad364fa99289eba74851cce9fa7ca605bbf",
-      "bytes": 5819
-    },
-    {
-      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/packaging/licenses/_spdx.py",
-      "sha256": "596ec35e2ca0ebcba9fd8343ff0a51625af548786257815f24b41f7e08613314",
-      "bytes": 51122
     },
     {
       "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
@@ -12690,109 +12690,9 @@
       "bytes": 18737
     },
     {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/LICENSE.txt",
-      "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104",
-      "bytes": 1093
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
-      "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
-      "bytes": 558
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
-      "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
-      "bytes": 989
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
-      "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d",
-      "bytes": 14531
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
-      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
-      "bytes": 11325
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
-      "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
-      "bytes": 1541
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
-      "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427",
-      "bytes": 614
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
-      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
-      "bytes": 197
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
-      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
-      "bytes": 10174
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
-      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
-      "bytes": 1344
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
+      "path": "licenses/python-installer/macos-arm64/lib/python3.11/site-packages/setuptools-84.0.0.dist-info/licenses/LICENSE",
       "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
       "bytes": 1023
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
-      "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
-      "bytes": 1089
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
-      "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
-      "bytes": 1331
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
-      "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
-      "bytes": 1081
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
-      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
-      "bytes": 10142
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
-      "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
-      "bytes": 751
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
-      "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15",
-      "bytes": 1056
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
-      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
-      "bytes": 1072
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
-      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
-      "bytes": 1072
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
-      "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
-      "bytes": 1086
-    },
-    {
-      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
-      "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
-      "bytes": 1093
     },
     {
       "path": "licenses/python-installer/pip/pip/_vendor/cachecontrol/LICENSE.txt",
@@ -12900,119 +12800,114 @@
       "bytes": 317
     },
     {
-      "path": "licenses/python-installer/windows-x64/LICENSE.txt",
-      "sha256": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a",
-      "bytes": 25066
-    },
-    {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/AUTHORS.txt",
-      "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2",
-      "bytes": 12139
-    },
-    {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/LICENSE.txt",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/LICENSE.txt",
       "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104",
       "bytes": 1093
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
       "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
       "bytes": 558
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
       "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
       "bytes": 989
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
       "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d",
       "bytes": 14531
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
       "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
       "bytes": 11325
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
       "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
       "bytes": 1541
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
       "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427",
       "bytes": 614
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
       "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
       "bytes": 197
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
       "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
       "bytes": 10174
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
       "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
       "bytes": 1344
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
       "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
       "bytes": 1023
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
       "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
       "bytes": 1089
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
       "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
       "bytes": 1331
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
       "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
       "bytes": 1081
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
       "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
       "bytes": 10142
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
       "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
       "bytes": 751
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
       "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15",
       "bytes": 1056
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
       "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
       "bytes": 1072
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
       "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
       "bytes": 1072
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
       "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
       "bytes": 1086
     },
     {
-      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
+      "path": "licenses/python-installer/pip/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
       "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
       "bytes": 1093
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/LICENSE.txt",
+      "sha256": "886a0ead2d89030ee62dbff52b04e47ab91998341295bb9c56fb952b4e081c7a",
+      "bytes": 25066
     },
     {
       "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip/_vendor/cachecontrol/LICENSE.txt",
@@ -13121,6 +13016,116 @@
     },
     {
       "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip/_vendor/urllib3/LICENSE.txt",
+      "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
+      "bytes": 1093
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/AUTHORS.txt",
+      "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2",
+      "bytes": 12139
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/LICENSE.txt",
+      "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104",
+      "bytes": 1093
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
+      "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b",
+      "bytes": 558
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
+      "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+      "bytes": 989
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
+      "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d",
+      "bytes": 14531
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "bytes": 11325
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+      "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
+      "bytes": 1541
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
+      "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427",
+      "bytes": 614
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "bytes": 197
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "bytes": 10174
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "bytes": 1344
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
+      "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741",
+      "bytes": 1023
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
+      "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+      "bytes": 1089
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
+      "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17",
+      "bytes": 1331
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
+      "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154",
+      "bytes": 1081
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
+      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+      "bytes": 10142
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
+      "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d",
+      "bytes": 751
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
+      "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15",
+      "bytes": 1056
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
+      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
+      "bytes": 1072
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
+      "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe",
+      "bytes": 1072
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
+      "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca",
+      "bytes": 1086
+    },
+    {
+      "path": "licenses/python-installer/windows-x64/Lib/site-packages/pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
       "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686",
       "bytes": 1093
     },
@@ -13235,11 +13240,6 @@
       "bytes": 2307
     },
     {
-      "path": "licenses/python-wheels.json",
-      "sha256": "06905724468ec9264c24c1e2d595902c46da563161e75495aa545d3fdd53d260",
-      "bytes": 4951
-    },
-    {
       "path": "licenses/python-wheels/Distance-0.1.3/LICENSE",
       "sha256": "d7e0d2b8d644e6f9a2706bee3ef03e7a6a08dfbf9bc375a60ce49bd18cf459ec",
       "bytes": 19226
@@ -13295,9 +13295,9 @@
       "bytes": 996
     },
     {
-      "path": "licenses/text-data.json",
-      "sha256": "53d38ac32250707d3090b58e17861b21b2c0506293cb634761f26c7b96733c33",
-      "bytes": 4097
+      "path": "licenses/python-wheels.json",
+      "sha256": "06905724468ec9264c24c1e2d595902c46da563161e75495aa545d3fdd53d260",
+      "bytes": 4951
     },
     {
       "path": "licenses/text-data/CMUdict-README.txt",
@@ -13348,6 +13348,11 @@
       "path": "licenses/text-data/pyopenjtalk-plus-windows/LICENSE_mei_normal.htsvoice",
       "sha256": "06fc42611289ac1224c64f765521e121b63a0d2b52cf1b04b0b33b20ea7bd6f2",
       "bytes": 2911
+    },
+    {
+      "path": "licenses/text-data.json",
+      "sha256": "53d38ac32250707d3090b58e17861b21b2c0506293cb634761f26c7b96733c33",
+      "bytes": 4097
     },
     {
       "path": "licenses/tool-source-manifest.json",
@@ -13681,13 +13686,13 @@
     },
     {
       "path": "scripts/public-desktop-index.md",
-      "sha256": "70254c6508e1984f449007932ed23fd5b8d04be681bba68ef3032ad6a14d64c6",
-      "bytes": 980
+      "sha256": "b00ce23f256e101e369bde1fc05d0f0088af51beb70e234f319a3728354a3b1f",
+      "bytes": 1036
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "2c3d1f4b71defc84479d1cc66b2eeeb63c8b2b6a6a531f34d4da41d6cf7dc9fd",
-      "bytes": 10750
+      "sha256": "e5f6fbcb0904f714634790439896085a0c27ea1e9b80dfc4a333a73defb1fe91",
+      "bytes": 10781
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -13931,12 +13936,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "a47378237f374c645e69bd0a84ad11a71d9e099edea3e75e014f1703e14822c4",
+      "sha256": "309f78965115335822fcbe7defaa056906ffffe9800a24819d3f88bfad346639",
       "bytes": 123429
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "dbbf2392c2851f412df8e4abbc02d933dad93ec01039c50c72f560b19ea4a7e4",
+      "sha256": "a489a249ad7533c256131a2f4dd4d901a57a1391b818eff1fb328175bf071fa5",
       "bytes": 542
     },
     {
@@ -13981,7 +13986,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "a17f251c5054d9a71e35412162eb20fc45fb7b1fdc369a0c3762928425e011c1",
+      "sha256": "c3d0858d57b6cb76b90f34df539378304da7f5e73c173c11ca52d5d9a61fbbc1",
       "bytes": 1012
     },
     {
@@ -13991,8 +13996,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "632dec7d5a2551e776f7d162518c32102a12b958f15bd8eb3406b8e7ca1b6dd6",
-      "bytes": 218615
+      "sha256": "00bc3caf966ad5f4fe323f87498bf7c7b5d1c3c64065ebdf27cfe86e503cb927",
+      "bytes": 218814
     },
     {
       "path": "studio/web/appearance.js",
@@ -14161,8 +14166,8 @@
     },
     {
       "path": "studio/web/styles.css",
-      "sha256": "6d91e6ccb9a733b61f2befa364fa21516ef78e862933195a1feffd341648e573",
-      "bytes": 84002
+      "sha256": "f56ea8ba3e68c3d8422cf6daf67679412fa9bd54ec82d6f4aac7699bb4645215",
+      "bytes": 84521
     },
     {
       "path": "studio/web/voice-parameters.js",
@@ -14463,6 +14468,11 @@
       "path": "tests/shared_model_ui.cjs",
       "sha256": "4209291a229330deb91ccb15a8efacc6ea7b1909742cb95e8128b61c312d4517",
       "bytes": 10305
+    },
+    {
+      "path": "tests/shared_navigation_layout_ui.cjs",
+      "sha256": "e81ec8f601954a275555e8d2f39978fe62d6c292b8f3e578ad6efe3eb306490f",
+      "bytes": 4324
     },
     {
       "path": "tests/shared_output_delivery_ui.cjs",
@@ -16084,6 +16094,5 @@
       "sha256": "ee11909ae46ddf32bb79657883a70cdb29fa61180093989d520c5018c186d2df",
       "bytes": 1679
     }
-  ],
-  "documentationRevision": "desktop-public-scope-2026-10-29"
+  ]
 }
