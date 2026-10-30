@@ -10,7 +10,7 @@ from downloads import download,sha256
 from runtime_installer import ensure_env,pip_command,repair_command,clean_environment
 
 def emit(message,**extra):print(json.dumps(dict(stage='Windows setup',message=message,**extra),ensure_ascii=False),flush=True)
-def call(args):subprocess.run(list(map(str,args)),check=True,env=clean_environment(data_root()))
+def call(args):subprocess.run(list(map(str,args)),check=True,timeout=2700,env=clean_environment(data_root()))
 def catalog():
  from model_catalog import catalog as common
  rows=common()
@@ -93,55 +93,64 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  except (OSError,ValueError):pass
  return result
 def environment(name,backend=None,cuda_index=None):
+ from runtime_progress import step
+ run=lambda phase,operation,*args,**kwargs:step(emit,name,phase,operation,*args,**kwargs)
  emit('Checking existing '+name+' runtime',setupStep='runtime')
  python=env_python(name)
  requirements=HERE/f'requirements-{name}.lock'
- if not python.is_file():ensure_env(data_root(),python.parent.parent)
+ # Check the package first. Recreating Python cannot repair missing app files.
+ if not requirements.is_file():raise RuntimeError('App runtime requirements are missing. Close the app and reopen the current portable EXE. Keep downloaded models.')
+ if not python.is_file():run('Preparing private Python',ensure_env,data_root(),python.parent.parent)
  if backend=='nvidia' and cuda_index is None:
   from gpu import planning_hardware
   from hardware_runtimes import nvidia
-  hardware=planning_hardware();profile=nvidia(hardware.get('acceleratorName',''),hardware.get('cudaComputeCapability'),hardware.get('cudaDriverVersion'),hardware.get('selectedTorchIndex'))
+  hardware=run('Detecting the GPU runtime',planning_hardware)
+  profile=nvidia(hardware.get('acceleratorName',''),hardware.get('cudaComputeCapability'),hardware.get('cudaDriverVersion'),hardware.get('selectedTorchIndex'))
   cuda_index=profile['torchIndex']
   if cuda_index=='cpu':raise ValueError('This NVIDIA GPU is not covered by the pinned CUDA runtimes. Choose CPU.')
  identity=hashlib.sha256(requirements.read_bytes()+str([backend,cuda_index]).encode()).hexdigest()
  stamp=data_root()/f'{name}-runtime-ready.json'
- try:previous=json.loads(stamp.read_text()) if stamp.is_file() else {}
- except ValueError:previous={}
- from runtime_health import missing,probe as imports,damaged,state
+ from runtime_health import missing,probe as imports,damaged,state,backend_matches,backend_version
  stamp.unlink(missing_ok=True)
- try:absent=missing(python,requirements)
+ try:absent=run('Checking installed package versions',missing,python,requirements)
  except (OSError,subprocess.CalledProcessError):
-  ensure_env(data_root(),python.parent.parent,recreate=True)
-  absent=missing(python,requirements)
- backend_missing=backend and (previous.get('identity')!=identity or any(n not in state(python)['packages'] for n in ('torch','torchaudio')))
- if backend_missing:
-  install_torch(python,backend,repair=bool(previous.get('identity') and previous.get('identity')!=identity),cuda_index=cuda_index)
+  run('Repairing private Python',ensure_env,data_root(),python.parent.parent,recreate=True)
+  absent=run('Checking installed package versions',missing,python,requirements)
+ backend_missing=False
  if backend:
-  versions=json.loads(subprocess.check_output([str(python),'-c','import importlib.metadata as m,json; print(json.dumps([m.version("torch"),m.version("torchaudio")]))'],text=True))
+  packages=run('Checking installed GPU packages',state,python)['packages']
+  backend_missing=not backend_matches(packages,backend,cuda_index)
+  if backend_missing:
+   run('Installing GPU or CPU runtime components',install_torch,python,backend,
+       repair=any(n in packages for n in ('torch','torchaudio')),
+       packages=[n for n in ('torch','torchaudio') if packages.get(n)!=backend_version(backend,cuda_index)],cuda_index=cuda_index)
+  versions=json.loads(run('Reading verified runtime versions',subprocess.check_output,
+   [str(python),'-c','import importlib.metadata as m,json; print(json.dumps([m.version("torch"),m.version("torchaudio")]))'],
+   text=True,timeout=60,env=clean_environment(data_root())))
   constraints=data_root()/f'{name}-torch-constraints.txt';constraints.write_text('torch=='+versions[0]+'\ntorchaudio=='+versions[1]+'\n')
  command=pip_command(python,data_root(),'install','--only-binary',':all:','--find-links',SHARED/'wheels','--find-links',HERE/'wheels')
  if backend:command+=['-c',constraints]
- # The complete analysis lock intentionally excludes unused Demucs quantization.
  if name in ('analysis','gpt'):command+=['--no-deps']
  command+=['-r',requirements]
- if absent or backend_missing:
+ if absent:
   emit('Installing missing or incompatible '+name+' runtime components',setupStep='runtime',missingPackages=absent,backendChange=bool(backend_missing))
-  call(command)
+  run('Installing missing runtime packages',call,command)
  else:emit('Reusing installed '+name+' runtime; checking imports',setupStep='verify')
- try:imports(python,name)
+ try:run('Checking runtime imports',imports,python,name)
  except subprocess.CalledProcessError:
-  broken=damaged(python,requirements,backend)
+  broken=run('Checking damaged package files',damaged,python,requirements,backend)
   if not broken:raise RuntimeError(name+' import check failed but package files are intact. No healthy packages were reinstalled.')
-  if backend and any(p in ('torch','torchaudio') for p in broken):install_torch(python,backend,repair=True,packages=[p for p in broken if p in ('torch','torchaudio')],cuda_index=cuda_index)
+  if backend and any(p in ('torch','torchaudio') for p in broken):
+   run('Repairing damaged GPU packages',install_torch,python,backend,repair=True,packages=[p for p in broken if p in ('torch','torchaudio')],cuda_index=cuda_index)
   from mac_runtime import requirements as pins
   expected=pins(requirements);broken=[p for p in broken if p not in ('torch','torchaudio')] if backend else broken
-  if broken:call(repair_command(python,data_root(),broken,expected,links=[SHARED/'wheels',HERE/'wheels'],constraints=constraints if backend else None))
-  imports(python,name)
- if missing(python,requirements):raise ValueError(name+' runtime packages remain incomplete.')
+  if broken:run('Repairing damaged runtime packages',call,repair_command(python,data_root(),broken,expected,links=[SHARED/'wheels',HERE/'wheels'],constraints=constraints if backend else None))
+  run('Checking runtime imports',imports,python,name)
+ if run('Verifying installed package versions',missing,python,requirements):raise ValueError(name+' runtime packages remain incomplete.')
  if name in ('analysis','gpt'):
   from runtime_exclusions import cleanup_command
-  cleanup=cleanup_command(data_root(),python,name,state(python)['packages'])
-  if cleanup:call(cleanup)
+  cleanup=cleanup_command(data_root(),python,name,run('Checking runtime package inventory',state,python)['packages'])
+  if cleanup:run('Removing unused runtime components',call,cleanup)
  stamp.write_text(json.dumps(dict(identity=identity,backend=backend,python=str(python))))
  return python
 

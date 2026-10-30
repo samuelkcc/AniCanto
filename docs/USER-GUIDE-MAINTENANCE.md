@@ -14,6 +14,8 @@ Task: Keep user instructions consistent with the installed workflow on each plat
 
 The application guide has schemaVersion1, a revision, four locales and chapters. A chapter has an ID, aliases, platforms, localized title and summary, and sections. A section has an ID, platforms, localized title, localized body paragraphs, controlRefs and steps. Platforms are desktop, ipad and iphone. Apply both chapter and section filters. Resolve each control ID from the control guide. Render titles and body in the chosen locale. Preserve chapter IDs or provide aliases when reorganizing.
 
+The exact schema1types are `body: [{"en":"paragraph", "zh-HK":"段落", "zh-CN":"段落", "ja":"段落"}]` and `steps: false` or `steps: true`. Do not use an object of locale arrays for body or an array for steps. Native readers decode all sections before platform filtering. Validate the complete document, including sections for other platforms, before packaging.
+
 ## Change procedure
 
 1. Read the operation chapter, referenced controls and current platform mapping before each user-visible change.

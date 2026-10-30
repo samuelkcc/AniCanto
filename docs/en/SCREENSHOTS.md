@@ -1,10 +1,10 @@
-# Inside the current app · 0.25.12
+# Inside the current app · 0.25.17
 
 [← AniCanto](../../README.md)
 
 Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
 
-These images use the Mac 0.25.12 interface. The Windows CUDA panel uses illustrative hardware data; it does not certify a new Windows build.
+These images use the Mac 0.25.17 interface. The Windows CUDA panel uses illustrative hardware data; it does not certify a new Windows build.
 
 ## Welcome
 
@@ -60,4 +60,4 @@ Use the circular arrow on a video to restart conversion, regenerate only its voi
 
 ## Assistant rest preview
 
-![Assistant rest preview](../images/assistant-rest-en.png?v=0.25.12)
+![Assistant rest preview](../images/assistant-rest-en.png?v=0.25.17)

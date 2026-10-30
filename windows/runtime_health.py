@@ -1,5 +1,5 @@
 """Check pinned packages and imports before trusting a Windows runtime receipt."""
-import os,subprocess
+import json,os,subprocess
 from pathlib import Path
 PROBES={
  'worker':'import numpy,scipy,soundfile,PIL,av,yaml,httpx,faster_whisper',
@@ -10,8 +10,19 @@ PROBES={
  'local':'import torch,torchaudio,transformers,soundfile,hyperpyyaml',
 }
 def state(python):
- from mac_runtime import package_state
- return package_state(python,dict(os.environ,PYTHONNOUSERSITE='1'))
+ # This inventory needs package versions only. Do not query platform.machine(),
+ # which also performs unrelated Windows platform discovery in a child process.
+ code="import importlib.metadata as m,json,sys,re; print(json.dumps(dict(python=list(sys.version_info[:2]),packages={re.sub(r'[-_.]+','-',d.metadata['Name'].lower()):d.version for d in m.distributions() if d.metadata['Name']})))"
+ return json.loads(subprocess.check_output([str(python),'-I','-c',code],text=True,timeout=60,env=dict(os.environ,PYTHONNOUSERSITE='1')))
+def backend_version(backend,cuda_index=None):
+ suffix={'nvidia':cuda_index,'cpu':'cpu','intel':'xpu','amd':'rocm7.2.1'}.get(backend)
+ return '2.9.1+'+suffix if suffix else None
+
+def backend_matches(packages,backend,cuda_index=None):
+ # Requirement-list changes do not change an already correct vendor wheel.
+ expected=backend_version(backend,cuda_index)
+ return bool(expected) and all(packages.get(n)==expected for n in ('torch','torchaudio'))
+
 def missing(python,requirements):
  from mac_runtime import requirements as pins
  current=state(python)

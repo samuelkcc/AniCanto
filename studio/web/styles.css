@@ -383,3 +383,10 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .repair-group input[type=range]{width:94px;flex:0 0 94px}.repair-group output{font-variant-numeric:tabular-nums;min-width:12px}.repair-group .setting-switch{gap:10px}.repair-group .setting-switch>.switch-copy{flex:1;min-width:0}
 
 .source-indeterminate .fill{animation:source-wait 1.8s ease-in-out infinite alternate}@keyframes source-wait{from{transform:translateX(0)}to{transform:translateX(180%)}}@media(prefers-reduced-motion:reduce){.source-indeterminate .fill{animation:none}}
+
+/* Keep scrolling separate from rail geometry. WebKit mis-sizes percentage
+   buttons when both-edge scrollbar gutters are reserved on their flex parent. */
+.navigation{overflow:hidden;scrollbar-gutter:auto;padding:8px 10px}
+.navigation-items{display:flex;flex:1;min-width:0;min-height:0;flex-direction:column;gap:2px;overflow-x:hidden;overflow-y:auto;scrollbar-width:none}
+.navigation-items::-webkit-scrollbar{display:none}
+.navigation-items>button{box-sizing:border-box;width:100%;align-self:stretch}

@@ -2616,7 +2616,7 @@
     "hkStyleRevision": "hong-kong-contextual-260",
     "mobileUptakePending": true,
     "ipad": {
-      "status": "Native266 source is prepared. Native execution, package and device installation remain pending.",
+      "status": "Piano executes10passing cases and an initial invalid export fixture. Corrected export rerun and normal installation remain independent owner work.",
       "lastInstalledBuild": 261,
       "settingImplemented": true,
       "defaultEnabledInNewRequests": false,
@@ -2649,7 +2649,7 @@
     "native266": {
       "revision": "caption-only-no-dialogue-native-266",
       "sourcePrepared": true,
-      "tested": false,
+      "tested": true,
       "installed": false,
       "lastInstalledBuild": 264,
       "newDefault": true,
@@ -2678,14 +2678,44 @@
       "spentBudgetsReset": false,
       "sourceClocksChanged": false,
       "nativeTests": "mobile/Tests/CaptionOnly266Tests.swift",
-      "acceptance": "Native execution, installation and real-film acceptance remain pending."
+      "acceptance": "All11unique phone fixture cases pass after bounded corrections. Normal package and whole-film acceptance remain pending.",
+      "phoneNative": {
+        "uniqueCases": 11,
+        "finalFailures": 0,
+        "retainedInitialFailures": 2,
+        "initialFailureScope": [
+          "Wrong job UUID in the export fixture.",
+          "English has3legible options for2physical subtitle tracks."
+        ],
+        "actualDualInputRows": [
+          7,
+          7
+        ],
+        "stemPeak": 0,
+        "stemRMS": 0,
+        "finalExportLanguages": [
+          "yue",
+          "zh",
+          "en"
+        ],
+        "finalRerunCases": 2,
+        "finalRerunSeconds": 14.272,
+        "result": ".build/caption-only266/phone-caption-exports-final.xcresult",
+        "wholeFilmAccepted": false
+      },
+      "normalPackagePending": true
     },
     "iPhone": {
       "sourcePrepared": true,
-      "tested": false,
-      "installedBuild": 264,
+      "tested": true,
+      "installedBuild": null,
       "candidateBuild": 266,
-      "receipt": null
+      "receipt": null,
+      "nativeUniqueCases": 11,
+      "nativeFinalFailures": 0,
+      "normalCandidateBuild": 266,
+      "installedTemporaryMaintenanceBuild": 266,
+      "temporaryMaintenanceRemainsNormalApp": false
     }
   },
   "hongKongContextualWording260": {
@@ -3601,5 +3631,118 @@
       }
     },
     "separateActions": "Recognition, translation and reading stay separate, as confirmed by Samuel."
+  },
+  "nativeHEVCProxy267": {
+    "policy": "native-hevc-description-267",
+    "scope": [
+      "ipad",
+      "iphone"
+    ],
+    "target": {
+      "generatedProxyOnly": true,
+      "requirePlayable": true,
+      "requireValidVPS_SPS_PPS": true,
+      "preserveMediaBytesAndClocks": true,
+      "bindReuseToInputAndOutputSHA256": true,
+      "resetSpentBudgets": false
+    },
+    "ipad": {
+      "source": "implemented",
+      "nativeEvidence": ".build/m4-cannot-open264/m4-native-result.json",
+      "nativeResult": "Three corrected sample frames and a two-second encode pass. The original remains unchanged.",
+      "installed": {
+        "m4": 267,
+        "piano": 267
+      },
+      "wholeFilmAccepted": false,
+      "productionMethodEvidence": ".build/m4-cannot-open264/production-host/result.json"
+    },
+    "iphone": {
+      "source": "pending adoption",
+      "nativeAcceptance": "pending"
+    },
+    "desktop": {
+      "mapping": "Existing remux requests hvc1. No desktop code changes."
+    },
+    "frozenAudit": {
+      "WF-01": "No mode change.",
+      "WF-02": "No new fill attempts.",
+      "WF-03": "Keep existing first takes.",
+      "WF-15": "Preserve duration and all source clocks.",
+      "WF-16": "No translation change.",
+      "WF-17": "No overlap retake permission."
+    }
+  },
+  "phoneCleanup266": {
+    "requestedBySamuel": true,
+    "scope": [
+      "Documents/Validation",
+      "Documents/iPhoneFeasibility"
+    ],
+    "backedUpFiles": 558,
+    "backedUpBytes": 411103077,
+    "hashPlan": ".build/phone-cleanup266/cleanup-plan.json",
+    "archive": ".build/phone-cleanup266/archive",
+    "archiveMustRemain": true,
+    "completed": true,
+    "deviceReceipt": ".build/phone-cleanup266/relative-receipt.json",
+    "modelsDeleted": false,
+    "userMediaDeleted": false,
+    "savedJobsDeleted": false,
+    "postNormalInventoryCheckPending": true
+  },
+  "nativeCaptionTrackValidation266": {
+    "scope": "Native caption writer. No subtitle text, source clock, audio choice or budget change.",
+    "physicalTracksExact": true,
+    "languageMultisetExact": true,
+    "audioCountAndDurationExact": true,
+    "systemLegibleOptionCount": "At least the physical caption count. The system can expose extra virtual options.",
+    "phoneActualThreeLanguageExportsPassed": true,
+    "mainIpadRerunPending": true
+  },
+  "readingPreferences267": {
+    "source": "implemented",
+    "navigation": "Header gear opens existing Preferences. Caption and narration panel stays separate.",
+    "prePlaybackAudio": "A bounded local VLC metadata parse prepares the audio-track catalogue. Recognition does not require initial playback.",
+    "ipadInstalled": {
+      "m4": 267,
+      "piano": 267
+    },
+    "pianoNativeMetadata": "One case passes. No playback starts and the input hash stays exact.",
+    "actualHeaderPresentation": "pending visual acceptance",
+    "guideConsumer": {
+      "revision": "application-user-guide-65-desktop-runtime-maintenance",
+      "sha256": "5845f63fd4e2e9c653f81114e0cd60388f6b82eb0102f0cff75ebab44eb1887b"
+    },
+    "iphone": "Narrow source adoption and physical validation remain separate.",
+    "desktop": "No mobile Reading mode."
+  },
+  "desktopCaptionQuiet270": {
+    "revision": "caption-only-no-dialogue-270",
+    "legacyRevisionRetained": "caption-only-no-dialogue-260",
+    "setting": "skipNonDialogueCaptions",
+    "default": true,
+    "supplementalGates": [
+      "completed hash-bound dual-input evidence",
+      "no witnessed source words within actual caption interval",
+      "complete padded stem below PCM16 quantum peak and quarter-quantum RMS",
+      "complete source and stem classification coverage",
+      "every vocal class <=0.05 and original music >=0.5"
+    ],
+    "validatedBackend": "apple-soundanalysis-v1",
+    "maximumUniqueInspectionsPerJob": 2,
+    "maximumCallsPerInspection": 2,
+    "secondsPerCall": 30,
+    "reserveBeforeCall": true,
+    "cacheFailedReservations": true,
+    "oldFrozenJobsRestamped": false,
+    "spentBudgetsReset": false,
+    "macIsolatedOpeningPass": true,
+    "captionRegressionCases": 78,
+    "installed": false,
+    "windowsASTCalibration": "pending",
+    "ipadMusicCase": "pending",
+    "iphoneMusicCase": "pending",
+    "handover": "docs/DESKTOP-CAPTION-QUIET-270-HANDOVER.md"
   }
 }

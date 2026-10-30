@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-63-desktop-emergency-export",
+  "revision": "application-user-guide-68-typed-sections",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -420,7 +420,7 @@
             }
           ],
           "controlRefs": [],
-          "steps": []
+          "steps": false
         },
         {
           "id": "desktop-reuse-models-267",
@@ -448,7 +448,7 @@
             }
           ],
           "controlRefs": [],
-          "steps": []
+          "steps": false
         },
         {
           "id": "desktop-storage-and-cuda-268",
@@ -461,26 +461,22 @@
             "zh-CN": "下载空间及已验证 CUDA",
             "ja": "ダウンロード容量と検証済み CUDA"
           },
-          "body": {
-            "en": [
-              "On Mac, model downloads use the system capacity available for important resources, including space macOS can reclaim. This can differ from ordinary free space. The download still needs its remaining file size plus reserved workspace. The app does not delete your files to make room. A real write failure retains partial downloads for retry.",
-              "On Windows, a verified Drama CUDA 12 runtime remains usable when compatible hardware selects CUDA 13 for PyTorch. These are separate processing runtimes. Model files, runtime files and speech verification must still pass. Switching models does not require deleting working models. Export a debug report if startup remains unavailable."
-            ],
-            "zh-HK": [
-              "Mac 下載模型會檢查系統可供重要資源使用嘅空間，包括 macOS 可釋放嘅空間，因此可能同一般剩餘空間唔同。仍須足夠存放未下載部分及預留工作空間。App 唔會刪除你嘅檔案騰出空間；如果實際寫入失敗，已下載部分會保留供重試。",
-              "Windows 喺兼容硬件上，即使 PyTorch 選用 CUDA 13，已驗證嘅 Drama CUDA 12 仍可繼續使用，兩者係獨立執行環境。模型、執行檔同試配音仍須通過檢查。切換模型毋須先刪除正常模型；如仍無法開始，請匯出偵錯記錄。"
-            ],
-            "zh-CN": [
-              "Mac 下载模型会检查系统可供重要资源使用的空间，包括 macOS 可释放的空间，因此可能与一般剩余空间不同。仍须足够存放未下载部分及预留工作空间。App 不会删除你的文件腾出空间；如果实际写入失败，已下载部分会保留供重试。",
-              "Windows 在兼容硬件上，即使 PyTorch 选用 CUDA 13，已验证的 Drama CUDA 12 仍可继续使用，两者是独立运行环境。模型、运行文件和试配音仍须通过检查。切换模型无需先删除正常模型；如仍无法开始，请导出调试记录。"
-            ],
-            "ja": [
-              "Mac のモデルダウンロードでは、macOS が解放できる領域を含む、重要なリソースに利用できる容量を確認します。通常の空き容量と異なる場合があります。未ダウンロード分と作業用の余裕が必要です。アプリが利用者のファイルを削除することはありません。実際の書き込みに失敗した場合も、途中のダウンロードを再試行用に保持します。",
-              "対応する Windows ハードウェアでは、PyTorch が CUDA 13 を選択しても、検証済みの Drama CUDA 12 を引き続き利用できます。両者は別の実行環境です。モデル、実行ファイル、試験音声の検証は必要です。モデル切り替えのために正常なモデルを削除する必要はありません。開始できない場合はデバッグ記録を書き出してください。"
-            ]
-          },
+          "body": [
+            {
+              "en": "On Mac, model downloads use the system capacity available for important resources, including space macOS can reclaim. This can differ from ordinary free space. The download still needs its remaining file size plus reserved workspace. The app does not delete your files to make room. A real write failure retains partial downloads for retry.",
+              "zh-HK": "Mac 下載模型會檢查系統可供重要資源使用嘅空間，包括 macOS 可釋放嘅空間，因此可能同一般剩餘空間唔同。仍須足夠存放未下載部分及預留工作空間。App 唔會刪除你嘅檔案騰出空間；如果實際寫入失敗，已下載部分會保留供重試。",
+              "zh-CN": "Mac 下载模型会检查系统可供重要资源使用的空间，包括 macOS 可释放的空间，因此可能与一般剩余空间不同。仍须足够存放未下载部分及预留工作空间。App 不会删除你的文件腾出空间；如果实际写入失败，已下载部分会保留供重试。",
+              "ja": "Mac のモデルダウンロードでは、macOS が解放できる領域を含む、重要なリソースに利用できる容量を確認します。通常の空き容量と異なる場合があります。未ダウンロード分と作業用の余裕が必要です。アプリが利用者のファイルを削除することはありません。実際の書き込みに失敗した場合も、途中のダウンロードを再試行用に保持します。"
+            },
+            {
+              "en": "On Windows, a verified Drama CUDA 12 runtime remains usable when compatible hardware selects CUDA 13 for PyTorch. These are separate processing runtimes. Model files, runtime files and speech verification must still pass. Switching models does not require deleting working models. Export a debug report if startup remains unavailable.",
+              "zh-HK": "Windows 喺兼容硬件上，即使 PyTorch 選用 CUDA 13，已驗證嘅 Drama CUDA 12 仍可繼續使用，兩者係獨立執行環境。模型、執行檔同試配音仍須通過檢查。切換模型毋須先刪除正常模型；如仍無法開始，請匯出偵錯記錄。",
+              "zh-CN": "Windows 在兼容硬件上，即使 PyTorch 选用 CUDA 13，已验证的 Drama CUDA 12 仍可继续使用，两者是独立运行环境。模型、运行文件和试配音仍须通过检查。切换模型无需先删除正常模型；如仍无法开始，请导出调试记录。",
+              "ja": "対応する Windows ハードウェアでは、PyTorch が CUDA 13 を選択しても、検証済みの Drama CUDA 12 を引き続き利用できます。両者は別の実行環境です。モデル、実行ファイル、試験音声の検証は必要です。モデル切り替えのために正常なモデルを削除する必要はありません。開始できない場合はデバッグ記録を書き出してください。"
+            }
+          ],
           "controlRefs": [],
-          "steps": []
+          "steps": false
         },
         {
           "id": "desktop-core-support-269",
@@ -493,30 +489,62 @@
             "zh-CN": "程序组件及调试导出",
             "ja": "アプリの構成要素とデバッグ記録"
           },
-          "body": {
-            "en": [
-              "Welcome lists Cantonese, Mandarin and English. Available voice languages depend on the selected engine.",
-              "A shared-core error concerns the app package, not a missing voice model. Keep installed models and saved work. Close the old app and open the latest EXE or App. The packaged app uses its own core rather than an inherited developer path.",
-              "Terminal → Export debug report can save a native support report when Python or the core is unavailable. It records the original error, component locations and bounded app-owned logs. If the selected destination cannot be written, the app saves to its support logs folder and displays that path. Reports can include dialogue and local paths; review them before public sharing."
-            ],
-            "zh-HK": [
-              "歡迎畫面列出廣東話、普通話同英文；實際可配音語言視乎所選引擎。",
-              "shared core 錯誤係程式封裝元件問題，唔係缺少配音模型。請保留現有模型同工作，關閉舊版後開啟最新 EXE 或 App。已封裝程式會使用自己嘅核心，唔會沿用外部開發路徑。",
-              "「終端機 → 匯出偵錯記錄」喺 Python 或核心無法使用時，仍可儲存原生支援記錄，包含原本錯誤、元件位置及有限長度嘅程式記錄。所選位置無法寫入時，會改存 App 專用記錄資料夾並顯示路徑。記錄可能包含對白及本機路徑，公開分享前請先檢查。"
-            ],
-            "zh-CN": [
-              "欢迎界面列出粤语、普通话和英语；实际可配音语言取决于所选引擎。",
-              "shared core 错误涉及程序包组件，并非缺少配音模型。请保留现有模型和工作，关闭旧版后打开最新 EXE 或 App。打包程序会使用自己的核心，不沿用外部开发路径。",
-              "「终端 → 导出调试记录」在 Python 或核心无法使用时，仍可保存原生支持记录，包含原始错误、组件位置及有限长度的程序记录。所选位置无法写入时，会改存 App 专用记录文件夹并显示路径。记录可能包含对白及本地路径，公开分享前请先检查。"
-            ],
-            "ja": [
-              "Welcome には広東語、標準中国語、英語を表示します。利用できる音声言語は選択したエンジンによります。",
-              "shared core エラーはアプリの構成要素に関するもので、音声モデルの不足とは異なります。モデルと作業を保持したまま旧版を閉じ、最新の EXE または App を開いてください。配布版は外部の開発用パスではなく、自分のパッケージのコアを使用します。",
-              "「ターミナル → デバッグ記録を書き出す」は Python やコアを利用できない場合も、元のエラー、構成要素の場所、長さを制限したアプリのログを保存できます。選択した保存先に書き込めない場合はアプリ専用ログフォルダに保存し、そのパスを表示します。記録に台詞やローカルパスが含まれる場合があります。公開前に確認してください。"
-            ]
-          },
+          "body": [
+            {
+              "en": "Welcome lists Cantonese, Mandarin and English. Available voice languages depend on the selected engine.",
+              "zh-HK": "歡迎畫面列出廣東話、普通話同英文；實際可配音語言視乎所選引擎。",
+              "zh-CN": "欢迎界面列出粤语、普通话和英语；实际可配音语言取决于所选引擎。",
+              "ja": "Welcome には広東語、標準中国語、英語を表示します。利用できる音声言語は選択したエンジンによります。"
+            },
+            {
+              "en": "A shared-core error concerns the app package, not a missing voice model. Keep installed models and saved work. Close the old app and open the latest EXE or App. The packaged app uses its own core rather than an inherited developer path.",
+              "zh-HK": "shared core 錯誤係程式封裝元件問題，唔係缺少配音模型。請保留現有模型同工作，關閉舊版後開啟最新 EXE 或 App。已封裝程式會使用自己嘅核心，唔會沿用外部開發路徑。",
+              "zh-CN": "shared core 错误涉及程序包组件，并非缺少配音模型。请保留现有模型和工作，关闭旧版后打开最新 EXE 或 App。打包程序会使用自己的核心，不沿用外部开发路径。",
+              "ja": "shared core エラーはアプリの構成要素に関するもので、音声モデルの不足とは異なります。モデルと作業を保持したまま旧版を閉じ、最新の EXE または App を開いてください。配布版は外部の開発用パスではなく、自分のパッケージのコアを使用します。"
+            },
+            {
+              "en": "Terminal → Export debug report can save a native support report when Python or the core is unavailable. It records the original error, component locations and bounded app-owned logs. If the selected destination cannot be written, the app saves to its support logs folder and displays that path. Reports can include dialogue and local paths; review them before public sharing.",
+              "zh-HK": "「終端機 → 匯出偵錯記錄」喺 Python 或核心無法使用時，仍可儲存原生支援記錄，包含原本錯誤、元件位置及有限長度嘅程式記錄。所選位置無法寫入時，會改存 App 專用記錄資料夾並顯示路徑。記錄可能包含對白及本機路徑，公開分享前請先檢查。",
+              "zh-CN": "「终端 → 导出调试记录」在 Python 或核心无法使用时，仍可保存原生支持记录，包含原始错误、组件位置及有限长度的程序记录。所选位置无法写入时，会改存 App 专用记录文件夹并显示路径。记录可能包含对白及本地路径，公开分享前请先检查。",
+              "ja": "「ターミナル → デバッグ記録を書き出す」は Python やコアを利用できない場合も、元のエラー、構成要素の場所、長さを制限したアプリのログを保存できます。選択した保存先に書き込めない場合はアプリ専用ログフォルダに保存し、そのパスを表示します。記録に台詞やローカルパスが含まれる場合があります。公開前に確認してください。"
+            }
+          ],
           "controlRefs": [],
-          "steps": []
+          "steps": false
+        },
+        {
+          "id": "desktop-runtime-maintenance-270",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Repair or redeploy",
+            "zh-HK": "修復或重新部署",
+            "zh-CN": "修复或重新部署",
+            "ja": "修復と再セットアップ"
+          },
+          "body": [
+            {
+              "en": "Welcome → Local models and deployment → Repair / redeploy offers two actions. Check and repair keeps downloaded models and verifies components. Only missing or incompatible packages need installation. A changed dependency list alone does not force installation of matching PyTorch wheels. Import and GPU checks still apply.",
+              "zh-HK": "「歡迎畫面 → 本機模型與部署 → 修復／重新部署」提供兩個選項。「檢查並修復」會保留已下載模型，驗證執行元件，只安裝缺失或版本不相容嘅部分。只更新依賴清單唔會強制重裝相符嘅 PyTorch；元件載入同 GPU 驗證仍需通過。",
+              "zh-CN": "「欢迎界面 → 本机模型与部署 → 修复／重新部署」提供两个选项。「检查并修复」保留已下载模型，验证运行组件，仅安装缺失或版本不兼容的部分。依赖清单更新不会强制重装版本相符的 PyTorch；组件加载和 GPU 验证仍需通过。",
+              "ja": "Welcome のローカルモデルとセットアップで「修復／再セットアップ」を選択します。「確認して修復」はモデルを保持し、不足または互換性のないパッケージのみをインストールします。依存一覧の変更だけでは、一致する PyTorch を強制再インストールしません。読み込みと GPU の検証は必要です。"
+            },
+            {
+              "en": "Reset and redeploy shows a removal review before confirmation. App-managed models and runtimes are removed. Videos, recordings, projects and exports stay. On Windows, the app closes before removal. Open the EXE again and select Download and prepare. Run only one setup at a time.",
+              "zh-HK": "「完全重新部署」先列出移除清單，確認後先清除 App 管理嘅模型及執行環境。影片、錄音、專案同成品會保留。Windows 會先關閉程式再移除；之後重新開啟 EXE，按「下載並準備」。唔好同時開兩個部署程序。",
+              "zh-CN": "「完全重新部署」先显示移除清单，确认后清除 App 管理的模型和运行环境。视频、录音、项目和成品保留。Windows 会先关闭程序再移除；随后重新打开 EXE，按「下载并准备」。请勿同时运行两个部署进程。",
+              "ja": "「初期化して再セットアップ」は削除一覧を先に表示し、確認後にモデルと実行環境を削除します。動画、録音、プロジェクト、出力は保持します。Windows では終了後に削除するため、EXE を開き直してダウンロードと準備を選択します。同時に二つのセットアップを実行しないでください。"
+            },
+            {
+              "en": "Setup displays the current runtime step and elapsed seconds. GPU component downloads and installation can take longer than model checks. There is no reliable percentage for this step. Elapsed time is not a completed download. A failed check never marks setup ready. Export a debug report from Terminal if setup fails.",
+              "zh-HK": "安裝時會顯示目前執行環境步驟及已用秒數。下載及安裝 GPU 元件可能比檢查模型耐；此階段無可靠百分比，已用時間唔代表下載完成。檢查失敗唔會標示部署就緒；可用「終端機 → 匯出偵錯記錄」提供資料。",
+              "zh-CN": "安装时显示当前运行环境步骤及已用秒数。GPU 组件下载安装可能比检查模型更久；此阶段没有可靠百分比，已用时间不代表下载完成。检查失败不会标记部署就绪；可通过终端导出调试记录。",
+              "ja": "セットアップ中は現在の手順と経過秒数を表示します。GPU 構成要素のインストールには時間がかかる場合があります。この手順には信頼できる進捗率がないため、経過時間はダウンロード完了を意味しません。失敗した設定は準備完了になりません。失敗時はターミナルからデバッグ記録を書き出してください。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -645,7 +673,7 @@
             }
           ],
           "controlRefs": [],
-          "steps": []
+          "steps": false
         }
       ]
     },
@@ -947,6 +975,36 @@
               "zh-HK": "「製作設定」的「非對白僅保留字幕」是獨立開關，新建以字幕為主要來源的基本及專家工作預設開啟。只有原聲與分離人聲的活動檢查、Whisper 原聲時間辨識均已完成，且分離人聲接近數碼靜音時，才可確認沒有對白並略過配音。證據不確定時仍會配音；字幕保留原有顯示時間。舊工作缺少此設定時維持關閉，續做不會重設已用次數。各平台須另行驗證實際執行及安裝。",
               "zh-CN": "“制作设置”的“非对白仅保留字幕”是独立开关，新建以字幕为主要来源的基本及专家任务默认开启。只有原声和分离人声的活动检查、Whisper 原声时间识别均已完成，且分离人声接近数字静音时，才可确认没有对白并跳过配音。证据不确定时仍会配音；字幕保留原有显示时间。旧任务缺少此设置时保持关闭，继续处理不会重置已用次数。各平台需单独验证实际执行及安装。",
               "ja": "制作設定の「会話なしでは字幕のみ」は独立したスイッチです。字幕を主入力とする新規Basic・Expert作業ではオンです。元音声と分離音声の活動検査、Whisperの元音声時刻結果が完了し、分離ボーカルがデジタル無音に近いことが必要です。証拠が不明なら音声を生成します。字幕の表示時刻は維持します。旧作業に設定がなければオフのままです。再開しても使用済み回数は戻りません。各プラットフォームの実行とインストールを別に検証します。"
+            }
+          ],
+          "controlRefs": [
+            "captionOnlyNoDialogue"
+          ],
+          "steps": false
+        },
+        {
+          "id": "desktop-caption-quiet-270",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Screen-only captions and shared lines",
+            "zh-HK": "畫面字幕及共用對白",
+            "zh-CN": "画面字幕与共用对白",
+            "ja": "画面字幕と共有する台詞"
+          },
+          "body": [
+            {
+              "en": "Keep No-dialogue captions: text only enabled to retain translated screen text without reading it aloud when the sound evidence confirms no dialogue. On Mac, a bounded paired sound check can distinguish music-only credits from VAD speech candidates. Missing recognition, separation failure or uncertain evidence keeps TTS. Windows uses its conservative gate until equivalent classifier evidence is verified.",
+              "zh-HK": "開啟「無對白字幕只顯示文字」後，確認冇對白嘅畫面字幕會保留翻譯文字，唔讀出嚟。Mac 可用有限次原聲／分離聲配對檢查，分辨純背景音樂字幕同語音活動疑點。辨識缺失、分離失敗或證據不確定時仍會配音。Windows 暫保留原有保守判定，等相應分類證據驗證。",
+              "zh-CN": "开启「无对白字幕只显示文字」后，确认没有对白的画面字幕保留翻译文字，不朗读。Mac 可用有限次原声／分离声配对检查，区分纯背景音乐字幕与语音活动疑点。识别缺失、分离失败或证据不确定时仍配音。Windows 暂保留原有保守判定，等待相应分类证据验证。",
+              "ja": "会話のない字幕を文字のみ表示する設定を有効にすると、音声の証拠で会話がないと確認された画面字幕を読み上げません。Mac は元音声と分離音声の回数制限付き検証で、音楽だけの字幕と VAD の候補を区別できます。認識や分離の失敗、証拠の不足時は TTS を維持します。Windows は分類証拠の検証まで従来の保守的な判定を維持します。"
+            },
+            {
+              "en": "A shared subtitle may contain several source fragments. A continuation can show its assigned owner dialogue rather than a missing recording. Open the listed owner to compare its complete script and saved recording. Ownership does not certify pronunciation or timing. Existing frozen conversions keep their earlier policy; start a new conversion to test the new caption gate.",
+              "zh-HK": "一條字幕可能涵蓋幾段原聲。延續片段會列出字幕已分配嘅所屬對白，而唔係一律顯示漏配。請開啟所列對白比較完整台詞同錄音；內容配對唔代表讀音或時間已驗證。舊工作保留原有凍結規則；測試新判定請開始新一次轉換。",
+              "zh-CN": "一条字幕可能涵盖多段原声。延续片段会列出字幕所属对白，而非一律显示漏配。请打开所列对白比较完整台词和录音；内容配对不代表读音或时间已验证。旧任务保留冻结规则；测试新判定请开始新一次转换。",
+              "ja": "一つの字幕に複数の音声区間が含まれる場合、続きの区間には割り当て先の台詞を表示します。その台詞を開いて全文と録音を比較してください。割り当てだけでは発音や時刻を認証しません。保存済みの処理は以前の規則を保持するため、新しい判定は新規変換で試してください。"
             }
           ],
           "controlRefs": [
@@ -2808,10 +2866,10 @@
           },
           "body": [
             {
-              "zh-HK": "預覽預設收起；轉換進度面板預設展開。新工作原始預設為香港廣東話，已儲存工作保留原語言。右上角的調整圖示開啟操作設定，配音後備位於最上方。配音語言位於預覽下方，按影片名稱旁的眼睛圖示開關預覽。開始轉換按鈕位於主畫面下方。",
-              "zh-CN": "预览默认收起；转换进度面板默认展开。新任务初始默认香港粤语，已保存任务保留原语言。右上角的调整图标打开操作设置，配音后备位于最上方。配音语言位于预览下方，点击影片名旁的眼睛图标开关预览。开始转换按钮位于主画面下方。",
-              "en": "Preview starts closed, and the conversion progress panel starts open. The factory target language is Hong Kong Cantonese; saved jobs keep their language. The upper-right sliders open Basic options, with Voice fallback first. Choose the target language below Preview. The filename eye toggles Preview. Start conversion stays at the bottom.",
-              "ja": "プレビューは最初閉じていますが、変換進捗パネルは最初に開いています。初期の出力言語は香港広東語で、保存済み作業は元の言語を保持します。右上の調整アイコンで基本設定を開きます。音声の代替設定が先頭にあります。プレビューの下で出力言語を選び、動画名の目のアイコンでプレビューを切り替えます。変換開始は画面下部です。"
+              "en": "Preview starts closed, and conversion progress starts open. The factory target is Hong Kong Cantonese. Saved jobs keep their language. The upper-right sliders open Basic options. Voice fallback is in Dubbing and checks. Choose the target below Preview. The filename eye toggles Preview. Start stays at the bottom.",
+              "zh-HK": "預覽預設收起，轉換進度預設展開。新工作的原始目標語言為香港廣東話；已保存工作保留原語言。右上角調整圖示開啟基本選項，配音後備位於「配音與核對」。目標語言位於預覽下方，影片名稱旁的眼睛圖示開關預覽，開始轉換按鈕保持在下方。",
+              "zh-CN": "预览默认收起，转换进度默认展开。新任务的初始目标语言为香港粤语；已保存任务保留原语言。右上角调整图标打开基本选项，配音后备位于“配音与检查”。目标语言位于预览下方，影片名旁的眼睛图标开关预览，开始转换按钮保持在下方。",
+              "ja": "プレビューは最初閉じ、変換進捗は開いています。初期の出力言語は香港広東語です。保存済みジョブは元の言語を保持します。右上の調整アイコンで基本設定を開き、音声の代替は「吹き替えと確認」で選びます。プレビュー下で出力言語を選び、動画名の目のアイコンでプレビューを切り替えます。開始ボタンは画面下部です。"
             }
           ],
           "controlRefs": [],
@@ -3573,6 +3631,32 @@
             "voiceReviewLevels"
           ],
           "steps": false
+        },
+        {
+          "id": "phone-production-groups",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Production settings groups",
+            "zh-HK": "製作設定分類",
+            "zh-CN": "制作设置分类",
+            "ja": "制作設定の分類"
+          },
+          "body": [
+            {
+              "en": "Basic options and Expert Production settings use four groups: Languages and models, Dubbing and checks, Opening and ending, and Subtitles and output. Open Details below the non-dialogue caption switch for its complete shared explanation. Basic lists downloaded models only. If the stored model is unavailable, choose a listed model; the app keeps the stored choice until you change it. New choices apply to new jobs. Saved jobs keep their frozen rules.",
+              "zh-HK": "基本選項與專家模式的製作設定分為四組：語言與模型、配音與核對、片頭與片尾、字幕與輸出。「無對白字幕只顯示文字」下方的「詳細說明」可展開完整共用說明。基本模式只列出已下載模型；已保存的模型不可用時，請手動選擇清單中的模型，App 不會自動改選。新選項只套用於新工作，已保存工作沿用凍結設定。",
+              "zh-CN": "基本选项与专家模式的制作设置分为四组：语言与模型、配音与检查、片头与片尾、字幕与输出。“无对白字幕只显示文字”下方的“详细说明”可展开完整共享说明。基本模式仅列出已下载模型；已保存的模型不可用时，请手动选择列表中的模型，App 不会自动改选。新选项仅用于新任务，已保存任务沿用冻结设置。",
+              "ja": "基本設定とエキスパートの制作設定は、言語とモデル、吹き替えと確認、オープニングとエンディング、字幕と出力の四つに分かれます。発話のない字幕のスイッチ下にある「詳細」で共通説明を開けます。基本モードにはダウンロード済みモデルだけを表示します。保存されたモデルが使えない場合は一覧から手動で選んでください。アプリは自動変更しません。新しい選択は新規ジョブに適用し、保存済みジョブは固定済み設定を保持します。"
+            }
+          ],
+          "controlRefs": [
+            "captionOnlyNoDialogue",
+            "failedVoiceFallback",
+            "standardReviewOnly"
+          ],
+          "steps": false
         }
       ]
     },
@@ -3641,6 +3725,12 @@
               "zh-HK": "朗讀模式使用 Apple 本機語音辨識。裝置及原聲語言支援時使用 SpeechTranscriber，否則在支援範圍內使用 DictationTranscriber。請在支援清單選擇原聲語言；每次辨識使用一種原聲語言。缺少系統資源時，確認後才會下載。生成字幕後可進行翻譯，再選已安裝的朗讀聲線。舊款 iPad 及 iPhone 按系統語言支援提供功能，不要求 Apple Intelligence。暫停會保留已完成片段；更換辨識引擎會另存紀錄。",
               "zh-CN": "朗读模式使用 Apple 本机语音识别。设备及原声语言支持时使用 SpeechTranscriber，否则在支持范围内使用 DictationTranscriber。请在支持列表选择原声语言；每次识别使用一种原声语言。缺少系统资源时，确认后才会下载。生成字幕后可进行翻译，再选择已安装的朗读声音。旧款 iPad 和 iPhone 按系统语言支持提供功能，不要求 Apple Intelligence。暂停会保留已完成片段；更换识别引擎会另存记录。",
               "ja": "読み上げではAppleの端末内音声認識を使います。端末と言語が対応する場合はSpeechTranscriber、それ以外は対応するDictationTranscriberを使います。一覧から元音声の言語を選びます。1回の認識では1言語を使います。不足するシステム資源は確認後にダウンロードします。生成した字幕を翻訳し、インストール済みの音声を選べます。旧型iPad・iPhoneもシステム言語の対応に応じて利用でき、Apple Intelligenceは不要です。一時停止すると完了済み区間を保持します。エンジンが変わる場合は別の記録を作ります。"
+            },
+            {
+              "en": "Select a video before speech recognition. Reading prepares its audio-track list without starting playback. Choose the source audio track when several are available. Recognition, translation and narration remain separate actions.",
+              "zh-HK": "選擇影片後，朗讀模式會直接準備聲道清單，毋須先播放影片。影片有多條聲道時，先選擇辨識使用的聲道。辨識、翻譯及朗讀仍是分開的操作。",
+              "zh-CN": "选择视频后，朗读模式会直接准备音轨列表，无需先播放视频。视频有多条音轨时，先选择识别使用的音轨。识别、翻译和朗读仍是分开的操作。",
+              "ja": "動画を選ぶと、再生せずに音声トラックを読み込みます。複数ある場合は認識に使う音声を選びます。認識、翻訳、読み上げは別々に操作します。"
             }
           ],
           "controlRefs": [],
@@ -3756,6 +3846,29 @@
               "zh-HK": "iPhone「更多」亦可開啟「朗讀設定」，與設定按鈕共用同一個可捲動頁面。可用頂部固定的字幕、翻譯、系統朗讀及影片聲音按鈕跳到所需部分。頁面保留字幕生成、繁簡轉換、聲線及語言、龜兔速度、聲道、靜音、獨立音量及傳統人聲抑制。AI 準備功能只在支援的硬件顯示。重設保留在「更多」，並沿用確認程序。",
               "zh-CN": "iPhone“更多”也可打开“朗读设置”，与设置按钮共用同一个可滚动页面。可用顶部固定的字幕、翻译、系统朗读和影片声音按钮跳到所需部分。页面保留字幕生成、繁简转换、声线和语言、龟兔速度、声道、静音、独立音量和传统人声抑制。AI 准备功能只在支持的硬件显示。重设保留在“更多”，并沿用确认流程。",
               "ja": "iPhone の「その他」からも読み上げ設定を開けます。設定ボタンと同じスクロール画面を使い、上部の字幕、翻訳、読み上げ、音声ボタンで移動します。字幕生成、文字変換、声と言語、亀と兎の速度、音声トラック、ミュート、個別音量、従来の音声抑制を保ちます。AI 準備は対応端末だけに表示します。リセットは「その他」に残し、既存の確認操作を使います。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "reading-preferences",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "zh-HK": "偏好設定",
+            "zh-CN": "偏好设置",
+            "en": "Preferences",
+            "ja": "環境設定"
+          },
+          "body": [
+            {
+              "zh-HK": "按朗讀模式頂部的齒輪開啟偏好設定，調整介面語言、主題及小助手。關閉後返回朗讀模式。字幕與朗讀設定仍在原有面板。",
+              "zh-CN": "点击朗读模式顶部的齿轮打开偏好设置，调整界面语言、主题和小助手。关闭后返回朗读模式。字幕与朗读设置仍在原有面板。",
+              "en": "Select the gear in the Reading header to open Preferences. Change interface language, theme or assistant. Close Preferences to return to Reading. Caption and narration controls remain in their existing panel.",
+              "ja": "読み上げ画面上部の歯車から環境設定を開き、表示言語、テーマ、アシスタントを変更できます。閉じると読み上げ画面に戻ります。字幕と読み上げの設定は既存のパネルにあります。"
             }
           ],
           "controlRefs": [],

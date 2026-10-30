@@ -6,6 +6,8 @@ ROOT=Path(__file__).resolve().parents[1]
 def prepare():
     target=ROOT/'studio/web/assets';target.mkdir(parents=True,exist_ok=True)
     guide_root=Path(os.environ.get('ANICANTO_GUIDE_ROOT') or ROOT/'docs')
+    from validate_user_guide import validate
+    validate(json.loads((guide_root/'APPLICATION-USER-GUIDE.json').read_bytes()))
     guide=(guide_root/'WORKFLOW-CONTROLS-GUIDE.json').read_bytes()
     (target/'workflow-controls-guide.json').write_bytes(guide)
     (target/'workflow-controls-guide.js').write_text('export const WORKFLOW_GUIDE='+guide.decode()+';\nexport const WORKFLOW_GUIDE_SHA='+json.dumps(hashlib.sha256(guide).hexdigest())+';\n')

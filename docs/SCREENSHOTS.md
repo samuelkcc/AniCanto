@@ -4,4 +4,4 @@
 
 ## 助手休息預覽
 
-![Assistant rest preview](images/assistant-rest-zh-HK.png?v=0.25.12)
+![Assistant rest preview](images/assistant-rest-zh-HK.png?v=0.25.17)

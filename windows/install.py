@@ -22,7 +22,7 @@ def emit(message):
 
 
 def call(args):
-    subprocess.run([str(arg) for arg in args], check=True)
+    subprocess.run([str(arg) for arg in args], check=True, timeout=2700)
 
 
 def env_python(name):

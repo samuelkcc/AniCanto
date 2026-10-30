@@ -1,10 +1,10 @@
-# 新版介面 · 0.25.12
+# 新版介面 · 0.25.17
 
 [← AniCanto](../../README.zh-HK.md)
 
-以下係 0.25.12 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
+以下係 0.25.17 真實介面。剪輯畫面統一用淺紫色主題，**關閉影片預覽，顯示動畫小助手**；模型及專案狀態只作示範，唔係轉換效能測試。
 
-圖片採用 Mac 0.25.12 介面。Windows CUDA 設定使用示範硬件資料，唔代表已發佈或驗證新 Windows 版本。
+圖片採用 Mac 0.25.17 介面。Windows CUDA 設定使用示範硬件資料，唔代表已發佈或驗證新 Windows 版本。
 
 ## 歡迎畫面
 
@@ -60,4 +60,4 @@
 
 ## 助手休息預覽
 
-![Assistant rest preview](../images/assistant-rest-zh-HK.png?v=0.25.12)
+![Assistant rest preview](../images/assistant-rest-zh-HK.png?v=0.25.17)

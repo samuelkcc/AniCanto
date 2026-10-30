@@ -24,15 +24,15 @@ SCKC が趣味と学びのために作っているこのプロジェクトは、
 
 AI の生成音声には、アクセント、読み間違い、演技の不足などが残る場合があります。作品を楽しむとともに、その声を届けるプロの演技を、これからも大切にし、応援してください。
 
-## Beta をダウンロード · 0.25.16
+## Beta をダウンロード · 0.25.17
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/AniCanto-macOS-0.25.16.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.16-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.17-beta)
 
-[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## この Beta の更新
 
-**0.25.16 修正：** アプリの処理を現在のパッケージの共通コアに固定しました。Python や通常のデバッグ記録が利用できない場合はアプリ内のサポート記録を作成し、保存先に書き込めない場合は専用フォルダの場所を表示します。4言語の Welcome に標準中国語を追加しました。
+**0.25.17 修正：** Mac のナビゲーションの中央揃えを修正しました。Windows の実行環境インストールの手順と経過時間を表示し、一致する GPU パッケージを再利用します。修復／再セットアップメニューを追加しました。初期化を確認しない限り、モデルと保存済み作業は保持します。
 
 - **クラウド動画の読み込み：** Google Drive、OneDrive、iCloud の大容量ファイルが読み取り可能になるまで待機し、準備状況とキャンセル操作を表示します。
 - **エラー表示とアシスタント：** 明暗の両外観で赤地に白文字を使用し、9人の休憩シーンに小さな呼吸と髪の動きを加えました。
@@ -40,7 +40,7 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 **既知の制限：** 制限付きの音声時刻復元を追加しましたが、未確定の OCR 区間には重複や長い字幕が残る場合があります。クラウド取得と Windows GPU 変換は提供元と実機に依存します。
 
-[0.25.16 release details](docs/DESKTOP-RELEASE-0.25.16.md)
+[0.25.17 release details](docs/DESKTOP-RELEASE-0.25.17.md)
 
 ## 元のデモを変換して、声を比較する
 
@@ -195,21 +195,21 @@ Apple Silicon では任意の **MLX Whisper**（約3.1 GB）で高速確認で�
 
 ### ようこそ・セットアップ
 
-![ようこそ・セットアップ](docs/images/welcome-ja.png?v=0.25.16)
+![ようこそ・セットアップ](docs/images/welcome-ja.png?v=0.25.17)
 
 UI 言語を選び、ローカルモデルを準備して基本・エキスパートモードへ。
 
 ### 基本モード：進捗と試聴
 
-![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.25.16)
+![基本モード：進捗と試聴](docs/images/basic-ja.png?v=0.25.17)
 
 動画、吹き替え言語、出力先を選び、進捗と各台詞の音声を確認。プレビューを閉じたままアシスタントを表示できます。
 
 ### エキスパートモード：タイムラインと編集
 
-![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.25.16)
+![エキスパートモード：タイムラインと編集](docs/images/timeline-ja.png?v=0.25.17)
 
-![AI Repair](docs/images/ai-repair-ja.png?v=0.25.16)
+![AI Repair](docs/images/ai-repair-ja.png?v=0.25.17)
 
 下部全幅のタイムラインで原文と吹き替え台詞を比較し、時刻を調整して選択した台詞を再生成。
 
@@ -217,25 +217,25 @@ UI 言語を選び、ローカルモデルを準備して基本・エキスパ�
 
 動画カードの円形矢印から、全体の再変換、音声のみの再生成、言語・エンジンの追加を選べます。再読み込みは不要です。
 
-![ 再変換と音声トラックの追加 ](docs/images/restart-ja.png?v=0.25.16)
+![ 再変換と音声トラックの追加 ](docs/images/restart-ja.png?v=0.25.17)
 
 ### 校正レポート：問題と録音の比較
 
-![校正レポート：問題と録音の比較](docs/images/review-ja.png?v=0.25.16)
+![校正レポート：問題と録音の比較](docs/images/review-ja.png?v=0.25.17)
 
 指摘された問題と修復の試行を確認し、保存済み録音を比較。以前の動画を残したまま新版を書き出せます。
 
 ### 吹き替えスタジオと保存した録音
 
-![Dubbing studio](docs/images/speech-studio-ja.png?v=0.25.16)
+![Dubbing studio](docs/images/speech-studio-ja.png?v=0.25.17)
 
 原文と広東語の台詞を確認し、生成した各版を保存。元音声・生成音声・対訳をプレーヤーで比較できます。
 
-![Saved clips and learning](docs/images/speech-player-ja.png?v=0.25.16)
+![Saved clips and learning](docs/images/speech-player-ja.png?v=0.25.17)
 
 ### Windows：NVIDIA CUDA の設定
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.25.16)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-ja.png?v=0.25.17)
 
 自動・NVIDIA CUDA・CPU を選択。システム RAM、VRAM、追加の CUDA ダウンロードを別表示します。設定画面の例であり、速度の測定結果ではありません。
 

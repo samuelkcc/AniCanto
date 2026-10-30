@@ -1,10 +1,10 @@
-# 新版界面 · 0.25.12
+# 新版界面 · 0.25.17
 
 [← AniCanto](../../README.zh-CN.md)
 
-以下为 0.25.12 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
+以下为 0.25.17 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
 
-图片采用 Mac 0.25.12 界面。Windows CUDA 设置使用示例硬件资料，不代表已发布或验证新 Windows 版本。
+图片采用 Mac 0.25.17 界面。Windows CUDA 设置使用示例硬件资料，不代表已发布或验证新 Windows 版本。
 
 ## 欢迎画面
 
@@ -60,4 +60,4 @@
 
 ## 助手休息预览
 
-![Assistant rest preview](../images/assistant-rest-zh-CN.png?v=0.25.12)
+![Assistant rest preview](../images/assistant-rest-zh-CN.png?v=0.25.17)

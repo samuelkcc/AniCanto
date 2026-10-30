@@ -32,6 +32,23 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Native HEVC export proxy, confirmed 2026-10-30: `native-hevc-description-267`
+
+An export proxy must be playable, not only contain readable track metadata.
+A generated HEVC MP4 can use an unsupported hev1 sample description.
+For this case, create a separate hvc1 proxy only when its configuration contains valid VPS, SPS and PPS.
+Change only the sample description. Preserve media bytes, every timestamp, duration and the original generated proxy.
+Bind reuse to input and output hashes and the compatibility revision. Validate native playability and a decoded frame.
+Do not change scripts, recordings, frozen source choices or spent repair/export allowances.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
+
+Alignment register: The exact M4 proxy fails native decoding before correction.
+A separate corrected copy decodes the start, middle and end. A two-second native encode passes.
+The original hash remains unchanged. Production integration and normal267 installation on M4 and Piano are complete.
+Production-method repair and hash-bound reuse pass on the host. Full-film M4 export remains pending.
+Desktop already requests hvc1 during remux. iPhone needs the narrow native helper and its own acceptance.
+This is compatibility evidence, not whole-film output or listening acceptance.
+
 ### Reading system recognition fallback, confirmed 2026-10-30: `reading-system-fallback-265`
 
 Reading on iPad and iPhone selects an Apple on-device recognizer per source language.
@@ -63,6 +80,17 @@ WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
 Alignment register: iPad 265 source is prepared. Live M1 checks are deferred because Samuel is timing a conversion on Lavina. Do not interrupt that run. iPhone must adopt and verify the same RAM floor separately.
 Desktop model defaults are outside this mobile hardware preference.
 
+### Desktop music-only caption correction270, source prepared 2026-10-30
+
+New desktop requests freeze caption-only-no-dialogue-270. Legacy260requests retain their existing gate and spent allowances.
+The supplemental gate requires complete hash-bound dual-input evidence, no witnessed words inside the actual caption interval and a complete padded stem below one PCM16 quantum peak and one quarter quantum RMS.
+Original VAD alone can mark music as a candidate. Do not discard it without independent paired classification. Both source and stem must have continuous classified coverage and all vocal classes at most0.05. Original music must be at least0.5in every overlapping window.
+These thresholds apply only to the tested Apple SoundAnalysis profile. Windows AST and native mobile adoption remain pending independent evidence. Their existing conservative gate stays active.
+Reserve at most two unique paired inspections per job before execution. Each inspection has at most two30-second helper calls. Cache failed and successful reservations. A restart cannot create fresh inspection or repair allowances. Keep text and display clocks. Uncertain evidence retains TTS.
+The original positive gate remains. Missing ASR alone, failed TTS or a quiet stem alone never authorize suppression.
+
+Alignment register: The exact Mac credit caption at0.98–7.73seconds fails the old gate and passes the new isolated native replay.78caption cases pass. Source and tested states are recorded; packages are not yet installed. iPad holds normal adoption and its final export fixture is still separate. Phone native11-case execution is not this music case. See docs/DESKTOP-CAPTION-QUIET-270-HANDOVER.md. WF-01/02/03/15/16/17 retain content priority, target-language delivery, overlap permission and spent budgets.
+
 ### Native no-dialogue captions, source prepared 2026-10-30: `caption-only-no-dialogue-native-266`
 
 Task: Keep confirmed non-dialogue captions visible without generated speech.
@@ -84,7 +112,14 @@ WF-01/02/03 retain the common flow, bounded mandatory fill and first audible tak
 WF-15/16/17 retain duration choice, three-language first-draft guidance and independent default-off excessive-overlap repair.
 
 Alignment register: Main iPad, private phone266 and private Duo source contain this adapter.
-Compilation and four native cases are in progress. No native execution or installation is certified here.
+Phone native evidence: All11unique fixture cases pass after two bounded corrections. Actual dual activity has7original and7stem rows.
+Three target-language MP4exports pass for Cantonese, Mandarin and English. Caption display times remain0.5–2.5seconds.
+The initial export fixture has the wrong job folder UUID. Production correctly rejects it; only the fixture changes.
+The later English case reveals3system legible options for2physical caption tracks.
+Native writer validation now retains exact physical track count, language multiset, audio count and duration.
+It permits extra system legible options. No caption, selected take or source clock changes.
+See .build/caption-only266/phone-caption-exports-final.xcresult. Final two-case rerun has0failures in14.272seconds.
+Normal phone/Duo packaging and whole-film acceptance remain pending. Piano corrected export acceptance stays with its owner.
 Desktop260 has its separate dual-input Silero implementation and receipt. Native model and full-film acceptance remain independent.
 The Reading and layout work stays separate. No iPad device operation occurs in this phone task.
 
