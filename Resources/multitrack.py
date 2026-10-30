@@ -247,6 +247,7 @@ def render(w, request):
         w.atomic_json(review_path,review)
     if 'en' in languages and not repair_only and not fast:dub_languages.english_script(w,cfg,job,submitted)
     if 'zh' in languages and not repair_only:dub_languages.mandarin_script(w,cfg,job,submitted)
+    if not repair_only:__import__('translation_editorial').review(w,cfg,job,submitted)
     __import__('terminology').audit(cfg,job,submitted)
     from engine_policy import pairs as supported_pairs
     pairs=supported_pairs(engines,languages)

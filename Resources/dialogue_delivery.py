@@ -33,7 +33,7 @@ def audit(tracks,health=None):
         rows=[];excluded=[]
         for n,cue in enumerate(review.get('cues',[])):
             if not cue.get('enabled',True) or (original_allowed(review.get('config',{}),cue) and not required_clock(cue)) or (is_vocalization(cue) and not required_clock(cue)):
-                excluded.append(dict(index=cue.get('reviewIndex',n)+1,editorID=cue.get('editorID'),start=cue['start'],end=cue['end'],reason='caption-only-no-dialogue' if cue.get('captionOnly') else 'disabled' if not cue.get('enabled',True) else 'deliberate-original' if original_allowed(review.get('config',{}),cue) else 'nonlexical-performance',detail=cue.get('reviewNote') or cue.get('originalSpeechReason') or '',sourceCaption=cue.get('subtitleHint','')))
+                excluded.append(dict(index=cue.get('reviewIndex',n)+1,editorID=cue.get('editorID'),start=cue['start'],end=cue['end'],reason='caption-owned-by-neighbour' if cue.get('captionCovered') else 'caption-only-no-dialogue' if cue.get('captionOnly') else 'disabled' if not cue.get('enabled',True) else 'deliberate-original' if original_allowed(review.get('config',{}),cue) else 'nonlexical-performance',detail=cue.get('reviewNote') or cue.get('originalSpeechReason') or '',sourceCaption=cue.get('subtitleHint','')))
                 continue
             index=cue.get('reviewIndex',n)+1;row=timing.get(index,{})
             path=row.get('renderedAudio') or row.get('audio','')

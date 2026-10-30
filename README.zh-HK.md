@@ -24,22 +24,21 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AI 可以協助探索語言同試做配音，但生成結果仍可能有口音、錯字或演繹不足，唔等同專業演出。希望大家享受呢個小作品之餘，繼續欣賞同支持熟悉聲音背後嘅表演者。
 
-## 下載 Beta · 0.25.9
+## 下載 Beta · 0.25.12
 
-**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/AniCanto-macOS-0.25.9.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.9-beta)
+**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto-macOS-0.25.12.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.12-beta)
 
-[下載對應源碼及第三方來源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[下載對應源碼及第三方來源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 
 ## 今個 Beta 新增咗乜
 
-- **剪輯同校對更清楚：** 製作與 AI 修復分開、逐句試聽、確認冇對白嘅畫面字幕只顯示文字，並分清缺少配音同可選覆核提示。
-- **香港廣東話用語：** 新翻譯加入按語境使用口語嘅指引；保留首輪有聲錄音，缺聲先按有限後備流程補錄。
-- **助手各有風格：** 九位原創助手各自嘅休息場景、偏好設定動畫預覽，同隨主題轉色嘅 A 音符標記。
-- **Mac／Windows 同版：** 共用介面同轉換程式來源。Windows 係交叉編譯；PC 實機及 GPU 轉換驗收仍屬獨立測試。
+- **雲端影片匯入：** Google Drive、OneDrive 或 iCloud 大檔案先等到可讀取，再開始影片檢查；提供準備進度同取消功能。
+- **錯誤提示同助手：** 深淺外觀統一鮮紅底白字，九位助手嘅休息場景加入輕微呼吸同頭髮微動。
+- **字幕同修復控制：** 確認冇對白嘅字幕只顯示文字，避免已涵蓋嘅延續字幕重複配音，額外 AI 修復權限分開設定。
 
-**已知限制：** 語音辨識配合 OCR 仍可能將幾句連續對白合成一條長字幕。今版未修正呢個原聲分句缺陷；AI 成品仍可能需要試聽同校對。
+**已知限制：** 已加入有限度原聲時間恢復，但未確認嘅 OCR 區間仍可能出現重複或過長字幕。雲端檔案完整下載及 Windows GPU 轉換仍視乎供應商同實機情況。
 
-[0.25.9 更新詳情](docs/DESKTOP-RELEASE-0.25.9.md)
+[0.25.12 release details](docs/DESKTOP-RELEASE-0.25.12.md)
 
 ## 下載測試原片，聽返配音成品比較
 
@@ -194,21 +193,21 @@ Apple Silicon 可選 **MLX Whisper** 加速覆聽（模型約 3.1 GB）；每句
 
 ### 歡迎及部署
 
-![歡迎及部署](docs/images/welcome-zh-HK.png?v=0.25.9)
+![歡迎及部署](docs/images/welcome-zh-HK.png?v=0.25.12)
 
 揀介面語言，準備本機模型，再選基本或專家模式入工作室。
 
 ### 基本模式：進度及試聽
 
-![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.25.9)
+![基本模式：進度及試聽](docs/images/basic-zh-HK.png?v=0.25.12)
 
 加入影片、揀配音語言同輸出資料夾，再跟進處理及逐句試聽；預覽可以保持關閉，由小助手陪住你。
 
 ### 專家模式：時間軸及逐句編輯
 
-![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.25.9)
+![專家模式：時間軸及逐句編輯](docs/images/timeline-zh-HK.png?v=0.25.12)
 
-![AI Repair](docs/images/ai-repair-zh-HK.png?v=0.25.9)
+![AI Repair](docs/images/ai-repair-zh-HK.png?v=0.25.12)
 
 用橫跨底部嘅時間軸比較原聲對白同配音稿、調整時間，亦可以為所選一句即時生成另一條錄音。
 
@@ -216,25 +215,25 @@ Apple Silicon 可選 **MLX Whisper** 加速覆聽（模型約 3.1 GB）；每句
 
 撳影片卡嘅圓形箭嘴，可以重做轉換、只重配聲音，或者新增語言／引擎音軌；唔使刪片再匯入。
 
-![ 重新開始或新增音軌 ](docs/images/restart-zh-HK.png?v=0.25.9)
+![ 重新開始或新增音軌 ](docs/images/restart-zh-HK.png?v=0.25.12)
 
 ### 校對報告：疑點及錄音比較
 
-![校對報告：疑點及錄音比較](docs/images/review-zh-HK.png?v=0.25.9)
+![校對報告：疑點及錄音比較](docs/images/review-zh-HK.png?v=0.25.12)
 
 睇返標示咗啲乜、試過點修復，再比較保留錄音。揀好之後匯出另一個版本，原有成品繼續保留。
 
 ### 配音器與已保存片段
 
-![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.25.9)
+![Dubbing studio](docs/images/speech-studio-zh-HK.png?v=0.25.12)
 
 核對原稿同廣東話譯稿，再生成及保存不同錄音；播放器可對照原聲、配音同兩份文字。
 
-![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.25.9)
+![Saved clips and learning](docs/images/speech-player-zh-HK.png?v=0.25.12)
 
 ### Windows：NVIDIA CUDA 部署
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.25.9)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-zh-HK.png?v=0.25.12)
 
 可揀自動偵測、NVIDIA CUDA 或 CPU，分開顯示系統 RAM、VRAM 同額外 CUDA 下載；圖片展示部署選項，唔係速度測試成績。
 

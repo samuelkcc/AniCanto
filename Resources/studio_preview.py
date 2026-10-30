@@ -54,7 +54,15 @@ def status(root,source,compatible=False,audio_stream=None):
     return data
 
 def prepare(root,source,tools,platform,compatible=False,audio_stream=None):
-    if platform=='darwin':return source_playback(source,tools,audio_stream,compatible)
+    if platform=='darwin':
+        from source_preparation import Preparation
+        preparation=Preparation(root,source)
+        try:
+            preparation.ensure_local();preparation.update(phase='probing')
+            result=source_playback(source,tools,audio_stream,compatible,preparation)
+            preparation.finish();return result
+        except Exception as error:
+            preparation.fail(error);raise
     source=Path(source).resolve();directory=folder(root,source,compatible,audio_stream)
     with exclusive(directory/'prepare.lock'):
         target=directory/'preview.mp4';metadata=directory/'metadata.json'
@@ -131,10 +139,12 @@ def thumbnail(root,source,tools,seconds):
     return dict(path=str(target),seconds=point)
 
 
-def source_playback(source,tools,audio_stream=None,compatible=False):
+def source_playback(source,tools,audio_stream=None,compatible=False,preparation=None):
     """Describe source playback. Mac never creates a full preview movie."""
     source=Path(source).resolve()
-    info=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_format','-show_streams','-of','json',str(source)],timeout=30))
+    from source_access import probe as media_probe
+    command=[tools['ffprobe'],'-v','error','-show_format','-show_streams','-of','json',str(source)]
+    info=json.loads(preparation.capture(command,timeout=45) if preparation else media_probe(source,tools['ffprobe']))
     streams=info.get('streams',[])
     video=next((s for s in streams if s.get('codec_type')=='video'),{})
     tracks=[s for s in streams if s.get('codec_type')=='audio']

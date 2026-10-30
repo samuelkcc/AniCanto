@@ -30,6 +30,8 @@ def dispatch(app,op,p):
             app.store.selected=row['id'];app.store.save()
             spec=app.dispatch('start',dict(id=row['id']))
             spec['nativeQueue']=p['epoch'];return spec
+        except __import__('source_preparation').SourcePreparationCancelled:
+            session['enabled']=False;write(path,session);return None
         except Exception as error:
             # Keep saved progress and files. A failed preparation is actionable,
             # never repeatedly retried in the same session.

@@ -697,6 +697,9 @@ def render_complete_preview(cfg,job,cues,paths,report,run,emit):
  timeline=array.array('i');warnings=[];intervals=[]
  rendered_dir=Path(job)/'rendered-takes';rendered_dir.mkdir(exist_ok=True)
  for cue,path,row in zip(cues,paths,report):
+  if cue.get('captionCovered'):
+   row.update(skipped=True,captionCovered=True,captionCoverageOwners=cue.get('captionCoverageOwners',[]),originalPreserved=False,needsReview=False,renderedStart=cue['start'],renderedEnd=cue['end'],renderedSeconds=0)
+   continue
   natural=cfg.get('speechRatePolicy')=='natural' or bool(cue.get('preserveOriginalSpeech'))
   if Path(path).name.startswith('skipped-'):
    row.update(speakerId=cue.get('speakerId'),text=cue.get('cantonese',''),skipped=True,needsReview=True,renderedStart=cue['start'],renderedEnd=cue['end'],renderedSeconds=0)

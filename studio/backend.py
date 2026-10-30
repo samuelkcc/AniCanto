@@ -228,6 +228,9 @@ class Studio:
         return report(self)
 
     def dispatch(self,op,p):
+        if op in ('source-prepare-status','source-prepare-cancel'):
+            import source_preparation
+            return source_preparation.status(self.root,p.get('operationID')) if op=='source-prepare-status' else source_preparation.cancel(self.root,p.get('operationID'))
         if op=='use-terms':
             from use_terms import document,accepted
             return dict(document(),accepted=accepted(self.root))
@@ -342,7 +345,7 @@ class Studio:
             if p.get('language') is not None:row['sourceLanguageOverride']=p['language']
             settings.update({k:row[k] for k in ('sourceAudioStream','sourceLanguageOverride') if k in row})
             if self.store.mode=='basic':settings['selectedEngines']=[settings['ttsBackend']]
-            result=preflight(self.root,row['video'],self.tools(),settings)
+            result=preflight(self.root,row['video'],self.tools(),settings,operation_id=p.get('operationID'),row_id=row['id'])
             row.update(sourceLanguage=result.get('language'),sourcePreflight=result)
             self.store.save();return result
         if op=='configure':
@@ -370,7 +373,7 @@ class Studio:
             if patch.get('normalRepairPolicy','missing-only') not in ('missing-only','verified'):raise ValueError('Unknown normal repair policy.')
             if patch.get('speechAcceleration','auto') not in ('auto','cpu'):raise ValueError('Unknown speech acceleration mode.')
             if patch.get('independentAsrBackend','auto') not in ('auto','mlx','cpu'):raise ValueError('Unknown independent ASR backend.')
-            if (any(k in patch and patch[k]!=base.get(k) for k in ('productionMode','workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap','skipNonDialogueCaptions'))
+            if (any(k in patch and patch[k]!=base.get(k) for k in ('productionMode','workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap','skipNonDialogueCaptions','translationTextReview','safeEndpointCheck','analyzeBackgroundGaps'))
                     and any(r.get('status')=='running' and r.get('request') for r in self.store.queue)):
                 raise ValueError('Production mode is locked until processing finishes.')
             if 'failedVoicePolicy' in patch and any(r.get('status')=='running' and r.get('request') for r in self.store.queue):

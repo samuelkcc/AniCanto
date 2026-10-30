@@ -21,7 +21,7 @@ def probe(source, ffprobe, timeout=45):
     try:
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
     except subprocess.TimeoutExpired as error:
-        raise RuntimeError(f'Video metadata timed out: {source}') from error
+        raise RuntimeError('Video metadata could not be read in time. If the video is in a cloud folder, make it available offline and retry.') from error
     if result.returncode:
         detail = result.stderr.decode('utf-8', errors='replace').strip()[-1000:]
         raise RuntimeError(f'Cannot read video metadata: {source}\n{detail or f"ffprobe exit code {result.returncode}"}')

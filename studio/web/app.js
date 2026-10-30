@@ -1,5 +1,7 @@
+import {preparationCopy} from './source-preparation-copy.js';
 import {syncAssistantActivities} from './assistant-activity-motion.js';
 import {workflowScene,workflowState,assistantPreviewHTML,updateWorkflowScene} from './assistant-workflow.js';
+import {repairControls} from './repair-controls.js';
 import {controlCopy,panelCopy} from './workflow-guide.js';
 import {editCueField,effectiveMix,mixerHTML} from './context-editor.js';
 import {impactHTML,wavesHTML,syncHTML,syncResultHTML,boundaryHTML} from './editing-tools.js';
@@ -38,6 +40,10 @@ const $=(s,root=document)=>root.querySelector(s),$$=(s,root=document)=>[...root.
 const native=window.__TAURI__;
 const invoke=(name,args={})=>native?native.core.invoke(name,args):Promise.reject(new Error('Open AniCanto desktop to use the local processing engine.'));
 const rpc=(op,params={})=>invoke('studio_rpc',{op,params});
+let sourcePreparation=null,sourcePreparationRequestID=null,sourcePreparationPolling=false;
+async function pollSourcePreparation(){if(sourcePreparationPolling)return;sourcePreparationPolling=true;try{const value=await rpc('source-prepare-status',sourcePreparationRequestID?{operationID:sourcePreparationRequestID}:{});if(value?.state==='preparing'&&(!sourcePreparationRequestID||value.operationID===sourcePreparationRequestID)){const first=!sourcePreparation;sourcePreparation=value;if(first)render();else updateProgress();}else if(!sourcePreparationRequestID&&sourcePreparation){sourcePreparation=null;render();}}catch(e){console.warn(e)}finally{sourcePreparationPolling=false}}
+async function preflightSource(params){const operationID=crypto.randomUUID();sourcePreparationRequestID=operationID;sourcePreparation={operationID,rowID:params.id,state:'preparing',phase:'reading',bytesRead:0,totalBytes:0};render();try{return await rpc('source-language',{...params,operationID});}finally{if(sourcePreparationRequestID===operationID){sourcePreparationRequestID=null;sourcePreparation=null;render();}}}
+function preparationHTML(){const c=preparationCopy(state.language),s=sourcePreparation,total=s.totalBytes||0,n=Math.min(total,s.bytesRead||0),known=total>0&&n>0,pct=known?Math.round(n/total*100):null;return `<div class="progress-top" role="status"><strong>${esc(c[s.phase]||c.reading)}</strong><strong>${pct===null?'':pct+'%'}</strong><p>${esc(known?bytes(n)+' / '+bytes(total):c.waiting)}${!known&&total?' · '+esc(bytes(total)):''}</p><small>${esc(c.note)}</small></div><div class="progress-track ${known?'':'source-indeterminate'}"><div class="fill" style="width:${known?pct:35}%"></div></div>`;}
 let setupSelection=null,selectedQuality=null,planChoiceRevision=0;
 const termsKey='anicanto-use-terms-'+USE_TERMS.sha256;
 let localTermsAccepted=localStorage.getItem(termsKey)==='accepted';
@@ -121,7 +127,7 @@ const select=(key,items,value,attrs='')=>`<select data-setting="${key}" ${attrs}
 const statusName=s=>t(({waiting:'Waiting',paused:'Paused',running:'Processing',complete:'Complete',attention:'Needs attention'})[s]||s||'Waiting');
 const empty=(title,body,ico='edit')=>`<div class="empty">${icon(ico)}<h3>${esc(t(title))}</h3>${body?`<p>${esc(t(body))}</p>`:''}</div>`;
 let toastTimer,roleQuery='';
-function toast(message,error=false){const el=$('#toast');el.textContent=t(String(message));el.hidden=false;el.style.background=error?'#a2373f':'';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,error?9000:3500)}
+function toast(message,error=false){const el=$('#toast');el.textContent=t(String(message));el.hidden=false;el.classList.toggle('toast-error',Boolean(error));clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,error?9000:3500)}
 async function enterWorkspace(){
  if(enteringWorkspace||!termsReady())return;
  enteringWorkspace=true;
@@ -350,7 +356,7 @@ async function runCacheCleanup(token,orphanIDs){
 function conversionModelsReady(){return runtimeReady&&!planChecking&&!planError&&plan?.setupReady===true;}
 function transportControl(){
  const label=startLabel();
- const control=!active&&(planChecking||!plan&&!planError)?button('checking-plan','Checking local models…','refresh','','disabled'):!active&&planError?button('retry-plan','Retry setup check','refresh','',`title="${esc(t('Unable to check local models'))}"`):active?button('pause','Pause & save','pause','',starting||finishingRun?'disabled':''):!conversionModelsReady()?button('setup','Download & prepare','download','primary',initializing||starting||finishingRun||!plan?.canDeployModels||!termsReady()?'disabled':''):button('start',label,label==='Done'?'check':'play','primary',!row()||starting||finishingRun||retryReviewStarting||label==='Done'?'disabled':'');
+ const control=sourcePreparation?button('cancel-source-preparation',preparationCopy(state.language).cancel,'close',''):!active&&(planChecking||!plan&&!planError)?button('checking-plan','Checking local models…','refresh','','disabled'):!active&&planError?button('retry-plan','Retry setup check','refresh','',`title="${esc(t('Unable to check local models'))}"`):active?button('pause','Pause & save','pause','',starting||finishingRun?'disabled':''):!conversionModelsReady()?button('setup','Download & prepare','download','primary',initializing||starting||finishingRun||!plan?.canDeployModels||!termsReady()?'disabled':''):button('start',label,label==='Done'?'check':'play','primary',!row()||starting||finishingRun||retryReviewStarting||label==='Done'?'disabled':'');
  return `<div class="transport-control">${control}</div>`;
 }
 function appbar(){const expert=state.mode==='expert';return `<header class="appbar"><div class="workspace-mode-tabs segmented" role="group" aria-label="${esc(t('Workspace mode'))}">${[['basic','Basic mode'],['expert','Expert mode']].map(([mode,label])=>`<button data-action="mode" data-value="${mode}" class="${state.mode===mode?'active':''}" aria-pressed="${state.mode===mode}">${esc(t(label))}</button>`).join('')}</div>${brand()}<div class="header-actions">
@@ -388,14 +394,9 @@ function productionPanel(){return productionTabs()+ (inspector==='automation'?au
 function automationSettings(){const s=productionConfig();return ` <section class="automation-options" aria-label="${esc(t('Automatic processing'))}">
   <div class="ai-cost-warning" role="note">${esc(panelCopy('warning',state.language))}</div>
   ${settingSwitch('fullAIReview','Full AI review',Boolean(s.fullAIReview),productionModeLocked()?'disabled':'')}
-  ${settingSwitch('aiAutoFix','AI auto repair',Boolean(s.aiAutoFix),productionModeLocked()?'disabled':'')}
-  <label class="setting-switch"><span>${esc(t('Content checks per recording'))}</span><input aria-label="${esc(t('Content checks per recording'))}" type="number" min="0" max="2" step="1" data-setting="contentChecks" value="${Number(s.contentChecks||0)}" style="width:64px" ${productionModeLocked()?'disabled':''}></label>
-  ${settingSwitch('repairExcessiveAudibleOverlap','Repair audible overlap over 2 seconds',Boolean(s.repairExcessiveAudibleOverlap),productionModeLocked()?'disabled':'')}
-  ${settingSwitch('limitSpeechDuration','Limit dubbing to original speech duration',Boolean(s.limitSpeechDuration),productionModeLocked()?'disabled':'')}
+  ${repairControls(s,state.language,productionModeLocked())}
   ${settingSwitch('autoSkipOP','Detect openings and endings',s.autoSkipOP!==false,active?'disabled':'')}
   ${settingSwitch('translateOPED','Translate dialogue in OP / ED',Boolean(s.translateOPED),active?'disabled':'')}
-  ${settingSwitch('automaticAlternateVoice','Try another installed voice model',s.automaticAlternateVoice!==false,active||!s.aiAutoFix?'disabled':'')}
-  ${settingSwitch('automaticSystemVoice','Installed system voice fallback',s.automaticSystemVoice!==false,active||!s.aiAutoFix?'disabled':'')}
  </section>`}
 
 function productionSettings(expert){const s={...productionConfig(),productionMode:productionConfig().fullAIReview?'standard':'fast',normalRepairPolicy:'missing-only'},englishSource=sourceLanguage()==='en';return `
@@ -439,7 +440,7 @@ async function previewDetails(){
 }
 
 function checkCue(key,label,value){return `<label class="check"><input type="checkbox" data-cue-field="${key}" ${value?'checked':''}>${esc(t(label))}</label>`}
-function progressHTML(basic){const live=activity(row());const j=journey||row()?.journey||snapshot.journey||{};const stages=visibleMilestones(j.milestones||PHASES.map(id=>({id,state:'pending',seconds:0})),basic);const complete=row()?.status==='complete'||(row()?.deliveryKind==='preview'&&!!row()?.output&&row()?.status!=='running')||j.complete;const pct=complete?100:Math.round((j.progress||row()?.progress||0)*100);const r=row();const total=snapshot.time?.seconds||r?.processingSeconds||0;const currentSeconds=active?.seconds||0;
+function progressHTML(basic){if(sourcePreparation)return preparationHTML();const live=activity(row());const j=journey||row()?.journey||snapshot.journey||{};const stages=visibleMilestones(j.milestones||PHASES.map(id=>({id,state:'pending',seconds:0})),basic);const complete=row()?.status==='complete'||(row()?.deliveryKind==='preview'&&!!row()?.output&&row()?.status!=='running')||j.complete;const pct=complete?100:Math.round((j.progress||row()?.progress||0)*100);const r=row();const total=snapshot.time?.seconds||r?.processingSeconds||0;const currentSeconds=active?.seconds||0;
  return `<div class="progress-top"><div class="progress-stage">${esc(complete?t(r?.deliveryKind==='preview'?'Preview saved — dubbing incomplete':'Output saved'):workerText(r?.stage,state.language,true)||t('Ready when you are'))}</div><div class="progress-percent">${pct}%</div><div class="progress-detail ellipsis" title="${esc(r?.message||'')}">${esc(workerText(r?.message,state.language)||t('Translated dialogue and recordings appear here as processing progresses.'))}</div><div class="progress-times">${esc(t('Total processing'))}: ${shortTime(total)} · ${esc(t('This run'))}: ${shortTime(currentSeconds)}<br>${esc(estimateRemaining())}</div></div>
  ${live.known?`<div class="activity-status ${live.quiet?'warning':''}" role="status">${esc(t('Last worker update'))}: ${shortTime(live.lastEvent)} · ${esc(t('Last progress change'))}: ${shortTime(live.lastProgress)}${live.quiet?`<small>${esc(t('No recent progress message. The model may still be loading or working; this is not a confirmed stop.'))}</small>`:''}${r?.lastError?.message?`<small>${esc(r.lastError.message)}</small>`:''}</div>`:''}
  ${stages.some(x=>x.state==='prepared')?`<small class="progress-reuse-note">${esc(t('Overall progress includes saved work. Current-stage counts show new processing.'))}</small>`:''}<div class="progress-track"><div class="fill" style="width:${pct}%"></div>${basic?`<div class="runner ${!active?'paused':''}" style="left:${Math.min(98,Math.max(2,pct))}%;background-image:url('${themeAssets(themeKey).runner}');background-size:${themeAssets(themeKey).runnerSize}" aria-hidden="true"></div>`:''}</div>
@@ -614,7 +615,7 @@ async function startConversion(id=state.selected,freshVersion=false){
   if(freshVersion&&forceAnalysisID===id||state.queue.find(r=>r.id===id)?.status!=='paused'&&!state.queue.find(r=>r.id===id)?.output){
    // Automatic detection uses the existing Starting status. A drawer is
    // reserved for a decision, so normal Japanese starts never flash a panel.
-   let info=await rpc('source-language',{id});
+   let info=await preflightSource({id});
    state=await rpc('state');language=state.settings.dubLanguages?.[0]||'yue';
    if(info.needsConfirmation){
     const accepted=await new Promise(resolve=>{
@@ -641,7 +642,7 @@ async function advanceQueue(){
  await queueOrder.idle();
  let id;
  while(!active&&(id=conversionQueue.next(state.queue))){
-  try{await startConversion(id,conversionQueue.freshVersionID===id);return}catch(e){toast(`${filename(state.queue.find(r=>r.id===id)?.video)} · ${t(e.message||String(e))}`,true)}
+  try{await startConversion(id,conversionQueue.freshVersionID===id);return}catch(e){toast(`${filename(state.queue.find(r=>r.id===id)?.video)} · ${t(e.message||String(e))}`,e.message!=='Source preparation cancelled.')}
   if(!conversionQueue.enabled)break;
  }
  conversionQueue.stop();await rememberQueue(false);
@@ -909,8 +910,8 @@ async function removeProject(id,b){
  }finally{removing=false;b.disabled=false;}
 }
 async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disabled)return;const a=b.dataset.action,v=b.dataset.value;if(a==='installation-details'){await showDrawer('Installation details',(setupFailure&&!installationActive()?`<section class="warning setup-failure" role="alert"><strong>${esc(t('Setup did not finish'))}</strong><p>${esc(setupFailure)}</p></section>`:installationProgress())+installationDetails()+(installationActive()?button('pause','Pause download','pause'):setupFailure?button('setup','Retry setup','refresh'):''));const details=$('#drawer .installation-details')||$('.drawer .installation-details');if(details)details.open=true;paintInstallation();return;}if(a==='copy-installation'){await navigator.clipboard.writeText(installationLog.text);toast(t('Copied'));return;}if(a==='open-project-link')e.preventDefault();
- if(a==='confirm-source-language'){const params={id:state.selected,language:$('#source-language-select')?.value};const stream=$('#source-stream-select')?.value;if(stream!==undefined&&stream!=='')params.stream=Number(stream);const info=await rpc('source-language',params);if(!info.supported)throw Error(info.reason);state=await rpc('state');const resolve=sourceConfirmation;sourceConfirmation=null;await closeDrawer();resolve?.(info);return}
- if(a==='source-settings'){if(active)return;const info=await rpc('source-language',{id:state.selected});await showDrawer('Source language',sourceHTML(info,t,button));return}
+ if(a==='confirm-source-language'){const params={id:state.selected,language:$('#source-language-select')?.value};const stream=$('#source-stream-select')?.value;if(stream!==undefined&&stream!=='')params.stream=Number(stream);const info=await preflightSource(params);if(!info.supported)throw Error(info.reason);state=await rpc('state');const resolve=sourceConfirmation;sourceConfirmation=null;await closeDrawer();resolve?.(info);return}
+ if(a==='source-settings'){if(active)return;const info=await preflightSource({id:state.selected});await showDrawer('Source language',sourceHTML(info,t,button));return}
  if(a==='update-recordings'){await openRecordingUpdate('selected');return}
  if(a==='restart-video'){await openRestartMenu(v||state.selected);return}
  if(a==='restart-choice'){
@@ -1030,6 +1031,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
   await beginConversion(v||state.selected,all,all,produceNew);return;
  }
  if(a==='start-all'){if($('.restart-menu,.reset-video-confirm')){restartNote('Confirm or cancel the reset menu before starting a conversion.',true);return;}await beginConversion(null,true,true);return}
+ if(a==='cancel-source-preparation'){conversionQueue.stop();if(!active)await invoke('studio_pause');if(sourcePreparation?.operationID)await rpc('source-prepare-cancel',{operationID:sourcePreparation.operationID});await rememberQueue(false);return}
  if(a==='pause'){await pauseConversion();return}
  if(a==='toggle-preview'||a==='preview-control'){await setPreview(!previewEnabled);return}if(a==='retry-preview'){await setPreview(true);return}
  if(a==='player-back'||a==='player-forward'){seek(sourceTime+(a==='player-back'?-10:10));return}
@@ -1218,7 +1220,7 @@ async function recoverCompletion(status){
  const payload=missedCompletion(status,active,finishedRunIDs);
  if(payload){finishChain=finishChain.then(()=>safely(()=>onFinished({payload})));await finishChain;}
 }
-async function poll(){if(pollBusy||initializing||addingVideos||selectionPending)return;pollBusy=true;try{
+async function poll(){if(sourcePreparation){updateProgress();return;}if(pollBusy||initializing||addingVideos||selectionPending)return;pollBusy=true;try{
  const status=await invoke('studio_status');runtimeReady=status.runtimeReady;
  if(status.running&&!finishedRunIDs.has(status.running.id))active={...active,...status.running};
  await recoverCompletion(status);
@@ -1268,6 +1270,7 @@ async function boot(){
  initializing=false;
  render();
  await recoverCompletion(status);
+ setInterval(pollSourcePreparation,800);
  setInterval(poll,2500);
  if(runtimeReady){await Promise.allSettled([refreshModels(),refreshSetupPlan()]);}
  else{await refreshSetupPlan();}

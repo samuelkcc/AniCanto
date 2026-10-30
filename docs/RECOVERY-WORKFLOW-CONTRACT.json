@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
   "alignmentGovernance": {
     "revision": "shared-workflow-controls-4-language-budget-overlap",
@@ -171,7 +171,7 @@
       "desktopConsumer": "notified to reuse; confirm integration in desktop handover",
       "items": 14,
       "presentation": "iPad build 193 uses plain icon selectors for separate production and AI repair pages, including production defaults",
-      "warning": "extra review/repair may take 2–3 times as long or longer, without guaranteed improvement over the optimized defaults; conditional advisory, not a benchmark"
+      "warning": "extra review/repair may take 2\u20133 times as long or longer, without guaranteed improvement over the optimized defaults; conditional advisory, not a benchmark"
     }
   },
   "desktopStandardMode": {
@@ -995,7 +995,7 @@
   },
   "controlPresentation": {
     "revision": "compact-optional-ai-controls-200",
-    "copyRevision": "workflow-controls-guide-6-source-fallback",
+    "copyRevision": "workflow-controls-guide-23-detailed-repair-help",
     "interfaceLanguageStyle": "Written Traditional Chinese (Hong Kong). Generated Cantonese dialogue retains spoken Hong Kong grammar.",
     "header": "Production slider and additional-repair wand icons.",
     "controlRows": "Labels, switches and values only. Full descriptions stay in the guide.",
@@ -1097,7 +1097,7 @@
     },
     "evidence": "mobile/Validation/required-caption-target-build205-2026-10-28.json",
     "guideRevision": "workflow-controls-guide-7-required-caption-target",
-    "desktopReviewClarification": "Samuel reaffirmed zero optional content checks and preservation of the first audible take. The iPad0–2 content-check stepper is separate from mandatory missing/damaged-audio recovery. Desktop252 has an AI switch but no matching count control. The exact-input/per-line three-call comparison is an internal recovery distinction, not a request to regenerate voiced lines three times. No app change in this clarification."
+    "desktopReviewClarification": "Samuel reaffirmed zero optional content checks and preservation of the first audible take. The iPad0\u20132 content-check stepper is separate from mandatory missing/damaged-audio recovery. Desktop252 has an AI switch but no matching count control. The exact-input/per-line three-call comparison is an internal recovery distinction, not a request to regenerate voiced lines three times. No app change in this clarification."
   },
   "gptMLXDeployment": {
     "decisionDate": "2026-10-28",
@@ -1568,11 +1568,11 @@
     "receipt": "mobile/Validation/iphone-basic-upgrade-build236-2026-10-29.json"
   },
   "applicationUserGuide": {
-    "revision": "application-user-guide-17-phone-reset-location",
+    "revision": "application-user-guide-40-phone-trailing-settings",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
-    "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
-    "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+    "sha256": "e274bb68ab1db03cbcd7bbcab72cf75c1de612228faf908a5046cf25204b045b",
+    "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+    "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
     "maintenance": "docs/USER-GUIDE-MAINTENANCE.md",
     "platformFilter": "chapter and section",
     "locales": [
@@ -1585,7 +1585,7 @@
     "consumers": {
       "desktop": {
         "version": "0.25.7",
-        "build": 260,
+        "build": 262,
         "sourceIntegrated": true,
         "renderedLocales": 4,
         "chapters": 20,
@@ -1596,11 +1596,11 @@
         "signatureVerified": true,
         "webFiles": 161,
         "installedStartup": true,
-        "receipt": ".build/timing260/install-receipt.json",
-        "manualRevision": "application-user-guide-13-caption-only-hk",
-        "manualSHA256": "177444f37d21f694be7138fa846e9c7116dc987e81deb7240e995fc9f57bbec9",
-        "latestSourcePendingNextPackage": false,
-        "latestChangeScope": "Confirmed caption-only source gate, contextual Hong Kong first-draft examples, and retired desktop speed-warning removal. Browser UI checked in four languages; no user-film inference.",
+        "receipt": ".build/rest262/install-receipt.json",
+        "manualRevision": "application-user-guide-18-desktop-rest-scenes",
+        "manualSHA256": "e97abc13d2618c25124e63b3b9b49df3dc16300a5916afc9e7dfe4e3185e6b94",
+        "latestSourcePendingNextPackage": true,
+        "latestChangeScope": "Installed rest artwork and guide18. Later guide/control source remains pending.",
         "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
         "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
         "candidate257": {
@@ -1635,41 +1635,96 @@
           "receipt": ".build/report259/install-receipt.json",
           "installed": true
         },
-        "nativeRenderingVerified": false
+        "nativeRenderingVerified": false,
+        "priorPackage260": {
+          "build": 260,
+          "manualRevision": "application-user-guide-13-caption-only-hk",
+          "manualSHA256": "177444f37d21f694be7138fa846e9c7116dc987e81deb7240e995fc9f57bbec9",
+          "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+          "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+          "receipt": ".build/timing260/install-receipt.json"
+        },
+        "pendingPhoneOnlyGuide23": "Phone layout instructions changed. Installed counterpart package hashes remain separate.",
+        "guide23SchemaCorrectionPendingPackage": "One empty steps array becomes false. A mobile Bool decoder rejected the prior copy. Adopt and verify this resource in the next owned package.",
+        "pendingDuoGuide24": "Duo layout instructions changed. Installed consumer hashes remain separate."
       },
       "ipad": {
-        "build": 250,
+        "build": 255,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
         "packaged": true,
         "installed": true,
         "launchVerified": true,
-        "manualRevision": "application-user-guide-16-ipad-whisper-recovery",
-        "manualSHA256": "9149ef641bcc9f7236e39a0d6765024cb9b2774cee03ac8c6036424e8af87846",
-        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
-        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
-        "receipt": "mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json",
+        "manualRevision": "application-user-guide-35-resting-assistant-motion",
+        "manualSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+        "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+        "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+        "receipt": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json",
         "latestSourcePendingNextPackage": true,
         "nativeRenderingVerified": false,
-        "previousRenderingEvidence": "Four locales were checked before guide8. No new native rendering check occurs for245.",
+        "previousRenderingEvidence": "Guide254 native four-language captures and decoding pass. Direct user interaction remains separate.",
         "reportRenderedLocales": 4,
-        "queueRenderedLocales": 4
+        "queueRenderedLocales": 4,
+        "priorPackage250": {
+          "build": 250,
+          "manualRevision": "application-user-guide-16-ipad-whisper-recovery",
+          "manualSHA256": "9149ef641bcc9f7236e39a0d6765024cb9b2774cee03ac8c6036424e8af87846",
+          "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+          "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+          "receipt": "mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json"
+        },
+        "priorPackage251": {
+          "build": 251,
+          "manualRevision": "application-user-guide-19-ipad-repair-slider",
+          "manualSHA256": "fa68204ed5ccce1809fa81b44e545d797c728fe0f35bbe8cf50d167da7efd57a",
+          "controlGuideRevision": "workflow-controls-guide-20-repair-clarity",
+          "controlGuideSHA256": "8436c85eb6cfeb280fa060cec7018b725fe6b9043df7a4a947319fe8f81dba9a",
+          "receipt": "mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json"
+        },
+        "priorPackage252": {
+          "build": 252,
+          "manualRevision": "application-user-guide-21-mobile-licence-navigation",
+          "manualSHA256": "a1534e95a33c472e3317e6a4555298d52016311cd102a7aec4e4945c548749e1",
+          "controlGuideRevision": "workflow-controls-guide-21-apple-review-scope",
+          "controlGuideSHA256": "023f421709a8c5381afe194da4cb7e955e74b4e1a70937efca62f92413124382",
+          "receipt": "mobile/Validation/ipad-independent-cmu-252-2026-10-30.json"
+        },
+        "priorPackage253": {
+          "build": 253,
+          "manualRevision": "application-user-guide-22-repair-groups-pencil",
+          "manualSHA256": "ffcc7301286369e2b8e45359d3fd7e12b46c9ea3a1fed837508b588ac41e5b23",
+          "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+          "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+          "receipt": "mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json"
+        },
+        "latestCanonicalIpadVisibleContentMatches": true,
+        "latestChangeScope": "Guide35 includes shared pre-conversion expectations and sleeping-motion instructions. No conversion permission changes.",
+        "priorPackage254": {
+          "build": 254,
+          "manualRevision": "application-user-guide-27-duo-expert-navigation",
+          "manualSHA256": "ba453fa4cd5da33650c735281ed077e0d2b6c66445e7126ede624d9340f2c837",
+          "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+          "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+          "receipt": "mobile/Validation/ipad-followup-254-2026-10-30.json"
+        },
+        "nativeGuideRenderingEvidenceBuild": 254,
+        "nativeGuideRenderingEvidenceScope": "Four locales rendered guide27. Native255 tests the animation; guide35 resource bytes are separately verified."
       },
       "iphone": {
-        "build": 250,
+        "build": 258,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
         "packaged": true,
         "installed": true,
         "launchVerified": true,
-        "manualRevision": "application-user-guide-17-phone-reset-location",
-        "manualSHA256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
-        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
-        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
-        "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json",
-        "status": "Normal250 installs and launches. Direct zh-HK reset placement, confirmation and Cancel checks pass. Exact guide17/control19 are packaged. Full guide rendering is not checked.",
+        "manualRevision": "application-user-guide-35-resting-assistant-motion",
+        "manualSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+        "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+        "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+        "receipt": "mobile/Validation/iphone-menu-258-2026-10-30.json",
+        "status": "Normal251installs and the process launch succeeds. Thirty critical metadata files remain exact. Direct physical UI and rotation checks wait for Trust This Computer confirmation. Native dictionary replacement is not in251.",
         "priorPackage239": {
           "build": 239,
           "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
@@ -1677,11 +1732,11 @@
           "receipt": "mobile/Validation/iphone-assistant-manual-239-2026-10-29.json",
           "status": "Normal239 installed and launched. Final manual4/control15 native rendering, direct search/navigation and saved-job/preference checks pass."
         },
-        "latestSourcePendingNextPackage": false,
-        "sourceManualRevision": "application-user-guide-17-phone-reset-location",
-        "sourceManualSHA256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
-        "sourceControlRevision": "workflow-controls-guide-19-caption-only-hk",
-        "sourceControlSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "latestSourcePendingNextPackage": true,
+        "sourceManualRevision": "application-user-guide-23-phone-adaptive-buttons",
+        "sourceManualSHA256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
+        "sourceControlRevision": "workflow-controls-guide-22-repair-groups",
+        "sourceControlSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
         "renderedCopyRevision": null,
         "nativePackageValidationPending": false,
         "priorPackage241": {
@@ -1762,6 +1817,59 @@
           "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
           "receipt": "mobile/Validation/iphone-workspace-249-2026-10-29.json",
           "status": "Normal249 installs and launches. Two native cases and direct zh-HK workspace navigation pass. Exact guide15/control19 are packaged. Native full-guide rendering remains unverified."
+        },
+        "priorPackage250": {
+          "build": 250,
+          "manualRevision": "application-user-guide-17-phone-reset-location",
+          "manualSHA256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
+          "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+          "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+          "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json",
+          "status": "Normal250 installs and launches. Direct zh-HK reset placement, confirmation and Cancel checks pass. Exact guide17/control19 are packaged. Full guide rendering is not checked."
+        },
+        "candidate255": {
+          "build": 255,
+          "manualRevision": "application-user-guide-23-phone-adaptive-buttons",
+          "manualSHA256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
+          "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+          "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+          "packaged": true,
+          "signatureVerified": true,
+          "installed": false,
+          "nativeGuideDecodeVerified": true,
+          "renderedLocales": 4,
+          "receipt": "mobile/Validation/iphone-button-layout-255-2026-10-30.json"
+        },
+        "candidate256": {
+          "build": 256,
+          "manualRevision": "application-user-guide-24-duo-navigation",
+          "manualSHA256": "857fc643963258a8b5b1026c8483b15566cd4ecc0d4ba00569f57460986083c2",
+          "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+          "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+          "packaged": true,
+          "signatureVerified": true,
+          "installed": true,
+          "nativeGuideDecodeVerified": true,
+          "receipt": "mobile/Validation/iphone-button-layout-256-2026-10-30.json"
+        },
+        "preferredStagedCandidate": 256,
+        "priorInstalledPackage251": {
+          "build": 251,
+          "manualRevision": "application-user-guide-20-phone-player-review-layout",
+          "manualSHA256": "3e4f4a20e4c3505495881733ba4c74a4d5736ed327d65d84e7b98a82f33c9622",
+          "controlGuideRevision": "workflow-controls-guide-21-apple-review-scope",
+          "controlGuideSHA256": "023f421709a8c5381afe194da4cb7e955e74b4e1a70937efca62f92413124382",
+          "receipt": "mobile/Validation/iphone-layout-review-251-2026-10-30.json"
+        },
+        "compiledSourceBuild": 258,
+        "priorInstalledPackage257": {
+          "build": 257,
+          "manualRevision": "application-user-guide-24-duo-navigation",
+          "manualSHA256": "857fc643963258a8b5b1026c8483b15566cd4ecc0d4ba00569f57460986083c2",
+          "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+          "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+          "receipt": "mobile/Validation/iphone-install-257-2026-10-30.json",
+          "compiledSourceBuild": 256
         }
       }
     },
@@ -1869,6 +1977,29 @@
         "scope": "Add one phone reset-location paragraph in four languages. Preserve guide16 content.",
         "iPhoneInstalledBuild": 250,
         "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json"
+      },
+      {
+        "revision": "application-user-guide-19-ipad-repair-slider",
+        "sha256": "fa68204ed5ccce1809fa81b44e545d797c728fe0f35bbe8cf50d167da7efd57a",
+        "iPadInstalledBuild": 251,
+        "receipt": "mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json"
+      },
+      {
+        "revision": "application-user-guide-21-mobile-licence-navigation",
+        "sha256": "a1534e95a33c472e3317e6a4555298d52016311cd102a7aec4e4945c548749e1",
+        "iPadInstalledBuild": 252,
+        "receipt": "mobile/Validation/ipad-independent-cmu-252-2026-10-30.json"
+      },
+      {
+        "revision": "application-user-guide-22-repair-groups-pencil",
+        "sha256": "ffcc7301286369e2b8e45359d3fd7e12b46c9ea3a1fed837508b588ac41e5b23",
+        "iPadInstalledBuild": 253,
+        "receipt": "mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json"
+      },
+      {
+        "revision": "application-user-guide-23-phone-adaptive-buttons",
+        "sha256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
+        "scope": "Phone adaptive buttons and complete upgrade pages. Correct one steps schema value. Existing installed counterpart hashes stay separate."
       }
     ],
     "mobileReadingBackgroundPrerequisite": {
@@ -2265,8 +2396,8 @@
     "hongKongWording": {
       "userVerifiedFromDesktopThread": true,
       "examples": [
-        "廢話小說 >> 廢話小講",
-        "搞不好 >> 搞唔好"
+        "\u5ee2\u8a71\u5c0f\u8aaa >> \u5ee2\u8a71\u5c0f\u8b1b",
+        "\u641e\u4e0d\u597d >> \u641e\u5514\u597d"
       ],
       "status": "Desktop260 new-request contextual style source is implemented. No global character substitution, saved-script rewrite or added inference permission. Mobile uptake remains pending."
     },
@@ -2368,7 +2499,36 @@
     },
     "hkStyleData": "Resources/hk-spoken-style.json",
     "hkStyleRevision": "hong-kong-contextual-260",
-    "mobileUptakePending": true
+    "mobileUptakePending": true,
+    "ipad": {
+      "status": "Source audit complete. Native implementation, tests and package remain pending.",
+      "lastInstalledBuild": 254,
+      "settingImplemented": false,
+      "defaultEnabledInNewRequests": false,
+      "nativeDualInputNoDialogueProofImplemented": false,
+      "manualSourceRevisionObserved": "application-user-guide-33-phone-expert-tools",
+      "controlGuideRevisionObserved": "workflow-controls-guide-23-detailed-repair-help",
+      "reuseWarning": "StandardBackgroundWitness verifies only a stem. It does not establish complete original-plus-stem negative speech evidence.",
+      "integrationPoints": [
+        "StandardPipeline.prepare source evidence before TTS",
+        "StandardProject frozen optional fields and required delivery gates",
+        "StandardFiles.srt and StandardMedia caption/mix export",
+        "StandardView shared Basic/Expert production settings",
+        "ProductionDefaults persisted values",
+        "report missing/advisory/source classification"
+      ],
+      "legacyResume": "Do not default missing saved fields to enabled. Do not change saved source clocks, audio decisions or spent allowances.",
+      "acceptanceRequired": [
+        "complete original and separated input with matching hashes and offsets",
+        "quiet/offscreen speech and incomplete evidence keep TTS",
+        "selected embedded, external and OCR display clocks survive export",
+        "Cantonese, Mandarin and English target text survives without a voice take",
+        "confirmed caption-only bypasses TTS and missing-audio fill",
+        "both mode defaults, persistence, explicit off and frozen resume",
+        "manual voice/source and nonverbal protection"
+      ],
+      "sourceAuditRecord": "docs/CODEX-HANDOVER.md: Mobile caption-only source audit255"
+    }
   },
   "hongKongContextualWording260": {
     "revision": "hong-kong-contextual-260",
@@ -2502,8 +2662,15 @@
     "platforms": {
       "ipad": {
         "source": 251,
-        "installedBuild": 250,
-        "nativeTestsPending": true
+        "installedBuild": 251,
+        "nativeTestsPending": false,
+        "nativeCases": 12,
+        "nativeFailures": 0,
+        "compiled": true,
+        "packaged": true,
+        "installed": true,
+        "launchVerified": true,
+        "receipt": "mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json"
       },
       "iphone": {
         "adopted": false
@@ -2518,5 +2685,558 @@
     "pictureCaptionLanguage": "Vision detects caption language independently of the audio language. Name-only evidence keeps its existing explicit language.",
     "unconfirmedOCRWindowSecondsMaximum": 8,
     "selectedOCRNeedsExpertAssist": false
+  },
+  "optionalControlAudit251": {
+    "revision": "ipad-repair-control-audit-251",
+    "slider": {
+      "values": [
+        0,
+        1,
+        2
+      ],
+      "default": 0,
+      "preference": "standard.repair.contentChecks",
+      "identifier": "production.optionalRepair.contentChecks",
+      "countPolicyChanged": false,
+      "nativeVisualAcceptance": false
+    },
+    "findings": {
+      "contentReview": "Find and record content concerns. This control does not permit replacement of an audible take.",
+      "autoRepair": "Permit bounded correction when reliable evidence supports a defect. This is separate from inspection.",
+      "zeroCountCaveat": "Zero stops ordinary inspection. Auto repair can retain a targeted two-check allowance, subject to other execution gates.",
+      "counterScope": "The optional content-check key includes the recording SHA. The limit applies to that recording version.",
+      "durationAndOverlap": "Duration control has priority. The separate audible-overlap retake does not run when strict duration control is enabled.",
+      "safeEndpoint": "Independent evidence can permit selection of a trimmed copy. The original recording stays available.",
+      "gapBorrowing": "Use source evidence of a background-only interval. Missing text alone cannot prove silence.",
+      "fallback": "Alternate-model and system-voice options are ordered fallback permissions. Both require auto repair.",
+      "translationReview": "Gemma and Qwen paths pass the option. The Apple translation branch returns before this additional review.",
+      "mandatoryPresence": "Missing, silent or damaged target audio requires bounded recovery even when optional controls are off."
+    },
+    "removedOrMergedControls": [],
+    "backendPermissionsChanged": false,
+    "sourceCopyRevision": "workflow-controls-guide-21-apple-review-scope",
+    "sourceCopySHA256": "023f421709a8c5381afe194da4cb7e955e74b4e1a70937efca62f92413124382",
+    "ipadReceipt": "mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json",
+    "counterparts": {
+      "desktop": "Review the same control semantics and presentation. No adoption is certified.",
+      "iphone": "Keep native and Pipeline uptake separate. Manual20 has a narrow phone UI owner."
+    }
+  },
+  "nativeDictionaryReplacement252": {
+    "revision": "independent-cmu-reader-252",
+    "workflowChanged": false,
+    "receipt": "mobile/Validation/ipad-independent-cmu-252-2026-10-30.json",
+    "iPadInstalledBuild": 252,
+    "iPhoneAdopted": false,
+    "publicDistributionCleared": false,
+    "iPhoneCandidate": {
+      "build": 252,
+      "sourceAndPackageReady": true,
+      "installed": false,
+      "receipt": "mobile/Validation/iphone-independent-cmu-252-2026-10-30.json",
+      "blocker": "Device trust confirmation and independent phone runtime checks are pending.",
+      "workflowChanged": false,
+      "publicDistributionCleared": false,
+      "archiveAndMachOChecksPassed": true,
+      "nativeDraftStorageTest": {
+        "cases": 1,
+        "failures": 0,
+        "scope": "Isolated simulator. Original text, selected audio and spent counters stay unchanged."
+      },
+      "sharedLicenceReconciliation": "mobile/Validation/mobile-license-reconciliation-253-2026-10-30.json"
+    },
+    "iPhoneCandidate255": {
+      "build": 255,
+      "sourceAndPackageReady": true,
+      "installed": false,
+      "receipt": "mobile/Validation/iphone-button-layout-255-2026-10-30.json",
+      "blocker": "Device trust and independent physical runtime checks remain pending.",
+      "publicDistributionCleared": false
+    }
+  },
+  "optionalControlAudit253": {
+    "revision": "grouped-repair-presentation-253",
+    "groupIDs": [
+      "translation",
+      "content",
+      "timing",
+      "fallback"
+    ],
+    "controlItemIDs": [
+      [
+        "translationReview"
+      ],
+      [
+        "contentReview",
+        "autoRepair"
+      ],
+      [
+        "durationLimit",
+        "excessiveAudibleOverlap",
+        "safeEndpoint",
+        "borrowGaps"
+      ],
+      [
+        "alternateEngine",
+        "systemVoice"
+      ]
+    ],
+    "backendPermissionsChanged": false,
+    "defaultSwitchesOn": 0,
+    "defaultContentChecks": 0,
+    "iPadInstalledBuild": 253,
+    "receipt": "mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json",
+    "counterparts": {
+      "iphone": "Phone owner receives exact copy22and scoped pencil steps. Native replacement and phone UI installation need their own receipt.",
+      "desktop": "Owner receives common groups and semantics. Current desktop staged guide is older. No desktop adoption is claimed.",
+      "appConnect": "Owner receives the252native and licence gate. Website preparation and publication remain separate."
+    }
+  },
+  "manualReviewPencil253": {
+    "draftOnlySave": true,
+    "automaticRetakeOnSave": false,
+    "automaticTakeSelection": false,
+    "iPadInstalledBuild": 253,
+    "iPhoneAdopted": false,
+    "receipt": "mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json"
+  },
+  "phonePlayerReviewLayout251": {
+    "build": 251,
+    "workflowChanged": false,
+    "installed": true,
+    "simulatorLayoutTests": 2,
+    "controlledMainPageCaptures": 20,
+    "directPhysicalUIVerified": false,
+    "userAccepted": false,
+    "nativeDictionaryAdopted": false,
+    "receipt": "mobile/Validation/iphone-layout-review-251-2026-10-30.json"
+  },
+  "phoneDuoPreview254": {
+    "build": 254,
+    "scope": "Isolated simulator UI and playback only.",
+    "installed": true,
+    "twoClipsPlay": true,
+    "allExistingMP4FilesExact": true,
+    "receipt": "mobile/Validation/iphone-duo-preview-254-2026-10-30.json",
+    "nativeInferenceVerified": false,
+    "physicalPhoneChanged": false
+  },
+  "phoneButtonLayout255": {
+    "build": 255,
+    "workflowChanged": false,
+    "sourceChanged": true,
+    "installed": false,
+    "target": "Equal-width actions, separate recording status and adaptive columns. Preserve action handlers and saved policies.",
+    "guideRevision": "application-user-guide-23-phone-adaptive-buttons",
+    "guideSHA256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
+    "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+    "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+    "evidence": "mobile/Validation/iphone-button-layout-255-2026-10-30.json",
+    "guideSchemaCorrection": "One empty steps array becomes false, as required by the shared schema. The native Bool decoder rejected the prior copy.",
+    "compiled": true,
+    "packaged": true,
+    "signatureVerified": true,
+    "installedPhoneBuild": 251,
+    "nativeCases": 3,
+    "nativeFailures": 0,
+    "controlledCaptures": 151,
+    "geometryChecks": 12,
+    "nativeGuidePhoneChapters": 17,
+    "userAccepted": false
+  },
+  "phoneDuoPreview255": {
+    "build": 255,
+    "scope": "Isolated simulator UI.",
+    "installed": true,
+    "installedBytesMatch": true,
+    "guideRevision": "application-user-guide-23-phone-adaptive-buttons",
+    "guideSHA256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
+    "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+    "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+    "allExistingMP4FilesExact": true,
+    "receipt": "mobile/Validation/iphone-duo-preview-255-2026-10-30.json",
+    "nativeInferenceVerified": false,
+    "physicalPhoneChanged": false
+  },
+  "phoneDuoPreview256": {
+    "build": 256,
+    "scope": "Isolated simulator UI only.",
+    "sourceImplemented": true,
+    "tested": true,
+    "installed": true,
+    "workflowChanged": false,
+    "guideRevision": "application-user-guide-24-duo-navigation",
+    "guideSHA256": "857fc643963258a8b5b1026c8483b15566cd4ecc0d4ba00569f57460986083c2",
+    "controlGuideRevision": "workflow-controls-guide-22-repair-groups",
+    "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
+    "receipt": "mobile/Validation/iphone-duo-preview-256-2026-10-30.json",
+    "installedBytesMatch": true,
+    "nativeInferenceVerified": false,
+    "directUI": {
+      "openedBasicAndExpert": true,
+      "closedBasicAndExpertReport": true,
+      "partialOpenReportRetained": true,
+      "sameReportPageSurvivesClosedPartialOpen": true,
+      "timelineHiddenInReport": true,
+      "locateFrameReturnsToPreview": {
+        "sourceSeconds": 1.885,
+        "segment": "First introduction dialogue."
+      },
+      "basicOptionsOpenAndDoneReturn": true,
+      "learningOpensPlaylistFirst": true,
+      "learningSettingsOpenAndDoneReturn": true,
+      "speechEntry": true,
+      "modelsEntry": true,
+      "modelsPageSurvivesFold": true,
+      "preferencesEntry": true,
+      "readingEntry": true,
+      "playerScrollShowsAllThreeExportActions": true,
+      "exportActionInvoked": false,
+      "mediaPlayback": {
+        "websiteIntroductionSecondsObserved": 2.741,
+        "builtInIntroductionSecondsObserved": 2.721,
+        "listeningQualityAccepted": false
+      },
+      "finalState": "Opened Basic. Website introduction selected and paused at zero.",
+      "screenshots": [
+        ".build/duo256/screens/basic-open.png",
+        ".build/duo256/screens/basic-closed.png",
+        ".build/duo256/screens/player-actions-open.png"
+      ]
+    },
+    "allExistingMP4FilesExact": true
+  },
+  "phoneButtonLayout256": {
+    "build": 256,
+    "workflowChanged": false,
+    "sourceImplemented": true,
+    "installed": true,
+    "installedBuild": 257,
+    "guideRevision": "application-user-guide-24-duo-navigation",
+    "guideSHA256": "857fc643963258a8b5b1026c8483b15566cd4ecc0d4ba00569f57460986083c2",
+    "scope": "Common Player, Learning header and large-text subtitle import layout.",
+    "receipt": "mobile/Validation/iphone-button-layout-256-2026-10-30.json",
+    "packaged": true,
+    "signatureVerified": true,
+    "commonPresentationTested": true,
+    "physicalPhoneExecutionVerified": true,
+    "guideNativeDecodeVerified": true,
+    "launchVerified": true,
+    "installReceipt": "mobile/Validation/iphone-install-257-2026-10-30.json",
+    "compiledSourceBuild": 256,
+    "physicalLayoutAccepted": false
+  },
+  "phoneDuoBasicToolbar257": {
+    "build": 257,
+    "sourceImplemented": true,
+    "installed": true,
+    "tested": true,
+    "guideRevision": "application-user-guide-28-duo-player-return",
+    "guideSHA256": "75b6102ee32a48576301f359dd853c6849f3aaa58f6aa6f969a4e3be787750d5",
+    "workflowChanged": false,
+    "target": "Opened Basic has no function column. Keep the video list and top-bar controls. Expert keeps its navigation.",
+    "expertEntries": "Playlist/Player and Speech use left navigation only. No duplicate shelf or More entries.",
+    "presentation": "Immediate Player and Speech entry and exit. Keep other animations.",
+    "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+    "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+    "displayName": "AniCanto",
+    "editingDefaults": {
+      "assistant": true,
+      "videoPreview": false
+    },
+    "playerReturn": "Opened: top-right return to studio. Closed portrait: left function menu.",
+    "installedBuild": 257,
+    "receipt": "mobile/Validation/iphone-duo-preview-257-2026-10-30.json",
+    "supersededByBuild": 258
+  },
+  "desktopSourceCorrection263": {
+    "revision": "bounded-source-clock-263",
+    "captionOwnership": "caption-owner-no-duplicate-263",
+    "repairGroups": "repair-groups-263",
+    "newRequestsOnly": true,
+    "sourceWindowSeconds": 8,
+    "maximumSourceCalls": 12,
+    "persistedSourceSeconds": 90,
+    "ocrCreatesWordClocks": false,
+    "partialSource": "Keep recovered segments. Label each unresolved audio window without invented word clocks. Whole-film caption acceptance remains pending.",
+    "coveredCaption": "One authored caption owner; no duplicate TTS or Japanese lexical continuation when ownership is complete.",
+    "nonDialogueCaptions": {
+      "default": true,
+      "modes": [
+        "basic",
+        "expert"
+      ],
+      "requires": "Complete original and separated-audio negative speech evidence. ASR absence alone is insufficient."
+    },
+    "platforms": {
+      "desktop": "Implemented and tested in isolated fixtures. Mac263 installed with guide29; whole-film source-clock acceptance pending. Windows remains262.",
+      "ipad": "Owner adoption and device tests pending.",
+      "iphone": "Owner adoption and device tests pending."
+    },
+    "rules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "persistedSourceSecondsPolicy": "Do not start another window after90seconds are spent. An in-flight local decode can finish later."
+  },
+  "phoneSignatureRepair257": {
+    "receipt": "mobile/Validation/iphone-install-257-2026-10-30.json",
+    "explicitRootDylibSignatureVerified": true,
+    "physicalWelcomeVisible": true,
+    "compiledSourceBuild": 256,
+    "newConversionRun": false
+  },
+  "ipadImmediateNavigation254": {
+    "build": 254,
+    "installed": true,
+    "routes": [
+      "Library Player",
+      "Library Speech",
+      "Projects Player",
+      "Demo Learning"
+    ],
+    "nativePresentationAndReturnAnimations": false,
+    "receipt": "mobile/Validation/ipad-followup-254-2026-10-30.json",
+    "algorithmChanged": false
+  },
+  "detailedRepairHelp254": {
+    "definitionSource": "docs/WORKFLOW-CONTROLS-GUIDE.json",
+    "controlRevision": "workflow-controls-guide-23-detailed-repair-help",
+    "manualReferenceSection": "additional-repair-reference",
+    "groups": [
+      "translation",
+      "content",
+      "timing",
+      "fallback"
+    ],
+    "permissionsChanged": false,
+    "ipadInstalledBuild": 254,
+    "desktopStatus": "Owner is implementing and verifying its own mapping.",
+    "iphoneStatus": "Private phone uptake is pending. Copy bytes alone do not prove alignment.",
+    "receipt": "mobile/Validation/ipad-followup-254-2026-10-30.json"
+  },
+  "phoneDuoExportFooter258": {
+    "sourceImplemented": true,
+    "tested": true,
+    "installed": true,
+    "guideRevision": "application-user-guide-35-resting-assistant-motion",
+    "guideSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+    "workflowChanged": false,
+    "receipt": "mobile/Validation/iphone-duo-preview-258-2026-10-30.json",
+    "openedNavigation": "No slide-out drawer. Right workspace return on Speech, Playlist and other pages.",
+    "installedBuild": 258,
+    "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+    "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+    "singleHomeIcon": true,
+    "displayName": "AniCanto",
+    "finalUniqueCaptures": 65
+  },
+  "phoneMenu258": {
+    "sourceImplemented": true,
+    "tested": true,
+    "installed": true,
+    "guideRevision": "application-user-guide-35-resting-assistant-motion",
+    "guideSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+    "workflowChanged": false,
+    "receipt": "mobile/Validation/iphone-menu-258-2026-10-30.json",
+    "commonOrder": "Keep common page entries first. Append the proofreading report and production presets below them. Do not add rebuild, repair or independent listening report entries.",
+    "reportActions": "The report menu reuses existing preparation, busy, draft and repair-work guards. The selected-take classifier and processing budgets do not change.",
+    "installedBuild": 258,
+    "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+    "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+    "physicalWelcomeVisible": true,
+    "physicalMenuAccepted": false
+  },
+  "restingAssistantMotion255": {
+    "revision": "resting-local-motion-255",
+    "rendererSHA256": "2dd0d67793e968fe501ca6bb5696399c456aefa6b904493db885df2e94c91add",
+    "themeCount": 9,
+    "workMotionChanged": false,
+    "conversionAlgorithmChanged": false,
+    "iPad": {
+      "build": 255,
+      "installed": true,
+      "nativeCasePassed": true,
+      "receipt": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json"
+    },
+    "iPhone": {
+      "sourceHashMatches": true,
+      "installationVerifiedByIpadOwner": false,
+      "owner": "iPhone Build (Open AI)"
+    },
+    "reducedMotionRetained": true
+  },
+  "phoneRestingResource258": {
+    "rendererSHA256": "2dd0d67793e968fe501ca6bb5696399c456aefa6b904493db885df2e94c91add",
+    "guideRevision": "application-user-guide-35-resting-assistant-motion",
+    "guideSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+    "phoneInstalled": true,
+    "duoInstalled": true,
+    "nativePhoneMotionDeltaMeasured": false,
+    "nativeDuoMotionDeltaMeasured": false,
+    "sourceNativeEvidence": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json"
+  },
+  "phoneWorkflowCounterpartFollowUp258": {
+    "status": "pending audit and adoption; no installed parity claim",
+    "items": [
+      "Detailed repair groups, count slider and actual frozen-request execution gates.",
+      "Default-on confirmed non-dialogue caption-only control and native audio evidence semantics.",
+      "Cloud source hydration, cancellation and retry through native File Providers."
+    ],
+    "unchangedInThisTask": [
+      "Conversion algorithms",
+      "Frozen request settings",
+      "Spent recovery allowances",
+      "Recording selection"
+    ],
+    "otherAcceptance": [
+      "Native six-sample pronunciation probe",
+      "Physical Player rotation and portrait return",
+      "Keyboard Save flow",
+      "Human listening quality acceptance"
+    ]
+  },
+  "cloudSourcePreparation264": {
+    "revision": "cloud-source-preparation-264",
+    "providers": [
+      "Google Drive",
+      "OneDrive",
+      "iCloud"
+    ],
+    "fullSourceBeforeMediaProbe": true,
+    "totalHydrationDeadline": false,
+    "progress": "Exact bytes read when available; waiting otherwise.",
+    "cancellable": true,
+    "noMacPreviewMovieCopy": true,
+    "completionEvidence": "Stable file identity, exact complete byte count and source SHA-256.",
+    "preserve": [
+      "original media and sidecars",
+      "queue items",
+      "frozen settings",
+      "recordings",
+      "saved conversion progress",
+      "spent repair allowances"
+    ],
+    "nativeStatusBypassesRPC": true,
+    "staleHostReceiptIgnored": true,
+    "platforms": {
+      "macos": "Mac0.25.11/build264installed. Focused source/UI/native/animation checks pass. Actual blocked provider read cancels in20.04seconds with queue unchanged; full download acceptance pending.",
+      "windows": "Shared source only; installed executable remains262. Native test pending.",
+      "ipad": "Explicit handover sent; owner implementation and File Provider tests pending.",
+      "iphone": "Explicit handover sent; owner implementation and File Provider tests pending."
+    },
+    "ruleAudit": {
+      "WF-01": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
+      "WF-02": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
+      "WF-03": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
+      "WF-15": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
+      "WF-16": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
+      "WF-17": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source."
+    }
+  },
+  "phoneDuoToolbarInspector259": {
+    "sourceImplemented": true,
+    "tested": false,
+    "installed": false,
+    "guideRevision": "application-user-guide-40-phone-trailing-settings",
+    "guideSHA256": "e274bb68ab1db03cbcd7bbcab72cf75c1de612228faf908a5046cf25204b045b",
+    "workflowChanged": false,
+    "phone258Changed": false,
+    "receipt": "mobile/Validation/iphone-duo-preview-259-2026-10-30.json",
+    "target": "Ordered stateful toolbar, Guide-only More, retained legal access, scrollable trailing settings and compact timeline.",
+    "foldedTimelineHeightPoints": {
+      "populated": 72,
+      "empty": 52
+    }
+  },
+  "mobileWelcomeDownload257": {
+    "workflowChanged": false,
+    "planGrantAndStorageLogicByteIdentical": true,
+    "target": "Full-screen setup and explicit resource consent. Supported Reading controls and shared Welcome language preferences.",
+    "ipad": {
+      "implemented": true,
+      "nativeCasesPassed": 2,
+      "installedOn": [
+        "M4",
+        "Piano",
+        "Lavina"
+      ],
+      "launchVerifiedOn": [
+        "M4",
+        "Piano"
+      ],
+      "lavinaLaunch": "Timeout; passcodeRequired=true.",
+      "guideRevision": "application-user-guide-39-mobile-welcome-download",
+      "guideSHA256": "ef4a24325726c8710e16d8aa06604b51c37e18cd4a2a2461f8ab8a1ff73620a7",
+      "receipt": "mobile/Validation/ipad-welcome-download-257-2026-10-30.json"
+    },
+    "iphone": "Shared source and frozen guide39 sent. Private uptake and package acceptance pending.",
+    "desktop": "No first-run or conversion policy change.",
+    "next": "Full iPad language names, app-style chooser and fixed intro footer need258."
+  },
+  "phoneTrailingSettings259": {
+    "sourceImplemented": true,
+    "tested": false,
+    "installed": false,
+    "target": "Use a theme-styled trailing panel for phone Basic and Expert settings. Keep all settings and processing guards.",
+    "guideRevision": "application-user-guide-40-phone-trailing-settings",
+    "guideSHA256": "e274bb68ab1db03cbcd7bbcab72cf75c1de612228faf908a5046cf25204b045b",
+    "workflowChanged": false
+  },
+  "traditionalReadingReduction258": {
+    "scope": "Mobile Reading playback only. Conversion rules do not change.",
+    "defaultStrength": 0,
+    "requiresAIModel": false,
+    "activeDuringNarration": true,
+    "wholeSoundtrackGain": 1,
+    "native": "Center-band reduction for one/two-channel Float32 PCM. Mono is frequency attenuation. Unsupported tap formats bypass.",
+    "compatibility": "Public VLC frequency EQ across channels; not center cancellation.",
+    "limitations": [
+      "Voices can remain.",
+      "Instruments in the affected band can also be reduced.",
+      "VLC filtered output and human listening are not accepted from the native synthetic test."
+    ],
+    "aiBackground": "Keep hardware/model guards. Hide unsupported group. Use AI switch after preparation; disable traditional slider.",
+    "preserve": [
+      "Source videos",
+      "Frozen conversion requests",
+      "Selected recordings",
+      "Spent recovery allowances"
+    ],
+    "ipad": {
+      "sourceImplemented": true,
+      "m4NativeCasesPassed": 2,
+      "pianoNativeCasesPassed": 1,
+      "guideRevision": "application-user-guide-42-mobile-full-language-names",
+      "guideSHA256": "7bdce051b7cf1dd6be4d17b20030c1532bfa3a51d3aa3daf47bb9c5f6850fa5b",
+      "installation": {
+        "installedOn": [
+          "M4",
+          "Piano",
+          "Lavina"
+        ],
+        "launchVerifiedOn": [
+          "M4",
+          "Piano"
+        ],
+        "lavina": "passcodeRequired=true; launch skipped.",
+        "build": 258
+      },
+      "receipt": "mobile/Validation/ipad-welcome-traditional-258-2026-10-30.json"
+    },
+    "iphone": "Verified source patch and frozen42sent. Private owner uptake, complete Reading More rendering and installation pending.",
+    "desktop": "No mobile Reading mode. No desktop conversion change.",
+    "ruleAudit": {
+      "WF-01": "No change to conversion generation, translation, timing, repair, export or saved budgets.",
+      "WF-02": "No change to conversion generation, translation, timing, repair, export or saved budgets.",
+      "WF-03": "No change to conversion generation, translation, timing, repair, export or saved budgets.",
+      "WF-15": "No change to conversion generation, translation, timing, repair, export or saved budgets.",
+      "WF-16": "No change to conversion generation, translation, timing, repair, export or saved budgets.",
+      "WF-17": "No change to conversion generation, translation, timing, repair, export or saved budgets."
+    }
   }
 }

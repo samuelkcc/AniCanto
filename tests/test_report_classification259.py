@@ -72,6 +72,14 @@ class Classification(unittest.TestCase):
   import editing_tools
   self.save('segment-issues.json',[dict(index=1,kind='missing-audio')]);self.save('resolved-segment-issues.json',[dict(index=1,kind='missing-audio')]);result=self.result();result['review']=self.review
   coverage=editing_tools.coverage(result);self.assertEqual(coverage['tracks'][0]['missing'],[]);self.assertEqual(coverage['tracks'][0]['recordings'],1);self.assertEqual(result['reviewState']['repairEligible'],0)
+ def test_covered_continuation_is_preserved_not_a_missing_tts(self):
+  self.review['cues'][0].update(captionCovered=True,captionCoverageOwners=[2],enabled=False)
+  self.save('segment-issues.json',[dict(index=1,kind='fast-generation-failed')])
+  p=self.result();self.assertEqual(p['reviewState']['needsDubbing'],0);self.assertEqual(p['issues'][0]['kind'],'subtitle-continuation');self.assertFalse(p['issues'][0]['repairEligible']);self.assertTrue(p['reportRows'][0]['captionCovered'])
+ def test_legacy_continuation_reason_does_not_imply_model_failure(self):
+  self.review['cues'][0].update(preserveOriginalSpeech=True,originalSpeechReason='subtitle-continuation')
+  self.save('segment-issues.json',[dict(index=1,kind='fast-generation-failed')])
+  p=self.result();self.assertEqual(p['issues'][0]['kind'],'subtitle-continuation');self.assertFalse(p['issues'][0]['repairEligible'])
  def test_normalization_never_runs_inference_or_repair(self):
   with patch('worker.ollama_chat',side_effect=AssertionError('No model call')),patch('normal_mode.repair_paths',side_effect=AssertionError('No repair')):self.result()
 

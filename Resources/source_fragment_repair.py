@@ -21,7 +21,7 @@ def suspect(row,language='ja'):
 
 
 def windows(rows,duration,language='ja',maximum=64):
-    wanted=[i for i,r in enumerate(rows) if suspect(r,language) and not r.get('manual')]
+    wanted=[i for i,r in enumerate(rows) if suspect(r,language) and not r.get('manual') and not r.get('sourceClockRecovery')]
     grouped=[]
     for i in wanted:
         a=max(0,rows[i]['start']-4);b=min(duration,rows[i]['end']+4)

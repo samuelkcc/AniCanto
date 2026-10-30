@@ -80,6 +80,13 @@ def build_cues(segments, spans, captions, duration, offset=0):
             current.append(w)
         if current: groups.append(current)
     cues=[]
+    for segment in segments:
+        if segment.get('sourceClockRecoveryIncomplete') and not segment.get('words'):
+            a,b=segment['start'],segment['end'];hints=[c['text'] for c in captions if c['end']>a and c['start']<b]
+            cues.append(dict(start=a,end=b,text='',japanese='',cantonese='',enabled=True,subtitleHint=' ／ '.join(hints),
+                sourceClockUnconfirmed=True,sourceClockFallback='unconfirmed-audio-window',sourceClockOriginal=segment.get('sourceClockOriginal'),
+                preserveOriginalSpeech=True,originalSpeechReason='uncertain-source-clock',timingSource='unconfirmed-audio-window',
+                reviewNote='局部原聲仍未確認；此為音訊覆核區間，不代表逐字發聲時間。'))
     for words in groups:
         a,b=words[0]['start'],words[-1]['end']
         coverage=sum(max(0,min(b,s['end'])-max(a,s['start'])) for s in merge_spans(spans))
@@ -216,7 +223,7 @@ def analyze(cfg,job,captions,run,emit):
     from source_evidence import chinese_captions,merge_ranges
     chinese=chinese_captions(captions,cfg)
     caption_windows=merge_ranges([dict(start=max(0,c['start']-.8),end=min(cfg['duration'],c['end']+.8)) for c in chinese])
-    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows,compute_identity(cfg)]).encode()).hexdigest()
+    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows,compute_identity(cfg),*([cfg['sourceClockRecoveryRevision']] if cfg.get('sourceClockRecoveryRevision') else [])]).encode()).hexdigest()
     cache=job/'japanese-analysis.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}
     if saved.get('key')!=key:
@@ -273,6 +280,8 @@ def analyze(cfg,job,captions,run,emit):
                         rows.append(dict(start=group[0]['start'],end=group[-1]['end'],text=''.join(w['word'] for w in group),words=group,recovered=True))
                 emit('日語原聲',f'已覆核 {gap_index+1}/{len(gaps)} 段遺漏候選。',.28,workID='japanese-coverage',workCompleted=gap_index+1,workTotal=len(gaps))
             rows.sort(key=lambda s:s['start'])
+        cfg['_sourceClockModelRevision']=choice(variant)['revision']
+        rows=__import__('source_clock_recovery').repair(model,audio,rows,cfg,job,emit)
         from source_timing_review import repair as repair_source_clock
         cfg['_sourceClockModelRevision']=choice(variant)['revision']
         # Corroborate the abnormal original word clock against that same

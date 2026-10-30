@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-18-desktop-rest-scenes",
+  "revision": "application-user-guide-36-desktop-cloud-preparation",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -31,6 +31,82 @@
         "ja": "モデルを準備し、動画を追加してリストを開始します。"
       },
       "sections": [
+        {
+          "id": "before-conversion-expectations",
+          "platforms": [
+            "desktop",
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Before you start: results and limits",
+            "zh-HK": "開始前：效果與限制",
+            "zh-CN": "开始前：效果与限制",
+            "ja": "開始前に：仕上がりと制限"
+          },
+          "body": [
+            {
+              "en": "Conversion quality depends on the selected translation and voice models, source audio and subtitle quality. AniCanto supports personal learning and enjoyment of anime and languages. AI dubbing cannot match every detail of a professional performance or replace professional voice performers.",
+              "zh-HK": "轉換品質視乎所選文字及配音模型，以及原片音訊和字幕品質。AniCanto 用於欣賞動畫及學習語言；AI 配音未能完整重現專業演出的細節，也不能代替專業配音員。",
+              "zh-CN": "转换质量取决于所选文字与配音模型，以及原片音频和字幕质量。AniCanto 用于欣赏动画及学习语言；AI 配音无法完整重现专业表演的细节，也不能代替专业配音演员。",
+              "ja": "仕上がりは、選択した翻訳・音声モデルと、元の音声・字幕の品質に左右されます。AniCantoはアニメ鑑賞と言語学習のためのアプリです。AI吹き替えでプロの演技の細部をすべて再現することはできず、声優に代わるものではありません。"
+            },
+            {
+              "en": "The workflow is optimized mainly for Japanese anime. English-language source videos have limited additional optimizations. Other languages and video types may produce less consistent results. Clear dialogue with limited music, noise or overlapping voices usually gives the most stable output.",
+              "zh-HK": "流程主要針對日本動畫優化，亦為英文原聲影片提供有限度的額外優化。其他語言或影片類型的效果可能較不穩定。對白清晰、背景音樂及雜聲較少、較少同時說話的片段，通常效果最穩定。",
+              "zh-CN": "流程主要针对日本动画优化，也为英文原声视频提供有限的额外优化。其他语言或视频类型的效果可能较不稳定。对白清晰、背景音乐和噪声较少、较少同时说话的片段，通常效果最稳定。",
+              "ja": "処理は主に日本のアニメ向けに最適化しており、英語音声の動画にも限定的な追加調整を行っています。他の言語や種類の動画では結果が安定しない場合があります。会話が明瞭で、音楽・雑音・声の重なりが少ない場面ほど安定した結果を得やすくなります。"
+            },
+            {
+              "en": "Anime performers can change pitch, emotion and delivery dramatically. AI may assign one character to different voice groups or clone short references differently. The same character can therefore sound different between lines. This is a current limitation; voice similarity and accent are not guaranteed across languages.",
+              "zh-HK": "動畫配音員的音高、情緒及表達方式可以有很大變化。AI 可能將同一角色分成不同聲線組別，或從短參考錄音生成不同音色，令同一角色在不同句子之間出現變聲。這是目前的限制；跨語言模仿亦不能保證音色及口音完全一致。",
+              "zh-CN": "动画配音演员的音高、情绪与表达方式可以有很大变化。AI 可能将同一角色分成不同声线组别，或从短参考录音生成不同音色，导致同一角色在不同句子之间出现变声。这是目前的限制；跨语言模仿也不能保证音色与口音完全一致。",
+              "ja": "アニメの演技では、声の高さ、感情、話し方が大きく変化します。AIが同じ人物を別の声のグループに分けたり、短い参照音声から異なる声質を生成したりする場合があります。そのため、同じ人物でも台詞ごとに声が変わることがあります。これは現状の制限であり、言語をまたぐ声質や発音の一致も保証できません。"
+            },
+            {
+              "en": "Fight scenes, shouts, loud effects and music can remain in a separated voice reference. Generated speech may then sound hoarse, distorted or noisy. These are possible separation or synthesis artifacts, not intended effects. Try a cleaner reference from the same character when available.",
+              "zh-HK": "打鬥、喊叫、強烈音效或音樂可能殘留在分離後的參考聲音，令生成配音帶有沙啞、失真或雜聲。這些是可能出現的分離或生成瑕疵，並非預期效果；如有合適片段，可改用同一角色較乾淨的參考錄音。",
+              "zh-CN": "打斗、喊叫、强烈音效或音乐可能残留在分离后的参考声音中，导致生成配音沙哑、失真或带有噪声。这些是可能出现的分离或生成瑕疵，并非预期效果；如有合适片段，可改用同一角色更干净的参考录音。",
+              "ja": "戦闘、叫び声、大きな効果音や音楽が、分離後の参照音声に残る場合があります。その影響で、生成音声にかすれ、歪み、雑音が生じることがあります。これは分離や生成による不具合で、意図した効果ではありません。可能なら、同じ人物のより明瞭な参照音声を試してください。"
+            },
+            {
+              "en": "Try a short sample before converting a long video. Extra AI checks and retakes increase processing time and do not guarantee a better result than the first take. Completion means an output was created; it does not certify every line. Missing speech, repeated lines or the wrong language still need inspection. Use the report to find affected lines and compare the original and generated recordings.",
+              "zh-HK": "建議先用短片測試，再轉換較長影片。額外 AI 覆核及重錄會增加處理時間，亦不保證比首次錄音更好。完成轉換只表示已產生成品，並不代表每句已通過品質驗收；無聲、漏句、重複對白或錯誤語言仍須檢查。可透過校對報告定位相關對白，比較原聲與配音。",
+              "zh-CN": "建议先用短片测试，再转换较长视频。额外 AI 复核和重录会增加处理时间，也不保证比首次录音更好。完成转换只表示已生成成品，不代表每句都通过了质量验收；无声、漏句、重复对白或错误语言仍需检查。可通过校对报告定位相关对白，比较原声与配音。",
+              "ja": "長い動画の前に短い動画で試すことをお勧めします。追加のAI確認や再生成は時間がかかり、初回より良くなるとは限りません。変換完了はファイルの作成を示すもので、全台詞の品質を保証するものではありません。無音、台詞の欠落・重複、言語の誤りは確認が必要です。校正レポートで該当箇所を探し、元の音声と生成音声を比較してください。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "desktop-before-conversion-acceleration",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Mac and Windows: processing speed",
+            "zh-HK": "Mac／Windows：轉換速度",
+            "zh-CN": "Mac／Windows：转换速度",
+            "ja": "Mac／Windows：処理速度"
+          },
+          "body": [
+            {
+              "en": "On Macs with Apple silicon, supported models can use MLX acceleration. On Windows, supported models can use NVIDIA CUDA when the graphics card, driver, runtime and video memory are compatible. AMD and integrated-graphics setups mainly use the CPU in this release. A model without a compatible acceleration path also uses the CPU. CPU processing can take substantially longer.",
+              "zh-HK": "配備 Apple silicon 的 Mac 可為支援的模型使用 MLX 加速。Windows 可在 NVIDIA 顯示卡、驅動程式、執行環境及顯示記憶體相容時，為支援的模型使用 CUDA 加速。本版的 AMD 及內置顯示配置主要使用 CPU；未有相容加速路徑的模型亦會使用 CPU，轉換時間可能明顯較長。",
+              "zh-CN": "搭载 Apple silicon 的 Mac 可为支持的模型使用 MLX 加速。Windows 可在 NVIDIA 显卡、驱动程序、运行环境和显存兼容时，为支持的模型使用 CUDA 加速。本版的 AMD 与集成显卡配置主要使用 CPU；没有兼容加速路径的模型也会使用 CPU，转换时间可能明显更长。",
+              "ja": "Apple silicon搭載Macでは、対応モデルにMLXアクセラレーションを利用できます。Windowsでは、NVIDIA GPU、ドライバー、実行環境、VRAMが適合する場合、対応モデルにCUDAを利用できます。この版のAMD GPUや内蔵GPUの構成では主にCPUを使用します。対応する高速化経路がないモデルもCPUで動作し、処理時間が大幅に長くなる場合があります。"
+            },
+            {
+              "en": "Acceleration does not apply to every processing stage. Speed also depends on model size, available memory, video length, dialogue density, output tracks and enabled checks. Check Model centre for the selected hardware path; do not assume that a detected GPU accelerates every model.",
+              "zh-HK": "硬件加速並非涵蓋每個步驟。模型大小、可用記憶體、片長、對白密度、輸出音軌數量及已啟用的檢查，都會影響時間。請在模型中心查看所選硬件路徑；偵測到 GPU 不代表所有模型都會使用 GPU。",
+              "zh-CN": "硬件加速并不覆盖每个步骤。模型大小、可用内存、片长、对白密度、输出音轨数量和已启用的检查，都会影响时间。请在模型中心查看所选硬件路径；检测到 GPU 不代表所有模型都会使用 GPU。",
+              "ja": "高速化はすべての処理工程に適用されるわけではありません。モデルの大きさ、空きメモリ、動画の長さ、会話の密度、出力音声トラック数、有効な確認項目も所要時間に影響します。モデルセンターで選択中の実行経路を確認してください。GPUの検出だけで全モデルが高速化されるとは限りません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
         {
           "id": "purpose",
           "platforms": [
@@ -96,6 +172,40 @@
               "zh-HK": "常見影片輸入包括 MKV、MP4、MOV、AVI、WebM、M4V；實際支援亦視乎編碼同音軌能否讀取。外掛文字字幕支援 SRT、ASS、SSA、VTT。畫面燒錄字幕需要 OCR，不等於可選文字字幕軌。",
               "zh-CN": "常见视频输入包括 MKV、MP4、MOV、AVI、WebM、M4V；实际支持也取决于编码和音轨是否可读。外挂文字字幕支持 SRT、ASS、SSA、VTT。画面烧录字幕需要 OCR，不是可选的文本字幕轨。",
               "ja": "MKV、MP4、MOV、AVI、WebM、M4Vなどを入力できます。コーデックや読み取り可能なストリームにも依存します。外部字幕はSRT、ASS、SSA、VTTに対応します。焼き込み字幕にはOCRが必要で、選択可能な文字字幕トラックとは異なります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "desktop-cloud-source-preparation",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Videos in Google Drive, OneDrive or iCloud",
+            "zh-HK": "Google Drive、OneDrive 或 iCloud 影片",
+            "zh-CN": "Google Drive、OneDrive 或 iCloud 视频",
+            "ja": "Google Drive・OneDrive・iCloudの動画"
+          },
+          "body": [
+            {
+              "en": "A cloud file can show its full size before its contents are downloaded. Keep the cloud provider connected. You can also choose Make available offline in Finder or Explorer before adding a large video. A slow download is not a dubbing failure.",
+              "zh-HK": "雲端檔案即使顯示完整大小，也可能尚未下載內容。請保持雲端服務連線；大型影片亦可先在 Finder 或檔案總管設為「可離線使用」。下載較慢不代表配音失敗。",
+              "zh-CN": "云文件即使显示完整大小，也可能尚未下载内容。请保持云服务连接；大型视频也可先在 Finder 或文件资源管理器设为“可离线使用”。下载较慢不代表配音失败。",
+              "ja": "クラウド上のファイルは、内容をダウンロードする前でも元のサイズが表示される場合があります。クラウドサービスへの接続を維持してください。大きな動画は、Finderやエクスプローラーで先にオフライン利用を有効にすることもできます。ダウンロードが遅いだけでは吹き替えの失敗を意味しません。"
+            },
+            {
+              "en": "Before conversion or Mac preview, AniCanto reads the complete cloud source first. Preparation shows bytes read and the total size when available. It shows a waiting state when the provider supplies no bytes yet. There is no fixed total download deadline. A separate short media check runs only after the complete file is readable.",
+              "zh-HK": "開始轉換或開啟 Mac 預覽前，AniCanto 會先完整讀取雲端原片。準備期間會按可用資料顯示已讀取大小及總大小；雲端服務尚未提供資料時顯示等待狀態，不設固定的整體下載時限。完整檔案可讀後，才進行獨立的影片資料檢查。",
+              "zh-CN": "开始转换或打开 Mac 预览前，AniCanto 会先完整读取云端原片。准备期间会按可用信息显示已读取大小和总大小；云服务尚未提供数据时显示等待状态，不设固定的整体下载时限。完整文件可读后，才进行独立的视频信息检查。",
+              "ja": "変換やMacのプレビューを開始する前に、クラウド上の元動画全体を読み取ります。準備中は取得できる読み取り済みサイズと全体サイズを表示し、データがまだ届かない場合は待機状態を表示します。ダウンロード全体に固定の制限時間は設けません。ファイル全体を読み取れる状態になってから、別途動画情報を確認します。"
+            },
+            {
+              "en": "Cancel preparation to stop the current read without deleting the video or its queue entry. If the provider disconnects or supplies an incomplete file, check the connection, make the file available offline and retry. Existing settings, recordings and conversion progress stay intact. Mac reuses the original file and does not create a second full preview movie.",
+              "zh-HK": "可按「取消準備」停止目前讀取，不會刪除影片或清單項目。若雲端斷線或只提供部分檔案，請檢查連線、設為可離線使用後重試；現有設定、錄音及轉換進度會保留。Mac 會重用原檔，不另製完整預覽影片。",
+              "zh-CN": "可按“取消准备”停止当前读取，不会删除视频或列表项目。若云服务断线或只提供部分文件，请检查连接、设为可离线使用后重试；现有设置、录音和转换进度会保留。Mac 会重用原文件，不另外制作完整预览视频。",
+              "ja": "「準備をキャンセル」で現在の読み取りを停止できます。動画やリスト項目は削除しません。クラウドの切断や不完全な読み取りが発生した場合は、接続を確認し、オフライン利用を有効にして再試行してください。設定、録音、変換の進捗は保持します。Macは元ファイルを再利用し、動画全体のプレビュー複製を作りません。"
             }
           ],
           "controlRefs": [],
@@ -563,7 +673,14 @@
             "zh-CN": "无对白字幕只显示文字",
             "ja": "会話のない字幕は表示のみ"
           },
-          "body": [],
+          "body": [
+            {
+              "en": "Non-dialogue captions only is on by default in Basic and Expert. Advertisement cards and other text stay visible without TTS when complete source and separated-audio evidence confirms no dialogue. Missing ASR text alone is not silence; uncertain or quiet speech keeps the normal dubbing path. Each platform records its own tested and installed state.",
+              "zh-HK": "基本模式及專家模式預設開啟「無對白字幕只顯示文字」。原片及分離音訊的完整證據確認沒有對白時，廣告字卡等字幕只顯示文字，不生成配音。語音辨識沒有文字並不代表靜音；細聲或未確認語音仍按正常流程處理。各平台須分別記錄測試及安裝狀態。",
+              "zh-CN": "基本模式及专家模式默认开启「无对白字幕仅显示文字」。原片和分离音频的完整证据确认没有对白时，广告字卡等字幕仅显示文字，不生成配音。语音识别没有文字不代表静音；轻声或未确认语音仍按正常流程处理。各平台须分别记录测试和安装状态。",
+              "ja": "基本・エキスパートの両モードで、発話のない字幕は文字のみ表示する設定が初期状態で有効です。元音声と分離音声の完全な証拠で発話がないと確認できた広告などは、字幕を残して音声を生成しません。認識文がないだけでは無音と判定しません。小さな声や不確かな発話は通常どおり処理します。テストと導入状況は各プラットフォームで別に記録します。"
+            }
+          ],
           "controlRefs": [
             "captionOnlyNoDialogue"
           ],
@@ -632,6 +749,38 @@
             }
           ],
           "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "desktop-repair-groups-source-clocks",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Independent repair and source timing",
+            "zh-HK": "獨立修復與原聲分句",
+            "zh-CN": "独立修复与原声分句",
+            "ja": "独立した修復と元音声の区切り"
+          },
+          "body": [
+            {
+              "en": "Desktop Additional AI repair groups translation, dubbing content, timing and fallback voices. Each control has its own permission; dubbing content repair is not a master switch. Strict original duration takes precedence over overlap repair. New source-clock recovery listens only to bounded suspect audio windows, never uses OCR to invent word times and keeps spent attempts on resume. A shared authored caption is voiced once; covered lexical continuations do not add a second Japanese voice. Existing jobs and accepted recordings keep their frozen policy.",
+              "zh-HK": "桌面「額外 AI 修復」分為翻譯、配音內容、時長與銜接及後備聲線。各項獨立授權；配音內容修復不是總開關。限制原聲時長優先於重疊修復。新工作只會分段重聽可疑原聲，不會用 OCR 推算逐字時間，續跑不會重設次數。共用字幕只配音一次，已承接的對白碎段不會另加一段日文。舊工作及已接受錄音沿用已保存規則。",
+              "zh-CN": "桌面「额外 AI 修复」分为翻译、配音内容、时长与衔接及备用声音。各项独立授权；配音内容修复不是总开关。原声时长限制优先于重叠修复。新任务仅分段重听可疑原声，不用 OCR 推算逐字时间，续跑不会重置次数。共用字幕只配音一次，已承接的对白片段不会另加一段日文。旧任务及已接受录音沿用已保存规则。",
+              "ja": "デスクトップの追加 AI 修復は、翻訳、吹き替え内容、長さとつながり、代替音声に分かれます。各設定は独立しており、内容修復は全機能の一括スイッチではありません。元音声の長さ制限は重なり修復より優先されます。新規処理は疑わしい元音声の短い区間だけを再認識し、OCRから単語時刻を作りません。再開しても使用回数は戻りません。共有字幕は一度だけ読み上げ、別の発話が担当済みの断片に日本語音声を重ねません。既存の処理と承認済み録音は保存済み規則を維持します。"
+            }
+          ],
+          "controlRefs": [
+            "translationReview",
+            "contentReview",
+            "autoRepair",
+            "durationLimit",
+            "excessiveAudibleOverlap",
+            "safeEndpoint",
+            "borrowGaps",
+            "alternateEngine",
+            "systemVoice"
+          ],
           "steps": false
         }
       ]
@@ -893,6 +1042,12 @@
               "zh-HK": "每位助手都有獨立休息姿勢，例如攬咕𠱸、靠喺扶手椅或蜷喺豆袋椅。各自保留原有五官、服裝同畫風；只會有細微頭髮動態，面部、雙手同家具保持固定。關閉預覽同偏好設定嘅「休息待機」會用同一套圖。",
               "zh-CN": "每位助手都有独立休息姿势，例如抱着靠垫、靠在扶手椅或蜷在豆袋椅。各自保留原有五官、服装和画风；只有头发轻微活动，面部、双手和家具保持固定。关闭预览和偏好设置的「休息待机」使用同一套图。",
               "ja": "各アシスタントに、クッションを抱く、肘掛け椅子で休む、ビーズクッションで丸まるなどの専用の休憩ポーズがあります。顔、服装、画風の違いを維持し、髪の一部だけがわずかに動きます。顔、手、家具は動きません。プレビューを閉じた画面と設定の「休憩中」は同じ画像を使います。"
+            },
+            {
+              "en": "Resting assistants have gentle breathing, small head movement and local hair sway. Facial proportions stay stable. The system Reduce motion preference disables these animations.",
+              "zh-HK": "休息助手會有輕微呼吸起伏、頭部微動及局部頭髮擺動，保持面部比例穩定。系統的「減少動態效果」設定會停用這些動畫。",
+              "zh-CN": "休息助手会有轻微呼吸起伏、头部微动和局部头发摆动，保持面部比例稳定。系统的“减弱动态效果”设置会停用这些动画。",
+              "ja": "休憩中のアシスタントは、穏やかな呼吸、わずかな頭の動き、髪の揺れで動きます。顔の比率は保ちます。システムの「視差効果を減らす」設定ではこれらの動きを停止します。"
             }
           ],
           "controlRefs": [],
@@ -1288,6 +1443,101 @@
             "excessiveAudibleOverlap"
           ],
           "steps": false
+        },
+        {
+          "id": "ipad-content-check-slider",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "zh-HK": "內容核對次數",
+            "zh-CN": "内容核对次数",
+            "en": "Content-check count",
+            "ja": "内容確認の回数"
+          },
+          "body": [
+            {
+              "zh-HK": "在專家模式開啟「額外 AI 修復」，拖動水平滑桿選擇 0、1、2 次，右側數字顯示目前選項。開關及次數的作用如下。",
+              "zh-CN": "在专家模式打开“额外 AI 修复”，拖动水平滑块选择 0、1、2 次，右侧数字显示当前选项。开关和次数的作用如下。",
+              "en": "Open Additional AI repair in Expert. Drag the horizontal slider to 0, 1 or 2. The number shows the current selection. The controls below define the behavior.",
+              "ja": "エキスパートの追加 AI 修復を開き、水平スライダーを0・1・2に動かします。数字は現在の選択を示します。動作は下の設定説明に従います。"
+            }
+          ],
+          "controlRefs": [
+            "contentReview",
+            "autoRepair"
+          ],
+          "steps": false
+        },
+        {
+          "id": "ipad-repair-groups",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "zh-HK": "額外修復分類",
+            "zh-CN": "额外修复分类",
+            "en": "Additional repair groups",
+            "ja": "追加修復の分類"
+          },
+          "body": [
+            {
+              "zh-HK": "額外 AI 修復分為「翻譯」、「配音內容」、「時長與銜接」及「後備聲線」。新工作的預設開關全部關閉，核對上限為 0；已保存工作保留原設定。使用滑桿選擇每段核對上限。內置翻譯不提供此額外翻譯覆核；開啟原聲時長限制後，過度重疊修復會顯示為灰色。",
+              "zh-CN": "额外 AI 修复分为“翻译”“配音内容”“时长与衔接”和“备用声音”。新任务的默认开关全部关闭，核对上限为 0；已保存任务保留原设置。使用滑块选择每段核对上限。内置翻译不提供此额外翻译复核；开启原声时长限制后，过度重叠修复会显示为灰色。",
+              "en": "Additional AI repair has Translation, Dubbing content, Timing and transitions, and Fallback voices groups. New defaults are off and the check limit is zero. Saved jobs retain their settings. Use the slider for the check limit. Built-in translation does not offer this extra translation review. Duration control disables the separate excessive-overlap control.",
+              "ja": "追加 AI 修復は「翻訳」「吹き替え内容」「長さとつながり」「代替音声」に分かれます。新規設定はすべてオフ、確認上限は0です。保存済み作業の設定は維持されます。上限はスライダーで変更します。内蔵翻訳にはこの追加翻訳確認はありません。長さ制限を有効にすると、過度な重なりの修復は選べません。"
+            }
+          ],
+          "controlRefs": [
+            "autoRepair",
+            "contentReview",
+            "translationReview",
+            "excessiveAudibleOverlap",
+            "missingAudio"
+          ],
+          "steps": false
+        },
+        {
+          "id": "additional-repair-reference",
+          "platforms": [
+            "desktop",
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "zh-HK": "額外 AI 修復：功能與優先次序",
+            "zh-CN": "额外 AI 修复：功能与优先顺序",
+            "en": "Additional AI repair: actions and precedence",
+            "ja": "追加の AI 修復：動作と優先順位"
+          },
+          "body": [
+            {
+              "zh-HK": "額外選項分為翻譯、配音內容、時長與銜接及後備聲線四類。新工作預設全部關閉，核對上限為 0。每個選項只授權其說明列出的動作；開啟一項不代表全部功能都開啟。修復可能令時間增至 2–3 倍或更長，亦不保證優於預設流程。",
+              "zh-CN": "额外选项分为翻译、配音内容、时长与衔接和后备声音四类。新工作默认全部关闭，核对上限为 0。每项只授权说明列出的动作，不代表开启全部功能。修复可能增加到 2–3 倍或更长时间，也不保证优于默认流程。",
+              "en": "Use four groups: Translation, Dubbing content, Timing and transitions, and Fallback voices. New defaults are off and the check count is 0. Each option permits only its stated actions. Enabling one does not enable all others. Repair can take 2–3 times as long or longer, without better results than the default flow.",
+              "ja": "翻訳、吹き替え内容、長さとつながり、代替音声の四分類です。新規設定はすべて無効、確認回数は 0 です。各設定は説明された動作だけを許可し、他の機能を一括で有効にしません。処理時間が 2〜3 倍以上になり、初期フローより良くなる保証はありません。"
+            },
+            {
+              "zh-HK": "無論額外選項是否開啟，缺失、靜音或損壞的必要配音都會接受有限補錄。已有聲音、辨識不確定、OP／ED 保留原聲及字幕空檔須分開判斷。續跑沿用凍結設定及已用次數，不會因改設定或重新開啟 App 而退回預算。下列說明列明實際動作及平台差異；各版本的完成、測試及安裝狀態另行記錄。",
+              "zh-CN": "无论额外选项是否开启，缺失、静音或损坏的必要配音都会有限补录。有声音、识别不确定、OP／ED 保留原声和字幕空档分开判断。继续时沿用冻结设置和已用次数，改设置或重开 App 不返还预算。以下说明列明动作及平台差异；版本完成、测试和安装状态另行记录。",
+              "en": "Required missing, silent or damaged dubbing receives bounded recovery even with all extra options off. Keep audible takes, uncertain recognition, preserved OP/ED and subtitle gaps distinct. Resume retains frozen settings and spent counts; changing settings or reopening does not refund budgets. Definitions below disclose actions and platform differences. Implementation, tests and installation remain separate evidence.",
+              "ja": "追加機能が無効でも、欠落・無音・破損した必須音声は有限回の補完を行います。有声音声、不確かな認識、OP・ED の原音保持、字幕の空白を区別します。再開時は固定設定と使用済み回数を保持し、設定変更や再起動で予算は戻りません。以下で動作と端末差を示し、実装・試験・導入の証拠は別に記録します。"
+            }
+          ],
+          "controlRefs": [
+            "translationReview",
+            "contentReview",
+            "autoRepair",
+            "durationLimit",
+            "excessiveAudibleOverlap",
+            "safeEndpoint",
+            "borrowGaps",
+            "alternateEngine",
+            "systemVoice",
+            "missingAudio",
+            "resume"
+          ],
+          "steps": false
         }
       ]
     },
@@ -1575,6 +1825,50 @@
               "zh-HK": "原聲反應及片頭／片尾與對白配音分開保護；未確認的反應時段可能包含真正對白。修改保留時段前，先比較原聲與分離聲音。保留時段數不代表已驗證的笑聲數量；原聲分離亦不保證保留每一下微弱反應。",
               "zh-CN": "原声反应与片头／片尾和对白配音分别保护；未确认的反应区间可能包含真正对白。修改保留区间前，先比较原声和分离声音。保留区间数不代表已验证的笑声数量；原声分离也不保证保留每一下微弱反应。",
               "ja": "元の反応音やOP・EDは台詞音声と別に保護します。不確かな反応区間に台詞が含まれる場合があります。変更前に元音声と分離音声を比較してください。保持区間数は確認済みの笑い声数ではなく、小さい反応音の保持も保証しません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "ipad-review-pencil",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "zh-HK": "逐句編輯配音稿",
+            "zh-CN": "逐句编辑配音稿",
+            "en": "Edit one dubbing draft",
+            "ja": "台詞ごとに原稿を編集"
+          },
+          "body": [
+            {
+              "zh-HK": "在校對報告按配音稿旁的鉛筆，修改文字後選擇「取消」或「儲存草稿」。儲存不會重錄或更改已採用錄音。再按「重錄此句」，試聽新版本後自行選擇採用；原文、舊錄音及成品會保留。",
+              "zh-CN": "在校对报告点击配音稿旁的铅笔，修改文本后选择“取消”或“保存草稿”。保存不会重录或更改已采用录音。再点击“重录此句”，试听新版本后自行选择采用；原文、旧录音及成品会保留。",
+              "en": "In the proofreading report, tap the pencil beside the target dialogue. Edit the draft, then Cancel or Save draft. Saving does not record or select audio. Use Re-record this line, listen to the new take, and select it explicitly. Source text, old recordings and exports remain intact.",
+              "ja": "校正レポートで吹き替え原稿の横の鉛筆を押します。編集後にキャンセルまたは下書きを保存します。保存では録音や音声選択は変わりません。「この台詞を再録音」で作成し、試聴してから採用します。原文、以前の録音、出力済み動画は残ります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "iphone-review-pencil",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "zh-HK": "逐句編輯配音稿",
+            "zh-CN": "逐句编辑配音稿",
+            "en": "Edit one dubbing draft",
+            "ja": "台詞ごとに原稿を編集"
+          },
+          "body": [
+            {
+              "zh-HK": "在校對報告按配音稿旁的鉛筆，修改文字後選擇「取消」或「儲存草稿」。儲存不會重錄或更改已採用錄音。再按「重錄此句」，試聽新版本後自行選擇採用；原文、舊錄音及成品會保留。",
+              "zh-CN": "在校对报告点击配音稿旁的铅笔，修改文本后选择“取消”或“保存草稿”。保存不会重录或更改已采用录音。再点击“重录此句”，试听新版本后自行选择采用；原文、旧录音及成品会保留。",
+              "en": "In the proofreading report, tap the pencil beside the target dialogue. Edit the draft, then Cancel or Save draft. Saving does not record or select audio. Use Retake line, listen to the new take, and select it explicitly. Source text, old recordings and exports remain intact.",
+              "ja": "校正レポートで吹き替え原稿の横の鉛筆を押します。編集後にキャンセルまたは下書きを保存します。保存では録音や音声選択は変わりません。「この台詞を再録音」で作成し、試聴してから採用します。原文、以前の録音、出力済み動画は残ります。"
             }
           ],
           "controlRefs": [],
@@ -2476,6 +2770,28 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "ipad-instant-workspace-navigation",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "zh-HK": "切換播放器及配音器",
+            "zh-CN": "切换播放器和配音器",
+            "en": "Open Player and Speech",
+            "ja": "プレーヤーと音声スタジオを開く"
+          },
+          "body": [
+            {
+              "zh-HK": "播放器及配音器會即時全螢幕顯示，不使用滑入動畫。按返回鍵回到工作室，已保存的轉換進度及錄音會保留。",
+              "zh-CN": "播放器和配音器即时全屏显示，不使用滑入动画。点击返回键回到工作室，已保存的转换进度和录音会保留。",
+              "en": "Player and Speech open full screen without a slide animation. Use Back to return to Studio. Saved progress and recordings remain intact.",
+              "ja": "プレーヤーと音声スタジオはスライドせず、すぐに全画面表示します。戻るボタンでスタジオへ戻り、保存済みの進捗と録音を保持します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -3348,6 +3664,84 @@
               "zh-HK": "影片及配音錄音播放清單的「學習模式」按鈕固定在最底部。學習頁面「內置翻譯」及語言選擇行的最右側滑桿圖示可開啟「翻譯與配音設定」，在捲動頁面選擇引擎參數及管理錄音。版面調整不會自動翻譯、錄音或刪除資料。",
               "zh-CN": "影片和配音录音播放列表的“学习模式”按钮固定在最底部。学习页面“内置翻译”和语言选择行最右侧的滑杆图标打开“翻译与配音设置”，在滚动页面选择引擎参数和管理录音。版面调整不会自动翻译、录音或删除数据。",
               "ja": "動画と音声録音の再生リストでは学習ボタンを最下部に置きます。学習画面では内蔵翻訳と言語の行の右端の設定ボタンから翻訳・音声設定を開きます。スクロール画面でエンジンのパラメータと録音を管理します。配置変更で翻訳・録音・削除を自動実行しません。"
+            },
+            {
+              "en": "On iPhone, the Player allows automatic rotation while a video is selected. Landscape shows the video and playback controls. Return to portrait for export actions. Welcome and Studio remain portrait. The three export actions have equal width. Their file checks and purchase requirements stay the same.",
+              "zh-HK": "iPhone 播放器選取影片後支援自動旋轉；橫向顯示影片及播放控制，轉回直向可使用匯出按鈕。歡迎頁及工作室維持直向。三個匯出按鈕採用相同闊度，檔案驗證及購買要求不變。",
+              "zh-CN": "iPhone 播放器选取影片后支持自动旋转；横向显示影片和播放控制，转回竖向可使用导出按钮。欢迎页和工作室保持竖向。三个导出按钮采用相同宽度，文件验证和购买要求不变。",
+              "ja": "iPhone のプレーヤーは動画を選択すると自動回転に対応します。横向きでは動画と再生操作を表示し、書き出しは縦向きに戻して操作します。ようこそ画面とスタジオは縦向きを維持します。三つの書き出しボタンは同じ幅で、ファイル検証と購入条件は変わりません。"
+            },
+            {
+              "en": "In the phone review, each recording shows its model below the take number. CV3 means CosyVoice 3. Recording progress and Stop use a separate row. Edit all dialogue uses a compact segment menu and previous/next buttons. Locate frame opens the source preview at that segment. Learning action buttons use equal grid widths. These layout changes do not select, generate or delete recordings automatically.",
+              "zh-HK": "iPhone 校對頁的每條錄音會在配音編號下方顯示模型；CV3 代表 CosyVoice 3。錄製進度及停止按鈕獨立一行。「編輯全部對白」使用緊湊段落選單及上一段／下一段按鈕；「定位畫面」開啟該段原片預覽。學習操作按鈕採用等闊格線。版面調整不會自動採用、生成或刪除錄音。",
+              "zh-CN": "iPhone 校对页的每条录音会在配音编号下方显示模型；CV3 代表 CosyVoice 3。录制进度和停止按钮独立一行。“编辑全部对白”使用紧凑段落菜单和上一段／下一段按钮；“定位画面”打开该段原片预览。学习操作按钮采用等宽网格。布局调整不会自动采用、生成或删除录音。",
+              "ja": "iPhone の確認画面は録音番号の下にモデルを表示します。CV3 は CosyVoice 3 を表します。録音進捗と停止操作は別の行に表示します。全台詞編集では短い区間メニューと前後ボタンを使い、画面位置の操作で該当区間の原動画を表示します。学習操作は同じ幅のグリッドで表示します。配置変更で録音を自動選択・生成・削除しません。"
+            },
+            {
+              "en": "On narrow iPhone screens, review and Learning actions use equal widths. Controls move to one column when space is limited or accessibility text is selected. Recording progress stays separate from engine and retake buttons. The Reading language menu uses its own line. These layout changes preserve the current actions and saved settings.",
+              "zh-HK": "iPhone 窄螢幕的校對及學習操作使用等闊按鈕；空間不足或使用輔助使用大字體時改成單欄。錄音進度與引擎及重錄按鈕分開顯示，朗讀語言選單亦獨立一行。版面調整保留現有操作及已保存設定。",
+              "zh-CN": "iPhone 窄屏幕的校对和学习操作使用等宽按钮；空间不足或使用辅助功能大字体时改为单列。录音进度与引擎和重录按钮分开显示，朗读语言菜单也独立一行。布局调整保留现有操作和已保存设置。",
+              "ja": "iPhone の狭い画面では校正と学習の操作ボタンを同じ幅で表示します。幅が足りない場合やアクセシビリティ文字サイズでは一列に並びます。録音状況はエンジンと再録音のボタンから分け、読み上げ言語も別の行に表示します。操作と保存済み設定は変わりません。"
+            },
+            {
+              "en": "The phone upgrade introduction shows one complete page at a time. Swipe horizontally or use Back, Previous and Next. Restore purchases stays at the top. The purchase button keeps the full available width.",
+              "zh-HK": "iPhone 升級介紹每次顯示一個完整頁面，可左右掃動，或使用「返回」、「上一頁」及「下一頁」。恢復購買保留在頂部，購買按鈕使用整個可用闊度。",
+              "zh-CN": "iPhone 升级介绍每次显示一个完整页面，可左右滑动，或使用“返回”“上一页”和“下一页”。恢复购买保留在顶部，购买按钮使用整个可用宽度。",
+              "ja": "iPhone のアップグレード紹介は一度に一つのページ全体を表示します。左右のスワイプか「戻る」「前へ」「次へ」で移動します。購入復元は上部、購入ボタンは画面幅に合わせて表示します。"
+            },
+            {
+              "en": "On the Duo preview, the closed screen uses the phone layout. Opened Basic follows the iPad layout: a video list beside Edit and preview, with no far-left function column. The top bar controls the video list, screen saver and Basic options. On wide screens, Preferences, Guide and Home have top-bar buttons. On narrower opened screens, find them in More. More also opens Playlist, Speech, Learning, Reading, Models and About. Expert keeps its slim left navigation. Production settings stay at the right. The opened dialogue timeline is compact and hides in review. Learning opens its playlist first. Expert keeps its existing unlock. Player content scrolls separately from the playlist.",
+              "zh-HK": "Duo 預覽的外螢幕使用 iPhone 排版。打開後的基本模式跟隨 iPad：影片清單放在「編輯與預覽」旁邊，最左側不顯示功能欄。頂部工具列提供影片清單開關、螢幕保護及基本選項；較闊畫面另有偏好設定、使用手冊及返回歡迎頁按鈕，較窄的打開畫面則放在「更多」。播放清單、配音器、學習、朗讀、模型中心及關於與授權亦可從「更多」進入。專家模式保留精簡左側導航，製作設定在右側。打開後的對白時間軸採用緊湊高度，校對時隱藏。學習模式先顯示播放清單，專家模式仍需解鎖。播放器內容可獨立於播放清單捲動。",
+              "zh-CN": "Duo 预览的外屏使用 iPhone 布局。展开后的基本模式跟随 iPad：影片列表放在“编辑与预览”旁边，最左侧不显示功能栏。顶部工具栏提供影片列表开关、屏幕保护和基本选项；较宽画面另有偏好设置、使用手册和返回欢迎页按钮，较窄的展开画面则放在“更多”。播放列表、配音器、学习、朗读、模型中心以及关于与授权也可从“更多”进入。专家模式保留精简左侧导航，制作设置在右侧。展开后的对白时间轴采用紧凑高度，校对时隐藏。学习模式先显示播放列表，专家模式仍需解锁。播放器内容可独立于播放列表滚动。",
+              "ja": "Duo プレビューの閉じた画面は iPhone の配置を使います。開いた基本モードは iPad と同様に、編集・プレビューの横に動画一覧を置き、左端の機能列を表示しません。上部で動画一覧、スクリーンセーバー、基本設定を操作します。広い画面には環境設定、使い方、ホームのボタンも表示し、狭い画面では「その他」から開きます。再生リスト、音声作成、学習、読み上げ、モデル、ライセンスも「その他」にあります。専門モードは左の細いナビゲーションを保ち、制作設定は右側にあります。台詞タイムラインは低く表示し、校正中は隠します。学習は再生リストから始まり、専門モードの解除条件は変わりません。プレーヤーの内容は再生リストとは別にスクロールします。"
+            },
+            {
+              "en": "On iPhone, Player content can scroll separately from the playlist. With accessibility text, caption and audio choices use separate headings. Subtitle import moves below the source-preview heading when text needs more space. The Learning translation language also moves to its own line when required. These controls keep their current actions.",
+              "zh-HK": "iPhone 播放器內容可獨立於播放清單捲動；使用輔助使用大字體時，字幕及音軌選項採用獨立標題。原片預覽的字幕匯入按鈕會在文字需要更多空間時移到標題下方，學習頁的翻譯語言亦會按需要另開一行。各控制項的操作不變。",
+              "zh-CN": "iPhone 播放器内容可独立于播放列表滚动；使用辅助功能大字体时，字幕和音轨选项采用独立标题。原片预览的字幕导入按钮会在文字需要更多空间时移到标题下方，学习页的翻译语言也会按需另开一行。各控件的操作不变。",
+              "ja": "iPhone のプレーヤーは再生リストと別にスクロールします。アクセシビリティの文字サイズでは字幕と音声の見出しを分けます。文字が収まらない場合、字幕の読み込みは原動画プレビューの見出しの下に、学習画面の翻訳言語は別の行に表示します。各操作の動作は変わりません。"
+            },
+            {
+              "en": "In opened Duo Expert, use the far-left navigation for Playlist and Speech. The video list keeps its clips but has no duplicate Player or Speech buttons. More does not repeat these workspace entries. Basic keeps its iPad-style toolbar and video list. Player full screen and Speech open and close immediately. Theme changes and video-list editing keep their own animations.",
+              "zh-HK": "Duo 打開後的專家模式，播放清單／播放器及配音器入口集中在最左側功能導航。影片清單保留影片，但不再顯示重複的播放器及配音器按鈕，「更多」亦不重複這些工作室入口。基本模式保留 iPad 式工具列及影片清單。全螢幕播放器及配音器會即時開啟和關閉；主題切換及影片清單編輯仍保留各自的動畫。",
+              "zh-CN": "Duo 展开后的专家模式，播放列表／播放器和配音器入口集中在最左侧功能导航。影片列表保留影片，但不再显示重复的播放器和配音器按钮，“更多”也不重复这些工作室入口。基本模式保留 iPad 式工具栏和影片列表。全屏播放器和配音器会立即打开和关闭；主题切换和影片列表编辑仍保留各自的动画。",
+              "ja": "開いた Duo の専門モードでは、再生リストと音声作成は左端のナビゲーションから開きます。動画一覧には動画だけを残し、プレーヤーと音声作成の重複ボタンを置きません。「その他」にも同じ入口を繰り返しません。基本モードは iPad 型のツールバーと動画一覧を保ちます。全画面プレーヤーと音声作成はアニメーションなしで開閉します。テーマ変更と動画一覧の編集は各自のアニメーションを保ちます。"
+            },
+            {
+              "en": "The Duo Home icon is named AniCanto. In Edit and Preview, the assistant is shown by default and video preview is off. Use the assistant and eye controls to change these choices. On the opened screen, Player and Learning have a workspace return at the top right. On the closed portrait screen, use the left function menu. Keep one current test app on the simulator Home screen.",
+              "zh-HK": "Duo 主畫面圖示名稱為 AniCanto。編輯與預覽預設顯示小助手，影片預覽預設關閉；可用助手及眼睛按鈕切換。打開螢幕後，播放器與學習模式的右上角提供返回工作室按鈕；摺埋直向使用時則用左側功能選單。模擬器主畫面只保留一個最新測試 App。",
+              "zh-CN": "Duo 主屏幕图标名称为 AniCanto。编辑与预览默认显示小助手，影片预览默认关闭；可用助手及眼睛按钮切换。展开屏幕后，播放器与学习模式的右上角提供返回工作室按钮；折叠竖屏使用时则用左侧功能菜单。模拟器主屏幕只保留一个最新测试 App。",
+              "ja": "Duo のホーム画面のアプリ名は AniCanto です。編集とプレビューでは、初期状態でアシスタントを表示し、動画プレビューを閉じます。アシスタントと目のボタンで切り替えられます。開いた画面のプレーヤーと学習モードには右上にスタジオへ戻るボタンがあります。閉じた縦画面では左側の機能メニューを使います。シミュレータのホーム画面には最新のテストアプリを一つだけ残します。"
+            },
+            {
+              "en": "On Duo, the inline player keeps export actions in a fixed bottom bar. The opened screen has three equal actions: Share video, Save video and Save subtitles. The video and its information scroll above this bar. The closed portrait screen uses stacked full-width actions. Full-screen video hides the export bar until you return to the playlist.",
+              "zh-HK": "Duo 播放器的匯出操作固定在底部。打開螢幕時，「分享影片」、「儲存影片」及「儲存字幕」三個按鈕等闊排列，影片與資料可在上方獨立捲動。摺埋直向使用時按鈕上下排列並佔滿闊度。全螢幕播放時會隱藏匯出列，返回播放清單後再顯示。",
+              "zh-CN": "Duo 播放器的导出操作固定在底部。展开屏幕时，“分享影片”、“保存影片”和“保存字幕”三个按钮等宽排列，影片与资料可在上方独立滚动。折叠竖屏使用时按钮上下排列并占满宽度。全屏播放时会隐藏导出栏，返回播放列表后再次显示。",
+              "ja": "Duo のプレーヤーでは、書き出し操作を下部に固定します。開いた画面では「動画を共有」「動画を保存」「字幕を保存」を同じ幅で並べます。動画と情報はその上で個別にスクロールできます。閉じた縦画面では全幅のボタンを縦に並べます。全画面再生中は書き出しバーを隠し、再生リストに戻ると表示します。"
+            },
+            {
+              "en": "The opened Duo screen has no slide-out function menu. Speech, Playlist and other workspace pages use the top-right workspace return. Closing the device restores the portrait left menu. An open portrait menu closes when the device opens. Expert editing keeps its separate far-left iPad-style navigation.",
+              "zh-HK": "Duo 打開螢幕後不顯示滑出功能選單。配音器、播放清單及其他工作室頁面使用右上角返回工作室按鈕。摺埋後恢復直向左側功能表；原本打開的直向功能表會在展開時收起。專家模式的編輯頁仍保留獨立的 iPad 式最左側導航。",
+              "zh-CN": "Duo 展开屏幕后不显示滑出功能菜单。配音器、播放列表及其他工作室页面使用右上角返回工作室按钮。折叠后恢复竖屏左侧功能菜单；原本打开的竖屏功能菜单会在展开时收起。专家模式的编辑页仍保留独立的 iPad 式最左侧导航。",
+              "ja": "開いた Duo ではスライド式の機能メニューを表示しません。音声作成、再生リストなどの作業ページは右上のボタンでスタジオへ戻ります。端末を閉じると縦画面の左メニューに戻ります。縦画面で開いていたメニューは端末を開くと閉じます。専門モードの編集画面では、iPad 型の左端ナビゲーションを保ちます。"
+            },
+            {
+              "en": "The iPhone left function menu has no Return to Welcome entry. The same rule applies to Duo in closed portrait mode. Opened Duo workspace return buttons go back to editing.",
+              "zh-HK": "iPhone 左側功能選單不再提供「返回歡迎頁」入口；Duo 摺埋後的直向選單亦一樣。Duo 打開後的返回工作室按鈕會返回編輯頁。",
+              "zh-CN": "iPhone 左侧功能菜单不再提供“返回欢迎页”入口；Duo 折叠后的竖屏菜单也一样。Duo 展开后的返回工作室按钮会返回编辑页。",
+              "ja": "iPhone の左側機能メニューには「ようこそ画面に戻る」を表示しません。閉じた Duo の縦画面も同じです。開いた Duo のスタジオへ戻るボタンは編集画面へ戻ります。"
+            },
+            {
+              "en": "Basic and Expert keep the same common left-menu order. Expert adds proofreading report and production presets in an Expert tools section below the common entries. Rebuild and AI repair are report actions, not navigation entries.",
+              "zh-HK": "基本與專家模式的左側選單保留相同的共用入口次序。專家模式會在共用入口下方的「專家功能」區加入校對報告及製作預設。重新合併與再次 AI 修復屬於校對操作，不會放在導覽目錄。",
+              "zh-CN": "基本与专家模式的左侧菜单保留相同的共用入口顺序。专家模式会在共用入口下方的“专家功能”区加入校对报告及制作预设。重新合并与再次 AI 修复属于校对操作，不会放在导航目录。",
+              "ja": "基本モードと専門モードは左メニューの共通項目を同じ順序で表示します。専門モードは共通項目の下の「専門機能」に校正レポートと制作プリセットを追加します。再結合と AI 修復は校正の操作であり、ナビゲーション項目には表示しません。"
+            },
+            {
+              "en": "On iPhone and Duo, use the proofreading report as the single review page. The separate alignment and listening report entry is removed. Delivery categories and low, medium, high or unchecked review hints remain in the proofreading cards. These hints do not change recording selection. In Expert, the report tab bar has a Review actions menu for rebuilding the selected recordings and running AI repair. Existing preparation, busy-state, translation-draft and repair-work checks still apply.",
+              "zh-HK": "iPhone 與 Duo 統一使用校對報告，不再提供獨立的對齊及覆聽報告入口。校對卡片保留配音分類，以及低、中、高或未檢查的覆核提示；提示不會改變錄音選擇。專家模式的校對分頁列設有「校對操作」選單，可按所選錄音重新合併及執行再次 AI 修復，仍沿用準備狀態、忙碌狀態、譯稿及待修復項目的原有檢查。",
+              "zh-CN": "iPhone 与 Duo 统一使用校对报告，不再提供独立的对齐及试听报告入口。校对卡片保留配音分类，以及低、中、高或未检查的复核提示；提示不会改变录音选择。专家模式的校对分页栏设有“校对操作”菜单，可按所选录音重新合并及执行再次 AI 修复，仍沿用准备状态、忙碌状态、译稿及待修复项目的原有检查。",
+              "ja": "iPhone と Duo は校正レポートを共通の確認画面として使います。独立したタイミングと試聴レポートの入口は表示しません。校正カードには配音の分類と低・中・高・未確認のヒントを残します。ヒントは録音の選択を変えません。専門モードでは校正タブ列の操作メニューから選択録音の再結合と AI 修復を実行できます。準備状態、処理中、翻訳草稿、修復対象の確認条件は維持します。"
             }
           ],
           "controlRefs": [],
@@ -3417,10 +3811,10 @@
           },
           "body": [
             {
-              "zh-HK": "偏好設定可預覽不同角色與動作。處理中助手會配合準備、辨識、翻譯或配音；沒有工作時，角色會坐下休息或打瞌睡，不會繼續跑動。工作室右上角月亮可立即開啟螢幕保護；自動啟用預設五分鐘，可改時間或關閉。待機不顯示進度，處理中才顯示；輕點返回。",
-              "zh-CN": "偏好设置可预览不同角色和动作。处理中助手对应准备、识别、翻译或配音；没有任务时，角色会坐下休息或打瞌睡，不会继续跑动。工作室右上月亮可立即开屏保；自动启用默认五分钟，可改时间或关闭。待机不显示进度，处理时才显示；轻点返回。",
-              "en": "Preview characters and actions in Preferences. Active assistants follow preparation, recognition, translation or dubbing; idle assistants sit down to rest or doze, rather than keep running. The studio moon opens the screen saver. Automatic entry defaults to five minutes and can be changed or disabled. Idle has no progress; active work shows it. Tap to return.",
-              "ja": "環境設定で人物と動作を試せます。処理中は準備・認識・翻訳・録音に対応し、待機中は走り続けず、座って休んだり居眠りする姿勢になります。スタジオの月アイコンでスクリーンセーバーを開き、自動開始は既定の五分から変更・無効化できます。待機時は進捗を出さず、処理中のみ表示します。タップで戻ります。"
+              "zh-HK": "偏好設定可預覽不同角色與動作。處理中助手會配合準備、辨識、翻譯或配音；沒有工作時，角色會坐下休息或打瞌睡，不會繼續跑動。工作室右上角月亮可立即開啟螢幕保護；自動啟用預設五分鐘，可改時間或關閉。待機不顯示進度，處理中才顯示；輕點返回。 休息動畫保留輕微呼吸、頭部起伏及頭髮擺動，腳部與座椅底部維持穩定。啟用系統「減少動態效果」時會停止這些局部動作。",
+              "zh-CN": "偏好设置可预览不同角色和动作。处理中助手对应准备、识别、翻译或配音；没有任务时，角色会坐下休息或打瞌睡，不会继续跑动。工作室右上月亮可立即开屏保；自动启用默认五分钟，可改时间或关闭。待机不显示进度，处理时才显示；轻点返回。 休息动画保留轻微呼吸、头部起伏和头发摆动，脚部和座椅底部保持稳定。启用系统“减弱动态效果”时停止这些局部动作。",
+              "en": "Preview characters and actions in Preferences. Active assistants follow preparation, recognition, translation or dubbing; idle assistants sit down to rest or doze, rather than keep running. The studio moon opens the screen saver. Automatic entry defaults to five minutes and can be changed or disabled. Idle has no progress; active work shows it. Tap to return. Resting characters keep gentle breathing, head nods and hair sway. Feet and the chair base stay fixed. System Reduce Motion disables these local movements.",
+              "ja": "環境設定で人物と動作を試せます。処理中は準備・認識・翻訳・録音に対応し、待機中は走り続けず、座って休んだり居眠りする姿勢になります。スタジオの月アイコンでスクリーンセーバーを開き、自動開始は既定の五分から変更・無効化できます。待機時は進捗を出さず、処理中のみ表示します。タップで戻ります。 休息中も穏やかな呼吸、頭の上下、髪の揺れが続き、足と椅子の脚は固定します。システムの「視差効果を減らす」が有効な場合、この局所的な動きを停止します。"
             }
           ],
           "controlRefs": [],
@@ -3444,6 +3838,29 @@
               "zh-CN": "介绍影片按系统语言选择初始内容。偏好设置提供重设示范等入口，可重新显示介绍或恢复内置示范；查看按钮说明和确认范围。这不会把用户影片当作示范重新转换。",
               "en": "The introduction starts in the system language. Preferences provides reset/restore actions for bundled demonstrations. Read the action and confirmation for its scope. Resetting the demonstration does not reconvert user movies.",
               "ja": "紹介はシステム言語で開始します。環境設定から内蔵紹介のリセット・復元を行えます。操作と確認画面で対象範囲を確認してください。ユーザー動画を紹介として再変換する操作ではありません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-third-party-notices",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "zh-HK": "查看第三方授權",
+            "zh-CN": "查看第三方许可",
+            "en": "View third-party notices",
+            "ja": "第三者ライセンスを確認"
+          },
+          "body": [
+            {
+              "zh-HK": "在「關於及授權」開啟「第三方授權及通知」，查看程式庫、模型、字典及素材的授權文字。不同版本所包含的項目可能不同，請以該版本內的清單為準。",
+              "zh-CN": "在“关于及许可”打开“第三方许可及通知”，查看程序库、模型、字典及素材的许可文本。不同版本包含的项目可能不同，请以该版本内的清单为准。",
+              "en": "In About and Licences, open Third-party licences and notices. View the library, model, dictionary and asset notices. Items can differ by version. Use the list included with that version.",
+              "ja": "「情報とライセンス」の「第三者ライセンスと通知」で、ライブラリ、モデル、辞書、素材のライセンスを確認できます。含まれる項目はバージョンにより異なります。使用中のバージョンの一覧を確認してください。"
             }
           ],
           "controlRefs": [],

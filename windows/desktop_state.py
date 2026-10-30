@@ -32,9 +32,9 @@ def defaults(language='en'):
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
         speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
-        repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=True,
-        fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,
-        failedVoicePolicy='first-take',automaticSystemVoice=True,
+        repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=True,translationTextReview=False,safeEndpointCheck=False,analyzeBackgroundGaps=False,
+        fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=False,preferFirstAudibleTake=True,
+        failedVoicePolicy='first-take',automaticSystemVoice=False,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
         cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,
         burnOutputCaptions=False,startOffset=0,limit=0,mixOriginal=0,subtitleOutput='none')
@@ -115,6 +115,9 @@ class Store:
         settings['captionOnlyRevision']=__import__('caption_only').REVISION
         settings['hongKongStyleRevision']=__import__('hk_spoken_style').REVISION
         settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
+        settings['sourceClockRecoveryRevision']=__import__('source_clock_recovery').REVISION
+        settings['captionContinuationRevision']='caption-owner-no-duplicate-263'
+        settings['repairGroupsRevision']='repair-groups-263'
         settings['sourceSelectionRevision']='basic-source-defaults-231'
         settings['forcedDubbingRevision']=__import__('delivery_policy').FORCED_TTS_REVISION
         __import__('work_modes').configure(settings)

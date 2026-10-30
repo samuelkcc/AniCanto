@@ -35,11 +35,29 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
+const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
         if !DESKTOP_OPERATIONS.contains(&op){return Err(format!("Unsupported desktop operation: {op}"));}
+        // Hydration can wait for a File Provider. Progress and cancellation
+        // must remain available while the normal Python RPC is occupied.
+        if ["source-prepare-status","source-prepare-cancel"].contains(&op) {
+            let directory=self.root.join("source-preparation");
+            let token=params["operationID"].as_str();
+            let path=if let Some(id)=token {
+                if id.is_empty()||id.len()>64||!id.bytes().all(|b|b.is_ascii_alphanumeric()||b==b'-'){return Err("Invalid source preparation operation.".into());}
+                directory.join(id).join("status.json")
+            }else{directory.join("current.json")};
+            if path.symlink_metadata().is_ok_and(|m|m.file_type().is_symlink()){return Err("Invalid preparation receipt.".into());}
+            let value=std::fs::read(&path).ok().filter(|v|v.len()<65536).and_then(|v|serde_json::from_slice::<Value>(&v).ok()).unwrap_or(Value::Null);
+            if op=="source-prepare-cancel" {
+                let id=token.ok_or("Missing source preparation operation.")?;
+                if value.is_null()||value["state"]=="preparing" {let own=directory.join(id);if own.symlink_metadata().is_ok_and(|m|m.file_type().is_symlink()){return Err("Invalid preparation directory.".into());}std::fs::create_dir_all(&own).map_err(|e|e.to_string())?;std::fs::write(own.join("cancel"),b"cancel").map_err(|e|e.to_string())?;}
+                return Ok(json!({"cancelRequested":true}));
+            }
+            return Ok(if value["state"]=="preparing"&&value["hostPID"].as_u64()!=Some(std::process::id() as u64){Value::Null}else{value});
+        }
         // Read only this fixed receipt without the mutation RPC lock. Calling
         // Python here would queue behind cleanup and hide all live progress.
         if op=="project-cache-status" {

@@ -9,7 +9,7 @@ from repair_limits import read,bounded,root
 
 REVISION='safe-audio-endpoint-1'
 
-def enabled(cfg):return __import__('delivery_policy').safe_capacity(cfg) and not cfg.get('editorRender')
+def enabled(cfg):return __import__('delivery_policy').safe_capacity(cfg) and not cfg.get('editorRender') and (cfg.get('repairGroupsRevision')!='repair-groups-263' or cfg.get('safeEndpointCheck') is True)
 def token(text):return __import__('speechcheck').text_key(text)
 def audio_sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -223,7 +223,7 @@ def apply(cfg,job,cues,paths,run,emit):
    if record.get('status')=='adopted' and audio_present(candidate) and audio_sha(candidate)==record.get('selectedSHA256'):selected[i]=candidate
   except (OSError,ValueError):continue
  # Performance starts no new content ASR; saved evidence is still reusable.
- if cfg.get('workMode')=='performance':return selected
+ if cfg.get('workMode')=='performance' and not (cfg.get('repairGroupsRevision')=='repair-groups-263' and cfg.get('safeEndpointCheck') is True):return selected
  return verify(cfg,job,cues,selected,run,emit)
 
 

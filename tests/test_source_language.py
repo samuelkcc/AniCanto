@@ -45,7 +45,7 @@ class SourceLanguageTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
    meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='eng'))])
-   with patch.object(source.subprocess,'check_output',return_value=json.dumps(meta).encode()) as probe:
+   with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()) as probe:
     a=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3']))
     b=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['gpt-sovits-v2']))
     self.assertEqual(probe.call_count,1);self.assertTrue(a['needsConfirmation']);self.assertTrue(a['supported'])

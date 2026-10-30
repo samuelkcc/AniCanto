@@ -691,8 +691,50 @@ Legacy half/quarter/eighth requests do not adopt this handoff. A quarter-first d
 
 Actual isolated evidence: The5.548-second Ninja window fails its second timed half. Untimed decoding emits unbounded repeated 好きよ text.
 Neither result is a usable complete transcript. Local Mac sound classification does not prove singing; do not extend ED from this evidence.
-The source fix and native fixtures are in progress. Installed M4 remains250 until a separate251receipt exists.
+Normal M4251 is installed and launch-verified. Twelve native cases pass with zero failures in2.387seconds.
+Three current latest checkpoints remain byte-identical. No user conversion starts during validation.
+See mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json.
+The actual post-roll OCR remains mixed. Neither subtitle meaning nor ED boundary quality is accepted.
 Phone and desktop implementation and whole-film acceptance remain pending.
+
+
+### Grouped repair presentation and draft pencil253
+
+Use four common control groups: translation, dubbing content, timing and transitions, and fallback voices.
+The former autoRepair label is now Repair dubbing content. This permission is not a master switch.
+It permits bounded script correction and re-recording when reliable content evidence supports a defect.
+Keep all new default switches off and the ordinary check count zero. Keep mandatory missing-audio recovery active.
+Do not reset existing preferences or frozen requests. Zero-count targeted-repair semantics and spent limits stay unchanged.
+Disable the separate overlap control when strict duration control has priority.
+On iPad, disable extra translation review when the Apple provider is selected. This branch does not implement it.
+
+The report pencil opens one target draft. Cancel saves nothing. Save draft calls the existing draft-only operation.
+Saving starts no model, changes no original source and selects no recording.
+The user then requests a retake, listens and explicitly adopts a recording. Retain older versions and exports.
+Remove the duplicate lower edit entry on iPad. Phone receives the same scoped operation instructions.
+
+Normal M4253is installed. Two native cases pass with zero failures in1.034seconds.
+The four-locale grouped view and zero defaults pass. The draft/checkpoint test preserves selected audio.
+Direct pencil tap acceptance remains pending. Three latest checkpoint files remain byte-identical.
+Native archives and licence text remain exact to verified252. Copy22is packaged with separate recorded hashes.
+Desktop staged help has an older hash. The isolated current-source manual consumer passes; counterpart uptake stays open.
+Receipt: mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json.
+
+### iPad optional-control review251
+
+The iPad content-check control uses a horizontal slider with values0,1,2. Keep its saved key and execution permissions.
+The limit applies to a recording version. Zero stops ordinary inspection. Auto repair can retain targeted checks.
+These checks remain subject to the existing execution gates and saved time limits.
+Inspection finds concerns. Auto repair separately permits bounded changes to confirmed defects.
+Strict duration control has priority over the separate audible-overlap retake. Do not run both repair rounds.
+Safe-endpoint evidence can select a trimmed copy. Retain the original recording. Digital-zero trimming is a separate operation.
+Background-gap analysis requires positive source evidence. Missing subtitles or undecided ASR do not prove silence.
+Alternate-model and installed-system-voice settings are separate fallback permissions, not two ordinary inspection passes.
+The current iPad Apple translation branch does not consume translationReview. Gemma and Qwen branches do.
+Guide21 records this implementation limit. Installed251 contains guide19 and control20, not the later control21 copy.
+Do not infer counterpart implementation from the common guide. Phone and desktop UI uptake remain open.
+No control is removed or merged. Missing-audio recovery remains mandatory with optional controls off.
+Receipt: mobile/Validation/ipad-source-handoff-slider-251-2026-10-30.json.
 
 ### Quarter-first bounded source recovery250
 
@@ -950,13 +992,39 @@ Five saved project files and two latest pointers remain exact. Configuration set
 Only StoreKit polling time and one sub-millisecond normalized playback position differ.
 See mobile/Validation/iphone-playlist-drawer-243-2026-10-29.json. Other platform installations retain their own records.
 
+### Detailed repair help and immediate iPad navigation254
+
+The canonical control23 text explains all nine optional controls in four languages.
+Use the common additional-repair-reference section. Resolve each control ID from the same control guide.
+Keep four groups: translation, dubbing content, timing and transitions, and fallback voices.
+Describe triggers, permitted mutations, precedence, targeted checks and saved limits.
+This presentation update grants no inference, retake, fallback or timing permission.
+WF-01/02/03/15/16/17 and frozen requests remain unchanged.
+
+Normal iPad254 is installed with guide27/control23. Three unique focused native cases pass after one test correction.
+The Player and Speech cover modifier has no native presentation or return animation in two lifecycle probes.
+Four guide locales decode and render. The iPad-visible27copy equals frozen26.
+Phone and desktop owners must prove their own controls, execution, packages and installation.
+Later phone-only canonical text does not change this installed package hash.
+See mobile/Validation/ipad-followup-254-2026-10-30.json.
+
 ## Cross-platform alignment register
+
+### Phone and Duo258 presentation evidence, 2026-10-30
+
+Phone258 and isolated Duo258 are installed. Their frozen manual is guide35 and their control copy is23. The report action menu reuses existing report guards. The review-priority classifier and Pipeline stay unchanged. This task does not test conversion execution or establish workflow parity.
+The phone receipt verifies launch, Welcome rendering and preservation. The Duo receipt verifies menu positions, opened returns, report access and the fixed export footer. Keep physical motion and full phone interaction acceptance separate.
+Detailed repair grouping, confirmed caption-only processing and cloud-source preparation remain pending native audit and adoption. Do not infer these features from the copied guide or UI captures. See `mobile/Validation/iphone-menu-258-2026-10-30.json` and `mobile/Validation/iphone-duo-preview-258-2026-10-30.json`.
+
 
 Snapshot: 2026-10-28. This register separates the shared target from recorded implementation evidence.
 Update the affected rows every time either line changes a workflow.
 
 | Item | Desktop evidence or mapping | iPad evidence or mapping | Alignment and next action |
 | --- | --- | --- | --- |
+| Detailed repair help254 | Owner receives control23, common groups and slider request. Actual desktop execution and installation remain separate. | Normal254 installed with guide27/control23. Native presentation probes and four-language guide checks pass. | Phone private repair-group uptake remains pending. Help bytes do not prove workflow alignment. |
+| Grouped controls and draft pencil253 | Common copy22 is supplied. Desktop adoption is separate; staged help is older. | Normal253 installed. Two native cases pass. All default repair switches are off and checks are zero. Pencil saves a draft only. | Phone receives scoped copy. Keep native/package receipts separate. No counter, first-take or source-priority change. |
+| Optional-control review251 | Common copy21 is available. Desktop uptake is not certified. | Normal251 has the0/1/2slider. Its package contains guide19/control20. No repair permission changes. | Group related functions and disclose precedence. Apple translation review is not connected on iPad. Phone native uptake stays separate. |
 | 822 pacing and repeated-clause audit | Owner receives source-review request. No fix or acceptance claim. | Frozen complete job has long takes and a verified adjacent partial-clause repetition. See CROSS-PLATFORM-822-PACING-REPETITION-REVIEW.md. | Phone owner reviews its actual core separately. Keep original takes, source clocks, optional-off permissions and spent budgets. |
 | Own-turn caption ownership gate242/244 | Mac258 is installed and tested; new requests only.26focused cases and116related regressions pass. Full-film listening remains pending. | Normal244 is installed. Ten injected execution cases and one actual Gemma correction pass. Priority origin, one saved retry and resume defects are fixed. Saved jobs remain exact. | Phone243 has not adopted244. The real-model fixture injects its initial bad draft. Full fresh-film requests and listening stay open. |
 | Required target/source separation234 | Desktop255 implements its adapter, clock and disclosure corrections with separate evidence. | Fifteen unique M4 cases pass, including actual generic inference and decoded translated-caption export. Normal234 is installed; three real checkpoint files remain byte-identical. | Normal phone241 is installed with the adopted234 core, bounded cache and coverage two. Fifteen unique native cases pass with zero failures; two saved job folders and47preference keys stay unchanged. Whole-film coverage and human listening acceptance remain open. |
@@ -1408,3 +1476,53 @@ Guide17/control19 are exact package copies. Full guide rendering is not checked.
 This appearance change does not change frozen requests, conversion rules or spent allowances.
 The iPad and desktop layouts stay unchanged. Phone quarter-first recovery and native replacement adoption remain pending.
 Evidence: mobile/Validation/iphone-reset-location-250-2026-10-29.json.
+
+
+### Desktop source-clock and caption ownership correction263, 2026-10-30
+
+Task: Recover corrupt broad source clocks without duplicate target or Japanese dialogue.
+
+New desktop requests freeze bounded-source-clock-263, caption-owner-no-duplicate-263 and repair-groups-263. Old requests do not receive those markers on resume. Source recovery detects sparse long segments with stretched word times, even with one VAD span. Decode at most twelve audio windows, each eight seconds plus context, with a persisted90-second start allowance. An in-flight local decode can finish later. Reserve before inference. An interrupted reservation keeps its charge. OCR never creates word times. Partial recovery keeps confirmed segments and labelled unresolved audio windows. These windows do not claim word times. Recovered ASR segments keep independent boundaries.
+
+An exact authored caption allocation can cover multiple lexical source fragments. Assign its full content once. When every caption ID has a substantive enabled target owner, mark an empty continuation as covered and do not inject another Japanese fragment. Retain original source and caption clocks and audition access. Manual audio decisions and nonlexical performances remain protected. Missing ownership stays unresolved, not silently muted. Do not regenerate the complete shared caption for each fragment. The report distinguishes covered continuation, deliberate source retention and missing required target audio.
+
+Additional AI repair consumes canonical control23 groups. Desktop maps translationReview to translationTextReview, contentReview to contentChecks, autoRepair to aiAutoFix, durationLimit to limitSpeechDuration, excessiveAudibleOverlap to repairExcessiveAudibleOverlap, safeEndpoint to safeEndpointCheck, borrowGaps to analyzeBackgroundGaps, alternateEngine to automaticAlternateVoice and systemVoice to automaticSystemVoice. Translation editorial review is optional first-script work with finite persisted attempts; it cannot change existing rendered takes. Endpoint inspection and background-gap analysis need their own switches. Strict duration has priority over optional overlap repair. Mandatory missing-audio fill remains independent and active at count0.
+
+Non-dialogue captions only remains default on in both desktop modes. Complete dual-input negative speech evidence and silent-vocal confirmation can suppress TTS while retaining caption text and display clocks. ASR absence alone never authorizes suppression. This is the shared advertisement and screen-text rule for desktop, iPad and iPhone. Native platform owners must verify their own consumer; a common document is not installed parity.
+
+Desktop263 passes26new workflow cases,224affected regression cases and four-language interface checks. Mac263 is installed with guide29 and native startup evidence. No new whole-film conversion is accepted. Windows stays262 at Samuel's request. Source-clock recovery still has one uncertain Ninja audio window; its fallback wording requires further review. Existing user jobs and recordings are not modified. iPad and iPhone source-clock/covered-continuation adoption and default-on real caption-only tests remain separate owner work. Read this section and WF-01/02/03/15/16/17 before changing the flow.
+
+
+### Cloud source preparation264, 2026-10-30
+
+Task: Wait for complete cloud source data before metadata checks or conversion.
+
+A logical file size does not prove local availability. Google Drive, OneDrive and iCloud downloads have a separate preparation phase. Show read bytes when known. Otherwise show waiting. Do not impose a fixed total download deadline. Permit explicit cancellation and retry. Validate stable identity, complete bytes and SHA-256 before metadata inspection. A later metadata or language check has its own bounded execution. Do not label provider delay as TTS failure. Retain queue entries, original paths, selected sidecars, settings, saved recordings and spent repair allowances. Mac does not create a second full preview movie.
+
+Desktop264uses an owned reader process and per-source readiness lock. The native host reads progress and cancellation without the slow Python RPC lock. A stale host receipt cannot block a new app instance. Cancellation stops only the owned preparation and must not pause a separate active conversion. Confirmed read completion can be reused while source identity matches. Readiness does not certify media validity, subtitle correctness or voice quality.
+
+Source and isolated tests pass. Mac0.25.11/build264is installed with guide36/control23. A real blocked provider read cancels in20.04seconds without a queue change. Complete provider-download acceptance remains pending. Windows stays262. Native iPad/iPhone File Provider, scoped access, implementation and device tests remain owner work. Both owners receive Samuel's explicit handover. WF-01/02/03/15/16/17remain unchanged: new conversion waits for source readiness; preview can also prepare a source. This grants no extra generation or repair.
+
+
+### Mobile traditional playback vocal reduction258, 2026-10-30
+
+Task: Offer low-cost karaoke-style suppression during system narration.
+
+Traditional reduction is separate from AI source separation. It starts at0%and needs no model download.
+The user sets its strength in Reading audio settings. Apply it during caption-following narration or line narration.
+Native one/two-channel Float32 playback reduces the center vocal band. Mono uses a frequency cut.
+The compatibility player uses its public equalizer across channels. This is not stereo center cancellation.
+Keep complete soundtrack gain at1. User video and narration volume controls remain separate.
+The effect can retain voices and can affect instruments. Unsupported native tap formats bypass processing.
+
+AI background preparation keeps its hardware and installed-model guards. It is hidden on unsupported hardware.
+After AI background preparation, disable the traditional slider and use the separate AI switch.
+All changes are playback-only. Do not edit source media, conversion requests, chosen takes or spent recovery budgets.
+WF-01, WF-02, WF-03, WF-15, WF-16and WF-17conversion rules remain unchanged.
+
+M4 executes two native cases without failure. Piano A12Z executes the actual tap case without failure.
+Both render8192tap frames. Synthetic center1kHz becomes10%amplitude, bass60Hz retains98.57%, and side2.3kHz stays unchanged.
+These checks do not certify human listening quality, every media format or VLC filtered output.
+Normal258installation and exact guide42consumer records are in the JSON contract and private receipt.
+iPhone receives the tested source and guide. Its private uptake, complete Reading settings and installation remain pending.
+Desktop has no mobile Reading mode. No desktop conversion flow changes in this task.

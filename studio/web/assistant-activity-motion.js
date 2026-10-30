@@ -43,9 +43,23 @@ export const REST_HAIR={
  future:[.52,.155,.12,.033], mint:[.44,.085,.09,.024],
  moonflower:[.50,.095,.10,.025]
 };
+// Each rest pose has its own head region. The central region moves rigidly,
+// so breathing cannot stretch the eyes, mouth or face proportions.
+export const REST_HEAD={studio:[.45,.25,.20,.19],ocean:[.37,.25,.17,.17],energy:[.66,.24,.18,.17],ninja:[.52,.24,.18,.18],retro:[.42,.23,.21,.19],forest:[.44,.27,.18,.17],future:[.53,.29,.23,.20],mint:[.40,.24,.18,.18],moonflower:[.51,.24,.18,.19]};
+export function restHeadWeight(x,y,theme='studio'){
+ const[cx,cy,rx,ry]=REST_HEAD[theme]||REST_HEAD.studio,d=Math.hypot((x-cx)/rx,(y-cy)/ry);
+ if(d<=1)return 1;if(d>=1.45)return 0;const k=(d-1)/.45;return 1-k*k*(3-2*k);
+}
 export function activityPoint(x,y,t,scene,idle=false,theme='studio'){
  const region=scene===4?(REST_HAIR[theme]||REST_HAIR.studio):CROWN_HAIR[theme]?.[scene]||(scene===3?[.28,.075,.22,.055]:[.36,.085,.24,.065]);
- const hair=weight(x,y,...region);return [.04+(x+.0013*Math.sin(t*.8)*hair)*.92,.02+(y+.0006*Math.sin(t*.7)*hair)*.90];
+ const hair=weight(x,y,...region);
+ if(scene===4){
+  const phase=Object.keys(REST_HEAD).indexOf(theme)*.37,breath=Math.sin(t*Math.PI/2.8+phase),head=restHeadWeight(x,y,theme),[cx,cy]=REST_HEAD[theme]||REST_HEAD.studio;
+  const angle=.003*Math.sin(t*.72+phase),c=Math.cos(angle),s=Math.sin(angle);
+  const dx=(x-cx)*(c-1)-(y-cy)*s+.001*Math.sin(t*.83+phase),dy=(x-cx)*s+(y-cy)*(c-1)-.0025*breath;
+  return [.04+(x+head*dx+.003*Math.sin(t*1.13+phase)*hair)*.92,.02+(y+head*dy+.0013*Math.sin(t*.91+phase)*hair)*.90];
+ }
+ return [.04+(x+.0013*Math.sin(t*.8)*hair)*.92,.02+(y+.0006*Math.sin(t*.7)*hair)*.90];
 }
 
 function imageFor(theme){
@@ -74,7 +88,7 @@ function make2D(canvas,sceneImages,atlas){
  // Clip the source tile before local mesh transforms, so a neighbour cannot leak.
  const tiles=Array.from({length:5},(_,scene)=>{const image=sceneImages[scene],c=document.createElement('canvas'),source=activitySource(atlas,scene),[u,v,w,h]=source.region;c.width=image.width*w;c.height=image.height*h;const tileContext=c.getContext('2d');tileContext.drawImage(image,u*image.width,v*image.height,c.width,c.height,0,0,c.width,c.height);for(const [x1,y1,x2,y2] of source.exclusions)tileContext.clearRect(Math.round(x1*c.width),Math.round(y1*c.height),Math.round((x2-x1)*c.width),Math.round((y2-y1)*c.height));return c;});
  function triangle(image,source,dest){const[a,b,c]=source,[p,q,r]=dest,det=a[0]*(b[1]-c[1])+b[0]*(c[1]-a[1])+c[0]*(a[1]-b[1]);const solve=v=>[(v[0]*(b[1]-c[1])+v[1]*(c[1]-a[1])+v[2]*(a[1]-b[1]))/det,(v[0]*(c[0]-b[0])+v[1]*(a[0]-c[0])+v[2]*(b[0]-a[0]))/det,(v[0]*(b[0]*c[1]-c[0]*b[1])+v[1]*(c[0]*a[1]-a[0]*c[1])+v[2]*(a[0]*b[1]-b[0]*a[1]))/det];const x=solve([p[0],q[0],r[0]]),y=solve([p[1],q[1],r[1]]);ctx.save();ctx.beginPath();ctx.moveTo(...p);ctx.lineTo(...q);ctx.lineTo(...r);ctx.closePath();ctx.clip();ctx.setTransform(x[0],y[0],x[1],y[1],x[2],y[2]);ctx.drawImage(image,0,0);ctx.restore();}
- return {kind:'canvas2d',draw(t,scene,idle){ctx.clearRect(0,0,canvas.width,canvas.height);const tile=tiles[scene],n=10;for(let y=0;y<n;y++)for(let x=0;x<n;x++){const points=[[x/n,y/n],[(x+1)/n,y/n],[x/n,(y+1)/n],[(x+1)/n,(y+1)/n]],s=points.map(([u,v])=>[u*tile.width,v*tile.height]),d=points.map(([u,v])=>{const p=activityPoint(u,v,t,scene,idle,atlas.characterId.replace('assistant-',''));return[p[0]*canvas.width,p[1]*canvas.height]});triangle(tile,[s[0],s[1],s[2]],[d[0],d[1],d[2]]);triangle(tile,[s[1],s[3],s[2]],[d[1],d[3],d[2]]);}},dispose(){ctx.clearRect(0,0,canvas.width,canvas.height)}};
+ return {kind:'canvas2d',draw(t,scene,idle){ctx.clearRect(0,0,canvas.width,canvas.height);const tile=tiles[scene],n=scene===4?16:10;for(let y=0;y<n;y++)for(let x=0;x<n;x++){const points=[[x/n,y/n],[(x+1)/n,y/n],[x/n,(y+1)/n],[(x+1)/n,(y+1)/n]],s=points.map(([u,v])=>[u*tile.width,v*tile.height]),d=points.map(([u,v])=>{const p=activityPoint(u,v,t,scene,idle,atlas.characterId.replace('assistant-',''));return[p[0]*canvas.width,p[1]*canvas.height]});triangle(tile,[s[0],s[1],s[2]],[d[0],d[1],d[2]]);triangle(tile,[s[1],s[3],s[2]],[d[1],d[3],d[2]]);}},dispose(){ctx.clearRect(0,0,canvas.width,canvas.height)}};
 }
 function visible(a){return a.ready&&a.visible&&a.canvas.isConnected&&!document.hidden;}
 function animated(a){return visible(a)&&!a.canvas.closest('.assistant-workflow.is-paused')&&!reduced.matches;}

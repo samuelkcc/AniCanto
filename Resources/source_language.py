@@ -88,7 +88,7 @@ def probe(request):
     return dict(language=winner if winner and confident.count(winner)>=2 else None,method='three-audio-samples',samples=votes,stream=request['stream'])
 
 
-def preflight(root,video,tools,settings):
+def _preflight(root,video,tools,settings,preparation=None):
     path=Path(video);stat=path.stat();chosen=settings.get('sourceAudioStream')
     identity=[str(path.resolve()),stat.st_size,stat.st_mtime_ns,'source-audio-2-audited',chosen,settings.get('startOffset',0),settings.get('limit',0),settings.get('speechModel')]
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()
@@ -100,7 +100,9 @@ def preflight(root,video,tools,settings):
             media_source,raw=accessible(video,tools['ffprobe'],root);meta=json.loads(raw)
         else:
             media_source=path
-            meta=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',video],stderr=subprocess.PIPE,timeout=15))
+            from source_access import probe as media_probe
+            command=[tools['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',video]
+            meta=json.loads(preparation.capture(command,timeout=45) if preparation else media_probe(video,tools['ffprobe']))
         streams=[x for x in meta.get('streams',[]) if x.get('codec_type')=='audio']
         if chosen is not None:
             stream=next((x for x in streams if x['index']==chosen),None)
@@ -116,7 +118,10 @@ def preflight(root,video,tools,settings):
             request=folder/'request.json';request.write_text(json.dumps(dict(storage=str(root),video=str(media_source),stream=result['stream'],duration=duration,startOffset=start,ffmpeg=tools['ffmpeg'],speechModel=settings.get('speechModel'))))
             python=python_for(root,'speech-runtime' if sys.platform=='win32' else 'runtime')
             try:
-                heard=json.loads(subprocess.check_output([str(python),str(Path(__file__).resolve()),str(request)],stderr=subprocess.PIPE,timeout=150));result.update(heard);result['metadataConflict']=bool(heard.get('language') and heard['language']!=info.get('language') and info.get('language'))
+                command=[str(python),str(Path(__file__).resolve()),str(request)]
+                if preparation:preparation.update(phase='language')
+                heard=json.loads(preparation.capture(command,timeout=150) if preparation else subprocess.check_output(command,stderr=subprocess.PIPE,timeout=150));result.update(heard);result['metadataConflict']=bool(heard.get('language') and heard['language']!=info.get('language') and info.get('language'))
+            except __import__('source_preparation').SourcePreparationCancelled:raise
             except (OSError,ValueError,subprocess.SubprocessError):result.update(language=None,method='unconfirmed-audio',reason='Source language could not be confirmed. Select the actual spoken language before conversion.')
         from atomic_files import write_json
         write_json(saved,result)
@@ -130,6 +135,25 @@ def preflight(root,video,tools,settings):
     return dict(result,name=NAMES.get(language,language or 'Unconfirmed'),supported=available,cacheKey=key,
                 needsConfirmation=bool(language!='ja' or result.get('metadataConflict') or override),token=token,
                 reason=result.get('reason') or ('' if available else 'Select a supported source language.'))
+
+
+def preflight(root,video,tools,settings,operation_id=None,row_id=None):
+    from source_preparation import Preparation,SourcePreparationCancelled,CLOUD_ERROR,READ_ERROR
+    preparation=Preparation(root,video,operation_id,row_id)
+    try:
+        preparation.ensure_local();preparation.update(phase='probing')
+        result=_preflight(root,video,tools,settings,preparation)
+        preparation.finish();return result
+    except SourcePreparationCancelled as error:
+        preparation.fail(error);raise
+    except (OSError,ValueError,subprocess.SubprocessError) as error:
+        message=CLOUD_ERROR if preparation.state['phase']=='reading' and __import__('source_preparation').cloud(video) else READ_ERROR
+        preparation.fail(RuntimeError(message))
+        from atomic_files import write_json
+        write_json(preparation.folder/'diagnostic.json',dict(kind=type(error).__name__,detail=str(error)[:1200],source=str(video),phase=preparation.state['phase']))
+        raise RuntimeError(message) from error
+    except RuntimeError as error:
+        preparation.fail(error);raise
 
 
 if __name__=='__main__':print(json.dumps(probe(json.loads(Path(sys.argv[1]).read_text()))))

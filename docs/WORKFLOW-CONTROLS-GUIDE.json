@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-19-caption-only-hk",
+  "revision": "workflow-controls-guide-23-detailed-repair-help",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -68,25 +68,25 @@
         "ja": "AI 内容確認"
       },
       "body": {
-        "zh-HK": "核對配音內容並記錄疑點。未開啟 AI 自動修復時，核對不會自動替換有聲錄音。各裝置支援的核對種類及模型可能不同。",
-        "zh-CN": "核对配音内容并记录疑点。未开启 AI 自动修复时，核对不会自动替换有声录音。各设备支持的核对类型和模型可能不同。",
-        "en": "Inspect dubbing and report findings. Without AI auto repair, review does not automatically replace audible recordings. Supported checks and models can differ by device.",
-        "ja": "吹き替えを確認して問題を報告します。AI 自動修復がオフなら、有音の録音を自動で置き換えません。対応する確認機能とモデルは端末により異なります。"
+        "zh-HK": "檢查已生成的配音並記錄內容疑點。檢查本身不會改稿或取代有聲錄音；需要另行開啟「配音內容修復」才可按可靠證據修復。每段上限以每個錄音版本分別計算，0 代表不作一般逐段核對，1 或 2 代表最多核對一次或兩次，不是重錄次數。即使設為 0，開啟內容修復後，已修復片段仍可能在工作時間預算內接受最多兩次針對性核對。辨識不確定不代表配音錯誤。",
+        "zh-CN": "检查已生成的配音并记录内容疑点。检查本身不会改稿或替换有声录音；需要另行开启“配音内容修复”才可按可靠证据修复。每段上限按每个录音版本分别计算，0 表示不做一般逐段核对，1 或 2 表示最多核对一次或两次，不是重录次数。即使设为 0，开启内容修复后，已修复片段仍可能在工作时间预算内接受最多两次针对性核对。识别不确定不代表配音错误。",
+        "en": "Inspect generated dubbing and report content concerns. Review alone does not rewrite a draft or replace audible audio. Repair dubbing content requires separate permission and reliable evidence. The count applies to each recording version: 0 skips ordinary line review; 1 or 2 permits that many checks. This is not a retake count. With content repair enabled, repaired passages can still receive up to two targeted checks within the saved time budget, even at 0. Uncertain recognition is not confirmed wrong speech.",
+        "ja": "生成済みの吹き替えを確認し、内容の疑いを記録します。確認だけでは原稿を書き換えず、有声音声を置き換えません。内容修復には別の許可と確かな証拠が必要です。回数は録音版ごとに適用され、0 は通常の台詞確認なし、1・2 は確認上限を表します。再録音回数ではありません。内容修復が有効なら、0 でも修復済み区間を保存された時間予算内で最大二回確認する場合があります。不確かな認識は誤発話の確定ではありません。"
       }
     },
     {
       "id": "autoRepair",
       "title": {
-        "zh-HK": "AI 自動修復",
-        "zh-CN": "AI 自动修复",
-        "en": "AI auto repair",
-        "ja": "AI 自動修復"
+        "zh-HK": "配音內容修復",
+        "zh-CN": "配音内容修复",
+        "en": "Repair dubbing content",
+        "ja": "吹き替え内容を修復"
       },
       "body": {
-        "zh-HK": "只處理已有可靠證據的錯誤或可疑片段，在指定次數及時間內嘗試修復。此選項可獨立開啟，無須啟用全片深入分析。未確認的辨識結果不會視為讀音錯誤。",
-        "zh-CN": "只处理已有可靠证据的错误或可疑片段，在有限次数和时间内尝试修复。可独立开启，无需启用整片深入分析；未确认的识别结果不视为已读错。",
-        "en": "Use reliable evidence or bounded targeted checks to repair suspect passages. This works independently of full-video analysis. An uncertain recognizer result alone does not prove wrong speech.",
-        "ja": "信頼できる証拠や回数制限付きの個別確認に基づき、疑わしい箇所を修復します。動画全体の詳しい分析とは独立しています。不確かな認識結果だけで読み間違いと判断しません。"
+        "zh-HK": "可靠核對證據確認配音內容有問題後，在已保存的次數及時間預算內修正譯稿並重新配音。這不是所有額外功能的總開關，也不會單憑不確定的辨識結果重錄。翻譯核對、時長限制、過度重疊、尾音及空檔分析各有獨立選項。使用另一模型或系統聲音還需要各自的許可。關閉此項不會關閉缺失、靜音或損壞配音的必要補錄。",
+        "zh-CN": "可靠核对证据确认配音内容有问题后，在已保存的次数和时间预算内修正译稿并重新配音。这不是所有额外功能的总开关，也不会仅凭不确定的识别结果重录。翻译核对、时长限制、过度重叠、尾音和空档分析各有独立选项。使用另一模型或系统声音还需要各自许可。关闭此项不会关闭缺失、静音或损坏配音的必要补录。",
+        "en": "When reliable review evidence confirms a content defect, correct the target draft and record again within saved limits. This is not a master switch for all extra controls. Uncertain recognition alone cannot trigger a retake. Translation review, duration, overlap, endpoint and gap controls remain independent. Another model and system voice each require separate permission. Turning this off does not disable required recovery for missing, silent or damaged dubbing.",
+        "ja": "確かな確認結果で内容の不具合が確定した場合、保存された回数・時間予算内で原稿を修正して再録音します。全追加機能の一括スイッチではありません。不確かな認識だけでは再録音しません。翻訳確認、長さ、重なり、末尾、空き時間は独立した設定です。別モデルとシステム音声にはそれぞれ許可が必要です。無効でも、欠落・無音・破損した必須音声の補完は行います。"
       }
     },
     {
@@ -98,10 +98,10 @@
         "ja": "吹き替えを原音声の長さに制限"
       },
       "body": {
-        "zh-HK": "先量度實際生成的錄音，只移除首尾完全數碼靜音，保留 80 毫秒保護、輕聲字尾及句中停頓。確認超時後，才以 AI 保留原意並縮短配音稿，再使用相同參考重錄一次。原裝字幕、原稿及錄音均會保留；無法對時的問題會列入報告。",
-        "zh-CN": "先测量实际生成录音，只移除首尾完全数字静音，保留 80 毫秒保护、轻声音尾和句中停顿。确实超时才用 AI 保义缩短配音稿，再用同一参考重录一次。原始字幕、原稿和录音保留；仍不能合时的问题会如实报告。",
-        "en": "Measure the generated recording first. Remove only exact digital silence at its edges, keeping 80 ms padding, quiet endings and internal pauses. A real overrun permits one faithful AI rewrite and one retake with the same reference. Keep source captions, scripts and recordings. Report unresolved timing.",
-        "ja": "生成した録音を先に測定します。前後の完全なデジタル無音のみを除き、80 ミリ秒の余白、弱い語尾、文中の間を残します。本当に長い場合だけ意味を保って原稿を短くし、同じ参照音声で1回再録音します。元字幕、原稿、録音を保持し、未解決の長さの問題を報告します。"
+        "zh-HK": "先量度已生成錄音的實際長度。只可移除邊緣完全數碼靜音，保留 80 毫秒緩衝、輕聲尾音及句中停頓。確實超時才可忠實精簡一次譯稿，並以相同聲線參考重錄一次，不會為求合時而直接加速。保留原字幕、原稿及原錄音；未能解決則在報告記錄。啟用後優先於「修復過度人聲重疊」，不會因同一時長問題再加一次重疊重錄。關閉時保留完整首條有聲錄音，容許延長及重疊。",
+        "zh-CN": "先测量生成录音的实际长度。只移除边缘完全数字静音，保留 80 毫秒缓冲、轻声尾音和句中停顿。确实超时才可忠实精简一次译稿，并用相同声音参考重录一次，不会为对时直接加速。保留原字幕、原稿和原录音；未解决则记入报告。启用后优先于过度人声重叠修复，不因同一时长问题再增加一次重叠重录。关闭时保留完整首条有声录音，允许延长和重叠。",
+        "en": "Measure the generated recording first. Trim only exact digital silence at the edges, retaining 80 ms padding, quiet endings and internal pauses. A measured overrun permits one faithful shorter draft and one same-reference retake, not direct speed-up. Keep source captions, drafts and original recordings. Report unresolved timing. This control takes precedence over overlap repair; do not add a second overlap retake for the same timing issue. Off retains complete first audible takes and permits extension and overlap.",
+        "ja": "生成音声の実際の長さを先に測定します。端の完全なデジタル無音だけを除き、80 ms の余白、静かな語尾、文中の間を保持します。超過を測定した場合のみ、意味を保った短縮原稿と同じ参照声による再録音を一回ずつ許可します。単純な高速化はしません。元字幕・原稿・録音を保持し、未解決は記録します。重なり修復より優先し、同じ長さの問題で追加の再録音を行いません。無効時は最初の有声音声を完全に保持し、延長と重なりを許可します。"
       }
     },
     {
@@ -158,10 +158,10 @@
         "ja": "別のインストール済み音声モデルを試す"
       },
       "body": {
-        "zh-HK": "須同時開啟 AI 自動修復。所選引擎的後備配音失敗時，才在指定次數內嘗試支援目標語言的已安裝模型；不會自動下載模型。",
-        "zh-CN": "需同时开启 AI 自动修复。所选引擎后备未成功时，才有限尝试支持目标语言的已安装模型；不会自行下载模型。",
-        "en": "Requires AI auto repair. If the selected engine fallback fails, try a supported installed model within the saved limits. Do not download models automatically.",
-        "ja": "AI 自動修復も有効にしてください。選択したエンジンの代替が失敗した場合に、対応するインストール済みモデルを制限内で試します。モデルを自動ダウンロードしません。"
+        "zh-HK": "需要同時開啟「配音內容修復」。所選引擎的後備處理仍失敗時，才可在已保存預算內試另一個已安裝、支援目標語言的模型。這不是同時使用所有模型，也不會自動下載模型。記錄實際使用的引擎及錄音版本，不會單憑另一個辨識器不確定就棄用已有聲音。",
+        "zh-CN": "需要同时开启“配音内容修复”。所选引擎的后备处理仍失败时，才可在保存预算内试另一个已安装且支持目标语言的模型。不是同时使用所有模型，也不自动下载。记录实际引擎和录音版本，不会仅因另一个识别器不确定就放弃已有声音。",
+        "en": "Requires Repair dubbing content. If fallback with the selected engine still fails, try another installed model that supports the target language. Use the saved limits. This does not run every model or download one automatically. Record the actual engine and take. Another recognizer being uncertain is not permission to discard existing audible audio.",
+        "ja": "「吹き替え内容を修復」の許可も必要です。選択エンジンの代替処理が失敗した場合、保存予算内で目標言語に対応した別の導入済みモデルを試します。全モデルの同時実行や自動ダウンロードはしません。実際のエンジンと録音版を記録します。他の認識器の不確かな結果だけでは有声音声を破棄しません。"
       }
     },
     {
@@ -173,10 +173,10 @@
         "ja": "インストール済みシステム音声の代替"
       },
       "body": {
-        "zh-HK": "須同時開啟 AI 自動修復，並在開始前確認使用。AI 後備配音仍然失敗時，才在指定次數內使用已安裝的目標語言系統聲線，並記錄實際使用的引擎。",
-        "zh-CN": "需同时开启 AI 自动修复，并在开始前确认使用。AI 后备仍失败时，才有限使用已安装的目标语言系统声音，并记录实际使用的引擎。",
-        "en": "Requires AI auto repair and confirmation before processing. If AI fallback still fails, use an installed target-language system voice within saved limits. Record the actual engine.",
-        "ja": "AI 自動修復と処理前の確認が必要です。AI の代替でも失敗した場合だけ、インストール済みの対象言語システム音声を制限内で使用し、実際のエンジンを記録します。"
+        "zh-HK": "需要同時開啟「配音內容修復」，並在處理前確認系統聲音提示。AI 後備仍失敗時，才可使用已安裝的目標語言系統聲音補配；不等同原角色聲線，也不保證可選 Siri 聲音。記錄實際引擎並沿用已保存預算。此項不是朗讀模式的聲線選擇；系統聲音的發布及使用條款仍須另行核實。",
+        "zh-CN": "需要同时开启“配音内容修复”，并在处理前确认系统声音提示。AI 后备仍失败时，才可使用已安装的目标语言系统声音补配；不等于原角色声音，也不保证可选 Siri 声音。记录实际引擎并沿用保存预算。不是朗读模式的声音选择；系统声音发布和使用条款仍须另行核实。",
+        "en": "Requires Repair dubbing content and confirmation before processing. If AI fallback still fails, use an installed target-language system voice within saved limits. This is not the original character voice and does not promise Siri voices. Record the actual engine. This is separate from Reading voice selection. Public distribution and system-audio use terms still require separate verification.",
+        "ja": "内容修復の許可と処理前の確認が必要です。AI の代替処理でも失敗した場合、保存予算内で目標言語の導入済みシステム音声を使います。元の役の声ではなく、Siri 音声も保証しません。実際のエンジンを記録します。読み上げモードの声選択とは別です。公開配布やシステム音声の利用条件は別途確認が必要です。"
       }
     },
     {
@@ -188,10 +188,10 @@
         "ja": "末尾の安全確認"
       },
       "body": {
-        "zh-HK": "只為疑似噪音長尾收集獨立證據。無法確認時保留原錄音；不會利用能量門檻刪除輕聲字尾或掩飾漏讀。",
-        "zh-CN": "仅对疑似噪音长尾收集独立证据。未确认就保留原录音；不能用能量阈值删除轻声音尾或掩盖漏读。",
-        "en": "Collect independent evidence for a suspected noisy tail. Keep the original if uncertain. An energy threshold must not remove quiet endings or conceal missing words.",
-        "ja": "雑音の長い末尾が疑われる場合に独立した証拠を集めます。不確かなら元の録音を保持します。音量しきい値だけで弱い語尾を削除したり、読み落としを隠したりしません。"
+        "zh-HK": "對疑似多餘尾音另行收集證據，不是只看音量低就剪走。必須保留輕聲字尾及完整字句；證據不確定時保留原錄音。iPad 在獨立確認有效終點後，可建立並採用裁剪副本，因此此項不只是唯讀檢查。原錄音仍會保留；此項不會授權改寫對白或重新配音。各平台須以實際實作及驗證結果為準。",
+        "zh-CN": "对疑似多余尾音另外收集证据，不是看到音量低就剪掉。必须保留轻声字尾和完整语句；证据不确定时保留原录音。iPad 独立确认有效终点后，可建立并采用裁剪副本，因此不只是只读检查。原录音仍保留；此项不授权改写对白或重新配音。各平台以实际实现和验证为准。",
+        "en": "Collect independent evidence for a suspected unwanted tail. Low energy alone cannot justify cutting quiet endings or hiding missing words. Keep the original when evidence is uncertain. On iPad, confirmed endpoint evidence can create and select a trimmed copy, so this is not read-only inspection. Preserve the original recording. This option does not authorize a rewritten draft or new synthesis. Each platform needs its own execution evidence.",
+        "ja": "不要な末尾の疑いに対して独立した証拠を集めます。音量が低いだけでは静かな語尾を切らず、欠落した語を隠しません。不確かな場合は原音を保持します。iPad は終点を独立確認した場合、切り詰めたコピーを作成して選択できるため、確認のみではありません。元録音を残し、原稿の変更や新規合成は許可しません。各端末で実行検証が必要です。"
       }
     },
     {
@@ -203,10 +203,10 @@
         "ja": "使用可能な背景区間を分析"
       },
       "body": {
-        "zh-HK": "只有證據確認沒有人聲的背景時段才可借用。沒有字幕或無法辨識文字，不代表沒有人聲。此功能不會開啟內容修復或取消時長限制。",
-        "zh-CN": "只有证据确认无人声的背景时段才可借用。没有字幕或无法识别文字，不代表无人声。此功能不会开启内容修复或取消时长限制。",
-        "en": "Borrow background time only with evidence that no voice is present. Missing captions or ASR words do not prove silence. This control does not enable content repair or override the duration limit.",
-        "ja": "人声がないと証拠で確認できた背景区間だけを使用します。字幕や認識語がないだけでは無音と判断しません。内容修復を有効にしたり、長さ制限を無効にしたりする機能ではありません。"
+        "zh-HK": "檢查前一句配音可能延伸到的背景時段，只有確認沒有其他人聲才可借用。沒有字幕或辨識不到文字並不代表靜音；呼聲、音樂及聲效亦不能任意當成可用空檔。此項不會改寫對白、開啟內容修復或推翻已選的時長限制。證據不足時保留原有邊界及錄音。",
+        "zh-CN": "检查前一句配音可能延伸到的背景时段，只有确认没有其他人声才可借用。没有字幕或识别不到文字不代表静音；呼声、音乐和音效也不能任意当作可用空档。此项不会改写对白、开启内容修复或推翻已选时长限制。证据不足时保留原边界和录音。",
+        "en": "Inspect background time that an earlier take could extend into. Borrow it only with evidence that no other voice is present. Missing captions or ASR words do not establish silence. Shouts, music and effects are not automatic permission to extend speech. This control does not rewrite dialogue, enable content repair or override the duration limit. Keep existing bounds and recordings when evidence is insufficient.",
+        "ja": "前の台詞が延長する可能性のある背景区間を調べ、他の声がない証拠がある場合のみ利用します。字幕や認識語の欠如は無音の証拠ではありません。叫び声、音楽、効果音があっても自動的に延長できるわけではありません。原稿を書き換えず、内容修復を有効にせず、長さ制限も変更しません。証拠不足なら境界と録音を保持します。"
       }
     },
     {
@@ -218,10 +218,10 @@
         "ja": "翻訳後の AI 確認"
       },
       "body": {
-        "zh-HK": "初稿完成後，增加一輪原意及措辭核對。此選項不會自動開啟配音重錄或時長修復，亦不會改寫已完成的舊稿。",
-        "zh-CN": "初稿完成后增加一轮原意和措辞核对。这不会自动开启配音重录或时长修复，也不会改写已完成的旧稿。",
-        "en": "Add an editorial pass after the first translation. This does not automatically enable voice retakes or timing repair, or rewrite completed saved scripts.",
-        "ja": "翻訳初稿の後に意味と表現を確認する工程を追加します。再録音や長さ修復を自動で有効にせず、保存済みの完成原稿も変更しません。"
+        "zh-HK": "在第一稿翻譯後增加一次 AI 編輯核對，檢查意思、用詞及上下文，並可能在首次配音前修正譯稿。不是再核對音訊，也不會自動開啟配音重錄、時長或重疊修復，更不會回頭重寫已完成工作的譯稿。iPad 目前只接到 Gemma／Qwen 翻譯流程；選用內置翻譯時停用此額外 AI 核對。各平台及模型的實際能力須分別驗證。",
+        "zh-CN": "第一稿翻译后增加一次 AI 编辑核对，检查意思、用词和上下文，可能在首次配音前修正译稿。不是检查音频，不会自动开启配音重录、时长或重叠修复，也不会回头改写已完成工作的译稿。iPad 目前仅连接 Gemma／Qwen 流程；内置翻译停用此额外 AI 核对。各平台和模型能力须分别验证。",
+        "en": "Add an AI editorial pass after the first translation. It can correct meaning, wording and context before initial dubbing. It is not audio review. It does not enable voice retakes, duration or overlap repair, or rewrite completed saved drafts. On iPad, this pass is connected to Gemma/Qwen translation only; built-in translation disables it. Verify actual model and platform capabilities separately.",
+        "ja": "初稿翻訳の後に AI 編集確認を追加し、初回吹き替え前に意味・表現・文脈を修正できます。音声確認ではありません。再録音、長さ、重なり修復を有効にせず、完了済みの保存原稿も書き換えません。iPad は Gemma／Qwen 翻訳に接続し、内蔵翻訳では無効です。モデル・端末ごとの実装を別に検証します。"
       }
     },
     {
@@ -385,10 +385,10 @@
         "ja": "過度な有音の重なりを修正"
       },
       "body": {
-        "zh-HK": "專家選項，預設關閉。只在同語言配音實際同時發聲超過 2 秒時，才保留原意縮稿並用同一聲線重錄一次；靜音、空檔及未確認的輕聲不會直接觸發。未改善便保留首輪錄音並列入報告，不反覆重錄。此選項獨立於內容核對及原聲時長限制，",
-        "zh-CN": "专家选项，默认关闭。仅在同语言配音实际同时发声超过 2 秒时，才保义缩稿并用同一声音重录一次；静音、空档及未确认的轻声不会直接触发。未改善则保留首轮录音并列入报告，不反复重录。此选项独立于内容核对及原声时长限制，",
-        "en": "Expert option, off by default. More than two seconds of confirmed simultaneous target speech permits one faithful rewrite and same-voice retake. Silence, free gaps, and uncertain quiet tails do not directly trigger it. Keep the first take and report an unsuccessful repair. This is separate from content checks and strict original duration.",
-        "ja": "エキスパート設定で、初期状態はオフです。同じ言語の吹き替えが実際に同時発声する時間が2秒を超えた場合だけ、意味を保って短くし、同じ声で1回再録音します。無音・空き時間・不確かな小声だけでは実行しません。改善しなければ初回音声を保持して報告します。内容確認・原音声の長さ制限とは独立しています。"
+        "zh-HK": "只在確認兩段目標語言配音同時發聲超過兩秒時，容許受影響對白忠實改寫及以同一聲線重錄一次。音檔時間範圍相交並不足夠；靜音、空檔及不確定的輕聲尾音不會觸發。修復失敗保留首條有聲錄音。此項預設關閉，並不代表所有重疊都必須消除；啟用原聲時長限制時，由時長限制優先處理，不另開重疊重錄。",
+        "zh-CN": "只有确认两段目标语言配音同时发声超过两秒，才允许受影响对白忠实改写并用同一声音重录一次。音频文件时间范围相交并不足够；静音、空档和不确定的轻声尾音不会触发。修复失败保留首条有声录音。默认关闭，不代表所有重叠都必须消除；原声时长限制启用时由它优先处理，不另开重叠重录。",
+        "en": "Permit one faithful rewrite and same-voice retake only when more than two seconds of simultaneous target speech is confirmed. Overlapping file ranges alone are insufficient. Silence, gaps and uncertain quiet tails do not trigger this action. Keep the first audible take if repair fails. This Expert option defaults off and does not prohibit every overlap. Strict original duration takes precedence and prevents a second overlap retake.",
+        "ja": "目標言語の発話が同時に二秒を超えて重なると確定した場合のみ、意味を保った書き換えと同じ声の再録音を一回許可します。ファイル時間の交差だけでは不十分です。無音、空き時間、不確かな静かな語尾は対象外です。失敗時は最初の有声音声を保持します。初期設定は無効で、すべての重なりを禁止する機能ではありません。原音の長さ制限が優先し、重複した再録音を防ぎます。"
       }
     },
     {
@@ -630,5 +630,60 @@
       "en": "May take 2–3 times as long or longer. Better results are not guaranteed.",
       "ja": "処理時間が2〜3倍以上になる場合があります。品質向上は保証されません。"
     }
-  }
+  },
+  "groups": [
+    {
+      "id": "translation",
+      "title": {
+        "zh-HK": "翻譯",
+        "zh-CN": "翻译",
+        "en": "Translation",
+        "ja": "翻訳"
+      },
+      "items": [
+        "translationReview"
+      ]
+    },
+    {
+      "id": "content",
+      "title": {
+        "zh-HK": "配音內容",
+        "zh-CN": "配音内容",
+        "en": "Dubbing content",
+        "ja": "吹き替え内容"
+      },
+      "items": [
+        "contentReview",
+        "autoRepair"
+      ]
+    },
+    {
+      "id": "timing",
+      "title": {
+        "zh-HK": "時長與銜接",
+        "zh-CN": "时长与衔接",
+        "en": "Timing and transitions",
+        "ja": "長さとつながり"
+      },
+      "items": [
+        "durationLimit",
+        "excessiveAudibleOverlap",
+        "safeEndpoint",
+        "borrowGaps"
+      ]
+    },
+    {
+      "id": "fallback",
+      "title": {
+        "zh-HK": "後備聲線",
+        "zh-CN": "备用声音",
+        "en": "Fallback voices",
+        "ja": "代替音声"
+      },
+      "items": [
+        "alternateEngine",
+        "systemVoice"
+      ]
+    }
+  ]
 }

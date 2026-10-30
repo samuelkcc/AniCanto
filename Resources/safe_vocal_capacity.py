@@ -11,6 +11,8 @@ REVISION='verified-vocal-capacity-1'
 REASONS=('subtitle-content-only-gap','subtitle-continuation')
 
 def configure(cfg,job,cues):
+ if cfg.get('repairGroupsRevision')=='repair-groups-263' and not cfg.get('analyzeBackgroundGaps'):
+  cfg.pop('_nonVocalCueIDs',None);cfg.pop('_nonVocalClockSHA',None);return cfg
  if not __import__('delivery_policy').safe_capacity(cfg) or cfg.get('editorRender'):return cfg
  import numpy as np,soundfile as sf
  from worker import atomic_json

@@ -54,6 +54,10 @@ def report(app):
         data=read(p)
         if fields and isinstance(data,dict):data={k:data[k] for k in fields if k in data}
         text,omitted=bounded_json(data);add(p.relative_to(root).as_posix(),text,sourceBytes=p.stat().st_size,omissions=omitted)
+    structured(root/'source-preparation/current.json')
+    current=read(root/'source-preparation/current.json') if (root/'source-preparation/current.json').is_file() else {}
+    operation=current.get('operationID','') if isinstance(current,dict) else ''
+    if re.fullmatch(r'[A-Za-z0-9-]{1,64}',operation):structured(root/'source-preparation'/operation/'diagnostic.json')
     ready=read(root/'native-ready.json') if (root/'native-ready.json').is_file() else {}
     header=dict(format='AniCanto debug report v2',created=time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),platform=app.platform,
                 computer=dict(system=platform.system(),release=platform.release(),machine=platform.machine(),python=platform.python_version()),

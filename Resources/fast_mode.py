@@ -133,6 +133,7 @@ def translate(w,cfg,job,cues):
                 if cues[i][field]:cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,cues[i][field],fresh=True)
                 if not cues[i][field]:cues[i].setdefault('fastDefects',[]).append('missing-'+field)
             w.atomic_json(Path(job)/'cues.json',cues)
+    __import__('translation_editorial').review(w,cfg,job,cues)
     # Bounded pass before synthesis: a line that cannot fit its own source window is
     # rewritten once here, instead of failing after the voice engine spent time on it.
     if 'yue' in languages:
@@ -365,6 +366,9 @@ def synthesize(cfg,job,cues,run,emit,generated_paths=None):
             safe_deadline=min(deadline,next_start+source_overlap)
         row=dict(index=cue.get('reviewIndex',i)+1,start=cue['start'],end=cue['end'],slot=deadline-anchor,speakerId=cue.get('speakerId'),text=cue.get('cantonese',''),renderedStart=anchor,renderedEnd=deadline,renderedSeconds=0,qualityChecked=False)
         if schedule:row.update(timingShiftSeconds=schedule[i]['shift'],timingMethod=schedule[i]['method'])
+        if cue.get('captionCovered'):
+            row.update(skipped=True,captionCovered=True,captionCoverageOwners=cue.get('captionCoverageOwners',[]),originalPreserved=False,failureKind=None)
+            rows.append(row);continue
         if i in source_fallback:
             from preview_continuity import fill
             try:
@@ -429,9 +433,9 @@ def synthesize(cfg,job,cues,run,emit,generated_paths=None):
                 from preview_continuity import fill
                 try:
                     if fill(cfg,job,cue,row,timeline,run,sr):
-                        warnings.append(dict(index=row['index'],kind='original-source-fallback',message='自動修復後仍未有可交付翻譯錄音；成品保留本句原聲並標記校對，唔會冒充翻譯配音。'))
+                        warnings.append(dict(index=row['index'],kind='deliberate-source-preserved' if cue.get('preserveOriginalSpeech') else 'original-source-fallback',message='按字幕或原聲保留規則處理；並非配音生成失敗。' if cue.get('preserveOriginalSpeech') else '自動修復後仍未有可交付翻譯錄音；成品保留本句原聲並標記校對，唔會冒充翻譯配音。'))
                 except (OSError,ValueError,RuntimeError,wave.Error):pass
-            warnings.append(dict(index=row['index'],kind=failure_kind,message=str(error)))
+            if not cue.get('preserveOriginalSpeech'):warnings.append(dict(index=row['index'],kind=failure_kind,message=str(error)))
         rows.append(row)
         if cfg.get('targetLanguage')=='en' and cue.get('englishOverlapReview'):
             warnings.append(dict(index=row['index'],kind='english-script-overlap-review',message='英文疑似帶入鄰句；未有確認保留意思嘅修正，原稿及錄音保留供覆核。'))

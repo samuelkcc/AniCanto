@@ -25,6 +25,7 @@ def repair(model,audio,spans,rows,cfg,job,emit):
     except (OSError,ValueError):ledger={}
     result=[];windows_used=0;started=time.monotonic()
     for row in rows:
+        if row.get('sourceClockRecovery')==__import__('source_clock_recovery').REVISION:result.append(row);continue
         if not abnormal(row,spans):result.append(row);continue
         a,b=row['start'],row['end'];others=[r for r in rows if r is not row]
         windows=merge_spans([dict(start=max(0,s['start']-.18),end=min(cfg['duration'],s['end']+.18)) for s in spans if min(b,s['end'])-max(a,s['start'])>.2])

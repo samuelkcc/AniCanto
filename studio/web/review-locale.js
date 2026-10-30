@@ -1,5 +1,6 @@
 export const reviewLocale={
   "zh-HK": {
+    "Subtitle voiced by neighbouring turn": "字幕由相鄰對白配音",
     "Source timing review": "原聲時間需覆核",
     "Subtitle allocation review": "字幕分句需覆核",
     "Subtitle source alignment": "字幕與對白配對",
@@ -43,6 +44,7 @@ export const reviewLocale={
     "Recording presence does not certify pronunciation. Delivery problems and optional listening notes are reported separately.": "有錄音唔代表讀音已驗證；目標配音未交付同可選試聽提示會分開顯示。"
   },
   "zh-CN": {
+    "Subtitle voiced by neighbouring turn": "字幕由相邻对白配音",
     "Source timing review": "原声时间需复核",
     "Subtitle allocation review": "字幕分句需复核",
     "Subtitle source alignment": "字幕与对白配对",
@@ -86,6 +88,7 @@ export const reviewLocale={
     "Recording presence does not certify pronunciation. Delivery problems and optional listening notes are reported separately.": "有录音不代表读音已验证；目标配音未交付与可选试听提示会分开显示。"
   },
   "ja": {
+    "Subtitle voiced by neighbouring turn": "隣の発話で吹き替え済み",
     "Source timing review": "元音声の時刻を確認",
     "Subtitle allocation review": "字幕の分割を確認",
     "Subtitle source alignment": "字幕と台詞の対応",
