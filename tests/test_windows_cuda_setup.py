@@ -15,7 +15,7 @@ class NativeCudaTests(unittest.TestCase):
   with patch.object(drama_gguf,'monitored_request',return_value=raw.getvalue()) as request:
    drama_gguf.generate(model,item,dict(targetLanguage='yue'))
   sent=request.call_args.args[1]
-  self.assertRegex(sent['input'],r'唔好[^。]*普通話');self.assertTrue(sent['input'].endswith(item['text']))
+  self.assertIn('香港廣東話',sent['input']);self.assertIn('原聲語氣',sent['input']);self.assertTrue(sent['input'].endswith(item['text']))
   self.assertEqual(sent['voice_ref'],'own-source.wav');self.assertEqual(sent['seed'],104771)
   self.assertEqual({k:sent[k] for k in ('temperature','top_p','top_k')},dict(temperature=1.,top_p=.9,top_k=30))
  def fixture(self,root):

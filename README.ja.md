@@ -24,13 +24,15 @@ SCKC が趣味と学びのために作っているこのプロジェクトは、
 
 AI の生成音声には、アクセント、読み間違い、演技の不足などが残る場合があります。作品を楽しむとともに、その声を届けるプロの演技を、これからも大切にし、応援してください。
 
-## Beta をダウンロード · 0.25.12
+## Beta をダウンロード · 0.25.13
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto-macOS-0.25.12.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.12-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto-macOS-0.25.13.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.13-beta)
 
-[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## この Beta の更新
+
+**0.25.13 修正：** Windows 再起動後も確認済みの構成を保持し、モデル修復後に開始操作を更新します。ファイルが揃っている場合は、削除せず起動確認を完了します。
 
 - **クラウド動画の読み込み：** Google Drive、OneDrive、iCloud の大容量ファイルが読み取り可能になるまで待機し、準備状況とキャンセル操作を表示します。
 - **エラー表示とアシスタント：** 明暗の両外観で赤地に白文字を使用し、9人の休憩シーンに小さな呼吸と髪の動きを加えました。
@@ -38,7 +40,7 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 **既知の制限：** 制限付きの音声時刻復元を追加しましたが、未確定の OCR 区間には重複や長い字幕が残る場合があります。クラウド取得と Windows GPU 変換は提供元と実機に依存します。
 
-[0.25.12 release details](docs/DESKTOP-RELEASE-0.25.12.md)
+[0.25.13 release details](docs/DESKTOP-RELEASE-0.25.13.md)
 
 ## 元のデモを変換して、声を比較する
 

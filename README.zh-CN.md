@@ -24,13 +24,15 @@ AniCanto 最初只是一个简单的心愿：**希望孩子看动画时，可以
 
 AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音、错字或表演不足，不等同于专业演出。希望大家在使用这个项目的同时，继续欣赏和支持熟悉声音背后的表演者。
 
-## 下载 Beta · 0.25.12
+## 下载 Beta · 0.25.13
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto-macOS-0.25.12.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.12-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto-macOS-0.25.13.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.13-beta)
 
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 本次 Beta 更新
+
+**0.25.13 修复：** Windows 重启后保留已验证部署，修复模型后刷新开始按钮；文件齐全时只需完成验证，不必先删除模型。
 
 - **云端视频导入：** Google Drive、OneDrive 或 iCloud 大文件先等待可读取，再开始媒体检查；提供准备进度和取消功能。
 - **错误提示和助手：** 深浅外观统一鲜红底白字，九位助手的休息场景加入轻微呼吸和头发微动。
@@ -38,7 +40,7 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 **已知限制：** 已加入有限度的原声时间恢复，但未确认的 OCR 区间仍可能出现重复或过长字幕。云端文件完整下载和 Windows GPU 转换仍取决于供应商及实机情况。
 
-[0.25.12 release details](docs/DESKTOP-RELEASE-0.25.12.md)
+[0.25.13 release details](docs/DESKTOP-RELEASE-0.25.13.md)
 
 ## 下载测试原片，听配音成品作比较
 

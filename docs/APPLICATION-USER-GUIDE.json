@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-36-desktop-cloud-preparation",
+  "revision": "application-user-guide-45-desktop-windows-readiness",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -393,6 +393,34 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "desktop-windows-setup-readiness",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Windows: downloaded models and startup verification",
+            "zh-HK": "Windows：模型下載同啟動驗證",
+            "zh-CN": "Windows：模型下载和启动验证",
+            "ja": "Windows：モデル取得と起動確認"
+          },
+          "body": [
+            {
+              "en": "Downloaded files and completed setup are different states. If all files are present but model or speech checks are incomplete, choose Finish setup verification. Verified downloads are reused. A completed installation keeps its verified CPU or CUDA path; a new hardware recommendation does not silently replace it. To change the path, select it in setup and complete verification.",
+              "zh-HK": "檔案下載完成同啟動驗證完成係兩回事。檔案齊全但模型或語音檢查未完成時，按「完成啟動驗證」；已驗證下載會重用。安裝完成後沿用已驗證嘅 CPU 或 CUDA 路徑，唔會因新硬件建議自動轉換。要改路徑，請喺部署設定揀選並完成驗證。",
+              "zh-CN": "文件下载完成和启动验证完成是不同状态。文件齐全但模型或语音检查尚未完成时，点击“完成启动验证”；已验证下载会复用。安装完成后沿用已验证的 CPU 或 CUDA 路径，不会因新硬件建议自动更换。要修改路径，请在部署设置中选择并完成验证。",
+              "ja": "ファイル取得と起動確認は別の状態です。ファイルが揃っていてもモデルや音声の確認が未完了なら「起動確認を完了」を選びます。確認済みの取得済みファイルを再利用します。完了した構成は確認済みの CPU または CUDA 経路を保持します。経路を変える場合はセットアップで選び、確認を完了します。"
+            },
+            {
+              "en": "After model repair, the app refreshes setup status. If conversion is still unavailable, check Welcome and Terminal, or export the debug report. Do not delete models as the first step.",
+              "zh-HK": "修復模型後會刷新準備狀態。如果仍然未能開始，請查看 Welcome 同終端機，或匯出偵錯報告；唔需要先刪除模型。",
+              "zh-CN": "修复模型后会刷新准备状态。如果仍无法开始，请查看 Welcome 和终端机，或导出调试报告；不必先删除模型。",
+              "ja": "モデル修復後は準備状態を更新します。開始できない場合は Welcome とターミナルを確認するか、デバッグレポートを出力してください。最初にモデルを削除する必要はありません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": []
         }
       ]
     },
@@ -2792,6 +2820,72 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "ipad-preview-eye",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "zh-HK": "開啟或關閉預覽",
+            "zh-CN": "开启或关闭预览",
+            "en": "Show or hide preview",
+            "ja": "プレビューの表示と非表示"
+          },
+          "body": [
+            {
+              "zh-HK": "在「預覽及試聽」右側按眼睛圖示切換。預覽開啟時，劃線眼睛表示可關閉；關閉後顯示小助手，眼睛按鈕變暗並顯示虛線框。閒置及轉換中均可操作。關閉會停止預覽播放，不會暫停轉換或改動已保存進度。「跟隨處理位置」只在轉換中顯示。",
+              "zh-CN": "在“预览与试听”右侧点击眼睛图标切换。预览开启时，划线眼睛表示可关闭；关闭后显示助手，眼睛按钮变暗并显示虚线框。空闲和转换时均可操作。关闭会停止预览播放，不会暂停转换或改变保存进度。“跟随处理位置”只在转换时显示。",
+              "en": "Use the eye button beside Preview and audition. A crossed eye closes the visible preview. When hidden, the assistant appears and the eye button becomes dim with a dashed outline. The button works while idle or converting. Hiding pauses preview playback, not conversion, and preserves saved progress. Follow processing appears only during conversion.",
+              "ja": "「プレビューと試聴」の右側の目のボタンで切り替えます。表示中の斜線付きの目で非表示にします。非表示時は助手を表示し、ボタンが薄い色と点線枠になります。待機中も変換中も操作できます。プレビュー再生だけを停止し、変換と保存済み進捗は保持します。処理位置への追従は変換中のみ表示します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "welcome-language",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Welcome language",
+            "zh-HK": "歡迎頁語言",
+            "zh-CN": "欢迎页语言",
+            "ja": "ようこそ画面の言語"
+          },
+          "body": [
+            {
+              "en": "The phone Welcome language button shows its full name at the top right, aligned with AniCanto. Its text uses the normal body size. It opens the same themed chooser as iPad. Choose English, Japanese, Traditional Chinese, Simplified Chinese or Follow system. New installations follow the system. An explicit choice is saved and shared with Preferences. It does not change saved conversion languages.",
+              "zh-HK": "iPhone 歡迎頁右上角的語言按鈕顯示完整名稱，與 AniCanto 文字底線對齊，並使用一般內文字體大小。按下後開啟與 iPad 相同的主題色選單，可選英文、日文、繁體中文、簡體中文或跟隨系統。首次使用跟隨系統；手動選擇會保存並與偏好設定共用，不會更改已保存轉換的語言。",
+              "zh-CN": "iPhone 欢迎页右上角的语言按钮显示完整名称，与 AniCanto 文字基线对齐，并使用正常正文字体大小。按下后打开与 iPad 相同的主题色菜单，可选英语、日语、繁体中文、简体中文或跟随系统。首次使用跟随系统；手动选择会保存并与偏好设置共用，不会更改已保存转换的语言。",
+              "ja": "iPhone のようこそ画面では、右上に言語の正式名を本文サイズで表示し、AniCanto の文字基準線に揃えます。iPad と同じテーマ色の選択画面で英語、日本語、繁体字、簡体字、システム設定から選べます。初回はシステム設定に従い、選択は環境設定と共有して保存します。保存済みの変換言語は変更しません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "ipad-welcome-language",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "en": "iPad Welcome language",
+            "zh-HK": "iPad 歡迎頁語言",
+            "zh-CN": "iPad 欢迎页语言",
+            "ja": "iPadのようこそ画面の言語"
+          },
+          "body": [
+            {
+              "en": "The top-right button shows the full language name. Choose English, Traditional Chinese, Simplified Chinese or Japanese from the app-style chooser, or Follow system. New installations follow the system until an explicit choice. The same choice appears in Preferences and does not change saved conversion languages.",
+              "zh-HK": "右上角顯示完整語言名稱。在 App 風格選擇畫面選擇 English、繁體中文、簡體中文、日本語或「跟隨系統」。首次使用預設跟隨系統，直至手動選擇；選擇會與偏好設定共用，不會更改已保存轉換的語言。",
+              "zh-CN": "右上角显示完整语言名称。在应用风格选择界面选择 English、繁體中文、簡體中文、日本語或“跟随系统”。首次使用默认跟随系统，直到手动选择；选择与偏好设置共用，不会更改已保存转换的语言。",
+              "ja": "右上に言語の正式名を表示します。アプリのデザインに合わせた選択画面でEnglish・繁體中文・簡體中文・日本語、またはシステムに従う設定を選びます。初回はシステムに従い、手動の選択を環境設定と共有して保存します。保存済み変換の言語は変更しません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -2959,6 +3053,29 @@
           "controlRefs": [
             "downloadedPresetModels"
           ],
+          "steps": false
+        },
+        {
+          "id": "download-fullscreen",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Confirm resource downloads",
+            "zh-HK": "資源下載確認",
+            "zh-CN": "资源下载确认",
+            "ja": "リソースのダウンロード確認"
+          },
+          "body": [
+            {
+              "en": "Initial setup and its confirmation use a full-screen layout. Scroll the resource list and review download size, temporary storage and available space. Start download authorizes only the listed resources. Cancel returns without starting a transfer. Verified files are reused. Apple-managed resources and system caches can require additional space that is not included in the known total.",
+              "zh-HK": "首次準備及下載確認使用全螢幕版面。捲動資源清單，核對下載容量、額外暫存空間及可用空間。「開始下載」只批准清單所列資源；「取消」返回而不開始下載。已驗證檔案會重用。Apple 管理資源及系統快取可能需要額外空間，未計入已知合計。",
+              "zh-CN": "首次准备及下载确认采用全屏布局。滚动资源列表，核对下载大小、额外临时空间及可用空间。“开始下载”仅批准列表中的资源；“取消”返回且不开始下载。已验证文件会复用。Apple 管理资源及系统缓存可能需要额外空间，未计入已知合计。",
+              "ja": "初期準備とダウンロード確認は全画面で表示します。一覧をスクロールし、ダウンロード容量、一時保存領域、空き容量を確認してください。開始ボタンは一覧のリソースだけを許可します。キャンセルでは転送しません。検証済みファイルは再利用します。Apple管理リソースとシステムキャッシュの追加容量は既知の合計に含まれません。"
+            }
+          ],
+          "controlRefs": [],
           "steps": false
         }
       ]
@@ -3242,6 +3359,33 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "mobile-basic-review-report-access",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Basic content review and Expert reports",
+            "zh-HK": "基本模式內容核對與專家報告",
+            "zh-CN": "基本模式内容核对与专家报告",
+            "ja": "基本の内容確認とエキスパートのレポート"
+          },
+          "body": [
+            {
+              "en": "Basic has an optional AI content review switch. Expert exposes the related count0,1or2under Additional AI repair. Mobile stores these choices independently. Reset status disables the Basic switch. Reports, including alignment/listening findings, are in Expert proofreading only. Production selectors share a leading text edge and switches stay together below them. These changes do not alter a saved job on resume.",
+              "zh-HK": "基本模式提供可選的「AI 內容核對」開關；專家模式在「額外 AI 修復」設定相關次數 0、1 或 2。行動版會分開儲存兩種模式的選擇；「重設狀態」會關閉基本模式核對。報告及對齊／覆聽提示統一在專家模式的校對報告查閱。製作設定的選單文字統一靠左，開關集中於下方。這些改動不會更改續做工作的已保存設定。",
+              "zh-CN": "基本模式提供可选的“AI 内容核对”开关；专家模式在“额外 AI 修复”中设置相关次数 0、1 或 2。移动版分别保存两种模式的选择；“重置状态”会关闭基本模式核对。报告及对齐／试听提示统一在专家模式的校对报告中查看。制作设置的菜单文字统一靠左，开关集中在下方。这些变化不会更改继续执行任务的已保存设置。",
+              "ja": "基本モードには任意のAI内容確認スイッチがあり、エキスパートでは追加AI修復で確認回数を0・1・2から選びます。モバイルでは両モードの選択を別に保存し、状態リセットで基本の確認を無効にします。位置合わせ・試聴の所見はエキスパートの校正レポートで表示します。制作設定の選択文字は左揃えにし、スイッチを下にまとめます。再開する保存済みジョブの設定は変わりません。"
+            }
+          ],
+          "controlRefs": [
+            "standardReviewOnly",
+            "contentReview",
+            "voiceReviewLevels"
+          ],
+          "steps": false
         }
       ]
     },
@@ -3338,6 +3482,18 @@
               "zh-HK": "準備去人聲背景需要裝置符合工作室轉換的硬件要求，並已安裝人聲分離模型。未符合這項硬件要求的裝置仍可使用系統朗讀。",
               "zh-CN": "准备去人声背景需要设备符合工作室转换的硬件要求，并已安装人声分离模型。未符合这项硬件要求的设备仍可使用系统朗读。",
               "ja": "ボーカル除去背景の準備には、スタジオ変換のハードウェア要件を満たす端末と、導入済みの音源分離モデルが必要です。要件に満たない端末でもシステム読み上げは使用できます。"
+            },
+            {
+              "en": "Narration volume changes system speech only. Before AI separation, Video volume changes the complete original soundtrack. Traditional vocal reduction starts at0%and applies during narration. Native stereo playback reduces the center vocal band. Mono and the compatibility player use frequency attenuation. It needs no AI model, can leave voices audible and can affect instruments. It does not turn down the complete soundtrack automatically.",
+              "zh-HK": "「朗讀音量」只調整系統朗讀聲音。AI 分離前，「影片音量」會調整整條原片聲軌。「傳統人聲抑制」預設為 0%，只在朗讀期間生效。原生立體聲播放採用中置人聲頻段抑制；單聲道及相容播放器採用頻段濾波。不需要 AI 模型，部分人聲可能殘留，亦可能影響樂器；不會自動降低整條原片聲軌的音量。",
+              "zh-CN": "“朗读音量”仅调整系统朗读声音。AI 分离前，“视频音量”会调整整条原片音轨。“传统人声抑制”默认为 0%，仅在朗读期间生效。原生立体声播放采用中置人声频段抑制；单声道及兼容播放器采用频段滤波。无需 AI 模型，部分人声可能残留，也可能影响乐器；不会自动降低整条原片音轨的音量。",
+              "ja": "読み上げ音量はシステムの声だけを調整します。AI分離前の動画音量は元の音声全体を調整します。従来方式の抑制は初期値0%で、読み上げ中だけ有効です。ネイティブのステレオ再生は中央の声域を抑え、モノラルと互換プレーヤーは周波数帯域を減衰します。AIモデルは不要です。声が残る場合や楽器に影響する場合があります。元の音声全体の音量は自動で下げません。"
+            },
+            {
+              "en": "AI vocal removal is a separate option on supported hardware with an installed separation model. Once an AI background is ready, the traditional slider is disabled; use the AI switch instead. Unsupported devices retain traditional suppression, narration, video mute and volume controls. These controls change playback only and preserve the source movie.",
+              "zh-HK": "「AI 去人聲」是另一項功能，需要支援的硬件及已安裝的人聲分離模型。AI 背景準備完成後，傳統抑制滑桿會停用，改用 AI 開關。未支援的裝置仍可使用傳統抑制、系統朗讀、影片靜音及音量調整。這些設定只影響播放，不會改動原影片。",
+              "zh-CN": "“AI 去人声”是另一项功能，需要支持的硬件及已安装的人声分离模型。AI 背景准备完成后，传统抑制滑杆会停用，改用 AI 开关。不支持的设备仍可使用传统抑制、系统朗读、视频静音和音量调整。这些设置仅影响播放，不会改动原视频。",
+              "ja": "AIボーカル除去は別の機能で、対応端末と導入済みの分離モデルが必要です。AI背景の準備後は従来方式のスライダーを無効にし、AIスイッチを使います。非対応端末でも従来方式、読み上げ、消音、音量調整を使えます。再生だけに作用し、元の動画は変更しません。"
             }
           ],
           "controlRefs": [],
@@ -3383,6 +3539,12 @@
               "zh-HK": "按滑桿圖示開啟「朗讀設定」，上下捲動選擇與 iPad 面板相同的字幕來源、字幕匯入、語音辨識或 OCR、翻譯、朗讀語言、性別、已安裝聲線、速度、聲道、靜音及音量控制。頂部捷徑可跳至字幕、翻譯、系統朗讀及影片聲音。選擇生成字幕來源後顯示相應選項。背景分離保留硬件及已安裝模型限制。",
               "zh-CN": "点击滑杆图标打开“朗读设置”，上下滚动选择与 iPad 面板相同的字幕来源、字幕导入、语音识别或 OCR、翻译、朗读语言、性别、已安装声线、速度、音轨、静音和音量控制。顶部快捷项跳至字幕、翻译、系统朗读和影片声音。选择生成字幕来源后显示相应选项。背景分离保留硬件和已安装模型限制。",
               "ja": "スライダーのボタンから読み上げ設定を開きます。スクロールして iPad と同じ字幕入力、字幕取り込み、音声認識・OCR、翻訳、読み上げ言語、性別、導入済み音声、速度、音声トラック、ミュート、音量を設定します。上の項目から字幕・翻訳・システム朗読・動画音声へ移動できます。生成字幕の設定はその入力を選ぶと表示します。背景分離の端末・モデル要件は維持します。"
+            },
+            {
+              "en": "On phone, More also opens Reading settings. It opens the same scrollable page as the settings button. Use the fixed Captions, Translation, Narration and Audio section links. The page retains subtitle generation, script conversion, voice and language choices, tortoise/rabbit speed, audio tracks, mute, separate volumes and traditional vocal reduction. AI preparation appears only on supported hardware. Reset stays in More and requires its existing confirmation.",
+              "zh-HK": "iPhone「更多」亦可開啟「朗讀設定」，與設定按鈕共用同一個可捲動頁面。可用頂部固定的字幕、翻譯、系統朗讀及影片聲音按鈕跳到所需部分。頁面保留字幕生成、繁簡轉換、聲線及語言、龜兔速度、聲道、靜音、獨立音量及傳統人聲抑制。AI 準備功能只在支援的硬件顯示。重設保留在「更多」，並沿用確認程序。",
+              "zh-CN": "iPhone“更多”也可打开“朗读设置”，与设置按钮共用同一个可滚动页面。可用顶部固定的字幕、翻译、系统朗读和影片声音按钮跳到所需部分。页面保留字幕生成、繁简转换、声线和语言、龟兔速度、声道、静音、独立音量和传统人声抑制。AI 准备功能只在支持的硬件显示。重设保留在“更多”，并沿用确认流程。",
+              "ja": "iPhone の「その他」からも読み上げ設定を開けます。設定ボタンと同じスクロール画面を使い、上部の字幕、翻訳、読み上げ、音声ボタンで移動します。字幕生成、文字変換、声と言語、亀と兎の速度、音声トラック、ミュート、個別音量、従来の音声抑制を保ちます。AI 準備は対応端末だけに表示します。リセットは「その他」に残し、既存の確認操作を使います。"
             }
           ],
           "controlRefs": [],
@@ -3690,10 +3852,10 @@
               "ja": "iPhone のアップグレード紹介は一度に一つのページ全体を表示します。左右のスワイプか「戻る」「前へ」「次へ」で移動します。購入復元は上部、購入ボタンは画面幅に合わせて表示します。"
             },
             {
-              "en": "On the Duo preview, the closed screen uses the phone layout. Opened Basic follows the iPad layout: a video list beside Edit and preview, with no far-left function column. The top bar controls the video list, screen saver and Basic options. On wide screens, Preferences, Guide and Home have top-bar buttons. On narrower opened screens, find them in More. More also opens Playlist, Speech, Learning, Reading, Models and About. Expert keeps its slim left navigation. Production settings stay at the right. The opened dialogue timeline is compact and hides in review. Learning opens its playlist first. Expert keeps its existing unlock. Player content scrolls separately from the playlist.",
-              "zh-HK": "Duo 預覽的外螢幕使用 iPhone 排版。打開後的基本模式跟隨 iPad：影片清單放在「編輯與預覽」旁邊，最左側不顯示功能欄。頂部工具列提供影片清單開關、螢幕保護及基本選項；較闊畫面另有偏好設定、使用手冊及返回歡迎頁按鈕，較窄的打開畫面則放在「更多」。播放清單、配音器、學習、朗讀、模型中心及關於與授權亦可從「更多」進入。專家模式保留精簡左側導航，製作設定在右側。打開後的對白時間軸採用緊湊高度，校對時隱藏。學習模式先顯示播放清單，專家模式仍需解鎖。播放器內容可獨立於播放清單捲動。",
-              "zh-CN": "Duo 预览的外屏使用 iPhone 布局。展开后的基本模式跟随 iPad：影片列表放在“编辑与预览”旁边，最左侧不显示功能栏。顶部工具栏提供影片列表开关、屏幕保护和基本选项；较宽画面另有偏好设置、使用手册和返回欢迎页按钮，较窄的展开画面则放在“更多”。播放列表、配音器、学习、朗读、模型中心以及关于与授权也可从“更多”进入。专家模式保留精简左侧导航，制作设置在右侧。展开后的对白时间轴采用紧凑高度，校对时隐藏。学习模式先显示播放列表，专家模式仍需解锁。播放器内容可独立于播放列表滚动。",
-              "ja": "Duo プレビューの閉じた画面は iPhone の配置を使います。開いた基本モードは iPad と同様に、編集・プレビューの横に動画一覧を置き、左端の機能列を表示しません。上部で動画一覧、スクリーンセーバー、基本設定を操作します。広い画面には環境設定、使い方、ホームのボタンも表示し、狭い画面では「その他」から開きます。再生リスト、音声作成、学習、読み上げ、モデル、ライセンスも「その他」にあります。専門モードは左の細いナビゲーションを保ち、制作設定は右側にあります。台詞タイムラインは低く表示し、校正中は隠します。学習は再生リストから始まり、専門モードの解除条件は変わりません。プレーヤーの内容は再生リストとは別にスクロールします。"
+              "en": "On Duo, the closed screen uses the phone layout. Opened Basic keeps a video list beside Edit and preview, without a far-left function rail. Expert keeps the function rail and video list. The top actions follow iPad order: screen saver, Basic preferences, Expert navigation and timeline, video list, production settings, More and Home. Controls that do not apply to the current mode are omitted. Narrow opened sizes put these actions on a separate row below the modes and brand. All controls keep their full touch targets.",
+              "zh-HK": "Duo 摺埋時使用手機排版。打開後，基本模式保留影片清單與編輯預覽，沒有最左側功能導航；專家模式保留功能導航與影片清單。頂部操作按 iPad 次序排列：螢幕保護、基本模式偏好設定、專家模式功能導航與時間軸、影片清單、製作設定、更多及主畫面；不適用於目前模式的按鈕不會顯示。較窄的展開尺寸會把操作列放在模式與品牌下方，保留完整點按範圍。",
+              "zh-CN": "Duo 折叠时使用手机排版。展开后，基本模式保留影片列表与编辑预览，没有最左侧功能导航；专家模式保留功能导航与影片列表。顶部操作按 iPad 顺序排列：屏幕保护、基本模式偏好设置、专家模式功能导航与时间轴、影片列表、制作设置、更多及主屏幕；不适用于当前模式的按钮不会显示。较窄的展开尺寸会把操作栏放在模式与品牌下方，保留完整点击范围。",
+              "ja": "閉じた Duo はスマートフォン型の画面を使います。開いた基本モードは動画一覧と編集・プレビューを並べ、左端の機能ナビゲーションを表示しません。専門モードは機能ナビゲーションと動画一覧を保ちます。上部の操作は iPad と同じ順で、スクリーンセーバー、基本モードの環境設定、専門モードのナビゲーションとタイムライン、動画一覧、制作設定、その他、ホームと並びます。現在のモードに不要な操作は表示しません。幅が狭い展開画面では、モードとブランドの下に操作列を置き、タッチ領域を保ちます。"
             },
             {
               "en": "On iPhone, Player content can scroll separately from the playlist. With accessibility text, caption and audio choices use separate headings. Subtitle import moves below the source-preview heading when text needs more space. The Learning translation language also moves to its own line when required. These controls keep their current actions.",
@@ -3720,10 +3882,10 @@
               "ja": "Duo のプレーヤーでは、書き出し操作を下部に固定します。開いた画面では「動画を共有」「動画を保存」「字幕を保存」を同じ幅で並べます。動画と情報はその上で個別にスクロールできます。閉じた縦画面では全幅のボタンを縦に並べます。全画面再生中は書き出しバーを隠し、再生リストに戻ると表示します。"
             },
             {
-              "en": "The opened Duo screen has no slide-out function menu. Speech, Playlist and other workspace pages use the top-right workspace return. Closing the device restores the portrait left menu. An open portrait menu closes when the device opens. Expert editing keeps its separate far-left iPad-style navigation.",
-              "zh-HK": "Duo 打開螢幕後不顯示滑出功能選單。配音器、播放清單及其他工作室頁面使用右上角返回工作室按鈕。摺埋後恢復直向左側功能表；原本打開的直向功能表會在展開時收起。專家模式的編輯頁仍保留獨立的 iPad 式最左側導航。",
-              "zh-CN": "Duo 展开屏幕后不显示滑出功能菜单。配音器、播放列表及其他工作室页面使用右上角返回工作室按钮。折叠后恢复竖屏左侧功能菜单；原本打开的竖屏功能菜单会在展开时收起。专家模式的编辑页仍保留独立的 iPad 式最左侧导航。",
-              "ja": "開いた Duo ではスライド式の機能メニューを表示しません。音声作成、再生リストなどの作業ページは右上のボタンでスタジオへ戻ります。端末を閉じると縦画面の左メニューに戻ります。縦画面で開いていたメニューは端末を開くと閉じます。専門モードの編集画面では、iPad 型の左端ナビゲーションを保ちます。"
+              "en": "The opened Duo screen has no left slide-out function menu. Speech, Playlist and other workspace pages use the top-right workspace return. Closing the device restores the portrait left menu. An open portrait menu closes when the device opens. Expert editing keeps its separate far-left iPad-style navigation.",
+              "zh-HK": "Duo 打開螢幕後不顯示左側滑出功能選單。配音器、播放清單及其他工作室頁面使用右上角返回工作室按鈕。摺埋後恢復直向左側功能表；原本打開的直向功能表會在展開時收起。專家模式的編輯頁仍保留獨立的 iPad 式最左側導航。",
+              "zh-CN": "Duo 展开屏幕后不显示左侧滑出功能菜单。配音器、播放列表及其他工作室页面使用右上角返回工作室按钮。折叠后恢复竖屏左侧功能菜单；原本打开的竖屏功能菜单会在展开时收起。专家模式的编辑页仍保留独立的 iPad 式最左侧导航。",
+              "ja": "開いた Duo では左側のスライド式機能メニューを表示しません。音声作成、再生リストなどの作業ページは右上のボタンでスタジオへ戻ります。端末を閉じると縦画面の左メニューに戻ります。縦画面で開いていたメニューは端末を開くと閉じます。専門モードの編集画面では、iPad 型の左端ナビゲーションを保ちます。"
             },
             {
               "en": "The iPhone left function menu has no Return to Welcome entry. The same rule applies to Duo in closed portrait mode. Opened Duo workspace return buttons go back to editing.",
@@ -3742,6 +3904,18 @@
               "zh-HK": "iPhone 與 Duo 統一使用校對報告，不再提供獨立的對齊及覆聽報告入口。校對卡片保留配音分類，以及低、中、高或未檢查的覆核提示；提示不會改變錄音選擇。專家模式的校對分頁列設有「校對操作」選單，可按所選錄音重新合併及執行再次 AI 修復，仍沿用準備狀態、忙碌狀態、譯稿及待修復項目的原有檢查。",
               "zh-CN": "iPhone 与 Duo 统一使用校对报告，不再提供独立的对齐及试听报告入口。校对卡片保留配音分类，以及低、中、高或未检查的复核提示；提示不会改变录音选择。专家模式的校对分页栏设有“校对操作”菜单，可按所选录音重新合并及执行再次 AI 修复，仍沿用准备状态、忙碌状态、译稿及待修复项目的原有检查。",
               "ja": "iPhone と Duo は校正レポートを共通の確認画面として使います。独立したタイミングと試聴レポートの入口は表示しません。校正カードには配音の分類と低・中・高・未確認のヒントを残します。ヒントは録音の選択を変えません。専門モードでは校正タブ列の操作メニューから選択録音の再結合と AI 修復を実行できます。準備状態、処理中、翻訳草稿、修復対象の確認条件は維持します。"
+            },
+            {
+              "en": "Opened Duo has a question-mark button that opens User guide directly. Expert omits User guide and About from its far-left rail. About and licence notices stay in Preferences. Opened Basic also has Models and Reading shortcuts in Preferences. Visible panel buttons use the active theme style. Hidden panels use a dimmed dashed outline. Reports keep the timeline hidden.",
+              "zh-HK": "Duo 打開後，問號按鈕會直接開啟使用手冊。專家模式最左側導航不再重複使用手冊或關於與授權；關於與授權仍可在偏好設定開啟。展開的基本模式亦可從偏好設定進入模型中心與朗讀模式。面板顯示時按鈕使用主題高亮，收起時以暗色及虛線框顯示。校對報告會保持隱藏時間軸。",
+              "zh-CN": "Duo 展开后，问号按钮会直接打开使用手册。专家模式最左侧导航不再重复使用手册或关于与授权；关于与授权仍可在偏好设置打开。展开的基本模式也可从偏好设置进入模型中心与朗读模式。面板显示时按钮使用主题高亮，收起时以暗色及虚线框显示。校对报告会保持隐藏时间轴。",
+              "ja": "開いた Duo の疑問符ボタンはユーザーガイドを直接開きます。専門モードの左端にはガイドとライセンス情報を重複して表示しません。ライセンス情報は環境設定から開けます。開いた基本モードでは環境設定からモデルセンターと読み上げにも移動できます。表示中のパネルはテーマ色で強調し、閉じた状態は暗い破線枠で示します。校正レポートではタイムラインを隠します。"
+            },
+            {
+              "en": "On iPhone and closed Duo, Production settings and Basic options slide from the right and fill the available width. Opened Duo keeps a right-side panel. Scroll the existing settings and use Done to close. On opened Duo, tapping the dimmed area also closes the panel. Folding retains the panel and selected tab. Values and busy-state checks stay unchanged. The Duo dialogue timeline uses compact cards without a visible heading. An empty timeline uses one short row.",
+              "zh-HK": "iPhone 與摺埋的 Duo，「製作設定」及「基本選項」從右側滑出並佔滿可用闊度。Duo 打開後保留右側面板。可上下捲動原有設定，按完成收起；展開時亦可點暗色範圍收起。摺合切換會保留設定開啟狀態與所選分頁，設定值及忙碌狀態檢查不變。下方對白時間軸使用沒有可見標題的矮身卡片；未有對白時只顯示一行提示。",
+              "zh-CN": "iPhone 与折叠的 Duo，“制作设置”和“基本选项”从右侧滑出并占满可用宽度。Duo 展开后保留右侧面板。可上下滚动原有设置，按完成收起；展开时也可点暗色区域收起。折叠切换会保留设置打开状态与所选分页，设置值和忙碌状态检查不变。下方对白时间轴使用没有可见标题的低矮卡片；没有对白时只显示一行提示。",
+              "ja": "iPhone と閉じた Duo では制作設定と基本オプションが右側から全幅で開きます。開いた Duo は右側のパネルを使います。既存の設定をスクロールし、「完了」で閉じます。開いた画面では暗い領域をタップしても閉じられます。開閉を切り替えても表示状態と選択タブを保ちます。設定値と処理中の制限は変わりません。下部のタイムラインは見出しのない低いカードを使い、対話がない場合は短い一行を表示します。"
             }
           ],
           "controlRefs": [],
@@ -3861,6 +4035,28 @@
               "zh-CN": "在“关于及许可”打开“第三方许可及通知”，查看程序库、模型、字典及素材的许可文本。不同版本包含的项目可能不同，请以该版本内的清单为准。",
               "en": "In About and Licences, open Third-party licences and notices. View the library, model, dictionary and asset notices. Items can differ by version. Use the list included with that version.",
               "ja": "「情報とライセンス」の「第三者ライセンスと通知」で、ライブラリ、モデル、辞書、素材のライセンスを確認できます。含まれる項目はバージョンにより異なります。使用中のバージョンの一覧を確認してください。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "ipad-introduction-controls",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "en": "iPad introduction controls",
+            "zh-HK": "iPad 介紹影片控制",
+            "zh-CN": "iPad 介绍视频控制",
+            "ja": "iPadの紹介動画の操作"
+          },
+          "body": [
+            {
+              "en": "The introduction has a Never show again switch at the top right, with its label on the left. The switch changes future automatic playback and does not close the current introduction. Four language buttons stay on the left below the video; Skip stays on the right. Their positions do not change with language. Reset the demonstration in Preferences to show it again.",
+              "zh-HK": "介紹影片右上角設有「下次不再顯示」開關，文字位於開關左側。開關只設定日後是否自動播放，不會關閉目前介紹。影片下方左側固定顯示四種語言，右側固定為「略過」，切換語言不會改變按鈕位置。可在偏好設定重設示範，重新顯示介紹。",
+              "zh-CN": "介绍视频右上角设有“下次不再显示”开关，文字在开关左侧。开关仅设置今后是否自动播放，不会关闭当前介绍。视频下方左侧固定显示四种语言，右侧固定为“跳过”，切换语言不会改变按钮位置。可在偏好设置重置示范，再次显示介绍。",
+              "ja": "紹介動画の右上に「次回から表示しない」スイッチを置き、ラベルは左側に表示します。次回以降の自動再生だけを変更し、今の紹介は閉じません。動画の下は左に四言語、右にスキップを固定し、言語変更で位置が変わりません。環境設定で紹介をリセットすると再表示できます。"
             }
           ],
           "controlRefs": [],

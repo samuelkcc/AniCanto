@@ -32,6 +32,22 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Mobile Basic review and report access, confirmed 2026-10-30: `basic-review-reset-261`
+
+Basic optional content review defaults off. Its preference is independent of the Expert review count.
+Basic permits one optional check. Expert retains its0/1/2count and separate repair permissions.
+On mobile, Reset status clears the Basic review choice. It does not change Expert preferences.
+A resumed job keeps its frozen review count and spent allowances. Do not migrate old requests silently.
+Required missing, silent or damaged audio checks remain active. Optional review never disables mandatory fill.
+Reports appear in Expert only. Remove the separate Basic alignment/listening report entry.
+Keep review findings separate from content-repair permission and from verified delivery.
+Use control guide24items standardReviewOnly, contentReview and voiceReviewLevels.
+
+iPad261source and focused tests are in progress. No installation is claimed here.
+iPhone owner has the target and needs a separate source/frozen-request audit.
+Desktop common help needs uptake review. Do not infer installed desktop changes from the common copy.
+WF-01/02/03/15/16/17retain first audible selection, mandatory fill, clocks and spent-budget protection.
+
 ### Automatic source selection, confirmed 2026-10-29: `basic-source-defaults-231`
 
 Basic has no manual source menu. Detect readable selected embedded or imported external text subtitles before source selection.
@@ -1526,3 +1542,18 @@ These checks do not certify human listening quality, every media format or VLC f
 Normal258installation and exact guide42consumer records are in the JSON contract and private receipt.
 iPhone receives the tested source and guide. Its private uptake, complete Reading settings and installation remain pending.
 Desktop has no mobile Reading mode. No desktop conversion flow changes in this task.
+
+
+### Phone and Duo settings261, 2026-10-30
+
+Task: Fill compact settings and complete language, Guide and Reading access.
+
+Duo261is installed with guide43and control23. Phone261is signed; phone260remains installed because the device is unavailable.
+Closed settings fill the available width. Opened settings retain a bounded trailing panel.
+Four accepted private native cases provide106captures. The final explicit panel-width case passes62captures.
+Actual Duo checks confirm the full-name chooser, full-width settings and direct Guide action.
+An isolated actual More menu opens complete Reading settings with four section links.
+Private DSP matches final main261three-band source. Main Piano native tests pass; human listening remains open.
+This is playback and presentation work. WF-01/02/03/15/16/17, frozen requests and spent allowances remain unchanged.
+Private Basic key/reset uptake and native caption-only/no-dialogue remain separate open workflow tasks.
+See mobile/Validation/iphone-duo-settings-reading-261-2026-10-30.json and iphone-settings-reading-261-2026-10-30.json.

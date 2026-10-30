@@ -19,6 +19,7 @@ import {activity,staleFor} from './workbench.js';
 import {captureReviewViewport,restoreReviewViewport} from './review-viewport.js';
 import {workerText,projectWarning} from './workflow-text.js';
 import {matchingPreset,presetPlan,setupParameters,presetReasons} from './quality-presets.js';
+import {setupActionLabel,setupReadinessHint} from './setup-readiness.js';
 import {icon} from './icons.js';
 import {syncAssistantMotion} from './assistant-motion.js';
 import {ConversionQueue,pendingVideos,missedCompletion,restorableCompletion} from './conversion-queue.js';
@@ -274,7 +275,8 @@ function packagePanel(){
  ${setupFailure&&!active?.setup?`<section class="warning setup-failure" role="alert"><strong>${esc(t('Setup did not finish'))}</strong><p>${esc(t(/127|No such file|啟動工作程序/.test(setupFailure)?'The local runtime could not start. Retry setup to repair it.':'Retry setup to continue. Existing verified downloads are kept.'))}</p><details><summary>${esc(t('Error details'))}</summary><p>${esc(setupFailure)}</p></details></section>`:''}
  ${active?.setup?`<div class="download-status">${installationProgress()}${installationDetails()}${button('pause','Pause download','pause')}</div>`:
  `<small>${esc(t(ready?'Your selected models are ready. Existing files are reused.':'The app chooses one suitable model per purpose for your computer.'))}</small>
- ${!initializing?button('setup',ready?'Check / repair files':runtimeReady?'Download & prepare':'Prepare to use','download',ready?'':'primary',active||!termsReady()||!plan?.canDeployModels||plan?.qualityPresets?.length&&!plan.qualityPresets.some(p=>p.available)?'disabled':''):''}`}
+ ${setupReadinessHint(plan,state.language)?`<small class="setup-readiness-hint" role="status">${esc(setupReadinessHint(plan,state.language))}</small>`:''}
+ ${!initializing?button('setup',ready?'Check / repair files':runtimeReady?setupActionLabel(plan,state.language):'Prepare to use','download',ready?'':'primary',active||!termsReady()||!plan?.canDeployModels||plan?.qualityPresets?.length&&!plan.qualityPresets.some(p=>p.available)?'disabled':''):''}`}
  ${!active?.setup&&installationLog.text?installationDetails():''}<details id="download-management"><summary>${esc(t('Models & storage'))}</summary><div class="stack">
  ${screen==='welcome'&&plan?.qualityPresets?.length?'':button('change-models',screen==='welcome'?'Custom setup · compare memory':'Change models','settings','',active?'disabled':'')}
  ${missing.length?`<details id="download-details"><summary>${esc(t('To download'))} · ${bytes(missing.reduce((n,r)=>n+(Number(r.bytes)||0),0))}</summary>${missing.map(r=>{const model=modelChoices.find(m=>m.id===r.id)||r,memory=voiceMemoryNote(model);return `<div class="package-row"><div><strong>${esc(r.title)}</strong><br><small>${r.kind==='tool'?esc(t('NVIDIA CUDA program & libraries')):`${esc(label(r))} · ${esc(t('Estimated memory'))}: ${memory.need.toFixed(1)} GB ${esc(t(memory.pool))}${memory.gpuNeed?` + ${memory.gpuNeed.toFixed(1)} GB VRAM`:''}${memory.warning?' · '+esc(t('May not load on this computer')):''}`}</small></div><small>${bytes(r.bytes)}</small></div>`}).join('')}<small>${esc(t('All files will be checked; healthy packages are reused.'))}</small></details>`:''}
@@ -356,7 +358,7 @@ async function runCacheCleanup(token,orphanIDs){
 function conversionModelsReady(){return runtimeReady&&!planChecking&&!planError&&plan?.setupReady===true;}
 function transportControl(){
  const label=startLabel();
- const control=sourcePreparation?button('cancel-source-preparation',preparationCopy(state.language).cancel,'close',''):!active&&(planChecking||!plan&&!planError)?button('checking-plan','Checking local models…','refresh','','disabled'):!active&&planError?button('retry-plan','Retry setup check','refresh','',`title="${esc(t('Unable to check local models'))}"`):active?button('pause','Pause & save','pause','',starting||finishingRun?'disabled':''):!conversionModelsReady()?button('setup','Download & prepare','download','primary',initializing||starting||finishingRun||!plan?.canDeployModels||!termsReady()?'disabled':''):button('start',label,label==='Done'?'check':'play','primary',!row()||starting||finishingRun||retryReviewStarting||label==='Done'?'disabled':'');
+ const control=sourcePreparation?button('cancel-source-preparation',preparationCopy(state.language).cancel,'close',''):!active&&(planChecking||!plan&&!planError)?button('checking-plan','Checking local models…','refresh','','disabled'):!active&&planError?button('retry-plan','Retry setup check','refresh','',`title="${esc(t('Unable to check local models'))}"`):active?button('pause','Pause & save','pause','',starting||finishingRun?'disabled':''):!conversionModelsReady()?button('setup',setupActionLabel(plan,state.language),'download','primary',initializing||starting||finishingRun||!plan?.canDeployModels||!termsReady()?'disabled':''):button('start',label,label==='Done'?'check':'play','primary',!row()||starting||finishingRun||retryReviewStarting||label==='Done'?'disabled':'');
  return `<div class="transport-control">${control}</div>`;
 }
 function appbar(){const expert=state.mode==='expert';return `<header class="appbar"><div class="workspace-mode-tabs segmented" role="group" aria-label="${esc(t('Workspace mode'))}">${[['basic','Basic mode'],['expert','Expert mode']].map(([mode,label])=>`<button data-action="mode" data-value="${mode}" class="${state.mode===mode?'active':''}" aria-pressed="${state.mode===mode}">${esc(t(label))}</button>`).join('')}</div>${brand()}<div class="header-actions">
@@ -1199,7 +1201,7 @@ async function onFinished({payload}){
    if(wasSetup&&!payload.code&&!payload.paused)updateDraftSettings(EXPORT_SETTINGS);
    await refreshSnapshot().catch(e=>console.warn(e));
   }
-  if(wasSetup&&runtimeReady){await refreshModels();acceptSetupPlan(await rpc('plan').catch(()=>null));if(!payload.code&&!payload.paused&&setupReturn){screen=setupReturn.screen;page=setupReturn.page;setupReturn=null;pendingSwitch=null}}
+  if((wasSetup||wasMaintenance)&&runtimeReady){await refreshModels();await refreshSetupPlan();if(wasSetup&&!payload.code&&!payload.paused&&setupReturn){screen=setupReturn.screen;page=setupReturn.page;setupReturn=null;pendingSwitch=null}}
   if(wasMaintenance&&runtimeReady){logSource='logs/studio/process.log';await refreshModels();toast(t(payload.paused?'Download paused':payload.code?'Model repair failed. See Terminal for details.':'Model files verified'),!!payload.code&&!payload.paused)}
   if(closing){await native.window.getCurrentWindow().close();return}
   render();

@@ -28,13 +28,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.25.12
+## Download the Beta · 0.25.13
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto-macOS-0.25.12.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.12-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto-macOS-0.25.13.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.13-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.12-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.13-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
+
+**0.25.13 patch:** Windows retains verified setup after restart and refreshes Start after model repair. If files are already present, finish verification without deleting models.
 
 - **Cloud video import:** wait for large Google Drive, OneDrive or iCloud files to become readable before media checks. Show preparation progress and allow cancellation.
 - **Clearer errors and assistants:** bright red errors with white text in both appearances, plus gentle breathing and hair movement in the nine distinct resting scenes.
@@ -42,7 +44,7 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 **Known limitation:** bounded source-clock recovery is included, but uncertain OCR windows can still collect repeated or long subtitle text. A complete cloud download and Windows GPU conversion depend on the provider and target device.
 
-[0.25.12 release details](docs/DESKTOP-RELEASE-0.25.12.md)
+[0.25.13 release details](docs/DESKTOP-RELEASE-0.25.13.md)
 
 ## Try the original demo and compare the voices
 

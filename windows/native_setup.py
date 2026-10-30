@@ -41,7 +41,11 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  if drama_backend=='auto':
   try:
    previous=json.loads((root/'drama3-windows-ready.json').read_text())
-   if previous.get('backend')=='cpu' and previous.get('cudaFailure') and previous.get('speechInferencePassed'):drama_backend='cpu'
+   from setup_readiness import verified
+   completed=json.loads((root/'native-ready.json').read_text()) if (root/'native-ready.json').is_file() else {}
+   cpu_verified=(verified(completed) and completed.get('engine')==engine=='drama3'
+                 and completed.get('voiceBackend')=='cpu' and previous.get('variant')==completed.get('roles',{}).get('voice'))
+   if previous.get('backend')=='cpu' and previous.get('speechInferencePassed') and (previous.get('cudaFailure') or cpu_verified):drama_backend='cpu'
   except (OSError,ValueError):pass
  from gpu import planning_hardware
  from drama_cuda import capable
@@ -73,9 +77,10 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  ready_file=root/'native-ready.json'
  try:ready=json.loads(ready_file.read_text())
  except (OSError,ValueError):ready={}
- result['setupReady']=ready.get('engine')==result['engine'] and ready.get('speechInferencePassed') is True and ready.get('modelLoadPassed') is True and all(ready.get('roles',{}).get(k)==v for k,v in result['roles'].items()) and not (root/'setup-invalidated.json').exists() and all(r.get('installed') for r in result['downloads'])
- if result.get('tools') and (not all(r['installed'] for r in result['tools']) or not cuda_ready(root,require_speech=True)):result['setupReady']=False
- if result.get('engine')=='drama3' and ready.get('voiceBackend')!=result.get('voiceBackend'):result['setupReady']=False
+ from setup_readiness import keep_verified_visual,status
+ keep_verified_visual(result,ready)
+ readiness=status(result,ready,(root/'setup-invalidated.json').exists(),not result.get('tools') or cuda_ready(root,require_speech=True))
+ result['setupReady']=readiness['ready'];result['setupStatus']=readiness
  try:
   verified=json.loads((root/'drama3-windows-ready.json').read_text())
   if result.get('engine')=='drama3' and verified.get('variant')==result['roles'].get('voice') and verified.get('speechInferencePassed'):
