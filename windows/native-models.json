@@ -205,7 +205,7 @@
     "id": "drama3-native-q2",
     "category": "voice",
     "engine": "drama3",
-    "title": "Drama 3 GGUF Q2 · native CPU",
+    "title": "Drama 3 GGUF Q2 · CPU / NVIDIA CUDA",
     "repo": "Jmica/Drama-3-GGUF",
     "revision": "17a5b40c5dc2c2be986f5371a7e650108b828e29",
     "legacy": "models/native-drama",

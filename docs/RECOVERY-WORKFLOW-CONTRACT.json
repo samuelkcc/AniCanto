@@ -239,7 +239,20 @@
       "missingASR": "retain subtitle; use exact authored display clock with explicit timing fallback"
     },
     "otherWorkflows": "A determines content; B auxiliary, missing A may use B with review flag",
-    "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes"
+    "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes",
+    "multilingualAuthoredSubtitles": {
+      "id": "authored-subtitle-variants-264",
+      "status": "target; iPad, iPhone and desktop implementation and native evidence pending",
+      "selection": "Expose explicit authored language/style versions and All versions. Use one selected cue set for preview and new subtitle-first requests.",
+      "freeze": [
+        "original file identity",
+        "selected version identity",
+        "exact selected text",
+        "unchanged authored display times"
+      ],
+      "preservation": "Keep original files and saved-job sources unchanged. Do not silently drop uncertain styles or merge concurrent language editions.",
+      "aiPermissions": "No additional AI inspection, repair or audio mutation permission. WF-01/02/03/15/16/17 remain unchanged."
+    }
   },
   "workModes": {
     "performance": {
@@ -1712,19 +1725,19 @@
         "nativeGuideRenderingEvidenceScope": "Four locales rendered guide27. Native255 tests the animation; guide35 resource bytes are separately verified."
       },
       "iphone": {
-        "build": 260,
+        "build": 263,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
         "packaged": true,
         "installed": true,
         "launchVerified": true,
-        "manualRevision": "application-user-guide-42-mobile-full-language-names",
-        "manualSHA256": "7bdce051b7cf1dd6be4d17b20030c1532bfa3a51d3aa3daf47bb9c5f6850fa5b",
+        "manualRevision": "application-user-guide-46-phone-timeline-settings",
+        "manualSHA256": "f871b989c0ce990b25498e385237e337a9542405c8e81f33a5cc9577a1111b8f",
         "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
         "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
-        "receipt": "mobile/Validation/iphone-welcome-settings-260-2026-10-30.json",
-        "status": "Phone260 remains installed. Signed261 waits for a connected device. Duo261 installation is separate.",
+        "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
+        "status": "Normal263 installed and launched. Ten job documents and model/export inventories remain unchanged. Physical panel interaction remains open.",
         "priorPackage239": {
           "build": 239,
           "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
@@ -1852,7 +1865,7 @@
           "nativeGuideDecodeVerified": true,
           "receipt": "mobile/Validation/iphone-button-layout-256-2026-10-30.json"
         },
-        "preferredStagedCandidate": 261,
+        "preferredStagedCandidate": 263,
         "priorInstalledPackage251": {
           "build": 251,
           "manualRevision": "application-user-guide-20-phone-player-review-layout",
@@ -1861,7 +1874,7 @@
           "controlGuideSHA256": "023f421709a8c5381afe194da4cb7e955e74b4e1a70937efca62f92413124382",
           "receipt": "mobile/Validation/iphone-layout-review-251-2026-10-30.json"
         },
-        "compiledSourceBuild": 260,
+        "compiledSourceBuild": 263,
         "priorInstalledPackage257": {
           "build": 257,
           "manualRevision": "application-user-guide-24-duo-navigation",
@@ -1881,6 +1894,22 @@
           "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
           "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
           "receipt": "mobile/Validation/iphone-settings-reading-261-2026-10-30.json"
+        },
+        "priorInstalledPackage260": {
+          "build": 260,
+          "manualRevision": "application-user-guide-42-mobile-full-language-names",
+          "manualSHA256": "7bdce051b7cf1dd6be4d17b20030c1532bfa3a51d3aa3daf47bb9c5f6850fa5b",
+          "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+          "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+          "receipt": "mobile/Validation/iphone-welcome-settings-260-2026-10-30.json"
+        },
+        "priorInstalledPackage262": {
+          "build": 262,
+          "manualRevision": "application-user-guide-46-phone-timeline-settings",
+          "manualSHA256": "f871b989c0ce990b25498e385237e337a9542405c8e81f33a5cc9577a1111b8f",
+          "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+          "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+          "receipt": "mobile/Validation/iphone-timeline-settings-262-2026-10-30.json"
         }
       },
       "iphoneDuo261": {
@@ -3284,7 +3313,7 @@
     }
   },
   "phoneReadingCounterpart261": {
-    "status": "Private source and rendered controls pass. Duo261 is installed. Physical phone261 installation waits for reconnection.",
+    "status": "Private Reading source is installed in phone263 and Duo263. Actual More route and controls are checked on the isolated native host. Human listening remains open.",
     "traditionalSuppressionImplemented": true,
     "moreEntryRenderedComplete": true,
     "target": "Adopt verified main258 traditional reduction and inspect the actual phone settings entry, scrolling and section jumps.",
@@ -3292,29 +3321,31 @@
     "sourceDSPAlgorithmsChanged": true,
     "guideRevision": "application-user-guide-43-phone-chooser-reading",
     "guideSHA256": "3ee3ba8cd03bb81f95a6038dcf94f6ad161134919e571d80bc886fcdc604360f",
-    "installed": false,
+    "installed": true,
     "sourceDSPMatchesVerifiedMain261": true,
     "dspSHA256": "5fc4ad7ef1879b5f9a8d326a36c71e512f8a08ff1465eaa2b4bbeaa30be74521",
     "duoInstalled": true,
-    "phoneInstalledBuild": 260,
-    "receipt": "mobile/Validation/iphone-duo-settings-reading-261-2026-10-30.json",
-    "humanListeningAccepted": false
+    "phoneInstalledBuild": 263,
+    "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
+    "humanListeningAccepted": false,
+    "laterMain262KaraokeUptakePending": true
   },
   "phonePresentation261": {
     "sourceImplemented": true,
     "tested": true,
-    "installed": false,
+    "installed": true,
     "target": "Body-size Welcome names with the shared themed chooser. Direct opened Duo Guide. Full-width compact settings.",
     "guideRevision": "application-user-guide-43-phone-chooser-reading",
     "guideSHA256": "3ee3ba8cd03bb81f95a6038dcf94f6ad161134919e571d80bc886fcdc604360f",
     "workflowChanged": false,
     "duoInstalled": true,
     "duoInstalledBuild": 261,
-    "phoneInstalledBuild": 260,
+    "phoneInstalledBuild": 263,
     "phoneCandidateSigned": true,
-    "phoneBlocker": "Paired phone unavailable; reconnect request pending.",
-    "receipt": "mobile/Validation/iphone-duo-settings-reading-261-2026-10-30.json",
-    "nativeGeometryCaptures": 62
+    "phoneBlocker": null,
+    "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
+    "nativeGeometryCaptures": 62,
+    "installedBuild": 263
   },
   "basicReviewReset261": {
     "revision": "basic-review-reset-261",
@@ -3343,5 +3374,36 @@
       "WF-16": "New Basic requests use an independent optional review choice. Old requests and spent budgets remain frozen. Mandatory fill and first audible selection are unchanged.",
       "WF-17": "New Basic requests use an independent optional review choice. Old requests and spent budgets remain frozen. Mandatory fill and first audible selection are unchanged."
     }
+  },
+  "phoneTimelineOverlay262": {
+    "sourceImplemented": true,
+    "tested": true,
+    "nativeCaptures": 56,
+    "nativeResult": ".build/duo262/timeline.xcresult",
+    "phoneInstalled": true,
+    "phoneBuild": 263,
+    "timelinePreference": "studio.showTimeline",
+    "settingsTemporarilyHidesTimelineWithoutChangingPreference": true,
+    "closedExpertToggle44Points": true,
+    "reportTimelineRemainsHidden": true,
+    "workflowChanged": false,
+    "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
+    "duoFinalNavigationBuildPending": 263
+  },
+  "desktopRuntimeSafety267": {
+    "modelSwitch": "Retain downloads by default. Activate only a verified current selection; otherwise verify files and loading.",
+    "backend": "Requested NVIDIA and verified CPU/CUDA are distinct. Explicit retries do not inherit automatic CPU pinning.",
+    "reset": "Future production parameters only. Respect global or individual scope. Keep frozen requests, media, models and recordings.",
+    "performance": "Reuse complete source-clock PCM across tracks/versions. Match source, offset, stream and duration. No optional cloud reread;90-second child limits. Keep conservative sound rules on failure.",
+    "unchangedRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "state": "source prepared; packages and whole-film acceptance pending",
+    "mobile": "Counterpart operational review remains open; no implementation or installation claim."
   }
 }

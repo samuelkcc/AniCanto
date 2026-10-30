@@ -348,6 +348,11 @@ class Studio:
             result=preflight(self.root,row['video'],self.tools(),settings,operation_id=p.get('operationID'),row_id=row['id'])
             row.update(sourceLanguage=result.get('language'),sourcePreflight=result)
             self.store.save();return result
+        if op=='reset-production-parameters':
+            from production_scope import reset_parameters
+            params=dict(settings=reset_parameters(self.store.language),scope=p.get('scope','global'))
+            if params['scope']=='video':params['id']=p.get('id')
+            return self.dispatch('configure',params)
         if op=='configure':
             scope=p.get('scope','global')
             if scope not in ('global','video'):raise ValueError('Unknown production settings scope.')
@@ -773,6 +778,16 @@ class Studio:
                 if row.get('category')!='voice' or row.get('retired') or row.get('licenseReviewRequired'):
                     raise ValueError('This voice model is unavailable for download: '+ident)
             return dict(program=str(Path(sys.executable)),args=[str(self.shared/'model_maintenance.py'),'--root',str(self.root),'--ids-json',json.dumps(ids),'--mode','repair','--platform',self.platform],action='model-maintenance',modelIDs=ids,root=str(self.root))
+        if op=='activate-models':
+            if self.platform!='win32':return dict(activated=False)
+            if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause conversion before changing models.')
+            requested=p.get('models',self.store.settings.get('deploymentModels',{}))
+            plan=self.dispatch('plan',dict(engine=p.get('engine') or self.store.settings['ttsBackend'],models=requested,dramaBackend=p.get('dramaBackend',self.store.settings.get('dramaBackend','auto')),backend=p.get('backend','auto')))
+            if not plan.get('setupReady'):return dict(activated=False,plan=plan)
+            from model_switch import begin
+            token=begin(self.root,plan,requested,p.get('removeOld',False),self.store.mode=='expert')
+            result=self.dispatch('finish-model-switch',dict(token=token,success=True))
+            return dict(activated=True,state=self.state(),plan=plan,result=result)
         if op=='setup':
             engine=p.get('engine') or self.store.settings['ttsBackend']
             requested=p.get('models',self.store.settings.get('deploymentModels',{}))

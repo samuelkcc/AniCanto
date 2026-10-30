@@ -32,6 +32,23 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Multilingual authored subtitle selection, target confirmed 2026-10-30: `authored-subtitle-variants-264`
+
+An authored subtitle file can contain multiple language or style versions at the same time.
+Expose an explicit version choice. Keep the original file unchanged.
+Use the same selected cue set for preview and a new subtitles-first request.
+Freeze the file identity, selected version, exact text and original display times in the new job.
+A later preview choice must not change a paused or completed job.
+Do not merge concurrent Japanese and Chinese editions into one translated utterance.
+Keep an All versions choice. Do not guess a language and silently discard uncertain styles.
+Use declared ASS style language hints for version labels. Retain unclassified styles as separate choices.
+A manual language/style choice is not an extra AI repair or a new permission to change audio.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 keep their existing generation, length and budget rules.
+
+Alignment register: iPad264 is pending implementation and native evidence. iPhone and desktop are pending owner review and uptake.
+Actual iPad evidence: Mobile Suit E00 ASS contains concurrent Dial_JP and Dial_CH events. The current parser flattens them.
+This section defines target behaviour. It does not certify installation or whole-film acceptance.
+
 ### Mobile Basic review and report access, confirmed 2026-10-30: `basic-review-reset-261`
 
 Basic optional content review defaults off. Its preference is independent of the Expert review count.
@@ -1557,3 +1574,13 @@ Private DSP matches final main261three-band source. Main Piano native tests pass
 This is playback and presentation work. WF-01/02/03/15/16/17, frozen requests and spent allowances remain unchanged.
 Private Basic key/reset uptake and native caption-only/no-dialogue remain separate open workflow tasks.
 See mobile/Validation/iphone-duo-settings-reading-261-2026-10-30.json and iphone-settings-reading-261-2026-10-30.json.
+
+## Desktop runtime and settings safety267
+
+Windows keeps downloaded models on a normal switch. A verified current selection can activate without installer work. Other selections must pass file and load checks. A requested NVIDIA path is separate from the verified runtime. The user can explicitly retry CUDA after a CPU fallback. Model removal needs its own review and confirmation.
+
+Production-parameter reset applies to future global settings, or to one video with Global off. It preserves frozen requests, recordings, exports, models and source selections. It does not reset video progress.
+
+Optional source-performance refinement reuses complete local PCM from the source job across tracks and versions. Shared PCM must match the source, offset, stream and duration. Without valid PCM, do not read a cloud movie again for this optional stage. Bound each optional media or classifier child to90seconds. A failed optional check keeps existing conservative sound rules and allows export to continue. This does not prove that all nonverbal sounds were preserved.
+
+WF-01/02/03/15/16/17 and submitted settings stay unchanged. Caption-only suppression still requires confirmed no-dialogue evidence; an unconfirmed result does not prove silence. Desktop source and isolated tests are under review. Mac and Windows installation and real-film acceptance remain separate. Mobile owners must review this operational safeguard where their tools differ. No mobile uptake is claimed.

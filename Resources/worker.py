@@ -66,8 +66,11 @@ def run_ocr_tool(args):
         if proc.poll() is None:proc.kill();proc.communicate()
 
 
-def run(args):
-    p = subprocess.run([str(x) for x in args], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+def run(args,timeout=None):
+    try:
+        p = subprocess.run([str(x) for x in args], stdout=subprocess.PIPE, stderr=subprocess.PIPE,**(dict(timeout=timeout) if timeout is not None else {}))
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError(f'Media analysis exceeded its {timeout}-second limit; completed recordings are retained.') from error
     if p.returncode:
         import tempfile
         detail = p.stderr.decode(errors="replace")

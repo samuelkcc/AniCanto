@@ -44,17 +44,12 @@ def paired_ranges(original,stem,length):
 def refine(cfg,job,rows,lexical,run,emit):
  from nonverbal import classification,classification_profile,validate_classification,missing_events
  job=Path(job);folder=job/'performance-tails';folder.mkdir(exist_ok=True)
- duration=float(cfg['duration']);original=job/'japanese-original.wav'
- if not original.is_file():
-  from update_plan import family
-  existing=family(job)/'japanese-original.wav'
-  if existing.is_file():original=existing
- if not original.is_file():
-  original=folder/'original-analysis.wav'
-  from source_language import audio_label
-  if not original.exists():run([cfg['ffmpeg'],'-v','error','-y','-ss',str(cfg.get('startOffset',0)),'-i',cfg['video'],'-map',audio_label(cfg),'-t',str(duration),'-vn','-ar','16000','-ac','1',original])
+ duration=float(cfg['duration'])
+ from performance_audio import original as original_audio
+ original=original_audio(cfg,job,folder,run,emit)
+ def bounded(args):return run(args,timeout=90)
  # Original and separated evidence are independently cached, once per source.
- original_rows=classification(dict(cfg,dialoguePath=str(original)),folder,run)
+ original_rows=classification(dict(cfg,dialoguePath=str(original)),original.parent/'original-performance',bounded)
  validate_classification(original_rows)
  windows=gaps(rows+original_rows,lexical,duration)
  digests=[]
@@ -75,8 +70,8 @@ def refine(cfg,job,rows,lexical,run,emit):
    classified=[]
    for label,source in (('original',original),('stem',Path(cfg['dialoguePath']))):
     target=local/(label+'.wav')
-    if not target.exists():run([cfg['ffmpeg'],'-v','error','-y','-ss',f'{a:.6f}','-t',f'{length:.6f}','-i',source,'-af',f'apad=whole_dur={max(length,minimum):.6f}','-ar','16000','-ac','1',target])
-    evidence=json.loads(run([cfg['executable'],'--classify-performance',str(target)]));validate_classification(evidence);classified.append(evidence)
+    if not target.exists():bounded([cfg['ffmpeg'],'-v','error','-y','-ss',f'{a:.6f}','-t',f'{length:.6f}','-i',source,'-af',f'apad=whole_dur={max(length,minimum):.6f}','-ar','16000','-ac','1',target])
+    evidence=json.loads(bounded([cfg['executable'],'--classify-performance',str(target)]));validate_classification(evidence);classified.append(evidence)
    saved=dict(identity=identity,original=classified[0],stem=classified[1],events=paired_ranges(*classified,length));write_json(cached,saved)
   for event in saved['events']:result.append(dict(event,start=event['start']+a,end=event['end']+a))
   checks.append(dict(start=a,end=b,coarseScore=score,status='paired-confirmed' if saved['events'] else 'unconfirmed',evidence=str(cached)))

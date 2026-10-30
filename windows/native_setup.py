@@ -38,7 +38,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  root=data_root();rows=catalog();installed=[r['id'] for r in rows if r.get('nativeFormat') and available(root,r)]
  # Keep a verified model-specific CPU fallback usable after a CUDA speech
  # failure; refreshing the welcome page must not force a redeploy loop.
- if drama_backend=='auto':
+ requested_drama_backend=drama_backend
+ if drama_backend=='auto' and backend not in ('nvidia','cuda'):
   try:
    previous=json.loads((root/'drama3-windows-ready.json').read_text())
    from setup_readiness import verified
@@ -56,7 +57,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  except (OSError,ValueError):selected={}
  result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama,dramaBackend=drama_backend)
  h=result.get('hardware',h)
- if h.get('backend')=='cpu':result['setupBackend']='cpu'
+ result['setupBackend']={'cuda':'nvidia','rocm':'amd'}.get(h.get('backend'),'cpu')
+ result['requestedDramaBackend']=requested_drama_backend
  from memory_plan import pools
  from drama_full_cuda import components,ready as cuda_ready
  classifier=next(r for r in rows if r['id']=='audio-classifier-native')
@@ -85,11 +87,12 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
   verified=json.loads((root/'drama3-windows-ready.json').read_text())
   if result.get('engine')=='drama3' and verified.get('variant')==result['roles'].get('voice') and verified.get('speechInferencePassed'):
    result['verifiedVoiceBackend']=verified.get('backend','cpu')
+   result['voiceFallbackReason']=verified.get('cudaFailure')
    result['warnings']=[w for w in result['warnings'] if w!='native-drama-small-cuda-planned']
  except (OSError,ValueError):pass
  return result
 def environment(name,backend=None,cuda_index=None):
- emit('Checking / installing '+name+' runtime',setupStep='runtime')
+ emit('Checking existing '+name+' runtime',setupStep='runtime')
  python=env_python(name)
  requirements=HERE/f'requirements-{name}.lock'
  if not python.is_file():ensure_env(data_root(),python.parent.parent)
@@ -120,7 +123,10 @@ def environment(name,backend=None,cuda_index=None):
  # The complete analysis lock intentionally excludes unused Demucs quantization.
  if name in ('analysis','gpt'):command+=['--no-deps']
  command+=['-r',requirements]
- if absent or backend_missing:call(command)
+ if absent or backend_missing:
+  emit('Installing missing or incompatible '+name+' runtime components',setupStep='runtime',missingPackages=absent,backendChange=bool(backend_missing))
+  call(command)
+ else:emit('Reusing installed '+name+' runtime; checking imports',setupStep='verify')
  try:imports(python,name)
  except subprocess.CalledProcessError:
   broken=damaged(python,requirements,backend)

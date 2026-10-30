@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-45-desktop-windows-readiness",
+  "revision": "application-user-guide-52-desktop-setup-reset",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -421,6 +421,34 @@
           ],
           "controlRefs": [],
           "steps": []
+        },
+        {
+          "id": "desktop-reuse-models-267",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Reuse models and select processing",
+            "zh-HK": "重用模型同選擇運算方式",
+            "zh-CN": "复用模型和选择运算方式",
+            "ja": "モデルの再利用と処理方法の選択"
+          },
+          "body": [
+            {
+              "en": "Windows shows the requested Drama 3 processing path separately from the verified voice backend. An NVIDIA choice is not proof of a successful CUDA test. A completed CPU fallback stays usable; select NVIDIA CUDA explicitly to verify it again.",
+              "zh-HK": "Windows 會分開顯示要求使用嘅 Drama 3 路徑同已驗證配音運算方式。揀咗 NVIDIA 唔代表 CUDA 測試已成功；已完成嘅 CPU 後備仍可使用，要重試請明確揀 NVIDIA CUDA 再驗證。",
+              "zh-CN": "Windows 会分别显示请求的 Drama 3 路径和已验证的配音运算方式。选择 NVIDIA 不代表 CUDA 测试已成功；已完成的 CPU 后备仍可使用，重试时请明确选择 NVIDIA CUDA 再验证。",
+              "ja": "Windows は希望する Drama 3 の処理経路と検証済みの音声処理を別々に表示します。NVIDIA の選択だけでは CUDA テスト成功を意味しません。検証済みの CPU 経路は維持されます。再検証する場合は NVIDIA CUDA を明示的に選びます。"
+            },
+            {
+              "en": "Model switching keeps downloaded models by default. A verified current selection activates without installation. Other selections check existing files, download only missing or damaged files and verify loading before activation. Welcome provides Remove all models with a removal review and a second confirmation. This does not remove videos, recordings or finished exports.",
+              "zh-HK": "切換模型預設保留已下載模型。已驗證嘅目前組合直接啟用，無須安裝；其他組合會先檢查檔案，只下載缺少或損壞部分，再驗證載入。Welcome 嘅「移除所有模型」會先列出移除範圍，再要求確認；唔會移除影片、錄音或成品。",
+              "zh-CN": "切换模型默认保留已下载模型。已验证的当前组合直接启用，无需安装；其他组合会先检查文件，仅下载缺少或损坏的部分，再验证加载。Welcome 的“移除所有模型”会先列出移除范围，再要求确认；不会移除视频、录音或成品。",
+              "ja": "モデル切り替え時は取得済みモデルを既定で保持します。検証済みの現在の構成は再インストールせず有効にします。他の構成は既存ファイルを確認し、不足・破損分だけ取得して読み込みを検証します。Welcome の「すべてのモデルを削除」は対象の確認後、もう一度承認が必要です。動画、録音、完成した出力は削除しません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": []
         }
       ]
     },
@@ -528,6 +556,28 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "desktop-production-reset-267",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Reset production parameters",
+            "zh-HK": "重設製作參數",
+            "zh-CN": "重置制作参数",
+            "ja": "制作パラメーターを初期化"
+          },
+          "body": [
+            {
+              "en": "Use the circular arrow in the Production settings header. With Global on, reset future global production and voice parameters. With Global off, reset only this video settings. Keep model selections, languages, subtitle sources, source files, saved job requests, recordings and exports. This is different from Reset state on a video.",
+              "zh-HK": "按「製作設定」頂部嘅循環箭嘴。「全域」開啟時重設日後全域製作及配音參數；關閉時只重設目前影片設定。模型、語言、字幕來源、原片、已保存工作、錄音同成品會保留；呢個同影片嘅「重設狀態」唔同。",
+              "zh-CN": "点击“制作设置”顶部的循环箭头。“全局”开启时重置后续全局制作和配音参数；关闭时仅重置当前视频设置。模型、语言、字幕来源、原片、已保存任务、录音和成品会保留；这与视频的“重置状态”不同。",
+              "ja": "「制作設定」見出しの循環矢印を使います。「全体」がオンなら今後の共通制作・音声パラメーター、オフならこの動画の設定だけを初期化します。モデル、言語、字幕ソース、元動画、保存済みジョブ、録音、出力は保持します。動画の「状態をリセット」とは別の操作です。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": []
         }
       ]
     },
@@ -2886,6 +2936,28 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "phone-timeline-settings-coverage",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Timeline and settings space",
+            "zh-HK": "時間軸與設定空間",
+            "zh-CN": "时间轴与设置空间",
+            "ja": "タイムラインと設定領域"
+          },
+          "body": [
+            {
+              "en": "In Expert Edit and preview, use the timeline icon beside Production settings to show or hide the lower timeline. The choice is saved and shared with opened Duo. Production settings temporarily hides the timeline and extends to the bottom in both closed and opened layouts. Done restores the saved timeline choice. Reports keep the timeline hidden. This changes display space only.",
+              "zh-HK": "在專家模式的編輯與預覽，按製作設定旁的時間軸圖示，顯示或收起下方時間軸。選擇會保存，並與展開的 Duo 共用。打開製作設定時，摺埋及展開畫面都會暫時隱藏時間軸，讓設定面板延伸到底部。按完成後會恢復原本的時間軸顯示選擇。校對報告仍會隱藏時間軸；此操作只調整顯示空間。",
+              "zh-CN": "在专家模式的编辑与预览，点击制作设置旁的时间轴图标，显示或收起下方时间轴。选择会保存，并与展开的 Duo 共用。打开制作设置时，折叠及展开画面都会暂时隐藏时间轴，让设置面板延伸到底部。点击完成后恢复原来的时间轴显示选择。校对报告仍隐藏时间轴；此操作只调整显示空间。",
+              "ja": "専門モードの編集とプレビューでは、制作設定の横にあるタイムラインボタンで下部の表示を切り替えます。選択は保存され、開いた Duo と共有します。制作設定を開くと、開閉どちらの画面でもタイムラインを一時的に隠し、設定パネルを下端まで広げます。完了で元の表示設定に戻ります。校正レポートでは引き続き非表示です。変わるのは表示領域だけです。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -3430,6 +3502,12 @@
               "zh-CN": "先选影片，再打开字幕与朗读设置面板。使用可读取的内置或外部字幕；没有合适字幕时，可根据声音生成字幕或执行画面 OCR。OCR 会按影片时间采样并整理字幕，无需逐帧手动按键。多音轨影片可先选要使用的音轨。",
               "en": "Choose a movie and open caption/reading settings. Use readable embedded or external captions, or generate captions from speech or screen OCR. OCR samples the movie timeline automatically. For multiple audio tracks, select the intended track first.",
               "ja": "動画を選び、字幕・読み上げ設定を開きます。内蔵・外部字幕を使うか、音声認識や画面 OCR で字幕を作成します。OCR は動画の時間軸を自動で走査します。複数音声では先に対象トラックを選びます。"
+            },
+            {
+              "en": "To add a subtitle file, select the movie and open Reading settings. Import subtitles is available below the source selector, including when Embedded subtitles or generated captions are selected. On phone, a quick import button is also above the video. Choose SRT, VTT or ASS in Files. The subtitle is linked to the selected movie even when the names differ. Select the imported external track to read it.",
+              "zh-HK": "加入字幕檔時，先選擇影片，再開啟「朗讀設定」。「匯入字幕檔」位於來源選單下方，選用內置字幕或生成字幕時亦會顯示。iPhone 的影片上方另有快捷入口。在「檔案」選擇 SRT、VTT 或 ASS；檔案名稱不同亦會關聯至目前影片，再選擇已匯入的外掛字幕朗讀。",
+              "zh-CN": "添加字幕文件时，先选择视频，再打开“朗读设置”。“导入字幕文件”位于来源菜单下方，选择内置字幕或生成字幕时也会显示。iPhone 的视频上方另有快捷入口。在“文件”选择 SRT、VTT 或 ASS；文件名称不同也会关联到当前视频，再选择已导入的外挂字幕朗读。",
+              "ja": "字幕ファイルを追加するには動画を選び、読み上げ設定を開きます。入力の種類に関係なく、字幕入力メニューの下に取り込みボタンを表示します。iPhoneでは動画の上にもあります。ファイルからSRT、VTT、ASSを選びます。名前が違っても選択中の動画に関連付けます。取り込んだ外部字幕を選んで読み上げます。"
             }
           ],
           "controlRefs": [],
@@ -3484,10 +3562,10 @@
               "ja": "ボーカル除去背景の準備には、スタジオ変換のハードウェア要件を満たす端末と、導入済みの音源分離モデルが必要です。要件に満たない端末でもシステム読み上げは使用できます。"
             },
             {
-              "en": "Narration volume changes system speech only. Before AI separation, Video volume changes the complete original soundtrack. Traditional vocal reduction starts at0%and applies during narration. Native stereo playback reduces the center vocal band. Mono and the compatibility player use frequency attenuation. It needs no AI model, can leave voices audible and can affect instruments. It does not turn down the complete soundtrack automatically.",
-              "zh-HK": "「朗讀音量」只調整系統朗讀聲音。AI 分離前，「影片音量」會調整整條原片聲軌。「傳統人聲抑制」預設為 0%，只在朗讀期間生效。原生立體聲播放採用中置人聲頻段抑制；單聲道及相容播放器採用頻段濾波。不需要 AI 模型，部分人聲可能殘留，亦可能影響樂器；不會自動降低整條原片聲軌的音量。",
-              "zh-CN": "“朗读音量”仅调整系统朗读声音。AI 分离前，“视频音量”会调整整条原片音轨。“传统人声抑制”默认为 0%，仅在朗读期间生效。原生立体声播放采用中置人声频段抑制；单声道及兼容播放器采用频段滤波。无需 AI 模型，部分人声可能残留，也可能影响乐器；不会自动降低整条原片音轨的音量。",
-              "ja": "読み上げ音量はシステムの声だけを調整します。AI分離前の動画音量は元の音声全体を調整します。従来方式の抑制は初期値0%で、読み上げ中だけ有効です。ネイティブのステレオ再生は中央の声域を抑え、モノラルと互換プレーヤーは周波数帯域を減衰します。AIモデルは不要です。声が残る場合や楽器に影響する場合があります。元の音声全体の音量は自動で下げません。"
+              "en": "Narration volume changes system speech only. Video volume changes the source soundtrack. Traditional vocal reduction starts at 0% and applies during narration. The upper half adds strong karaoke-style center cancellation. At 100%, native playback removes 98% of the filtered center signal and retains stereo side sound. Mono and centered music can become very quiet. The compatibility player uses a wider frequency cut instead. No AI model is needed. Some voices can remain. The source movie is unchanged.",
+              "zh-HK": "「朗讀音量」只調整系統朗讀；「影片音量」調整原片聲軌。「傳統人聲抑制」預設為 0%，只在朗讀期間生效。滑桿後半段加入較強的卡拉 OK 式中置聲音消除。原生播放在 100% 時削弱已濾波中置信號的 98%，保留立體聲兩側聲音；單聲道及置中的音樂可能變得很小聲。相容播放器則加強較闊頻段的抑制。不需要 AI 模型，部分人聲仍可能殘留。原影片不會改動。",
+              "zh-CN": "“朗读音量”仅调整系统朗读；“视频音量”调整原片音轨。“传统人声抑制”默认为 0%，仅在朗读期间生效。滑杆后半段加入更强的卡拉 OK 式中央声音消除。原生播放在 100% 时削弱已滤波中央信号的 98%，保留立体声两侧声音；单声道和中央音乐可能变得很小声。兼容播放器则加强更宽频段的抑制。无需 AI 模型，部分人声仍可能残留。原视频不会更改。",
+              "ja": "読み上げ音量はシステム音声、動画音量は元の音声を調整します。従来方式の抑制は初期値0%で、読み上げ中に有効です。スライダーの後半はカラオケ式の中央音声除去を強めます。ネイティブ再生の100%では帯域処理後の中央信号を98%減衰し、左右の差分音声を保ちます。モノラルや中央の楽器も小さくなります。互換プレーヤーは広い周波数帯を抑えます。AIモデルは不要ですが、声が残る場合があります。元の動画は変更しません。"
             },
             {
               "en": "AI vocal removal is a separate option on supported hardware with an installed separation model. Once an AI background is ready, the traditional slider is disabled; use the AI switch instead. Unsupported devices retain traditional suppression, narration, video mute and volume controls. These controls change playback only and preserve the source movie.",
@@ -3777,10 +3855,10 @@
           },
           "body": [
             {
-              "zh-HK": "完成後在播放器開啟成品，使用分享影片或儲存影片到檔案；有字幕時可另存字幕檔。先完成 App 內輸出，再選擇「檔案」目的地。iPhone 從選單的播放清單選擇成品；iPad 可從播放器及專案與成品進入。分享及儲存不需要專家版。",
-              "zh-CN": "完成后在播放器打开成品，分享影片或保存影片到文件；有字幕时可另存字幕。先完成 App 内输出，再选择“文件”位置。iPhone 从菜单的播放清单选择成品；iPad 可从播放器和项目与成品进入。分享和保存无需专家版。",
-              "en": "Open the finished output to share or save the video to Files. Save a separate subtitle file when available. The app creates its output before you choose a Files destination. On iPhone, choose an output from Playlist; iPad also offers Player and Projects and outputs. Saving and sharing do not require Expert.",
-              "ja": "完成した出力から動画を共有・「ファイル」へ保存し、字幕があれば別に保存できます。アプリ内で出力を完成した後に保存先を選びます。iPhone はプレイリストから出力を選び、iPad はプレーヤーやプロジェクトと出力から開きます。保存・共有に専門モードの購入は不要です。"
+              "zh-HK": "完成後在播放器開啟成品，使用分享影片或儲存影片到檔案；有字幕時可另存字幕檔。先完成 App 內輸出，再選擇「檔案」目的地。iPhone 從選單的播放清單選擇成品；iPad 請從「播放器」進入。側欄已移除重複的「專案與成品」入口，已存專案及成品仍然保留。分享及儲存不需要專家版。",
+              "zh-CN": "完成后在播放器打开成品，分享影片或保存影片到文件；有字幕时可另存字幕。先完成 App 内输出，再选择“文件”位置。iPhone 从菜单的播放清单选择成品；iPad 请从“播放器”进入。侧栏已移除重复的“项目与成品”入口，已存项目和成品仍然保留。分享和保存无需专家版。",
+              "en": "Open the finished output to share or save the video to Files. Save a separate subtitle file when available. The app creates its output before you choose a Files destination. On iPhone, choose an output from Playlist; On iPad, use Player. The duplicate Projects and outputs sidebar entry is removed; saved projects and outputs remain. Saving and sharing do not require Expert.",
+              "ja": "完成した出力から動画を共有・「ファイル」へ保存し、字幕があれば別に保存できます。アプリ内で出力を完成した後に保存先を選びます。iPhone はプレイリストから出力を選び、iPad はプレーヤーから開きます。重複する「プロジェクトと出力」のサイドバー項目は削除されますが、保存済みの内容は残ります。保存・共有に専門モードの購入は不要です。"
             }
           ],
           "controlRefs": [],
@@ -3916,6 +3994,30 @@
               "zh-HK": "iPhone 與摺埋的 Duo，「製作設定」及「基本選項」從右側滑出並佔滿可用闊度。Duo 打開後保留右側面板。可上下捲動原有設定，按完成收起；展開時亦可點暗色範圍收起。摺合切換會保留設定開啟狀態與所選分頁，設定值及忙碌狀態檢查不變。下方對白時間軸使用沒有可見標題的矮身卡片；未有對白時只顯示一行提示。",
               "zh-CN": "iPhone 与折叠的 Duo，“制作设置”和“基本选项”从右侧滑出并占满可用宽度。Duo 展开后保留右侧面板。可上下滚动原有设置，按完成收起；展开时也可点暗色区域收起。折叠切换会保留设置打开状态与所选分页，设置值和忙碌状态检查不变。下方对白时间轴使用没有可见标题的低矮卡片；没有对白时只显示一行提示。",
               "ja": "iPhone と閉じた Duo では制作設定と基本オプションが右側から全幅で開きます。開いた Duo は右側のパネルを使います。既存の設定をスクロールし、「完了」で閉じます。開いた画面では暗い領域をタップしても閉じられます。開閉を切り替えても表示状態と選択タブを保ちます。設定値と処理中の制限は変わりません。下部のタイムラインは見出しのない低いカードを使い、対話がない場合は短い一行を表示します。"
+            },
+            {
+              "en": "On opened Duo in Expert, Learning is not a far-left navigation entry. Open Playlist, select a saved video, then use Learning at the bottom of the player. Compact phone navigation keeps its existing Learning entry.",
+              "zh-HK": "Duo 展開的專家模式不會在最左側導航重複顯示學習模式。請開啟播放清單並選擇已保存影片，再按播放器底部的學習模式。摺埋及一般 iPhone 選單會保留原有學習入口。",
+              "zh-CN": "Duo 展开的专家模式不会在最左侧导航重复显示学习模式。请打开播放列表并选择已保存影片，再点击播放器底部的学习模式。折叠及普通 iPhone 菜单保留原有学习入口。",
+              "ja": "開いた Duo の専門モードでは、左端のナビゲーションに学習モードを重複表示しません。プレイリストで保存済み動画を選び、プレーヤー下部の学習モードを押します。閉じた画面と通常の iPhone メニューは既存の学習入口を保持します。"
+            },
+            {
+              "en": "Opened Duo uses the iPad Welcome layout. Choose Basic, Expert or Reading, then press the entry button. Choosing a mode alone does not enter Studio. The full-name language chooser and About remain on Welcome. Closed Duo keeps the compact phone Welcome layout.",
+              "zh-HK": "Duo 展開後使用 iPad 歡迎頁排版，可先選基本、專家或朗讀模式，再按下方進入按鈕。只選模式不會立即進入工作室。歡迎頁保留完整名稱的語言選單，以及關於與授權。摺埋後沿用手機歡迎頁排版。",
+              "zh-CN": "Duo 展开后使用 iPad 欢迎页布局，可先选基本、专家或朗读模式，再点击下方进入按钮。只选模式不会立即进入工作室。欢迎页保留完整名称的语言菜单以及关于与授权。折叠后沿用手机欢迎页布局。",
+              "ja": "開いた Duo は iPad の開始画面を使います。基本・専門・読み上げを選び、下部の開始ボタンを押します。モードを選ぶだけではスタジオへ移動しません。開始画面には言語の正式名とライセンス情報を残します。閉じるとコンパクトな iPhone の開始画面に戻ります。"
+            },
+            {
+              "en": "The phone and Duo video-only fullscreen view hides the outer workspace header and system status bar. Expand the selected video or rotate the phone to landscape. Close fullscreen or return to portrait to restore the normal player layout. Learning and Playlist retain their navigation controls.",
+              "zh-HK": "iPhone 與 Duo 的影片全螢幕畫面會隱藏外層工作室標頭及系統狀態列。選擇影片後可按全螢幕，或把手機轉為橫向。退出全螢幕或回復直向後會恢復一般播放器排版。學習模式及播放清單會保留原有導覽按鈕。",
+              "zh-CN": "iPhone 与 Duo 的影片全屏画面会隐藏外层工作室标题栏及系统状态栏。选择影片后可点击全屏，或把手机转为横向。退出全屏或回到竖向后恢复普通播放器布局。学习模式及播放列表保留原有导航按钮。",
+              "ja": "iPhone と Duo の動画全画面表示では、外側のスタジオヘッダーとステータスバーを隠します。動画を選んで全画面にするか、横向きに回転します。全画面を閉じるか縦向きに戻すと通常の再生画面に戻ります。学習とプレイリストのナビゲーションは保持します。"
+            },
+            {
+              "en": "Opened Duo scales the complete iPad Welcome composition to fit its available screen. Artwork stays on the left. Mode choices and entry stay on the right. The full page remains visible without moving controls below the artwork. Closed Duo keeps its phone layout.",
+              "zh-HK": "Duo 展開後會按可用畫面，等比例縮放完整 iPad 歡迎頁。角色圖保持在左，模式選擇及進入按鈕保持在右；整頁同時顯示，不會把控制區移到角色圖下方。摺埋後仍使用手機排版。",
+              "zh-CN": "Duo 展开后按可用画面等比例缩放完整 iPad 欢迎页。角色图保持在左，模式选择及进入按钮保持在右；整页同时显示，不会把控制区移到角色图下方。折叠后仍使用手机布局。",
+              "ja": "開いた Duo は iPad の開始画面全体を利用可能な画面に比例縮小します。キャラクターは左、モードと開始ボタンは右に保ちます。操作部を画像の下へ移さず、全体を同時に表示します。閉じると iPhone のレイアウトを使います。"
             }
           ],
           "controlRefs": [],

@@ -72,8 +72,21 @@ def finish(root,token,models,folder_for,success=True):
             write(root/'native-ready.json',record['previousReady']);write(root/'model-selections.json',record['previous'])
             (root/'setup-invalidated.json').unlink(missing_ok=True)
         record['status']='incomplete';write(journal,record);return record
-    roles={k:v for k,v in record['plan']['roles'].items() if isinstance(v,str)}
+    # Windows free VRAM can change optional visual eligibility between the
+    # proposal and the successful load. Adopt only its actual verified role.
+    windows=read(root/'native-ready.json',{})
     current=read(root/'model-selections.json',{})
+    required={k:v for k,v in record['plan']['roles'].items() if k!='visual' and isinstance(v,str)}
+    proof=(windows.get('engine')==record['plan']['engine'] and windows.get('modelLoadPassed') is True
+           and windows.get('speechInferencePassed') is True and all(windows.get('roles',{}).get(k)==v for k,v in required.items()))
+    if proof and current.get('visual')==windows.get('roles',{}).get('visual'):
+        visual=windows.get('roles',{}).get('visual')
+        if visual in (None,required.get('text')) and visual!=record['plan']['roles'].get('visual'):
+            import copy
+            record.setdefault('proposedPlan',copy.deepcopy(record['plan']))
+            record['plan']=copy.deepcopy(record['plan']);record['plan']['roles']['visual']=visual
+            record['plan']['roleAnalysisMode']='audiovisual' if visual else 'audio'
+    roles={k:v for k,v in record['plan']['roles'].items() if isinstance(v,str)}
     engine=record['plan']['engine']
     selected=lambda role:current.get(engine) if role=='voice' and engine in current else current.get(role)
     if any(selected(role)!=ident for role,ident in roles.items()):raise ValueError('New model selections have not been committed.')
