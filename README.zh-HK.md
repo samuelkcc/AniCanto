@@ -10,7 +10,17 @@
 
 將日本動畫嘅日文對白轉成**香港廣東話、普通話或英文配音**。模型同執行環境準備好後，辨識、翻譯、配音及匯出都喺本機完成。
 
-[下載](#下載-beta--0259) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [技術支援](SUPPORT.zh-HK.md) · [支持計劃](#支持更多人認識廣東話) · [示範影片](#下載測試原片聽返配音成品比較)
+<!-- desktop-downloads:start -->
+<a id="download"></a>
+
+## 下載
+
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+<!-- desktop-downloads:end -->
+
+[下載](#download) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [技術支援](SUPPORT.zh-HK.md) · [支持計劃](#支持更多人認識廣東話) · [示範影片](#下載測試原片聽返配音成品比較)
 
 ## 點解會有 AniCanto
 
@@ -23,28 +33,6 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 **AniCanto 以語言學習同創作實驗為本，並唔係用嚟取代專業配音員。** 角色演繹、情緒、節奏同戲劇張力，都來自配音員嘅訓練、創意同投入，唔係單靠生成一把相似嘅聲音就可以做到。
 
 AI 可以協助探索語言同試做配音，但生成結果仍可能有口音、錯字或演繹不足，唔等同專業演出。希望大家享受呢個小作品之餘，繼續欣賞同支持熟悉聲音背後嘅表演者。
-
-## 下載 Beta · 0.25.17
-
-**[下載 Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下載 Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [更新內容及對應源碼](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
-
-[下載對應源碼及第三方來源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
-
-## 今個 Beta 新增咗乜
-
-**Windows 0.25.19：** 修復清理後唔完整嘅 Python 環境；即使 Python 啟動唔到，仍可完全重設。重新開啟時會等上一輪清理完成。實際 Windows 故障仍待用戶驗收。
-
-**Windows 0.25.18 修正：** 修復失效嘅 FFmpeg 下載地址並保持原檔校驗，避免重設清理阻止重新開啟，顯示實際元件下載及安裝階段。Mac 維持 0.25.17。Windows 全新部署尚待用戶實機測試。
-
-**0.25.17 修正：** 修正 Mac 左邊工具列置中；Windows 部署顯示詳細步驟同已用時間，重用版本相符嘅 GPU 元件，並加入清晰嘅「修復／重新部署」選單。除非確認完全重設，否則保留現有模型同工作。
-
-- **雲端影片匯入：** Google Drive、OneDrive 或 iCloud 大檔案先等到可讀取，再開始影片檢查；提供準備進度同取消功能。
-- **錯誤提示同助手：** 深淺外觀統一鮮紅底白字，九位助手嘅休息場景加入輕微呼吸同頭髮微動。
-- **字幕同修復控制：** 確認冇對白嘅字幕只顯示文字，避免已涵蓋嘅延續字幕重複配音，額外 AI 修復權限分開設定。
-
-**已知限制：** 已加入有限度原聲時間恢復，但未確認嘅 OCR 區間仍可能出現重複或過長字幕。雲端檔案完整下載及 Windows GPU 轉換仍視乎供應商同實機情況。
-
-[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## 下載測試原片，聽返配音成品比較
 

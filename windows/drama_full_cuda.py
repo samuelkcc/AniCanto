@@ -5,11 +5,19 @@ HERE=Path(__file__).resolve().parent
 TOOLS=('drama-full-cuda12','drama-full-cudart12','drama-full-cuda13','drama-full-cudart13')
 MARKER='drama-full-cuda-ready.json'
 
+def validate_version(hardware,version):
+ cc=hardware.get('cudaComputeCapability')
+ names=' '.join([str(hardware.get('acceleratorName',''))]+[str(a.get('name','')) for a in hardware.get('displayAdapters',[])])
+ blackwell=(isinstance(cc,(int,float)) and cc>=10) or bool(re.search(r'Blackwell|\bRTX\s*(?:50\d\d|PRO\s*\d+)|\b[BR]200\b',names,re.I))
+ if version=='12' and blackwell:raise ValueError('This GPU needs the CUDA 13 native runtime. CUDA 12 is not compatible.')
+ if version=='13' and isinstance(cc,(int,float)) and cc<7.5:raise ValueError('This GPU needs the supported CUDA 12 native runtime. CUDA 13 is not compatible.')
+
+
 def cuda_version(hardware):
  if hardware.get('nativeDramaRuntimeVersion') in ('12','13'):return hardware['nativeDramaRuntimeVersion']
  # CUDA 12.4 predates Blackwell. The matching 13.3 bundle includes that architecture.
  names=' '.join([str(hardware.get('acceleratorName',''))]+[str(a.get('name',a.get('Name',''))) for a in hardware.get('displayAdapters',[])])
- if hardware.get('gpuRuntime',{}).get('torchIndex')=='cu130':return '13'
+ if (hardware.get('selectedTorchIndex') or hardware.get('gpuRuntime',{}).get('torchIndex'))=='cu130':return '13'
  return '13' if re.search(r'Blackwell|\bRTX\s*(?:50\d\d|PRO\s*\d+)|\b[BR]200\b',names,re.I) else '12'
 
 def deployment_hardware(root,hardware):
@@ -97,7 +105,7 @@ def checked_deployment(root,hardware,memory,worker,backend,emit):
   # The registered CUDA12 native bundle includes Pascal through Ada; it is
   # never offered as a Blackwell substitute merely because CUDA13 failed.
   older_compatible=(isinstance(cc,(int,float)) and 6.1<=cc<10) or ('RTX 40' in name and 'BLACKWELL' not in name)
-  if cuda_version(hardware)=='13' and older_compatible:choices.append(dict(hardware,nativeDramaRuntimeVersion='12'))
+  if hardware.get('nativeDramaRuntimeVersion') not in ('12','13') and cuda_version(hardware)=='13' and older_compatible:choices.append(dict(hardware,nativeDramaRuntimeVersion='12'))
   for candidate in choices:
    version=cuda_version(candidate)
    try:

@@ -10,7 +10,17 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--0259) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
+<!-- desktop-downloads:start -->
+<a id="download"></a>
+
+## Download
+
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+<!-- desktop-downloads:end -->
+
+[Download](#download) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 
@@ -27,28 +37,6 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 **AniCanto is for language learning and creative experimentation. It is not intended to replace professional voice actors.** Character interpretation, emotion, timing and dramatic intent are creative skills; AI-generated speech should not be equated with a professional performance. Please continue to appreciate and support the performers behind the voices you love.
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
-
-## Download the Beta · 0.25.17
-
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
-
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
-
-## What’s new in this Beta
-
-**Windows 0.25.19:** Repair partly removed Python environments, keep native reset available without Python, and wait for an earlier cleanup before reopening. Exact Windows fault acceptance remains user testing.
-
-**Windows 0.25.18 hotfix:** Restore the retained, checksum-verified FFmpeg download, keep reset cleanup from blocking relaunch, and show actual package download or installation status. Mac remains 0.25.17. A clean deployment on Windows is pending user testing.
-
-**0.25.17 patch:** Centre the desktop navigation rail on Mac. Show Windows runtime installation steps and elapsed time, reuse matching GPU packages, and add a clear Repair / redeploy menu. Existing models and saved work are kept unless you confirm a full reset.
-
-- **Cloud video import:** wait for large Google Drive, OneDrive or iCloud files to become readable before media checks. Show preparation progress and allow cancellation.
-- **Clearer errors and assistants:** bright red errors with white text in both appearances, plus gentle breathing and hair movement in the nine distinct resting scenes.
-- **Subtitle and repair controls:** retain caption-only text when no dialogue is confirmed, keep covered subtitle continuations from being dubbed twice, and separate optional repair permissions.
-
-**Known limitation:** bounded source-clock recovery is included, but uncertain OCR windows can still collect repeated or long subtitle text. A complete cloud download and Windows GPU conversion depend on the provider and target device.
-
-[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## Try the original demo and compare the voices
 

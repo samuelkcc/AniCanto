@@ -26,28 +26,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "fa7146da56ebf472b13699c815bc32169e77a53e24eb1f757dc3e15bd24c6bb1",
-      "bytes": 24772
+      "sha256": "64530850b129472e0f459cc09977dde1698ed80aed3359df7ceb4087b579bf1a",
+      "bytes": 23173
     },
     {
       "path": "README.ja.md",
-      "sha256": "d1dd1f92eead8f78ecbaf6f138b4c035592523dc5d8fe152ec4f02e76ea3d649",
-      "bytes": 27541
+      "sha256": "5f8f02ce863fe526789570cd54a49031a114b7baddf1085e0819f2ef0848e712",
+      "bytes": 25601
     },
     {
       "path": "README.md",
-      "sha256": "fa7146da56ebf472b13699c815bc32169e77a53e24eb1f757dc3e15bd24c6bb1",
-      "bytes": 24772
+      "sha256": "64530850b129472e0f459cc09977dde1698ed80aed3359df7ceb4087b579bf1a",
+      "bytes": 23173
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "d74f7777d28b97654b07064c3d4ff575e08d85a3d0261bd02c04f45df332fc1c",
-      "bytes": 21404
+      "sha256": "ed7ec76da14bb33222c08edc25ded74013a0593c4e9dd3b7bee7b6dc59ae17c1",
+      "bytes": 19961
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "9b4f785b18c36f32bde686478665e033ca67a24ea6777eddb09a083a45900d3d",
-      "bytes": 21514
+      "sha256": "e0d603ffaf25ef8e5bef757297e2a65e7e7e08cce5f8cb3aa271bd13654a1e6b",
+      "bytes": 20082
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -3306,7 +3306,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "38dc3d8bba9ad87367b5b01fcbda6a12dcddbc6e42391ffdc66e363f2f79735f",
+      "sha256": "435414eee1682b54ff3d8c4b89e1039bbe4af0b5f04c08a8072ae6217e5adead",
       "bytes": 66
     },
     {
@@ -3321,8 +3321,8 @@
     },
     {
       "path": "core/src/cleanup.rs",
-      "sha256": "7227b62a519bac44b54c1e56e06d5be9d92e2de8f93b1cda9fdb94d28074f05d",
-      "bytes": 11144
+      "sha256": "abeec406f425c0faec40d1423845ece6891e271a96cc4f0bacaa22e8bfae2938",
+      "bytes": 12108
     },
     {
       "path": "core/src/lib.rs",
@@ -3336,8 +3336,8 @@
     },
     {
       "path": "core/tests/cleanup.rs",
-      "sha256": "ceaf6999f5cef0e5088f5519f9f82e6621accb5a639a9067c2b75bd83aad93f2",
-      "bytes": 6996
+      "sha256": "c3082d4742579d298e1878cba8d1ef8f8fc36ab8a749f0c59b6259ad174d65eb",
+      "bytes": 7901
     },
     {
       "path": "core/tests/package.rs",
@@ -3351,8 +3351,8 @@
     },
     {
       "path": "docs/APPLICATION-USER-GUIDE.json",
-      "sha256": "21621a7d4edb2451fdc4bbcdfa21f8bda87b71620936fd6a096b6350a19cbbba",
-      "bytes": 417659
+      "sha256": "0e8cecbb7fbeb36948ebe93abe19696ab1445e42c2f9a319921da7c2020b3130",
+      "bytes": 422468
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
@@ -3380,14 +3380,19 @@
       "bytes": 3673
     },
     {
+      "path": "docs/DESKTOP-DOWNLOADS.json",
+      "sha256": "bbd080366982f14315d948f0381455e35942a2700c455725deaa2ce7d1c55e4d",
+      "bytes": 221
+    },
+    {
       "path": "docs/DESKTOP-IMPROVEMENTS-0.24.77.md",
       "sha256": "1a5a643315b536dfce242c6982ee94cfbcc57b9c3ab9c17f2ef8765911bd599e",
       "bytes": 8787
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "fbfca12de48a2827373740335a79ec756eeba3389c2f1629b72be20affc50f31",
-      "bytes": 191749
+      "sha256": "e97d99a32ccf047c578ab14f742e7bbff4da0df598368db6067ceac3d086c23f",
+      "bytes": 192296
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
@@ -3468,6 +3473,11 @@
       "path": "docs/DESKTOP-RELEASE-0.25.19.md",
       "sha256": "57a893e85d0955f7dd83ed8015028dc5adddd6449d82ab547f2368cb44150aa9",
       "bytes": 1889
+    },
+    {
+      "path": "docs/DESKTOP-RELEASE-0.25.20.md",
+      "sha256": "4e6b0c12591698fe7195fa88a01e5c8266715f4e0245ea0f39dd75cbe3d5cc7d",
+      "bytes": 2319
     },
     {
       "path": "docs/DESKTOP-RELEASE-0.25.9.md",
@@ -3566,13 +3576,13 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "3d2e3b28b7723947629ed77061a373d784801431f4f281ddb481599130a38050",
-      "bytes": 1100
+      "sha256": "0e94a7f17dc7f3261f937f36ce0d986ce564e64fcb9d2ab0287d1e597e95ea5f",
+      "bytes": 1099
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "8e84bda5d521a83c02a04182fb8e72c053934c8d36d33a70a3b1261a473f857a",
-      "bytes": 208212
+      "sha256": "02436fb4dff6ef26e516e915350602dda1bf0ba45748556055a29e9ec5cc622c",
+      "bytes": 209840
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -13841,13 +13851,13 @@
     },
     {
       "path": "scripts/public-desktop-index.md",
-      "sha256": "3d2e3b28b7723947629ed77061a373d784801431f4f281ddb481599130a38050",
-      "bytes": 1100
+      "sha256": "0e94a7f17dc7f3261f937f36ce0d986ce564e64fcb9d2ab0287d1e597e95ea5f",
+      "bytes": 1099
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "d8b422f1ca4bbb0492c74ee916a9334d163a05c01920808b03788bac8c43b7f4",
-      "bytes": 12900
+      "sha256": "f16894745e6a4950c436475d8443ba91204c17d53785f0f1fb9acda0cac5f78a",
+      "bytes": 12954
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -13888,6 +13898,11 @@
       "path": "scripts/stage_release.py",
       "sha256": "b1f06f56a33d5ce85d5c02bef3ba6337abfddfe97181cac3f57cd6c80ffcb76b",
       "bytes": 5669
+    },
+    {
+      "path": "scripts/update_desktop_downloads.py",
+      "sha256": "40e1a88efcc2b997a95b7223d73846016e4b1c41a7c9426f628b27deb0f4f624",
+      "bytes": 2546
     },
     {
       "path": "scripts/validate_user_guide.py",
@@ -14101,12 +14116,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "6f92fae4e2f61718ccef7619ec1bad132c4cffacf2fb33921e196fb6fe018399",
+      "sha256": "89bc7419acfdc965523591c147838715ac2f62024988feb2f7357b761256146f",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "4c681f0443eab74a016b6db50594a04ef2d58bc56b5d26e0d529d83432153482",
+      "sha256": "a42ff593a577db88a042f90c034867d71244ac8d67c52364705c9613c5b4ea58",
       "bytes": 543
     },
     {
@@ -14166,7 +14181,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "dfe5795b5b9251c8001300b0f418098fc579e90b6f2fd9b4ece52f556adcb70f",
+      "sha256": "32f4a85a3dcab4e125e09a4e37c5f2988563dee65f4a46c2039677e0a41d20e0",
       "bytes": 1051
     },
     {
@@ -14176,8 +14191,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "93d45433eb2a905b4729cb8f7705b2840b7b0195f7781cd015c8c8566f2e2d8d",
-      "bytes": 221630
+      "sha256": "26ef0ee30f3d7b4c53488ad080ad496ca2f6b5d171031d81eeb242c0e5b2051d",
+      "bytes": 221734
     },
     {
       "path": "studio/web/appearance.js",
@@ -15218,6 +15233,11 @@
       "path": "tests/test_core_package269.py",
       "sha256": "d2b4734443c7a781d550f84ef814f958298ca99c1aa5f717051d85d7472cb1eb",
       "bytes": 3054
+    },
+    {
+      "path": "tests/test_cuda_selection273.py",
+      "sha256": "d1f4768112f19d2d1de2767419f6150a464d216086a450481715de201eb26e58",
+      "bytes": 2937
     },
     {
       "path": "tests/test_delivery.py",
@@ -16331,8 +16351,8 @@
     },
     {
       "path": "windows/drama_full_cuda.py",
-      "sha256": "efc1e489b5f4f63d6734341874eba5134c2120871bc8991ac6fe43cb750b7b0d",
-      "bytes": 7573
+      "sha256": "bdbf4c984c5cedc290b7df5264fa31289f10248717c5aa1bed2cdf69b15cbd2f",
+      "bytes": 8307
     },
     {
       "path": "windows/gpu.py",
@@ -16371,8 +16391,8 @@
     },
     {
       "path": "windows/launcher/src/main.rs",
-      "sha256": "810d3f919b1d2f2027fb0e29514078afc053102bd06e27f7766fcd607d714abe",
-      "bytes": 12315
+      "sha256": "3f3f349eb99a4ee00b91d63bd6d31ac30415311916c0f271144ceaf136a8cc17",
+      "bytes": 12829
     },
     {
       "path": "windows/launcher/src/package.rs",
@@ -16386,8 +16406,8 @@
     },
     {
       "path": "windows/launcher/src/storage_lock.rs",
-      "sha256": "de196b9466a20842aeeee17bc6a074797864f96c1d24fbb99595932f3d5bbb77",
-      "bytes": 2328
+      "sha256": "aa154cca124e0b42e6d0d27f7504db190238aa46fbd95eaba56826f9be30cfff",
+      "bytes": 5772
     },
     {
       "path": "windows/memory_plan.py",
@@ -16441,8 +16461,8 @@
     },
     {
       "path": "windows/native_setup.py",
-      "sha256": "b1baecc1b4562daa6a8339932cb38f7205bb3112cf1a3c4513ecd615961206dc",
-      "bytes": 31047
+      "sha256": "2d98c7cec02067c88add138b6f492a4073cebe2e9694048eaa8cb59e90e2e1c8",
+      "bytes": 31676
     },
     {
       "path": "windows/native_tools.py",

@@ -97,7 +97,9 @@ pub fn reviewed(req:&Value)->Result<Value,String> {
 }
 
 /// Shutdown may add caches. Never delete new or changed files without review.
-pub fn execute_reviewed(req:&Value)->Result<Value,String> {
+pub fn execute_reviewed(req:&Value)->Result<Value,String> {execute_reviewed_with_progress(req,&mut |_|{})}
+pub fn execute_reviewed_with_progress(req:&Value,notify:&mut dyn FnMut(Value))->Result<Value,String> {
+    notify(json!({"phase":"checking","processed":0}));
     let root=root(req)?;let mode=req["mode"].as_str().ok_or("missing-cleanup-mode")?;
     if !["models","all"].contains(&mode){return Err("invalid-cleanup-mode".into());}
     let rows=req["files"].as_array().ok_or("missing-reviewed-files")?;
@@ -115,7 +117,13 @@ pub fn execute_reviewed(req:&Value)->Result<Value,String> {
     let (_,current,_)=scan(&json!({"root":root,"mode":mode}))?;
     let additions:Vec<_>=current.files.iter().filter(|(p,_,_)|!seen.contains(p)).map(|(p,_,_)|p.to_string_lossy().to_string()).collect();
     let mut retained=Vec::new();let mut failures=Vec::new();let mut bytes=0u64;let mut deleted=0;
+    let total=files.len();let mut processed=0;let mut last=std::time::Instant::now();
+    notify(json!({"phase":"deleting","total":total,"processed":0,"freedBytes":0,"failed":0}));
     for (relative,size,modified) in files {
+        processed+=1;
+        if processed==1 || processed==total || last.elapsed()>=std::time::Duration::from_millis(100){
+            notify(json!({"phase":"deleting","total":total,"processed":processed-1,"freedBytes":bytes,"failed":failures.len()}));last=std::time::Instant::now();
+        }
         let path=root.join(&relative);
         if path.ancestors().take_while(|p|*p!=root).any(|p|fs::symlink_metadata(p).is_ok_and(|m|linked(&m))) {retained.push(relative.to_string_lossy().to_string());continue;}
         let meta=match fs::symlink_metadata(&path){Ok(m)=>m,Err(e) if e.kind()==std::io::ErrorKind::NotFound=>continue,Err(e)=>{failures.push(format!("{}: {e}",relative.display()));continue;}};
@@ -123,7 +131,9 @@ pub fn execute_reviewed(req:&Value)->Result<Value,String> {
         if !meta.is_file() || meta.len()!=size || time!=Some(modified) {retained.push(relative.to_string_lossy().to_string());continue;}
         match fs::remove_file(&path){Ok(())=>{bytes+=size;deleted+=1;},Err(e)=>failures.push(format!("{}: {e}",relative.display()))}
     }
+    notify(json!({"phase":"tidying","total":total,"processed":processed,"freedBytes":bytes,"failed":failures.len()}));
     let mut dirs=current.dirs;dirs.sort_by_key(|p|std::cmp::Reverse(p.components().count()));dirs.dedup();for dir in dirs {let _=fs::remove_dir(dir);}
     let result=json!({"mode":mode,"reviewedSnapshot":true,"token":req["token"],"bytesFreed":bytes,"filesDeleted":deleted,"retainedChangedCount":retained.len(),"retainedNewCount":additions.len(),"retainedChanged":retained.iter().take(20).collect::<Vec<_>>(),"retainedNew":additions.iter().take(20).collect::<Vec<_>>(),"failures":failures.iter().take(20).collect::<Vec<_>>(),"failureCount":failures.len(),"complete":failures.is_empty()&&retained.is_empty()&&additions.is_empty()});
-    fs::write(root.join("last-download-cleanup.json"),result.to_string()).map_err(|e|e.to_string())?;Ok(result)
+    fs::write(root.join("last-download-cleanup.json"),result.to_string()).map_err(|e|e.to_string())?;
+    notify(json!({"phase":if result["complete"]==true{"complete"}else{"partial"},"total":total,"processed":processed,"freedBytes":bytes,"failed":failures.len()}));Ok(result)
 }

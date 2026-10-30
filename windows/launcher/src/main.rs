@@ -19,8 +19,16 @@ fn pending_cleanup(root:&std::path::Path,executable:&std::path::Path)->Result<()
         if exe.starts_with(storage) {return Err("Move AniCanto.exe outside the app data folder before removing downloads.".into());}
     }
     storage_lock::phase(root,"cleaning");
+    let cleanup_window=splash::Splash::new();
+    let mut notify=|status:serde_json::Value|{
+        storage_lock::cleanup_progress(root,&status);
+        let total=status["total"].as_u64().unwrap_or(0) as usize;let done=status["processed"].as_u64().unwrap_or(0) as usize;
+        let stage=storage_lock::cleanup_message(&status);
+        // Closing the progress window does not cancel approved removal midway.
+        let _=cleanup_window.update(&stage,done,total);
+    };
     let request=serde_json::json!({"root":root,"mode":req["mode"],"token":req["token"]});
-    let result=if req["approved"].is_object(){anicanto_core::cleanup::execute_reviewed(&req["approved"])}else{anicanto_core::cleanup::execute(&request)};
+    let result=if req["approved"].is_object(){anicanto_core::cleanup::execute_reviewed_with_progress(&req["approved"],&mut notify)}else{anicanto_core::cleanup::execute_with_progress(&request,&mut notify)};
     // A request is one-shot, including failure; always review a new plan.
     std::fs::remove_file(file).map_err(|e|e.to_string())?;
     if let Err(error)=result {
@@ -53,7 +61,7 @@ fn launch() -> Result<(), String> {
     let root = std::env::var_os("CANTOSYNC_WINDOWS_DATA").map(PathBuf::from)
         .or_else(||std::env::var_os("LOCALAPPDATA").map(|p|PathBuf::from(p).join("CantoSync-Windows")))
         .ok_or("LOCALAPPDATA is unavailable")?;
-    let _storage_lock=storage_lock::acquire(&root,||splash.update("Finishing the previous reset — please wait…",0,0))?;
+    let _storage_lock=storage_lock::acquire(&root,||splash.update(&storage_lock::waiting_message(&root),0,0))?;
     storage_lock::phase(&root,"opening");
     let folder = package::folder(&executable,&splash)?;
     let package_seconds=started.elapsed().as_secs_f64();

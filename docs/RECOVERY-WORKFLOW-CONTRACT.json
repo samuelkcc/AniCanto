@@ -2644,7 +2644,9 @@
       ],
       "sourceAuditRecord": "docs/CODEX-HANDOVER.md: Mobile caption-only source audit255",
       "latestUserPriority": "Next workflow task after current261UI/audio fixes. Native implementation remains absent.",
-      "latestSourceCheck": "2026-10-30: Native settings and dual-input proof remain absent in StandardProject and StandardPipeline."
+      "latestSourceCheck": "2026-10-30: Native settings and dual-input proof remain absent in StandardProject and StandardPipeline.",
+      "latest270Receipt": "mobile/Validation/ipad-followup-270-2026-10-30.json",
+      "latest270Status": "Normal270 installed on M4 and Piano. New policy is native269. Historical261 and266 records remain unchanged."
     },
     "native266": {
       "revision": "caption-only-no-dialogue-native-266",
@@ -3863,7 +3865,7 @@
   },
   "mobile269Combined": {
     "revision": "mobile269-clock-caption-reading",
-    "status": "Source prepared. Host exact-clock packet check passes. Native execution and normal installation remain pending.",
+    "status": "Normal270 is installed and launched on M4, Piano and Lavina M1. Whole-film acceptance remains open.",
     "videoClock": {
       "policy": "matroska-verified-clock-269",
       "source": "Original Matroska H264 or HEVC block presentation times with a declared frame duration.",
@@ -3874,7 +3876,7 @@
       "sourcePackets": 34024,
       "omittedFinalPacket": 1,
       "maxPresentationErrorSeconds": 0,
-      "nativeTests": "Pending."
+      "nativeTests": "Piano first, midpoint and final frame decode and three-second native export pass. Host packet comparison is separate evidence."
     },
     "captionOnly": {
       "newRevision": "caption-only-no-dialogue-native-269",
@@ -3897,7 +3899,7 @@
       },
       "captionTextAndDisplayTimesRetained": true,
       "quietAndOffscreenSpeech": "Retain TTS unless complete evidence confirms no dialogue.",
-      "nativeCalibration": "Pending actual desktop music input and real quiet/offscreen speech execution.",
+      "nativeCalibration": "Exact desktop pure-music fixture, quiet and offscreen negatives, three-language export, hash and missing-clock invalidation pass. Legacy266 remains frozen.",
       "revalidateBeforeVoiceAndExport": "Recheck the completed exact Whisper receipt and its waveform SHA. Missing or changed source-clock evidence restores required TTS without refund."
     },
     "report": {
@@ -3921,7 +3923,7 @@
     "frozenSettingsChanged": false,
     "spentBudgetsReset": false,
     "counterparts": {
-      "iphone": "Wait for one combined verified handover. Do not replace private phone UI files wholesale.",
+      "iphone": "Phone273 owner verifies narrow268 and exact-clock269 separately. Combined caption, attributed timing, assistant and grouped UI adoption remains pending.",
       "desktop": "270 provides music-only fixtures. Native timing and report implementation have independent evidence."
     },
     "manualRevision": "application-user-guide-73-production-settings-groups",
@@ -3938,6 +3940,41 @@
       "detailsInSharedGuide": true,
       "frozenBindingsUnchanged": true,
       "phonePrivateLayoutUptake": "Pending owner review."
-    }
+    },
+    "validationReceipt": "mobile/Validation/ipad-followup-270-2026-10-30.json",
+    "installedConsumers": [
+      {
+        "device": "M4",
+        "build": 270,
+        "appInventory": ".build/followup270/m4-apps.json",
+        "normalPackage": true,
+        "launched": true
+      },
+      {
+        "device": "Piano",
+        "build": 270,
+        "appInventory": ".build/followup270/piano-apps.json",
+        "normalPackage": true,
+        "launched": true
+      },
+      {
+        "device": "Lavina M1",
+        "build": 270,
+        "appInventory": ".build/followup270/lavina/apps-after.json",
+        "normalPackage": true,
+        "launched": true
+      }
+    ],
+    "manualConsumers": {
+      "APPLICATION-USER-GUIDE.json": {
+        "revision": "application-user-guide-73-production-settings-groups",
+        "sha256": "b6d524474f5d48ddf45bd6dccc5ddc98b280f319ac64d9f6556449b199663138"
+      },
+      "WORKFLOW-CONTROLS-GUIDE.json": {
+        "revision": "workflow-controls-guide-27-native-caption-music-proof",
+        "sha256": "410f100acac978be14e8b6e651f19eba7587b7fa2fa4d18d3708af49aa2e22d8"
+      }
+    },
+    "wholeFilmListeningAccepted": false
   }
 }

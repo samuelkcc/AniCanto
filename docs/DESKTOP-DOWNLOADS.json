@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "repository": "samuelkcc/AniCanto",
+  "mac": {
+    "version": "0.25.17",
+    "asset": "AniCanto-macOS-0.25.17.zip"
+  },
+  "windows": {
+    "version": "0.25.20",
+    "asset": "AniCanto.exe"
+  }
+}

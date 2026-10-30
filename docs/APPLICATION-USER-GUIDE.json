@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-73-desktop-reset-recovery",
+  "revision": "application-user-guide-74-desktop-visible-reset-cuda-choice",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -553,6 +553,18 @@
               "zh-HK": "Windows 喺 Python 啟動唔到時，仍可檢查修復或完全重新部署；唔會只憑 python.exe 檔案存在就當就緒。部署會驗證程式，修復唔完整嘅專用環境，同時保留已下載模型同元件。若上一輪仍在清理，再開 EXE 會先等待完成。重複重設唔需要先裝好 Python；清理及執行環境錯誤會自動保存，方便匯出偵錯記錄。",
               "zh-CN": "Windows 在 Python 无法启动时，仍可检查修复或完全重新部署；不会仅凭 python.exe 文件存在就判定就绪。部署会验证解释器，修复不完整的专用环境，同时保留已下载模型和组件。若上一轮仍在清理，重新打开 EXE 会先等待完成。重复重置不需要先装好 Python；清理和运行环境错误会自动保存，供导出调试记录。",
               "ja": "Windows では Python が起動しない場合でも修復と初期化を利用できます。実行ファイルの存在だけでは準備完了と判定しません。セットアップは動作を確認し、モデルとパッケージを保持して不完全な専用環境を修復します。前回の初期化で削除が続いている場合、EXE を開くと完了まで待機します。再度の初期化に動作中の Python は不要です。削除と実行環境のエラーはサポート記録用に保存します。"
+            },
+            {
+              "en": "After Windows full reset closes the studio, the portable launcher continues removal in a visible progress window. It shows the processed file count and freed space. Wait for this window to finish before reopening. A second launcher waits while removal advances; it does not start a second cleanup. This can take several minutes for large runtimes.",
+              "zh-HK": "Windows 完全重設會先關閉工作室，再由 EXE 啟動程序喺進度視窗繼續清理，顯示已處理檔案數同已釋放空間。請等清理視窗完成先重新開啟；重開 EXE 只會等待上一輪，唔會同時再清理。大型執行環境可能需要數分鐘。",
+              "zh-CN": "Windows 完全重置会先关闭工作室，再由 EXE 启动程序在进度窗口继续清理，显示已处理文件数和已释放空间。请等待清理窗口完成后再重新打开；重新打开 EXE 只会等待上一轮，不会同时再次清理。大型运行环境可能需要几分钟。",
+              "ja": "Windows の完全初期化では、スタジオ終了後にランチャーが進捗ウィンドウで削除を続けます。処理済みファイル数と解放容量を表示します。終了を待ってから EXE を開いてください。再度起動した EXE は削除を重複実行せず待機します。大きな実行環境では数分かかる場合があります。"
+            },
+            {
+              "en": "Drama3 processing defaults to automatic detection. Advanced choices can request CUDA12or CUDA13for a compatible NVIDIA GPU. Planning, downloads and device checks use the same selected native version. Manual choice does not bypass model loading or speech tests. Unsupported generations are refused. PyTorch acceleration is verified separately.",
+              "zh-HK": "Drama3 處理預設自動偵測；亦可為相容 NVIDIA 顯示卡手動揀 CUDA 12 或 CUDA 13。規劃、下載同裝置驗證會用同一個原生版本。手動選擇唔會略過模型載入同試音檢查；唔相容嘅顯示卡世代會被拒絕。PyTorch 加速會獨立驗證。",
+              "zh-CN": "Drama3 处理默认自动检测；也可为兼容 NVIDIA 显卡手动选择 CUDA 12 或 CUDA 13。规划、下载和设备验证使用同一原生版本。手动选择不会跳过模型加载和试音检查；不兼容的显卡代际会被拒绝。PyTorch 加速单独验证。",
+              "ja": "Drama3 は標準で自動検出します。対応する NVIDIA GPU では CUDA 12 または CUDA 13 を手動選択できます。計画、取得、装置検証は同じネイティブ版を使用します。手動選択でもモデル読み込みと音声試験は必須で、非対応世代は拒否します。PyTorch 加速は別に検証します。"
             }
           ],
           "controlRefs": [],
@@ -3191,6 +3203,32 @@
             }
           ],
           "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "production-settings-groups",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Production settings groups",
+            "zh-HK": "製作設定分類",
+            "zh-CN": "制作设置分类",
+            "ja": "制作設定の分類"
+          },
+          "body": [
+            {
+              "en": "Models and languages contains model and language menus. Source and output contains the source workflow, voice fallback and caption output choices. Processing options keeps switches together. Open Help for full control definitions. Extra AI repair remains a separate page. A submitted job retains its saved settings.",
+              "zh-HK": "「模型與語言」集中顯示模型及語言選單；「來源與輸出」包含翻譯來源流程、配音後備及字幕輸出選項；所有開關集中放在「處理選項」。詳細功能說明請查看使用說明。「額外 AI 修復」仍是獨立頁面，已提交的工作會沿用已保存設定。",
+              "zh-CN": "“模型与语言”集中显示模型和语言菜单；“来源与输出”包含翻译来源流程、配音后备和字幕输出选项；所有开关集中放在“处理选项”。详细功能说明请查看使用说明。“额外 AI 修复”仍是独立页面，已提交的任务会沿用已保存设置。",
+              "ja": "「モデルと言語」にモデル・言語メニュー、「入力と出力」に翻訳元の流れ・代替音声・字幕出力をまとめます。スイッチは「処理オプション」に集約します。詳しい機能はヘルプで確認します。追加AI修復は別ページのままです。開始済みの作業は保存済み設定を使います。"
+            }
+          ],
+          "controlRefs": [
+            "captionOnlyNoDialogue",
+            "contentReview"
+          ],
           "steps": false
         }
       ]

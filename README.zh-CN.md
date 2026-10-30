@@ -10,7 +10,17 @@
 
 将日本动画的日语对白转换成**香港粤语、普通话或英语配音**。安装所需模型和运行环境后，识别、翻译、配音和导出都在本机完成。
 
-[下载](#下载-beta--0259) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [演示视频](#下载测试原片听配音成品作比较)
+<!-- desktop-downloads:start -->
+<a id="download"></a>
+
+## 下载
+
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+
+[版本说明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [对应源码](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+<!-- desktop-downloads:end -->
+
+[下载](#download) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [演示视频](#下载测试原片听配音成品作比较)
 
 ## 为什么会有 AniCanto
 
@@ -23,28 +33,6 @@ AniCanto 最初只是一个简单的心愿：**希望孩子看动画时，可以
 **AniCanto 用于语言学习和创作实验，并非用来取代专业配音演员。** 角色演绎、情绪、节奏和戏剧张力，来自配音演员的训练、创意和投入，不能仅靠生成相似的声音来完成。
 
 AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音、错字或表演不足，不等同于专业演出。希望大家在使用这个项目的同时，继续欣赏和支持熟悉声音背后的表演者。
-
-## 下载 Beta · 0.25.17
-
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
-
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
-
-## 本次 Beta 更新
-
-**Windows 0.25.19：** 修复清理后不完整的 Python 环境；即使 Python 无法启动，仍可完全重置。重新打开时会等待上一轮清理完成。实际 Windows 故障仍待用户验收。
-
-**Windows 0.25.18 修复：** 修复失效的 FFmpeg 下载地址并保留原文件校验，避免重置清理阻止重新启动，显示实际组件下载和安装阶段。Mac 维持 0.25.17。Windows 全新部署尚待用户实机测试。
-
-**0.25.17 修复：** 修正 Mac 左侧工具栏居中；Windows 部署显示详细步骤和已用时间，复用版本相符的 GPU 组件，并提供清晰的修复／重新部署菜单。除非确认完全重置，否则保留现有模型和任务。
-
-- **云端视频导入：** Google Drive、OneDrive 或 iCloud 大文件先等待可读取，再开始媒体检查；提供准备进度和取消功能。
-- **错误提示和助手：** 深浅外观统一鲜红底白字，九位助手的休息场景加入轻微呼吸和头发微动。
-- **字幕与修复控制：** 确认无对白的字幕仅显示文字，避免已覆盖的延续字幕重复配音，额外 AI 修复权限分别设置。
-
-**已知限制：** 已加入有限度的原声时间恢复，但未确认的 OCR 区间仍可能出现重复或过长字幕。云端文件完整下载和 Windows GPU 转换仍取决于供应商及实机情况。
-
-[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## 下载测试原片，听配音成品作比较
 

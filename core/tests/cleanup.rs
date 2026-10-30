@@ -61,3 +61,12 @@ fn run(t:&Temp,mode:&str)->serde_json::Value {let mut r=json!({"root":t.0,"mode"
  request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let second=cleanup::execute_reviewed(&cleanup::reviewed(&request).unwrap()).unwrap();assert_eq!(second["complete"],true);assert!(!python.exists());assert!(media.exists());
  request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let third=cleanup::execute_reviewed(&cleanup::reviewed(&request).unwrap()).unwrap();assert_eq!(third["filesDeleted"],0);assert_eq!(third["complete"],true);assert!(media.exists());
 }
+
+#[test] fn reviewed_removal_reports_real_counts_and_keeps_saved_audio() {
+ let t=Temp::new();for i in 0..120{t.put(&format!("runtimes/analysis/package-{i}.bin"));}let kept=t.put("jobs/current/recording.wav");
+ let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let approved=cleanup::reviewed(&request).unwrap();
+ let mut events=vec![];let result=cleanup::execute_reviewed_with_progress(&approved,&mut |e|events.push(e)).unwrap();
+ assert_eq!(result["filesDeleted"],120);assert!(kept.exists());assert_eq!(events.first().unwrap()["phase"],"checking");
+ let end=events.last().unwrap();assert_eq!(end["phase"],"complete");assert_eq!(end["processed"],120);assert_eq!(end["total"],120);assert!(end["freedBytes"].as_u64().unwrap()>0);
+ assert!(events.iter().any(|e|e["phase"]=="deleting"));assert!(events.iter().any(|e|e["phase"]=="tidying"));
+}

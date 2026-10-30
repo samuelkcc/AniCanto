@@ -247,7 +247,7 @@ function dramaBackendControl(proposal=plan,scope='setup'){
  const h=proposal?.hardware||{},win=h.platform==='windows'||state.platform==='win32';
  if(!win||proposal?.engine!=='drama3')return '';
  const value=proposal.dramaBackend||'auto',canCUDA=[h.backend,h.detectedBackend].includes('cuda')&&Number(h.acceleratorMemoryGB||0)>=7.5;
- return `<section class="drama-backend-control"><label>${esc(t('Drama 3 processing'))}<select data-setting="drama-deployment-backend" data-scope="${scope}" ${active?'disabled':''}>${[['auto','Automatic · NVIDIA CUDA when available'],['cuda','NVIDIA · CUDA'],['cpu','CPU · AMD / Intel / integrated graphics']].map(([id,title])=>`<option value="${id}" ${value===id?'selected':''} ${id==='cuda'&&!canCUDA?'disabled':''}>${esc(t(title))}</option>`).join('')}</select></label><small>${esc(t('CUDA reuses the same full Drama 3 Q2 weights. Only the acceleration program and libraries are added; a real speech test is required.'))}</small></section>`;
+ return `<section class="drama-backend-control"><label>${esc(t('Drama 3 processing'))}<select data-setting="drama-deployment-backend" data-scope="${scope}" ${active?'disabled':''}>${[['auto','Automatic · NVIDIA CUDA when available'],['cuda','NVIDIA · CUDA'],['cuda12','NVIDIA · CUDA 12'],['cuda13','NVIDIA · CUDA 13'],['cpu','CPU · AMD / Intel / integrated graphics']].map(([id,title])=>`<option value="${id}" ${value===id?'selected':''} ${id.startsWith('cuda')&&!canCUDA?'disabled':''}>${esc(t(title))}</option>`).join('')}</select></label><small>${esc(t('CUDA reuses the same full Drama 3 Q2 weights. Only the acceleration program and libraries are added; a real speech test is required.'))}</small></section>`;
 }
 function cudaDownloadSummary(proposal){
  if(!proposal?.tools?.length)return '';
@@ -805,7 +805,7 @@ async function reviewSwitch(){
  if($('#switch-plan'))$('#switch-plan').textContent=t('Checking download plan…');
  try{
  let proposal,planningError='';
- try{proposal=await rpc('plan',{engine:selection.engine,models:selection.models,dramaBackend:selection.dramaBackend||'auto',...(selection.dramaBackend==='cuda'?{backend:'nvidia'}:{})});}
+ try{proposal=await rpc('plan',{engine:selection.engine,models:selection.models,dramaBackend:selection.dramaBackend||'auto',...(selection.dramaBackend?.startsWith('cuda')?{backend:'nvidia'}:{})});}
  catch(error){planningError=String(error.message||error);proposal={...(plan||{}),engine:selection.engine,roles:{...(plan?.roles||{}),...selection.models},canDeployModels:false,blockers:[planningError],downloads:[],modelDownloadBytes:0};}
  if(revision!==switchRevision||!$('#model-switch'))return;
  const roles=proposal.roles||{};
@@ -1030,7 +1030,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='download-independent-asr'){if(active)return;await startModelMaintenance('whisper-large-v3-mlx','repair');return;}
  if(a==='repair-model'||a==='redownload-model'){await maintainModel(v,a==='repair-model'?'repair':'redownload');return}
  if(a==='start-model-maintenance'){await startModelMaintenance(v,b.dataset.mode);return}
- if(a==='confirm-switch'){if(switchBusy||!pendingSwitch||active||!termsReady())return;switchBusy=true;switchStarting=true;b.disabled=true;const label=b.querySelector('span'),before=label.textContent;label.textContent=deploymentCopy('checking',state.language);setupReturn={screen,page};pendingSwitch.removeOld=$('#remove-old-model')?.checked||false;const params=structuredClone(pendingSwitch);if(params.dramaBackend==='cuda')params.backend='nvidia';let r;try{if(runtimeReady&&state.platform==='win32'){const reuse=await rpc('activate-models',params);if(reuse.activated){state=reuse.state;acceptSetupPlan(reuse.plan);inventory=await rpc('models');switchBusy=false;await closeDrawer();render();toast(deploymentCopy('reused',state.language));return;}}beginInstallation();if(!runtimeReady){setupSelection=params;deployAfterBootstrap=true;r=await invoke('studio_bootstrap');}else{r=await invoke('studio_start',{op:'setup',params});}}catch(error){deployAfterBootstrap=false;switchBusy=false;b.disabled=false;label.textContent=before;throw error;}finally{switchStarting=false;}if(!finishedRunIDs.has(r.id)){active={id:r.id,setup:true,seconds:0};setupEvent={message:t(runtimeReady?'Downloading & preparing…':'Prepare runtime')};if(!(screen==='studio'&&page==='models'))screen='welcome';}await closeDrawer();render();return;}
+ if(a==='confirm-switch'){if(switchBusy||!pendingSwitch||active||!termsReady())return;switchBusy=true;switchStarting=true;b.disabled=true;const label=b.querySelector('span'),before=label.textContent;label.textContent=deploymentCopy('checking',state.language);setupReturn={screen,page};pendingSwitch.removeOld=$('#remove-old-model')?.checked||false;const params=structuredClone(pendingSwitch);if(params.dramaBackend?.startsWith('cuda'))params.backend='nvidia';let r;try{if(runtimeReady&&state.platform==='win32'){const reuse=await rpc('activate-models',params);if(reuse.activated){state=reuse.state;acceptSetupPlan(reuse.plan);inventory=await rpc('models');switchBusy=false;await closeDrawer();render();toast(deploymentCopy('reused',state.language));return;}}beginInstallation();if(!runtimeReady){setupSelection=params;deployAfterBootstrap=true;r=await invoke('studio_bootstrap');}else{r=await invoke('studio_start',{op:'setup',params});}}catch(error){deployAfterBootstrap=false;switchBusy=false;b.disabled=false;label.textContent=before;throw error;}finally{switchStarting=false;}if(!finishedRunIDs.has(r.id)){active={id:r.id,setup:true,seconds:0};setupEvent={message:t(runtimeReady?'Downloading & preparing…':'Prepare runtime')};if(!(screen==='studio'&&page==='models'))screen='welcome';}await closeDrawer();render();return;}
  if(a==='production-mode'){if(productionModeLocked()){toast(t('Production mode is locked until processing finishes.'),true);return}await setSettings({productionMode:v});return}
  if(a==='start'||a==='retry'){
   if($('.restart-menu,.reset-video-confirm')){restartNote('Confirm or cancel the reset menu before starting a conversion.',true);return;}
@@ -1168,7 +1168,7 @@ document.addEventListener('change',e=>safely(async()=>{const el=e.target;
   if(active)return;
   if(el.dataset.scope==='switch'){if(pendingSwitch){pendingSwitch.dramaBackend=value;await reviewSwitch();}return;}
   const revision=++planChoiceRevision,previous=selectedQuality;
-  const next=await rpc('plan',{engine:plan?.engine||'drama3',models:plan?.requestedModels||{},dramaBackend:value,...(value==='cuda'?{backend:'nvidia'}:{})});
+  const next=await rpc('plan',{engine:plan?.engine||'drama3',models:plan?.requestedModels||{},dramaBackend:value,...(value.startsWith('cuda')?{backend:'nvidia'}:{})});
   if(revision!==planChoiceRevision)return;
   acceptSetupPlan(next);
   if(previous&&next.qualityPresets?.some(p=>p.id===previous&&p.available)){plan=presetPlan(next,previous);selectedQuality=previous;}

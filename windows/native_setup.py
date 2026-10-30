@@ -41,6 +41,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  # Keep a verified model-specific CPU fallback usable after a CUDA speech
  # failure; refreshing the welcome page must not force a redeploy loop.
  requested_drama_backend=drama_backend
+ native_version=drama_backend[-2:] if drama_backend in ('cuda12','cuda13') else None
+ if native_version:drama_backend='cuda'
  if drama_backend=='auto' and backend not in ('nvidia','cuda'):
   try:
    previous=json.loads((root/'drama3-windows-ready.json').read_text())
@@ -54,11 +56,19 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  from drama_cuda import capable
  h=hardware or planning_hardware();h=dict(h,nativeDramaCUDA=True,nativeWorkflowVersion=1,nativeDramaSmallCPU=(HERE/'tools/audiocpp_small_server.exe').is_file(),nativeDramaSmallCUDA=capable())
  if hardware is None and backend!='auto':h['backend']=dict(nvidia='cuda',amd='rocm').get(backend,'cpu')
+ if native_version:
+  from drama_full_cuda import validate_version
+  validate_version(h,native_version)
+  h['nativeDramaRuntimeVersion']=native_version
  if h.get('backend') in ('unprobed',None):h['backend']='cpu'
  try:selected=json.loads((root/'model-selections.json').read_text())
  except (OSError,ValueError):selected={}
  result=core('deployment',hardware=h,engine=engine,models=rows,installedModels=installed,selectedModels=selected,requestedModels=requested or {},singleModelPerCategory=True,allowDramaCPU=allow_cpu_drama,dramaBackend=drama_backend)
  h=result.get('hardware',h)
+ if native_version:
+  result['dramaBackend']=requested_drama_backend
+  for preset in result.get('qualityPresets',[]):
+   if preset.get('plan',{}).get('voiceBackend')=='cuda':preset['plan']['dramaBackend']=requested_drama_backend
  result['setupBackend']={'cuda':'nvidia','rocm':'amd'}.get(h.get('backend'),'cpu')
  result['requestedDramaBackend']=requested_drama_backend
  from memory_plan import pools
@@ -296,6 +306,8 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
   h['selectedTorchIndex']=probe['torchIndex'];h['cudaDriverVersion']=detected.get('driverVersion')
   (root/'gpu-runtime-selection.json').write_text(json.dumps(dict(name=h.get('acceleratorName'),driver=h.get('cudaDriverVersion'),torchIndex=probe['torchIndex'],kernelPassed=True,fallbackReason=analysis_fallback)))
  deployment=plan(engine,h,allow_cpu_drama,requested=requested,drama_backend=drama_backend)
+ # Use the exact normalized hardware that selected the downloaded tools.
+ h=deployment.get('hardware',h)
  if deployment['blockers']:raise ValueError('; '.join(deployment['blockers']))
  emit('Deployment plan',deployment=deployment)
  ffdir=tool('ffmpeg');tool('ollama')
@@ -391,7 +403,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
 if __name__=='__main__':
  from process_job import install as own_processes
  own_processes()
- parser=argparse.ArgumentParser();parser.add_argument('--drama-backend',choices=['auto','cuda','cpu'],default='auto');parser.add_argument('--models-json',default='{}');parser.add_argument('--engine',default='drama3');parser.add_argument('--backend',default='auto');parser.add_argument('--allow-cpu-drama',action='store_true');parser.add_argument('--plan',action='store_true');parser.add_argument('--manage',choices=['repair','redownload','remove']);parser.add_argument('--package');parser.add_argument('--kind',choices=['model','runtime','tool']);args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--drama-backend',choices=['auto','cuda','cuda12','cuda13','cpu'],default='auto');parser.add_argument('--models-json',default='{}');parser.add_argument('--engine',default='drama3');parser.add_argument('--backend',default='auto');parser.add_argument('--allow-cpu-drama',action='store_true');parser.add_argument('--plan',action='store_true');parser.add_argument('--manage',choices=['repair','redownload','remove']);parser.add_argument('--package');parser.add_argument('--kind',choices=['model','runtime','tool']);args=parser.parse_args()
  try:
   if args.manage:
    from setup_inventory import remove,RUNTIMES

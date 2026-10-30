@@ -103,7 +103,7 @@ WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
 Alignment register: iPad 265 source is prepared. Live M1 checks are deferred because Samuel is timing a conversion on Lavina. Do not interrupt that run. iPhone must adopt and verify the same RAM floor separately.
 Desktop model defaults are outside this mobile hardware preference.
 
-### Mobile combined corrections269, source in progress 2026-10-30
+### Mobile combined corrections269, normal270 installed 2026-10-30
 
 The new native caption policy is `caption-only-no-dialogue-native-269`.
 Only new jobs freeze this policy. Legacy266requests retain their old whole-window and float-quantum decisions.
@@ -124,10 +124,15 @@ A composition-only correction can reuse saved recordings. It does not grant tran
 Reading uses complete attributed recognizer times. It keeps the broader result when timed text is incomplete.
 Recognition, translation and narration stay separate. This adds no automatic name substitutions.
 
-Alignment register: Source and the34023-frame host clock comparison pass. Native calibration and installation are pending.
-The actual Mac270paired fixtures are copied to an isolated Piano validation folder. User M4media is not transferred.
-The iPhone owner waits for one verified combined handover. Do not infer phone installation from this source entry.
-Guide72and control27are the shared product instructions. Record each installed consumer hash separately.
+Alignment register: Normal270 is installed and launched on M4, Piano and Lavina M1.
+The34023-frame host packet comparison passes. Piano first, midpoint and final frame decode and a three-second export pass.
+These are separate evidence. Native output byte identity and whole-film listening are not established.
+Exact music, quiet/offscreen negatives, hash checks, missing-clock restoration and three-language export tests pass.
+A final proof check requires the matching completed Whisper clock and waveform hash. Missing proof restores required TTS.
+The actual Mac270paired fixtures use isolated validation folders. User M4media is not transferred.
+Phone273 adopts narrow268 and exact-clock269 separately. Combined native caption and grouped UI uptake remain owner work.
+Guide73and control27are installed on M4, Piano and Lavina M1. Exact consumer hashes are in ipad-followup-270-2026-10-30.json.
+Production menus use two cards. All switches use a third card. Detailed definitions stay in the shared guide.
 WF-01/02/03/15/16/17retain first audible selection, required bounded fill, frozen overlap settings and spent budgets.
 
 ### Desktop music-only caption correction270, source prepared 2026-10-30
