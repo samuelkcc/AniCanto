@@ -28,15 +28,15 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.25.15
+## Download the Beta · 0.25.16
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.15-beta/AniCanto-macOS-0.25.15.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.15-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.15-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/AniCanto-macOS-0.25.16.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.16-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.15-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.16-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-**0.25.15 patch:** Fix Windows startup when a verified Drama CUDA 12 runtime was incorrectly treated as missing because PyTorch selected CUDA 13. Fix Mac model-download capacity checks to include space macOS can reclaim for user-requested downloads. Keep file and speech verification; no model deletion is required.
+**0.25.16 patch:** Bind app processes to the current bundled policy core. Add a native emergency debug export when Python or the normal report fails, and a support-folder fallback for an unwritable save destination. Add Mandarin to Welcome in all four interface languages.
 
 - **Cloud video import:** wait for large Google Drive, OneDrive or iCloud files to become readable before media checks. Show preparation progress and allow cancellation.
 - **Clearer errors and assistants:** bright red errors with white text in both appearances, plus gentle breathing and hair movement in the nine distinct resting scenes.
@@ -44,7 +44,7 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 **Known limitation:** bounded source-clock recovery is included, but uncertain OCR windows can still collect repeated or long subtitle text. A complete cloud download and Windows GPU conversion depend on the provider and target device.
 
-[0.25.15 release details](docs/DESKTOP-RELEASE-0.25.15.md)
+[0.25.16 release details](docs/DESKTOP-RELEASE-0.25.16.md)
 
 ## Try the original demo and compare the voices
 
@@ -199,21 +199,21 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ### Welcome and setup
 
-![Welcome and setup](docs/images/welcome-en.png?v=0.25.15)
+![Welcome and setup](docs/images/welcome-en.png?v=0.25.16)
 
 Choose the interface language, prepare local models, and enter Basic or Expert mode.
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.15)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.16)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.15)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.16)
 
-![AI Repair](docs/images/ai-repair-en.png?v=0.25.15)
+![AI Repair](docs/images/ai-repair-en.png?v=0.25.16)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
@@ -221,25 +221,25 @@ Use the full-width timeline to compare source dialogue and dubbing scripts, adju
 
 Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
 
-![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.15)
+![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.16)
 
 ### Review report: issues and recording comparison
 
-![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.15)
+![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.16)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.15)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.16)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips](docs/images/speech-player-en.png?v=0.25.15)
+![Saved clips](docs/images/speech-player-en.png?v=0.25.16)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.15)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.16)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 

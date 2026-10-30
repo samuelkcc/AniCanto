@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-60-desktop-deployment-capacity",
+  "revision": "application-user-guide-63-desktop-emergency-export",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -481,6 +481,42 @@
           },
           "controlRefs": [],
           "steps": []
+        },
+        {
+          "id": "desktop-core-support-269",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "App components and debug export",
+            "zh-HK": "程式元件及偵錯匯出",
+            "zh-CN": "程序组件及调试导出",
+            "ja": "アプリの構成要素とデバッグ記録"
+          },
+          "body": {
+            "en": [
+              "Welcome lists Cantonese, Mandarin and English. Available voice languages depend on the selected engine.",
+              "A shared-core error concerns the app package, not a missing voice model. Keep installed models and saved work. Close the old app and open the latest EXE or App. The packaged app uses its own core rather than an inherited developer path.",
+              "Terminal → Export debug report can save a native support report when Python or the core is unavailable. It records the original error, component locations and bounded app-owned logs. If the selected destination cannot be written, the app saves to its support logs folder and displays that path. Reports can include dialogue and local paths; review them before public sharing."
+            ],
+            "zh-HK": [
+              "歡迎畫面列出廣東話、普通話同英文；實際可配音語言視乎所選引擎。",
+              "shared core 錯誤係程式封裝元件問題，唔係缺少配音模型。請保留現有模型同工作，關閉舊版後開啟最新 EXE 或 App。已封裝程式會使用自己嘅核心，唔會沿用外部開發路徑。",
+              "「終端機 → 匯出偵錯記錄」喺 Python 或核心無法使用時，仍可儲存原生支援記錄，包含原本錯誤、元件位置及有限長度嘅程式記錄。所選位置無法寫入時，會改存 App 專用記錄資料夾並顯示路徑。記錄可能包含對白及本機路徑，公開分享前請先檢查。"
+            ],
+            "zh-CN": [
+              "欢迎界面列出粤语、普通话和英语；实际可配音语言取决于所选引擎。",
+              "shared core 错误涉及程序包组件，并非缺少配音模型。请保留现有模型和工作，关闭旧版后打开最新 EXE 或 App。打包程序会使用自己的核心，不沿用外部开发路径。",
+              "「终端 → 导出调试记录」在 Python 或核心无法使用时，仍可保存原生支持记录，包含原始错误、组件位置及有限长度的程序记录。所选位置无法写入时，会改存 App 专用记录文件夹并显示路径。记录可能包含对白及本地路径，公开分享前请先检查。"
+            ],
+            "ja": [
+              "Welcome には広東語、標準中国語、英語を表示します。利用できる音声言語は選択したエンジンによります。",
+              "shared core エラーはアプリの構成要素に関するもので、音声モデルの不足とは異なります。モデルと作業を保持したまま旧版を閉じ、最新の EXE または App を開いてください。配布版は外部の開発用パスではなく、自分のパッケージのコアを使用します。",
+              "「ターミナル → デバッグ記録を書き出す」は Python やコアを利用できない場合も、元のエラー、構成要素の場所、長さを制限したアプリのログを保存できます。選択した保存先に書き込めない場合はアプリ専用ログフォルダに保存し、そのパスを表示します。記録に台詞やローカルパスが含まれる場合があります。公開前に確認してください。"
+            ]
+          },
+          "controlRefs": [],
+          "steps": []
         }
       ]
     },
@@ -890,6 +926,31 @@
             "borrowGaps",
             "alternateEngine",
             "systemVoice"
+          ],
+          "steps": false
+        },
+        {
+          "id": "mobile-caption-only-navigation-266",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Mobile non-dialogue captions",
+            "zh-HK": "流動版非對白字幕",
+            "zh-CN": "移动版非对白字幕",
+            "ja": "モバイルの非会話字幕"
+          },
+          "body": [
+            {
+              "en": "In Production settings, Non-dialogue captions only is an independent switch, on for new Basic and Expert subtitle-led jobs. Completed activity checks for original and separated audio, a completed Whisper source-clock result and near-digital-quiet separated vocals must all confirm no dialogue. Uncertain evidence keeps TTS. Captions retain authored times. An absent field in old work stays off; resume retains spent allowances. Each platform needs separate execution and installation evidence.",
+              "zh-HK": "「製作設定」的「非對白僅保留字幕」是獨立開關，新建以字幕為主要來源的基本及專家工作預設開啟。只有原聲與分離人聲的活動檢查、Whisper 原聲時間辨識均已完成，且分離人聲接近數碼靜音時，才可確認沒有對白並略過配音。證據不確定時仍會配音；字幕保留原有顯示時間。舊工作缺少此設定時維持關閉，續做不會重設已用次數。各平台須另行驗證實際執行及安裝。",
+              "zh-CN": "“制作设置”的“非对白仅保留字幕”是独立开关，新建以字幕为主要来源的基本及专家任务默认开启。只有原声和分离人声的活动检查、Whisper 原声时间识别均已完成，且分离人声接近数字静音时，才可确认没有对白并跳过配音。证据不确定时仍会配音；字幕保留原有显示时间。旧任务缺少此设置时保持关闭，继续处理不会重置已用次数。各平台需单独验证实际执行及安装。",
+              "ja": "制作設定の「会話なしでは字幕のみ」は独立したスイッチです。字幕を主入力とする新規Basic・Expert作業ではオンです。元音声と分離音声の活動検査、Whisperの元音声時刻結果が完了し、分離ボーカルがデジタル無音に近いことが必要です。証拠が不明なら音声を生成します。字幕の表示時刻は維持します。旧作業に設定がなければオフのままです。再開しても使用済み回数は戻りません。各プラットフォームの実行とインストールを別に検証します。"
+            }
+          ],
+          "controlRefs": [
+            "captionOnlyNoDialogue"
           ],
           "steps": false
         }
@@ -3568,6 +3629,18 @@
               "zh-HK": "同一個 ASS 字幕檔可同時包含中文及日文版本。在字幕選單選擇所需語言或樣式；朗讀模式會將各版本列為外掛字幕軌。「所有語言／樣式」保留整份字幕。語言分組可參考樣式名稱及文字語言，未能分類的樣式仍可個別選擇。原檔會保留；SRT 或 VTT 內同一行混合語言不會自動分拆。",
               "zh-CN": "同一个 ASS 字幕文件可以同时包含中文和日文版本。在字幕菜单选择所需语言或样式；朗读模式会把各版本列为外挂字幕轨。“所有语言／样式”保留整份字幕。语言分组可以参考样式名称和文本语言，无法分类的样式仍可单独选择。原文件会保留；SRT 或 VTT 同一行内混合语言不会自动拆分。",
               "ja": "ASSには中国語と日本語の字幕が同時に含まれる場合があります。字幕メニューで言語やスタイルを選びます。読み上げでは外部トラックとして表示します。「すべての言語・スタイル」は全内容を保持します。言語グループはスタイル名や文章の言語を参考にし、不明なスタイルも個別に選べます。元ファイルは残ります。SRT・VTTの同一行の混在言語は自動分割しません。"
+            },
+            {
+              "en": "In Reading, choose External subtitles, then select Subtitle file and Subtitle language / edition separately. Select Chinese or Japanese from a multilingual ASS file. All languages / styles keeps the original combined text. Reading voice is a separate setting. Full screen keeps a subtitle menu. Rotate the iPad to use landscape; system rotation lock still applies.",
+              "zh-HK": "在朗讀模式選擇「外掛字幕」，再分別選擇「字幕檔」及「字幕語言／版本」。多語言 ASS 可選中文或日文；「所有語言／樣式」保留原有混合文字。朗讀聲線另行設定。全螢幕仍可切換字幕；將 iPad 轉為橫向即可旋轉，系統旋轉鎖定仍然適用。",
+              "zh-CN": "在朗读模式选择“外挂字幕”，再分别选择“字幕文件”和“字幕语言／版本”。多语言 ASS 可选中文或日文；“所有语言／样式”保留原有混合文字。朗读声音另行设置。全屏仍可切换字幕；将 iPad 转为横向即可旋转，系统旋转锁定仍然适用。",
+              "ja": "読み上げで外部字幕を選び、字幕ファイルと字幕言語・版を別々に選択します。多言語ASSでは中国語や日本語を選べます。「すべての言語・スタイル」は元の混在テキストを保持します。読み上げ音声は別に設定します。全画面でも字幕を切り替えられます。iPadを横にすると画面が回転します。システムの回転ロックは有効です。"
+            },
+            {
+              "en": "Reading uses Apple on-device recognition. It selects SpeechTranscriber when the device and source language support it, otherwise DictationTranscriber where supported. Choose the source language from the supported list. One recognition pass uses one source language. Missing Apple resources require confirmation before download. Then translate the generated captions and select an installed reading voice. Old iPad and iPhone support depends on the available system languages, not Apple Intelligence. Pausing retains completed windows; changing the recognition engine starts a separate record.",
+              "zh-HK": "朗讀模式使用 Apple 本機語音辨識。裝置及原聲語言支援時使用 SpeechTranscriber，否則在支援範圍內使用 DictationTranscriber。請在支援清單選擇原聲語言；每次辨識使用一種原聲語言。缺少系統資源時，確認後才會下載。生成字幕後可進行翻譯，再選已安裝的朗讀聲線。舊款 iPad 及 iPhone 按系統語言支援提供功能，不要求 Apple Intelligence。暫停會保留已完成片段；更換辨識引擎會另存紀錄。",
+              "zh-CN": "朗读模式使用 Apple 本机语音识别。设备及原声语言支持时使用 SpeechTranscriber，否则在支持范围内使用 DictationTranscriber。请在支持列表选择原声语言；每次识别使用一种原声语言。缺少系统资源时，确认后才会下载。生成字幕后可进行翻译，再选择已安装的朗读声音。旧款 iPad 和 iPhone 按系统语言支持提供功能，不要求 Apple Intelligence。暂停会保留已完成片段；更换识别引擎会另存记录。",
+              "ja": "読み上げではAppleの端末内音声認識を使います。端末と言語が対応する場合はSpeechTranscriber、それ以外は対応するDictationTranscriberを使います。一覧から元音声の言語を選びます。1回の認識では1言語を使います。不足するシステム資源は確認後にダウンロードします。生成した字幕を翻訳し、インストール済みの音声を選べます。旧型iPad・iPhoneもシステム言語の対応に応じて利用でき、Apple Intelligenceは不要です。一時停止すると完了済み区間を保持します。エンジンが変わる場合は別の記録を作ります。"
             }
           ],
           "controlRefs": [],

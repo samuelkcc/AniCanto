@@ -71,7 +71,7 @@ struct WelcomeStudio:View {
                     HStack {AppEmblem().frame(width:32,height:32);Text("AniCanto").font(.title2.bold())}
                     Spacer(minLength:12)
                     Text(L("你嘅動畫，另一把聲音。")).font(.system(size:38,weight:.bold,design:.rounded)).fixedSize(horizontal:false,vertical:true)
-                    Text(L("香港廣東話 · English · Just for fun")).font(.headline).foregroundStyle(.secondary)
+                    Text(L("香港廣東話 · 普通話 · English · Just for fun")).font(.headline).foregroundStyle(.secondary)
                     if let url=Bundle.main.url(forResource:"welcome-"+theme+"-1",withExtension:"png",subdirectory:"welcome-art"),let art=NSImage(contentsOf:url) {
                         Image(nsImage:art).resizable().scaledToFit().frame(maxWidth:.infinity,maxHeight:.infinity).accessibilityLabel(L("配音助手大合照"))
                     } else {AppEmblem().frame(maxWidth:.infinity,maxHeight:.infinity)}

@@ -1,6 +1,7 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Selected location unavailable. Debug report saved to:": "選択した場所に保存できません。デバッグ記録の保存先：",
 "Retained source audio":"保持した原音",
 "Shared subtitle continuation":"共有字幕の継続区間",
 "No assigned subtitle wording":"割り当てられた字幕がありません",
@@ -507,7 +508,7 @@ export const LOCALE={
     "Quick guide": "クイックガイド",
     "About & licences": "利用規約について",
     "Your anime. A whole new voice.": "あなたのアニメに、新しい声を。",
-    "Hong Kong Cantonese · English · Just for fun": "香港広東語 · 英語 · 楽しもう",
+    "Hong Kong Cantonese · Mandarin · English · Just for fun": "香港広東語 · 標準中国語 · 英語 · 楽しもう",
     "Welcome to your dubbing studio": "吹き替えスタジオへようこそ",
     "Bring an episode. Pick a voice. Hear your characters in a new language.": "エピソードを持ってきて、声を選び、キャラクターを新しい言語で聞いてみましょう",
     "Choose an engine and subtitles. Start automatic production.": "エンジンと字幕を選択して、自動制作を開始",

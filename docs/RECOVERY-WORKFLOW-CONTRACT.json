@@ -1760,7 +1760,20 @@
           "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
           "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
           "receipt": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json"
-        }
+        },
+        "devicePackage265Piano": {
+          "build": 265,
+          "device": "Piano only",
+          "manualRevision": "application-user-guide-62-reading-system-fallback",
+          "manualSHA256": "523da877c2890f279ec10f58c54530399f18b0453d724dab3fe8635f4f5c6803",
+          "controlGuideRevision": "workflow-controls-guide-25-authored-subtitle-versions",
+          "controlGuideSHA256": "1d3c68453034cc9a08c1e1cc65de66b0660d4bb6361196b9cb6b4947b11f37e3",
+          "installed": true,
+          "launchVerified": true,
+          "renderedLocales": 0,
+          "receipt": "mobile/Validation/ipad-reading-dictation-265-2026-10-30.json"
+        },
+        "otherDevicesRetainBuild264": true
       },
       "iphone": {
         "build": 264,
@@ -2603,11 +2616,11 @@
     "hkStyleRevision": "hong-kong-contextual-260",
     "mobileUptakePending": true,
     "ipad": {
-      "status": "Source audit complete. Native implementation, tests and package remain pending.",
+      "status": "Native266 source is prepared. Native execution, package and device installation remain pending.",
       "lastInstalledBuild": 261,
-      "settingImplemented": false,
+      "settingImplemented": true,
       "defaultEnabledInNewRequests": false,
-      "nativeDualInputNoDialogueProofImplemented": false,
+      "nativeDualInputNoDialogueProofImplemented": true,
       "manualSourceRevisionObserved": "application-user-guide-33-phone-expert-tools",
       "controlGuideRevisionObserved": "workflow-controls-guide-23-detailed-repair-help",
       "reuseWarning": "StandardBackgroundWitness verifies only a stem. It does not establish complete original-plus-stem negative speech evidence.",
@@ -2632,6 +2645,47 @@
       "sourceAuditRecord": "docs/CODEX-HANDOVER.md: Mobile caption-only source audit255",
       "latestUserPriority": "Next workflow task after current261UI/audio fixes. Native implementation remains absent.",
       "latestSourceCheck": "2026-10-30: Native settings and dual-input proof remain absent in StandardProject and StandardPipeline."
+    },
+    "native266": {
+      "revision": "caption-only-no-dialogue-native-266",
+      "sourcePrepared": true,
+      "tested": false,
+      "installed": false,
+      "lastInstalledBuild": 264,
+      "newDefault": true,
+      "oldMissingFieldsEnabled": false,
+      "flow": "subtitles-speech",
+      "activityBackend": "apple-soundanalysis-v1",
+      "activityInputs": [
+        "original window",
+        "separated vocal window"
+      ],
+      "requiredHumanClassConfidenceBelow": 0.01,
+      "requiredCompletePaddedSeconds": 0.25,
+      "lexicalEvidence": "Exact completed source-clock receipt. No extra ASR request. Failure is not silence.",
+      "vocalThreshold": "Complete vocal window peak <= one PCM quantum; RMS <= one quarter quantum.",
+      "proofBinding": [
+        "project ID",
+        "full source SHA256",
+        "source offset",
+        "cue window",
+        "caption identity and text",
+        "original window SHA256",
+        "vocal window SHA256",
+        "completed dual activity results"
+      ],
+      "sourceTranscriberChanged": false,
+      "spentBudgetsReset": false,
+      "sourceClocksChanged": false,
+      "nativeTests": "mobile/Tests/CaptionOnly266Tests.swift",
+      "acceptance": "Native execution, installation and real-film acceptance remain pending."
+    },
+    "iPhone": {
+      "sourcePrepared": true,
+      "tested": false,
+      "installedBuild": 264,
+      "candidateBuild": 266,
+      "receipt": null
     }
   },
   "hongKongContextualWording260": {
@@ -3513,5 +3567,39 @@
     "physicalPhoneInstalledBuild": 264,
     "physicalCounterpart265Pending": true,
     "receipt": "mobile/Validation/iphone-duo-player-270-2026-10-30.json"
+  },
+  "readingSystemFallback265": {
+    "authority": "reading-system-fallback-265",
+    "scope": [
+      "ipad-reading",
+      "iphone-reading"
+    ],
+    "selection": "SpeechTranscriber for a supported device and locale; otherwise supported DictationTranscriber",
+    "sourceLanguages": "Available system locales; one language per pass",
+    "download": "Existing exact-locale confirmation before missing Apple assets",
+    "windowSeconds": 30,
+    "checkpoint": "Commit only a completed window; preserve earlier windows after cancellation or timeout",
+    "engineIdentity": "New records store the engine. Legacy absent engine means speech. Engine changes use a separate record.",
+    "conversionRulesChanged": false,
+    "platforms": {
+      "ipad": {
+        "source": "implemented",
+        "simulatorCompilation": "passed",
+        "nativeTests": "3 Piano cases pass; actual15second Dictation input produces timed text in2.473679seconds",
+        "installed": "normal265 on Piano only; M4 and Lavina remain264",
+        "wholeFilmAccepted": false,
+        "qualityAccepted": false,
+        "evidence": "mobile/Validation/ipad-reading-dictation-265-2026-10-30.json"
+      },
+      "iphone": {
+        "source": "pending adoption",
+        "nativeTests": "pending",
+        "installed": "pending"
+      },
+      "desktop": {
+        "scope": "not applicable; no mobile Reading"
+      }
+    },
+    "separateActions": "Recognition, translation and reading stay separate, as confirmed by Samuel."
   }
 }

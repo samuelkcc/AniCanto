@@ -65,6 +65,7 @@ fn launch() -> Result<(), String> {
         let _=std::fs::remove_file(&ready);
         let mut desktop=Command::new(studio);
         desktop.env("CANTOSYNC_WINDOWS_PACKAGE",&folder).env("CANTOSYNC_WINDOWS_DATA",&root)
+            .env("CANTOSYNC_SHARED_RESOURCES",folder.join("shared")).env("CANTOSYNC_CORE",folder.join("shared/bin/anicanto-core.exe"))
             .env("CANTOSYNC_STUDIO_DATA",&root).env("CANTOSYNC_LAUNCHER_PID",std::process::id().to_string())
             .env("CANTOSYNC_LAUNCH_READY_PATH",&ready);
         #[cfg(target_os="windows")]

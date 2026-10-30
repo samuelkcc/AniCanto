@@ -95,16 +95,24 @@ def report(app):
         from storage_capacity import capacity
         header['storageObservation']=dict(at=time.time(),**capacity(root))
     except (OSError,ValueError):header['storageObservation']=dict(status='unavailable')
+    try:
+        from studio_core import diagnostic
+        header['coreLookup']=diagnostic()
+    except (OSError,ValueError,RuntimeError):header['coreLookup']=dict(status='unavailable')
     add('@header',json.dumps(header,ensure_ascii=False,indent=2))
     for source in app.log_sources():
         ident=source['id']
-        if ident=='@conversion':
-            text,omitted=bounded_json(build(root,row));add(ident,text,omissions=omitted)
-        elif ident.startswith('@'):add(ident,app.log_text(source,512*1024))
-        else:
-            p=owned(root/ident)
-            if not p or not p.is_file():continue
-            add(ident,app.log_text(source,512*1024),sourceBytes=p.stat().st_size,truncated=p.stat().st_size>512*1024)
+        try:
+            if ident=='@conversion':
+                text,omitted=bounded_json(build(root,row));add(ident,text,omissions=omitted)
+            elif ident.startswith('@'):add(ident,app.log_text(source,512*1024))
+            else:
+                p=owned(root/ident)
+                if not p or not p.is_file():continue
+                add(ident,app.log_text(source,512*1024),sourceBytes=p.stat().st_size,truncated=p.stat().st_size>512*1024)
+        except Exception as error:
+            text,omitted=bounded_json(dict(exportStatus='unavailable',errorType=type(error).__name__,error=str(error)[:2000]))
+            add(ident,text,omissions=omitted)
     for name in RECEIPTS:structured(root/name,RUNTIME_KEYS+('name','driver','torchIndex','kernelPassed','cudaVersion','runtimeTool','cudartTool','deviceProbePassed','memory','threads','model','modelVariant','speechVersions','verifiedEngines','fallbackReason'))
     structured(root/'model-selections.json',('text','voice','drama3','speech','referenceSpeech','asr','visual'))
     structured(root/'setup-invalidated.json',('reason','at','id','kind','operation'))

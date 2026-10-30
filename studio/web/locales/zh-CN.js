@@ -1,6 +1,7 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Selected location unavailable. Debug report saved to:": "所选位置无法保存，调试记录已保存至：",
 "Retained source audio":"保留原声",
 "Shared subtitle continuation":"共用字幕延续片段",
 "No assigned subtitle wording":"尚无配对字幕文字",
@@ -507,7 +508,7 @@ export const LOCALE={
     "Quick guide": "快速指南",
     "About & licences": "关于与许可",
     "Your anime. A whole new voice.": "你的动画，焕然一新的声音。",
-    "Hong Kong Cantonese · English · Just for fun": "香港粤语 · 英语 · 享受配音乐趣",
+    "Hong Kong Cantonese · Mandarin · English · Just for fun": "香港粤语 · 普通话 · 英语 · 享受配音乐趣",
     "Welcome to your dubbing studio": "欢迎来到配音工作室",
     "Bring an episode. Pick a voice. Hear your characters in a new language.": "导入一集，选择配音，让角色用新语言发声",
     "Choose an engine and subtitles. Start automatic production.": "选择引擎和字幕，开始自动制作",

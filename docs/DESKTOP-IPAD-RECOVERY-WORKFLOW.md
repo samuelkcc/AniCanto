@@ -32,6 +32,24 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Reading system recognition fallback, confirmed 2026-10-30: `reading-system-fallback-265`
+
+Reading on iPad and iPhone selects an Apple on-device recognizer per source language.
+Use SpeechTranscriber when available for that device and locale. Otherwise use a supported DictationTranscriber locale.
+List supported languages from both available engines. Each pass uses one selected source language.
+Do not require Apple Intelligence, a paid entitlement or the full Studio RAM floor for this Reading path.
+Missing Apple resources still require the existing exact-locale download confirmation.
+Process at most thirty seconds per window. Commit text and times only after the window completes.
+Cancellation and timeout retain earlier completed windows. They do not mark a partial window complete.
+Store the chosen engine with new Reading records. A legacy missing engine means SpeechTranscriber.
+Keep old records. An engine change creates a separate record instead of silently merging results.
+System translation and installed reading voices remain separate choices. Samuel confirms separate recognition, translation and reading actions.
+No network transcription fallback, Whisper model change or conversion-runtime change is authorized by this rule.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged for all frozen conversion requests.
+
+Alignment register: iPad265passes three Piano native cases. A15-second Japanese Dictation input produces timed text in2.473679seconds. Normal265is installed on Piano only. M4 and Lavina remain264. Names and sentence segmentation still need quality review. No whole-film acceptance is claimed.
+iPhone source adoption and physical old-phone testing are pending. Desktop has no mobile Reading mode.
+
 ### Supported 8 GB class voice defaults, confirmed 2026-10-30: `mobile-voice-memory-265`
 
 Both iPad and iPhone require at least the 8 GB RAM class for full mode. This is total device RAM, not free RAM.
@@ -44,6 +62,31 @@ WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
 
 Alignment register: iPad 265 source is prepared. Live M1 checks are deferred because Samuel is timing a conversion on Lavina. Do not interrupt that run. iPhone must adopt and verify the same RAM floor separately.
 Desktop model defaults are outside this mobile hardware preference.
+
+### Native no-dialogue captions, source prepared 2026-10-30: `caption-only-no-dialogue-native-266`
+
+Task: Keep confirmed non-dialogue captions visible without generated speech.
+
+The independent switch defaults on for new Basic and Expert subtitle-led jobs.
+Old jobs without the frozen fields remain unchanged. Explicit off keeps normal voice requirements.
+Complete original and vocal activity checks must cover the caption window with 0.25-second context at each available edge.
+The native adapter uses the existing SoundAnalysis classifier. It does not replace Whisper transcription with Apple recognition.
+Every human-voice class must stay below 0.01 across both complete inputs.
+The completed exact Whisper clock receipt must contain no lexical units and no failure.
+The complete vocal window must have peak no greater than one PCM quantum and RMS no greater than one quarter quantum.
+Bind evidence to project, source hash, offset, selected caption identity, windows and both waveform hashes.
+Missing, stale, clipped or uncertain evidence retains TTS. Preserve quiet and offscreen speech, existing takes and manual source decisions.
+Keep the translated caption and original display times. Exclude only a confirmed caption-only row from mandatory missing-audio fill.
+Recheck proof before voice generation and final export. An invalid proof restores the normal target requirement without a budget refund.
+Reserve each inspection once. Cancellation does not create a fresh inspection or ASR allowance on resume.
+The native adapter adds bounded activity analysis. It adds no ASR, translation, TTS or content-review permission.
+WF-01/02/03 retain the common flow, bounded mandatory fill and first audible take for required dialogue.
+WF-15/16/17 retain duration choice, three-language first-draft guidance and independent default-off excessive-overlap repair.
+
+Alignment register: Main iPad, private phone266 and private Duo source contain this adapter.
+Compilation and four native cases are in progress. No native execution or installation is certified here.
+Desktop260 has its separate dual-input Silero implementation and receipt. Native model and full-film acceptance remain independent.
+The Reading and layout work stays separate. No iPad device operation occurs in this phone task.
 
 ### Multilingual authored subtitle selection, target confirmed 2026-10-30: `authored-subtitle-variants-264`
 

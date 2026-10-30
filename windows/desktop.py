@@ -152,7 +152,7 @@ class Studio(StudioRoleTools,StudioPreferences,StudioEditing,StudioPages,StudioL
         page=QWidget();layout=QHBoxLayout(page);layout.setContentsMargins(30,35,30,30);layout.setSpacing(40)
         left_widget=QWidget();left_widget.setObjectName('welcomeArt');left=QVBoxLayout(left_widget);left.setContentsMargins(30,30,30,30);brand=self.label('AniCanto','AniCanto');brand.setObjectName('brand');left.addWidget(brand)
         title=self.label('Your anime. A whole new voice.','你嘅動畫，另一把聲音。');title.setObjectName('heading');left.addWidget(title)
-        left.addWidget(self.label('Hong Kong Cantonese · English · Just for fun','香港廣東話 · English · Just for fun',True));left.addWidget(Cover(self.cover_path),1)
+        left.addWidget(self.label('Hong Kong Cantonese · Mandarin · English · Just for fun','香港廣東話 · 普通話 · English · Just for fun',True));left.addWidget(Cover(self.cover_path),1)
         left.addWidget(self.label('SCKC / ANIME DUBBING PLAYGROUND','SCKC / ANIME DUBBING PLAYGROUND',True));layout.addWidget(left_widget,1)
         right=QVBoxLayout();right.setSpacing(15)
         line=QHBoxLayout();line.addStretch();line.addWidget(self.label('Interface language','介面語言'))

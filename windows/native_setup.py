@@ -222,6 +222,8 @@ def setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,dr
 def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,drama_backend='auto'):
  emit('Checking hardware and existing installation',setupStep='check')
  if sys.platform!='win32':raise RuntimeError('Run native setup on Windows 11 x64.')
+ from studio_core import verify
+ verify()  # Fail before runtime installation or ready-receipt invalidation.
  root=data_root();root.mkdir(parents=True,exist_ok=True)
  (root/'native-ready.json').unlink(missing_ok=True)
  (root/'setup-invalidated.json').write_text(json.dumps(dict(reason='setup-in-progress')))

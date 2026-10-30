@@ -292,6 +292,20 @@ class SharedStudioTests(unittest.TestCase):
         outside=Path(self.tmp.name)/'private.log';outside.write_text('never export outside data')
         (job/'outside.log').symlink_to(outside)
         self.assertNotIn('never export outside data',self.app.dispatch('export-logs',{}))
+    def test_one_failed_log_section_does_not_block_remaining_export(self):
+        self.project()
+        (self.root/'logs/studio').mkdir(parents=True,exist_ok=True)
+        (self.root/'logs/studio/process.log').write_text('retained setup evidence')
+        original=self.app.log_text
+        def damaged(source,limit):
+            if source['id']=='@summary':raise RuntimeError('section read failed')
+            return original(source,limit)
+        with patch.object(self.app,'log_text',side_effect=damaged):report=self.app.debug_report()
+        self.assertIn('section read failed',report)
+        self.assertIn('retained setup evidence',report)
+        self.assertIn('coreLookup',report)
+        self.assertIn('@export-manifest',report)
+
     def test_debug_export_has_bounded_native_take_evidence_and_no_symlink_escape(self):
         ident,job=self.project();track=job/'tracks/drama3-test';track.mkdir(parents=True)
         write(track/'native-drama-request.json',dict(state='waiting',elapsedSeconds=23))

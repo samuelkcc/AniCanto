@@ -5,6 +5,7 @@ use serde_json::{json,Value};
 use tauri::{Emitter,Manager,State};
 use fs2::FileExt;
 mod appearance;
+mod support_export;
 mod preview_stream;
 mod task_lifecycle;
 mod native_queue;
@@ -35,11 +36,12 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
+const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
         if !DESKTOP_OPERATIONS.contains(&op){return Err(format!("Unsupported desktop operation: {op}"));}
+        if op=="export-logs" {return Ok(json!(self.debug_contents()));}
         // Hydration can wait for a File Provider. Progress and cancellation
         // must remain available while the normal Python RPC is occupied.
         if ["source-prepare-status","source-prepare-cancel"].contains(&op) {
@@ -113,6 +115,17 @@ impl Host {
             std::env::var_os("CANTOSYNC_MAC_HELPER").map(PathBuf::from).unwrap_or(development.join("dist/AniCanto.app/Contents/MacOS/AniCanto"))};
         Ok(Self{root,shared,windows,backend,helper,recovery_checked:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance})
     }
+    fn debug_contents(&self)->String {
+        let report=self.rpc("export-logs",json!({})).and_then(|r|r.as_str().map(str::to_owned).ok_or_else(||"The Python debug report returned invalid output.".to_owned()));
+        match report {
+            Ok(text)=>format!("AniCanto {}\n{}",env!("CARGO_PKG_VERSION"),text),
+            Err(error)=>{
+                let core=self.shared.join(if cfg!(windows){"bin/anicanto-core.exe"}else{"bin/anicanto-core"});
+                let python=self.python().unwrap_or_else(||self.root.join("missing-python"));
+                support_export::report(&self.root,&[("Shared core",&core),("Python",&python),("Backend",&self.backend),("Shared resources",&self.shared),("Windows package",&self.windows)],&error,env!("CARGO_PKG_VERSION"))
+            }
+        }
+    }
     fn python(&self)->Option<PathBuf> {
         let candidates=if cfg!(windows){vec![self.root.join("runtimes/ui/Scripts/python.exe"),self.root.join("runtimes/worker/Scripts/python.exe")]}else{
             vec![self.root.join("runtime/bin/python3"),self.shared.join("runtimes/runtime/bin/python3")]};
@@ -122,7 +135,8 @@ impl Host {
         cmd.env("PYTHONUTF8","1").env("PYTHONUNBUFFERED","1").env("PYTHONDONTWRITEBYTECODE","1")
             .env("PYTHONNOUSERSITE","1").env("SAM_CANTO_DATA",&self.root).env("CANTOSYNC_WINDOWS_DATA",&self.root)
             .env("CANTOSYNC_HOST_PID",std::process::id().to_string())
-            .env("CANTOSYNC_SHARED_RESOURCES",&self.shared).env("CANTOSYNC_WINDOWS_PACKAGE",&self.windows);
+            .env("CANTOSYNC_SHARED_RESOURCES",&self.shared).env("CANTOSYNC_WINDOWS_PACKAGE",&self.windows)
+            .env("CANTOSYNC_CORE",self.shared.join(if cfg!(windows){"bin/anicanto-core.exe"}else{"bin/anicanto-core"}));
         #[cfg(windows)] {use std::os::windows::process::CommandExt;cmd.creation_flags(0x08000000);}
     }
     fn rpc(&self,op:&str,params:Value)->Result<Value,String> {
@@ -338,11 +352,9 @@ async fn studio_export_logs(language:Option<String>,host:State<'_,Arc<Host>>)->R
             .set_file_name("AniCanto-debug.txt").add_filter("Text report", &["txt"]).save_file() else {
                 return Ok(json!({"cancelled":true}));
             };
-        let report=host.rpc("export-logs",json!({}))?;
-        let text=report.as_str().ok_or("The debug report could not be generated.")?;
-        let contents=format!("AniCanto {}\n{}",env!("CARGO_PKG_VERSION"),text);
-        std::fs::write(&path,contents.as_bytes()).map_err(|e|e.to_string())?;
-        Ok(json!({"path":path,"cancelled":false}))
+        let contents=host.debug_contents();
+        let (saved,recovered_location)=support_export::save(&host.root,&path,&contents)?;
+        Ok(json!({"path":saved,"cancelled":false,"recoveredLocation":recovered_location}))
     }).await.map_err(|e|e.to_string())?
 }
 

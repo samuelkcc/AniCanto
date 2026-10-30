@@ -502,7 +502,7 @@ const zh={
  'Full AI review takes longer. Original recordings are retained.':'完整 AI 覆核會增加時間，原錄音保留。',
 
  'Basic mode':'基本模式','Expert mode':'專家模式','Current mode':'目前模式','Switch to':'切換至','Welcome':'首頁','Quick guide':'使用教學','About & licences':'關於與授權',
- 'Your anime. A whole new voice.':'你嘅動畫，另一把聲音。','Hong Kong Cantonese · English · Just for fun':'香港廣東話 · English · Just for fun',
+ 'Your anime. A whole new voice.':'你嘅動畫，另一把聲音。','Hong Kong Cantonese · Mandarin · English · Just for fun':'香港廣東話 · 普通話 · English · Just for fun',
  'Welcome to your dubbing studio':'歡迎返到聲演工作室','Bring an episode. Pick a voice. Hear your characters in a new language.':'放入動畫，揀把聲，睇角色講你嘅語言。',
  'Choose an engine and subtitles. Start automatic production.':'揀引擎同字幕，一按自動製作。','A timeline, individual auditions, retakes and detailed editing.':'時間線、逐句試聽、重錄同精細編輯。',
  'Interface language':'介面語言','Enter the studio':'進入工作室','Local models & setup':'本機模型與部署','Review download plan':'檢視下載方案','Installed packages':'已下載套件',
@@ -631,3 +631,5 @@ Object.assign(zh,{"One first take; no content listening or shortening. Recovery 
 Object.assign(zh,{"Automatic processing": "自動處理", "Full AI review": "完整 AI 覆核", "Detect openings and endings": "偵測片頭／片尾", "Translate dialogue in OP / ED": "翻譯 OP／ED 中嘅對白", "Try another installed voice model": "嘗試其他已安裝配音模型", "Installed system voice fallback": "已安裝系統聲線後備", "Voice fallback options": "配音後備設定", "Full AI review adds slow frame analysis. System fallback uses installed target-language voices; the voice may differ.": "完整 AI 覆核會額外分析畫面，較慢。系統後備只用已安裝目標語聲線，音色可能不同。", "These settings apply to new work. Paused conversions keep their saved settings.": "設定套用未開始嘅工作；已暫停轉換沿用原本已儲存嘅設定。"});
 
 Object.assign(zh,{"One first take kept; only fully silent takes retry, at most twice, with no alternate or system voice substitution. Repair time adapts to measured work, capped at 5 minutes.": "首錄一次並保留；只有完全冇聲先補錄，最多兩次，唔改用後備或系統聲線；按實測工作量分配補聲時間，上限 5 分鐘。", "Keep fitting first takes. One measured timing rewrite; repair first, then optional suspect listening. Repair cap: 15 minutes; listening: 1 minute.": "保留合時首錄；實測過長可縮稿重配一次。先補聲，再局部覆聽；修復上限 15 分鐘，覆聽另限 1 分鐘。", "Up to three initial attempts and two measured timing repairs. Repair first, then broader listening. Repair cap: 30 minutes; listening: 3 minutes.": "首次最多三次，實測對時最多兩次。先補聲，再較全面覆聽；修復上限 30 分鐘，覆聽另限 3 分鐘。"});
+
+Object.assign(zh,{"Selected location unavailable. Debug report saved to:": "所選位置無法儲存，偵錯記錄已儲存至："});

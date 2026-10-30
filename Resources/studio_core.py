@@ -20,16 +20,29 @@ def catalog():
 
 def executable():
     name = 'anicanto-core.exe' if sys.platform == 'win32' else 'anicanto-core'
-    if os.environ.get('CANTOSYNC_CORE'):
-        candidate = Path(os.environ['CANTOSYNC_CORE'])
-    else:
-        candidate = HERE/'bin'/name
-        # Source checkout only. A packaged app never searches arbitrary PATH entries.
-        if not candidate.is_file() and (HERE.parent/'core/Cargo.toml').is_file():
+    candidate = HERE/'bin'/name
+    checkout = (HERE.parent/'core/Cargo.toml').is_file()
+    # Installed packages use their own policy binary. An inherited developer
+    # override must not redirect a new package to a removed older release.
+    if checkout:
+        if os.environ.get('CANTOSYNC_CORE'):
+            candidate = Path(os.environ['CANTOSYNC_CORE'])
+        elif not candidate.is_file():
             candidate = HERE.parent/'.build/core/release'/name
     if not candidate.is_file():
-        raise RuntimeError('AniCanto shared core is missing. Rebuild or repair the app package.')
+        raise RuntimeError('AniCanto shared core is missing. Rebuild or repair the app package. Checked: '+str(candidate))
     return candidate
+
+
+def diagnostic():
+    name = 'anicanto-core.exe' if sys.platform == 'win32' else 'anicanto-core'
+    bundled = HERE/'bin'/name
+    result = dict(module=str(HERE/'studio_core.py'),platform=sys.platform,bundledPath=str(bundled),bundledPresent=bundled.is_file(),inheritedOverride=os.environ.get('CANTOSYNC_CORE'),sourceCheckout=(HERE.parent/'core/Cargo.toml').is_file())
+    try:
+        chosen=executable();result.update(selectedPath=str(chosen),selectedPresent=True,bytes=chosen.stat().st_size)
+    except (OSError,RuntimeError) as error:result.update(selectedPresent=False,error=str(error))
+    return result
+
 
 def _invoke(request):
     result = subprocess.run([str(executable())], input=json.dumps(request,ensure_ascii=False),

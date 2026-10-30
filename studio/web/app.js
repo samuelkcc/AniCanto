@@ -182,7 +182,7 @@ function render(){
  paintInstallation();
 }
 function welcome(){const a=themeAssets(themeKey,welcomeVariant);return `<div class="welcome">
- <section class="welcome-art">${brand(true)}<div class="welcome-heading"><h1>${esc(t('Your anime. A whole new voice.'))}</h1><p>${esc(t('Hong Kong Cantonese · English · Just for fun'))}</p></div><div class="welcome-cover"><img src="${a.cover}" data-theme="${a.key}" data-character="assistant-${a.key}" alt="AniCanto assistant ensemble" draggable="false"></div><div class="welcome-credit">SCKC / ANIME DUBBING PLAYGROUND</div></section>
+ <section class="welcome-art">${brand(true)}<div class="welcome-heading"><h1>${esc(t('Your anime. A whole new voice.'))}</h1><p>${esc(t('Hong Kong Cantonese · Mandarin · English · Just for fun'))}</p></div><div class="welcome-cover"><img src="${a.cover}" data-theme="${a.key}" data-character="assistant-${a.key}" alt="AniCanto assistant ensemble" draggable="false"></div><div class="welcome-credit">SCKC / ANIME DUBBING PLAYGROUND</div></section>
  <section class="welcome-controls"><div class="welcome-inner">
  <div class="welcome-language"><label for="welcome-language">${esc(t('Language'))}</label><select id="welcome-language" ${initializing?'disabled':''}>${interfaceLanguageOptions(state.language)}</select></div>
  <div class="welcome-title"><h2>${esc(t('Welcome to your dubbing studio'))}</h2><p>${esc(t('Bring an episode. Pick a voice. Hear your characters in a new language.'))}</p></div>
@@ -1138,7 +1138,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='preview-cleanup'){const mode=$('input[name=cleanup-mode]:checked')?.value;if(mode==='models'||mode==='all')await cleanup(mode);return}
  if(a==='execute-cleanup'){await executePackageCleanup(b.dataset.mode,b.dataset.token);return}
  if(a==='refresh-setup-plan'){b.disabled=true;try{await refreshAfterPackageCleanup();await closeDrawer()}finally{if(b.isConnected)b.disabled=false}return}
- if(a==='export-logs'){if(exportingLogs)return;exportingLogs=true;b.disabled=true;try{const report=await invoke('studio_export_logs',{language:state.language});if(!report.cancelled)toast(t('Debug report saved')+' · '+filename(report.path));}finally{exportingLogs=false;b.disabled=false;}return}
+ if(a==='export-logs'){if(exportingLogs)return;exportingLogs=true;b.disabled=true;try{const report=await invoke('studio_export_logs',{language:state.language});if(!report.cancelled)toast(report.recoveredLocation?t('Selected location unavailable. Debug report saved to:')+' '+report.path:t('Debug report saved')+' · '+filename(report.path));}finally{exportingLogs=false;b.disabled=false;}return}
  if(a==='refresh-logs'){await refreshLogs();return}if(a==='copy-logs'){await navigator.clipboard.writeText(logs);toast(t('Copied'));return}
  if(a==='automatic-subtitles'){await setSettings({subtitleSelection:'automatic'});return}
  if(a==='close-paused'){closing=true;await pauseConversion();return}
