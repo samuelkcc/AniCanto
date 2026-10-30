@@ -1,6 +1,17 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Retained source audio":"保留原声",
+"Shared subtitle continuation":"共用字幕延续片段",
+"No assigned subtitle wording":"尚无配对字幕文字",
+"Source retention does not certify target dubbing or complete meaning coverage.":"保留原声不代表已交付目标配音，也不代表意思已完整覆盖。",
+"Open dialogue":"查看对白",
+
+"Automatic: subtitles first when readable text subtitles are available; otherwise speech first with OCR assistance. Expert mode can select a manual workflow. Saved jobs keep their source choice.":"自动：有可读文字字幕时以字幕为主；否则以语音为主、OCR 辅助。专家模式可手动选择流程；已保存任务保持原选择。",
+"Generation input error":"生成输入错误",
+"Target voice skipped for uncertain timing":"因时间未确认而跳过目标配音",
+"source audio retained":"段保留原声",
+
 "Global":"全局",
 "AI repair":"AI 修复",
 "Individual settings":"单独设置",
@@ -525,7 +536,6 @@ export const LOCALE={
     "Standard": "标准",
     "High speed": "高速",
     "Production mode": "制作模式",
-    "High speed skips all quality review and quality-driven retakes. The video may contain dubbing defects.": "高速模式跳过所有质量审查和质量驱动的重录。视频可能包含配音缺陷。",
     "Preview captions": "预览字幕",
     "Follow processing": "跟随处理",
     "Play original": "播放原片",

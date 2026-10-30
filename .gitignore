@@ -28,7 +28,8 @@ studio/src-tauri/gen/
 *.pth
 /Resources/drama3-small-server
 /docs/archive/
-/studio/web/assets/
+/studio/web/assets/*
+!/studio/web/assets/assistant-activities/
 
 # The independently developed iPad application is private and is never part of
 # the public desktop repository or release source archives.

@@ -11,7 +11,7 @@ import time
 
 ROOT=Path(__file__).resolve().parent
 DEFAULT='drama3-35b-4bit'
-REVISION='fish-drama3-5-explicit-shared-sampling'
+REVISION='fish-drama3-6-spoken-chunks'
 RATE=44100
 SAMPLING=dict(temperature=1.,top_p=.9,top_k=30)
 
@@ -37,14 +37,13 @@ def complete_clauses(text):
 
 
 def language_hint(language,style):
-    """Two textual Yue cues; Drama 3 has no hard Cantonese language ID."""
+    """Keep delivery cues short; preflight still checks every spoken chunk."""
     if language=='en':return 'Speak natural English'
-    if language=='zh':return '请用中国大陆标准普通话，保持自然情绪与参考音色，完整读出指定台词，不添加、重复或省略。'
+    if language=='zh':return '用普通话，跟原声语气，完整读出台词'
     if style in ('cantonese-yue','cantonese-yue-clauses'):
-        return '請用粵語讀出以下台詞，唔好用普通話或日文。完整讀出每個字，保留原聲語氣，唔好加字或重複。'
+        return '用香港廣東話講，跟原聲語氣，完整讀出台詞'
     if style in ('cantonese-strict','cantonese-strict-clauses'):
-        return ('用香港廣東話講，唔好日文或普通話。完整讀出指定台詞，唔好加字、重複、拖長尾音或額外停頓。'
-                '跟住參考錄音嘅音高起伏、速度同情緒講，唔好平讀，唔好照稿唸書')
+        return '用香港廣東話講，跟原聲語氣，唔好平讀'
     return '用香港廣東話講，自然語氣'
 
 
@@ -161,8 +160,13 @@ def generate(model,item,cfg):
                targetSeconds=item.get('targetSeconds'),referenceLanguage=profile.get('language'),sampling=sampling,modelVariant=selection(cfg),backend='mlx',
                deliveryStyle=item.get('deliveryStyle'),sampleRate=RATE)
     cfg['_dramaLastGeneration']=trace
-    for piece in pieces:
-        prompted=piece if item.get('deliveryStyle') in ('plain-clauses','plain-whole') else '['+cue+'] '+piece
+    from drama_prompt import plan
+    # Preflight the complete plan before the first neural call. The vendor stays pinned.
+    planned=[chunk for piece in pieces for chunk in plan(piece,'' if item.get('deliveryStyle') in ('plain-clauses','plain-whole') else cue)]
+    trace['promptPlanRevision']=__import__('drama_prompt').REVISION
+    trace['plannedParts']=len(planned)
+    for chunk in planned:
+        piece=chunk['text'];prompted=chunk['prompt']
         maximum=generation_budget(piece,item.get('targetSeconds'))
         counts={}
         for result in model.generate(text=prompted,ref_audio=reference,ref_text=profile['promptText'],stream=True,
@@ -173,13 +177,14 @@ def generate(model,item,cfg):
             if audio.size:chunks.append(audio)
             segment=int(getattr(result,'segment_idx',0) or 0)
             counts[segment]=counts.get(segment,0)+int(getattr(result,'token_count',0) or 0)
-        trace['parts'].append(dict(characters=sum(c.isalnum() for c in piece),promptedText=prompted,maximumFrames=maximum,
+        trace['parts'].append(dict(characters=sum(c.isalnum() for c in piece),promptedText=prompted,synthesisChunks=[prompted],maximumFrames=maximum,
                                   maximumSeconds=maximum*2048/RATE,segmentFrames=counts))
         trace['submittedText']=''.join(pieces[:len(trace['parts'])])
         if any(count>=maximum for count in counts.values()):
             trace['status']='generation-limit'
             raise GenerationLimit(np.concatenate(chunks) if chunks else np.zeros(0,dtype=np.float32))
     trace['status']='completed'
+    trace['submittedText']=text
     return np.concatenate(chunks) if chunks else np.zeros(0,dtype=np.float32)
 
 

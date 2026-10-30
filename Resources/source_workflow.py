@@ -26,6 +26,7 @@ def configure(cfg,meta,select_track):
  requested=cfg.get('sourceWorkflow','auto') if cfg.get('interfaceMode')=='expert' else 'auto'
  choices=TEXT_CHOICES if has_text else OCR_CHOICES
  default=cfg.get('defaultSubtitleWorkflow','subtitles-speech') if has_text else cfg.get('defaultOCRWorkflow','ocr-speech')
+ if cfg.get('sourceSelectionRevision')=='basic-source-defaults-231':default='subtitles-speech' if has_text else 'speech-ocr'
  if requested!='auto' and requested not in choices:raise ValueError('The selected content workflow does not match subtitle availability. Choose a matching path or use preference defaults.')
  effective=requested if requested in choices else default
  if has_text:
@@ -33,6 +34,7 @@ def configure(cfg,meta,select_track):
   if not external:cfg.update(subtitle=None,subtitleStream=track['index'])
  else:
   cfg.update(translationSource='audio-and-ocr',subtitleSource='burned',subtitle=None,ocr=True,ocrAutoRegion=True,sourceContentPriority='speech' if effective=='speech-ocr' else 'ocr')
+ if cfg.get('sourceSelectionRevision')=='basic-source-defaults-231':cfg['sourceSelectionMode']=requested
  cfg['sourceWorkflowEffective']=effective
  cfg['sourceWorkflowResolution']=dict(revision=cfg['sourceWorkflowRevision'],requested=requested,effective=effective,hasTextSubtitles=bool(has_text),ocrUsed=not has_text,automatic=requested=='auto' or requested not in choices,clocks='original-speech')
  return cfg

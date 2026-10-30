@@ -141,7 +141,7 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .selected-model-status p{margin:0}.selected-model-status>small{overflow-wrap:anywhere}
 .installation-badge-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* Use the approved artwork at native UI size instead of placing it inside a second coloured tile. */
-.brand-mark:has(.brand-waveform){background:transparent;color:var(--accent)}.brand-mark .brand-waveform{width:100%;height:100%}
+.brand-mark:has(.brand-wordmark){background:transparent;color:var(--accent)}.brand-mark .brand-wordmark{width:100%;height:100%}.about-project~.brand-wordmark,.row>.brand-wordmark{color:var(--accent)}
 .model-memory{display:grid;gap:10px}.model-memory-pool{display:grid;gap:5px}.model-memory-pool .download-fill{margin:0}
 .model-choice-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0}.model-choice-dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}.model-choice-dot.installed{background:#25965c}.model-choice-dot.missing{background:#cf4c55}
 
@@ -352,3 +352,28 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 @media(max-height:800px){
  .navigation button{flex-basis:36px;min-height:36px}
 }
+
+/* Desktop 257: paired preview controls, balanced rail and one assistant surface. */
+.navigation{padding-left:10px;padding-right:10px;scrollbar-gutter:stable both-edges}
+.navigation button{width:100%;align-items:center;justify-content:center}
+.preview-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:38px;flex:none;padding:2px 0 8px}
+.preview-heading h2{font-size:14px;white-space:nowrap}
+.preview-header-controls{display:flex;align-items:center;gap:14px;min-width:0}
+.preview-toggle{min-height:30px;font-size:12px;padding:4px 6px;color:var(--accent)}
+.preview-follow{display:flex;align-items:center;gap:8px;font-size:11px;white-space:nowrap}
+.preview-follow[hidden]{display:none!important}
+.preview-follow input{appearance:none;-webkit-appearance:none;position:relative;width:34px;height:20px;min-height:20px;padding:0;border-radius:12px;border:1px solid var(--line);background:var(--muted);cursor:pointer;flex:none}
+.preview-follow input:before{content:'';position:absolute;left:2px;top:2px;width:14px;height:14px;border-radius:50%;background:white;transition:transform .15s}
+.preview-follow input:checked{background:var(--accent);border-color:var(--accent)}
+.preview-follow input:checked:before{transform:translateX(14px)}
+.preview-off>.waiting-scene{padding:12px;gap:0}
+.waiting-scene .waiting-stage,.waiting-scene .waiting-stage:has(.illustrated-activity){width:min(100%,500px);max-width:500px;height:100%;max-height:100%;padding:0}
+.waiting-stage .assistant-workflow.illustrated-activity{width:100%;height:100%;max-height:100%}
+.waiting-stage .work-illustration{height:100%;max-height:100%}
+.preview-load-state{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 12px;color:var(--ink);font-size:12px;white-space:nowrap}
+.preview-load-state[hidden]{display:none}
+.player-caption-settings>summary::before,.player-caption-settings>summary::marker{content:none;display:none}
+@media(max-width:1150px){.preview-header-controls{gap:6px}.preview-toggle span{font-size:11px}.preview-follow{font-size:10px}.preview-heading h2{font-size:12px}}
+.navigation{width:96px;min-width:96px;padding-left:10px;padding-right:10px}
+.preview-heading{padding-left:12px;padding-right:12px}
+@media(max-width:1150px){.navigation{width:84px;min-width:84px}}

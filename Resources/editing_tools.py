@@ -49,6 +49,13 @@ def coverage(snapshot):
     pairs=cfg.get('_trackPairs') or [[l,e] for l in cfg.get('dubLanguages',['yue']) for e in cfg.get('selectedEngines',[cfg.get('ttsBackend','drama3')])]
     takes=snapshot.get('takes',[]);issues=snapshot.get('issues',[]);rows=[]
     for language,engine in pairs:
+        current=[x for x in snapshot.get('reportRows',[]) if x['engine']==engine and x['language']==language]
+        if current:
+            required=[x for x in current if x['reportGroup']!='reportPreserved']
+            rows.append(dict(language=language,engine=engine,expected=len(required),recordings=sum(bool(x.get('recordingAvailable')) for x in required),missing=[x['index'] for x in required if x['reportGroup']=='reportMissing'],sourcePreserved=len(current)-len(required),checking=sum(x['reportGroup']=='checking' for x in current),presenceOnly=True));continue
+        delivered=next((t for t in snapshot.get('deliveryCoverage',{}).get('tracks',[]) if t['engine']==engine and t['language']==language),None)
+        if delivered is not None:
+            rows.append(dict(language=language,engine=engine,expected=delivered['required'],recordings=delivered['available'],missing=[r['index'] for r in delivered['rows'] if not r['available']],sourcePreserved=delivered.get('sourcePreservedCount',0),presenceOnly=True));continue
         expected=[i+1 for i,c in enumerate(cues) if c.get('enabled',True) and not c.get('preserveOriginalSpeech')]
         existing={x.get('index') for x in takes if x.get('language')==language and x.get('engine')==engine and Path(x.get('audio') or '/nonexistent').is_file()}
         rows.append(dict(language=language,engine=engine,expected=len(expected),recordings=len(set(expected)&existing),missing=[i for i in expected if i not in existing]))

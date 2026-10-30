@@ -25,15 +25,13 @@ class PreviewTests(unittest.TestCase):
         self.assertIn('copy',calls[0]);self.assertNotIn('libx264',calls[0]);self.assertTrue(Path(results[0]['path']).is_file())
         self.assertEqual(studio_preview.status(self.root,self.source)['progress'],1)
         self.assertFalse(list(Path(results[0]['path']).parent.glob('*.partial.mp4')))
-    def test_hevc_mac_uses_hvc1_remux_but_compatibility_fallback_is_h264(self):
-        hevc=self.root/'hevc.mkv'
-        subprocess.run([FF,'-v','error','-y','-i',str(self.source),'-c:v','libx265','-x265-params','pools=1:frame-threads=1:log-level=error',str(hevc)],check=True,stderr=subprocess.DEVNULL)
-        m=studio_preview.prepare(self.root,hevc,TOOLS,'darwin');self.assertEqual(m['mode'],'remux');self.assertTrue(m['fallbackAvailable'])
-        meta=json.loads(subprocess.check_output([PROBE,'-v','error','-show_streams','-of','json',m['path']]))
-        self.assertEqual(meta['streams'][0]['codec_tag_string'],'hvc1')
-        safe=studio_preview.prepare(self.root,hevc,TOOLS,'darwin',True);self.assertEqual(safe['mode'],'encode');self.assertFalse(safe['fallbackAvailable'])
-        meta=json.loads(subprocess.check_output([PROBE,'-v','error','-show_streams','-of','json',safe['path']]))
-        self.assertEqual(meta['streams'][0]['codec_name'],'h264')
+    def test_mac_mkv_uses_source_reader_and_does_not_create_movie_cache(self):
+        m=studio_preview.prepare(self.root,self.source,TOOLS,'darwin')
+        self.assertEqual(m['mode'],'demand');self.assertEqual(m['path'],str(self.source.resolve()));self.assertFalse(m['fullMovieCopy'])
+        self.assertEqual(m['streamConfig']['source'],str(self.source.resolve()))
+        self.assertFalse((self.root/'cache').exists())
+        safe=studio_preview.prepare(self.root,self.source,TOOLS,'darwin',True)
+        self.assertEqual(safe['mode'],'demand');self.assertFalse((self.root/'cache').exists())
     def test_progress_is_readable_while_other_request_holds_lock(self):
         d=studio_preview.folder(self.root,self.source);d.mkdir(parents=True)
         (d/'status.json').write_text(json.dumps(dict(stage='encode',duration=100)))

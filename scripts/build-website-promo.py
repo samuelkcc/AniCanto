@@ -153,6 +153,13 @@ def text(draw, xy, value, kind, size, fill, width=None):
     draw.text(xy, value, font=font(kind, size), fill=fill, stroke_width=0)
 
 
+def right_text(draw, right, top, value, kind, size, fill):
+    """Place the visible right edge on the shared safe-area guide."""
+    face = font(kind, size)
+    bounds = draw.textbbox((0, 0), value, font=face)
+    draw.text((right - bounds[2], top), value, font=face, fill=fill)
+
+
 def render_frame(seconds, background, actor, mix, scene=None, text_opacity=None):
     frame = background.copy()
     draw = ImageDraw.Draw(frame)
@@ -177,8 +184,8 @@ def render_frame(seconds, background, actor, mix, scene=None, text_opacity=None)
     text(draw, (53, 31), 'AniCanto', 'bold', 31, (244, 239, 249, 255))
     text(draw, (55, 77), 'A LOCAL AI DUBBING STORY', 'en', 10, (160, 145, 184, 255))
     draw.line((54, 109, WIDTH - 54, 109), fill=(47, 33, 63, 255))
-    text(draw, (1010, 39), '紫音 / SHION', 'zh', 17, accent)
-    text(draw, (1029, 70), 'THE STUDIO COMPANION', 'en', 8, (160, 145, 184, 255))
+    right_text(draw, WIDTH - 54, 39, '紫音 / SHION', 'zh', 17, accent)
+    right_text(draw, WIDTH - 54, 70, 'THE STUDIO COMPANION', 'en', 8, (160, 145, 184, 255))
     # The source artwork has no facial features.
     actor_height = round(650 * (1 + .018 * math.sin(seconds * .62)))
     art = actor.resize((round(actor.width * actor_height / actor.height), actor_height), Image.Resampling.BICUBIC)
@@ -197,8 +204,8 @@ def render_frame(seconds, background, actor, mix, scene=None, text_opacity=None)
         text(draw, (56, 260), OUTRO_TITLE[1], 'zh', 64, accent)
         text(draw, (60, 370), 'YOUR STORY. ANOTHER VOICE.', 'bold', 19, (190, 222, 210, 255))
         text(draw, (60, 424), 'anicanto.com', 'bold', 34, (245, 239, 248, 255))
-        text(draw, (61, 487), 'macOS / Windows Beta', 'en', 17, (190, 178, 204, 255))
-        text(draw, (61, 517), 'iPad / iPhone — Coming soon', 'en', 17, (190, 178, 204, 255))
+        text(draw, (61, 487), 'iPad / iPhone — Coming soon', 'en', 17, (190, 178, 204, 255))
+        text(draw, (61, 521), 'Demo voices: AniCanto Desktop / Drama3', 'en', 14, (190, 178, 204, 255))
     else:
         label, title, kind, subline, note = TITLES[language]
         text(draw, (58, 150), f'0{index + 1} / {label}', 'zh', 15, accent)
@@ -233,7 +240,7 @@ def render_frame(seconds, background, actor, mix, scene=None, text_opacity=None)
         color = accent if i == index else (92, 77, 113, 255)
         draw.rectangle((bx, 689, bx + 42, 691), fill=color)
         text(draw, (bx, 667), badge, 'en', 10, color)
-    text(draw, (892, 677), 'Built with Fish Audio', 'en', 12, (164, 148, 188, 255))
+    right_text(draw, WIDTH - 54, 677, 'Built with Fish Audio', 'en', 12, (164, 148, 188, 255))
     text(draw, (60, 622), 'Same Shion. Four languages. / 同一位紫音，四種語言。', 'zh', 16,
          (190, 178, 204, 255)) if opening or closing else None
     return frame.convert('RGB')

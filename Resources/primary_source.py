@@ -105,7 +105,7 @@ def prepare(w,cfg,job,cues):
  if not enabled(cfg):return cues
  job=Path(job);kind=provenance(cfg);modern=cfg.get('sourceAllocationRevision')==ALLOCATION_REVISION
  only=__import__('source_workflow').subtitle_content_only(cfg)
- if only:__import__('subtitle_content_only').complete_windows(cfg,job,cues,w.atomic_json)
+ if only or __import__('caption_only').enabled(cfg):__import__('subtitle_content_only').complete_windows(cfg,job,cues,w.atomic_json)
  if modern:
   for c in cues:
    c.pop('sourcePrimaryFallback',None);c.pop('sourceAllocationReview',None);c.pop('subtitleContentOnlyGap',None)
@@ -130,12 +130,17 @@ def prepare(w,cfg,job,cues):
     if local:
      attach(c,'missing-speech-caption-fallback',' '.join(r['text'] for r in local),[r['id'] for r in local]);c['sourcePrimaryFallback']=True;c['primarySource']['fallbackReason']='missing-primary'
     else:c.update(sourcePolicyBlocked=True,preserveOriginalSpeech=True,originalSpeechReason='source-content-unavailable')
+  __import__('target_delivery').prepare(cfg,cues)
+  __import__('caption_only').apply(cfg,job,cues,w.atomic_json)
   w.atomic_json(job/'source-policy.json',dict(revision=REVISION,kind='speech-primary',workflow=cfg.get('sourceWorkflowEffective'),primaryFallbacks=[i+1 for i,c in enumerate(cues) if c.get('sourcePrimaryFallback')],unresolved=[i+1 for i,c in enumerate(cues) if c.get('sourcePolicyBlocked')],clocksChanged=False));return cues
  # Legacy OCR comparisons remain frozen. New OCR-first requests explicitly
  # choose OCR primary content, with original speech as the auxiliary source.
  if kind=='ocr-and-speech':
   for c in cues:
-   attach(c,kind,c.get('japanese') or c.get('text',''));c['primarySource']['language']=cfg.get('sourceLanguage','ja')
+   attach(c,'ocr-primary' if c.get('subtitleClockFallbackID') else kind,c.get('subtitleHint','') if c.get('subtitleClockFallbackID') else c.get('japanese') or c.get('text',''))
+   if not c.get('subtitleClockFallbackID'):c['primarySource']['language']=cfg.get('sourceLanguage','ja')
+  __import__('target_delivery').prepare(cfg,cues)
+  __import__('caption_only').apply(cfg,job,cues,w.atomic_json)
   w.atomic_json(job/'source-policy.json',dict(revision=REVISION,kind=kind,unresolved=[],clocksChanged=False));return cues
  owners={};by_id={r['id']:r for r in records};assigned={i:[] for i in range(len(cues))}
  for record in records:
@@ -223,6 +228,8 @@ def prepare(w,cfg,job,cues):
     c['primarySource']['allocationMethod']='full-caption-overlap-fallback'
     c['sourceAllocationReview']=True
     c['reviewNote']=(c.get('reviewNote','')+' 字幕按主要原聲時段保留全文；跨句分配未確認，請覆核聲畫。').strip()
+ __import__('target_delivery').prepare(cfg,cues)
  gaps=[dict(id=row['id'],start=row['start'],end=row['end'],text=row['text'],reason='No corroborated speech clock; subtitle retained for review, no invented timing') for row in records if not owners[row['id']]]
+ __import__('caption_only').apply(cfg,job,cues,w.atomic_json)
  w.atomic_json(job/'source-policy.json',dict(revision=REVISION,workflowRevision=cfg.get('sourceWorkflowRevision'),subtitleContentOnly=only,preservedSubtitleGaps=[i+1 for i,c in enumerate(cues) if c.get('subtitleContentOnlyGap')],kind=kind if records else 'asr',captionRows=len(records),primaryFallbacks=[i+1 for i,c in enumerate(cues) if c.get('sourcePrimaryFallback')],allocationRevision=cfg.get('sourceAllocationRevision','legacy-1'),fallbackTurns=sorted(set(fallbacks)),continuationTurns=[i+1 for i,c in enumerate(cues) if c.get('originalSpeechReason')=='subtitle-continuation'],unresolved=sorted(set(unresolved)),subtitleClockGaps=gaps,clocksChanged=False,semanticQualityCertified=False))
  return cues

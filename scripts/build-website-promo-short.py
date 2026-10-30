@@ -31,7 +31,7 @@ def main():
         script = ROOT / 'scripts/website-promo-short-copy.json'
     copy = json.loads(script.read_text())
     if copy.get('theme') == 'anime-language-learning':
-        art.ACTOR = ROOT / 'website/assets/web-shion-studio-v2.png'
+        art.ACTOR = ROOT / 'website/assets/web-shion-film-v3.png'
         art.INTRO_TITLE = ['從喜歡的動畫，', '學懂一句廣東話。']
         art.OUTRO_TITLE = ['每天一句，', '從興趣開始。']
         art.INTRO_SUBTITLE = 'ANIME. CANTONESE. YOUR OWN PACE.'

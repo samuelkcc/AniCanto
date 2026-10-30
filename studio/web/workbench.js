@@ -5,6 +5,8 @@ export function activity(row,now=Date.now()/1000){
 }
 export function reviewMatches(item,filter){
  if(filter==='all')return true;
+ if(filter.startsWith('report'))return item.reportGroup===filter;
+ if(filter==='issues'&&item.reportGroup)return item.reportGroup==='reportMissing';
  if(filter==='checked'||filter==='deferred')return item.triage===filter;
  if(filter==='issues')return item.triage!=='checked'&&item.triage!=='deferred';
  return item.category===filter&&item.triage!=='checked';

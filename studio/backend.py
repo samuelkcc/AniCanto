@@ -370,7 +370,7 @@ class Studio:
             if patch.get('normalRepairPolicy','missing-only') not in ('missing-only','verified'):raise ValueError('Unknown normal repair policy.')
             if patch.get('speechAcceleration','auto') not in ('auto','cpu'):raise ValueError('Unknown speech acceleration mode.')
             if patch.get('independentAsrBackend','auto') not in ('auto','mlx','cpu'):raise ValueError('Unknown independent ASR backend.')
-            if (any(k in patch and patch[k]!=base.get(k) for k in ('productionMode','workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap'))
+            if (any(k in patch and patch[k]!=base.get(k) for k in ('productionMode','workMode','fullAIReview','aiAutoFix','limitSpeechDuration','contentChecks','repairExcessiveAudibleOverlap','skipNonDialogueCaptions'))
                     and any(r.get('status')=='running' and r.get('request') for r in self.store.queue)):
                 raise ValueError('Production mode is locked until processing finishes.')
             if 'failedVoicePolicy' in patch and any(r.get('status')=='running' and r.get('request') for r in self.store.queue):
@@ -557,6 +557,7 @@ class Studio:
                             applied=all(index<len(rendered) and rendered[index].get('editorDecisions',{}).get(key)==value for index,key,value in choices)
                             if applied:break
                     snapshot.setdefault('reviewState',{})['userChoicesApplied']=applied
+                    for record in snapshot.get('reportRows',[]):record['pendingExport']=bool(record.get('pendingExport') and not applied)
                 except ValueError:pass
             snapshot['rowID']=row['id']
             from review_workbench import project

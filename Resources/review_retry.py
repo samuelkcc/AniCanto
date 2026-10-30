@@ -19,11 +19,12 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
  root=Path(root).resolve();path=Path(review_path).resolve()
  if not path.is_relative_to(root/'jobs') or not path.is_file():raise ValueError('The saved review is unavailable.')
  review=read(path,{})
- if review.get('config',{}).get('productionMode')!='normal':raise ValueError('Automatic review retry requires Normal mode.')
+ if review.get('config',{}).get('productionMode')!='normal' and not __import__('basic_flow').enabled(review.get('config',{})):raise ValueError('Automatic review retry requires Normal mode.')
  if mode not in ('pending','all'):raise ValueError('Unknown review retry mode.')
  targets={}
  for issue in snapshot.get('issues',[]):
   if mode=='pending' and issue.get('repairEligible') is False:continue
+  if mode=='pending' and issue.get('reportGroup') not in (None,'reportMissing'):continue
   if issue.get('kind')=='name-term-mismatch':continue
   if issue.get('status')=='user-choice-saved' or (mode=='pending' and issue.get('triage') in ('checked','deferred')):continue
   if type(issue.get('index')) is int:targets.setdefault(issue.get('language','yue')+':'+issue.get('engine',''),[]).append(issue['index'])
@@ -59,6 +60,8 @@ def submission(root,review_path,snapshot,mode='pending',saved_draft=None):
   cues=edited
  if mode=='pending' and not any(targets.values()) and not any(c.get('editorDecisions') for c in cues):raise ValueError('There are no reported lines or saved changes to repair.')
  settings=copy.deepcopy(review['config'])
+ # An explicit new repair version can use the corrected target gate; the old request stays frozen.
+ settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
  if saved_draft and 'voiceProfiles' in saved_draft.get('settings',{}):settings['voiceProfiles']=copy.deepcopy(saved_draft['settings']['voiceProfiles'])
  return dict(id=uuid.uuid4().hex,review=str(path),settings=settings,automaticReviewRetry=dict(revision=REVISION,mode=mode,fingerprint=fingerprint(review),targets={k:sorted(set(v)) for k,v in targets.items()},donors=donors,submittedCues=cues))
 
@@ -72,7 +75,7 @@ def render(w,request,draft):
  folder.mkdir(parents=True,exist_ok=False)
  cfg=dict(copy.deepcopy(review['config']),**draft.get('settings',{}));cfg.update({k:request[k] for k in ('storage','port','executable','ffmpeg','ffprobe') if k in request})
  cfg.pop('_trackControl',None);cfg.pop('editorCache',None);cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
- cfg.update(productionMode='normal',editorRender=False,scriptLocked=True,automaticDurationRewrite=True,exportFolder=review['config'].get('exportFolder',''),_reviewRetry=spec,_reviewRetryToken=ident)
+ cfg.update(productionMode='normal',editorRender=False,scriptLocked=True,automaticDurationRewrite=bool(cfg.get('limitSpeechDuration')) if __import__('basic_flow').enabled(cfg) else True,exportFolder=review['config'].get('exportFolder',''),_reviewRetry=spec,_reviewRetryToken=ident)
  for name in ('cues.json','japanese-analysis.json','japanese-original.wav','source.srt','subtitle-context.json','subtitle-context-meta.json','natural-scene-boundaries.json','nonverbal-classification-v2.json'):
   p=base/name
   if p.is_file():shutil.copy2(p,folder/name)
@@ -98,6 +101,7 @@ def track_cues(cfg,cues,engine,language):
  result=copy.deepcopy(cues)
  for n,cue in enumerate(result):
   index=cue.get('reviewIndex',n)+1
+  if index in pending:__import__('target_delivery').prepare(cfg,[cue])
   # Explicit saved choices/manual audio remain protected even when reported.
   if cue.get('editorAudio') or cue.get('preserveOriginalSpeech'):continue
   if index in pending:

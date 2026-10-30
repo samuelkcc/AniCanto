@@ -149,7 +149,7 @@
       "maximumRetrievedExamples": 4,
       "method": "bounded lexical retrieval; no external corpus copied"
     },
-    "purchase": "all in-app features are free; existing entitlement gates external media export and sharing only",
+    "purchase": "Only mobile Expert entry requires purchase. Basic, Reading, unlimited Learning and all exports are free.",
     "acceptance": "8 final targeted M4 tests pass, including an eight-combination execution matrix; no real-model or whole-film acceptance for revision 191",
     "duration": {
       "off": "first audible take in full at fixed source onset; overlap; original sound retained; held final frame for an output tail; source range unchanged",
@@ -1163,7 +1163,7 @@
     },
     "mandatoryPresence": "Missing, silent, or damaged required audio receives bounded fill independent of optional zero. At most three total calls under the new shared presence rule, including one selected-engine generic fill if needed. Never retry a voiced take just to use this allowance.",
     "expert": "Same baseline plus explicit optional controls; changing UI does not change a frozen job.",
-    "sourcePriority": "Readable authored subtitles are primary by default. Source speech supplies onset/end; OCR does not set the speech clock.",
+    "sourcePriority": "Basic and Expert Automatic: readable selected text subtitles > speech; otherwise speech > OCR. Expert retains four explicit manual flows. A controls meaning; B is auxiliary.",
     "draftBudget": {
       "revision": "language-aware-first-draft-budget-1",
       "target": "Original speech interval; do not enlarge the draft for an allowed overlap.",
@@ -1214,11 +1214,12 @@
         "executionTested": true,
         "installed": true,
         "wholeFilmAccepted": false,
-        "note": "Mac and Windows packages installed in dist. 206 focused checks and four-language browser controls pass. Real FFmpeg full-tail export passes with synthetic PCM. Actual Windows execution, optional ASR plus neural retake, and whole-film listening remain open.",
-        "build": 253,
-        "version": "0.25.0",
+        "note": "Mac and Windows are installed in dist. One real MLX candidate, source-presence/report execution tests and four-language UI checks pass. Native Windows inference and whole-film acceptance remain open.",
+        "build": 255,
+        "version": "0.25.2",
         "frozenRevision": "basic-first-audible-253",
-        "evidence": "docs/DESKTOP-WORKFLOW-0.25.0.md"
+        "evidence": "docs/DESKTOP-TARGET-DELIVERY-0.25.2.md",
+        "targetDeliveryRevision": "caption-clock-target-255"
       },
       "iPad": {
         "implemented": true,
@@ -1235,15 +1236,16 @@
         "executionTested": true,
         "installed": true,
         "wholeFilmAccepted": false,
-        "build": 225,
+        "build": 227,
         "frozenRevision": "standard-first-audible-223",
         "note": "Eighteen native cases and final three boundary cases pass. Actual E4B, Whisper/Cosy, MLX, and native export have bounded evidence. Real optional overlap ASR/TTS, Apple system-translation guidance, and whole-film acceptance remain open.",
         "evidence": "mobile/Validation/iphone-workflow-build224-2026-10-28.json",
         "executionEvidenceBuild": 224,
-        "interfaceEvidence": "mobile/Validation/iphone-interface-build225-2026-10-29.json"
+        "interfaceEvidence": "mobile/Validation/iphone-portrait-introduction-build227-2026-10-29.json"
       }
     },
-    "evidence": "Per-platform receipts separate implementation, execution tests, installation, and whole-film acceptance. Desktop253 has bounded execution evidence; whole-film acceptance remains open."
+    "evidence": "Per-platform receipts separate implementation, execution tests, installation, and whole-film acceptance. Desktop253 has bounded execution evidence; whole-film acceptance remains open.",
+    "purchase": "Only mobile Expert entry requires purchase. Basic, Reading, unlimited Learning and all exports are free."
   },
   "mobileWorkflow223": {
     "revision": "standard-first-audible-223",
@@ -1273,7 +1275,7 @@
     "guideItem": "learningLineActions",
     "platforms": {
       "iPad": "Normal228 installed and launched on M4. Five native cases pass. Actual Cosy English and GPT MLX Cantonese use the same0.392375second source reference. Apple translation quality and human gesture acceptance remain open.",
-      "iPhone": "Shared source updated; phone owner pickup and separate acceptance pending.",
+      "iPhone": "Normal227 installed. Five Learning cases pass, including actual Cosy English and GPT MLX Cantonese with a0.7029375second reference. Guide11 includes the shared Learning item. Human translation and listening acceptance remain open.",
       "desktop": "Review and alignment pending. No desktop behaviour or installation claim."
     }
   },
@@ -1291,11 +1293,1230 @@
     "preservation": "Reuse verified and partial files. Preserve resume data, selected engines, frozen jobs, and spent budgets.",
     "gpt": "Installed or imported packages only. The model release is an unpublished draft. Source and notice checks remain pending.",
     "platforms": {
-      "iPhone": "Source implemented. Consent passes. Final queue tests and normal227 install pending.",
-      "iPad": "Shared source implemented. Adoption and installation pending after normal228.",
+      "iPhone": "Normal227 installed. Consent rejection, exact approval reuse, five-group order and cancellation fixtures pass. Full clean-user download remains unaccepted.",
+      "iPad": "Shared source ready. Normal M4229 has not consumed the new first-setup helper.",
       "desktop": "No change. Separate platform deployment remains."
     },
     "wholeDownloadAccepted": false,
-    "evidence": "docs/IPHONE-PORTRAIT-INTRO-227.md"
+    "evidence": "docs/IPHONE-PORTRAIT-INTRO-227.md",
+    "iPad234": "Normal234 installed. Completed phone helper consumed. Native five-group planner, serial skip and cancellation pass. No fresh-user full-download or consent UI acceptance claim.",
+    "supersededBy": "mobileDefaultModelPreparation245; retain227 evidence as historical"
+  },
+  "mobilePurchaseAccess229": {
+    "decisionDate": "2026-10-29",
+    "paid": [
+      "Expert entry"
+    ],
+    "free": [
+      "Basic",
+      "Reading",
+      "Learning without dialogue limit",
+      "playback",
+      "export",
+      "save",
+      "share"
+    ],
+    "identity": "Keep the existing non-consumable product identifier.",
+    "debug": "Simulated unpaid overrides the receipt. iPad test menu moves to About and licences.",
+    "supersedes": [
+      "export-only purchase",
+      "Expert plus export purchase"
+    ],
+    "iPad": "Normal229 installed and launched. Two isolated native access/menu tests pass; guide11 bytes are exact. User acceptance pending.",
+    "iPhone": "Normal227 installed with exact guide11. Sixteen capability/access combinations pass. Both actual unpaid Expert entries open upgrade. Basic remains usable. No financial transaction.",
+    "desktop": "No purchase change.",
+    "workflowEffect": "No frozen request, source, first take, repair budget or model change.",
+    "evidence": "mobile/Validation/ipad-access-229-2026-10-29.json",
+    "guideRevision": "workflow-controls-guide-11-expert-access"
+  },
+  "phonePortraitIntroduction227": {
+    "installed": true,
+    "tested": true,
+    "filmSHA256": "6e63082b4cd1b3b6e7d6f3929dad2a9ec3d0b711fb29201cabc39f4d4b846d28",
+    "guideRevision": "workflow-controls-guide-11-expert-access",
+    "reading": "Quick explicit language selection and aligned phone playback controls. No subtitle or speech-rule migration.",
+    "automaticWorkflowChanged": false,
+    "receipt": "mobile/Validation/iphone-portrait-introduction-build227-2026-10-29.json"
+  },
+  "basicSourceDefaults231": {
+    "revision": "basic-source-defaults-231",
+    "date": "2026-10-29",
+    "basic": "No manual source menu. Detect readable selected embedded or external text subtitles.",
+    "withReadableTextSubtitles": "subtitles-speech",
+    "withoutReadableTextSubtitles": "speech-ocr",
+    "expertChoices": [
+      "automatic",
+      "speech-subtitles",
+      "subtitles-speech",
+      "speech-ocr",
+      "ocr-speech"
+    ],
+    "automatic": "Use the same fixed detection rule as Basic, independent of legacy preference overrides.",
+    "freeze": [
+      "requested selection mode",
+      "effective source workflow",
+      "selection revision"
+    ],
+    "preserve": "Saved effective flows, source content, recordings, first takes and spent budgets remain unchanged.",
+    "guideRevision": "workflow-controls-guide-12-source-auto",
+    "guideItem": "sourceWorkflowDefaults",
+    "iPad": "Normal234 installed, including completed231 defaults and Expert fallback. Seventeen host source checks and native core coverage pass; full new-user film acceptance remains open.",
+    "iPhone": "Normal233 installed. Actual native subtitle import/capture/resolve and direct manual/Automatic controls pass. Full neural prepare and whole-film acceptance remain pending.",
+    "desktop": "New-job Automatic rule implemented and installed in255. Basic has no source menu; Expert has Automatic plus four manual choices. Frozen jobs remain unchanged. Focused routing tests pass."
+  },
+  "targetDelivery255": {
+    "revision": "caption-clock-target-255",
+    "rules": [
+      "WF-02",
+      "WF-03",
+      "WF-09",
+      "WF-10",
+      "WF-13",
+      "WF-14"
+    ],
+    "newJobsOnly": true,
+    "preflight": "Each actual engine chunk contains approved spoken target text. Reject instruction-only chunks before inference.",
+    "clock": "A valid owned subtitle script stays required when only the source clock is uncertain. Preserve and label the existing clock.",
+    "fallback": "Use the selected engine and the existing bounded presence budget. No implicit cross-engine or system voice.",
+    "continuation": "Retain caption ownership. Do not duplicate shared text. Report source retention without certifying target or meaning coverage.",
+    "report": "Read-only current-track coverage separates source preservation, missing target dialogue, known generation input defects and unchecked language quality.",
+    "existing": "No change to saved requests, movies, recordings or consumed budgets. A manual repair creates a separate version.",
+    "desktop": {
+      "version": "0.25.2",
+      "build": 255,
+      "implemented": true,
+      "tests": "210 focused regression cases pass, including22 new cases. Separate14 permissions,4 explicit repair draft and18 recovery cases pass. One actual MLX candidate and four-language report/browser checks pass.",
+      "wholeFilmAccepted": false,
+      "installed": true,
+      "packaged": true,
+      "windowsNativeExecution": false,
+      "evidence": "docs/DESKTOP-TARGET-DELIVERY-0.25.2.md"
+    },
+    "iPad": {
+      "state": "Owner notified. Current subtitle-first native source already has a labelled subtitle clock fallback. Legacy keepOriginal generation and coverage guards need owner review.",
+      "installedCorrection": false
+    },
+    "iPhone": {
+      "state": "Owner notified. Separate source review, native tests and installation pending.",
+      "installedCorrection": false
+    }
+  },
+  "originalDeliveryReport233": {
+    "revision": "original-delivery-report-233",
+    "meaning": "Preserved source audio does not confirm target-language delivery.",
+    "visibility": "Keep known non-OP/ED dialogue visible, including automatic keepOriginal fallback. Show saved processing issue and source-audio label.",
+    "status": "Do not infer user choice from keepOriginal alone. Unconfirmed ASR is not confirmed wrong speech.",
+    "permissions": "Report display cannot start generation, replace takes, grant repair, change source gates, or refill allowances.",
+    "guideRevision": "workflow-controls-guide-13-original-delivery",
+    "guideItem": "originalDelivery",
+    "iPhone": "Normal233 installed. Actual missing-audio finalizer/report fixture passes with saved attempts/time unchanged. Direct controls pass. Whole-film target coverage remains unaccepted.",
+    "iPad": "Shared presentation source prepared; native package and installation pending.",
+    "desktop": "Separate255 coverage correction belongs to its owner; no parity inferred."
+  },
+  "phoneSourceControls233": {
+    "build": 233,
+    "installed": true,
+    "guide": "workflow-controls-guide-13-original-delivery",
+    "defaults": "Basic and Expert Automatic use shared231 detection. Expert keeps four manual flows. Fallback factory is first audible.",
+    "ui": "Direct imports in Basic/Expert and Reading. Preview starts closed; filename eye toggles it. Preferences removes duplicate Models/Production defaults; drawer keeps them.",
+    "tests": "Seven passing native invocations across five distinct cases. Twenty final portrait captures inspected. Direct controls pass.",
+    "preserve": "One Piece checkpoint remains exact. No conversion, model change, M4 input or budget refill.",
+    "pending": "Completed iPad234 core is adopted in normal phone241 with separate native acceptance. Whole-film target coverage, audio presence and human listening parity remain open. No whole-film parity claim."
+  },
+  "nativeTargetDelivery234": {
+    "revision": "caption-clock-target-234",
+    "scope": "New mobile projects; old frozen rules and spent counters remain.",
+    "preservationField": "originalPreservationReason",
+    "preservationValues": [
+      "user-selected-source",
+      "source-recognition-unconfirmed",
+      "missing-target-after-bounded-fill"
+    ],
+    "requiredContent": "Only automatic source-recognition uncertainty can release its original-only gate when reliable selected authored/OCR meaning exists and no take exists. Manual, OP/ED, no-speech and unknown-old intent remain.",
+    "artifact": "Known source waveform SHA cannot qualify as generated target audio. No counter refund.",
+    "genericReadback": "Explicit content-check permission only; independent of stored mode label or strict duration.",
+    "coverage": "Disclose source retention, requested target, actual audio presence and uncertified language separately. Manual original differs from unknown original.",
+    "cache": {
+      "eligible": "Bundled CC0 only; exact model pins, waveform SHA and reference text.",
+      "storage": "CPU-only in-process arrays; no private-reference disk cache.",
+      "maxEntries": 6,
+      "maxBytes": 8388608,
+      "measuredColdSeconds": 49.987115025520325,
+      "measuredWarmSeconds": 3.7529799938201904,
+      "sameOutputSHA": true,
+      "wholeFilmSpeedCertified": false
+    },
+    "iPad": {
+      "implemented": true,
+      "nativeUniqueCases": 15,
+      "nativeInvocations": 19,
+      "installed": true,
+      "wholeFilmAccepted": false,
+      "evidence": "mobile/Validation/ipad-target-delivery-234-2026-10-29.json",
+      "launchVerified": true,
+      "preservation": "Three actual paused/review checkpoint files remain byte-identical after installation and launch."
+    },
+    "iPhone": {
+      "implemented": true,
+      "nativeUniqueCases": 15,
+      "nativeInvocations": 15,
+      "nativeFailures": 0,
+      "nativeWallSeconds": 80.152,
+      "installed": true,
+      "launchVerified": true,
+      "build": 241,
+      "wholeFilmAccepted": false,
+      "evidence": "mobile/Validation/iphone-target-delivery-241-2026-10-29.json",
+      "preservation": "Two saved job folders with53files each remain byte-identical after installation and launch. The saved One Piece checkpoint keeps its recorded SHA256 and its spent source-window attempts. Only the StoreKit polling timestamp advances in preferences.",
+      "cachePair": "One warm reuse returns a byte-identical0.97second recording and lowers reference open time from1.228to0.654seconds in a process that already held the Cosy model. This is not cold preparation and not whole-film speed evidence.",
+      "productCopy": "Operation guide4 and control guide15 stay exact. No locale string change.",
+      "phoneRetention": "The inline voice fallback selector and the239 duplicate-entry fix stay. Purchase gating and upgrade layout stay unchanged."
+    },
+    "desktop": "Desktop255 adapter and delivery corrections have independent receipts. No native parity claim.",
+    "guideRevision": "workflow-controls-guide-13-original-delivery"
+  },
+  "basicControls235": {
+    "revision": "basic-controls-235",
+    "guideRevision": "workflow-controls-guide-14-basic-fallback",
+    "guideItem": "failedVoiceFallback",
+    "scope": "Basic and Expert expose the existing final fallback choice. Preferences and production controls share the stored value.",
+    "factory": "first-take",
+    "freeze": "New jobs freeze the selected policy. Resume retains the saved policy and spent budgets.",
+    "unchanged": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "permissions": "No optional repair, readback, cross-engine or system-voice permission is granted by control visibility.",
+    "assistant": "The existing idle/work preview entry is first in Preferences.",
+    "readingIntroduction": [
+      "Capability reason or voluntary introduction",
+      "Reading functions",
+      "Start steps and explicit Reading entry"
+    ],
+    "iPad": {
+      "build": 235,
+      "implemented": true,
+      "nativeTested": true,
+      "installed": true,
+      "wholeFilmAccepted": false,
+      "launchVerified": true,
+      "receipt": "mobile/Validation/ipad-basic-controls-235-2026-10-29.json",
+      "nativeScope": "Four layout/capability/frozen-policy cases. Actual new Basic neural conversion with a changed policy remains untested."
+    },
+    "iPhone": {
+      "build": 236,
+      "implemented": true,
+      "nativeTested": true,
+      "installed": true,
+      "launchVerified": true,
+      "receipt": "mobile/Validation/iphone-basic-upgrade-build236-2026-10-29.json",
+      "scope": "Basic fallback, selected new-job argument, shared Preferences helper and guide14. Compact assistant placement remains separate.",
+      "wholeFilmAccepted": false
+    },
+    "desktop": "Existing fallback execution remains; guide14 copy adoption needs its own receipt."
+  },
+  "readingIntroOverview237": {
+    "revision": "reading-intro-overview-237",
+    "informationOnly": true,
+    "pages": [
+      "Capability reason and Reading alternative",
+      "Basic studio features",
+      "Expert studio features"
+    ],
+    "finalAction": "Enter Reading mode",
+    "access": "The overview does not change hardware or purchase gates. Basic is free; Expert requires its existing one-time purchase.",
+    "sharedSource": "ReadingIntroContent in mobile/AniCantoApp/ReadingExperience.swift and the four shared locale files",
+    "workflowEffect": "No translation, repair, generation, export, frozen policy or budget changes.",
+    "guideRevision": "workflow-controls-guide-14-basic-fallback",
+    "iPad": {
+      "build": 237,
+      "implemented": true,
+      "nativeTested": true,
+      "installed": true,
+      "launchVerified": true,
+      "receipt": "mobile/Validation/ipad-reading-overview-237-2026-10-29.json"
+    },
+    "iPhone": {
+      "build": 236,
+      "implemented": true,
+      "nativeTested": true,
+      "installed": true,
+      "launchVerified": true,
+      "captures": 25,
+      "localeMismatches": 0,
+      "receipt": "mobile/Validation/iphone-basic-upgrade-build236-2026-10-29.json"
+    },
+    "desktop": "No desktop page change is required.",
+    "localizedCopySHA256": "7a33a12ddc1112aa22af6edad2a66b9677e0843751917aa0571e863226c529ae",
+    "parityEvidence": ".build/reading237/phone-signed-copy-check.json and .build/iphone236/reading-content-parity.json; separate native and installed platform receipts remain."
+  },
+  "phoneUpgradeLayout236": {
+    "build": 236,
+    "presentationOnly": true,
+    "navigation": "Back dismisses page1. Previous moves back. Next advances and stops at the last page.",
+    "purchase": "Full content width with the existing live price.",
+    "restore": "Upper-right purple underlined text.",
+    "productAndEntitlementChanged": false,
+    "transactionsTested": false,
+    "installed": true,
+    "nativeTested": true,
+    "directNavigationTested": true,
+    "receipt": "mobile/Validation/iphone-basic-upgrade-build236-2026-10-29.json"
+  },
+  "applicationUserGuide": {
+    "revision": "application-user-guide-17-phone-reset-location",
+    "source": "docs/APPLICATION-USER-GUIDE.json",
+    "sha256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
+    "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+    "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+    "maintenance": "docs/USER-GUIDE-MAINTENANCE.md",
+    "platformFilter": "chapter and section",
+    "locales": [
+      "en",
+      "zh-HK",
+      "zh-CN",
+      "ja"
+    ],
+    "chapters": 30,
+    "consumers": {
+      "desktop": {
+        "version": "0.25.7",
+        "build": 260,
+        "sourceIntegrated": true,
+        "renderedLocales": 4,
+        "chapters": 20,
+        "installed": true,
+        "nativePackageValidationPending": false,
+        "packaged": true,
+        "macStartup": true,
+        "signatureVerified": true,
+        "webFiles": 161,
+        "installedStartup": true,
+        "receipt": ".build/timing260/install-receipt.json",
+        "manualRevision": "application-user-guide-13-caption-only-hk",
+        "manualSHA256": "177444f37d21f694be7138fa846e9c7116dc987e81deb7240e995fc9f57bbec9",
+        "latestSourcePendingNextPackage": false,
+        "latestChangeScope": "Confirmed caption-only source gate, contextual Hong Kong first-draft examples, and retired desktop speed-warning removal. Browser UI checked in four languages; no user-film inference.",
+        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "candidate257": {
+          "version": "0.25.4",
+          "build": 257,
+          "manualRevision": "application-user-guide-4",
+          "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "installed": true,
+          "validation": ".build/preview257/verification.json"
+        },
+        "candidate258": {
+          "version": "0.25.5",
+          "build": 258,
+          "manualRevision": "application-user-guide-7-desktop-locales",
+          "manualSHA256": "eb6531da6e955f09ebc2c25fa8667775f448b11f98eb18f3d24477d725d02aa9",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "installed": true,
+          "validation": ".build/desktop258/verification.json",
+          "signatureVerified": true,
+          "installedStartup": true
+        },
+        "priorPackage259": {
+          "version": "0.25.6",
+          "build": 259,
+          "manualRevision": "application-user-guide-9-review-classification",
+          "manualSHA256": "a2b388c52de3491d2f72efbb0948900bb0ad90152afd8b1462a61731836799eb",
+          "controlGuideRevision": "workflow-controls-guide-16-report-classification",
+          "controlGuideSHA256": "8074fd652f6452f4fd8bb96eb00203915513a967f52063c308d6a130efc150ac",
+          "receipt": ".build/report259/install-receipt.json",
+          "installed": true
+        },
+        "nativeRenderingVerified": false
+      },
+      "ipad": {
+        "build": 250,
+        "sourceIntegrated": true,
+        "renderedLocales": 0,
+        "chapters": 17,
+        "packaged": true,
+        "installed": true,
+        "launchVerified": true,
+        "manualRevision": "application-user-guide-16-ipad-whisper-recovery",
+        "manualSHA256": "9149ef641bcc9f7236e39a0d6765024cb9b2774cee03ac8c6036424e8af87846",
+        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "receipt": "mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json",
+        "latestSourcePendingNextPackage": true,
+        "nativeRenderingVerified": false,
+        "previousRenderingEvidence": "Four locales were checked before guide8. No new native rendering check occurs for245.",
+        "reportRenderedLocales": 4,
+        "queueRenderedLocales": 4
+      },
+      "iphone": {
+        "build": 250,
+        "sourceIntegrated": true,
+        "renderedLocales": 0,
+        "chapters": 17,
+        "packaged": true,
+        "installed": true,
+        "launchVerified": true,
+        "manualRevision": "application-user-guide-17-phone-reset-location",
+        "manualSHA256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
+        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json",
+        "status": "Normal250 installs and launches. Direct zh-HK reset placement, confirmation and Cancel checks pass. Exact guide17/control19 are packaged. Full guide rendering is not checked.",
+        "priorPackage239": {
+          "build": 239,
+          "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "receipt": "mobile/Validation/iphone-assistant-manual-239-2026-10-29.json",
+          "status": "Normal239 installed and launched. Final manual4/control15 native rendering, direct search/navigation and saved-job/preference checks pass."
+        },
+        "latestSourcePendingNextPackage": false,
+        "sourceManualRevision": "application-user-guide-17-phone-reset-location",
+        "sourceManualSHA256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
+        "sourceControlRevision": "workflow-controls-guide-19-caption-only-hk",
+        "sourceControlSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "renderedCopyRevision": null,
+        "nativePackageValidationPending": false,
+        "priorPackage241": {
+          "build": 241,
+          "manualRevision": "application-user-guide-4",
+          "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "receipt": "mobile/Validation/iphone-target-delivery-241-2026-10-29.json"
+        },
+        "candidate243": {
+          "build": 243,
+          "manualRevision": "application-user-guide-6-phone-playlist",
+          "manualSHA256": "6a82ed2669686385842ce97f5f7c5a43a064993f26e88eb31b3c786f00ba56eb",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "packaged": true,
+          "installed": true,
+          "receipt": "mobile/Validation/iphone-playlist-drawer-243-2026-10-29.json",
+          "launchVerified": true
+        },
+        "priorPackage242": {
+          "build": 242,
+          "manualRevision": "application-user-guide-4",
+          "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "receipt": "mobile/Validation/iphone-recovered-state-242-2026-10-29.json"
+        },
+        "priorFourLocaleNativeEvidence": {
+          "manualRevision": "application-user-guide-4",
+          "receipt": "mobile/Validation/iphone-assistant-manual-239-2026-10-29.json"
+        },
+        "priorPackage243": {
+          "build": 243,
+          "manualRevision": "application-user-guide-6-phone-playlist",
+          "manualSHA256": "6a82ed2669686385842ce97f5f7c5a43a064993f26e88eb31b3c786f00ba56eb",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "receipt": "mobile/Validation/iphone-playlist-drawer-243-2026-10-29.json",
+          "status": "Normal243 installed. Direct zh-HK drawer, playlist/player and manual navigation/search pass. Four-language values, references and platform scope pass source checks; no new four-locale native suite is claimed."
+        },
+        "priorPackage245": {
+          "build": 245,
+          "manualRevision": "application-user-guide-8-mobile-default-models",
+          "manualSHA256": "d5d9664c370284180ce4cb2a3a6f10089030d35f0442462312a332b60576e4e5",
+          "controlGuideRevision": "workflow-controls-guide-15-fallback-location",
+          "controlGuideSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+          "receipt": "mobile/Validation/iphone-default-models-245-2026-10-29.json",
+          "status": "Normal245 installed and launched. Direct zh-HK Models and guide8 setup content pass. The lower chapter row opens after a touch drag; its original remote hit behavior needs separate review. No new four-locale native suite is claimed."
+        },
+        "reportRenderedLocales": 4,
+        "nativeRenderingVerified": false,
+        "laterCounterpartSource": "Mobile caption-only and contextual Hong Kong wording remain pending. Copy distribution is not core implementation evidence.",
+        "priorPackage247": {
+          "build": 247,
+          "manualRevision": "application-user-guide-10-mobile-errors",
+          "manualSHA256": "4eef6ee7d71f0aad85e98129affbb464f4ec3191aba62dd2fa0d17f4d7e5cdd7",
+          "controlGuideRevision": "workflow-controls-guide-16-report-classification",
+          "controlGuideSHA256": "8074fd652f6452f4fd8bb96eb00203915513a967f52063c308d6a130efc150ac",
+          "receipt": "mobile/Validation/iphone-pause-menu-247-2026-10-29.json",
+          "status": "Normal247 installed and launched. Direct zh-HK drawer, Models and report filter checks pass. Exact guide10/control16 are packaged. Full native guide10 rendering is not checked."
+        },
+        "priorPackage248": {
+          "build": 248,
+          "manualRevision": "application-user-guide-12-phone-model-start",
+          "manualSHA256": "dacc4ae369dd0d701d8d61489d3a6fdc40f5b752ba2ca5c8e03008a0581d3aea",
+          "controlGuideRevision": "workflow-controls-guide-18-phone-model-start",
+          "controlGuideSHA256": "7f8c7a368f115b99c4870cd5d971b506a07689504cdb311c78933b1f6101431d",
+          "receipt": "mobile/Validation/iphone-model-start-248-2026-10-29.json",
+          "status": "Normal248 installs and launches. Direct zh-HK missing saved-engine notice and Basic model menus pass. Exact guide12/control18 packaged; full native manual rendering is not checked."
+        },
+        "priorPackage249": {
+          "build": 249,
+          "manualRevision": "application-user-guide-15-phone-workspace",
+          "manualSHA256": "05e9bb3f46ca2dd3f819d6e47d322b4a00577a5f6665438e5ef596aeab61f41f",
+          "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+          "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+          "receipt": "mobile/Validation/iphone-workspace-249-2026-10-29.json",
+          "status": "Normal249 installs and launches. Two native cases and direct zh-HK workspace navigation pass. Exact guide15/control19 are packaged. Native full-guide rendering remains unverified."
+        }
+      }
+    },
+    "workflowChanged": false,
+    "sourceHistory": [
+      {
+        "revision": "application-user-guide-1",
+        "sha256": "92b237bb6e796a0c42e475c25bf3907786092e1dfbad1eee369625b938b06a08",
+        "installed": false
+      },
+      {
+        "revision": "application-user-guide-2",
+        "sha256": "35e4e9f42ed92f0363fe4c28a68194dc855072f1e9bcdbc5f50fa1430a4214b6",
+        "desktopInstalled": true,
+        "desktopBuild": 256
+      },
+      {
+        "revision": "application-user-guide-4",
+        "sha256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+        "desktopInstalled": true,
+        "desktopBuild": 257
+      },
+      {
+        "revision": "application-user-guide-5",
+        "sha256": "f9b22bee9ea076ad35cae41e0236fae6519e6bc9ea956a3e9c3123cb5e566e4c",
+        "iPadInstalledBuild": 242,
+        "sourceAuthor": "Unestablished. Preserve the historical source; do not invent ownership."
+      },
+      {
+        "revision": "application-user-guide-6-phone-playlist",
+        "sha256": "6a82ed2669686385842ce97f5f7c5a43a064993f26e88eb31b3c786f00ba56eb",
+        "sourceAuthor": "Phone owner; scoped iPad first-draft text and phone playlist navigation."
+      },
+      {
+        "revision": "application-user-guide-7-desktop-locales",
+        "sha256": "eb6531da6e955f09ebc2c25fa8667775f448b11f98eb18f3d24477d725d02aa9",
+        "sourceAuthor": "Desktop owner; preserve desktop locale and ownership changes."
+      },
+      {
+        "revision": "application-user-guide-9-review-classification",
+        "sha256": "a2b388c52de3491d2f72efbb0948900bb0ad90152afd8b1462a61731836799eb",
+        "author": "Codex iPad OpenAI",
+        "changes": [
+          "Common report coverage now resolves canonical classification controls.",
+          "Phone owner requests the Reading/Models drawer order paragraph in four locales."
+        ],
+        "nativeAcceptance": "Pending246focused execution and package evidence."
+      },
+      {
+        "revision": "application-user-guide-10-mobile-errors",
+        "sha256": "4eef6ee7d71f0aad85e98129affbb464f4ec3191aba62dd2fa0d17f4d7e5cdd7",
+        "author": "Codex iPad OpenAI with a phone-owner scoped pause paragraph",
+        "changes": [
+          "Remove mobile process-log navigation instructions.",
+          "Keep Desktop Terminal copy exact to9.",
+          "Add phone-only cooperative pause instructions."
+        ],
+        "nativeAcceptance": "Mobile packages record separate source and install evidence."
+      },
+      {
+        "revision": "application-user-guide-11-queue-controls",
+        "sha256": "5a2e1d4fb67b573eb36731e147d1cb9941266dab4afe2a4144ce5976d41ebb51",
+        "author": "Codex iPad OpenAI",
+        "changes": [
+          "Add queue selection and source-language fallback controls.",
+          "Add iPad model availability and Expert menu navigation."
+        ],
+        "iPadInstalledBuild": 248,
+        "receipt": "mobile/Validation/ipad-queue-controls-248-2026-10-29.json"
+      },
+      {
+        "revision": "application-user-guide-12-phone-model-start",
+        "sha256": "dacc4ae369dd0d701d8d61489d3a6fdc40f5b752ba2ca5c8e03008a0581d3aea",
+        "author": "Codex iPhone OpenAI",
+        "scope": "Phone model availability and missing frozen-engine notice.",
+        "nativeAcceptance": "Four isolated native fixtures pass. Separate install receipt required."
+      },
+      {
+        "revision": "application-user-guide-13-caption-only-hk",
+        "sha256": "177444f37d21f694be7138fa846e9c7116dc987e81deb7240e995fc9f57bbec9",
+        "author": "Codex Desktop OpenAI",
+        "scope": "Confirmed-no-dialogue captions and contextual Hong Kong wording. Mobile uptake pending.",
+        "nativeAcceptance": "Desktop source tests and four-locale UI evidence only. M4 keeps frozen11/17."
+      },
+      {
+        "revision": "application-user-guide-14-ipad-dubbing-cover",
+        "sha256": "fc99faf5a9e843a19f42fb34f776ebf5b9a88e2c13f46ece5317c1fa88ee6ec6",
+        "author": "Codex iPad OpenAI",
+        "scope": "iPad Expert Dubbing uses the existing full-screen cover and returns to the previous workspace.",
+        "iPadInstalledBuild": 249,
+        "receipt": "mobile/Validation/ipad-dubbing-fullscreen-249-2026-10-29.json"
+      },
+      {
+        "revision": "application-user-guide-16-ipad-whisper-recovery",
+        "sha256": "9149ef641bcc9f7236e39a0d6765024cb9b2774cee03ac8c6036424e8af87846",
+        "author": "Codex iPad OpenAI",
+        "scope": "iPad quarter-first bounded source recognition. Preserve all phone15 sections.",
+        "iPadInstalledBuild": 250,
+        "receipt": "mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json"
+      },
+      {
+        "revision": "application-user-guide-17-phone-reset-location",
+        "sha256": "2dc949313053c9a060201c8ea8cde2c4dc64b30db1cdace9b0bf8852e5409e5b",
+        "author": "Codex iPhone OpenAI",
+        "scope": "Add one phone reset-location paragraph in four languages. Preserve guide16 content.",
+        "iPhoneInstalledBuild": 250,
+        "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json"
+      }
+    ],
+    "mobileReadingBackgroundPrerequisite": {
+      "device": "Studio conversion eligibility",
+      "model": "installed vocal-separation model",
+      "systemNarrationRemainsAvailable": true,
+      "implementationOwner": "mobile",
+      "nativeAcceptance": "The mobile owner must record actual UI and operation-boundary evidence.",
+      "ipadImplementation": "238 UI and operation checks pass. Installed; no neural capability claim."
+    },
+    "sourceOwnerRecord": "iPad owner authors guide11 queue/model/navigation controls. Preserve guide10 phone-only pause and mobile errors."
+  },
+  "assistantPresentation238": {
+    "scope": "Presentation and Reading neural prerequisites. No conversion-flow change.",
+    "iPad": {
+      "build": 238,
+      "tested": true,
+      "installed": true,
+      "rendererSHA256": "9499a165a2e7516c4e50f693fb43bdcb0fd15d816ac1e7b045f8d1526f38d3e9"
+    },
+    "iPhone": {
+      "build": 239,
+      "sourceIntegrated": true,
+      "tested": true,
+      "nativeInvocations": 6,
+      "nativeUniqueCases": 4,
+      "packaged": true,
+      "installed": true,
+      "rendererSHA256": "9499a165a2e7516c4e50f693fb43bdcb0fd15d816ac1e7b045f8d1526f38d3e9",
+      "receipt": "mobile/Validation/iphone-assistant-manual-239-2026-10-29.json",
+      "status": "Normal239 installed. Eighteen final native scenes and normal idle-saver entry pass. Separate character-style audit corrections remain open.",
+      "launchVerified": true
+    },
+    "recognition": "Two lowered hands and open flat notebook for nine characters. Other27work scenes retain exact pixels.",
+    "idle": "Nine distinct seated resting poses. No gait or progress. Welcome remains unchanged.",
+    "evidence": "mobile/Validation/ipad-assistant-manual-238-2026-10-29.json"
+  },
+  "fallbackPlacement240": {
+    "requirement": "General Preferences must not duplicate Voice fallback. Keep Basic operation and Expert production settings.",
+    "factory": "first-take",
+    "executionChanged": false,
+    "savedPoliciesChanged": false,
+    "iPad": {
+      "build": 240,
+      "sourceImplemented": true,
+      "sourceBoundaryChecked": true,
+      "packaged": true,
+      "installed": true,
+      "deviceState": "No active conversion at installation. Three saved jobs remain byte-identical.",
+      "compiled": true,
+      "receipt": "mobile/Validation/ipad-preferences-fallback-240-2026-10-29.json",
+      "launchVerified": true
+    },
+    "iPhone": {
+      "state": "Owner notified. Keep the separate user pause; no installation requested now."
+    },
+    "manual": {
+      "operationRevision": "application-user-guide-4",
+      "operationSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
+      "controlRevision": "workflow-controls-guide-15-fallback-location",
+      "controlSHA256": "0f09ee3493c80cac7e64e7442dde7c1beca5bb7676eaea759c74c0a003dd1287",
+      "executionChanged": false
+    }
+  },
+  "desktopSourcePlayback257": {
+    "source": "docs/DESKTOP-PREVIEW-ASSISTANTS-257.md",
+    "platform": "mac",
+    "mode": "direct compatible source or bounded memory-only HLS intervals",
+    "fullMovieClone": false,
+    "conversionPolicyChanged": false,
+    "installed": true,
+    "wholeMovieAcceptancePending": true
+  },
+  "crossPlatformOutputQualityReviews": {
+    "822-pacing-repetition-2026-10-29": {
+      "state": "Own-turn gate: iPad244 and Mac258 installed. Slow/long speech pacing and whole-film listening remain open.",
+      "record": "docs/CROSS-PLATFORM-822-PACING-REPETITION-REVIEW.md",
+      "privateEvidence": "mobile/Validation/ipad-822-pacing-repetition-audit-2026-10-29.json",
+      "privateFixture": "mobile/Validation/822-pacing-repetition-fixture-2026-10-29.json",
+      "ruleIDs": [
+        "WF-01",
+        "WF-02",
+        "WF-03",
+        "WF-15",
+        "WF-16",
+        "WF-17"
+      ],
+      "findings": [
+        "Slow/long selected target takes.",
+        "Neighbour context appears in a previous target and repeats in the next target."
+      ],
+      "iPad": "Frozen job, subtitle file, delivery manifest and four selected WAV hashes inspected. Original job remains exact.",
+      "desktop": "Source258 adds a bounded own-turn check and language-independent report hints. No user-film rerun, clock, take, sampling or repair permission change.",
+      "iPhone": "Bounded source review returned in docs/IPHONE-822-SOURCE-REVIEW.md. No new runtime reproduction or fix.",
+      "frozenPermissionsChanged": false,
+      "implementedFix": false,
+      "handover": "docs/IPAD-QWEN-HANDOVER-2026-10-29.md",
+      "ownTurnGate": {
+        "revision": "own-turn-caption-ownership-242",
+        "sharedRuleSection": "DESKTOP-IPAD-RECOVERY-WORKFLOW.md own-turn-caption-ownership-242",
+        "iPad": "Normal244 installed and launch verified. Ten injected boundary cases, one actual Gemma correction and original242fixtures pass. No full user-film or TTS/listening acceptance.",
+        "desktop": "Mac0.25.5/build258 installed, strict signature and isolated startup verified.26focused cases and116related regressions pass. New first drafts only; no real user-film inference/listening acceptance.",
+        "iPhone": "Not adopted.",
+        "optionalRepairChanged": false,
+        "firstTakeAudioChanged": false,
+        "normalPackage": "244",
+        "installed": true,
+        "launchVerified": true,
+        "packageSHA256": "08678ca7e395014aa573989d04399d71e6e81be559b4e8abfa2d03b30214a2e3",
+        "receipt": "mobile/Validation/ipad-own-turn-followup-244-2026-10-29.json",
+        "listeningAcceptance": "pending",
+        "codeDylibSHA256": "6c8a7063a654923cc60fdc2f21e3e1ff8092f798f44b32f24557b7e4f32ad1c4",
+        "executionStateRevision": "own-turn-first-draft-state-244",
+        "prior242Regression": {
+          "failedCases": 7,
+          "baselineZeroTestsIsInconclusive": true,
+          "currentFixtureCasesCorrected": 5,
+          "remainingOldCases": [
+            "testManualAndFastNeverCreateTempoDerivatives",
+            "testIsolatedRealCosyTimingProbe173"
+          ]
+        },
+        "desktopExecution": {
+          "version": "0.25.5",
+          "build": 258,
+          "sourceIntegrated": true,
+          "tested": true,
+          "packaged": true,
+          "installed": true,
+          "receipt": ".build/desktop258/verification.json",
+          "listeningAcceptance": "pending",
+          "voiceRetakesChanged": false,
+          "oldRequestsRestamped": false
+        }
+      },
+      "implementedPartialFix": "Own-turn first-draft guard. Pacing calibration remains open.",
+      "latestGPTReadOnlyAudit": {
+        "date": "2026-10-29",
+        "jobID": "2A763BB0-DDBE-48A0-8C5D-EA8798194F91",
+        "receipt": "mobile/Validation/ipad-822-gpt-output-audit-2026-10-29.json",
+        "implementedFix": false,
+        "pendingCount": 234,
+        "pendingMeaning": "All234target rows lack saved voice-audit results. This is not234confirmed audio failures.",
+        "longTake": "Cue177 raw and delivered audio23.488seconds for a4.03second source interval.",
+        "oldSavedRepetition": "Cue413still borrows414content in this completed pre244output.",
+        "nextWork": [
+          "Separate unverified UI counts from confirmed issues.",
+          "Trace requested contentChecks1with absent per-cue results.",
+          "Investigate GPT long-take/internal-pause cause using the frozen cue177fixture."
+        ],
+        "frozenRulesUnchanged": true
+      }
+    }
+  },
+  "phonePlaylistDrawer243": {
+    "scope": "iPhone navigation only",
+    "sourceIntegrated": true,
+    "built": true,
+    "packaged": true,
+    "installed": true,
+    "conversionCoreChanged": false,
+    "receipt": "mobile/Validation/iphone-playlist-drawer-243-2026-10-29.json",
+    "launchVerified": true,
+    "directNavigationVerified": true
+  },
+  "mobileDefaultModelPreparation245": {
+    "revision": "mobile-default-models-245",
+    "decisionDate": "2026-10-29",
+    "userDecision": "Default Gemma4E4B and CosyVoice. Include required Whisper and HTDemucs components, as confirmed in the iPad chat.",
+    "defaultGroups": [
+      "Gemma 4 E4B",
+      "CosyVoice",
+      "Whisper",
+      "HTDemucs"
+    ],
+    "optionalGroups": [
+      "Qwen 3.5 4B 4-bit",
+      "GPT-SoVITS",
+      "other alternative models"
+    ],
+    "consent": "One scoped approval before network access. Sequential preparation, verified-file reuse and pause remain.",
+    "apple": "No Apple recognition resource request in the default preparation pass. Required recognition remains Whisper.",
+    "gpt": "Installed or imported packages remain usable. No verified public direct download is available.",
+    "preservation": "Do not remove installed models, change selected engines, rewrite frozen requests, or refund spent budgets.",
+    "platforms": {
+      "iphone": {
+        "source": 245,
+        "compiled": true,
+        "nativeTested": true,
+        "installed": true,
+        "installedBuild": 245,
+        "packaged": true,
+        "normalPackageSHA256": "81639efe4e89ae9146ca27a39c0b95fb6db2b12f2506612927326ed03eafebb1",
+        "nativeTestState": "Three focused native cases pass. Scoped optional-model rejection, consent rejection, serial skip and cancellation pass with isolated paths. Full clean-device download is not accepted.",
+        "launchVerified": true,
+        "receipt": "mobile/Validation/iphone-default-models-245-2026-10-29.json",
+        "directNormalUI": "zh-HK Models copy, existing-file one-click completion, preserved GPT choice and guide8 setup text pass. Lower-row remote input observation remains open."
+      },
+      "ipad": {
+        "source": 245,
+        "compiled": true,
+        "nativeTested": false,
+        "installed": true,
+        "installedBuild": 245,
+        "launchVerified": true,
+        "receipt": "mobile/Validation/ipad-default-models-245-2026-10-29.json",
+        "preserved244Core": true
+      },
+      "desktop": "No desktop setup change."
+    },
+    "cleanDeviceDownloadAccepted": false,
+    "receipt": "mobile/Validation/iphone-default-models-245-2026-10-29.json"
+  },
+  "reportClassification246": {
+    "revision": "report-classification-246",
+    "primary": "missing/silent/damaged required selected target delivery, including unplanned source fallback",
+    "available": "usable first audible, selected generic, repaired target recording",
+    "advisory": "current wording/language/source/duration notes; absent or inconclusive verification does not mean failure",
+    "protected": "OP/ED, protected performance and explicit user source choice are not missing",
+    "axes": [
+      "delivery",
+      "processing",
+      "verification",
+      "human/export choice"
+    ],
+    "history": "Resolve stale failures using current selected recording identity. Preserve history and current findings.",
+    "inspection": "Background read-only PCM/integrity checks cached by project, folder and recording SHA. No model inference.",
+    "permissions": "No new repair, retake, optional inspection or spent-budget allowance.",
+    "controlsGuideRevision": "workflow-controls-guide-16-report-classification",
+    "operationGuideRevision": "application-user-guide-9-review-classification",
+    "platforms": {
+      "ipad": {
+        "source": 246,
+        "compiled": true,
+        "nativeCases": 6,
+        "nativeFailures": 0,
+        "installed": true,
+        "installedBuild": 246,
+        "receipt": "mobile/Validation/ipad-report-classification-246-2026-10-29.json",
+        "actual822": {
+          "audioAvailable": 234,
+          "counts": {
+            "reportAdvisory": 24,
+            "reportAvailable": 210
+          },
+          "currentOptionalAudits": 0,
+          "jobID": "2A763BB0-DDBE-48A0-8C5D-EA8798194F91",
+          "jobUnchanged": true,
+          "repairsStarted": 0
+        },
+        "containingInstalledBuild": 247
+      },
+      "iphone": {
+        "sourceReview": ".build/iphone-review-classification-2026-10-29.json",
+        "implemented": true,
+        "installedBuild": 247,
+        "source": 247,
+        "compiled": true,
+        "nativeCasesPassed": 5,
+        "nativeCasesSkipped": 1,
+        "nativeFailures": 0,
+        "installed": true,
+        "renderedLocales": 4,
+        "receipt": "mobile/Validation/iphone-pause-menu-247-2026-10-29.json",
+        "actualSavedFilmAcceptance": false,
+        "state": "Normal247 installed and launch-verified. Native fixtures pass. Direct zh-HK report route/filter labels pass. No actual saved-film classification or listening acceptance is claimed."
+      },
+      "desktop": {
+        "source": 259,
+        "implemented": true,
+        "packagedBuild": 259,
+        "installed": true,
+        "installedBuild": 259,
+        "state": "Mac259 installed. Startup, signature and 204 metadata hashes pass. Windows remains255.",
+        "evidence": "docs/DESKTOP-REPORT-CLASSIFICATION-259.md",
+        "tests": {
+          "relatedRegressions": 175,
+          "targetedClassification": 20,
+          "backendUIFilters": 16,
+          "locales": 4
+        },
+        "manualRevision": "application-user-guide-9-review-classification",
+        "manualSHA256": "a2b388c52de3491d2f72efbb0948900bb0ad90152afd8b1462a61731836799eb",
+        "controlGuideSHA256": "8074fd652f6452f4fd8bb96eb00203915513a967f52063c308d6a130efc150ac",
+        "windowsInstalledBuild": 255,
+        "userFilmRerun": false,
+        "installReceipt": ".build/report259/install-receipt.json"
+      }
+    },
+    "operationGuideSHA256": "a2b388c52de3491d2f72efbb0948900bb0ad90152afd8b1462a61731836799eb",
+    "controlsGuideSHA256": "8074fd652f6452f4fd8bb96eb00203915513a967f52063c308d6a130efc150ac"
+  },
+  "mobileProcessLogRemoval247": {
+    "request": "Remove the process-log entry from iPad and iPhone.",
+    "scope": "Mobile interface only. Preserve internal English diagnostics, error messages, media, models and checkpoints. Desktop Terminal remains.",
+    "platforms": {
+      "ipad": {
+        "source": ".build/logs247/workspace/mobile",
+        "installed": true,
+        "installedBuild": 247,
+        "launchVerified": true,
+        "receipt": "mobile/Validation/ipad-log-navigation-removal-247-2026-10-29.json",
+        "phonePauseIncluded": false,
+        "core246Exact": true
+      },
+      "iphone": {
+        "installed": true,
+        "installedBuild": 247,
+        "receipt": "mobile/Validation/iphone-pause-menu-247-2026-10-29.json"
+      }
+    },
+    "guideRevision": "application-user-guide-10-mobile-errors"
+  },
+  "manualPause247": {
+    "revision": "cooperative-manual-pause-247",
+    "target": "Save the current safe checkpoint and request cooperative cancellation. Do not start another inference or queued video. Keep busy through complete model cleanup.",
+    "timingTransaction": "Retain the existing reserved checkpoint and use the existing safe cancellation path.",
+    "preservation": "Keep scripts, selected recordings, frozen policy and spent counts. No resume refund or new repair permission.",
+    "diagnostics": "Record request time and interrupted phase. Historical jobs without that event do not establish incident latency.",
+    "platforms": {
+      "iphone": {
+        "source": 247,
+        "compiled": true,
+        "nativeTested": true,
+        "installed": true,
+        "previousInstalledBuild": 245,
+        "installedBuild": 247,
+        "nativePauseCases": 2,
+        "nativeFailures": 0,
+        "loadedModelLatencyAccepted": false,
+        "receipt": "mobile/Validation/iphone-pause-menu-247-2026-10-29.json"
+      },
+      "ipad": {
+        "source": 248,
+        "compiled": true,
+        "nativeTested": true,
+        "nativePauseCases": 2,
+        "nativeFailures": 0,
+        "installed": true,
+        "installedBuild": 248,
+        "loadedModelLatencyAccepted": false,
+        "receipt": "mobile/Validation/ipad-queue-controls-248-2026-10-29.json"
+      },
+      "desktop": "Not audited. Counterpart source mapping remains open."
+    },
+    "loadedModelCancellationLatencyAccepted": false,
+    "receipt": "mobile/Validation/iphone-pause-menu-247-2026-10-29.json"
+  },
+  "queueControls248": {
+    "revision": "queue-source-language-248",
+    "newRequestsOnly": true,
+    "excludedDefault": "No exclusions. Read current exclusion IDs before each handoff.",
+    "sourceLanguage": "Global source choice; automatic mode uses current probe consensus or saved configured fallback.",
+    "fallbackDefault": "ja",
+    "fallbackIsConfirmedDetection": false,
+    "savedJobMigration": false,
+    "savedBudgetsReset": false,
+    "modelGate": "Gemma, Qwen and Cosy use installed-file completeness. GPT uses a deployment marker; partial GPT files remain an open gap. Preserve stored choices. Complete cold files stay selectable.",
+    "navigation": "iPad Expert Player and Dubbing studio are named left entries; Basic shortcuts remain.",
+    "platforms": {
+      "ipad": {
+        "source": 248,
+        "compiledInitial": true,
+        "nativeTested": true,
+        "installedBuild": 248,
+        "compiled": true,
+        "nativeCases": 8,
+        "nativeFailures": 0,
+        "packaged": true,
+        "installed": true,
+        "receipt": "mobile/Validation/ipad-queue-controls-248-2026-10-29.json",
+        "wholeFilmAccepted": false
+      },
+      "iphone": {
+        "installedBuild": 247,
+        "adopted": false
+      },
+      "desktop": {
+        "installedBuild": 259,
+        "adopted": false,
+        "review": "Pending queue/source-language comparison."
+      }
+    },
+    "controlsGuideRevision": "workflow-controls-guide-17-queue-language",
+    "guideRevision": "application-user-guide-11-queue-controls"
+  },
+  "pendingCrossPlatformAfter248": {
+    "captionOnly": {
+      "userVerifiedFromDesktopThread": true,
+      "requirement": "Default-on option: retain screen-text captions without TTS only when positive source/stem evidence proves no dialogue. Missing ASR/TTS or offscreen/uncertain speech is not proof.",
+      "controlProposal": "caption-only-no-dialogue",
+      "status": "Desktop260 source has 33 focused and 238 related passing cases. Mac259 remains installed. Guide13/control19 are current source. iPad and phone implementation and real-film acceptance remain pending."
+    },
+    "hongKongWording": {
+      "userVerifiedFromDesktopThread": true,
+      "examples": [
+        "廢話小說 >> 廢話小講",
+        "搞不好 >> 搞唔好"
+      ],
+      "status": "Desktop260 new-request contextual style source is implemented. No global character substitution, saved-script rewrite or added inference permission. Mobile uptake remains pending."
+    },
+    "phoneBasicModels": {
+      "status": "Phone248 private source and four native fixtures pass. Normal package installation is in progress. iPad named-resume and partial-GPT completeness adoption remain open."
+    },
+    "longCaptionDisplay": {
+      "sourceOwner": "Desktop",
+      "reportedFilm": "Ninja Cat",
+      "reportedSeconds": 187,
+      "observation": "Several dialogue sentences appear in one large caption. User says existing dubbing roughly matches and is meaningful.",
+      "causeConfirmed": false,
+      "keepAcceptedAudio": true,
+      "requires": "Saved source/OCR/caption IDs and source/display/audio clocks.",
+      "guessTimestampsFromCharacters": false,
+      "mobileOutputAccepted": false,
+      "evidence": "<home>/Desktop/Screenshot 2026-10-29 at 22.55.18.png",
+      "mobileSourceEvidence": {
+        "sameSRTFunction": true,
+        "functionSHA256": "6839199115160552ed82f5b00728d9ec6650dfeef3d9aea7edeb15e75913e632",
+        "behavior": "The full translated cue uses rendered audio bounds. MP4 captionSamples joins simultaneous cue text. A long source/dub cue or overlapping displayed cues can produce large text.",
+        "actualMobileOutputCauseConfirmed": false
+      }
+    }
+  },
+  "phoneModelStart248": {
+    "target": "Hide incomplete local choices in phone Basic and defaults. Name missing frozen resume engines. Require explicit new-conversion action to use current defaults.",
+    "frozenJobs": "Keep old files, engines, source policy and spent limits. Default preparation never silently switches a saved GPT job to Cosy.",
+    "platforms": {
+      "iphone": {
+        "source": 248,
+        "nativeTested": true,
+        "nativeCases": 4,
+        "nativeFailures": 0,
+        "installed": true,
+        "installedBuild": 248,
+        "packagePendingInstallReceipt": false,
+        "receipt": "mobile/Validation/iphone-model-start-248-2026-10-29.json",
+        "launchVerified": true,
+        "directBasicMenusVerified": true,
+        "directMissingFrozenEngineNoticeVerified": true,
+        "savedProjectFilesUnchanged": 5,
+        "latestJobFilesUnchanged": 2,
+        "wholeFilmAccepted": false
+      },
+      "ipad": {
+        "installedBuild": 248,
+        "namedResumeNoticeAdopted": false,
+        "partialGPTFileGateAdopted": false
+      }
+    },
+    "guideRevision": "application-user-guide-12-phone-model-start",
+    "controlGuideRevision": "workflow-controls-guide-18-phone-model-start"
+  },
+  "captionOnlyNoDialogue260": {
+    "revision": "caption-only-no-dialogue-260",
+    "setting": "skipNonDialogueCaptions",
+    "newDefault": true,
+    "desktop": {
+      "sourceBuild": 260,
+      "installedBuild": 260,
+      "focusedCases": 34,
+      "relatedCases": 239,
+      "uiLocales": 4,
+      "installed": true,
+      "preservedMetadataFiles": 204,
+      "receipt": ".build/timing260/install-receipt.json"
+    },
+    "gates": [
+      "completed original and stem VAD with matching waveform SHA256 and offset",
+      "no lexical ASR in padded caption window",
+      "no VAD activity in that window",
+      "near-digital-quiet complete vocal-stem window"
+    ],
+    "uncertainKeepsTarget": true,
+    "noRecognitionIsNotSilence": true,
+    "failedTTSIsNotSilence": true,
+    "preserveCaptionTextAndDisplayClock": true,
+    "captionOnlyExcludedFromTargetMissing": true,
+    "extraInferenceCalls": 0,
+    "oldFrozenJobsRestamped": false,
+    "spentBudgetsReset": false,
+    "tempoRuleChanged": false,
+    "canonicalCopy": {
+      "previous": {
+        "guideSHA256": "dacc4ae369dd0d701d8d61489d3a6fdc40f5b752ba2ca5c8e03008a0581d3aea",
+        "controlsSHA256": "7f8c7a368f115b99c4870cd5d971b506a07689504cdb311c78933b1f6101431d",
+        "guideRevision": "application-user-guide-12-phone-model-start",
+        "controlRevision": "workflow-controls-guide-18-phone-model-start"
+      },
+      "manualRevision": "application-user-guide-13-caption-only-hk",
+      "manualSHA256": "177444f37d21f694be7138fa846e9c7116dc987e81deb7240e995fc9f57bbec9",
+      "controlRevision": "workflow-controls-guide-19-caption-only-hk",
+      "controlSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+      "oneWriterHandoffFrom": "iPad Build (Open AI)",
+      "mobileImplementationPending": true,
+      "existingChaptersPreserved": true,
+      "existingControlsPreserved": true
+    },
+    "hkStyleData": "Resources/hk-spoken-style.json",
+    "hkStyleRevision": "hong-kong-contextual-260",
+    "mobileUptakePending": true
+  },
+  "hongKongContextualWording260": {
+    "revision": "hong-kong-contextual-260",
+    "data": "Resources/hk-spoken-style.json",
+    "newRequestsOnly": true,
+    "contextRequired": true,
+    "globalCharacterReplacement": false,
+    "extraRepairPermission": false,
+    "savedScriptsRewritten": false,
+    "desktopSource": 260,
+    "desktopInstalled": 260,
+    "mobileAdopted": false,
+    "receipt": ".build/timing260/canonical-copy.json"
+  },
+  "ipadDubbingPresentation249": {
+    "source": 249,
+    "compiled": true,
+    "installed": true,
+    "installedBuild": 249,
+    "presentation": "Existing fullScreenCover, same type as Player. Keep the prior workspace selection on dismiss.",
+    "visualUserAcceptance": false,
+    "conversionPolicyChanged": false,
+    "receipt": "mobile/Validation/ipad-dubbing-fullscreen-249-2026-10-29.json"
+  },
+  "whisperSourceRecovery250": {
+    "policy": "bounded-quarter-first-eight-call-250",
+    "newJobsOnly": true,
+    "rounds": 2,
+    "secondRound": "Four quarters; split only an eligible failed quarter into two once.",
+    "maximumSecondRoundDecoderCalls": 8,
+    "successfulQuartersRetained": true,
+    "savedPolicyMigration": false,
+    "spentAttemptsReset": false,
+    "unknownRecognitionIsSilence": false,
+    "crossEngineFallback": false,
+    "diagnostic": {
+      "jobID": "9095DA9F-9950-4714-BCD9-E89B8A0CEE2D",
+      "window": [
+        216.3,
+        246.3
+      ],
+      "fourQuarterComplete": true,
+      "fourQuarterUnits": 11,
+      "eightPartComplete": false,
+      "totalComparisonSeconds": 93.185,
+      "receipt": ".build/ninja250/comparison-partial.json"
+    },
+    "platforms": {
+      "ipad": {
+        "source": 250,
+        "installedBuild": 250,
+        "nativePolicyFixturesPending": false,
+        "compiled": true,
+        "nativePolicyCases": 6,
+        "nativePolicyFailures": 0,
+        "packaged": true,
+        "installed": true,
+        "receipt": "mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json",
+        "wholeFilmAccepted": false
+      },
+      "iphone": {
+        "adopted": false
+      },
+      "desktop": {
+        "adopted": false
+      }
+    },
+    "sharedRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "policyScope": "Required source recognition only. No target-audio retry, translation priority, first-take or optional repair permission changes."
+  },
+  "phoneWorkspace249": {
+    "build": 249,
+    "presentationOnly": true,
+    "target": "Use the Welcome button for installed-model checks. Keep compact phone settings and report navigation.",
+    "implemented": true,
+    "nativeTests": {
+      "cases": 2,
+      "failures": 0
+    },
+    "packaged": true,
+    "installed": true,
+    "directNavigationTested": true,
+    "userAccepted": false,
+    "receipt": "mobile/Validation/iphone-workspace-249-2026-10-29.json",
+    "conversionCoreChanged": false,
+    "limits": [
+      "The cold validation bar is not observed live because installed models are ready before entry. Native route fixtures and three static layouts cover that state.",
+      "The processing assistant animation is not exercised with inference.",
+      "Generated-caption recognition and OCR controls match iPad source. This task does not run them.",
+      "The actual guide15 native rendering and four-locale interaction suite are not run."
+    ]
+  },
+  "phoneResetLocation250": {
+    "build": 250,
+    "scope": "Phone presentation only. No workflow or AI-control change.",
+    "target": "Place the circular reset arrow immediately right of the filename eye.",
+    "implemented": true,
+    "installed": true,
+    "directDeviceChecks": true,
+    "userAccepted": false,
+    "resetActionChanged": false,
+    "resetEnabledConditionsChanged": false,
+    "guideRevision": "application-user-guide-17-phone-reset-location",
+    "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
+    "receipt": "mobile/Validation/iphone-reset-location-250-2026-10-29.json",
+    "counterparts": "No iPad or desktop layout change. Quarter-first recovery and native replacement adoption remain pending."
+  },
+  "whisperUnconfirmedFallback251": {
+    "sourceRevision": 251,
+    "scope": "Quarter-first required recognition only. Legacy source policies remain exact.",
+    "shortRound": "Use two timed halves in the unused second round for windows below eight seconds.",
+    "maximumRounds": 2,
+    "maximumRecoveryCalls": 8,
+    "unconfirmedStrategy": "unconfirmed-source-window-251",
+    "inputBoundsAreWitnessedSpeechTimes": false,
+    "unknownIsNoSpeech": false,
+    "failedUntimedTextUsed": false,
+    "cacheIdentity": "Source, project, source start/duration, window, model, OS, frozen recovery policy and audio SHA remain bound. Optional reason flags the unconfirmed window.",
+    "positiveFallback": "Selected authored subtitle or usable OCR can supply absent A through the existing priority rule. Keep a genuinely available A.",
+    "missingMeaning": "Keep original preservation and explicit unconfirmed Review state. Do not fabricate speech.",
+    "fatalErrorsStop": true,
+    "spentBudgetsReset": false,
+    "olderPoliciesMigrated": false,
+    "platforms": {
+      "ipad": {
+        "source": 251,
+        "installedBuild": 250,
+        "nativeTestsPending": true
+      },
+      "iphone": {
+        "adopted": false
+      },
+      "desktop": {
+        "adopted": false
+      }
+    },
+    "actualDiagnostic": ".build/ninja251/comparison.json",
+    "macSoundDiagnostic": ".build/ninja251/sound-classification.json",
+    "wholeFilmAccepted": false,
+    "pictureCaptionLanguage": "Vision detects caption language independently of the audio language. Name-only evidence keeps its existing explicit language.",
+    "unconfirmedOCRWindowSecondsMaximum": 8,
+    "selectedOCRNeedsExpertAssist": false
   }
 }

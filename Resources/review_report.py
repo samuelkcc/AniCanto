@@ -70,12 +70,20 @@ def project(root,review,row):
         for t in report.get('tracks',[]):
             p=Path(t.get('report','')).resolve().parent
             if p.is_dir() and p.is_relative_to(bound):folders.add(p)
-    coverage=read(root/'dialogue-delivery-audit.json',{})
+    coverage_tracks=[]
+    for folder in sorted(folders):
+        local_review=review if folder==root else read(folder/'review.json',{});local=local_review.get('config',{})
+        if not (folder/'timing.json').is_file():continue
+        coverage_tracks.append(dict(folder=folder,engine=local.get('ttsBackend',cfg.get('ttsBackend','')),language=local.get('targetLanguage','yue'),review=local_review))
+    coverage_tracks=list({(t['language'],t['engine']):t for t in coverage_tracks}.values())
+    from review_classification import AudioEvidence
+    audio_evidence=AudioEvidence(root,bound)
+    coverage=__import__('dialogue_delivery').audit(coverage_tracks,health=audio_evidence.healthy) if coverage_tracks else read(root/'dialogue-delivery-audit.json',{})
     for track in coverage.get('tracks',[]):
         for v in track.get('rows',[]):
-            if not v.get('available'):insert(v,track.get('engine'),track.get('language'),'awaiting-recheck' if active else 'unresolved','dialogue-delivery-audit.json')
+            if not v.get('available'):insert(dict(v,kind=v.get('reason')), track.get('engine'),track.get('language'),'awaiting-recheck' if active else 'unresolved','dialogue-delivery-audit.json')
     for folder in sorted(folders):
-        local_review=read(folder/'review.json',{});local=local_review.get('config',{});engine=local.get('ttsBackend',cfg.get('ttsBackend'));language=local.get('targetLanguage','yue')
+        local_review=review if folder==root else read(folder/'review.json',{});local=local_review.get('config',{});engine=local.get('ttsBackend',cfg.get('ttsBackend'));language=local.get('targetLanguage','yue')
         contexts[(language,engine)]=(folder,local_review)
         origin=str(folder.relative_to(bound))
         for v in read(folder/'segment-issues.json',[]):insert(v,engine,language,origin=origin+'/segment-issues.json')
@@ -166,7 +174,11 @@ def project(root,review,row):
             for n in segment.get('sources',[]):
                 item=items.get(f'{lang}:{engine}:{n+1}')
                 if item:item.update(status='user-choice-saved',userDecision=decision)
-    for key in items:resolved.pop(key,None)
+    for track in coverage.get('tracks',[]):
+        for record in track.get('rows',[]):
+            if record.get('reason') not in ('generation-input','source-clock-target-missing'):continue
+            key=f"{track['language']}:{track['engine']}:{record['index']}"
+            if key in items:items[key]['kind']=record['reason']
     # A listening/alignment advisory is not permission to regenerate a line.
     # Delivery coverage and explicit content-failure evidence remain separate.
     for item in items.values():
@@ -175,8 +187,8 @@ def project(root,review,row):
         cue=next((c for n,c in enumerate(local_cues) if c.get('reviewIndex',n)+1==item['index']),{})
         missing=any(t.get('engine')==item['engine'] and t.get('language','yue')==item['language'] and any(r.get('index')==item['index'] and r.get('available') is False for r in t.get('rows',[])) for t in coverage.get('tracks',[]))
         explicit=item['index'] in __import__('delivery_policy').confirmed_indices(local_review.get('config',cfg),folder)
-        required=bool(cue.get('enabled',True) and not cue.get('preserveOriginalSpeech'))
-        physical=item['kind'] in ('missing-script','missing-audio','fast-generation-failed','tts-generation','reference-blocked')
+        required=bool(cue.get('enabled',True) and (not cue.get('preserveOriginalSpeech') or __import__('target_delivery').required_clock(cue)))
+        physical=item['kind'] in ('generation-input','source-clock-target-missing','missing-script','missing-audio','fast-generation-failed','tts-generation','reference-blocked')
         item['repairEligible']=bool(required and (missing or explicit or physical))
         item['reviewLevel']='delivery' if item['repairEligible'] else 'advisory'
     summary=dict(processing=active,pending=sum(x['status']!='voice-fallback' for x in items.values()),voiceFallbacks=sum(x['status']=='voice-fallback' for x in items.values()),repairing=sum(x['status']=='repairing' for x in items.values()),repaired=len(resolved),userChoices=sum(x['status']=='user-choice-saved' for x in items.values()),qualityChecked=not active and report.get('qualityStatus')=='automatic-checks-passed',hasReport=bool(report or coverage or items or resolved))
@@ -186,4 +198,5 @@ def project(root,review,row):
     notices=notice_projection(root)
     preserved=[dict(index=n+1,start=c['start'],end=c['end'],reason=c.get('originalSpeechReason')) for n,c in enumerate(cues) if c.get('preserveOriginalSpeech') and c.get('originalSpeechReason') in ('confirmed-source-song','confirmed-nonlexical-performance')]
     summary.update(workflowNotices=len(notices),preservedPerformances=len(preserved))
-    return dict(workflowNotices=notices,preservedPerformances=preserved,performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)
+    result=dict(deliveryCoverage=coverage,workflowNotices=notices,preservedPerformances=preserved,performance=performance,issues=sorted(items.values(),key=lambda x:(x['index'],x['language'],x['engine'])),resolvedIssues=sorted(resolved.values(),key=lambda x:(x['index'],x['language'])),reviewState=summary)
+    return __import__('review_classification').project(root,result,review,row,audio_evidence,contexts)

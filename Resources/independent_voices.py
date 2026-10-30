@@ -24,7 +24,7 @@ def prepare(cfg, emit):
     with sf.SoundFile(source) as stream:
         sr=stream.samplerate;duration=stream.frames/sr
         for index,cue in enumerate(cfg['cues']):
-            if not cue.get('enabled',True) or cue.get('subtitleContentOnlyGap'):continue
+            if not cue.get('enabled',True) or cue.get('subtitleContentOnlyGap') or cue.get('captionOnly'):continue
             ident=f'line-{job.name}-{index+1}'
             profile=dict(id=ident,name=f'第 {index+1} 句原聲',reference='',promptText='',language=cfg.get('sourceLanguage','ja'),referenceCandidates=[],referenceRanges=[],identityStatus='independent',sourceIndex=index)
             a=float(cue.get('speechStart',cue['start']));b=min(float(cue.get('speechEnd',cue['end'])),a+8,duration)
@@ -70,7 +70,7 @@ def assign(cfg,job,cues,emit):
     root=Path(cfg['storage']);job=Path(job);source=Path(cfg['dialoguePath'])
     analysis=job/'japanese-analysis.json'
     text_hash=hashlib.sha256(analysis.read_bytes()).hexdigest() if analysis.exists() else ''
-    identity=[REVISION,cfg.get('productionMode','standard'),str(source),source.stat().st_size,source.stat().st_mtime_ns,cfg.get('referenceSpeechModel'),text_hash,[(c['start'],c['end'],c.get('speechStart'),c.get('speechEnd'),c.get('enabled',True)) for c in cues]]
+    identity=[REVISION,cfg.get('productionMode','standard'),str(source),source.stat().st_size,source.stat().st_mtime_ns,cfg.get('referenceSpeechModel'),text_hash,[(c['start'],c['end'],c.get('speechStart'),c.get('speechEnd'),c.get('enabled',True),bool(c.get('captionOnly'))) for c in cues]]
     if __import__('source_workflow').subtitle_content_only(cfg):identity.append(['subtitle-content-only',[bool(c.get('subtitleContentOnlyGap')) for c in cues]])
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest();cache=job/'independent-voices.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}

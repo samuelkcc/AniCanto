@@ -54,6 +54,7 @@ def status(root,source,compatible=False,audio_stream=None):
     return data
 
 def prepare(root,source,tools,platform,compatible=False,audio_stream=None):
+    if platform=='darwin':return source_playback(source,tools,audio_stream,compatible)
     source=Path(source).resolve();directory=folder(root,source,compatible,audio_stream)
     with exclusive(directory/'prepare.lock'):
         target=directory/'preview.mp4';metadata=directory/'metadata.json'
@@ -128,3 +129,22 @@ def thumbnail(root,source,tools,seconds):
                 temp.replace(target)
             finally:temp.unlink(missing_ok=True)
     return dict(path=str(target),seconds=point)
+
+
+def source_playback(source,tools,audio_stream=None,compatible=False):
+    """Describe source playback. Mac never creates a full preview movie."""
+    source=Path(source).resolve()
+    info=json.loads(subprocess.check_output([tools['ffprobe'],'-v','error','-show_format','-show_streams','-of','json',str(source)],timeout=30))
+    streams=info.get('streams',[])
+    video=next((s for s in streams if s.get('codec_type')=='video'),{})
+    tracks=[s for s in streams if s.get('codec_type')=='audio']
+    if audio_stream is not None and (type(audio_stream) is not int or not any(s['index']==audio_stream for s in tracks)):
+        raise ValueError('Invalid preview audio track.')
+    audio=next((s for s in tracks if s['index']==audio_stream),tracks[0] if tracks else {})
+    start=float(info['format'].get('start_time',0) or 0)
+    duration=float(info['format']['duration'])-max(0,start)
+    if not math.isfinite(duration) or duration<=0:raise ValueError('Invalid preview duration.')
+    direct=not compatible and source.suffix.lower() in ('.mp4','.mov','.m4v') and video.get('codec_name') in ('h264','hevc') and video.get('pix_fmt') in ('yuv420p','yuv420p10le') and (not tracks or audio==tracks[0]) and (not audio or audio.get('codec_name') in ('aac','mp3','alac'))
+    result=dict(path=str(source),duration=duration,streams=streams,selectedAudioStream=audio.get('index'),mode='direct' if direct else 'demand',fallbackAvailable=direct,sourceUnchanged=True,fullMovieCopy=False)
+    if not direct:result['streamConfig']=dict(source=str(source),duration=duration,audioStream=audio.get('index'),ffmpeg=str(tools['ffmpeg']))
+    return result

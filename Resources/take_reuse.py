@@ -91,6 +91,7 @@ def plan(job,request,engine):
             if type(item.get('reviewIndex')) is int and item['reviewIndex']+1 in flagged:continue
             generation=read(path.with_suffix('.generation.json'))
             if generation and generation.get('status')!='completed':continue
+            if engine=='drama3' and __import__('drama_prompt').defects(generation):continue
             if not healthy(path):continue
             found[key]=(path,manifest,generation)
         if len(found)==len(wanted):break

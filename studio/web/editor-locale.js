@@ -17,6 +17,8 @@ const COPY={
  'Full AI review':['完整 AI 覆核','完整 AI 复核','完全 AI 確認'],
  'AI auto repair':['AI 自動修復','AI 自动修复','AI 自動修復'],
  'Limit dubbing to original speech duration':['限制配音至原聲時長','限制配音至原声时长','吹き替えを原音の長さに制限'],
+ 'Caption only · no dialogue':['僅字幕・無對白','仅字幕・无对白','字幕のみ・会話なし'],
+ 'Non-dialogue captions only':['無對白字幕只顯示文字','无对白字幕只显示文字','会話のない字幕は表示のみ'],
  'Detect openings and endings':['偵測片頭／片尾','检测片头／片尾','オープニング・エンディングを検出'],
  'Translate dialogue in OP / ED':['翻譯片頭／片尾對白','翻译片头／片尾对白','OP・ED 内の台詞を翻訳'],
  'Try another installed voice model':['嘗試其他已安裝配音模型','尝试其他已安装配音模型','他のインストール済み音声モデルを試す'],

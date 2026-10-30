@@ -18,6 +18,7 @@ def migrate(settings):
 def validated(settings):
     result=migrate(settings)
     __import__('basic_flow').validate(result)
+    if not isinstance(result.get('skipNonDialogueCaptions',True),bool):raise ValueError('Caption-only control must be on or off.')
     modes=__import__('work_modes')
     # Revision 2 has no speed choice. The stored value stays 'performance' so the
     # frozen performance gates keep working while the selector is hidden.

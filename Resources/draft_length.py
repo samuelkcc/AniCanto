@@ -8,7 +8,7 @@ def units(text,language):
  return len(re.findall(r'[\u3400-\u9fff]|[A-Za-z]+|\d',str(text)))
 def instruction(cfg,language):
  if not __import__('basic_flow').enabled(cfg):return ''
- return (' FIRST-DRAFT LENGTH: use durationGuidance as a SOFT spoken-length estimate in this target language. '
+ return __import__('hk_spoken_style').instruction(cfg,language)+(' FIRST-DRAFT LENGTH: use durationGuidance as a SOFT spoken-length estimate in this target language. '
   'Aim at the original speech time; a following free gap or permitted overlap is tolerance, not space for more text. '
   'Keep all meaning, names, negation, numbers, relationships and emotion. Prefer direct natural clauses and contractions in English. '
   'Do not expand short reactions into explanations. Expand number/name readings mentally when judging length. '
@@ -31,7 +31,12 @@ def apply(cfg,job,cues,rows,language):
  try:history=json.loads((Path(job)/'draft-length-observed.json').read_text()).get('rows',[])
  except (OSError,ValueError):history=[]
  for key,row in rows.items():
-  index=int(key);cue=cues[index];seconds=max(.15,float(cue.get('speechEnd',cue['end']))-float(cue.get('speechStart',cue['start'])))
+  index=int(key);cue=cues[index]
+  if cue.get('captionOnly'):
+   row['captionOnly']=True;row['captionInstruction']='Translate the screen text for display only. Preserve its full meaning; no spoken-duration target or narrator.'
+   for key_to_remove in ('targetCharacters','targetWords','durationGuidance'):row.pop(key_to_remove,None)
+   continue
+  seconds=max(.15,float(cue.get('speechEnd',cue['end']))-float(cue.get('speechStart',cue['start'])))
   engine=cfg.get('ttsBackend','drama3');speaker=cue.get('speakerId','');reference=reference_identity(cfg,cue,language)
   rates=[r['units']/r['seconds'] for r in history if r.get('language')==language and r.get('engine')==engine and r.get('speaker')==speaker and reference and r.get('referenceIdentity')==reference and r.get('seconds',0)>.2 and r.get('units',0)>0]
   rates=[r for r in rates if RATES[language]*.5<=r<=RATES[language]*1.5]

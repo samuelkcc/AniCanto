@@ -28,11 +28,11 @@ def defaults(language='en'):
     return dict(animeTheme='studio',randomAnimeTheme=False,selectedEngines=['drama3'],ttsBackend='drama3',defaultAudioEngine='drama3',
         dubLanguages=['yue','en'] if language=='en' else ['yue'],includeOriginal=True,
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
-        subtitleSource='embedded',batchAutoSubtitles=True,sourceWorkflow='auto',defaultSubtitleWorkflow='subtitles-speech',defaultOCRWorkflow='ocr-speech',workMode='performance',workModeRevision=__import__('work_modes').REVISION,fullAIReview=False,productionMode='fast',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
+        subtitleSource='embedded',batchAutoSubtitles=True,sourceWorkflow='auto',defaultSubtitleWorkflow='subtitles-speech',defaultOCRWorkflow='speech-ocr',workMode='performance',workModeRevision=__import__('work_modes').REVISION,fullAIReview=False,productionMode='fast',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
         speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
-        repairExcessiveAudibleOverlap=False,contentChecks=0,
+        repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=True,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=True,preferFirstAudibleTake=True,
         failedVoicePolicy='first-take',automaticSystemVoice=True,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
@@ -111,6 +111,11 @@ class Store:
         settings['speechDurationRevision']=__import__('speech_duration').REVISION
         settings['repairPermissionsRevision']=__import__('repair_permissions').REVISION
         settings['basicFlowRevision']=__import__('basic_flow').REVISION
+        settings['ownTurnGateRevision']=__import__('own_turn').REVISION
+        settings['captionOnlyRevision']=__import__('caption_only').REVISION
+        settings['hongKongStyleRevision']=__import__('hk_spoken_style').REVISION
+        settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
+        settings['sourceSelectionRevision']='basic-source-defaults-231'
         settings['forcedDubbingRevision']=__import__('delivery_policy').FORCED_TTS_REVISION
         __import__('work_modes').configure(settings)
         from source_workflow import REVISION as workflow_revision,validate as validate_workflow
@@ -248,6 +253,7 @@ def job_snapshot(row):
             version=read(folder.parent.parent/'version.json',{})
         engine=engine or version.get('engine');language=version.get('language',language)
         for n,take in enumerate(manifest.get('rows',[])):
+            if take.get('preserveOriginalSpeech') or take.get('originalPreserved') or take.get('originalFallback'):continue
             add_candidate(take.get('audio'),take.get('index',take.get('reviewIndex',n)+1),engine,language,'first',spoken_text=take.get('text'))
         checks=read(folder/'normal-checks.json',{})
         for row in checks.get('repairs',[])+checks.get('advisories',[]):
@@ -264,7 +270,7 @@ def job_snapshot(row):
             add_candidate(manifest_path.parent/archived.get('audio','audio.wav'),archived.get('index'),archived.get('engine') or engine,archived.get('language') or language,'rejected',archived.get('reason',''),archived.get('created',0),archived.get('text'))
         for index,take in enumerate(rows):
             audio=take.get('renderedAudio') or take.get('audio')
-            if audio and not take.get('skipped') and Path(audio).is_file():
+            if audio and not take.get('skipped') and not take.get('originalPreserved') and not take.get('originalFallback') and Path(audio).is_file():
                 cue_id=version.get('segment')
                 cue_index=next((n+1 for n,c in enumerate(review.get('cues',[])) if c.get('editorID',f'cue-{n}')==cue_id),None)
                 local_index=take.get('reviewIndex',index)

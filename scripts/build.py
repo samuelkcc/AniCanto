@@ -34,6 +34,7 @@ def build():
     install_core(BIN/'anicanto-core')
     run('python3', ROOT/'scripts/generate_contract.py', '--check')
     shutil.copy2(ROOT/'Resources/production-contract.json',RES/'production-contract.json')
+    shutil.copy2(ROOT/'Resources/hk-spoken-style.json',RES/'hk-spoken-style.json')
     (BIN/'uv').unlink(missing_ok=True)
     for name in ('python-installer.json','python-bootstrap.sh','python-bootstrap.ps1','runtime_installer.py'):
         shutil.copy2(ROOT/'Resources'/name,RES/name)

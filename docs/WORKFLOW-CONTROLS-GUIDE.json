@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-10-learning-line-actions",
+  "revision": "workflow-controls-guide-19-caption-only-hk",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -248,10 +248,10 @@
         "ja": "最終音声フォールバック"
       },
       "body": {
-        "en": "This choice applies after permitted repair. First audible take keeps a usable original generation; it does not request a generic or system voice. Original source speech is the final source fallback. Generic target-language voice permits one bounded final trial in the selected engine, even with AI repair off. Other engines and installed system voices also require AI repair and their separate permission. Missing or silent audio still receives at most two fill retries. A strict duration limit still applies. If no permitted take can be delivered, preserve source continuity and report the missing target dub. Review uncertainty alone does not replace audible speech. For required missing audio with no usable clone reference, one selected-engine generic fill is allowed within the shared limit. It cannot replace audible audio or enable a system voice.",
-        "zh-HK": "此選項在獲准修復後生效。「首次有聲錄音」保留可用的原始錄音，不會自動改用通用或系統聲線。「原片對白原聲」以原聲作最後後備。「通用目標語言聲線」允許所選引擎最後試配一次，即使 AI 修復關閉亦適用。其他引擎及已安裝系統聲線另須開啟 AI 修復及各自選項。缺聲或無聲仍最多補配兩次；已開啟的時長限制仍然生效。所有獲准錄音均無法交付時，會保留原聲連續性，並列明缺失的目標語言配音。單憑未確認的覆聽結果，不會替換有聲錄音。 缺少參考而完全沒有錄音時，必要補配可使用所選引擎的一次通用聲線；不會取代已有聲音，也不會自動改用系統聲音。",
-        "zh-CN": "此选项在获准修复后生效。“首次有声录音”保留可用的原始生成，不会暗中改用通用或系统声音。“原片对白原声”以原声作最终后备。“通用目标语言声音”使用已选引擎最后试配一次，即使 AI 修复关闭也适用。其他引擎和已安装系统声音，还须开启 AI 修复及各自选项。缺声或无声仍最多补配两次；已开启的时长限制仍然生效。所有获准录音都无法交付时，保留原声连续性，并列明缺失的目标语配音。仅凭复听未确认不会替换有声录音。 缺少参考且完全没有录音时，必要补配可使用所选引擎的一次通用声线；不替换已有声音，也不自动改用系统声音。",
-        "ja": "許可された修復の後に適用します。「最初の音声付きテイク」は使用可能な初回生成を保持し、汎用音声やシステム音声を要求しません。「原音声」は最終的に原音声を使います。「対象言語の汎用音声」は、AI修復がオフでも選択したエンジンで最後に1回試します。別エンジンとインストール済みシステム音声には、AI修復と各項目の許可も必要です。欠損・無音の再生成は最大2回です。有効な長さ制限は引き続き適用します。使用可能なテイクがない場合は原音声で連続性を保ち、対象言語の欠落を報告します。確認できない認識結果だけでは音声を置き換えません。 参照不足で音声がない場合、共通回数内で選択中エンジンの汎用音声による補完を1回許可します。有声音声の置換やシステム音声への切替は行いません。"
+        "en": "Basic and Expert offer this choice. The default is First audible take. Production settings controls this choice; mobile Basic mode also provides it in operation options. Changes apply to new jobs; saved jobs keep their policy. This choice applies after permitted repair. First audible take keeps a usable original generation; it does not request a generic or system voice. Original source speech is the final source fallback. Generic target-language voice permits one bounded final trial in the selected engine, even with AI repair off. Other engines and installed system voices also require AI repair and their separate permission. Missing or silent audio still receives at most two fill retries. A strict duration limit still applies. If no permitted take can be delivered, preserve source continuity and report the missing target dub. Review uncertainty alone does not replace audible speech. For required missing audio with no usable clone reference, one selected-engine generic fill is allowed within the shared limit. It cannot replace audible audio or enable a system voice.",
+        "zh-HK": "基本與專家模式均提供此選項，預設為「第一條有聲錄音」。此選項集中喺製作設定；流動版基本模式亦可喺操作選項設定。更改只套用於新轉換；已儲存任務保留原設定。此選項在獲准修復後生效。「首次有聲錄音」保留可用的原始錄音，不會自動改用通用或系統聲線。「原片對白原聲」以原聲作最後後備。「通用目標語言聲線」允許所選引擎最後試配一次，即使 AI 修復關閉亦適用。其他引擎及已安裝系統聲線另須開啟 AI 修復及各自選項。缺聲或無聲仍最多補配兩次；已開啟的時長限制仍然生效。所有獲准錄音均無法交付時，會保留原聲連續性，並列明缺失的目標語言配音。單憑未確認的覆聽結果，不會替換有聲錄音。 缺少參考而完全沒有錄音時，必要補配可使用所選引擎的一次通用聲線；不會取代已有聲音，也不會自動改用系統聲音。",
+        "zh-CN": "基本与专家模式均提供此选项，默认为“第一条有声录音”。此选项集中在制作设置；移动版基本模式也可在操作选项设置。更改只应用于新转换；已保存任务保留原设置。此选项在获准修复后生效。“首次有声录音”保留可用的原始生成，不会暗中改用通用或系统声音。“原片对白原声”以原声作最终后备。“通用目标语言声音”使用已选引擎最后试配一次，即使 AI 修复关闭也适用。其他引擎和已安装系统声音，还须开启 AI 修复及各自选项。缺声或无声仍最多补配两次；已开启的时长限制仍然生效。所有获准录音都无法交付时，保留原声连续性，并列明缺失的目标语配音。仅凭复听未确认不会替换有声录音。 缺少参考且完全没有录音时，必要补配可使用所选引擎的一次通用声线；不替换已有声音，也不自动改用系统声音。",
+        "ja": "基本・専門モードの両方で選べます。既定は最初の音声付きテイクです。この選択は制作設定にあります。モバイルの基本モードでは操作オプションからも設定できます。変更は新規変換に適用し、保存済みジョブは元の設定を保持します。許可された修復の後に適用します。「最初の音声付きテイク」は使用可能な初回生成を保持し、汎用音声やシステム音声を要求しません。「原音声」は最終的に原音声を使います。「対象言語の汎用音声」は、AI修復がオフでも選択したエンジンで最後に1回試します。別エンジンとインストール済みシステム音声には、AI修復と各項目の許可も必要です。欠損・無音の再生成は最大2回です。有効な長さ制限は引き続き適用します。使用可能なテイクがない場合は原音声で連続性を保ち、対象言語の欠落を報告します。確認できない認識結果だけでは音声を置き換えません。 参照不足で音声がない場合、共通回数内で選択中エンジンの汎用音声による補完を1回許可します。有声音声の置換やシステム音声への切替は行いません。"
       }
     },
     {
@@ -404,6 +404,216 @@
         "zh-CN": "在学习模式每句按“翻译原文”，只翻译该句原文，其他句子的同语言译文会保留。更改输出语言后重新翻译。译文旁可选配音引擎和参数，再按“录制译文”建立独立试录。短句沿用已验证的原角色参考，仅补静音以符合编码器长度；不重复说话或借用其他角色。原配音、成品和转换进度保持不变。",
         "en": "Select Translate original on a Learning line to translate only that source line. Other translations in the same language remain. Translate again after changing the target language. Choose an engine and settings beside the translation, then record a separate take. Short lines keep their verified original speaker reference; only silence is added for encoder context. No repeated words or other speaker is added. Original dubbing, outputs and conversion progress remain.",
         "ja": "学習モードの各行で「原文を翻訳」を押すと、その行だけを翻訳します。同じ言語のほかの翻訳は保持します。出力言語を変えた後は再翻訳してください。訳文の横でエンジンと設定を選び、独立した録音を作成できます。短い台詞も検証済みの元話者の参照音声を使用し、エンコーダーの長さに合わせて無音だけを追加します。台詞の繰り返しや別の話者は追加しません。元の吹替、完成品、変換の進行状況は保持します。"
+      }
+    },
+    {
+      "id": "purchaseAccess",
+      "title": {
+        "zh-HK": "購買與免費功能",
+        "zh-CN": "购买与免费功能",
+        "en": "Purchase and free features",
+        "ja": "購入と無料機能"
+      },
+      "body": {
+        "zh-HK": "基本模式、朗讀、學習及所有匯出功能免費，學習模式沒有對話數量限制。一次性購買只解鎖專家模式；未購買時會顯示鎖頭，按下可查看升級介紹。",
+        "zh-CN": "基本模式、朗读、学习及所有导出功能免费，学习模式没有对话数量限制。一次性购买仅解锁专家模式；未购买时显示锁，点击可查看升级介绍。",
+        "en": "Basic, Reading, Learning and all export features are free. Learning has no dialogue limit. One purchase unlocks Expert mode only. Unpurchased Expert shows a lock and opens the upgrade introduction.",
+        "ja": "基本、読み上げ、学習、すべての書き出しは無料です。学習の会話数に制限はありません。1回の購入でエキスパートのみ解除します。未購入時は鍵を表示し、タップで紹介を開きます。"
+      }
+    },
+    {
+      "id": "sourceWorkflowDefaults",
+      "title": {
+        "zh-HK": "翻譯來源自動偵測",
+        "zh-CN": "翻译来源自动检测",
+        "en": "Automatic translation source",
+        "ja": "翻訳ソースの自動検出"
+      },
+      "body": {
+        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。",
+        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。",
+        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow.",
+        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。"
+      }
+    },
+    {
+      "id": "originalDelivery",
+      "title": {
+        "zh-HK": "保留原聲",
+        "zh-CN": "保留原声",
+        "en": "Original audio retained",
+        "ja": "元の音声を保持"
+      },
+      "body": {
+        "zh-HK": "此句輸出保留原片聲音，不代表已提供目標語言配音。請查看保留原因並試聽。自動原聲後備仍會顯示在報告中；這項提示不會啟動重錄或增加修復次數。",
+        "zh-CN": "此句输出保留原片声音，不代表已提供目标语言配音。请查看保留原因并试听。自动原声后备仍会显示在报告中；此提示不会启动重录或增加修复次数。",
+        "en": "This line retains source audio in the output. It does not confirm target-language delivery. Check the reason and listen. Automatic source fallback remains visible in the report. This notice does not start a retake or grant repair attempts.",
+        "ja": "この行の出力は元の音声を保持しています。対象言語の音声が提供されたことを示しません。理由を確認し、試聴してください。自動的に元の音声へ戻った行もレポートに表示します。この表示は再録音を開始せず、修復回数も増やしません。"
+      }
+    },
+    {
+      "id": "reportClassification",
+      "title": {
+        "zh-HK": "校對報告分類",
+        "zh-CN": "校对报告分类",
+        "en": "Review report categories",
+        "ja": "校正レポートの分類"
+      },
+      "body": {
+        "zh-HK": "「待補配音」只列需要目標配音但錄音缺失、無聲或損壞的段落，包括非用戶選擇的原聲後備。可用的首條錄音、通用聲線及已修復錄音列為「已有配音」；未執行或未能確認的 AI 核對不算失敗。字句、語言、時長及來源疑點另列「建議覆核」。片頭／片尾、刻意保留的反應聲及用戶選擇原聲不算缺漏。讀取錄音時另顯示檢查狀態；有聲不代表字句或口音已驗收。歷史失敗不能取代目前錄音狀態。分類不會開始重錄、增加修復次數或改變已保存設定。",
+        "zh-CN": "“待补配音”仅列需要目标配音但录音缺失、无声或损坏的片段，包括非用户选择的原声后备。可用的首条录音、通用声线与已修复录音列为“已有配音”；未执行或未能确认的 AI 核对不算失败。字句、语言、时长及来源疑点另列“建议复核”。片头／片尾、刻意保留的反应声与用户选择原声不算缺漏。读取录音时另显示检查状态；有声不代表字句或口音已验收。历史失败不能取代当前录音状态。分类不会开始重录、增加修复次数或改变已保存设置。",
+        "en": "Needs dubbing lists required target lines with missing, silent or damaged selected audio, including unplanned source fallback. Usable first takes, generic voices and repaired recordings belong in Audio available. Absent or inconclusive optional checks are not failures. Wording, language, duration and source notes belong in Review suggested. Exclude protected performances and explicit source choices from missing counts. Show file checks separately. Audio presence does not certify content or accent. Historical failures do not override current recording evidence. Categories never start retakes, grant attempts or change frozen settings.",
+        "ja": "「吹替が必要」は、対象音声が必要なのに選択音声が欠落・無音・破損した行だけを示し、意図しない元音声へのフォールバックも含みます。利用できる最初の録音、汎用音声、修復済み録音は「音声あり」です。未実行・判定不能の任意検査は失敗ではありません。言葉、言語、長さ、ソースの疑問は「確認を推奨」に分けます。保護された演技や利用者が選んだ元音声は欠落に数えません。ファイル確認中は別表示し、有音だけで内容やアクセントを認証しません。過去の失敗は現在の録音証拠を上書きしません。分類は再録音、試行回数、保存設定を変更しません。"
+      }
+    },
+    {
+      "id": "reportMissing",
+      "title": {
+        "zh-HK": "待補配音",
+        "zh-CN": "待补配音",
+        "en": "Needs dubbing",
+        "ja": "吹替が必要"
+      },
+      "body": {
+        "zh-HK": "需要目標配音，但目前錄音缺失、無聲或損壞。",
+        "zh-CN": "需要目标配音，但当前录音缺失、无声或损坏。",
+        "en": "Required target audio is missing, silent or damaged.",
+        "ja": "必要な対象音声が欠落・無音・破損しています。"
+      }
+    },
+    {
+      "id": "reportAdvisory",
+      "title": {
+        "zh-HK": "建議覆核",
+        "zh-CN": "建议复核",
+        "en": "Review suggested",
+        "ja": "確認を推奨"
+      },
+      "body": {
+        "zh-HK": "已有錄音，另有字句、來源或時長提示；不會因此自動重錄。",
+        "zh-CN": "已有录音，另有字句、来源或时长提示；不会因此自动重录。",
+        "en": "Audio exists with wording, source or duration notes. These notes do not start a retake.",
+        "ja": "音声はありますが、言葉・ソース・長さの確認メモがあります。自動再録音は開始しません。"
+      }
+    },
+    {
+      "id": "reportAvailable",
+      "title": {
+        "zh-HK": "已有配音",
+        "zh-CN": "已有配音",
+        "en": "Audio available",
+        "ja": "音声あり"
+      },
+      "body": {
+        "zh-HK": "目前已有可用配音；AI 核對結果另行顯示，不等於內容已驗收。",
+        "zh-CN": "当前已有可用配音；AI 核对结果另行显示，不等于内容已验收。",
+        "en": "A usable target recording is available. Optional check status is separate from content acceptance.",
+        "ja": "利用できる対象録音があります。任意検査の状態と内容の承認は別です。"
+      }
+    },
+    {
+      "id": "reportPreserved",
+      "title": {
+        "zh-HK": "保留原聲",
+        "zh-CN": "保留原声",
+        "en": "Source retained",
+        "ja": "元音声を保持"
+      },
+      "body": {
+        "zh-HK": "用戶選擇或受保護表演保留原聲，不列作缺少配音。",
+        "zh-CN": "用户选择或受保护表演保留原声，不列为缺少配音。",
+        "en": "An explicit source choice or protected performance retains source audio. It is not missing dubbing.",
+        "ja": "利用者の選択や保護された演技として元音声を保持します。吹替の欠落ではありません。"
+      }
+    },
+    {
+      "id": "reportSummary",
+      "title": {
+        "zh-HK": "校對狀態",
+        "zh-CN": "校对状态",
+        "en": "Review status",
+        "ja": "校正状況"
+      },
+      "body": {
+        "zh-HK": "優先處理缺少配音的段落。未完成 AI 核對不代表配音失敗。",
+        "zh-CN": "优先处理缺少配音的片段。未完成 AI 核对不代表配音失败。",
+        "en": "Prioritize missing dubbing. An absent optional check does not mean the recording failed.",
+        "ja": "不足している吹替を優先します。任意検査の未実施は録音の失敗ではありません。"
+      }
+    },
+    {
+      "id": "queueSelection",
+      "title": {
+        "zh-HK": "自動佇列選擇",
+        "zh-CN": "自动队列选择",
+        "en": "Automatic queue selection",
+        "ja": "自動キューの選択"
+      },
+      "body": {
+        "zh-HK": "勾選影片才會加入後續自動轉換。取消勾選不會刪除影片、錄音或進度，亦不會停止正在處理的影片。介紹影片不會自動排隊，已完成影片會略過。重新開啟 App 不會自行啟動轉換。",
+        "zh-CN": "勾选影片才会加入后续自动转换。取消勾选不会删除影片、录音或进度，也不会停止正在处理的影片。介绍视频不会自动排队，已完成影片会跳过。重新打开应用不会自行启动转换。",
+        "en": "Only selected videos enter later automatic handoffs. Deselecting retains media, recordings and progress and does not stop the active conversion. Skip the introduction and completed videos. Relaunch does not start a conversion.",
+        "ja": "選択した動画だけを後続の自動変換に含めます。選択解除は動画・録音・進捗を削除せず、処理中の動画も停止しません。紹介動画と完了済み動画はスキップします。アプリの再起動だけでは変換を開始しません。"
+      }
+    },
+    {
+      "id": "queueSourceLanguage",
+      "title": {
+        "zh-HK": "佇列原聲語言",
+        "zh-CN": "队列原声语言",
+        "en": "Queue source language",
+        "ja": "キューの元音声言語"
+      },
+      "body": {
+        "zh-HK": "新自動工作可使用自動偵測或指定原聲語言。自動偵測結果不確定時，使用預先選定的後備語言，預設日文，不再逐條詢問。後備選擇不代表已確認偵測結果。語言設定會隨新工作保存；舊草稿沿用已保存政策。此設定不會改變字幕與語音的翻譯主次關係。",
+        "zh-CN": "新自动任务可使用自动检测或指定原声语言。自动检测结果不确定时，使用预选的后备语言，默认日文，不再逐条询问。后备选择不代表已确认检测结果。语言设置随新任务保存；旧草稿保留已保存策略。此设置不改变字幕和语音的翻译主次关系。",
+        "en": "New automatic jobs use detected or explicitly selected source language. If detection is inconclusive, use the configured fallback, Japanese by default, without a per-video prompt. A fallback is not confirmed detection. Freeze the language policy in each new job; saved drafts retain their policy. Subtitle/speech content priority does not change.",
+        "ja": "新しい自動ジョブは言語の自動検出または指定言語を使います。判定できない場合は設定済みの代替言語（初期値は日本語）を使い、動画ごとの確認を省きます。代替言語は検出確認ではありません。新規ジョブに方針を保存し、既存の下書きは従来の方針を保持します。字幕と音声の優先関係は変わりません。"
+      }
+    },
+    {
+      "id": "downloadedPresetModels",
+      "title": {
+        "zh-HK": "製作預設的模型選擇",
+        "zh-CN": "制作预设的模型选择",
+        "en": "Downloaded models in defaults",
+        "ja": "プリセットの導入済みモデル"
+      },
+      "body": {
+        "zh-HK": "iPad 製作預設會將未完整下載的本機模型顯示為灰色，不能選取。iPhone 基本模式及製作預設會隱藏這些模型；模型中心保留下載入口。檔案齊全但尚未載入記憶體的模型仍可選擇。此限制不會下載模型、清除原有選擇或更改舊工作。系統翻譯與朗讀按裝置服務及已安裝聲線提供。",
+        "zh-CN": "iPad 制作预设会将未完整下载的本地模型显示为灰色，无法选择。iPhone 基本模式和制作预设会隐藏这些模型；模型中心保留下载入口。文件齐全但尚未载入内存的模型仍可选择。此限制不会下载模型、清除原选择或改变旧任务。系统翻译和朗读依设备服务及已安装声线提供。",
+        "en": "iPad defaults show incomplete local models as gray and disabled. iPhone Basic and defaults hide them. Models keeps download entries. Complete files remain selectable before runtime loading. This gate does not download, clear stored choices or change saved jobs. System translation and speech depend on OS services and installed voices.",
+        "ja": "iPad の制作プリセットでは未導入・不完全なモデルを灰色で無効表示します。iPhone の基本モードとプリセットでは非表示にします。モデル画面には導入項目を残します。ファイルが揃っていれば実行時の読み込み前でも選択できます。自動ダウンロード、保存済み選択の消去、保存済み作業の変更は行いません。システム翻訳と読み上げは OS 機能・導入済み音声に従います。"
+      }
+    },
+    {
+      "id": "captionOnlyNoDialogue",
+      "title": {
+        "en": "Non-dialogue captions only",
+        "zh-HK": "無對白字幕只顯示文字",
+        "zh-CN": "无对白字幕只显示文字",
+        "ja": "会話のない字幕は表示のみ"
+      },
+      "body": {
+        "en": "Desktop Production settings has this switch on by default in Basic and Expert. Keep translated screen captions at their display times without TTS only when completed original and separated-audio checks agree that there is no dialogue. Missing recognition or a failed voice take is not proof of silence. Quiet or offscreen words and uncertain evidence keep the normal dubbing requirement. The conservative check can leave ambiguous screen text dubbed. This control does not enable extra AI review, grant retries or change saved jobs. iPad and iPhone uptake is pending; this shared description does not confirm delivery there.",
+        "zh-HK": "桌面「製作設定」預設開啟，基本與專家模式適用。只有原聲及分離聲音的完整檢測共同確認沒有對白，才保留畫面文字的翻譯字幕及原顯示時間，不生成配音。辨識不到文字或配音失敗不等於沒有對白；細聲、畫外對白或證據不確定時仍需配音。保守檢查可能保留不確定畫面文字的配音。此開關不會開啟額外 AI 覆核、增加重錄次數或改變已保存工作。iPad／iPhone 接入待完成，共用說明不代表已在手機或平板交付。",
+        "zh-CN": "桌面“制作设置”默认开启，基本与专家模式适用。只有原声与分离声音的完整检测共同确认没有对白，才保留画面文字的翻译字幕与原显示时间，不生成配音。未识别出文字或配音失败不等于没有对白；小声、画外对白或证据不确定时仍需配音。保守检查可能保留不确定画面文字的配音。此开关不会开启额外 AI 复核、增加重录次数或改变已保存任务。iPad／iPhone 接入待完成，共用说明不代表已在手机或平板交付。",
+        "ja": "デスクトップの制作設定で、基本・エキスパートとも初期状態はオンです。元音声と分離音声の検査が完了し、会話がないと一致した場合だけ、画面文字の翻訳字幕と表示時刻を保持してTTSを省きます。認識原稿の欠落やTTSの失敗は無音の証明ではありません。小声・画面外の台詞や不確かな証拠は通常の吹替対象に残します。保守的な検査のため、不確かな画面文字を読み上げる場合があります。追加AI確認、再試行回数、保存済みジョブの設定は変更しません。iPad・iPhoneへの適用は未完了で、この共通説明は提供済みの証明ではありません。"
+      }
+    },
+    {
+      "id": "hongKongContextualWording",
+      "title": {
+        "en": "Contextual Hong Kong wording",
+        "zh-HK": "按語境使用香港口語",
+        "zh-CN": "按语境使用香港口语",
+        "ja": "文脈に合う香港広東語"
+      },
+      "body": {
+        "en": "New desktop Cantonese drafts use shared contextual examples in the first translation. Use 廢話少講 for 廢話少說. For 搞不好, distinguish a possible outcome (可能 or 分分鐘) from inability to fix something (整唔好). Keep nouns such as 小說, project names and quoted text. Never globally replace 說 or 不好. The examples add no AI call or repair loop and do not rewrite saved scripts or recordings. Native model wording still needs listening checks. iPad and iPhone implementation is pending.",
+        "zh-HK": "桌面新廣東話稿在首輪翻譯加入共用語境例子：「廢話少說」可用「廢話少講」；「搞不好」要分清「可能／分分鐘」與「整唔好」的意思，不能機械替換。保留「小說」等名詞、專案人名及引號內文字，不會全局把「說」換成「講」或「不好」換成「唔好」。例子不增加 AI 呼叫或修復輪次，亦不改寫已保存稿件或錄音；模型實際用字仍需試聽。iPad／iPhone 實作待完成。",
+        "zh-CN": "桌面新粤语稿在首轮翻译加入共用语境示例：“廢話少說”可用“廢話少講”；“搞不好”要区分“可能／分分鐘”和“整唔好”的含义，不能机械替换。保留“小說”等名词、项目人名与引号内文字，不会全局把“說”换成“講”或“不好”换成“唔好”。示例不增加 AI 调用或修复轮次，也不改写已保存稿件与录音；模型实际用字仍需试听。iPad／iPhone 实现待完成。",
+        "ja": "新しいデスクトップの広東語原稿では、最初の翻訳に共通の文脈例を加えます。「廢話少說」は「廢話少講」へ、「搞不好」は可能性の「可能・分分鐘」と修理不能の「整唔好」を区別します。「小說」などの名詞、登録名、引用文を守り、「說」や「不好」を一括置換しません。AI呼出しや修復の回数を増やさず、保存済みの原稿・録音も変更しません。モデルの実際の言い回しは試聴確認が必要です。iPad・iPhoneの実装は未完了です。"
       }
     }
   ],

@@ -60,7 +60,7 @@ class ScopeTests(unittest.TestCase):
   row=self.rows[0];self.change_scope(row,False)
   self.app.dispatch('configure',dict(settings=dict(defaultSubtitleWorkflow='speech-subtitles',defaultOCRWorkflow='speech-ocr')))
   self.assertEqual(self.app.store.settings_for(row)['defaultSubtitleWorkflow'],'subtitles-speech')
-  self.assertEqual(self.app.store.settings_for(row)['defaultOCRWorkflow'],'ocr-speech')
+  self.assertEqual(self.app.store.settings_for(row)['defaultOCRWorkflow'],'speech-ocr')
   self.assertEqual(self.app.store.settings_for(self.rows[1])['defaultSubtitleWorkflow'],'speech-subtitles')
  def test_cannot_implicitly_edit_global_row_through_video_scope(self):
   with self.assertRaises(ValueError):self.patch(self.rows[0],dubLanguages=['en'])

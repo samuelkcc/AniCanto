@@ -114,7 +114,7 @@ def validate_export(cfg,job,cues,target,run,emit):
     content_flags=sorted({r['index'] for r in content['rows'] if r['requiresReview']}) if content else []
     language_flags=sorted({r['index'] for r in content['rows'] if r.get('languageMismatch') or r.get('languageUnverified')}) if content else []
     from script_preflight import issues
-    script_flags=[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if (c.get('englishTimingReview') if cfg.get('targetLanguage')=='en' else issues(cues,i) or c.get('translationWarnings'))]
+    script_flags=[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if c.get('translationWarnings') or (c.get('englishTimingReview') if cfg.get('targetLanguage')=='en' else issues(cues,i))]
     voice=json.loads((job/'voice-consistency.json').read_text()) if (job/'voice-consistency.json').exists() else {}
     voice_flags=voice.get('reviewIndices',[])
     from speakers import audit_references

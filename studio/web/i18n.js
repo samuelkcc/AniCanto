@@ -2,6 +2,17 @@ import {editorLocale} from './editor-locale.js';
 import {reviewLocale} from './review-locale.js';
 import {localeData} from './locale-data.js';
 const zh={
+"Retained source audio":"保留原聲",
+"Shared subtitle continuation":"共用字幕延續片段",
+"No assigned subtitle wording":"未有配對字幕文字",
+"Source retention does not certify target dubbing or complete meaning coverage.":"保留原聲唔代表已交付目標配音，亦唔代表意思已完整涵蓋。",
+"Open dialogue":"查看對白",
+
+"Automatic: subtitles first when readable text subtitles are available; otherwise speech first with OCR assistance. Expert mode can select a manual workflow. Saved jobs keep their source choice.":"自動：有可讀文字字幕時以字幕為主；否則以語音為主、OCR 輔助。專家模式可手動選流程；已保存工作維持原選擇。",
+"Generation input error":"生成輸入錯誤",
+"Target voice skipped for uncertain timing":"對時未確認而跳過目標配音",
+"source audio retained":"段保留原聲",
+
 "Global":"全域",
 "AI repair":"AI 修復",
 "Individual settings":"個別設定",
@@ -497,7 +508,7 @@ const zh={
  'Download missing components':'下載缺少嘅元件','Prepare runtime':'準備執行環境','Runtime ready':'執行環境已就緒','Checking your computer…':'正在檢查電腦…',
  'Video queue':'影片清單','Add videos':'加入影片','Preview & listen':'預覽與試聽','Production settings':'製作設定','Voice engine':'配音引擎','Dubbing languages':'配音語言',
  'Hong Kong Cantonese':'香港廣東話','English':'英文','Both languages':'雙語','Keep Japanese audio track':'保留日文原聲音軌','Output subtitles':'輸出字幕','Original subtitles':'原片字幕',
- 'Standard':'標準模式','High speed':'高速模式','Production mode':'製作模式','High speed skips all quality review and quality-driven retakes. The video may contain dubbing defects.':'高速模式會跳過所有品質檢查及品質重錄，生成影片可能存在配音缺陷。',
+ 'Standard':'標準模式','High speed':'高速模式','Production mode':'製作模式',
  'Preview captions':'預覽字幕','Follow processing':'跟隨處理','Play original':'日文原聲','Listen':'試聽','Retake':'重錄','Adjust':'調整','This line':'本段試聽',
  'Preparing preview without re-encoding…':'正在準備預覽，毋須重新壓片…','Preparing compatible preview…':'正在準備相容預覽…','Reading video…':'正在讀取影片…','Copying cloud video into local cache…':'正在將雲端影片複製到本機暫存…','Starting…':'正在啟動…','Resume all unfinished videos':'繼續全部未完成影片',
  'Start remaining videos':'開始餘下影片','Start conversion':'開始轉換','Start all waiting':'開始全部待處理','Pause & save':'暫停並保存','Resume':'繼續處理','Produce a new version':'製作新版','Waiting':'等待','Paused':'已暫停','Processing':'處理中','Complete':'已完成','Needs attention':'需要處理',

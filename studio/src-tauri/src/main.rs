@@ -5,6 +5,7 @@ use serde_json::{json,Value};
 use tauri::{Emitter,Manager,State};
 use fs2::FileExt;
 mod appearance;
+mod preview_stream;
 mod task_lifecycle;
 mod native_queue;
 use native_queue::QueueControl;
@@ -437,9 +438,17 @@ async fn studio_media(params:Value,host:State<'_,Arc<Host>>)->Result<Value,Strin
         // Media transcoding must not hold the state lock for its whole duration.
         // A separate adapter instance only reads state for this operation.
         let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
-        shadow.rpc("media",params)
+        let mut result=shadow.rpc("media",params)?;
+        if result["mode"]=="demand" {
+            let python=host.python().ok_or("The playback runtime is missing.")?;
+            let stream=preview_stream::start(&python,&host.shared.join("studio_stream.py"),result["streamConfig"].take())?;
+            result["url"]=stream["url"].clone();result["streamID"]=stream["streamID"].clone();
+        }
+        Ok(result)
     }).await.map_err(|e|e.to_string())?
 }
+#[tauri::command]
+async fn studio_stop_stream(id:String)->Result<(),String>{tauri::async_runtime::spawn_blocking(move||preview_stream::stop(&id)).await.map_err(|e|e.to_string())?;Ok(())}
 #[tauri::command]
 async fn studio_thumbnail(params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
@@ -564,10 +573,10 @@ fn main(){
             }
             #[cfg(not(windows))] let _=(webview,payload);
         })
-        .invoke_handler(tauri::generate_handler![studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
+        .invoke_handler(tauri::generate_handler![studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_stop_stream,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
             let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
-            else {#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}
+            else {preview_stream::stop_all();#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}
         }})
         .run(tauri::generate_context!()).expect("AniCanto desktop could not start");
 }

@@ -130,6 +130,7 @@ def translate(w,cfg,job,cues):
             for i in indices:
                 text=result.get(str(i))
                 cues[i][field]=(w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()) if isinstance(text,str) and text.strip() else ''
+                if cues[i][field]:cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,cues[i][field],fresh=True)
                 if not cues[i][field]:cues[i].setdefault('fastDefects',[]).append('missing-'+field)
             w.atomic_json(Path(job)/'cues.json',cues)
     # Bounded pass before synthesis: a line that cannot fit its own source window is
@@ -208,6 +209,8 @@ def convert(w,cfg):
         if cfg.get('productionMode')=='normal':
             from normal_mode import metadata_only
             cues=[c for c in cues if not metadata_only(c)]
+        if not cues and __import__('caption_only').enabled(cfg):
+            __import__('subtitle_content_only').complete_windows(cfg,job,cues,w.atomic_json)
         if not cues:raise ValueError('未找到有效對白時段。')
         w.atomic_json(cache,cues)
         w.atomic_json(job/'subtitle-context-meta.json',dict(language=cfg.get('sourceCaptionLanguage','')))
@@ -419,7 +422,7 @@ def synthesize(cfg,job,cues,run,emit,generated_paths=None):
             if __import__('speech_duration').overlap(cfg) and next_index is not None and not cue.get('preserveOriginalSpeech'):
                 overlap_seconds=round(max(0.,anchor+len(raw)/2/sr-window(cues[next_index],cues,cfg['duration'])[0]),3)
                 row['intentionalOverlap']=bool(overlap_seconds)
-            row.update(originalPreserved=bool(cue.get('preserveOriginalSpeech')),renderedAudio=str(take),renderedEnd=(offset+len(samples))/sr,renderedSeconds=len(samples)/sr,rate=rate,speechDeadline=deadline,hardSlotCompression=rate,overlapSeconds=overlap_seconds,requiresTimingReview=bool(overlap_seconds) and not __import__('speech_duration').overlap(cfg),needsReview=bool(overlap_seconds) and not __import__('speech_duration').overlap(cfg),skipped=False)
+            row.update(generationSourceAudio=str(path),generationTrace=str(Path(path).with_suffix('.generation.json')),originalPreserved=bool(cue.get('preserveOriginalSpeech')),renderedAudio=str(take),renderedEnd=(offset+len(samples))/sr,renderedSeconds=len(samples)/sr,rate=rate,speechDeadline=deadline,hardSlotCompression=rate,overlapSeconds=overlap_seconds,requiresTimingReview=bool(overlap_seconds) and not __import__('speech_duration').overlap(cfg),needsReview=bool(overlap_seconds) and not __import__('speech_duration').overlap(cfg),skipped=False)
         except (ValueError,RuntimeError,OSError) as error:
             row.update(skipped=True,needsReview=True,requiresTimingReview=True,failureKind=failure_kind,error=str(error),audio=str(path))
             if cfg.get('productionMode')=='normal' or __import__('delivery_policy').enabled(cfg):
@@ -464,6 +467,7 @@ def validation(cfg,job,cues,target,run,emit):
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     normal=cfg.get('productionMode')=='normal'
     result=dict(structuralStatus='passed',fullDecode='passed',qualityStatus='targeted-checks-only' if normal else 'not-checked-fast-mode',qualityChecked=False,contentCheck='targeted-language-and-integrity' if normal else 'skipped-fast-mode',timingReviewIndices=[],contentReviewIndices=[],duration=duration,cues=len(cues),warning=warning(cfg))
+    result['scriptReviewIndices']=[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if any(isinstance(note,dict) and note.get('stage')=='own-turn-caption' for note in c.get('translationWarnings',[]))]
     from normal_policy import retain
     if normal and retain(cfg) and not __import__('delivery_policy').bounded_delivery(cfg):result.update(qualityStatus='retained-recordings-unverified',contentCheck='not-automatically-reviewed',repairPolicy='missing-only')
     if __import__('delivery_policy').bounded_delivery(cfg):result.update(contentCheck='bounded-content-listen-see-normal-checks' if cfg.get('workMode')!='performance' else 'skipped-performance-all-fallbacks',wholeTrackRecheck=False)

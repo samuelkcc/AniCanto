@@ -69,7 +69,8 @@ def project(root,snapshot):
         state=entry.get('state','pending') if entry.get('fingerprint')==fp else 'pending'
         if state not in states:state='pending'
         issue.update(category=category(issue),triage=state,triageFingerprint=fp)
-        counts[issue['category']]+=1;states[state]+=1
+        counts[issue['category']]+=1
+        if state!='pending' or issue.get('reportGroup') in (None,'reportMissing'):states[state]+=1
     snapshot['workbench']=dict(categories=counts,**states,canUndo=bool(data.get('history')),qualityCertified=False)
     snapshot['staleRecordings']=stale_recordings(snapshot)
     return snapshot

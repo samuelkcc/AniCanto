@@ -10,7 +10,7 @@
 
 Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dubbing**. Recognition, translation, speech generation and export run locally after models and runtimes are installed.
 
-[Download](#download-the-beta--0251) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
+[Download](#download-the-beta--0259) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
 ## Why AniCanto exists
 
@@ -28,19 +28,22 @@ AniCanto 最初只係一個簡單嘅心願：**希望小朋友睇動畫時，可
 
 AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音員。角色演繹、情緒、節奏同戲劇張力都係配音員嘅專業；AI 生成聲音唔等同真人演出，希望大家繼續欣賞同支持背後嘅表演者。
 
-## Download the Beta · 0.25.1
+## Download the Beta · 0.25.9
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto-macOS-0.25.1.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.1-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/AniCanto-macOS-0.25.9.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.9-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.1-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.9-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
 
-- **Stable left tools:** the navigation stays anchored below the header. Compact spacing keeps all tools visible at normal window sizes; short windows use named icon controls. Page changes preserve positions, and very short windows retain scroll position after a redraw.
-- **Same conversion workflow:** the first-audible baseline, subtitle priority, three-language draft guidance, bounded missing-audio fill, and independent repair options are unchanged from0.25.0.
-- **Matching interface update:** Mac and Windows share the fix. Four-language interface images are current. Windows is cross-compiled and still needs native PC testing.
+- **Clearer editing and review:** separate production and AI Repair controls, direct line auditions, caption-only handling when no dialogue is confirmed, and clearer target-audio versus optional-review notes.
+- **Hong Kong wording:** contextual spoken-Cantonese guidance for new translations, with first audible takes preserved and bounded missing-audio fallback.
+- **Distinct assistants:** nine original rest scenes and drawing styles, shared Settings previews, and a theme-coloured A-note mark throughout the app.
+- **Matching desktop packages:** Mac and Windows use the same interface and shared worker source. Windows is cross-compiled; native Windows/GPU acceptance remains a separate test.
 
-[Layout fix and validation](docs/DESKTOP-NAVIGATION-0.25.1.md) · [Conversion workflow and limits](docs/DESKTOP-WORKFLOW-0.25.0.md).
+**Known limitation:** speech recognition with OCR can still group several short conversations into one long subtitle. This release does not fix that source-grouping defect. AI output can require listening and review.
+
+[0.25.9 release details](docs/DESKTOP-RELEASE-0.25.9.md)
 
 ## Try the original demo and compare the voices
 
@@ -195,21 +198,21 @@ Editing screenshots show **video preview switched off, with the animated assista
 
 ### Welcome and setup
 
-![Welcome and setup](docs/images/welcome-en.png?v=0.25.1)
+![Welcome and setup](docs/images/welcome-en.png?v=0.25.9)
 
 Choose the interface language, prepare local models, and enter Basic or Expert mode.
 
 ### Basic mode: progress and audition
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.1)
+![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.9)
 
 Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
 
 ### Expert mode: timeline and line editing
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.1)
+![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.9)
 
-![AI Repair](docs/images/ai-repair-en.png?v=0.25.1)
+![AI Repair](docs/images/ai-repair-en.png?v=0.25.9)
 
 Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
 
@@ -217,25 +220,25 @@ Use the full-width timeline to compare source dialogue and dubbing scripts, adju
 
 Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
 
-![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.1)
+![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.9)
 
 ### Review report: issues and recording comparison
 
-![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.1)
+![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.9)
 
 See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
 
 ### Dubbing studio and saved clips
 
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.1)
+![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.9)
 
 Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
 
-![Saved clips and learning](docs/images/speech-player-en.png?v=0.25.1)
+![Saved clips](docs/images/speech-player-en.png?v=0.25.9)
 
 ### Windows: NVIDIA CUDA setup
 
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.1)
+![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.9)
 
 Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
 

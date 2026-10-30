@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "revision": "hong-kong-contextual-260",
+  "purpose": "Use context-aware Hong Kong Cantonese in the first draft. Preserve meaning and names.",
+  "rules": [
+    "Use everyday Hong Kong verb forms and sentence grammar, not token substitution.",
+    "Distinguish an uncertain outcome from inability to do an action.",
+    "Never globally replace 說 with 講 or 不 with 唔. Preserve nouns, titles, names, quoted terms and technical meanings.",
+    "Do not use 講 in the noun 小說. Do not treat 不是不好 as a simple prohibition.",
+    "Examples are wording evidence, not additional dialogue. Choose a form from this turn only."
+  ],
+  "examples": [
+    {
+      "source": "廢話少說，快走！",
+      "target": "廢話少講，快走！",
+      "sense": "Stop unnecessary talk"
+    },
+    {
+      "source": "搞不好會下雨。",
+      "target": "分分鐘會落雨。",
+      "sense": "Uncertain possible outcome"
+    },
+    {
+      "source": "搞不好他已經走了。",
+      "target": "佢可能已經走咗喇。",
+      "sense": "Uncertain possible outcome"
+    },
+    {
+      "source": "這個機器我搞不好。",
+      "target": "呢部機我整唔好。",
+      "sense": "Unable to repair"
+    },
+    {
+      "source": "不要說了。",
+      "target": "唔好再講喇。",
+      "sense": "Request to stop speaking"
+    },
+    {
+      "source": "老實說，這本小說不錯。",
+      "target": "老實講，呢本小說幾好睇。",
+      "sense": "Keep the noun 小說"
+    },
+    {
+      "source": "不好意思，借過。",
+      "target": "唔該，借借。",
+      "sense": "Polite request; not mechanical 唔好意思"
+    }
+  ],
+  "safePhraseRewrites": {
+    "廢話少說": "廢話少講",
+    "廢話少説": "廢話少講"
+  },
+  "noGlobalCharacterReplacement": true,
+  "extraAIRequests": 0
+}

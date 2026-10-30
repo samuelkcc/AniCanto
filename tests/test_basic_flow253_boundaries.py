@@ -10,7 +10,7 @@ class Submission(ScopeTests):
  def test_new_request_freezes_controls_and_resume_keeps_them(self):
   row=self.rows[0];self.app.dispatch('configure',dict(settings=dict(contentChecks=2,repairExcessiveAudibleOverlap=True)))
   path=self.app.store.submit(row);original=Path(path).read_bytes();request=json.loads(original);row.update(request=str(path),status='paused');self.app.store.save()
-  self.assertEqual(request['basicFlowRevision'],basic_flow.REVISION);self.assertEqual(request['contentChecks'],2);self.assertTrue(request['repairExcessiveAudibleOverlap'])
+  self.assertEqual(request['ownTurnGateRevision'],__import__('own_turn').REVISION);self.assertEqual(request['basicFlowRevision'],basic_flow.REVISION);self.assertEqual(request['contentChecks'],2);self.assertTrue(request['repairExcessiveAudibleOverlap'])
   self.app.dispatch('configure',dict(settings=dict(contentChecks=0,repairExcessiveAudibleOverlap=False)))
   self.assertEqual(self.app.store.submit(row),path);self.assertEqual(Path(path).read_bytes(),original)
  def test_bad_count_leaves_settings_and_queue_unchanged(self):

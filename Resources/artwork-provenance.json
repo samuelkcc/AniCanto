@@ -32,5 +32,370 @@
     "reference": "Each character record retains its four exact canonical Welcome-cover hashes and distinct artStyle.",
     "generator": "built-in image_gen",
     "scope": "Preview, progress walking and desktop assistant share one atlas per theme."
+  },
+  "desktopWorkSleep257": {
+    "generator": "built-in image_gen",
+    "date": "2026-10-29",
+    "policy": "Retain each original desktop character and art medium. Full faces remain. Do not use mobile silhouettes. Keep hands and face fixed; only upper hair moves. Single transparent scene assets avoid atlas-neighbour fragments.",
+    "assets": [
+      {
+        "key": "sleep-studio",
+        "saved": "studio/web/assets/assistant-activities/corrections/studio-sleep-257.png",
+        "sha256": "0729219cca304d079037dd8efc14afc308c9da4abee18dc0eb9ab2c6fb4736c0",
+        "artStyle": "original-lavender-anime"
+      },
+      {
+        "key": "sleep-ocean",
+        "saved": "studio/web/assets/assistant-activities/corrections/ocean-sleep-257.png",
+        "sha256": "cc07b0ddc27828245760e5edbe3f5062a1ce5cbab3f679360eb7f6e1dc7d2d88",
+        "artStyle": "elastic-adventure-comic"
+      },
+      {
+        "key": "sleep-energy",
+        "saved": "studio/web/assets/assistant-activities/corrections/energy-sleep-257.png",
+        "sha256": "2a26c61a792aa888b9b018f28d203b5070dbe001874c0fa1f571792a6343cc2a",
+        "artStyle": "angular-athletic-cel"
+      },
+      {
+        "key": "sleep-ninja",
+        "saved": "studio/web/assets/assistant-activities/corrections/ninja-sleep-257.png",
+        "sha256": "3993e48b500342251d9b25d4bdb57d778e033cb3aec320134c82f4c38ae69de7",
+        "artStyle": "sharp-brush-ink-action"
+      },
+      {
+        "key": "sleep-retro",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-sleep-257.png",
+        "sha256": "4746282c4ab2d9a907880dda6bfed63b00d2fb4f8e58ef876b16a71fe2e8ae9f",
+        "artStyle": "flat-geometric-tv-cartoon"
+      },
+      {
+        "key": "sleep-forest",
+        "saved": "studio/web/assets/assistant-activities/corrections/forest-sleep-257.png",
+        "sha256": "b13e4cca6e473e6b29f0a6b1853fc0aa12cce3e410e049ce3f6db5bf1025969d",
+        "artStyle": "pastoral-gouache"
+      },
+      {
+        "key": "sleep-future",
+        "saved": "studio/web/assets/assistant-activities/corrections/future-sleep-257.png",
+        "sha256": "716d51f47c4d1144e0b06cca3ccecb79c0e24e627c891a48a7ab704e852dcd7b",
+        "artStyle": "round-three-head-cartoon"
+      },
+      {
+        "key": "sleep-mint",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-sleep-257.png",
+        "sha256": "ab9b88b7a5c4f05934ffd38eaa66f8d11c6a0a462aec06976c6eaf4409ac41a7",
+        "artStyle": "glossy-3d-toon"
+      },
+      {
+        "key": "sleep-moonflower",
+        "saved": "studio/web/assets/assistant-activities/corrections/moonflower-sleep-257.png",
+        "sha256": "33459ac10b70f567f3c3275dd138ace92729ea8de0bb595e6af6e029c2824468",
+        "artStyle": "decorative-shojo-watercolor"
+      },
+      {
+        "key": "forest-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/forest-computer-257.png",
+        "sha256": "6adcf5597ac5cadfdd61370f4871f3b2e04eee8b5caa7dbf5124e77659309cc1",
+        "artStyle": "pastoral-gouache"
+      },
+      {
+        "key": "forest-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/forest-listening-257.png",
+        "sha256": "fe1b2e4287a9ef1bb7a5720c013703924b516d86d183f6f6feab77d1e8e35baf",
+        "artStyle": "pastoral-gouache"
+      },
+      {
+        "key": "forest-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/forest-dubbing-257.png",
+        "sha256": "b670d596d660346d689f7dd34505ed992b0c7ab5e3aa4a0dd8497a01a6a74a50",
+        "artStyle": "pastoral-gouache"
+      },
+      {
+        "key": "future-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/future-computer-257.png",
+        "sha256": "c2ace54405304a7d8209f3c766e7af6038dc2a9107f919983410a55b9a2a8e1c",
+        "artStyle": "round-three-head-cartoon"
+      },
+      {
+        "key": "future-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/future-listening-257.png",
+        "sha256": "65134d9fd0b98d2b72d887ad83dbb8b8751ea6fa99710e6f71155d8ab6d2baa1",
+        "artStyle": "round-three-head-cartoon"
+      },
+      {
+        "key": "future-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/future-dubbing-257.png",
+        "sha256": "1c33a25b226d26340f2ccaa0a6ff5eb06c1674725791379b5c3ab56f7ccea5a1",
+        "artStyle": "round-three-head-cartoon"
+      },
+      {
+        "key": "mint-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-computer-257.png",
+        "sha256": "46b0121632872187fa21a4ecb7d4be2b1e2b1dfbf0b1f7852eb2a298376d2e6c",
+        "artStyle": "glossy-3d-toon"
+      },
+      {
+        "key": "mint-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-listening-257.png",
+        "sha256": "0edbe340de88190cc3545af7f245f5bf8028cfa54e36f0c020ca7030aefe2000",
+        "artStyle": "glossy-3d-toon"
+      },
+      {
+        "key": "mint-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-dubbing-257.png",
+        "sha256": "4b1e49c17a17d931bf076883a4ea5cf886753ee78752bc37558f9da3631244d4",
+        "artStyle": "glossy-3d-toon"
+      },
+      {
+        "key": "retro-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-computer-257.png",
+        "sha256": "0b9da7a9b74d08be79caec3927fef77961e3920e8176de1117e16ff67a8cc463",
+        "artStyle": "flat-geometric-tv-cartoon"
+      },
+      {
+        "key": "retro-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-listening-257.png",
+        "sha256": "3f2c509e7fda7855c7ffaf8590386646410a674ab44cd2ba78b8c0b6c20f474a",
+        "artStyle": "flat-geometric-tv-cartoon"
+      },
+      {
+        "key": "retro-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-dubbing-257.png",
+        "sha256": "4797e69c24f4c20e7c3a224d88e8db0923258d47464dd0de4a78afcad7533d7e",
+        "artStyle": "flat-geometric-tv-cartoon"
+      }
+    ]
+  },
+  "desktopWork258": {
+    "generator": "built-in image_gen",
+    "date": "2026-10-29",
+    "policy": "Fifteen independent transparent scenes restore five original character media. Sleep and other characters remain unchanged. No scripted raster edits.",
+    "assets": [
+      {
+        "key": "energy-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/energy-computer-258.png",
+        "sha256": "e15207e1a7ebd744129496a0e5f60fba3372421738def841fc6a03053f508cec",
+        "prompt": "Use case: identity-preserve. Create one NEW transparent-background desktop assistant activity illustration from the reference character. Keep this exact adult woman's identity and angular athletic hand-inked cel animation style: dark warm-brown skin, short swept copper-orange curls with one visibly closely clipped side, amber eyes, small gold hoop, orange utility overshirt over black top, loose blue cargo trousers, cream sneakers and orange headphones. Do not grow the hair into braids or long hanging curls. Change the pose to alert computer work: seated naturally on an office chair at a simple wood-topped dark metal desk, using a slim laptop showing abstract audio tracks. Three-quarter front/side view lets us see her face and clipped side, concentrating with a subtle lively smile. Exactly two arms and two hands resting naturally over the keyboard, two feet. Preserve the strong angular cel line work and athletic adult proportions, not generic cute chibi, not 3D. Show the complete desk, chair, feet, hair with generous 7 percent transparent margin on every edge. One isolated coherent scene only, no grid, no other characters, no progress indicator, no captions, no text, no watermark. Genuinely transparent alpha background.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "energy-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/energy-listening-258.png",
+        "sha256": "68aacda416e786a2b2313643146aebafb8f9baf47b19758c05049a09c5e98e5c",
+        "prompt": "Use case: identity-preserve. One NEW standalone transparent desktop assistant activity. Reference1 defines the exact identity and angular athletic CEL ANIMATION drawing style; reference2 defines her awake face, short hair and outfit. Same adult woman, warm dark-brown skin, short swept copper curls with visibly closely clipped side, amber eyes, gold hoop, orange overshirt/black top, loose blue cargo trousers, cream sneakers and orange headphones. Maintain SHORT compact hair, no braids, no long hair. Activity: seated at a wood-topped dark metal desk, listening attentively through orange headphones worn over her ears, looking down and taking notes with her right hand in an open paperback notebook lying completely FLAT on the tabletop. Her left hand rests naturally on the open flat page. Show two hands only and a small pencil cup. No computer needed. Three-quarter front/side view, clean angular ink and controlled flat cel shadows, adult proportions. Exactly two arms/two hands/two legs, natural anatomy. One complete scene only. Preserve generous transparent space around ALL hair, feet and furniture, at least 7 percent margin. No cut edges, no neighbouring character, no grid, no progress, no decorative floating items, no text/watermark. Real alpha transparency.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "energy-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/energy-dubbing-258.png",
+        "sha256": "273a9484c9a4bb26e0f7f5d2ecd5648fe8973671038beeee341f33d1b2e68905",
+        "prompt": "Create a SQUARE 1:1 transparent PNG activity asset. Use the reference adult woman EXACTLY: dark brown skin, SHORT compact copper curls swept above her forehead, closely clipped side above ear, amber eyes, gold hoop, orange utility shirt over black tank, loose blue cargo pants, cream chunky sneakers, orange headphones. Match the angular hand-inked CEL ANIMATION illustration medium of the reference. NEW pose: she stands naturally performing a voice-over into one microphone and pop filter on a simple black tripod stand, one hand holds a script sheet, the other makes a small open conversational gesture. Awake lively eyes, expressive smile. Full body with both shoes, entire microphone stand, all hair and hands. Fit complete scene WITHIN central 82% of SQUARE canvas, leave clear empty alpha margins top/right/bottom/left. Exactly two hands, two arms, two legs. ONLY the character, page and microphone equipment have painted pixels. Everything else must be FULLY TRANSPARENT alpha=0. NO background, NO aura, NO coloured glow, NO light rays, NO gradient, NO vignette, NO cast shadow or floor patch. No desk, chair, extra people, symbols, words or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "ninja-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/ninja-computer-258.png",
+        "sha256": "7ec2f12e58826e8ab123f92b81247681085123d60c301d63af53a568ddf0fafc",
+        "prompt": "Use case: identity-preserve. Create ONE square 1:1 desktop activity asset, transparent PNG. The reference is the exact original adult female character and drawing medium. Keep her long loose charcoal-black hair, round thin glasses, olive headphones, sage technical jacket over black top, black cargo trousers with belt details, green/cream trainers, adult proportions and serious intelligent face. Keep strong sharp hand-inked manga contour lines and fine brush hatching with restrained olive/black cel shadows, as in this reference; NOT rounded generic cute anime, NOT chibi, NOT glossy3D. New awake activity: seated on an office chair at a simple wood-topped black metal desk, using a slim laptop with abstract sound tracks. Both hands rest at the keyboard, both feet visible. No pen or paper in her hands. Three-quarter front/side view with face visible. Exactly two arms/two hands/two legs. Fit ALL hair, shoes, desk/chair or stand within central82% of SQUARE canvas; generous transparent margins around every edge. Isolated single scene only. ONLY the character and necessary equipment have painted pixels; everything else alpha0. NO background, aura, gradient, floor shadow, stray mark, text, extra character or sheet grid.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "ninja-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/ninja-listening-258.png",
+        "sha256": "db89ce843153ccfd6a672ea443d6990e56c5d9692dcfa96013a29b4af443e4f4",
+        "prompt": "Use case: identity-preserve. Create ONE square 1:1 desktop activity asset, transparent PNG. The reference is the exact original adult female character and drawing medium. Keep her long loose charcoal-black hair, round thin glasses, olive headphones, sage technical jacket over black top, black cargo trousers with belt details, green/cream trainers, adult proportions and serious intelligent face. Keep strong sharp hand-inked manga contour lines and fine brush hatching with restrained olive/black cel shadows, as in this reference; NOT rounded generic cute anime, NOT chibi, NOT glossy3D. New awake activity: seated on an office chair at a simple wood-topped black metal desk, listening through olive headphones over her ears and writing in an open soft notebook lying completely flat on the tabletop. One hand holds a pen, the other rests on the flat page. Exactly two hands. No raised or slanted book. Three-quarter front/side view with face visible. Exactly two arms/two hands/two legs. Fit ALL hair, shoes, desk/chair or stand within central82% of SQUARE canvas; generous transparent margins around every edge. Isolated single scene only. ONLY the character and necessary equipment have painted pixels; everything else alpha0. NO background, aura, gradient, floor shadow, stray mark, text, extra character or sheet grid.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "ninja-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/ninja-dubbing-258.png",
+        "sha256": "3f795292df1c4e42c8509c0eb1c84386e56d3d2a2ac7622aacff8ebea2b2547e",
+        "prompt": "Use case: identity-preserve. Create ONE square 1:1 desktop activity asset, transparent PNG. The reference is the exact original adult female character and drawing medium. Keep her long loose charcoal-black hair, round thin glasses, olive headphones, sage technical jacket over black top, black cargo trousers with belt details, green/cream trainers, adult proportions and serious intelligent face. Keep strong sharp hand-inked manga contour lines and fine brush hatching with restrained olive/black cel shadows, as in this reference; NOT rounded generic cute anime, NOT chibi, NOT glossy3D. New awake activity: standing naturally beside one microphone and pop filter on a tripod, holding a single script page in one hand, her other hand making a modest expressive gesture. Lively but focused expression. No desk or chair. Full body and both shoes. Three-quarter front/side view with face visible. Exactly two arms/two hands/two legs. Fit ALL hair, shoes, desk/chair or stand within central82% of SQUARE canvas; generous transparent margins around every edge. Isolated single scene only. ONLY the character and necessary equipment have painted pixels; everything else alpha0. NO background, aura, gradient, floor shadow, stray mark, text, extra character or sheet grid.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "retro-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-computer-258.png",
+        "sha256": "4d5c9a08a64e4bdd2d98383910571aa52917108e4cc0c0c5e33e8cca77b53b93",
+        "prompt": "Use case: identity-preserve. One SQUARE1:1 transparent activity illustration of the EXACT original woman in the reference, now awake. Original retro flat geometric television cartoon style, thick clean dark outlines, simplified expressive face with SOLID BLACK OVAL/DOT EYES, NO iris or sparkling anime eyes, NO elaborate eyelids, NO anime-style face. Deep red rounded curly hair, coral headphones, coral short-sleeve blouse with cream piping, cream high-waisted flared trousers, brown loafers. Adult flat-cartoon proportions, same woman as reference. Activity: seated upright at a wooden desk on a swivel chair, using a simple laptop, both hands at the keyboard, cheerful concentration. Three-quarter view, friendly face visible. Retain simple flat colours and minimal one-step cel shading, not painted gradients or3D/chibi. Exactly two arms/two hands/two feet. Fit whole scene inside central82% of square, full hair, shoes, desk and chair legs visible with ample empty transparent margins. Paint only character and equipment, all other pixels transparent alpha0. No backdrop, aura, gradient, floor shadow, extra people, grid, symbols, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "retro-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-listening-258.png",
+        "sha256": "d7d7dec863be8f4697bff88cc39ccb8e435d89b7b672e8dbf313c30c13914d03",
+        "prompt": "Use case: identity-preserve. One SQUARE1:1 transparent activity illustration of the EXACT original woman in the reference, now awake. Original retro flat geometric television cartoon style, thick clean dark outlines, simplified expressive face with SOLID BLACK OVAL/DOT EYES, NO iris or sparkling anime eyes, NO elaborate eyelids, NO anime-style face. Deep red rounded curly hair, coral headphones, coral short-sleeve blouse with cream piping, cream high-waisted flared trousers, brown loafers. Adult flat-cartoon proportions, same woman as reference. Activity: seated at a wooden desk on a swivel chair, headphones over ears, using one pen to take notes in an OPEN SOFT NOTEBOOK COMPLETELY FLAT on the desk, other hand resting on the page. Two hands only. No propped or angled book. Three-quarter view, friendly face visible. Retain simple flat colours and minimal one-step cel shading, not painted gradients or3D/chibi. Exactly two arms/two hands/two feet. Fit whole scene inside central82% of square, full hair, shoes, desk and chair legs visible with ample empty transparent margins. Paint only character and equipment, all other pixels transparent alpha0. No backdrop, aura, gradient, floor shadow, extra people, grid, symbols, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "retro-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/retro-dubbing-258.png",
+        "sha256": "3d94db596edb27370a42e6521e06c80c07a1260167fdbeed52bddd05423c5bdd",
+        "prompt": "Use case: identity-preserve. One SQUARE1:1 transparent activity illustration of the EXACT original woman in the reference, now awake. Original retro flat geometric television cartoon style, thick clean dark outlines, simplified expressive face with SOLID BLACK OVAL/DOT EYES, NO iris or sparkling anime eyes, NO elaborate eyelids, NO anime-style face. Deep red rounded curly hair, coral headphones, coral short-sleeve blouse with cream piping, cream high-waisted flared trousers, brown loafers. Adult flat-cartoon proportions, same woman as reference. Activity: standing beside a microphone and pop filter on one tripod stand, one hand holds a script sheet and one hand makes a small expressive gesture, happily speaking. No desk or chair. Show both shoes and entire stand. Three-quarter view, friendly face visible. Retain simple flat colours and minimal one-step cel shading, not painted gradients or3D/chibi. Exactly two arms/two hands/two feet. Fit whole scene inside central82% of square, full hair, shoes, desk and chair legs visible with ample empty transparent margins. Paint only character and equipment, all other pixels transparent alpha0. No backdrop, aura, gradient, floor shadow, extra people, grid, symbols, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "mint-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-computer-258.png",
+        "sha256": "733c485887bb4812e788d9ae2f820e8541d6bfe047cc6928fcaa9103a39b3ed2",
+        "prompt": "Use case: identity-preserve. Create one SQUARE1:1 transparent desktop activity asset. Use the exact adult woman and rendered medium of the reference: dimensional glossy3D animated-feature TOON, sculpted rounded face and softly modelled skin, full volumetric lighting/materials, NOT a2D anime drawing and NOT ink outlines. Black chin-length bob with mint tips, green eyes, mint headphones, white short-sleeve blouse, cropped mint padded vest, black wide cargo trousers with green belt straps, coral red lace-up chunky boots. Keep reference face, outfit and proportions. NEW awake activity: seated at a wood-topped dark metal desk on an office chair, both hands working naturally at a slim laptop. Awake friendly focused face, both boots visible. Three-quarter front-side view, face visible. Exactly two hands/arms/legs; natural anatomy. Entire scene fits central82% of SQUARE image, full hair/shoes/equipment with generous empty transparent margins on all edges. Only the woman and necessary equipment have pixels. Everything else alpha0: NO background, glow, aura, vignette, gradient, floor shadow, extra person, grid, progress, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "mint-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-listening-258.png",
+        "sha256": "bd1aa5820bc999d08909e8fdac072313cfdc75a30a29d3c16c22133f75f7fb75",
+        "prompt": "Use case: identity-preserve. Create one SQUARE1:1 transparent desktop activity asset. Use the exact adult woman and rendered medium of the reference: dimensional glossy3D animated-feature TOON, sculpted rounded face and softly modelled skin, full volumetric lighting/materials, NOT a2D anime drawing and NOT ink outlines. Black chin-length bob with mint tips, green eyes, mint headphones, white short-sleeve blouse, cropped mint padded vest, black wide cargo trousers with green belt straps, coral red lace-up chunky boots. Keep reference face, outfit and proportions. NEW awake activity: seated at a wood-topped dark metal desk on an office chair, mint headphones worn over her ears, making notes with a pen in an open flexible notebook lying COMPLETELY FLAT on the tabletop. Other hand rests on the flat page. Exactly two hands, no raised book. Three-quarter front-side view, face visible. Exactly two hands/arms/legs; natural anatomy. Entire scene fits central82% of SQUARE image, full hair/shoes/equipment with generous empty transparent margins on all edges. Only the woman and necessary equipment have pixels. Everything else alpha0: NO background, glow, aura, vignette, gradient, floor shadow, extra person, grid, progress, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "mint-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/mint-dubbing-258.png",
+        "sha256": "0bfa91f749a69209d093a6bc6c3b16c5948dcc102e1387cb5fac51a2930a913d",
+        "prompt": "Use case: identity-preserve. Create one SQUARE1:1 transparent desktop activity asset. Use the exact adult woman and rendered medium of the reference: dimensional glossy3D animated-feature TOON, sculpted rounded face and softly modelled skin, full volumetric lighting/materials, NOT a2D anime drawing and NOT ink outlines. Black chin-length bob with mint tips, green eyes, mint headphones, white short-sleeve blouse, cropped mint padded vest, black wide cargo trousers with green belt straps, coral red lace-up chunky boots. Keep reference face, outfit and proportions. NEW awake activity: standing beside one studio microphone/pop filter on one tripod, holding one script sheet and giving a small expressive free-hand gesture while speaking cheerfully. No desk/chair, show complete body, boots and stand. Three-quarter front-side view, face visible. Exactly two hands/arms/legs; natural anatomy. Entire scene fits central82% of SQUARE image, full hair/shoes/equipment with generous empty transparent margins on all edges. Only the woman and necessary equipment have pixels. Everything else alpha0: NO background, glow, aura, vignette, gradient, floor shadow, extra person, grid, progress, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "moonflower-computer",
+        "saved": "studio/web/assets/assistant-activities/corrections/moonflower-computer-258.png",
+        "sha256": "00333da177094b7e387602791320fdec051748c478f5efcae54730761787e4b1",
+        "prompt": "Use case: identity-preserve. One SQUARE1:1 transparent desktop assistant work illustration. Match the reference's exact original adult woman and decorative SHOJO WATERCOLOR MEDIUM: delicate finely inked face, translucent layered watercolor shading, textured fabric, tiny gold floral embroidery. Long pale lavender hair in thick braids with small flowers, gold floral headphones, wine-burgundy floral outer robe/cardigan with gold flowers, layered dusty-rose flowing skirt and brown embroidered lace-up boots. NOT generic flat cel anime, not chibi, NOT3D. Activity: seated at a wood-topped desk on a chair, operating a slim laptop with two hands on keyboard; awake gentle focused face. Show full flowing skirt and both brown embroidered boots under desk. Three-quarter front-side view with her face visible, elegant original adult proportions. Exactly two arms, two natural hands, two feet. Fit ALL hair, skirt hem, shoes, furniture/equipment inside central82% of SQUARE, leave ample empty transparent margins. Paint only woman and needed equipment, all else alpha0. No background wash, coloured aura, haze, gradients, floor shadow, flying petals, other characters, grid, progress, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "moonflower-listening",
+        "saved": "studio/web/assets/assistant-activities/corrections/moonflower-listening-258.png",
+        "sha256": "7b9f83cac77f39ea3667840488952e697ec1956db720a49cdd0c72b863ec5ff3",
+        "prompt": "Use case: identity-preserve. One SQUARE1:1 transparent desktop assistant work illustration. Match the reference's exact original adult woman and decorative SHOJO WATERCOLOR MEDIUM: delicate finely inked face, translucent layered watercolor shading, textured fabric, tiny gold floral embroidery. Long pale lavender hair in thick braids with small flowers, gold floral headphones, wine-burgundy floral outer robe/cardigan with gold flowers, layered dusty-rose flowing skirt and brown embroidered lace-up boots. NOT generic flat cel anime, not chibi, NOT3D. Activity: seated at a wood-topped desk on a chair, listening through gold floral headphones, taking notes with one pen in an open flexible notebook lying COMPLETELY FLAT on the desk, other hand rests on its flat page. Exactly two hands, no tilted book. Show skirt and both boots. Three-quarter front-side view with her face visible, elegant original adult proportions. Exactly two arms, two natural hands, two feet. Fit ALL hair, skirt hem, shoes, furniture/equipment inside central82% of SQUARE, leave ample empty transparent margins. Paint only woman and needed equipment, all else alpha0. No background wash, coloured aura, haze, gradients, floor shadow, flying petals, other characters, grid, progress, text or watermark.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "key": "moonflower-dubbing",
+        "saved": "studio/web/assets/assistant-activities/corrections/moonflower-dubbing-258.png",
+        "sha256": "00fc424734556561ff933f92af607c6271c22eb2f17363e9899c86668a6af9ea",
+        "prompt": "Precise identity correction to image1. Keep its exact square composition, full body, microphone, script, two hands, burgundy floral robe, pink layered skirt, brown boots, beautiful delicate watercolor rendering and transparent background. CHANGE ONLY THE HAIRSTYLE: image1 incorrectly gives the woman loose wavy hair; she must have TWO CLEAR THICK WOVEN LAVENDER BRAIDS, with small floral decorations as shown in reference2. Preserve her face/headphones and eye expression. One braid on each side of the chest, extending well below the waist, recognizably braided rather than loose hair. No large unbraided curtain of hair behind her. Reference2 is hairstyle/identity only, do not adopt its sleeping pose or furniture. Preserve the full scene and transparent margins, do not crop feet/hair/stand. Clean genuine transparent background, no coloured aura, no text, no watermark, no extra limbs or objects.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      }
+    ]
+  },
+  "desktopRest262": {
+    "task": "Preserve each original character style in a separate rest scene.",
+    "motion": "Only small crown-hair regions move. Faces, hands, feet and furniture remain fixed.",
+    "assets": [
+      {
+        "character": "studio",
+        "file": "studio/web/assets/assistant-activities/corrections/studio-rest-262.png",
+        "sha256": "71217cda189397faf8f778852d2a9a7097e57e19fb71c2fa43253a58329b7c9d",
+        "style": "original-lavender-anime",
+        "pose": "asleep hugging a lavender cushion in a lavender upholstered armchair",
+        "prompt": "Create one independent transparent PNG cutout for the desktop AniCanto assistant \"studio\". Reference image 1 defines the exact original character identity and drawing style; reference image 2 defines only the relaxed pose and furniture, not its faceless silhouette treatment. Character: Welcome short lavender bob, cream cardigan, navy dress, teal headphones. Preserve the distinctive original-lavender-anime illustration style of image 1. New scene: asleep hugging a lavender cushion in a lavender upholstered armchair. Natural skin, visible facial features, gently closed sleeping eyes, original hair silhouette and headphones. Complete character and all furniture fully visible, generous transparent margin around hair, shoes, chair legs. Exactly two arms and two hands with anatomically coherent connections, no stray fragments, no duplicated limbs. No desk unless explicitly in the requested scene. No progress indicator, captions, lettering, logos, music notes, or separate animation frames. One character only, square composition, actual alpha transparency, subtle calm expression. This will be animated later with only tiny hair movement; do not draw motion trails.",
+        "editPrompt": "Edit this existing lavender sleeping assistant PNG only. Preserve the exact character, face, closed eyes, hair, clothes, headphones, two hands, cushion, armchair and all artwork/style. Reduce the entire complete illustration to 80% size within a square transparent canvas so EVERY part has at least 8% completely empty transparent padding, especially the TOP HAIR CURL which currently touches the upper edge. Fully finish any clipped hair curl. Remove any unrelated isolated pixel fragments. Do not crop the body, shoes or chair legs. No changes to pose, expression or style. Retain real alpha transparency. One image only.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "ocean",
+        "file": "studio/web/assets/assistant-activities/corrections/ocean-rest-262.png",
+        "sha256": "b4b9e2c4ae57bdebec7e8bba9691df5395018d82ca21aa79e32e8a60ef551048",
+        "style": "elastic-adventure-comic",
+        "pose": "asleep leaning against the arm of a deep blue armchair, legs crossed loosely",
+        "prompt": "Create ONE independent transparent PNG desktop assistant cutout. Input1 is the exact character identity and original rendering style; input2 is ONLY the rest pose/furniture reference, never copy its featureless face. adult female location recorder, short indigo pixie hair, tan skin, hazel eyes, teal long utility coat, cream jumpsuit, slate boots, coral headphones; no sailor uniform, no pirate hat or scarf. Preserve elastic-adventure-comic: expressive elastic ink contours, adventurous illustrated comic style, NOT the lavender girl's glossy chibi style. Scene: asleep leaning against the arm of a deep blue armchair, legs crossed loosely. Real face with relaxed closed eyes, natural skin, two anatomically connected arms and hands, exact original outfit. Frame the COMPLETE figure and armchair at only 78% of the square canvas height, with at least 8% empty transparent margin on EVERY side including above hair and below boots/chair legs. No cropping. Actual alpha background. No lettering, symbols, progress bar, sheet/grid, extra limbs, desks or other characters. Calm sleeping pose with no motion trails.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "energy",
+        "file": "studio/web/assets/assistant-activities/corrections/energy-rest-262.png",
+        "sha256": "b16d8b97a27cee4a4006eb76dfe6c0d3870934433d6887e9efd01ec0ac1e2c18",
+        "style": "angular-athletic-cel",
+        "pose": "asleep with head on folded forearms on a small square wooden table, seated on a simple stool",
+        "prompt": "One standalone transparent cutout, NOT a collage. Retain the exact original adult female character and angular athletic cel-shaded illustration of input1: adult female sound technician, close-cropped copper curls with shaved sides, dark brown skin, amber eyes, rust orange asymmetric work overshirt, petrol-blue trousers, cream sneakers, orange headphones; no spiky hair, no martial arts costume. Input2 supplies only the rest pose, never its faceless silhouette. Scene: asleep with head on folded forearms on a small square wooden table, seated on a simple stool. Slumped comfortably in a natural sleeping pose, visible closed eyes and natural dark skin, vivid copper curls with undercut, rust shirt and petrol blue trousers. Clear bold angular linework, simple cel shadows, NOT glossy chibi or generic anime girl. Exactly two connected arms, two hands, two legs. Entire hair, character, shoes, table and stool fit with wide transparent margins on all four edges. Complete object occupies 78% of square canvas. Actual alpha transparency. No words, symbols, graphics, progress bar, books, extra limbs, stray fragments, or other people.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "ninja",
+        "file": "studio/web/assets/assistant-activities/corrections/ninja-rest-262.png",
+        "sha256": "4e61969f21832e2b03c65241a6d0721553c9f3d28f7c25c1ff6382652eba0896",
+        "style": "sharp-brush-ink-action",
+        "pose": "asleep cross-legged on a broad olive floor cushion, chin gently lowered, hands resting visibly on knees",
+        "prompt": "Create one complete isolated transparent PNG of this original adult female desktop assistant. Image1 is identity/style authority: adult female night editor, straight charcoal undercut hair, round glasses, sage cropped technical jacket with asymmetric pockets, black tapered trousers, mint trainers, olive headphones; no ninja costume, no headband, no cape. Keep the sharp-brush-ink-action look: sharp expressive ink contours, brush-like black strokes and restrained olive/black cel colours; NOT soft glossy chibi. Image2 is pose inspiration only. New scene: asleep cross-legged on a broad olive floor cushion, chin gently lowered, hands resting visibly on knees. Long dark hair, glasses, olive headphones, dark trousers and distinctive shoes unchanged. Show a natural face with gently closed eyelids behind glasses, no faceless shadow. Two hands rest clearly on the knees with coherent arms; complete crossed legs visible. Large soft olive floor cushion only, no table or office chair. Full silhouette with at least 8% empty transparent padding around all edges; head and hair entirely inside frame, figure occupies 78% canvas. No lettering, progress, motion trails, extra characters or limbs. True alpha transparent background.",
+        "editPrompt": "Precisely repair this existing PNG cutout. Remove the unwanted separate dark fragment in the extreme TOP LEFT CORNER. Make every corner and all outside areas fully transparent, with no isolated leftover marks. Preserve the exact black-haired glasses-wearing woman, face, closed eyes, two hands on knees, cross-legged pose, clothing, shoes, olive cushion, original brush-ink style and all details. Do not redesign the character. Retain wide transparent margin around the complete figure and cushion. Actual alpha transparency; no white matte, no new objects or lettering.",
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "retro",
+        "file": "studio/web/assets/assistant-activities/corrections/retro-rest-262.png",
+        "sha256": "77b45835ea4f9200389360d26039b20cacd3337c9d4cbd502c87ac79c24c6078",
+        "style": "flat-geometric-tv-cartoon",
+        "pose": "asleep reclined in a mid-century cream upholstered wooden armchair, hands on the armrests",
+        "prompt": "One complete transparent desktop assistant illustration. Preserve image1's ORIGINAL FLAT GEOMETRIC RETRO TV CARTOON rendering and its red-haired adult female identity: adult female radio presenter, burgundy shoulder-length loose curls, freckles, coral short-sleeve bowling shirt, cream high-waist flared trousers, brown loafers, wine-red vintage headphones; no schoolgirl costume. Use thick flowing outlines, flat simple shape shading, very limited shadow tones, no glossy anime gradients, no realistic/detailed face. Image2 supplies ONLY pose/furniture inspiration. Scene: asleep reclined in a mid-century cream upholstered wooden armchair, hands on the armrests. Relaxed closed cartoon eyes, visible normal face, gentle sleepy smile. Red shirt, cream trousers, red headphones, shoes remain original. Exactly two arms, two hands on armrests, two legs; comfortably reclined in cream mid-century chair with wooden arms and legs, no table. Whole object completely inside square canvas with minimum 8% empty alpha margin all sides. No extra people, no words, progress bar, symbols, fragments or motion trails. Actual transparent background.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "forest",
+        "file": "studio/web/assets/assistant-activities/corrections/forest-rest-262.png",
+        "sha256": "70549ca295cd18853a456cd6e05715b97dea0e4bd4890649e92b10effcfcd2a0",
+        "style": "pastoral-gouache",
+        "pose": "asleep on a small wooden bench hugging a yellow cushion",
+        "prompt": "Create ONE original assistant transparent cutout. Image1 defines the exact adult female design and pastoral storybook gouache style: Female sound archivist with soft brown bob, mustard shirt, olive dungarees, copper boots and jade headphones; natural human face with small eyes and pencil/gouache rendering.. Keep the soft hand-painted textured shapes, warm muted outlines and gentle rustic woodland feeling of image1, not generic glossy chibi/anime. Image2 defines only the pose/furniture. Scene: asleep on a small wooden bench hugging a yellow cushion. Copper brown curly bob with small daisy, green headphones, yellow shirt, green overalls, brown boots. A normal warm face with naturally closed sleeping eyes; two hands clasp a yellow cushion and two feet are supported by the simple rustic bench. No desk. Entire girl, curls, bench legs and boots visible with at least 8% empty transparent margins on every side. Square composition. No lettering, progress, stray fragments, motion trails, duplicate arms or other people. Actual alpha transparent background.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "future",
+        "file": "studio/web/assets/assistant-activities/corrections/future-rest-262.png",
+        "sha256": "147312bcfd07bed17c74dbbdb37ce22bc4439b5c373856ab3dc5fe0cda58752b",
+        "style": "round-three-head-cartoon",
+        "pose": "asleep curled gently in a royal blue beanbag, arms wrapped around a white cushion",
+        "prompt": "ONE transparent cutout of the exact original desktop assistant from image1. Character Female blue-haired recording assistant with round blue glasses, oval eyes, fluffy blue waves, blue/ivory bomber, charcoal trousers and blue/white sneakers; squat three-head-tall flat cartoon with simple round hands.. IMPORTANT style is round-three-head-cartoon: short approximately THREE HEADS TALL body, large round head, simple blue curls, round glasses, thick smooth cartoon outlines, flat compact shapes. Preserve this intentionally stylized round cartoon style; do NOT turn her into a realistically proportioned anime woman. Input2 is only the resting arrangement reference. New scene: asleep curled gently in a royal blue beanbag, arms wrapped around a white cushion. Visible face, closed smiling cartoon eyes behind round glasses, two hands around the cushion, two feet. Blue and white varsity jacket, dark trousers, blue headphones and blue/white sneakers as original. No desk/chair; broad royal-blue beanbag only. Full figure and beanbag inside image with at least8% clear transparent margins on all sides. No text, props other than cushion/beanbag, extra limbs, progress or stray corner fragments. Actual alpha transparency.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "mint",
+        "file": "studio/web/assets/assistant-activities/corrections/mint-rest-262.png",
+        "sha256": "834b3472ce3cb722f198516b9f54b2e95dc5a14903254c488ee1d5329033782f",
+        "style": "glossy-3d-toon",
+        "pose": "asleep in a sage upholstered armchair with red boots resting on a matching footstool",
+        "prompt": "Single transparent PNG of the exact original adult female desktop assistant from reference1: adult female rhythm producer, dark teal short curly bob with mint tips, brown eyes, mint cropped utility vest over ivory long sleeve, charcoal straight trousers, coral boots, geometric mint headphones; no idol uniform, no twin tails. Preserve its distinctive GLOSSY 3D TOON / sculpted smooth animated-film style, rounded dimensional shapes, gentle material shading and smooth bob; not flat anime, not chibi or watercolor. Reference2 is ONLY a pose/furniture reference. New scene: asleep in a sage upholstered armchair with red boots resting on a matching footstool. Real face with natural closed sleeping eyes, soft smile, dark bob with mint ends and mint headphones; cream blouse, teal vest, dark pleated skirt/trousers and vivid red boots as original. Two arms, exactly two hands quietly folded in lap. Two boots both rest coherently on one sage footstool. Complete figure, armchair, footstool and all feet contained with at least8% empty transparent margin all sides. No table, text, progress graphics, extra limbs, fragments, floor background or other characters. Actual alpha transparency.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      },
+      {
+        "character": "moonflower",
+        "file": "studio/web/assets/assistant-activities/corrections/moonflower-rest-262.png",
+        "sha256": "fe5cb6b3264df1a00045018c3389bd0c8d49421800463b6c806e3de77fca46bc",
+        "style": "decorative-shojo-watercolor",
+        "pose": "asleep seated sideways on a dusty rose floor pouf, long pink skirt and floral sleeves drape naturally",
+        "prompt": "ONE isolated full-character transparent desktop assistant illustration. Preserve exact original adult female identity and decorative SHOJO WATERCOLOR style of reference1: adult female voice storyteller, silver-lilac low side braid, warm amber eyes, plum wrap jacket with tiny abstract moon embroidery, dusty rose full-length skirt with practical boots, brass headphones; no witch hat, no franchise costume. Delicate ink lines, flowing lavender braids, visible soft natural face, closed sleeping eyes, fine flower ornaments and patterned burgundy floral robe over long pink skirt; elegant painted fabric, NOT generic chibi or 3D. Reference2 supplies resting arrangement only. Scene: asleep seated sideways on a dusty rose floor pouf, long pink skirt and floral sleeves drape naturally. Graceful seated sleeping pose on a dusty rose floor pouf, hands resting together on lap, normal two connected arms and two hands, both feet/shoes beneath skirt arranged naturally. No desk or chair. Entire hair, skirt hem, pouf and shoes within square image with wide transparent padding on EVERY edge. No cropped garments. No writing, progress, decorative floating effects, extra characters or stray fragments. Actual alpha transparency.",
+        "editPrompt": null,
+        "generator": "built-in image_gen",
+        "visuallyInspected": true
+      }
+    ]
   }
 }

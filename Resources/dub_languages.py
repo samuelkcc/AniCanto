@@ -68,7 +68,7 @@ def english_script(w,cfg,job,cues):
             except (ValueError,TypeError,RuntimeError):pass
         if isinstance(result,dict):
             for i in pending:
-                if valid(result.get(str(i))):saved[str(i)]=result[str(i)].strip()
+                if valid(result.get(str(i))):saved[str(i)]=__import__('own_turn').guard(w,cfg,job,cues,i,'en',result[str(i)].strip())
         w.atomic_json(cache,saved)
         missing=[i for i in pending if not valid(saved.get(str(i)))]
         if missing:
@@ -135,7 +135,9 @@ def mandarin_script(w,cfg,job,cues):
             except (RuntimeError,ValueError,TypeError,OSError):answer={}
             if not isinstance(answer,dict):answer={}
             for i in pending:
-                if validate_mandarin(answer.get(str(i))):saved[str(i)]=simplified(cfg,answer[str(i)].strip())
+                if validate_mandarin(answer.get(str(i))):
+                    candidate=simplified(cfg,answer[str(i)].strip())
+                    saved[str(i)]=__import__('own_turn').guard(w,cfg,job,cues,i,'zh',candidate)
             w.atomic_json(path,saved)
             pending=[i for i in pending if not validate_mandarin(saved.get(str(i)))]
     for i,c in enumerate(cues):

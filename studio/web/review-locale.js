@@ -129,3 +129,8 @@ export const reviewLocale={
     "Recording presence does not certify pronunciation. Delivery problems and optional listening notes are reported separately.": "録音の存在は発音の保証ではありません。音声の要対応と任意の試聴メモを分けて表示します。"
   }
 };
+
+// Recording-file check state is separate from a dubbing failure.
+Object.assign(reviewLocale["zh-HK"],{"Checking recordings":"正在檢查錄音"});
+Object.assign(reviewLocale["zh-CN"],{"Checking recordings":"正在检查录音"});
+Object.assign(reviewLocale["ja"],{"Checking recordings":"録音を確認中"});

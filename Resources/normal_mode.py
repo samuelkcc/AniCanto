@@ -157,7 +157,8 @@ def translate(w,cfg,job,cues):
                 for i in pending:
                     text=answer.get(str(i),'')
                     if valid_target(text,language,source_language):
-                        cues[i][field]=w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()
+                        candidate=w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()
+                        cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,candidate)
                         if language=='yue' and written_mandarin(text):remaining.append(i)
                     else:remaining.append(i)
                 pending=remaining;w.atomic_json(Path(job)/'cues.json',cues)
@@ -356,6 +357,8 @@ def language_decision(expected,heard,language,target='yue',source=''):
 
 
 def inspect(cfg,job,cues,paths,emit):
+    # The shared baseline needs explicit inspection permission in every legacy work-mode label.
+    if __import__('basic_flow').enabled(cfg) and not (cfg.get('_allowBasicContentCheck') and cfg.get('contentChecks',0)>0):return {}
     if __import__('delivery_policy').repair_first(cfg) and cfg.get('_deferContentReadback'):return {}
     if __import__('delivery_policy').bounded_delivery(cfg) and cfg.get('workMode')=='performance' and not ( __import__('basic_flow').enabled(cfg) and cfg.get('_allowBasicContentCheck') and cfg.get('contentChecks',0)>0):return {}
     from normal_policy import retain

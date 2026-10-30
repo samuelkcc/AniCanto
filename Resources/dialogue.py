@@ -280,7 +280,10 @@ def analyze(cfg,job,captions,run,emit):
         rows=repair_source_clock(model,audio,spans,rows,cfg,job,emit)
         from source_fragment_repair import repair as repair_fragments
         rows=repair_fragments(model,audio,rows,cfg,job,emit)
-        saved=dict(key=key,segments=rows,spans=spans,actualCompute=getattr(model,'chosen',dict(backend='cpu',id=variant)));atomic_json(cache,saved)
+        saved=dict(key=key,segments=rows,spans=spans,actualCompute=getattr(model,'chosen',dict(backend='cpu',id=variant)))
+        if __import__('caption_only').enabled(cfg) and voice_audio is not None:
+            saved['noDialogueEvidence']=dict(complete=True,dualInput=abs(len(voice_audio)-len(audio))<=800,sourceSHA256=hashlib.sha256(path.read_bytes()).hexdigest(),stemSHA256=hashlib.sha256(Path(cfg['dialoguePath']).read_bytes()).hexdigest(),startOffset=cfg.get('startOffset',0))
+        atomic_json(cache,saved)
         del model
     cues=build_cues(saved['segments'],saved['spans'],captions,cfg['duration'],cfg.get('startOffset',0))
     if not cues: raise ValueError('原片未辨識到有效日語，請檢查音軌同開始位置；未改用 OCR 碎句配音。')

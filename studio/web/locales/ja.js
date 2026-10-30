@@ -1,6 +1,17 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Retained source audio":"保持した原音",
+"Shared subtitle continuation":"共有字幕の継続区間",
+"No assigned subtitle wording":"割り当てられた字幕がありません",
+"Source retention does not certify target dubbing or complete meaning coverage.":"原音の保持は、対象言語の吹替や意味の完全な網羅を保証しません。",
+"Open dialogue":"セリフを開く",
+
+"Automatic: subtitles first when readable text subtitles are available; otherwise speech first with OCR assistance. Expert mode can select a manual workflow. Saved jobs keep their source choice.":"自動：読み取れるテキスト字幕がある場合は字幕を優先し、それ以外は音声を優先してOCRを補助に使います。エキスパートでは手動で選択できます。保存済み処理の設定は維持します。",
+"Generation input error":"音声生成の入力エラー",
+"Target voice skipped for uncertain timing":"時刻未確認のため対象音声を省略",
+"source audio retained":"区間で原音を保持",
+
 "Global":"共通",
 "AI repair":"AI修復",
 "Individual settings":"個別設定",
@@ -525,7 +536,6 @@ export const LOCALE={
     "Standard": "標準",
     "High speed": "高速",
     "Production mode": "制作モード",
-    "High speed skips all quality review and quality-driven retakes. The video may contain dubbing defects.": "高速モードではすべての品質レビューと品質に基づく再吹き替えがスキップされます。動画に吹き替えの欠陥が含まれる可能性があります。",
     "Preview captions": "キャプションをプレビュー",
     "Follow processing": "処理に従う",
     "Play original": "オリジナルを再生",

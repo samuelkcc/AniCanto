@@ -34,7 +34,8 @@ class DesktopStateTests(unittest.TestCase):
    rows=inventory(root);self.assertEqual(len(rows),1);self.assertEqual(len(rows[0]['runtimes']),2);self.assertEqual(len(rows[0]['notices']),1)
  def test_mode_and_language_changes_do_not_rewrite_submitted_settings(self):
   with tempfile.TemporaryDirectory() as tmp:
-   store=Store(tmp);store.add([Path(tmp)/'episode.mkv']);row=store.queue[0]
+   source=Path(tmp)/'episode.mkv';source.write_bytes(b'isolated submission fixture')
+   store=Store(tmp);store.add([source]);row=store.queue[0]
    request=store.submit(row);before=request.read_bytes();row['status']='paused'
    store.mode='expert';store.settings['selectedEngines']=['cosyvoice3'];store.language_default('zh-HK')
    self.assertEqual(store.submit(row),request);self.assertEqual(request.read_bytes(),before)

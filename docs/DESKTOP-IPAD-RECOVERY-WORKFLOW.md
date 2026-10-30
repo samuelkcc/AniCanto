@@ -32,6 +32,86 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Automatic source selection, confirmed 2026-10-29: `basic-source-defaults-231`
+
+Basic has no manual source menu. Detect readable selected embedded or imported external text subtitles before source selection.
+With readable text subtitles, select subtitles > speech. Without them, select speech > OCR.
+Burned-in picture text is OCR evidence, not an embedded text subtitle track.
+Expert offers five choices: Automatic detection and the four existing manual source flows.
+Automatic detection uses the same fixed rule as Basic. Old preference overrides do not change this detection rule.
+Retain the existing missing-text fallback for an explicit speech/subtitle selection. Report the effective flow and reason.
+A determines meaning. B assists only. Subtitle-led gaps do not create new ASR dialogue.
+Apply this decision only at new source initialization. Keep saved effective flows and spent budgets unchanged.
+Freeze the requested selection mode, effective flow, and selection-rule revision separately.
+This decision supersedes the earlier no-subtitle OCR > speech default. Four manual Expert flows remain available.
+Use guide12 item `sourceWorkflowDefaults`. Mobile source is prepared; runtime boundary tests and package delivery are pending.
+Desktop and phone owners must record separate implementation, execution, installation, and whole-film acceptance.
+
+### Original-audio report visibility, confirmed 2026-10-29: `original-delivery-report-233`
+
+A preserved original is not proof of delivered target-language speech.
+Show known non-OP/ED dialogue in the alignment report even when keepOriginal is true.
+Show the source-audio label and saved processing issue. Do not call every preserved original a user choice.
+Keep automatic source fallback visible as unconfirmed delivery. An uncertain ASR score is not confirmed wrong speech.
+A report notice cannot start generation, replace a take, grant repair permission, or renew spent allowances.
+No generation gate or saved preservation reason changes in this presentation correction.
+Normal phone233 is installed. The native finalizer/report fixture and direct controls pass. Whole-film acceptance remains open.
+Shared iPad presentation source has the same change. Its native package and installation remain pending.
+Desktop255 owns its separate coverage correction. Do not infer phone output acceptance from the desktop audit.
+Use shared guide13 item `originalDelivery`. Earlier source-selection guide12 text remains exact within guide13.
+
+### Basic preferences and fallback access, confirmed 2026-10-29: `basic-controls-235`
+
+Basic and Expert expose the existing final voice-fallback choice. The factory choice remains first audible take.
+Production controls set the stored choice for new jobs. General Preferences must not duplicate this control.
+Freeze that choice only when a new job starts. Normal240 is installed on M4. Its separate receipt confirms launch and unchanged saved jobs.
+Do not replace a saved job policy on resume. Do not grant optional AI repair or cross-engine permission.
+Mandatory missing-audio fill, the three-call total, duration rules, first-draft guidance and overlap permissions stay unchanged.
+Check WF-01/02/03/15/16/17 against frozen requests. Their generation and export algorithms do not change here.
+Use guide14 item `failedVoiceFallback`; all four languages use one shared definition.
+The iPad settings page places assistant preview first. It offers the existing idle and work animations.
+A capability-limited Reading introduction explains the reason, then Reading functions, then entry steps.
+Its final action says Enter Reading mode. It does not introduce Basic or Expert as available destinations.
+A capable device's voluntary introduction must not claim insufficient memory.
+Normal M4235 is installed and launched. Four native cases pass; all three saved jobs remain byte-identical.
+Normal phone236 installs the narrow fallback controls and guide14. Its separate native and direct checks pass.
+Compact phone assistant placement and desktop help consumption remain separate. No complete-film output acceptance is claimed.
+
+### Shared Reading introduction information: `reading-intro-overview-237`
+
+This information-only follow-up supersedes the235Reading page copy. It changes no workflow or purchase gate.
+First explain the actual hardware limit and the lighter Reading option.
+Then show short Basic and Expert feature summaries with their corresponding screenshots.
+State that studio features need supported hardware. Basic is free; Expert needs the existing one-time upgrade.
+The final action explicitly enters Reading mode. It cannot open an unsupported studio or start a purchase.
+iPad and iPhone consume the same ReadingIntroContent keys and four locale values.
+Retain separate native layouts and capability reasons. Source parity is not installed acceptance.
+Normal M4237 is installed. One native case captures13layouts and all three saved jobs remain exact.
+Phone236 is installed according to its owner. The signed normal package matches all31shared keys in four locales.
+Its native Reading layouts pass. Broader phone purchase-navigation and final-preservation checks retain their separate receipt.
+
+### Phone upgrade presentation236
+
+The first lower-left action is Back. It dismisses the introduction. Later pages show Previous.
+The lower-right action is Next. It is disabled on the last page.
+The existing priced purchase action fills the content width. Restore purchases is upper-right, purple, and underlined.
+Normal236 installs this phone layout. Native captures and direct navigation checks pass.
+The shared lifetime product, tablet layout, entitlement rules and transaction handlers remain unchanged.
+No purchase or restore transaction runs during validation.
+
+### Mobile purchase access, confirmed 2026-10-29
+
+Only Expert mode requires the existing non-consumable purchase. Keep its product identifier.
+Basic, Reading, Learning, playback, export, save, and share remain free. Learning has no dialogue limit.
+Unpaid Expert entry shows a lock and opens the common upgrade introduction.
+A stored Expert selection cannot bypass the entry check. Simulated unpaid state takes precedence in DEBUG builds.
+The iPad DEBUG test menu is in About and licences. Production builds omit this menu.
+This rule supersedes the earlier export-only and Expert-plus-export policies.
+No conversion source, frozen request, first take, model, or spent recovery budget changes.
+Normal M4229 is installed. Two native access/menu tests pass. Its package contains exact guide11.
+Normal phone227 is installed. Native access fixtures and both actual unpaid Expert entries pass.
+Real purchase/restore remains open. Desktop purchase behaviour does not change.
+
 ### iPhone scope, 2026-10-28
 
 Samuel first authorized a Standard-only iPhone 17 Pro prototype and an original three-minute sample.
@@ -140,13 +220,21 @@ See `mobile/Validation/iphone-interface-build225-2026-10-29.json`.
 
 Phone227 uses a real portrait introduction movie with original audio and subtitle clocks.
 Its unpaid Expert card opens the shared purchase introduction. The separate Welcome banner is removed.
-Shared first setup selects all five direct-download groups: Gemma, Qwen, CosyVoice, Whisper, and HTDemucs.
+Current default, confirmed 2026-10-29: prepare Gemma 4 E4B and CosyVoice, plus required Whisper and HTDemucs.
+Qwen, GPT-SoVITS and other alternative models require a separate manual action in Models.
+This decision supersedes the five-group default from227. It does not remove existing models or change selected engines.
 The user approves one combined plan before connection. Preparation runs sequentially.
+The default pass does not request Apple recognition resources. Recognition remains Whisper-first.
+Normal phone245 and iPad245 now install this source and exact guide8.
+Three phone native cases pass. Existing-file one-click preparation and direct zh-HK setup instructions pass on phone245.
+The iPad owner records its separate compilation, installation and preservation evidence. Native scope execution on M4 remains unverified.
+Clean-device full download acceptance remains open. The phone lower chapter-row remote hit behavior needs separate review.
 Pause cancels the active transfer and prevents the next group from starting.
 Reuse verified files and partial downloads. Keep selected engines, saved requests, and spent counts.
 GPT packages remain installed/imported resources until a verified public artifact exists.
 The iPad owner checks provenance and notices. The dedicated model release remains an unpublished draft.
-Phone227 final queue tests and normal installation remain pending. M4228 does not yet include the setup change.
+Phone227 is installed. Consent, exact approval reuse, queue order, and cancellation fixtures pass.
+Normal M4229 does not include the setup change. Clean-user whole-download acceptance remains open.
 No desktop deployment change or clean-user whole-download acceptance is claimed.
 See `docs/IPHONE-PORTRAIT-INTRO-227.md`. WF-01/02/03/15/16/17 remain unchanged.
 
@@ -175,7 +263,199 @@ A hash-verified short cue can use the existing short-reference adapter. It adds 
 Never repeat words, borrow another speaker, or switch engines solely because a reference is shorter than three seconds.
 This manual action does not change WF-01/02/03/15/16/17 or frozen automatic requests.
 Use guide10 item `learningLineActions` for product help. Normal iPad228 is installed. Five native cases pass, including two actual engines and live assistant frames.
-Shared phone source is available. Phone installation and desktop line-action review remain pending.
+Normal phone227 consumes completed228 Learning and guide11. Five native Learning cases pass, including two actual engines.
+Human listening and desktop line-action review remain pending.
+
+
+
+### Native target delivery, iPad234
+
+New iPad projects freeze `caption-clock-target-234`. Required selected content cannot be suppressed by automatic source uncertainty.
+Keep original clocks, transcripts and spent counts. Old frozen jobs and explicit user originals are not migrated.
+Source waveform identity cannot certify generated audio. Source retention, requested delivery and actual audio stay separate in coverage.
+Unknown old preservation flags are not assumed user choices. Fifteen unique M4 fixture cases pass. Normal234 is installed and launched; three real checkpoint files remain byte-identical.
+Optional generic readback requires content-check permission in every stored mode label. Strict timing does not grant content permission.
+Bundled CC0 profile reuse is CPU-only and bounded to six entries/eightMiB. Private references do not enter it.
+One same-input cold/warm pair produces identical recordings in49.99/3.75seconds. This is not whole-film performance acceptance.
+Completed phone233 report and serial setup sources are consumed. Normal phone241 now consumes the234 core, cache and coverage rules with its own device evidence.
+See `docs/IPAD-TARGET-DELIVERY-234.md`. Guide13 retains the shared report and source-control definitions.
+
+### iPhone target delivery241
+
+Normal phone241 is installed and launched on Samuel's iPhone 17 Pro after the completed234 core is adopted in the private phone source.
+Fifteen unique native cases pass in one invocation with zero failures in80.152seconds on that device.
+New phone projects freeze `caption-clock-target-234`. Both saved jobs keep every file byte-identical, including the saved One Piece checkpoint and its spent Whisper source-window attempts.
+The saved One Piece job has no `standardFlowRevision` and receives none. All47 preference keys match except the StoreKit polling timestamp.
+The bundled reference cache keeps the same six-entry and eightMiB bounds. One warm reuse returns a byte-identical recording and lowers reference open time from1.228to0.654seconds.
+The Cosy model was already loaded in that process. This is profile encode reuse only, not cold preparation and not whole-film performance acceptance.
+Operation guide4 and control guide15 stay exact in the package. No product copy and no locale string changes occur.
+The phone keeps its inline voice fallback selector and the239 duplicate-entry fix. Purchase gating and layouts stay separate from this core change.
+Whole-film target coverage, audio presence, subtitle coverage and human listening acceptance remain unaccepted on the phone.
+See mobile/Validation/iphone-target-delivery-241-2026-10-29.json.
+
+### Target speech preflight and source retention, desktop255
+
+This clarification maps WF-02, WF-03, WF-09, WF-10, WF-13, and WF-14.
+Desktop new submissions freeze `targetDeliveryRevision=caption-clock-target-255`.
+Existing frozen requests and spent recovery counts remain unchanged.
+
+- Every TTS synthesis chunk must contain the approved spoken target text. Delivery instructions
+  cannot form an independent generation chunk. Verify the actual pinned engine splitter before
+  inference. Keep the vendor source unchanged. Do not cut a fixed waveform prefix as a repair.
+- A valid owned subtitle script remains required target dialogue when only source word timing is
+  uncertain. Keep the saved clock and its uncertainty label. Do not mark it as a confirmed word
+  clock. Do not use that uncertainty alone to set deliberate original preservation.
+- Try the selected engine with a usable reference. Missing or invalid clone conditioning can
+  reach the existing bounded selected-engine generic fill. Do not enable a second engine or
+  a system voice implicitly. Keep the first audible take and the same presence budget.
+- A shared-caption continuation does not automatically need a duplicate translation. Keep its
+  owner evidence. Report source retention and unconfirmed meaning coverage separately.
+  Genuine subtitle gaps, OP/ED, nonverbal performance, and explicit user choices retain their rules.
+- Report generated target audio, absent target delivery, source preservation, known generation
+  input defects, and unchecked language quality separately. A physical source recording does
+  not count as a delivered target recording. An ASR label alone does not prove wrong language.
+- A read-only report can reveal an older deterministic input defect. It must not overwrite an old
+  recording, renew an automatic budget, or launch inference. Explicit user repair creates a new
+  version and retains the earlier movie and evidence.
+
+Mac255 has the implementation and focused execution evidence. One real Drama3 MLX candidate
+uses the same822reference, target words, seed, and sampling. It has one spoken chunk and lasts
+7.105seconds. The previous take has an instruction-only chunk and lasts13.514seconds. Independent
+readback no longer returns the Japanese prefix. This is not whole-film or accent acceptance.
+Windows uses the same source guard and report code. Its native GGUF splitter is not certified by
+the MLX test. Native Windows execution remains open. Mac0.25.2/build255 and the Windows package are now installed in dist. The app stays closed.
+The210-case focused regression, separate14/4/18recovery-related cases, four report locales,
+and24navigation viewport cases pass. Native Windows inference and whole-film acceptance remain
+open. See `docs/DESKTOP-TARGET-DELIVERY-0.25.2.md`.
+
+iPad and iPhone owners were notified on Samuel's explicit request. Their installed versions
+and later corrections require their own receipts. The M4 subtitle-first
+path already retains a labelled subtitle clock instead of silently skipping authored dialogue.
+The mobile legacy source-preservation gate and export-coverage classification still need review.
+The mobile GPT/Cosy adapters do not use the desktop Drama3 instruction path. Do not infer the same
+300-byte defect or completed platform alignment. Each owner must record native execution,
+packaging, installation, and user acceptance separately.
+
+## Shared operation manual, desktop256
+
+`docs/APPLICATION-USER-GUIDE.json` is the single operation-manual source for desktop, iPad and iPhone.
+Its source revision is `application-user-guide-3`. Its SHA-256 is `8cef8e01fb22ec8ca3571cbf3e67718624df0a9f3980ab23b3f16bd0aa24a244`.
+Installed Mac256 retains operation guide revision2 at SHA35e4e9f42ed92f0363fe4c28a68194dc855072f1e9bcdbc5f50fa1430a4214b6.
+Revision3changes only mobile Reading prerequisites and seated rest/dozing help. Desktop chapter content is unchanged.
+A later desktop package must consume the new source; do not relabel the installed256copy.
+Revision1 is superseded before desktop installation. Its source remains in the private manual256 evidence.
+Filter both chapters and sections by platform. Four locales share stable IDs and chapter aliases.
+Resolve `controlRefs` from `docs/WORKFLOW-CONTROLS-GUIDE.json`; do not copy and alter a control definition.
+Guide14 remains exact at `d8c6a0da78914b5ed68fd81ed3615814c8ebb6700e0c1ba43284102e508d1aaa`.
+`docs/USER-GUIDE-MAINTENANCE.md` defines the change procedure. AGENTS requires this check for every visible feature change.
+Desktop owns the initial common source. The mobile owner supplies ten reviewed mobile-only chapters.
+The file contains30chapters. Desktop displays20; Reading, Learning, mobile purchases and mobile navigation are filtered out.
+Desktop Help consumes the canonical source and shared control IDs. The old duplicate chapter definitions are removed.
+Mac0.25.3/build256 is installed after user closure. Isolated installed startup and strict signing pass.
+All194user metadata files remain exact during installation. Windows remains255.
+Mobile consumers must record their own copied hashes, native tests, package and install states.
+This documentation change does not change WF-01/02/03/15/16/17, a frozen request, a recording, or a spent allowance.
+The actual822/823requests retain first-audible253, target-delivery255, zero content checks, no optional repair, no duration limit and allowed overlap.
+Do not infer mobile core parity, complete-film language quality, or new hardware support from a manual copy.
+
+## Confirmed silent captions and contextual Cantonese260
+
+Target: Keep screen-text subtitles visible without target speech only when positive evidence proves no dialogue.
+New desktop requests save skipNonDialogueCaptions, default true, and caption-only-no-dialogue-260.
+Require completed original and vocal-stem VAD with matching waveform hashes and offsets.
+Require no lexical recognition in the padded caption window, no VAD activity and a complete near-digital-silent vocal-stem window.
+Absent recognition, failed TTS, uncertain speech or offscreen speech is not proof of silence. Keep target dubbing when evidence is incomplete.
+Keep source text, translated captions and display clocks. Exclude a confirmed caption-only row from missing-target fill only with this evidence.
+Do not restamp old frozen jobs, refund spent limits, change tempo or add inference calls.
+
+For new Cantonese drafts, use contextual Hong Kong examples from Resources/hk-spoken-style.json.
+Freeze hong-kong-contextual-260. Preserve nouns such as 小說 and uncertainty meanings such as 搞不好.
+Do not apply global character substitutions, rewrite saved scripts or add repair permission.
+
+Mac260is installed after guarded replacement. All239related cases, including34focused cases, pass. Four locale Basic and Expert UI checks pass. Installed startup and signing pass;204saved metadata files stay exact.
+Mobile implementation and whole-film acceptance of these new controls remain pending. The user accepts the prior823output; that is a separate listening result. See .build/timing260/verification.json.
+Guide13/control19 are source copy. Installed iPad248 retains exact guide11/control17. Phone248 packages exact12/18.
+Evidence: .build/timing260/shared-rule-contribution.json and .build/timing260/canonical-copy.json.
+
+## Phone model-start controls248
+
+Phone Basic and Production defaults hide incomplete local models. Models retains the download entries.
+Name missing engines from a frozen saved request. Default preparation does not silently change a saved GPT engine.
+An explicit new-conversion action returns to current defaults and retains old job files and spent limits.
+Normal phone248 is installed and launch-verified. Four isolated native cases and direct zh-HK model menus/notice pass.
+Five saved project files and two latest job files remain byte-identical. Whole-film acceptance is not claimed.
+iPad248 does not adopt this named resume notice or the phone partial-GPT component-size gate.
+Guide12/control18 define the shared four-language copy. Mobile caption-only and contextual wording adoption remain pending.
+WF-01/02/03/15/16/17 generation and repair permissions stay unchanged.
+
+## Automatic queue source selection248
+
+For new automatic full-video queue work, save the selected source-language policy and a configured fallback, Japanese by default.
+Use a valid consensus probe result without another language dialog. If no consensus exists, use the configured fallback.
+Record detectedSourceLanguage as absent and sourceLanguageConfirmed as false when the fallback is used.
+A configured language is not proof of speech or recognition accuracy. Keep original transcripts and source/caption evidence.
+The source-content priority under WF-10 stays exact. Resume retains the saved revision, language and spent budgets.
+Legacy saved requests without this revision retain their prior confirmation path. Do not migrate them from current preferences.
+
+The automatic queue reads excluded video IDs before each next handoff. Skip excluded, introduction and completed videos.
+Deselecting never deletes media or stops active work. It never creates a launch-time queue replay.
+Production defaults disable incomplete local models, using installed files rather than a loaded-runtime flag.
+Do not clear existing preferences, trigger downloads or mutate a running/frozen selection.
+UI and supported OS service choices are distinct from AI control permissions.
+
+Normal iPad248 is installed. Eight isolated native cases pass, including two cooperative-pause cases. Four locale queue screens pass visual checks.
+Complete-film queue and loaded-model pause latency remain unverified. iPhone and desktop have not adopted this queue revision.
+Gemma, Qwen and Cosy use file-completeness gates. GPT still uses a deployment marker; partial GPT files remain an open gap.
+Counterpart queue behavior review remains open; matching common Help does not prove adoption.
+Control items queueSelection, queueSourceLanguage and downloadedPresetModels carry the canonical four-language definitions.
+WF-01/02/03/15/16/17 remain unchanged; no generation or repair permission is added.
+
+## Mobile error navigation247
+
+Samuel removes the process-log entry from iPad and iPhone. Preserve internal English diagnostics and saved work.
+Errors stay on the active work screen. The review report keeps missing-audio and advisory results.
+Normalize a saved terminal page to preview. Desktop Terminal is unchanged.
+Guide10-mobile-errors keeps the phone pause-response paragraph scoped to iphone. It does not claim iPad pause uptake.
+The iPad UI-only247candidate uses frozen246conversion core. Shared mobile source can separately contain later phone pause changes.
+Record each installed package and exact source separately. No workflow permission or recovery budget changes here.
+
+## Report classification, confirmed2026-10-29: `report-classification-246`
+
+The primary report group is Needs dubbing. It contains required target lines whose currently selected delivery is missing, silent or damaged.
+An unplanned source fallback for required target dialogue is missing target delivery, even when the original track has sound.
+OP/ED, deliberately protected performances and explicit user source choices do not enter this group.
+Processing, optional verification, human choice and export application are separate axes. A pending human export choice is not missing audio.
+
+Usable first audible takes, selected-engine generic fills and healthy repaired takes belong in Audio available.
+Missing or inconclusive optional verification is not a confirmed failure and cannot move healthy audio into Needs dubbing.
+Current wording, language, source or duration evidence can enter Review suggested. A file-span overrun is advisory, not confirmed simultaneous speech.
+Keep uncertain results visible as badges or details. Do not certify content, accent or emotion from file presence.
+Resolve historical missing-audio labels from the current selected cue/language/engine and recording identity. Preserve real current findings and history.
+During local file checks, show checking state separately. Perform PCM reads off the interface thread and reuse per-recording evidence.
+This read-only classification grants no generation, repair, extra inspection, resume refund or audio replacement.
+WF-01/02/03/15/16/17 and frozen requests remain unchanged. Control item reportClassification is the canonical four-language copy.
+
+Implementation: Normal iPad246 is installed and launch-verified. Six native cases pass. Saved822has0missing,24advisory and210available rows after physical PCM checks. Four locale category views render. Phone247 is installed and launch-verified. Five native classification cases pass; one M4-only case skips. Four locale category views render. Direct phone route/filter checks pass. No phone saved-film acceptance is claimed. Mac259was installed with separate source and fixture evidence. Mac260now retains that classifier and adds the later caption-only control; installed startup and signing pass. Windows remains255. See docs/DESKTOP-REPORT-CLASSIFICATION-259.md.
+The phone review identifies absent-audit pending inflation. Desktop review identifies advisory default-list inflation and stale resolved failures.
+Phone247 and Mac259 provide separate classification evidence. These checks do not prove full workflow or whole-film alignment.
+
+## Cooperative pause and saved progress247
+
+A manual pause first saves the current safe checkpoint, then requests cancellation of the running operation.
+An active timing transaction keeps its existing reserved checkpoint until its safe cancellation path completes.
+Cancellation is cooperative. A synchronous model kernel can finish before its runtime observes the request.
+Do not start another cue, inference, automatic recovery or queued video after a pause request.
+Keep the interface busy until text, separator, recognition and voice cleanup finish. Then save the paused state.
+Preserve scripts, selected recordings, frozen source/engine/control policy and all spent attempts. Resume never refunds work.
+A pause event records its request time and interrupted phase. A missing historical event cannot prove pause latency.
+This change does not authorize a retake, content repair, timing repair, new ASR review or different voice engine.
+
+Private phone247 and later shared source implement this rule. Normal phone247 is installed and launch-verified.
+Two isolated native launcher cases pass. Five saved projects and two latest files remain byte-identical.
+Frozen iPad246 and UI-only iPad247 retain the prior Pipeline. Do not infer pause uptake from their UI delivery.
+Desktop pause implementation is not audited in this bounded phone task. Counterpart source review remains open.
+Actual runtime cancellation latency during each loaded model remains a separate device acceptance check.
+See mobile/Validation/iphone-pause-menu-247-2026-10-29.json. WF-01/02/03/15/16/17 permissions and budgets stay unchanged.
 
 ## Active shared baseline: `shared-workflow-controls-4-language-budget-overlap`
 
@@ -190,7 +470,7 @@ Shared phone source is available. Phone installation and desktop line-action rev
 | WF-07 | Freeze finite per-stage counts and whole-job time limits. Reserve before inference. Resume never refunds spent budgets. |
 | WF-08 | Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission. |
 | WF-09 | Attempt final output with saved valid work and report genuine missing target dubs. Storage, source, or encode failure stays an explicit error. |
-| WF-10 | A determines meaning and B supplies auxiliary evidence. Default text-subtitle jobs use subtitles > speech; no-subtitle jobs use OCR > speech. |
+| WF-10 | A determines meaning and B supplies auxiliary evidence. Basic and Expert Automatic use subtitles > speech with readable text subtitles, otherwise speech > OCR. |
 | WF-11 | Preserve OP/ED and nonverbal performances. A subtitle gap does not authorize new translated dialogue or prove silence. |
 | WF-12 | Cantonese uses spoken Hong Kong grammar and Traditional Chinese. Preserve source meaning and keep source captions separately selectable. |
 | WF-13 | Keep source, subtitle display, and delivered audio clocks distinct. Do not drop captions because audio or caption intervals overlap. |
@@ -303,6 +583,53 @@ Acceptance must cover all three target languages, silence gaps, quiet tails, exa
 multiple target tracks, failed retakes, count zero, independent permissions, save/resume, and unchanged spent allowances.
 Use real bounded media and model tests after deterministic cases. Metadata alone is not full-film or pronunciation acceptance.
 
+### Own-turn caption ownership gate, prepared 2026-10-29: `own-turn-caption-ownership-242`
+
+This section states the shared target and the iPad source change. It is not an installed or accepted feature claim.
+It serves the existing rule "Do not merge neighbouring dialogue or duplicate a shared caption in several turns."
+
+**Shared target.** Before text-to-speech uses a translated script, each required line must own its content.
+One deterministic check compares the target script with the saved source captions of the same context window.
+A contiguous alphanumeric span of four or more characters that appears in exactly one neighbouring caption,
+and not in this cue's own source, is an own-turn finding. The check uses no model and scores no quality.
+
+**Preserve rules.** A span present in this cue's source is never a finding. A span present in more than one
+source in the window is never a finding. That keeps rolling captions, shared lines, songs, intentional
+repetition, and separate speakers valid. The check never deletes text globally and never rewrites saved takes.
+
+**Bounded correction.** When the finding crosses an authored-caption boundary, the platform may run one
+re-translation per cue on a first draft only. The retry names the forbidden clause and keeps the first draft.
+When the retry is invalid, still crossing, or already used, keep the first draft and report the finding.
+The retry uses a saved per-cue counter. It is not the optional overlap repair, not a content check, and not a
+recording retake. First-take audio, source clocks, selected references, and spent budgets stay unchanged.
+
+**iPad source mapping, 2026-10-29.** `StandardProject.subtitleLeakageIssues` and its attempt key implement the
+check. `StandardPipeline.translateCue` runs it after the first draft and before TTS. `GemmaRuntime.translateStandard`
+accepts `forbiddenClauses` for the one retry. Two deterministic native cases cover the frozen cue413/414
+repetition and the shared/repeated negative fixtures. Compile, targeted test result, package, installation, and
+listening acceptance are recorded separately below and in the execution receipt.
+
+**iPad execution state, 2026-10-29.** Normal build 242 is compiled, signed, and installed on Samuel's M4 iPad
+`00008132-000478D23C69001C`. The launch check passes. Two deterministic native cases pass with zero failures. The
+saved job pointers for One Piece, Ranma, and Ninja stay byte-identical across the install. No control-guide copy
+changes. Desktop and iPhone do not adopt this gate. Real-request proof and human listening acceptance are still
+open, because no fresh user-video conversion ran. Receipt:
+`mobile/Validation/ipad-own-turn-gate-242-2026-10-29.json`. Working evidence: `.build/ownturn242/`.
+
+**Desktop and iPhone mapping remains open.** Desktop keeps its separate `script_fit.copied_neighbour_content`
+guard. Neither platform has adopted this gate. Do not claim shared execution from this section.
+
+**Execution follow-up244, 2026-10-29.** Normal244 is installed and launch verified on M4.
+The correction now accepts priority caption-primary origins. One saved reservation is enforced without resetting old spent values.
+A fingerprinted first draft and resolution survive cancellation/resume. Immutable owner counts prevent false uniqueness and missing-index failure.
+Ten injected execution cases and one actual Gemma correction pass. The real-model case injects a frozen bad draft;
+it does not reproduce a complete new film request. Five stale fixture/guide expectations now pass; two older timing cases remain open.
+The242full regression receipt is still failed and its zero-test baseline is inconclusive. Do not claim a clean full suite.
+Exact canonical manual6/control15 is installed. First-take audio, source clocks, optional permissions and spent recovery budgets do not change.
+See mobile/Validation/ipad-own-turn-followup-244-2026-10-29.json. Pacing, alternate budget mapping and full-film listening remain open.
+
+**Desktop source follow-up258, 2026-10-29.** New submissions freeze ownTurnGateRevision. Resources/own_turn.py checks authored embedded or external primary captions, with NFKC and native Hans-to-Hant normalization. It excludes speech-primary policy, saved script fields, disabled cues and deliberate source preservation. A unique4–12character neighbour span can request one correction. The persistent per-cue/language reservation is written before inference. The first draft and selected resolution remain available after cancellation or replay, including when a new model reply differs. The correction prompt excludes full neighbour captions. An invalid, failed or spent correction retains the saved first draft and reports a hint in all three output languages. Fast, Normal, alternate-language and full-review first-draft paths are connected. This does not change the first audible take, source clocks, optional checks or spent voice budgets.25focused cases and116related regression cases pass. Package, installation and whole-film listening are recorded separately. Pacing calibration is still an open review; no automatic tempo or new retake is added.
+
 ### Required caption target delivery, build 205
 
 New jobs freeze `subtitle-target-presence-205`. Old jobs retain their existing policy and spent allowances.
@@ -337,6 +664,52 @@ Evidence: `docs/IPAD-REQUIRED-TARGET-205.md` and the private build 205 receipt.
 Phone224 consumes completed205 rules and passes one actual exact-reference Whisper/Gemma/Cosy case.
 Its older failed source window remains a recorded failure. Desktop adoption and whole-film acceptance remain separate.
 Whole-film coverage, listening, meaning, pace, and OCR acceptance remain pending on every platform.
+
+### Long displayed caption review, 2026-10-29
+
+Samuel reports a desktop Ninja subtitle at about187seconds that combines multiple Pizza Cat order and greeting lines.
+He reports broadly meaningful dubbing with roughly matching timing. Do not infer a bad take from a long caption alone.
+The desktop owner must compare saved source units, frame/OCR identities, translation groups and final subtitle clocks.
+Distinguish dialogue grouping from caption export merging. Keep accepted audio while this cause remains undecided.
+Any display-only split needs witnessed source/caption boundaries. Do not assign timestamps from character count.
+iPad and phone counterpart risk is reported, not verified from the screenshot. Separate source and output evidence is required.
+Screenshot: <home>/Desktop/Screenshot 2026-10-29 at 22.55.18.png.
+
+### Unconfirmed source handoff251
+
+Complete the remaining reserved round for short windows in the quarter-first policy. Two timed halves are sufficient below eight seconds.
+Use at most two reserved rounds and the existing eight-call ceiling. Do not renew an exhausted allowance.
+After an eligible bounded timestamp, repetition or decoder-time failure, retain the exact input interval as unconfirmed.
+Cache the empty timed result with its source/model/audio identity, explicit reason and unconfirmed-source-window-251 strategy.
+Do not label it no-speech, claim witnessed timestamps or use text-only repetition as source dialogue.
+Continue the existing selected-content workflow. A usable selected subtitle or OCR text can supply missing primary content.
+A selected speech/OCR or OCR/speech workflow activates picture-caption OCR independently of optional Expert picture assistance.
+Caption OCR detects its language independently of the soundtrack. Keep name-only requests on their prior explicit language.
+Only that positive content can release the automatic original-preservation gate. Missing evidence stays unconfirmed in Review.
+Protected OP/ED, user choices and first audible takes remain exact. Cancellation, file changes, storage and unsupported errors still stop.
+Legacy half/quarter/eighth requests do not adopt this handoff. A quarter-first draft can use its unused reserved round and valid cached chunks.
+
+Actual isolated evidence: The5.548-second Ninja window fails its second timed half. Untimed decoding emits unbounded repeated 好きよ text.
+Neither result is a usable complete transcript. Local Mac sound classification does not prove singing; do not extend ED from this evidence.
+The source fix and native fixtures are in progress. Installed M4 remains250 until a separate251receipt exists.
+Phone and desktop implementation and whole-film acceptance remain pending.
+
+### Quarter-first bounded source recovery250
+
+New iPad requests freeze bounded-quarter-first-eight-call-250. Keep old requests and identities unchanged.
+Round one decodes the full source window. Round two first tries four fixed quarters.
+Split only a failed quarter into two equal parts, once, for the existing repetition, timestamp-limit or decoder-timeout errors.
+Keep successful quarters. Stop after at most eight decoder calls in the complete second round.
+Reserve each round before work. Resume retains both reservations and never grants a third round.
+Do not recursively shrink, switch recognizers, change translation priority or treat an undecided result as silence.
+
+The new Ninja job9095DA9F fails at216.3–246.3seconds with the legacy frozen eighth policy.
+An isolated exact audio copy produces11timed units with four quarters. Eight eighths fail on their first part.
+The complete diagnostic takes93.185seconds. Timing output is not transcript accuracy or listening acceptance.
+Six native bound, cancellation and legacy-policy fixtures pass with zero failures in0.032seconds.
+Normal M4250 is installed and launch-verified. Exact guide16/control19 are packaged. Whole-film acceptance remains pending.
+See mobile/Validation/ipad-ninja-quarter-first-250-2026-10-29.json.
+Phone and desktop mapping remain pending. Their source or installation cannot be inferred from this paragraph.
 
 ### Missing text-subtitle selection and source recognition, 2026-10-28
 
@@ -550,6 +923,33 @@ The current iPad proposal retains embedded step progress. Desktop removes it und
 Do not claim exact assistant presentation parity. Desktop build 252 separately implements the compact AI-control header.
 This patch does not change conversion, first-take selection, overlap, repair, or export rules.
 
+### iPhone239 presentation and common manual uptake
+
+Normal239 is installed and launched after Samuel explicitly resumes phone work.
+The package contains exact operation guide4 and control guide15. Six native invocations across four cases pass.
+Eight final four-language manual captures and18final canvas captures pass.
+The final shared renderer removes the tested native atlas-edge strip. The source bitmap has no isolated strip.
+Normal app search for Whisper opens First setup and models. The moon opens seated rest without progress.
+General Preferences removes duplicate fallback. Basic and Expert production controls remain unchanged.
+Reading background preparation checks hardware and model readiness at both boundaries. System narration remains available.
+The saved One Piece checkpoint remains byte-identical. All app preferences match the fresh baseline after restoring Standard.
+Only the StoreKit polling timestamp advances. No conversion, repair, export, saved request or spent budget changes.
+At that installation the phone core remained233/231 with236controls, and no234core/cache uptake was claimed. Normal241 later adopts that core; see the iPhone target delivery241 section. Whole-film acceptance remains open.
+The desktop257 character-style audit remains separate and open. This delivery does not close its five corrections.
+See mobile/Validation/iphone-assistant-manual-239-2026-10-29.json.
+
+### Phone playlist drawer243
+
+Phone243 removes the duplicate Import videos drawer entry. Edit and preview retains source import and management.
+The renamed Playlist entry first shows saved outputs, then opens the selected player.
+Only phone navigation and initial selection change. Conversion and frozen permissions stay exact to the recovered242baseline.
+Operation guide6 supplies four-language phone navigation and one separately scoped iPad draft-ownership section.
+Control guide15 stays unchanged. The phone excludes the iPad-only section.
+Normal243 is installed and launched. Direct drawer, playlist/player and zh-HK manual navigation/search checks pass.
+Five saved project files and two latest pointers remain exact. Configuration settings are unchanged.
+Only StoreKit polling time and one sub-millisecond normalized playback position differ.
+See mobile/Validation/iphone-playlist-drawer-243-2026-10-29.json. Other platform installations retain their own records.
+
 ## Cross-platform alignment register
 
 Snapshot: 2026-10-28. This register separates the shared target from recorded implementation evidence.
@@ -557,7 +957,18 @@ Update the affected rows every time either line changes a workflow.
 
 | Item | Desktop evidence or mapping | iPad evidence or mapping | Alignment and next action |
 | --- | --- | --- | --- |
-| Manual Learning line actions228 | Pending review of desktop line actions and short-reference handling. | Normal228 is installed. Five native cases cover one-line translation/recording and valid short-reference silence padding. | Phone shared source is available; no phone install claim. Preserve original outputs and automatic budgets. |
+| 822 pacing and repeated-clause audit | Owner receives source-review request. No fix or acceptance claim. | Frozen complete job has long takes and a verified adjacent partial-clause repetition. See CROSS-PLATFORM-822-PACING-REPETITION-REVIEW.md. | Phone owner reviews its actual core separately. Keep original takes, source clocks, optional-off permissions and spent budgets. |
+| Own-turn caption ownership gate242/244 | Mac258 is installed and tested; new requests only.26focused cases and116related regressions pass. Full-film listening remains pending. | Normal244 is installed. Ten injected execution cases and one actual Gemma correction pass. Priority origin, one saved retry and resume defects are fixed. Saved jobs remain exact. | Phone243 has not adopted244. The real-model fixture injects its initial bad draft. Full fresh-film requests and listening stay open. |
+| Required target/source separation234 | Desktop255 implements its adapter, clock and disclosure corrections with separate evidence. | Fifteen unique M4 cases pass, including actual generic inference and decoded translated-caption export. Normal234 is installed; three real checkpoint files remain byte-identical. | Normal phone241 is installed with the adopted234 core, bounded cache and coverage two. Fifteen unique native cases pass with zero failures; two saved job folders and47preference keys stay unchanged. Whole-film coverage and human listening acceptance remain open. |
+| Original delivery report233 | Desktop255 owns separate coverage correction; acceptance pending. | Shared report presentation source prepared. Native package/install pending. | Normal phone233 installed. Native finalizer/report fixture and direct controls pass. No generation gate change. |
+| Automatic source selection231 | Owner notified; implementation and acceptance pending. | Source prepared. Basic and Expert Automatic share fixed text-subtitle detection. Tests and install pending. | Normal phone233 consumes231. Native import/capture/resolve and manual controls pass. Full neural prepare and whole-film acceptance remain pending. |
+| Mobile Expert-only purchase229 | Desktop open-source access is unchanged. | Normal229 installed. Two native access/menu tests pass; guide11 is exact. | Normal phone227 is installed. Sixteen capability/access combinations and both actual unpaid entry checks pass. Guide11 is common copy. Real transactions remain open. |
+| Initial model preparation227/245 | Desktop setup is unchanged. | Normal iPad245 is built, strictly signed, installed and launch-verified. Gemma, CosyVoice, required Whisper and HTDemucs are default; Qwen/GPT remain manual. Three latest job files stay exact. M4 scope execution and clean-device download remain untested. See mobile/Validation/ipad-default-models-245-2026-10-29.json. | Normal phone245 is installed. Three focused native cases and existing-file one-click completion pass. Guide8 renders current setup text. Five jobs, two pointers and all configuration values remain exact. Only StoreKit polling time advances. Full clean-device download and lower chapter-row remote hit review remain open. See mobile/Validation/iphone-default-models-245-2026-10-29.json. |
+| Cooperative pause247 | Not audited in this phone task. Counterpart mapping remains open. | Later shared source requests safe cancellation and preserves checkpoint/budgets. Frozen normal246 retains its previous Pipeline; no M4 pause acceptance is claimed. | Normal phone247 is installed. Two native launcher cases pass with preserved checkpoints and spent counts. No loaded-model latency or new user-film acceptance is claimed. See mobile/Validation/iphone-pause-menu-247-2026-10-29.json. |
+| Phone model-start248 | Desktop setup is unchanged. | Installed248 does not adopt the named resume notice or partial-GPT file gate. | Normal248 is installed. Four native cases and direct Basic menu/missing-GPT notice pass. Saved jobs remain exact. Whole-film acceptance is open. See mobile/Validation/iphone-model-start-248-2026-10-29.json. |
+| Manual Learning line actions228 | Pending review of desktop line actions and short-reference handling. | Normal228 is installed. Five native cases cover one-line translation/recording and valid short-reference silence padding. | Normal phone227 is installed. Five native cases and two actual engines pass. Preserve original outputs and automatic budgets. Human acceptance remains open. |
+| Basic fallback and assistant controls235 | Existing desktop fallback execution remains. Guide14 consumption is pending. | Normal235 is installed. Basic exposes the existing fallback menu and passes its selected choice for new work. Assistant preview is first in Preferences. Four native cases pass; whole-film acceptance stays open. | Normal236 installs Basic fallback controls and guide14. Native recovery fixtures and direct settings checks pass. Compact assistant placement remains separate. |
+| Fallback placement240 | No desktop control behavior change. Canonical manual4/control15 location copy is complete; desktop installed consumer remains separate. | Duplicate general Preferences entry removed in source. Basic operation and Expert production controls remain. Normal240 is installed with exact manual4/control15. Launch and saved-job preservation checks pass. | Normal phone239 is installed with exact manual4/control15. Direct search/navigation, launch and saved-job/preference checks pass. No policy or budget changes. |
 | WF-16 three-language first-draft length |253 is installed on desktop. Real submission snapshots and first-request payload tests pass for three languages. Model replies are isolated fixtures; whole-film acceptance remains open. | Normal223 is installed. Three real E4B first requests contain language-aware soft guidance. Clock fallback and original data retention pass. | Default local-AI mapping is tested on M4 and installed phone224. Three actual phone E4B requests pass. Apple system-translation guidance and whole-film acceptance remain pending. |
 | WF-17 optional audible overlap over two seconds |253 is installed. Local Silero sample detection and bounded one-operation coordinator fixtures pass. Real optional neural retake and Windows inference remain open. | Normal223 has a default-off independent switch. Native coordinator fixtures cover thresholds, gaps, uncertainty, strict interaction, failed takes, and resume. | M4 and installed phone224 use conservative attributed lexical ranges. Native permission/resume fixtures pass. Real recognition plus retake acceptance and full-film tests remain open. |
 | GPT MLX deployment | Mac short comparison accepted; desktop app backend unchanged. | Normal223 retains tested215 MLX and the character App icon. Explicit engine preferences and the legacy picker are preserved. | Normal phone224 is installed. Six fresh MLX calls, memory/cancel subchecks, and retained-take export have bounded evidence. Whole-film acceptance remains open. This is not a v4 MLX port. |
@@ -955,3 +1366,45 @@ No model, media, existing recording, saved progress, source workflow, repair bud
 The compact guide consumer matches revision 6. Its new source-fallback behaviour remains pending on desktop.
 The first-take duration/fallback defect and held-tail work remain separate. Whole-film listening is not certified.
 Windows remains build 244. See `docs/DESKTOP-INSPECTOR-CONSOLIDATION.md` for evidence and limits.
+
+
+## Desktop preview257 and shared guide15
+
+See docs/DESKTOP-PREVIEW-ASSISTANTS-257.md for the presentation and source-reader change. It does not change WF-01, WF-02, WF-03, WF-15, WF-16 or WF-17. Existing requests and spent allowances remain unchanged. Mac257 is installed after process and instance-lock checks. Installed startup passes. Windows remains255.
+
+The latest common operation source is application-user-guide-4. The control source is workflow-controls-guide-15-fallback-location. Only the fallback location clause changes: Production settings and mobile Basic operation options. No repair, retry or final-fallback permission changes. Exact hashes and separate consumer install states are in RECOVERY-WORKFLOW-CONTRACT.json. Mobile owners must copy the same files and validate their own packages.
+
+### Desktop operation guide7, 2026-10-29
+
+Guide7 corrects legacy desktop CN/JA chapter-index mismatches and documents bounded first-draft correction in a desktop-only section. It preserves guide6 mobile-only chapters. Control guide15 is unchanged. Mac258 installs guide7 with hash eb6531da6e955f09ebc2c25fa8667775f448b11f98eb18f3d24477d725d02aa9. The installed mobile guide6 hashes remain separate in the JSON consumer map. Mobile-visible filtered content is exact. Windows255 remains unchanged.
+
+**Desktop258 delivery.** Mac0.25.5/build258 is signed, installed and passes isolated native-host startup.194queue/job metadata hashes remain unchanged. Package parity covers161web files and247Python files. Receipt: .build/desktop258/verification.json. No real film conversion, new model download, Windows binary change or GitHub publication occurs.
+
+## Phone workspace presentation249
+
+Installed-model validation stays in the selected Welcome button until entry is ready.
+Missing or invalid required resources retain the deployment route. The bar counts verified default model groups.
+The phone can hide its default-visible preview assistant independently of video preview.
+Expert Review retains the filename header and hides the lower timeline.
+The drawer Edit and preview action returns to production and restores the timeline.
+Basic has no drawer report entry. Reading settings reuse the five existing iPad setting groups.
+The speech-playlist Learning action stays at the bottom. Learning settings use a small icon beside the target language.
+
+Normal phone249 is installed and launch-verified. Two isolated native cases and direct zh-HK navigation checks pass.
+Five saved project files and two latest files remain byte-identical.
+Cold validation timing, processing animation with inference and full guide rendering remain unverified.
+Guide15/control19 are exact package copies. This copy does not implement pending mobile generation rules.
+No conversion core, frozen request, recording or spent allowance changes.
+Evidence: mobile/Validation/iphone-workspace-249-2026-10-29.json.
+
+
+## Phone reset location250
+
+The phone circular reset arrow is immediately right of the filename eye.
+The previous source-shelf copy is removed. The same confirmation and enabled conditions remain.
+Normal phone250 is installed and launch-verified. Direct placement, confirmation and Cancel checks pass.
+Five saved project files and two latest files remain byte-identical. Only the StoreKit check timestamp changes in preferences.
+Guide17/control19 are exact package copies. Full guide rendering is not checked.
+This appearance change does not change frozen requests, conversion rules or spent allowances.
+The iPad and desktop layouts stay unchanged. Phone quarter-first recovery and native replacement adoption remain pending.
+Evidence: mobile/Validation/iphone-reset-location-250-2026-10-29.json.

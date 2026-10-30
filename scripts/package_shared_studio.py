@@ -61,7 +61,7 @@ def bundle():
         shutil.copy2(ROOT/'Resources'/name,resources/name)
     shutil.rmtree(resources/'welcome-art',ignore_errors=True)
     shutil.copytree(ROOT/'Resources/welcome-art',resources/'welcome-art')
-    for name in ('hardware-runtimes.json','production-contract.json','model-options.json','voice-models.json','cosy-models.json','cosy-native-sources.json'):shutil.copy2(ROOT/'Resources'/name,resources/name)
+    for name in ('hk-spoken-style.json','hardware-runtimes.json','production-contract.json','model-options.json','voice-models.json','cosy-models.json','cosy-native-sources.json'):shutil.copy2(ROOT/'Resources'/name,resources/name)
     shutil.copy2(ROOT/'VERSION.json',resources/'VERSION.json')
     (resources/'studio').mkdir(exist_ok=True);shutil.copy2(ROOT/'studio/backend.py',resources/'studio/backend.py')
     (resources/'windows').mkdir(exist_ok=True)

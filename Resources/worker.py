@@ -252,7 +252,7 @@ def caption_evidence(text):
 def traditional_cantonese(cfg,text):
     if cfg.get('executable'):
         text=subprocess.check_output([cfg['executable'],'--traditional-text'],input=text.encode()).decode()
-    return spoken_cantonese(text)
+    return __import__('hk_spoken_style').normalize(cfg,spoken_cantonese(text))
 
 
 def scene_glossary(cfg,job,cues):
@@ -933,6 +933,8 @@ def convert(cfg):
             ranges=opening.local_ranges(dict(cfg,_captionPreserveRanges=[]))
             cues=[c for c in cues if not opening.excludes(c,ranges)]
         cues = [dict(c, sourceStart=c["start"]+cfg["startOffset"], sourceEnd=c["end"]+cfg["startOffset"]) for c in cues]
+        if not cues and __import__('caption_only').enabled(cfg):
+            __import__('subtitle_content_only').complete_windows(cfg,job,cues,atomic_json)
         if not cues:
             raise ValueError("呢段影片未辨識到有效對白／字幕。請加入字幕，或更換字幕來源再試。")
         if cfg.get("separateBackground") and not cfg.get("speechTiming"):
@@ -981,6 +983,7 @@ def convert(cfg):
             if cfg.get('speechTiming'):
                 plan_dialogue_scenes(cfg,job,cues,glossary)
                 atomic_json(cache,cues)
+            own_turn_fresh={i for i,c in enumerate(cues) if not c.get('cantonese','').strip()}
             for start in range(0, len(cues), 4):
                 batch = cues[start:start+4]
                 if all(c.get("cantonese") for c in batch):
@@ -990,6 +993,10 @@ def convert(cfg):
                 scene=[dict(turn_id=c.get('turnId'),speaker=c.get('speakerId','unknown'),japanese=c.get('japanese',c['text']),subtitle_hint=caption_evidence(c.get('subtitleHint',''))) for c in cues[max(0,start-4):start+8]]
                 translate_batch(dict(cfg,_sceneContext=scene,_glossary=glossary,_translationJob=str(job)), batch, context, lambda: atomic_json(cache, cues))
                 emit('翻譯',f'已保存廣東話台詞（{start+len(batch)}/{len(cues)}）。',.30+.25*(start+len(batch))/len(cues))
+            for i in sorted(own_turn_fresh):
+                if cues[i].get('cantonese'):
+                    cues[i]['cantonese']=__import__('own_turn').guard(__import__(__name__),cfg,job,cues,i,'yue',cues[i]['cantonese'],fresh=True)
+            atomic_json(cache,cues)
             polish_script(cfg,job,cues)
             repair_spoken_register(cfg,job,cues)
         # Release LLM memory after translation. Failure to unload is nonfatal.
