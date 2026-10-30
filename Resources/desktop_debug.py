@@ -114,6 +114,9 @@ def report(app):
             text,omitted=bounded_json(dict(exportStatus='unavailable',errorType=type(error).__name__,error=str(error)[:2000]))
             add(ident,text,omissions=omitted)
     for name in RECEIPTS:structured(root/name,RUNTIME_KEYS+('name','driver','torchIndex','kernelPassed','cudaVersion','runtimeTool','cudartTool','deviceProbePassed','memory','threads','model','modelVariant','speechVersions','verifiedEngines','fallbackReason','complete','reviewedSnapshot','retainedChangedCount','retainedNewCount','failureCount','failures','error','filesDeleted','bytesFreed'))
+    for name in ('drama-full-cuda12','drama-full-cuda13','drama-small-cuda'):
+        probe=owned(root/'tools'/name/'device-probe.log')
+        if probe and probe.is_file():add('tools/'+name+'/device-probe.log',redact(probe.read_text(errors='replace')[-32768:]))
     structured(root/'model-selections.json',('text','voice','drama3','speech','referenceSpeech','asr','visual'))
     structured(root/'setup-invalidated.json',('reason','at','id','kind','operation'))
     job=owned(row.get('job') or root/'jobs/nonexistent')

@@ -73,8 +73,13 @@ def prepare(root,hardware,memory,emit):
  emit('Checking the full Drama 3 NVIDIA CUDA device',setupStep='verify')
  env=dict(os.environ,PATH=os.pathsep.join([str(a),str(b),os.environ.get('PATH','')]))
  result=subprocess.run([str(a/'audiocpp_server.exe'),'--list-devices'],capture_output=True,text=True,timeout=90,env=env)
- output=result.stdout+'\n'+result.stderr;(a/'device-probe.log').write_text(output,encoding='utf-8')
- if result.returncode or not any(line.strip().startswith('CUDA:') for line in result.stdout.splitlines()):raise RuntimeError('CUDA device check failed. Update the NVIDIA driver or select CPU. See '+str(a/'device-probe.log'))
+ output=result.stdout+'\n'+result.stderr
+ details=dict(returnCode=result.returncode,returnCodeHex=hex(result.returncode&0xffffffff),stdout=result.stdout[-16000:],stderr=result.stderr[-16000:],cudaVersion=version,executable=str(a/'audiocpp_server.exe'))
+ (a/'device-probe.log').write_text(json.dumps(details,ensure_ascii=False,indent=2),encoding='utf-8')
+ if result.returncode or not any(re.match(r'^CUDA:\d+\b',line.strip(),re.I) for line in output.splitlines()):
+  reason='process-exit' if result.returncode else 'no-cuda-device-row'
+  emit('Drama 3 CUDA '+version+' device check failed: '+reason+'; exit='+details['returnCodeHex']+'; '+output.strip()[-1800:],setupStep='verify',cudaProbe=details)
+  raise RuntimeError('CUDA device check failed: '+reason+'; exit='+details['returnCodeHex']+'. '+output.strip()[-1000:])
  from atomic_files import write_json
  write_json(marker,dict(runtimeTool=runtime_id,cudartTool=cudart_id,deviceProbePassed=True,speechInferencePassed=False,memory=memory,cudaVersion=version))
  return dict(runtimeTool=runtime_id,cudartTool=cudart_id,memory=memory)
@@ -100,7 +105,7 @@ def checked_deployment(root,hardware,memory,worker,backend,emit):
     call([worker,checks,'drama3',root,'cuda'])
     return 'cuda','; '.join(errors) or None
    except (OSError,ValueError,RuntimeError,subprocess.SubprocessError) as error:
-    errors.append('CUDA '+version+': '+str(error)[-400:]);emit('Drama 3 CUDA '+version+' did not pass; trying the next compatible path.')
+    errors.append('CUDA '+version+': '+str(error)[-1600:]);emit('Drama 3 CUDA '+version+' did not pass: '+str(error)[-1800:])
   emit('Drama 3 GPU checks did not pass. Verifying the same full model on CPU.')
  call([worker,checks,'drama3',root,'cpu'])
  return 'cpu','; '.join(errors) or None

@@ -651,8 +651,8 @@
     },
     {
       "path": "Resources/desktop_debug.py",
-      "sha256": "f8ff481713e99f8da792d4d08db5d74ac21b782767dc8139e6e38d1f9451d95a",
-      "bytes": 11858
+      "sha256": "f0430b1f6aef2a68aa8b49bcda41a5236bf21b37e09c11b48c1deca2fe99c434",
+      "bytes": 12121
     },
     {
       "path": "Resources/dialogue.py",
@@ -3466,8 +3466,8 @@
     },
     {
       "path": "docs/DESKTOP-RELEASE-0.25.19.md",
-      "sha256": "df2e1f204e247e4f72ffe4fae1aed64187f96fecaef8f4c80af0e176b0d31f00",
-      "bytes": 1443
+      "sha256": "57a893e85d0955f7dd83ed8015028dc5adddd6449d82ab547f2368cb44150aa9",
+      "bytes": 1889
     },
     {
       "path": "docs/DESKTOP-RELEASE-0.25.9.md",
@@ -15860,6 +15860,11 @@
       "bytes": 8791
     },
     {
+      "path": "tests/test_setup_audio272.py",
+      "sha256": "db36a1550c4321587ebc406d4cf19ff74fbac4f0e765e7c3b1637e845d5ba179",
+      "bytes": 1669
+    },
+    {
       "path": "tests/test_setup_experience.py",
       "sha256": "26e8bcdde9da37660e1e174d8e26e4c8cdde3b3386507efcefb04a41c88ae0bf",
       "bytes": 8472
@@ -16326,8 +16331,8 @@
     },
     {
       "path": "windows/drama_full_cuda.py",
-      "sha256": "db1d48f4575ca0f07b9725ffdee71292b7b3a08238f4ac7fb3cbd109956cf3e2",
-      "bytes": 7090
+      "sha256": "efc1e489b5f4f63d6734341874eba5134c2120871bc8991ac6fe43cb750b7b0d",
+      "bytes": 7573
     },
     {
       "path": "windows/gpu.py",
@@ -16436,8 +16441,8 @@
     },
     {
       "path": "windows/native_setup.py",
-      "sha256": "cd89ee76c396415bf4d9eedbcfab663764dab0788f8c2ac5a5dd840a7252d1a8",
-      "bytes": 30432
+      "sha256": "b1baecc1b4562daa6a8339932cb38f7205bb3112cf1a3c4513ecd615961206dc",
+      "bytes": 31047
     },
     {
       "path": "windows/native_tools.py",

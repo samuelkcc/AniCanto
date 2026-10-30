@@ -213,6 +213,16 @@ def install_model(row):
  mark_available(root,row)
  emit('Model files verified: '+row['title'],modelComplete=row['id'])
 
+def verify_speech_probe(python,path):
+ # Setup runs in the minimal UI environment. Inspect generated audio in the
+ # verified worker environment where soundfile is an explicit dependency.
+ command=[str(python),'-I','-c',"import json,soundfile as sf,sys; i=sf.info(sys.argv[1]); print(json.dumps(dict(frames=i.frames,sampleRate=i.samplerate,channels=i.channels)))",str(path)]
+ raw=subprocess.check_output(command,text=True,timeout=60,env=clean_environment(data_root()))
+ info=json.loads(raw)
+ if not isinstance(info,dict) or not isinstance(info.get('frames'),int) or info['frames']<2400 or not info.get('sampleRate',0):
+  raise ValueError('Native speech probe was not completed.')
+ return info
+
 def probe_runtime(python,backend):
  device='cuda' if backend in ('nvidia','amd') else 'cpu'
  result=subprocess.check_output([str(python),str(HERE/'gpu.py'),'--probe','gpt','--device',device],text=True,env=dict(os.environ,PYTHONUTF8='1'))
@@ -363,8 +373,7 @@ def _setup(engine='drama3',backend='auto',allow_cpu_drama=False,requested=None,d
  (checks/'native-voice-probe.wav').unlink(missing_ok=True)
  file=checks/'native-voice-probe.json';file.write_text(json.dumps(probe_cfg,ensure_ascii=False))
  call([engine_runtime,HERE/'shared_inference.py','tts' if chosen.startswith('gpt-sovits') else 'cosy' if chosen=='cosyvoice3' else chosen,file])
- import soundfile as sf
- if sf.info(checks/'native-voice-probe.wav').frames<2400:raise ValueError('Native speech probe was not completed.')
+ verify_speech_probe(worker,checks/'native-voice-probe.wav')
  kind='gpt' if chosen.startswith('gpt-sovits') else 'cosy' if chosen=='cosyvoice3' else 'local' if chosen in ('voxcpm2','wsyue') else 'drama3'
  marker=root/(kind+'-windows-ready.json');verified=json.loads(marker.read_text());verified['speechInferencePassed']=True
  if kind=='gpt':verified['speechVersions']=list(dict.fromkeys(verified.get('speechVersions',[])+[version]))

@@ -4,6 +4,8 @@ Task: Keep reset and repair usable after a partial runtime removal.
 
 The user reports that a second full reset fails with a Python path error. The exact Windows error was not retained. These changes fix tested failure classes; they do not establish the exact PC root cause.
 
+- Validate final generated audio in the verified worker environment. The minimal Welcome Python does not need soundfile. This fixes the supplied log3 ModuleNotFoundError after successful model loading.
+- Record the actual Drama CUDA device-probe exit code, output and failure stage before CPU fallback. A downloaded CUDA package or working PyTorch kernel does not establish Drama GPU readiness. The exact native CUDA failure remains unconfirmed.
 - Check that the private Python interpreter can run. An executable file alone is not readiness evidence. Cache the bounded check against the executable, environment configuration and base-file signatures.
 - Repair an existing but unusable Windows venv without clearing downloaded models or installed packages.
 - Keep native full reset available before Python setup and after Python damage.
