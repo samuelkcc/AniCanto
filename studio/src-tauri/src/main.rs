@@ -307,7 +307,7 @@ fn continue_native_queue(host:Arc<Host>,app:tauri::AppHandle,epoch:u64){
 #[tauri::command]
 async fn studio_status(app:tauri::AppHandle,host:State<'_,Arc<Host>>,lifecycle:State<'_,TaskLifecycle>)->Result<Value,String> {
     let active=host.active.lock().unwrap();
-    Ok(json!({"lastFinished":lifecycle.last_finished(),"idleSleepInhibited":lifecycle.inhibited(),"nativeQueue":app.state::<QueueControl>().enabled(),"runtimeReady":host.python().is_some(),"running":active.as_ref().map(|a|json!({"id":a.id,"rowID":a.row,"seconds":a.started.elapsed().as_secs_f64(),"paused":a.paused,"setup":a.setup,"action":a.action,"modelID":a.model_id})),"storage":host.root}))
+    Ok(json!({"cleanupResult":std::fs::metadata(host.root.join("last-download-cleanup.json")).ok().filter(|m|m.len()<65536).and_then(|_|std::fs::read(host.root.join("last-download-cleanup.json")).ok()).and_then(|b|serde_json::from_slice::<Value>(&b).ok()),"lastFinished":lifecycle.last_finished(),"idleSleepInhibited":lifecycle.inhibited(),"nativeQueue":app.state::<QueueControl>().enabled(),"runtimeReady":host.python().is_some(),"running":active.as_ref().map(|a|json!({"id":a.id,"rowID":a.row,"seconds":a.started.elapsed().as_secs_f64(),"paused":a.paused,"setup":a.setup,"action":a.action,"modelID":a.model_id})),"storage":host.root}))
 }
 #[tauri::command]
 fn studio_ack_finished(run_id:String,app:tauri::AppHandle,host:State<'_,Arc<Host>>,lifecycle:State<'_,TaskLifecycle>)->bool{
@@ -517,10 +517,10 @@ async fn studio_cleanup(mode:String,token:Option<String>,operation:Option<String
         notify(json!({"phase":"checking"}));
         #[cfg(windows)] if mode=="all" && token.is_some(){
             let launcher=std::env::var("CANTOSYNC_LAUNCHER_PID").ok().and_then(|s|s.parse::<u32>().ok()).ok_or("Open the portable AniCanto.exe to remove runtimes safely on exit.")?;
-            let plan=anicanto_core::cleanup::plan(&request)?;if plan["token"]!=request["token"]{return Err("Storage changed. Review cleanup again.".into());}
-            std::fs::write(host.root.join("download-cleanup-request.json"),json!({"mode":mode,"token":token,"launcherPID":launcher}).to_string()).map_err(|e|e.to_string())?;
+            let approved=anicanto_core::cleanup::reviewed(&request)?;
+            std::fs::write(host.root.join("download-cleanup-request.json"),json!({"mode":mode,"token":token,"launcherPID":launcher,"approved":approved}).to_string()).map_err(|e|e.to_string())?;
             notify(json!({"phase":"deferred"}));
-            return Ok(json!({"deferred":true,"bytes":plan["bytes"]}));
+            return Ok(json!({"deferred":true}));
         }
         if token.is_some(){anicanto_core::cleanup::execute_with_progress(&request,&mut notify)}else{anicanto_core::cleanup::plan(&request)}
     }).await.map_err(|e|e.to_string())?

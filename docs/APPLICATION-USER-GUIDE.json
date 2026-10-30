@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-68-typed-sections",
+  "revision": "application-user-guide-71-windows-deployment-progress",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -541,6 +541,12 @@
               "zh-HK": "安裝時會顯示目前執行環境步驟及已用秒數。下載及安裝 GPU 元件可能比檢查模型耐；此階段無可靠百分比，已用時間唔代表下載完成。檢查失敗唔會標示部署就緒；可用「終端機 → 匯出偵錯記錄」提供資料。",
               "zh-CN": "安装时显示当前运行环境步骤及已用秒数。GPU 组件下载安装可能比检查模型更久；此阶段没有可靠百分比，已用时间不代表下载完成。检查失败不会标记部署就绪；可通过终端导出调试记录。",
               "ja": "セットアップ中は現在の手順と経過秒数を表示します。GPU 構成要素のインストールには時間がかかる場合があります。この手順には信頼できる進捗率がないため、経過時間はダウンロード完了を意味しません。失敗した設定は準備完了になりません。失敗時はターミナルからデバッグ記録を書き出してください。"
+            },
+            {
+              "en": "Windows setup shows the package name, received bytes and speed when the installer reports these values. Installation and import checks show elapsed time instead of an estimated percentage. Repeated timer updates do not mean repeated installations. Reset removes only unchanged files from the confirmed list. Files added or changed during shutdown stay and do not prevent the next launch. Use Check and repair to continue with local files.",
+              "zh-HK": "Windows 部署會喺安裝程式提供資料時顯示元件名稱、已下載容量及速度；安裝及載入驗證只顯示已用時間，唔會估算百分比。計時更新唔代表重複安裝。完全重設只會移除已確認清單內未改動嘅檔案；關閉期間新增或改動嘅檔案會保留，唔會阻止下次啟動。可用「檢查並修復」繼續使用本機檔案。",
+              "zh-CN": "Windows 部署会在安装程序提供数据时显示组件名称、已下载容量及速度；安装和加载验证仅显示已用时间，不估算百分比。计时更新不代表重复安装。完全重置仅移除已确认清单中未改动的文件；关闭期间新增或改动的文件会保留，不会阻止下次启动。可通过「检查并修复」继续使用本机文件。",
+              "ja": "Windows のセットアップでは、取得できる場合にパッケージ名、受信量、速度を表示します。インストールと読み込みの確認中は経過時間を表示し、進捗率を推測しません。タイマー更新は再インストールではありません。初期化では確認済み一覧の変更のないファイルのみを削除します。終了時に追加または変更されたファイルを保持し、次回起動を妨げません。「確認して修復」で続行できます。"
             }
           ],
           "controlRefs": [],
@@ -3109,6 +3115,28 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "duo-header-centering",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Unfolded Duo header",
+            "zh-HK": "Duo 展開畫面標題列",
+            "zh-CN": "Duo 展开画面标题栏",
+            "ja": "Duo 展開時のヘッダー"
+          },
+          "body": [
+            {
+              "en": "On an unfolded Duo, Studio and Playlist keep the AniCanto brand at the same display centre. The layout accounts for the right status area. Mode and return buttons retain their existing positions.",
+              "zh-HK": "Duo 展開時，工作室與播放清單的 AniCanto 標誌保持在同一個螢幕中央位置，並計算右側狀態列所佔的空間。模式與返回按鈕保留原有位置。",
+              "zh-CN": "Duo 展开时，工作室与播放列表的 AniCanto 标志保持在同一个屏幕中央位置，并计算右侧状态栏占用的空间。模式与返回按钮保留原有位置。",
+              "ja": "Duo 展開時は、スタジオと再生リストで AniCanto のロゴを同じ画面中央に保ちます。右側のステータス領域を考慮し、モードと戻るボタンは現在の位置を保ちます。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -3657,6 +3685,29 @@
             "standardReviewOnly"
           ],
           "steps": false
+        },
+        {
+          "id": "source-tracks-and-review-return-268",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Source tracks and review actions",
+            "zh-HK": "來源軌道與校對操作",
+            "zh-CN": "来源轨道与校对操作",
+            "ja": "入力トラックと校正操作"
+          },
+          "body": [
+            {
+              "en": "Preview lists readable embedded subtitles and external language/style editions before playback. The selected original subtitle is captured for a new translation job. A preview change does not alter a saved job. Audio tracks are also selectable. A timeline audition moves Preview to that line. Starting review repair or recomposition returns to production progress.",
+              "zh-HK": "預覽會在播放前列出可讀取的內置字幕及外掛字幕語言／樣式版本。所選原片字幕會用於新建的翻譯工作；更改預覽選擇不會改動已儲存工作。亦可選擇聲道。時間軸試聽會將預覽移至該句位置。校對修復或重新合成成功開始後，會返回製作進度畫面。",
+              "zh-CN": "预览会在播放前列出可读取的内置字幕和外挂字幕语言／样式版本。所选原片字幕会用于新建的翻译任务；更改预览选择不会修改已保存任务。也可选择音轨。时间轴试听会将预览移到该句位置。校对修复或重新合成成功开始后，会返回制作进度画面。",
+              "ja": "再生前に読み取り可能な内蔵字幕と外部字幕の言語・スタイル版を表示します。選択した元字幕を新しい翻訳ジョブに保存します。プレビューの変更は保存済みジョブを変えません。音声トラックも選べます。時間軸の試聴は該当場面へ移動します。修復や再合成の開始後は制作進捗へ戻ります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -3869,6 +3920,52 @@
               "zh-CN": "点击朗读模式顶部的齿轮打开偏好设置，调整界面语言、主题和小助手。关闭后返回朗读模式。字幕与朗读设置仍在原有面板。",
               "en": "Select the gear in the Reading header to open Preferences. Change interface language, theme or assistant. Close Preferences to return to Reading. Caption and narration controls remain in their existing panel.",
               "ja": "読み上げ画面上部の歯車から環境設定を開き、表示言語、テーマ、アシスタントを変更できます。閉じると読み上げ画面に戻ります。字幕と読み上げの設定は既存のパネルにあります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "reading-source-language-268",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Source language",
+            "zh-HK": "原聲語言",
+            "zh-CN": "原声语言",
+            "ja": "元音声の言語"
+          },
+          "body": [
+            {
+              "en": "Automatic selection reuses a confirmed language for this source version and audio track, or the track language tag. If neither exists, choose the source language in the dialog. Recognition starts after confirmation and remembers the choice. No initial playback is needed. Recognition, translation and narration remain separate.",
+              "zh-HK": "自動選擇會沿用同一影片版本及聲道已確認的語言，或使用聲道的語言標示。兩者均沒有時，請在視窗選擇原聲語言；確認後開始辨識並記住選擇。毋須先播放影片。辨識、翻譯及朗讀仍是分開的操作。",
+              "zh-CN": "自动选择会沿用同一视频版本及音轨已确认的语言，或使用音轨的语言标记。两者均没有时，请在窗口选择原声语言；确认后开始识别并记住选择。无需先播放视频。识别、翻译和朗读仍是分开的操作。",
+              "ja": "自動選択は同じ動画版と音声トラックで確認済みの言語、またはトラックの言語タグを使います。どちらもない場合は画面で元音声の言語を選びます。確認後に認識を開始し、選択を保存します。先に動画を再生する必要はありません。認識、翻訳、読み上げは別の操作です。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "reading-complete-player-268",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Full-screen player",
+            "zh-HK": "全螢幕播放器",
+            "zh-CN": "全屏播放器",
+            "ja": "全画面プレーヤー"
+          },
+          "body": [
+            {
+              "en": "Full screen uses the common player: play or pause, ten-second skips, thumbnail scrubbing and controls that hide during playback. Open Subtitles to choose a readable track or edition and caption visibility. Open Audio for tracks, separate video and narration volumes, mute, playback speed and reading voice/speed. Seeking stops the current utterance and continues from the new position.",
+              "zh-HK": "全螢幕使用共用播放器，提供播放／暫停、前後十秒、拖動縮圖預覽，以及播放時自動隱藏控制。「字幕」可選擇可讀取的字幕軌或版本及顯示開關。「音訊」提供聲道、影片與朗讀獨立音量、靜音、播放速度及朗讀聲線／速度。跳轉時會停止目前朗讀，再由新位置繼續。",
+              "zh-CN": "全屏使用共用播放器，提供播放／暂停、前后十秒、拖动缩略图预览，以及播放时自动隐藏控制。“字幕”可选择可读取的字幕轨或版本及显示开关。“音频”提供音轨、视频和朗读独立音量、静音、播放速度及朗读声音／速度。跳转时会停止当前朗读，再从新位置继续。",
+              "ja": "全画面は共通プレーヤーを使い、再生・一時停止、10秒移動、サムネイル付きシーク、操作部の自動非表示を利用できます。字幕から読み取り可能なトラックや版、表示を選べます。音声からトラック、動画と読み上げの個別音量、消音、再生速度、読み上げ音声と速度を設定します。移動時は現在の読み上げを止め、新しい位置から続けます。"
             }
           ],
           "controlRefs": [],

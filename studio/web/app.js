@@ -1185,7 +1185,7 @@ document.addEventListener('change',e=>safely(async()=>{const el=e.target;
 async function onEvent({payload}){const event=payload.event;if(active?.action==='speech-studio'){speechStudio.event(event);return;}if(active&&payload.runID!==active.id)return;if(payload.rowID){const r=state.queue.find(r=>r.id===payload.rowID);if(r){r.stage=event.stage;r.message=event.message;if(event.journey){journey=mergeJourney(journey,event.journey,payload.runID);r.journey=journey}if(event.output)r.output=event.output;if(event.deliveryKind){r.deliveryKind=event.deliveryKind;if(event.deliveryKind==='complete'){delete r.previewOutput;delete r.missingDialogue;delete r.incompleteDialogue;}}if(event.previewOutput)r.previewOutput=event.previewOutput;if(event.missingDialogue!=null)r.missingDialogue=event.missingDialogue;if(event.incompleteDialogue!=null)r.incompleteDialogue=event.incompleteDialogue;if(event.job)r.job=event.job;if(event.review)r.review=event.review;if(event.cueIndex!=null){const c=cues()[event.cueIndex];if(c)r.sourceTime=c.start;}if(follow&&processingPlayback(row())&&r.id===state.selected&&$('#audition').paused&&r.sourceTime!=null&&Math.abs(sourceTime-r.sourceTime)>.4)seek(r.sourceTime);}}
  if(event.workTotal>0){const key=`${event.workID}-${event.workTotal}`;if(!phaseSample||phaseSample.key!==key)phaseSample={key,first:event.workCompleted,last:event.workCompleted,total:event.workTotal,started:performance.now(),rowID:active?.rowID||state.selected,phase:(journey?.milestones||[]).find(m=>m.state==='running')?.id};else phaseSample.last=event.workCompleted;}
  if(installationActive())installationLog.event(event);
- if(installationActive()){const message=event.message||'';if(/^ERROR:/i.test(message)||!setupFailure&&(event.stage==='錯誤'||/error|failed/i.test(event.stage||'')))setupFailure=message;setupEvent=event;if(active?.setup)updateSetup();const el=$('#model-maintenance-status');if(el&&!el.querySelector('.installation-summary'))el.innerHTML=maintenanceHTML();scheduleInstallation();}appendProcessLog(JSON.stringify(event),true);updateProgress();}
+ if(installationActive()){const message=event.message||'';if(/^ERROR:/i.test(message)||!setupFailure&&(event.stage==='錯誤'||/error|failed/i.test(event.stage||'')))setupFailure=message;setupEvent=event;if(active?.setup)updateSetup();const el=$('#model-maintenance-status');if(el&&!el.querySelector('.installation-summary'))el.innerHTML=maintenanceHTML();scheduleInstallation();}if(!event.heartbeat)appendProcessLog(JSON.stringify(event),true);updateProgress();}
 async function onFinished({payload}){
  if(finishedRunIDs.has(payload.runID))return;
  finishedRunIDs.add(payload.runID);if(finishedRunIDs.size>100)finishedRunIDs.delete(finishedRunIDs.values().next().value);
@@ -1261,6 +1261,7 @@ async function boot(){
  startupProgress('Checking your computer…');
  const status=await invoke('studio_status');
  runtimeReady=status.runtimeReady;
+ if(status.cleanupResult?.reviewedSnapshot&&status.cleanupResult.complete===false){const key=JSON.stringify(status.cleanupResult);if(localStorage.getItem('anicanto-cleanup-notice')!==key){toast(deploymentCopy('cleanupPartial',state.language));localStorage.setItem('anicanto-cleanup-notice',key);}}
  if(status.running)active=status.running;
  if(runtimeReady){
   startupProgress('Loading your projects…');

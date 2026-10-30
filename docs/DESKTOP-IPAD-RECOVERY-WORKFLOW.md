@@ -32,7 +32,30 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Native source-clock correction268, implemented 2026-10-30
+
+The default Matroska demux path produces growing HEVC presentation-time errors in the actual M4case.
+Use the bundled avformat demuxer for generated MKV/WebMvideo proxies. Use a new proxy filename; retain old artifacts.
+Preserve known fractional export frame rates. Keep source files, recordings, scripts, captions and spent allowances unchanged.
+Piano native execution and full encoded-packet comparison remove the growing0–20.600952second error.
+A remaining approximately41msfixed offset and first-GOPdifferences remain. Do not claim exact lip-sync or whole-film acceptance.
+M4 and Piano have normal268. Existing outputs need recomposition with existing recordings. No automatic conversion starts.
+iPhone adoption and independent native acceptance are pending. Desktop already uses its separate FFmpeg path.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 retain their frozen meaning.
+
+Reading268 uses confirmed source/audio-language memory or track tags. Unknown new sources open a language choice.
+It does not claim audio language identification. Recognition, translation and narration remain separate.
+New source subtitle choices use exact stable track identities. Do not modify saved frozen requests from later preview choices.
+Manual desktop-demo retakes use the selected archived target voice and exact archived prompt; edited output text stays separate.
+This changes no automatic generation, review or repair allowance. New voice quality remains unaccepted.
+
 ### Native HEVC export proxy, confirmed 2026-10-30: `native-hevc-description-267`
+
+Open counterpart, reported by the iPad owner: The actual HEVC Matroska remux has presentation-time drift.
+Descriptor repair and frame decoding do not prove source-clock or audio synchronization.
+The phone adopts no generic timestamp repair in266. Preserve recordings, source media and spent budgets.
+Reproduce the exact source packet clocks before mobile acceptance.
+
 
 An export proxy must be playable, not only contain readable track metadata.
 A generated HEVC MP4 can use an unsupported hev1 sample description.
@@ -46,7 +69,7 @@ Alignment register: The exact M4 proxy fails native decoding before correction.
 A separate corrected copy decodes the start, middle and end. A two-second native encode passes.
 The original hash remains unchanged. Production integration and normal267 installation on M4 and Piano are complete.
 Production-method repair and hash-bound reuse pass on the host. Full-film M4 export remains pending.
-Desktop already requests hvc1 during remux. iPhone needs the narrow native helper and its own acceptance.
+Desktop already requests hvc1 during remux. iPhone266adopts the narrow helper. H264 export regression passes; actual HEVC and whole-film acceptance remain pending.
 This is compatibility evidence, not whole-film output or listening acceptance.
 
 ### Reading system recognition fallback, confirmed 2026-10-30: `reading-system-fallback-265`
@@ -65,7 +88,7 @@ No network transcription fallback, Whisper model change or conversion-runtime ch
 WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged for all frozen conversion requests.
 
 Alignment register: iPad265passes three Piano native cases. A15-second Japanese Dictation input produces timed text in2.473679seconds. Normal265is installed on Piano only. M4 and Lavina remain264. Names and sentence segmentation still need quality review. No whole-film acceptance is claimed.
-iPhone source adoption and physical old-phone testing are pending. Desktop has no mobile Reading mode.
+iPhone266adopts the exact Reading helper. Pre-play metadata passes. Physical old-phone recognition remains pending. Desktop has no mobile Reading mode.
 
 ### Supported 8 GB class voice defaults, confirmed 2026-10-30: `mobile-voice-memory-265`
 
@@ -119,7 +142,8 @@ The later English case reveals3system legible options for2physical caption track
 Native writer validation now retains exact physical track count, language multiset, audio count and duration.
 It permits extra system legible options. No caption, selected take or source clock changes.
 See .build/caption-only266/phone-caption-exports-final.xcresult. Final two-case rerun has0failures in14.272seconds.
-Normal phone/Duo packaging and whole-film acceptance remain pending. Piano corrected export acceptance stays with its owner.
+Normal phone266and Duo272are installed. Two additional native isolation/metadata cases pass, for13unique phone cases.
+Whole-film acceptance remains pending. Piano corrected export acceptance stays with its owner.
 Desktop260 has its separate dual-input Silero implementation and receipt. Native model and full-film acceptance remain independent.
 The Reading and layout work stays separate. No iPad device operation occurs in this phone task.
 

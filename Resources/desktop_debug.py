@@ -4,7 +4,7 @@ from pathlib import Path
 
 MAX_JSON=2*1024*1024
 RUNTIME_KEYS=('engine','requestedEngine','backend','voiceBackend','device','gpu','textModel','voiceModel','variant','dramaBackend','cudaFailure','hardware','roles','drama3Memory','modelLoadPassed','speechInferencePassed','warnings','analysisFallbackReason')
-RECEIPTS=('native-ready.json','gpu-runtime-selection.json','drama-full-cuda-ready.json','drama3-windows-ready.json','gpt-windows-ready.json','cosy-windows-ready.json')
+RECEIPTS=('last-download-cleanup.json','native-ready.json','gpu-runtime-selection.json','drama-full-cuda-ready.json','drama3-windows-ready.json','gpt-windows-ready.json','cosy-windows-ready.json')
 JOB_FILES=('processing-time.json','production-progress.json','report.json','segment-issues.json','normal-script-rescue.json','source-timing-review.json','normal-checks.json','english-overlap.json','concise-dialogue.json','dialogue-delivery-audit.json','translation-brevity.json','natural-repair.json','natural-placement.json','automatic-recovery.json','input-source.json','ocr-status.json','ocr-region.json','ocr-metrics.json','ocr-discovery/ocr-progress.json','frames-pts/ocr-progress.json','source-performance-policy.json','whisper-compute.json','reference-whisper/whisper-compute.json')
 SECRET=re.compile(r'(?i)("?(?:api[_-]?key|access[_-]?token|authorization|password|secret)"?\s*[:=]\s*)("[^"\n]*"|[^\s,}\n]+)')
 
@@ -113,7 +113,7 @@ def report(app):
         except Exception as error:
             text,omitted=bounded_json(dict(exportStatus='unavailable',errorType=type(error).__name__,error=str(error)[:2000]))
             add(ident,text,omissions=omitted)
-    for name in RECEIPTS:structured(root/name,RUNTIME_KEYS+('name','driver','torchIndex','kernelPassed','cudaVersion','runtimeTool','cudartTool','deviceProbePassed','memory','threads','model','modelVariant','speechVersions','verifiedEngines','fallbackReason'))
+    for name in RECEIPTS:structured(root/name,RUNTIME_KEYS+('name','driver','torchIndex','kernelPassed','cudaVersion','runtimeTool','cudartTool','deviceProbePassed','memory','threads','model','modelVariant','speechVersions','verifiedEngines','fallbackReason','complete','reviewedSnapshot','retainedChangedCount','retainedNewCount','failureCount','failures','error','filesDeleted','bytesFreed'))
     structured(root/'model-selections.json',('text','voice','drama3','speech','referenceSpeech','asr','visual'))
     structured(root/'setup-invalidated.json',('reason','at','id','kind','operation'))
     job=owned(row.get('job') or root/'jobs/nonexistent')

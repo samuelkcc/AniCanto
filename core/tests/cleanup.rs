@@ -39,3 +39,17 @@ fn run(t:&Temp,mode:&str)->serde_json::Value {let mut r=json!({"root":t.0,"mode"
  assert!(cleanup::execute_with_progress(&json!({"root":t.0,"mode":"models","token":"stale"}),&mut |e|events.push(e)).is_err());
  assert!(model.exists());assert!(events.iter().all(|e|e["phase"]=="checking"));
 }
+
+#[test] fn deferred_cleanup_keeps_shutdown_changes_and_new_files() {
+ let t=Temp::new();t.put("models/a.gguf");let changed=t.put("cache/live");t.put("runtimes/ui/python.exe");let movie=t.put("jobs/keep.mp4");
+ let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let approved=cleanup::reviewed(&request).unwrap();
+ fs::write(&changed,b"changed during shutdown").unwrap();let added=t.put("cache/new");
+ let result=cleanup::execute_reviewed(&approved).unwrap();assert_eq!(result["filesDeleted"],2);assert_eq!(result["retainedChangedCount"],1);assert_eq!(result["retainedNewCount"],1);assert_eq!(result["complete"],false);
+ assert!(changed.exists()&&added.exists()&&movie.exists());assert!(!t.0.join("models/a.gguf").exists());
+}
+#[test] fn reviewed_cleanup_rejects_modified_scope_before_any_delete() {
+ let t=Temp::new();let model=t.put("models/a.gguf");let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let mut approved=cleanup::reviewed(&request).unwrap();approved["files"][0][0]=json!("jobs/precious.json");assert!(cleanup::execute_reviewed(&approved).is_err());assert!(model.exists());
+}
+#[cfg(unix)] #[test] fn reviewed_cleanup_never_follows_replaced_directory_link() {
+ let t=Temp::new();let outside=Temp::new();let other=outside.put("a.gguf");t.put("models/a.gguf");let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let approved=cleanup::reviewed(&request).unwrap();fs::remove_dir_all(t.0.join("models")).unwrap();std::os::unix::fs::symlink(&outside.0,t.0.join("models")).unwrap();let result=cleanup::execute_reviewed(&approved).unwrap();assert!(other.exists());assert_eq!(result["filesDeleted"],0);
+}

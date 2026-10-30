@@ -1,5 +1,6 @@
 // Deployment and scoped production reset. Backend receipts remain authoritative.
 const copy={
+ cleanupPartial:['Cleanup kept files changed during shutdown. Check and repair can continue.','清理已保留關閉期間新增或改動嘅檔案，可以繼續「檢查並修復」。','清理已保留关闭期间新增或改动的文件，可以继续「检查并修复」。','終了時に変更または追加されたファイルを保持しました。確認と修復を続行できます。'],
  captionCovered:['Subtitle content is assigned to dialogue','字幕內容已合併至對白','字幕内容已合并至对白','字幕内容の割り当て先の台詞'],
  captionCoveredNote:['This continuation shares a subtitle with its owner. Open that dialogue to compare its script and recording; no duplicate take is required here.','此延續片段同相鄰對白共用字幕。請開啟所列對白比較台詞同錄音，呢度無須重複配音。','此延续片段与相邻对白共用字幕。请打开所列对白比较台词和录音，此处无需重复配音。','この続きの区間は前後の台詞と字幕を共有します。割り当て先の台詞と録音を確認してください。ここでの重複生成は不要です。'],
  openOwner:['Open assigned dialogue','查看所屬對白','查看所属对白','割り当て先を開く'],

@@ -2650,8 +2650,8 @@
       "revision": "caption-only-no-dialogue-native-266",
       "sourcePrepared": true,
       "tested": true,
-      "installed": false,
-      "lastInstalledBuild": 264,
+      "installed": true,
+      "lastInstalledBuild": 266,
       "newDefault": true,
       "oldMissingFieldsEnabled": false,
       "flow": "subtitles-speech",
@@ -2678,9 +2678,9 @@
       "spentBudgetsReset": false,
       "sourceClocksChanged": false,
       "nativeTests": "mobile/Tests/CaptionOnly266Tests.swift",
-      "acceptance": "All11unique phone fixture cases pass after bounded corrections. Normal package and whole-film acceptance remain pending.",
+      "acceptance": "All13unique phone fixture cases pass. Final changed-source regression has4cases and0failures. Whole-film and listening acceptance remain open.",
       "phoneNative": {
-        "uniqueCases": 11,
+        "uniqueCases": 13,
         "finalFailures": 0,
         "retainedInitialFailures": 2,
         "initialFailureScope": [
@@ -2701,21 +2701,24 @@
         "finalRerunCases": 2,
         "finalRerunSeconds": 14.272,
         "result": ".build/caption-only266/phone-caption-exports-final.xcresult",
-        "wholeFilmAccepted": false
+        "wholeFilmAccepted": false,
+        "finalChangedSourceCases": 4,
+        "finalChangedSourceFailures": 0,
+        "finalChangedSourceResult": ".build/phone266/final-source-regression.xcresult"
       },
-      "normalPackagePending": true
+      "normalPackagePending": false,
+      "installedScope": [
+        "Samuel iPhone266",
+        "existing Duo272 simulator"
+      ]
     },
     "iPhone": {
-      "sourcePrepared": true,
-      "tested": true,
-      "installedBuild": null,
-      "candidateBuild": 266,
-      "receipt": null,
-      "nativeUniqueCases": 11,
-      "nativeFinalFailures": 0,
-      "normalCandidateBuild": 266,
-      "installedTemporaryMaintenanceBuild": 266,
-      "temporaryMaintenanceRemainsNormalApp": false
+      "sourceImplemented": true,
+      "installedBuild": 266,
+      "duoInstalledBuild": 272,
+      "normalPackage": ".build/phone266/guide69/delivery/AniCanto.app",
+      "proofScope": "Thirteen unique isolated native cases. No user film conversion. Desktop270 music supplement remains unadopted.",
+      "receipt": "mobile/Validation/iphone-cleanup-caption-reading-266-2026-10-30.json"
     }
   },
   "hongKongContextualWording260": {
@@ -3497,7 +3500,7 @@
     "controlSHA256": "dab693d7d032bf016df6b2f5bed851266eba64f10369267e8a9013f3894a004e",
     "platforms": {
       "ipad": "Implemented. Five focused Piano cases pass. Normal261 is installed and launch-verified on M4/Piano. Saved jobs remain exact. Physical reset/report-gate tap and user listening remain unverified.",
-      "iphone": "Separate private owner audit and adoption pending.",
+      "iphone": "Implemented and installed in normal266. Exact native isolation/reset case passes. Existing saved requests remain byte-exact. Physical reset tap remains unverified.",
       "desktop": "Common help uptake review pending. No installed policy claim."
     },
     "ruleAudit": {
@@ -3622,9 +3625,10 @@
         "evidence": "mobile/Validation/ipad-reading-dictation-265-2026-10-30.json"
       },
       "iphone": {
-        "source": "pending adoption",
-        "nativeTests": "pending",
-        "installed": "pending"
+        "source": "Exact Reading helper adopted in private phone and Duo. Conversion remains Whisper.",
+        "nativeTests": "Pre-play metadata case passes. Actual old-phone Dictation recognition is unverified.",
+        "installed": "normal phone266 and Duo272 simulator",
+        "wholeFilmAccepted": false
       },
       "desktop": {
         "scope": "not applicable; no mobile Reading"
@@ -3658,8 +3662,11 @@
       "productionMethodEvidence": ".build/m4-cannot-open264/production-host/result.json"
     },
     "iphone": {
-      "source": "pending adoption",
-      "nativeAcceptance": "pending"
+      "source": "Narrow267helper adopted. Native H264 overlapping/export regression passes.",
+      "installedBuild": 266,
+      "nativeHEVCAcceptance": "pending",
+      "wholeFilmAccepted": false,
+      "clockCounterpart": "The iPad owner reports source-remux PTS drift for HEVC Matroska. The descriptor correction does not repair timestamps. Generic clock repair remains pending."
     },
     "desktop": {
       "mapping": "Existing remux requests hvc1. No desktop code changes."
@@ -3689,7 +3696,15 @@
     "modelsDeleted": false,
     "userMediaDeleted": false,
     "savedJobsDeleted": false,
-    "postNormalInventoryCheckPending": true
+    "postNormalInventoryCheckPending": false,
+    "metadataFilesChecked": 36,
+    "metadataFilesByteExact": 34,
+    "otherMetadata": "One demo JSON is semantically equal. Preferences record normal use.",
+    "preservedSupportFiles": 3611,
+    "supportInventoryChange": "Only semantically equal demo metadata changes size/date.",
+    "preservedExportFiles": 2370,
+    "exportSizeDateChanges": 0,
+    "finalReceipt": "mobile/Validation/iphone-cleanup-caption-reading-266-2026-10-30.json"
   },
   "nativeCaptionTrackValidation266": {
     "scope": "Native caption writer. No subtitle text, source clock, audio choice or budget change.",
@@ -3714,7 +3729,7 @@
       "revision": "application-user-guide-65-desktop-runtime-maintenance",
       "sha256": "5845f63fd4e2e9c653f81114e0cd60388f6b82eb0102f0cff75ebab44eb1887b"
     },
-    "iphone": "Narrow source adoption and physical validation remain separate.",
+    "iphone": "Private source adopted. Normal266 installed. Metadata before playback passes. Gear is visually present; explicit-close follow-up remains separate.",
     "desktop": "No mobile Reading mode."
   },
   "desktopCaptionQuiet270": {
@@ -3744,5 +3759,106 @@
     "ipadMusicCase": "pending",
     "iphoneMusicCase": "pending",
     "handover": "docs/DESKTOP-CAPTION-QUIET-270-HANDOVER.md"
+  },
+  "phoneProductionGroups266": {
+    "sourceImplemented": true,
+    "phoneInstalledBuild": 266,
+    "duoInstalledBuild": 272,
+    "groups": [
+      "Languages and models",
+      "Dubbing and checks",
+      "Opening and ending",
+      "Captions and output"
+    ],
+    "copy": {
+      "APPLICATION-USER-GUIDE.json": {
+        "revision": "application-user-guide-69-duo-header-centering",
+        "sha256": "206861f57a7772ac573ec579ecdac80fe5fe71931b01bf2bf59054049334357d"
+      },
+      "WORKFLOW-CONTROLS-GUIDE.json": {
+        "revision": "workflow-controls-guide-26-native-caption-only",
+        "sha256": "5f5dd7d48e54601b9e6ad786328917eb0a476ad3927f9e68d0e7d802a38254f1"
+      }
+    },
+    "actualPhoneGroupsAndCaptionSwitchObserved": true,
+    "frozenRequestsChanged": false
+  },
+  "duoCenteredBrand272": {
+    "sourceImplemented": true,
+    "compiled": true,
+    "installedBuild": 272,
+    "singleAniCantoApp": true,
+    "formula": "Offset the safe-content centre by (right inset - left inset) / 2.",
+    "actualOpenedStudioAndPlaylistSameCentre": true,
+    "guideParagraphRenders": true,
+    "moviesHashPreserved": 4,
+    "receipt": ".build/duo272/installed-readback.json",
+    "newSimulatorCreated": false
+  },
+  "phone266FrozenAudit": {
+    "WF-01": "Source conversion stays Whisper. Old frozen requests remain byte-exact.",
+    "WF-02": "No user missing-audio retry or spent allowance is reset.",
+    "WF-03": "Keep the first audible required-dialogue take.",
+    "WF-15": "No duration setting changes. Generic HEVC source-clock repair remains open.",
+    "WF-16": "Existing three-language draft guidance stays unchanged.",
+    "WF-17": "Overlap stays allowed. The Expert retake option remains independent and off by default."
+  },
+  "nativeRemuxClock268": {
+    "scope": [
+      "ipad",
+      "iphone"
+    ],
+    "source": "implemented",
+    "ipadInstalled": {
+      "m4": 268,
+      "piano": 268
+    },
+    "changes": [
+      "Use the bundled avformat demuxer for generated MKV/WebM video remux.",
+      "Use source-remux-clock268.mp4instead of reusing the old defective proxy.",
+      "Preserve recognized fractional frame rates in video composition.",
+      "Preserve recordings, frozen source/text choices and spent budgets."
+    ],
+    "evidence": {
+      "sourceFrames": 34024,
+      "nativeProxyFrames": 34023,
+      "samePacketHashes": 34022,
+      "ptsDeltaMinSeconds": -0.125,
+      "ptsDeltaMaxSeconds": 0.04100099999999998,
+      "ptsDeltaMedianSeconds": 0.04099999999999682,
+      "lastDeltaSeconds": 0.04099999999993997,
+      "scope": "Full-file encoded packet/PTS comparison. Remaining constant offset and first GOP differences are not zero-error lip-sync acceptance."
+    },
+    "wholeFilmLipSyncAccepted": false,
+    "iphone": "Pending narrow adoption and physical test.",
+    "frozenAudit": {
+      "WF-01": "No mode change.",
+      "WF-02": "No added generation or fill allowance.",
+      "WF-03": "Existing first audible takes stay selected.",
+      "WF-15": "No duration-option migration; full recordings and source caption clocks remain.",
+      "WF-16": "No first-draft translation change.",
+      "WF-17": "No overlap retake permission added."
+    }
+  },
+  "readingPresentation268": {
+    "ipadInstalled": {
+      "m4": 268,
+      "piano": 268
+    },
+    "guide": {
+      "revision": "application-user-guide-70-mobile-reading-repair",
+      "sha256": "f389026fdb09efb22ec5368e4e4d83a04e9f0567aba1bbf713868ed305c4f1d0"
+    },
+    "features": [
+      "Confirmed source-language choice per source version/audio track; no fake audio language identification.",
+      "Shared complete full-screen player with Reading-owned transport/effects.",
+      "Readable embedded source track IDs and external editions selectable before playback; new requests capture the exact selected identity.",
+      "Inline preview audio choices.",
+      "Explicit Preferences close binding; remove the source-default explanatory card.",
+      "Timeline audition source-frame handoff; review repair/rebuild returns to production only after start."
+    ],
+    "manualDemoReference": "Use selected archived desktop-demo target recording and its exact transcript for manual retake only.",
+    "iphone": "Pending narrow adoption; do not infer installation from guide consumption.",
+    "nativeCaptionOnlyIncluded": false
   }
 }

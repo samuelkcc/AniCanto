@@ -18,11 +18,14 @@ export class InstallationLog{
  constructor(limit=98304){this.limit=limit;this.text='';this.summary={};}
  reset(){this.text='';this.summary={};}
  append(value){const line=String(value??'').replace(/\x1b\[[0-?]*[ -/]*[@-~]/g,'').replace(/\r/g,'');if(!line)return;this.text=(this.text+line+'\n').slice(-this.limit);}
- event(event){this.summary=installationSummary(event,this.summary);if(event.message)this.append(event.message);}
+ event(event){this.summary=installationSummary(event,this.summary);if(event.message&&!event.heartbeat&&!event.download?.file?.endsWith('.whl'))this.append(event.message);}
 }
 
 // Step clocks are elapsed time, never a fabricated download percentage.
 const runtimeSteps={
+ 'Downloading runtime packages':['Downloading runtime packages','下載執行元件','下载运行组件','実行パッケージをダウンロード中'],
+ 'Reusing cached runtime packages':['Reusing cached runtime packages','使用已下載元件','使用已下载组件','キャッシュ済みパッケージを使用中'],
+ 'Installing downloaded runtime packages':['Installing downloaded runtime packages','安裝已下載元件','安装已下载组件','ダウンロード済みパッケージをインストール中'],
  'Preparing private Python':['Preparing private Python','準備專用 Python','准备专用 Python','専用 Python を準備中'],
  'Repairing private Python':['Repairing private Python','修復專用 Python','修复专用 Python','専用 Python を修復中'],
  'Detecting the GPU runtime':['Detecting the GPU runtime','偵測 GPU 執行環境','检测 GPU 运行环境','GPU 実行環境を検出中'],
@@ -44,5 +47,5 @@ export function runtimeProgressCopy(value,language='en'){
  const phase=(runtimeSteps[value.phase]||runtimeSteps['Checking installed package versions'])[i];
  const labels={worker:['Base','基本','基础','基本'],analysis:['Audio analysis','音訊分析','音频分析','音声解析'],asr:['Speech recognition','語音辨識','语音识别','音声認識'],gpt:['GPT-SoVITS','GPT-SoVITS','GPT-SoVITS','GPT-SoVITS']};
  const name=labels[value.name]?.[i]||value.name||'';
- return [name,phase,Math.max(0,Math.floor(Number(value.elapsedSeconds)||0))+' s'].filter(Boolean).join(' · ');
+ return [name,phase,value.detail&&value.detail!==value.phase?value.detail:'',Math.max(0,Math.floor(Number(value.elapsedSeconds)||0))+' s'].filter(Boolean).join(' · ');
 }

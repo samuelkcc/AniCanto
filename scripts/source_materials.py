@@ -18,7 +18,7 @@ def checked_file(root,relative,digest):
     if actual!=digest:raise ValueError('Source checksum mismatch: '+str(relative))
     return path
 
-def assemble(source,output):
+def assemble(source,output,mac_source_app=None):
     source=Path(source).resolve();output=Path(output).resolve();base=ROOT/'.build/compliance/native-source'
     if not source.is_relative_to(ROOT/'.build/public-review') or not (source/'SOURCE-MANIFEST.json').is_file():raise ValueError('Reviewed source export required')
     if not output.is_relative_to(ROOT/'.build/public-review') or output.exists():raise ValueError('Use a fresh local review archive')
@@ -82,7 +82,7 @@ def assemble(source,output):
             include(checked_file(windows_base,row['path'],row['sha256']),'windows-ffmpeg/'+row['path'],row['sha256'])
     from ffmpeg_source_audit import verify_mac
     version=json.loads((ROOT/'VERSION.json').read_text())['version']
-    mac_verification=verify_mac(ROOT/'.build/shared-release'/version/'AniCanto.app')
+    mac_verification=verify_mac(Path(mac_source_app) if mac_source_app else ROOT/'.build/shared-release'/version/'AniCanto.app')
     # pip is a source-form wheel: preserve its Python sources, vendored certifi
     # MPL sources/certificate data and all original notices, not just an URL.
     installer=json.loads((ROOT/'Resources/python-installer.json').read_text())['pip']
@@ -110,4 +110,4 @@ def assemble(source,output):
     return dict(file=output.relative_to(ROOT).as_posix(),sha256=hashlib.sha256(output.read_bytes()).hexdigest(),verifiedFiles=len(records),completeCorrespondingSource=True,legalApproval=False,published=False)
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--source',required=True,type=Path);parser.add_argument('--output',required=True,type=Path);args=parser.parse_args();print(json.dumps(assemble(args.source,args.output),indent=2))
+    parser=argparse.ArgumentParser();parser.add_argument('--source',required=True,type=Path);parser.add_argument('--output',required=True,type=Path);parser.add_argument('--mac-source-app',type=Path);args=parser.parse_args();print(json.dumps(assemble(args.source,args.output,args.mac_source_app),indent=2))

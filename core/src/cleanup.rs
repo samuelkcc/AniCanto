@@ -88,3 +88,42 @@ pub fn execute_with_progress(req:&Value,notify:&mut dyn FnMut(Value))->Result<Va
     notify(json!({"phase":if failures.is_empty(){"complete"}else{"partial"},"total":total,"processed":processed,"freedBytes":freed,"failed":failures.len()}));
     Ok(result)
 }
+
+/// Freeze the exact reviewed files before the Windows host exits.
+pub fn reviewed(req:&Value)->Result<Value,String> {
+    let (root,s,plan)=scan(req)?;
+    if req["token"]!=plan["token"] {return Err("storage-changed-review-cleanup-again".into());}
+    Ok(json!({"root":root,"mode":plan["mode"],"token":plan["token"],"files":s.files.iter().map(|(p,n,t)|json!([p.to_string_lossy(),n,t.to_string()])).collect::<Vec<_>>()}))
+}
+
+/// Shutdown may add caches. Never delete new or changed files without review.
+pub fn execute_reviewed(req:&Value)->Result<Value,String> {
+    let root=root(req)?;let mode=req["mode"].as_str().ok_or("missing-cleanup-mode")?;
+    if !["models","all"].contains(&mode){return Err("invalid-cleanup-mode".into());}
+    let rows=req["files"].as_array().ok_or("missing-reviewed-files")?;
+    let identity=json!([root.to_string_lossy(),mode,rows]);
+    if req["token"].as_str()!=Some(digest(identity.to_string().as_bytes()).as_str()){return Err("invalid-reviewed-cleanup-token".into());}
+    let mut allowed=MODELS.to_vec();if mode=="all"{allowed.extend(ALL);}allowed.extend(MARKERS);
+    let mut files=Vec::new();let mut seen=std::collections::HashSet::new();
+    for row in rows {
+        let relative=PathBuf::from(row[0].as_str().ok_or("invalid-reviewed-path")?);
+        if relative.components().any(|c|!matches!(c,std::path::Component::Normal(_))) || protected(&relative) || !allowed.iter().any(|base|relative.starts_with(base)) || !seen.insert(relative.clone()) {return Err("unsafe-reviewed-cleanup-path".into());}
+        let size=row[1].as_u64().ok_or("invalid-reviewed-size")?;
+        let modified=row[2].as_str().and_then(|v|v.parse::<u128>().ok()).ok_or("invalid-reviewed-time")?;
+        files.push((relative,size,modified));
+    }
+    let (_,current,_)=scan(&json!({"root":root,"mode":mode}))?;
+    let additions:Vec<_>=current.files.iter().filter(|(p,_,_)|!seen.contains(p)).map(|(p,_,_)|p.to_string_lossy().to_string()).collect();
+    let mut retained=Vec::new();let mut failures=Vec::new();let mut bytes=0u64;let mut deleted=0;
+    for (relative,size,modified) in files {
+        let path=root.join(&relative);
+        if path.ancestors().take_while(|p|*p!=root).any(|p|fs::symlink_metadata(p).is_ok_and(|m|linked(&m))) {retained.push(relative.to_string_lossy().to_string());continue;}
+        let meta=match fs::symlink_metadata(&path){Ok(m)=>m,Err(e) if e.kind()==std::io::ErrorKind::NotFound=>continue,Err(e)=>{failures.push(format!("{}: {e}",relative.display()));continue;}};
+        let time=meta.modified().ok().and_then(|t|t.duration_since(UNIX_EPOCH).ok()).map(|d|d.as_nanos());
+        if !meta.is_file() || meta.len()!=size || time!=Some(modified) {retained.push(relative.to_string_lossy().to_string());continue;}
+        match fs::remove_file(&path){Ok(())=>{bytes+=size;deleted+=1;},Err(e)=>failures.push(format!("{}: {e}",relative.display()))}
+    }
+    let mut dirs=current.dirs;dirs.sort_by_key(|p|std::cmp::Reverse(p.components().count()));dirs.dedup();for dir in dirs {let _=fs::remove_dir(dir);}
+    let result=json!({"mode":mode,"reviewedSnapshot":true,"token":req["token"],"bytesFreed":bytes,"filesDeleted":deleted,"retainedChangedCount":retained.len(),"retainedNewCount":additions.len(),"retainedChanged":retained.iter().take(20).collect::<Vec<_>>(),"retainedNew":additions.iter().take(20).collect::<Vec<_>>(),"failures":failures.iter().take(20).collect::<Vec<_>>(),"failureCount":failures.len(),"complete":failures.is_empty()&&retained.is_empty()&&additions.is_empty()});
+    fs::write(root.join("last-download-cleanup.json"),result.to_string()).map_err(|e|e.to_string())?;Ok(result)
+}

@@ -10,7 +10,9 @@ from downloads import download,sha256
 from runtime_installer import ensure_env,pip_command,repair_command,clean_environment
 
 def emit(message,**extra):print(json.dumps(dict(stage='Windows setup',message=message,**extra),ensure_ascii=False),flush=True)
-def call(args):subprocess.run(list(map(str,args)),check=True,timeout=2700,env=clean_environment(data_root()))
+def call(args):
+ from runtime_progress import stream_command
+ return stream_command(args,env=clean_environment(data_root()))
 def catalog():
  from model_catalog import catalog as common
  rows=common()

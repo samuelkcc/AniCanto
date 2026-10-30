@@ -26,11 +26,13 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 ## 下载 Beta · 0.25.17
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.17-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.18-beta)
 
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 本次 Beta 更新
+
+**Windows 0.25.18 修复：** 修复失效的 FFmpeg 下载地址并保留原文件校验，避免重置清理阻止重新启动，显示实际组件下载和安装阶段。Mac 维持 0.25.17。Windows 全新部署尚待用户实机测试。
 
 **0.25.17 修复：** 修正 Mac 左侧工具栏居中；Windows 部署显示详细步骤和已用时间，复用版本相符的 GPU 组件，并提供清晰的修复／重新部署菜单。除非确认完全重置，否则保留现有模型和任务。
 
@@ -40,7 +42,7 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 **已知限制：** 已加入有限度的原声时间恢复，但未确认的 OCR 区间仍可能出现重复或过长字幕。云端文件完整下载和 Windows GPU 转换仍取决于供应商及实机情况。
 
-[0.25.17 release details](docs/DESKTOP-RELEASE-0.25.17.md)
+[0.25.18 Windows release details](docs/DESKTOP-RELEASE-0.25.18.md)
 
 ## 下载测试原片，听配音成品作比较
 

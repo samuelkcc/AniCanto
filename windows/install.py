@@ -22,7 +22,9 @@ def emit(message):
 
 
 def call(args):
-    subprocess.run([str(arg) for arg in args], check=True, timeout=2700)
+    from runtime_progress import stream_command
+    from runtime_installer import clean_environment
+    return stream_command(args, env=clean_environment(data_root()))
 
 
 def env_python(name):

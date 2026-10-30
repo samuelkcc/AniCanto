@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-23-detailed-repair-help",
+  "revision": "workflow-controls-guide-26-native-caption-only",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -263,10 +263,10 @@
         "ja": "標準：任意のレポート確認"
       },
       "body": {
-        "zh-HK": "AI／ASR 粵語核對預設關閉，與必要的有聲及靜音檢查分開。開啟後只產生覆聽提示，不會替換首次有聲錄音。新設定只套用至新轉換；舊工作沿用已保存的設定。成品質素由用戶親自試聽判斷。",
-        "zh-CN": "AI／ASR 粤语核对默认关闭，与必须进行的有声／静音检查分开。开启后仅产生试听提示，不会替换第一段有声录音。新设置只用于新转换；已有任务保留设置。成品由你亲自试听决定。",
-        "en": "AI/ASR Cantonese review is optional and off by default. It is separate from mandatory audio-presence checks. Review produces listening hints and never replaces the first audible take. New settings apply to new conversions; saved jobs keep their settings. You decide acceptability by listening.",
-        "ja": "AI/ASRによる広東語確認は任意で、初期設定ではオフです。必須の有音・無音確認とは別です。確認は試聴の目安だけを示し、最初の有音録音を置き換えません。新設定は新しい変換に適用し、保存済みジョブの設定は保持します。音質の可否は試聴して判断してください。"
+        "en": "Basic optional content review starts off. Turning it on permits one content check without automatic content repair. On mobile, Reset status turns it off independently of Expert preferences. Saved jobs retain their frozen review count and spent allowances. Reports are available in Expert only. Required checks for missing, silent or damaged audio remain active at all times.",
+        "zh-HK": "基本模式的額外內容核對預設關閉；開啟後只核對一次，不會自動修復內容。行動版「重設狀態」會關閉此項，並與專家模式設定分開。已保存工作沿用原有核對次數及已用預算。報告只在專家模式查閱。缺失、靜音或損壞音訊的必要檢查一直啟用。",
+        "zh-CN": "基本模式的额外内容核对默认关闭；开启后仅核对一次，不自动修复内容。移动版“重置状态”会关闭此项，并与专家模式设置分开。已保存任务沿用原有核对次数和已用预算。报告仅在专家模式查阅。缺失、静音或损坏音频的必要检查始终开启。",
+        "ja": "基本モードの追加内容確認は初期状態で無効です。有効にすると一回確認し、自動で内容を修復しません。モバイルの状態リセットはこの設定を無効にし、エキスパート設定とは独立します。保存済みジョブの確認回数と使用済み予算は保持します。レポートはエキスパートのみで表示します。欠落・無音・破損音声の必須確認は常に有効です。"
       }
     },
     {
@@ -430,10 +430,10 @@
         "ja": "翻訳ソースの自動検出"
       },
       "body": {
-        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。",
-        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。",
-        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow.",
-        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。"
+        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。 如字幕選單提供語言或樣式版本，請先選擇所需版本再新建轉換，保留所選文字及原有顯示時間。舊工作沿用已保存來源，之後更改預覽不會替換來源。",
+        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。 如果字幕菜单提供语言或样式版本，请先选择所需版本再新建转换，保留所选文本和原显示时间。旧任务保留已保存来源，以后更改预览不会替换来源。",
+        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow. If the subtitle menu offers language or style versions, select the required version before a new conversion. Keep its selected text and original display times. Saved jobs retain their earlier source; a later preview change does not replace it.",
+        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。 字幕メニューに言語やスタイルの選択がある場合は、新規変換前に選びます。選択した文章と元の表示時刻を保ちます。保存済みジョブの入力は、後からのプレビュー変更で置き換えません。"
       }
     },
     {
@@ -595,10 +595,10 @@
         "ja": "会話のない字幕は表示のみ"
       },
       "body": {
-        "en": "Desktop Production settings has this switch on by default in Basic and Expert. Keep translated screen captions at their display times without TTS only when completed original and separated-audio checks agree that there is no dialogue. Missing recognition or a failed voice take is not proof of silence. Quiet or offscreen words and uncertain evidence keep the normal dubbing requirement. The conservative check can leave ambiguous screen text dubbed. This control does not enable extra AI review, grant retries or change saved jobs. iPad and iPhone uptake is pending; this shared description does not confirm delivery there.",
-        "zh-HK": "桌面「製作設定」預設開啟，基本與專家模式適用。只有原聲及分離聲音的完整檢測共同確認沒有對白，才保留畫面文字的翻譯字幕及原顯示時間，不生成配音。辨識不到文字或配音失敗不等於沒有對白；細聲、畫外對白或證據不確定時仍需配音。保守檢查可能保留不確定畫面文字的配音。此開關不會開啟額外 AI 覆核、增加重錄次數或改變已保存工作。iPad／iPhone 接入待完成，共用說明不代表已在手機或平板交付。",
-        "zh-CN": "桌面“制作设置”默认开启，基本与专家模式适用。只有原声与分离声音的完整检测共同确认没有对白，才保留画面文字的翻译字幕与原显示时间，不生成配音。未识别出文字或配音失败不等于没有对白；小声、画外对白或证据不确定时仍需配音。保守检查可能保留不确定画面文字的配音。此开关不会开启额外 AI 复核、增加重录次数或改变已保存任务。iPad／iPhone 接入待完成，共用说明不代表已在手机或平板交付。",
-        "ja": "デスクトップの制作設定で、基本・エキスパートとも初期状態はオンです。元音声と分離音声の検査が完了し、会話がないと一致した場合だけ、画面文字の翻訳字幕と表示時刻を保持してTTSを省きます。認識原稿の欠落やTTSの失敗は無音の証明ではありません。小声・画面外の台詞や不確かな証拠は通常の吹替対象に残します。保守的な検査のため、不確かな画面文字を読み上げる場合があります。追加AI確認、再試行回数、保存済みジョブの設定は変更しません。iPad・iPhoneへの適用は未完了で、この共通説明は提供済みの証明ではありません。"
+        "en": "Production settings has this independent switch on by default for new Basic and Expert subtitle-led jobs. Keep translated captions at their authored display times without TTS only when complete original and separated-audio activity checks agree, the completed source speech check has no words, and the complete vocal window is near digital silence. Missing recognition, failed TTS, quiet or offscreen speech, and uncertain or incomplete evidence keep normal dubbing. The check can leave ambiguous captions dubbed. It does not enable extra content review, grant retakes or change saved jobs. Old mobile jobs with no stored switch remain unchanged. Each platform records testing and installation separately.",
+        "zh-HK": "「製作設定」提供獨立開關，基本及專家模式的新字幕優先工作預設開啟。只有原聲與分離音訊的完整活動檢查一致、已完成的原聲辨識沒有對白文字，而且整段人聲接近數碼靜音，才保留翻譯字幕及原顯示時間，不生成配音。辨識失敗、配音失敗、細聲或畫外對白，以及不完整或未確定的證據，仍按正常流程配音；不確定的字幕可能繼續配音。此開關不開啟額外內容核對、不增加重錄次數，亦不改變已保存工作。未保存此選項的舊手機／平板工作保持原設定。各平台的測試及安裝狀態分開記錄。",
+        "zh-CN": "“制作设置”提供独立开关，基本及专家模式的新字幕优先任务默认开启。只有原声与分离音频的完整活动检查一致、已完成的原声识别没有对白文字，而且完整人声片段接近数字静音，才保留翻译字幕及原显示时间，不生成配音。识别失败、配音失败、轻声或画外对白，以及不完整或未确定的证据，仍按正常流程配音；不确定的字幕可能继续配音。此开关不开启额外内容检查、不增加重录次数，也不改变已保存任务。未保存此选项的旧手机／平板任务保持原设置。各平台的测试及安装状态分别记录。",
+        "ja": "制作設定の独立したスイッチは、基本・エキスパートの新しい字幕優先ジョブで初期状態がオンです。元音声と分離音声の完全な活動検査が一致し、完了した音声認識に発話がなく、人声区間全体がデジタル無音に近い場合のみ、元の表示時刻で翻訳字幕を残し、音声を生成しません。認識失敗、音声生成失敗、小さな声、画面外の発話、不完全・不確かな証拠では通常の吹き替えを続けます。不確かな字幕には音声が付く場合があります。追加の内容検査や再録音を許可せず、保存済みジョブも変更しません。この選択がない古いモバイルジョブは従来設定を保持します。テストと導入状況は各プラットフォームで別に記録します。"
       }
     },
     {

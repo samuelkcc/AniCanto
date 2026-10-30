@@ -10,7 +10,7 @@ mod splash;
 fn pending_cleanup(root:&std::path::Path,executable:&std::path::Path)->Result<(),String> {
     let file=root.join("download-cleanup-request.json");
     if !file.is_file() {return Ok(());}
-    if std::fs::metadata(&file).map_err(|e|e.to_string())?.len()>16384 {return Err("Invalid cleanup request".into());}
+    if std::fs::metadata(&file).map_err(|e|e.to_string())?.len()>64*1024*1024 {return Err("Invalid cleanup request".into());}
     let req:serde_json::Value=serde_json::from_slice(&std::fs::read(&file).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
     if req["launcherPID"].as_u64()!=Some(std::process::id() as u64) {return Ok(());}
     // Never remove a running EXE if the user stored it in a managed folder.
@@ -18,11 +18,14 @@ fn pending_cleanup(root:&std::path::Path,executable:&std::path::Path)->Result<()
         if exe.starts_with(storage) {return Err("Move AniCanto.exe outside the app data folder before removing downloads.".into());}
     }
     let request=serde_json::json!({"root":root,"mode":req["mode"],"token":req["token"]});
-    let result=anicanto_core::cleanup::execute(&request);
+    let result=if req["approved"].is_object(){anicanto_core::cleanup::execute_reviewed(&req["approved"])}else{anicanto_core::cleanup::execute(&request)};
     // A request is one-shot, including failure; always review a new plan.
     std::fs::remove_file(file).map_err(|e|e.to_string())?;
-    let result=result?;
-    if result["complete"]!=true {return Err(format!("Some downloaded files could not be removed. Projects and exports are kept. See last-download-cleanup.json in the app data folder. {}",result["failures"]));}
+    if let Err(error)=result {
+        // A cleanup failure is not an app startup failure. Keep the exact reason
+        // for the next Welcome screen and support export; never retry deletion.
+        let _=std::fs::write(root.join("last-download-cleanup.json"),serde_json::json!({"complete":false,"reviewedSnapshot":true,"error":error}).to_string());
+    }
     Ok(())
 }
 
@@ -148,6 +151,24 @@ fn main() {
 
 #[cfg(test)] mod tests {
     use super::*;
+    #[test] fn changed_reviewed_cleanup_never_blocks_the_next_launch() {
+        let root=std::env::temp_dir().join(format!("anicanto-reviewed-launch-{}",std::process::id()));
+        std::fs::create_dir_all(root.join("runtimes/ui")).unwrap();
+        std::fs::write(root.join("desktop-state.json"),"{}").unwrap();
+        std::fs::write(root.join("runtimes/ui/python.exe"),"runtime").unwrap();
+        let mut request=serde_json::json!({"root":root,"mode":"all"});
+        request["token"]=anicanto_core::cleanup::plan(&request).unwrap()["token"].clone();
+        let approved=anicanto_core::cleanup::reviewed(&request).unwrap();
+        std::fs::write(root.join("runtimes/ui/python.exe"),"changed runtime").unwrap();
+        let file=root.join("download-cleanup-request.json");
+        std::fs::write(&file,serde_json::json!({"mode":"all","approved":approved,"launcherPID":std::process::id()}).to_string()).unwrap();
+        pending_cleanup(&root,&std::env::current_exe().unwrap()).unwrap();
+        assert!(!file.exists());assert!(root.join("runtimes/ui/python.exe").exists());
+        let result:serde_json::Value=serde_json::from_slice(&std::fs::read(root.join("last-download-cleanup.json")).unwrap()).unwrap();
+        assert_eq!(result["retainedChangedCount"],1);assert_eq!(result["complete"],false);
+        pending_cleanup(&root,&std::env::current_exe().unwrap()).unwrap();
+        std::fs::remove_dir_all(root).unwrap();
+    }
     #[test] fn cleanup_is_owned_by_the_requesting_launcher_only() {
         let root=std::env::temp_dir().join(format!("anicanto-launch-cleanup-{}",std::process::id()));
         std::fs::create_dir_all(root.join("runtimes/ui")).unwrap();

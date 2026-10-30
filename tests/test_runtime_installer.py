@@ -74,7 +74,7 @@ class RuntimeInstallerTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d,patch.object(install,'data_root',return_value=Path(d)),patch.object(install,'call') as run:
    python=Path(d)/'runtimes/gpt/Scripts/python.exe'
    for backend,index in [('nvidia','cu128'),('intel','xpu'),('cpu','cpu')]:
-    install.install_torch(python,backend)
+    install.install_torch(python,backend,cuda_index=index if backend=='nvidia' else None)
     command=run.call_args.args[0]
     self.assertIn('https://download.pytorch.org/whl/'+index,command)
     self.assertIn('torch==2.9.1',command);self.assertIn('torchaudio==2.9.1',command)
