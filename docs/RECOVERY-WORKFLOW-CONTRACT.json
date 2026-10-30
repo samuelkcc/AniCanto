@@ -3976,5 +3976,25 @@
       }
     },
     "wholeFilmListeningAccepted": false
+  },
+  "mobileSelectedSubtitleEdition279": {
+    "rule": "Freeze the exact selected external record and authored language edition for a new conversion.",
+    "phoneSource": "implemented279; three native execution tests pass; normal279 installed and launched; full user conversion pending",
+    "duoSource": "implemented; not built or installed",
+    "ipadSource": "verified in frozen normal271 source; no new device test",
+    "legacyWholeFileSelection": "retained",
+    "savedJobs": "Do not replace frozen captions or reset spent budgets.",
+    "workflowRules": "WF-01/02/03/15/16/17 retain their frozen meaning.",
+    "receipt": "mobile/Validation/iphone-subtitle-edition-279-2026-10-30.json",
+    "consumer": {
+      "APPLICATION-USER-GUIDE.json": {
+        "revision": "application-user-guide-77-mobile-selected-subtitle-edition",
+        "sha256": "cdf9907e9da6664db4bfa7f60b4c4da693b892cead3e4b9ee0fb42b67fbaaa1d"
+      },
+      "WORKFLOW-CONTROLS-GUIDE.json": {
+        "revision": "workflow-controls-guide-27-native-caption-music-proof",
+        "sha256": "410f100acac978be14e8b6e651f19eba7587b7fa2fa4d18d3708af49aa2e22d8"
+      }
+    }
   }
 }

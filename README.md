@@ -15,9 +15,9 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.21](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.21-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 [Download](#download) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)

@@ -150,7 +150,7 @@ def preflight(root,video,tools,settings,operation_id=None,row_id=None):
         message=CLOUD_ERROR if preparation.state['phase']=='reading' and __import__('source_preparation').cloud(video) else READ_ERROR
         preparation.fail(RuntimeError(message))
         from atomic_files import write_json
-        write_json(preparation.folder/'diagnostic.json',dict(kind=type(error).__name__,detail=str(error)[:1200],source=str(video),phase=preparation.state['phase']))
+        write_json(preparation.folder/'diagnostic.json',dict(kind=type(error).__name__,detail=str(error)[:1200],readerError=(getattr(error,'stderr',b'') or b'').decode('utf-8',errors='replace')[-4000:] if isinstance(getattr(error,'stderr',None),bytes) else str(getattr(error,'stderr',''))[-4000:],source=str(video),phase=preparation.state['phase']))
         raise RuntimeError(message) from error
     except RuntimeError as error:
         preparation.fail(error);raise

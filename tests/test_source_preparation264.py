@@ -56,7 +56,7 @@ class PreparationTests(unittest.TestCase):
   expected=prep.identity(self.source);expected['bytes']+=100
   request=dict(source=str(self.source),identity=expected,progress=str(self.root/'progress.json'),result=str(self.root/'result.json'))
   with patch.object(prep,'identity',return_value=expected):
-   with self.assertRaisesRegex(RuntimeError,'incomplete'):prep.read_source(request)
+   with self.assertRaisesRegex(RuntimeError,'incomplete'):prep.read_source(request,max_idle=0)
   self.assertFalse((self.root/'result.json').exists())
  def test_cancelled_native_preparation_does_not_start_next_video(self):
   from types import SimpleNamespace

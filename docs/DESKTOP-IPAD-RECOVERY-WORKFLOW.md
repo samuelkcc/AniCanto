@@ -1198,6 +1198,19 @@ See mobile/Validation/ipad-followup-254-2026-10-30.json.
 
 ## Cross-platform alignment register
 
+### Selected external subtitle edition279, 2026-10-30
+
+New conversions must freeze the exact selected record and authored language edition.
+Phone274 preview accepts edition identifiers, but conversion incorrectly parses the complete identifier as a UUID.
+Private phone279 and Duo source now use ExternalSubtitleSelection and freeze only the selected edition.
+Frozen iPad271 source already has this implementation. No new iPad device test occurs.
+Phone279 has three passing native capture cases and is installed and launched. User full-conversion acceptance remains open.
+Duo compilation and installation are pending.
+Existing whole-file selections remain valid. Saved snapshots and spent budgets remain unchanged.
+WF-01/02/03/15/16/17 retain source priority, required voice, first audible take, timing and allowance rules.
+Desktop is unchanged. Phone279 consumes exact guide77/control27; hashes are in the receipt. Other consumers remain unchanged.
+See mobile/Validation/iphone-subtitle-edition-279-2026-10-30.json.
+
 ### Duo270 normal-player presentation evidence, 2026-10-30
 
 Duo270 is installed as one AniCanto app. Four movie hashes and the normal-player catalog entry remain exact.

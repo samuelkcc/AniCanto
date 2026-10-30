@@ -26,27 +26,27 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "64530850b129472e0f459cc09977dde1698ed80aed3359df7ceb4087b579bf1a",
+      "sha256": "18dd223d11aa85ac6493dc689c902a05674707e041ec9f56bea125fc62f6e3aa",
       "bytes": 23173
     },
     {
       "path": "README.ja.md",
-      "sha256": "5f8f02ce863fe526789570cd54a49031a114b7baddf1085e0819f2ef0848e712",
+      "sha256": "47afef0b7d53d5043fdd9fa6d62779c888a8bf534bb6cf4df2d044fdbba91cc2",
       "bytes": 25601
     },
     {
       "path": "README.md",
-      "sha256": "64530850b129472e0f459cc09977dde1698ed80aed3359df7ceb4087b579bf1a",
+      "sha256": "18dd223d11aa85ac6493dc689c902a05674707e041ec9f56bea125fc62f6e3aa",
       "bytes": 23173
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "ed7ec76da14bb33222c08edc25ded74013a0593c4e9dd3b7bee7b6dc59ae17c1",
+      "sha256": "b0285d3c21a31c29662fe1356d861765068fb6b8f07453890d9b45a465a0438c",
       "bytes": 19961
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "e0d603ffaf25ef8e5bef757297e2a65e7e7e08cce5f8cb3aa271bd13654a1e6b",
+      "sha256": "04cbaf35242f8cb5baafaa6c40a9bd6a3f2a7c3bee6d2d3309c17727e8b0aa20",
       "bytes": 20082
     },
     {
@@ -1516,8 +1516,8 @@
     },
     {
       "path": "Resources/source_language.py",
-      "sha256": "117e5ae85901c16b93023ee61579446f27b2e1abbe7168b5752a5a0c1d4b7ff4",
-      "bytes": 9967
+      "sha256": "aa6ca6f0f95ceb73c9dab8948a70d0ce42939de4879385292659ce9f6480ae0f",
+      "bytes": 10152
     },
     {
       "path": "Resources/source_mora.py",
@@ -1531,8 +1531,8 @@
     },
     {
       "path": "Resources/source_preparation.py",
-      "sha256": "a5e8bc5fc3a57f4befd11452d6b81921a749d61e4b28903712be860c289d4565",
-      "bytes": 8485
+      "sha256": "7a32eee810b7374e003230a4f84b3890eae92364e45dc39a120f5466b9acdc40",
+      "bytes": 10019
     },
     {
       "path": "Resources/source_reference.py",
@@ -3306,7 +3306,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "435414eee1682b54ff3d8c4b89e1039bbe4af0b5f04c08a8072ae6217e5adead",
+      "sha256": "17266f9de1872c32fceb36884f18b7fe8db691aaff5c2140ab9b419e4d5216e3",
       "bytes": 66
     },
     {
@@ -3351,8 +3351,8 @@
     },
     {
       "path": "docs/APPLICATION-USER-GUIDE.json",
-      "sha256": "0e8cecbb7fbeb36948ebe93abe19696ab1445e42c2f9a319921da7c2020b3130",
-      "bytes": 422468
+      "sha256": "7ca39bd7969803e67f50cc69ea8b126d5a532b73dcac255853f5d3e1017ddbb1",
+      "bytes": 429515
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
@@ -3381,7 +3381,7 @@
     },
     {
       "path": "docs/DESKTOP-DOWNLOADS.json",
-      "sha256": "bbd080366982f14315d948f0381455e35942a2700c455725deaa2ce7d1c55e4d",
+      "sha256": "ec1d702a5c334660a680773eadb0031ff17203f1f1f58b0ecce3b7aac526ca66",
       "bytes": 221
     },
     {
@@ -3391,8 +3391,8 @@
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "e97d99a32ccf047c578ab14f742e7bbff4da0df598368db6067ceac3d086c23f",
-      "bytes": 192296
+      "sha256": "61dc062f55dd2d6a5e69d08768da60fbdaed903568b9320e458b6428e38c0628",
+      "bytes": 193313
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
@@ -3478,6 +3478,11 @@
       "path": "docs/DESKTOP-RELEASE-0.25.20.md",
       "sha256": "4e6b0c12591698fe7195fa88a01e5c8266715f4e0245ea0f39dd75cbe3d5cc7d",
       "bytes": 2319
+    },
+    {
+      "path": "docs/DESKTOP-RELEASE-0.25.21.md",
+      "sha256": "6e023c6cd6f105b5d687f5709733655fe3921c5ee4c51b3c263a461d820bd2fd",
+      "bytes": 1494
     },
     {
       "path": "docs/DESKTOP-RELEASE-0.25.9.md",
@@ -3576,13 +3581,13 @@
     },
     {
       "path": "docs/README.md",
-      "sha256": "0e94a7f17dc7f3261f937f36ce0d986ce564e64fcb9d2ab0287d1e597e95ea5f",
+      "sha256": "1b536fb33709a9f37f1dd004bfbf0d979b612a71996f45db189321a2dc4c4c70",
       "bytes": 1099
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "02436fb4dff6ef26e516e915350602dda1bf0ba45748556055a29e9ec5cc622c",
-      "bytes": 209840
+      "sha256": "5bef3f490d867c0481f13728bb5497cc03c70645eb5d11c51fed3ec233b286b3",
+      "bytes": 210985
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -13851,13 +13856,13 @@
     },
     {
       "path": "scripts/public-desktop-index.md",
-      "sha256": "0e94a7f17dc7f3261f937f36ce0d986ce564e64fcb9d2ab0287d1e597e95ea5f",
+      "sha256": "1b536fb33709a9f37f1dd004bfbf0d979b612a71996f45db189321a2dc4c4c70",
       "bytes": 1099
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "f16894745e6a4950c436475d8443ba91204c17d53785f0f1fb9acda0cac5f78a",
-      "bytes": 12954
+      "sha256": "dcb3c216b596ef314c614df27e4be07b1ade373c4fcddd712995d99d0610d58e",
+      "bytes": 12983
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -14116,12 +14121,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "89bc7419acfdc965523591c147838715ac2f62024988feb2f7357b761256146f",
+      "sha256": "7a4ad3033fa4e02d1b27830b691a48bb35a2887255112597de3aa7797230315a",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "a42ff593a577db88a042f90c034867d71244ac8d67c52364705c9613c5b4ea58",
+      "sha256": "4f825ec55c8b80888f2cb14d5d95fd4a0b25f26432bb2c3ea2e1199d8e4d0b2a",
       "bytes": 543
     },
     {
@@ -14181,7 +14186,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "32f4a85a3dcab4e125e09a4e37c5f2988563dee65f4a46c2039677e0a41d20e0",
+      "sha256": "00a10bcbdcd33bb5fbdaa0a766678c549dc35d03454db09109d2b6f141017b17",
       "bytes": 1051
     },
     {
@@ -15920,6 +15925,11 @@
       "bytes": 4356
     },
     {
+      "path": "tests/test_source_cloud274.py",
+      "sha256": "94b205faac3a255bfba6334377fa056244d983815748235ce0042954850fb40f",
+      "bytes": 3603
+    },
+    {
       "path": "tests/test_source_counting.py",
       "sha256": "bd554e7d9351b8e7102e59d3db1c56e0c2bafc908f4d19526c26e31ed721fee4",
       "bytes": 2681
@@ -15936,8 +15946,8 @@
     },
     {
       "path": "tests/test_source_preparation264.py",
-      "sha256": "947f0e6251da9a9a1f1cd7f256d8f9f653ef673a0873063c6ffddbf100b00de9",
-      "bytes": 6551
+      "sha256": "04399b15369e498f1b31040ecad254d859351e92388a78412e7342e8c1a6ac3a",
+      "bytes": 6562
     },
     {
       "path": "tests/test_source_workflow84.py",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-74-desktop-visible-reset-cuda-choice",
+  "revision": "application-user-guide-78-desktop-cloud-local-data",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -206,6 +206,51 @@
               "zh-HK": "可按「取消準備」停止目前讀取，不會刪除影片或清單項目。若雲端斷線或只提供部分檔案，請檢查連線、設為可離線使用後重試；現有設定、錄音及轉換進度會保留。Mac 會重用原檔，不另製完整預覽影片。",
               "zh-CN": "可按“取消准备”停止当前读取，不会删除视频或列表项目。若云服务断线或只提供部分文件，请检查连接、设为可离线使用后重试；现有设置、录音和转换进度会保留。Mac 会重用原文件，不另外制作完整预览视频。",
               "ja": "「準備をキャンセル」で現在の読み取りを停止できます。動画やリスト項目は削除しません。クラウドの切断や不完全な読み取りが発生した場合は、接続を確認し、オフライン利用を有効にして再試行してください。設定、録音、変換の進捗は保持します。Macは元ファイルを再利用し、動画全体のプレビュー複製を作りません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "duo-open-landscape",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Duo screen direction",
+            "zh-HK": "Duo 螢幕方向",
+            "zh-CN": "Duo 屏幕方向",
+            "ja": "Duo の画面方向"
+          },
+          "body": [
+            {
+              "en": "The open Duo screen uses landscape orientation. The closed screen uses the iPhone layout. Full-screen playback on the closed screen can rotate with the device. Reading preferences use the same content width as ordinary preferences. Close returns to Reading.",
+              "zh-HK": "Duo 打開後的螢幕使用橫向。摺合後使用 iPhone 排版；摺合螢幕的全螢幕播放器可隨裝置旋轉。朗讀模式與一般偏好設定使用相同內容寬度，關閉後返回朗讀模式。",
+              "zh-CN": "Duo 展开后的屏幕使用横向。折叠后使用 iPhone 排版；折叠屏幕的全屏播放器可随设备旋转。朗读模式与一般偏好设置使用相同内容宽度，关闭后返回朗读模式。",
+              "ja": "Duo を開いた画面は横向きで使用します。閉じた画面は iPhone のレイアウトを使用し、全画面プレーヤーは端末の向きに合わせて回転できます。読み上げモードの環境設定は通常の環境設定と同じ本文幅を使用し、閉じると読み上げモードに戻ります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-selected-subtitle-edition",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Convert the selected subtitle edition",
+            "zh-HK": "使用所選字幕版本轉換",
+            "zh-CN": "使用所选字幕版本转换",
+            "ja": "選択した字幕版で変換"
+          },
+          "body": [
+            {
+              "en": "After importing a multilingual ASS file, select the required language edition in the preview subtitle menu. A new conversion saves only that edition as its source text. Later preview choices do not change a saved conversion. Resume a job that stopped before subtitle capture after updating the app. A missing or removed edition still requires a valid selection.",
+              "zh-HK": "匯入多語言 ASS 字幕後，請在預覽字幕選單選擇所需語言版本。新轉換只保存該版本作為來源文字；之後更改預覽選擇不會改動已保存的轉換。若工作在保存來源字幕前停止，更新程式後可繼續轉換。已刪除或不存在的版本仍需重新選擇。",
+              "zh-CN": "导入多语言 ASS 字幕后，请在预览字幕菜单选择所需语言版本。新转换只保存该版本作为来源文字；之后更改预览选择不会改动已保存的转换。若任务在保存来源字幕前停止，更新程序后可继续转换。已删除或不存在的版本仍需重新选择。",
+              "ja": "多言語ASS字幕を読み込んだら、プレビューの字幕メニューで必要な言語版を選びます。新しい変換はその版だけを入力テキストとして保存します。後でプレビューの選択を変えても、保存済みの変換は変わりません。字幕保存前に停止した処理は、アプリ更新後に再開できます。削除済みまたは存在しない版は、再選択が必要です。"
             }
           ],
           "controlRefs": [],
@@ -565,6 +610,12 @@
               "zh-HK": "Drama3 處理預設自動偵測；亦可為相容 NVIDIA 顯示卡手動揀 CUDA 12 或 CUDA 13。規劃、下載同裝置驗證會用同一個原生版本。手動選擇唔會略過模型載入同試音檢查；唔相容嘅顯示卡世代會被拒絕。PyTorch 加速會獨立驗證。",
               "zh-CN": "Drama3 处理默认自动检测；也可为兼容 NVIDIA 显卡手动选择 CUDA 12 或 CUDA 13。规划、下载和设备验证使用同一原生版本。手动选择不会跳过模型加载和试音检查；不兼容的显卡代际会被拒绝。PyTorch 加速单独验证。",
               "ja": "Drama3 は標準で自動検出します。対応する NVIDIA GPU では CUDA 12 または CUDA 13 を手動選択できます。計画、取得、装置検証は同じネイティブ版を使用します。手動選択でもモデル読み込みと音声試験は必須で、非対応世代は拒否します。PyTorch 加速は別に検証します。"
+            },
+            {
+              "en": "Windows checks the file offline/recall attributes before cloud preparation. A regular locally available file inside a cloud folder goes directly to media checks. Files still requiring recall retain their read progress across temporary empty reads or read errors. Only a stalled read with no new bytes for120seconds fails; active downloading has no total deadline. A failed media check is not labelled as waiting for the cloud provider.",
+              "zh-HK": "Windows 會先檢查檔案嘅離線／取回標記；雲端資料夾入面已喺本機可用嘅一般檔案會直接檢查影片資料。仍需取回嘅檔案遇到暫時空讀或讀取錯誤，會保留進度繼續等待；只有連續 120 秒冇新資料先報錯，持續下載冇總時限。影片檢查失敗唔會再標示為等待雲端。",
+              "zh-CN": "Windows 会先检查文件的离线／取回标记；云端文件夹中已在本地可用的普通文件会直接检查视频信息。仍需取回的文件遇到临时空读或读取错误，会保留进度继续等待；仅连续 120 秒没有新数据才报错，持续下载无总时限。视频检查失败不会再标为等待云端。",
+              "ja": "Windows はファイルのオフライン／再取得属性を先に確認します。クラウドフォルダー内でもローカルに存在する通常ファイルは動画情報の確認へ進みます。再取得が必要なファイルでは一時的な空読みや読み取りエラー後も進捗を保持します。新しいデータが120秒間ない場合のみ失敗し、継続中の取得には総時間制限を設けません。動画確認の失敗をクラウド待機とは表示しません。"
             }
           ],
           "controlRefs": [],
@@ -2967,10 +3018,10 @@
               "ja": "開始画面でモードを選び、スタジオに入ります。基本モードの歯車は環境設定を開きます。専門モードは左のナビゲーションを使い、右上のアイコンで各パネルを表示・非表示にします。環境設定を閉じると元の画面に戻ります。"
             },
             {
-              "zh-HK": "專家模式的「播放器」及「配音器」位於左側功能表，均由下方彈出全螢幕。使用返回按鈕可回到原有工作畫面。基本模式保留原有入口。",
-              "zh-CN": "专家模式的“播放器”和“配音器”位于左侧菜单，均从下方弹出全屏。使用返回按钮可回到原工作画面。基本模式保留原入口。",
-              "en": "Expert opens Player and Dubbing studio from the left menu. Both slide up in full screen. Use Return to restore the previous workspace. Basic keeps its existing shortcuts.",
-              "ja": "エキスパートでは左メニューからプレーヤーと音声スタジオを開きます。どちらも下から全画面で表示されます。戻るボタンで元の作業画面へ戻ります。基本モードの入口は変わりません。"
+              "zh-HK": "專家模式的「播放器」及「配音器」位於左側功能表，會直接切換至全螢幕。使用返回按鈕可回到原有工作畫面。基本模式保留原有入口。",
+              "zh-CN": "专家模式的“播放器”和“配音器”位于左侧菜单，直接切换至全屏。使用返回按钮可回到原工作画面。基本模式保留原入口。",
+              "en": "Expert opens Player and Dubbing studio from the left menu. Both switch directly to full screen. Use Return to restore the previous workspace. Basic keeps its existing shortcuts.",
+              "ja": "エキスパートでは左メニューからプレーヤーと音声スタジオを開き、すぐに全画面へ切り替わります。戻るボタンで元の作業画面へ戻ります。基本モードの入口は変わりません。"
             }
           ],
           "controlRefs": [],
@@ -3229,6 +3280,28 @@
             "captionOnlyNoDialogue",
             "contentReview"
           ],
+          "steps": false
+        },
+        {
+          "id": "ipad-guide-index",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "en": "User guide navigation",
+            "zh-HK": "使用手冊導覽",
+            "zh-CN": "使用手册导航",
+            "ja": "ガイドの操作"
+          },
+          "body": [
+            {
+              "en": "On iPad, the chapter index stays beside the selected chapter. Search filters the index. Choose a chapter to open its contents. In a narrow window, use the Chapters menu. Close the guide with the top-right cross. Preferences keeps its close button above the scrolling settings.",
+              "zh-HK": "在 iPad，章節目錄會固定顯示在內容左側。搜尋可篩選目錄，選取章節即可閱讀。在較窄視窗，請使用「章節目錄」選單。按右上角交叉可關閉手冊；偏好設定的關閉按鈕會固定在頂欄，不會隨內容捲動。",
+              "zh-CN": "在 iPad，章节目录固定显示在内容左侧。搜索可筛选目录，选取章节即可阅读。在较窄窗口，请使用“章节目录”菜单。按右上角叉号可关闭手册；偏好设置的关闭按钮固定在顶栏，不随内容滚动。",
+              "ja": "iPadでは章一覧を本文の左側に固定します。検索で一覧を絞り込み、章を選ぶと本文を表示します。狭いウインドウでは章メニューを使います。右上の閉じるボタンでガイドを閉じます。環境設定の閉じるボタンは上部に固定され、本文と一緒にスクロールしません。"
+            }
+          ],
+          "controlRefs": [],
           "steps": false
         }
       ]

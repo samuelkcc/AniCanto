@@ -15,6 +15,16 @@ def placeholder(path):return bool(getattr(Path(path).stat(),'st_flags',0)&0x4000
 def cloud(path):
  parts=[x.casefold() for x in (*Path(path).parts,*PureWindowsPath(str(path)).parts)]
  return any(x in ('cloudstorage','mobile documents','my drive','google drive') or x.startswith(('onedrive','googledrive')) for x in parts) or str(path).startswith('\\\\')
+def windows_attributes(path):
+ if os.name!='nt':return None
+ return getattr(Path(path).stat(),'st_file_attributes',None)
+def requires_hydration(path):
+ attributes=windows_attributes(path)
+ # Microsoft OFFLINE / RECALL_ON_OPEN / RECALL_ON_DATA_ACCESS attributes.
+ # A cloud folder name is not proof that a regular file still needs recall.
+ if attributes is not None and not str(path).startswith('\\\\'):
+  return bool(attributes & (0x1000|0x40000|0x400000))
+ return cloud(path) or placeholder(path)
 def owner_alive(pid):
  if not pid:return True
  if os.name=='nt':
@@ -99,7 +109,9 @@ class Preparation:
     else:fcntl.flock(lock,fcntl.LOCK_UN)
  def ensure_local(self):
   self.check();before=identity(self.source);self.update(totalBytes=before['bytes'])
-  if not cloud(self.source) and not placeholder(self.source):return
+  if not requires_hydration(self.source):
+   self.update(sourceReadPolicy='local-data',localDataAvailable=True);return
+  self.update(sourceReadPolicy='provider-read')
   key=hashlib.sha256(json.dumps(before,sort_keys=True).encode()).hexdigest();receipt=self.root/'cache/source-readiness'/(key+'.json')
   with self.exclusive_read(receipt.with_suffix('.lock')):
    try:ready=json.loads(receipt.read_text())
@@ -115,7 +127,7 @@ class Preparation:
    if result.get('identity')!=before or result.get('bytesRead')!=before['bytes'] or identity(self.source)!=before:raise RuntimeError(READ_ERROR)
    write_json(receipt,result);self.update(bytesRead=before['bytes'])
  def finish(self):self.update(state='ready',phase='ready')
- def fail(self,error):self.update(state='cancelled' if isinstance(error,SourcePreparationCancelled) else 'waiting',message=str(error)[:500])
+ def fail(self,error):self.update(state='cancelled' if isinstance(error,SourcePreparationCancelled) else 'failed',message=str(error)[:500])
 
 
 def status(root,operation_id=None):
@@ -132,16 +144,32 @@ def cancel(root,operation_id):
  if value is None or value.get('state')=='preparing':(folder/'cancel').touch()
  return dict(cancelRequested=True)
 
-def read_source(request):
- source=Path(request['source']);expected=request['identity'];count=0;sha=hashlib.sha256();last=0
+def read_source(request,*,max_idle=120,pause=time.sleep,clock=time.monotonic,opener=None):
+ source=Path(request['source']);expected=request['identity'];count=0;sha=hashlib.sha256();last=0;stream=None;last_progress=clock();last_error=''
  if identity(source)!=expected:raise RuntimeError('Source identity changed before reading.')
- with source.open('rb') as f:
-  while True:
-   block=f.read(1024*1024)
-   if not block:break
-   count+=len(block);sha.update(block)
-   if time.monotonic()-last>.25 or count>=expected['bytes']:
-    write_json(request['progress'],dict(bytesRead=count,totalBytes=expected['bytes']));last=time.monotonic()
+ open_source=opener or (lambda:source.open('rb'))
+ try:
+  while count<expected['bytes']:
+   try:
+    if stream is None:stream=open_source();stream.seek(count)
+    block=stream.read(min(1024*1024,expected['bytes']-count))
+   except OSError as error:
+    last_error=str(error)[-500:]
+    if stream is not None:
+     try:stream.close()
+     except OSError:pass
+    stream=None;block=b''
+   if not block:
+    if stream is not None:stream.close();stream=None
+    if identity(source)!=expected:raise RuntimeError('Source changed during reading.')
+    if clock()-last_progress>=max_idle:raise RuntimeError('The provider supplied an incomplete source and made no read progress for '+str(max_idle)+' seconds. '+last_error)
+    write_json(request['progress'],dict(bytesRead=count,totalBytes=expected['bytes'],waitingForData=True))
+    pause(.5);continue
+   count+=len(block);sha.update(block);last_progress=clock()
+   if clock()-last>.25 or count>=expected['bytes']:
+    write_json(request['progress'],dict(bytesRead=count,totalBytes=expected['bytes'],waitingForData=False));last=clock()
+ finally:
+  if stream is not None:stream.close()
  if count!=expected['bytes'] or identity(source)!=expected:raise RuntimeError('The provider supplied an incomplete or changed source.')
  write_json(request['result'],dict(identity=expected,bytesRead=count,sha256=sha.hexdigest(),completed=time.time()))
 if __name__=='__main__':read_source(json.loads(Path(sys.argv[1]).read_text()))

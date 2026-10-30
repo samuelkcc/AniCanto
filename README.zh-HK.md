@@ -15,9 +15,9 @@
 
 ## 下載
 
-**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.21](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.21-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 [下載](#download) · [功能](#app-可以做啲乜) · [處理流程](#由影片到另一把聲音) · [介面圖](#新版介面) · [技術支援](SUPPORT.zh-HK.md) · [支持計劃](#支持更多人認識廣東話) · [示範影片](#下載測試原片聽返配音成品比較)

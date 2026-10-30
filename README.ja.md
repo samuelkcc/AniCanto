@@ -15,9 +15,9 @@
 
 ## ダウンロード
 
-**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.20](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/AniCanto.exe)**
+**[Mac 0.25.17](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 0.25.21](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.20-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.20-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.21-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.21-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 [ダウンロード](#download) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [デモ](#元のデモを変換して声を比較する)
