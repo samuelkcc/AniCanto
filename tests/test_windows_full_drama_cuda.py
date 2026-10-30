@@ -56,6 +56,29 @@ class FullDramaCUDA(unittest.TestCase):
    quality=next(q for q in p['qualityPresets'] if q['id']=='quality')['plan']
    self.assertEqual(quality['tools'],p['tools']);self.assertEqual(quality['memoryPools']['system']['peak'],22)
    self.assertFalse(p['setupReady'])
+ def test_verified_cuda12_remains_ready_when_torch_prefers_cuda13(self):
+  import copy
+  with tempfile.TemporaryDirectory() as d,patch.object(native_setup,'data_root',return_value=Path(d)),patch.object(native_setup,'available',return_value=True):
+   root=Path(d);self.verified(root)
+   h=dict(self.hardware(),acceleratorName='NVIDIA GeForce RTX 4090 Laptop GPU',cudaComputeCapability=8.9,selectedTorchIndex='cu130',cudaDriverVersion='617.42',gpuRuntime=dict(torchIndex='cu130'))
+   first=native_setup.plan('drama3',hardware=h,drama_backend='cuda')
+   roles=copy.deepcopy(first['roles'])
+   (root/'model-selections.json').write_text(json.dumps(roles))
+   (root/'native-ready.json').write_text(json.dumps(dict(engine='drama3',voiceBackend='cuda',roles=roles,modelLoadPassed=True,speechInferencePassed=True)))
+   again=native_setup.plan('drama3',hardware=h,drama_backend='cuda')
+   self.assertEqual([t['id'] for t in again['tools']],['drama-full-cuda12','drama-full-cudart12'])
+   self.assertEqual(again['toolDownloadBytes'],0);self.assertTrue(again['setupReady'],again['setupStatus'])
+   (root/'tools/drama-full-cuda12/ggml-cuda.dll').write_bytes(b'broken')
+   broken=native_setup.plan('drama3',hardware=h,drama_backend='cuda')
+   self.assertFalse(broken['setupReady']);self.assertIn('cuda-verification-required',broken['setupStatus']['reasons'])
+ def test_old_cuda12_is_not_reused_for_blackwell_or_failed_speech(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);record=self.verified(root)
+   h=dict(self.hardware(),acceleratorName='NVIDIA GeForce RTX 5090',cudaComputeCapability=12.0,gpuRuntime=dict(torchIndex='cu130'))
+   self.assertEqual(cuda.components(root,h)[0]['id'],'drama-full-cuda13')
+   record['speechInferencePassed']=False;(root/cuda.MARKER).write_text(json.dumps(record))
+   h.update(acceleratorName='NVIDIA GeForce RTX 4090',cudaComputeCapability=8.9)
+   self.assertEqual(cuda.components(root,h)[0]['id'],'drama-full-cuda13')
  def test_cuda_major_matches_gpu_generation(self):
   self.assertEqual(cuda.cuda_version(self.hardware()),'12')
   for name in ['NVIDIA GeForce RTX 5090','NVIDIA RTX PRO 6000 Blackwell','NVIDIA B200']:

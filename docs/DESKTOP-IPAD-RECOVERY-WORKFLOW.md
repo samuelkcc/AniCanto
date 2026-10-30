@@ -32,6 +32,19 @@ Use `pending`, `defect`, `intentional difference`, or `verified` explicitly. Sam
 Do not block unrelated work or start another conversation, device test, or conversion to enforce this protocol.
 The common rule does not require identical models, hardware, interface layouts, or build numbers.
 
+### Supported 8 GB class voice defaults, confirmed 2026-10-30: `mobile-voice-memory-265`
+
+Both iPad and iPhone require at least the 8 GB RAM class for full mode. This is total device RAM, not free RAM.
+A supported 8 GB class device must not receive the old below-12-GB system-voice recommendation.
+Use the existing StudioCompatibility memory floor for this new-default preference.
+Keep the chip, GPU and actual runtime memory checks. Eligibility is not full-film acceptance.
+A new preference can choose CosyVoice. Retain every explicit stored engine and frozen job engine.
+Do not delete installed models, reset work or grant new recovery attempts.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
+
+Alignment register: iPad 265 source is prepared. Live M1 checks are deferred because Samuel is timing a conversion on Lavina. Do not interrupt that run. iPhone must adopt and verify the same RAM floor separately.
+Desktop model defaults are outside this mobile hardware preference.
+
 ### Multilingual authored subtitle selection, target confirmed 2026-10-30: `authored-subtitle-variants-264`
 
 An authored subtitle file can contain multiple language or style versions at the same time.
@@ -42,12 +55,20 @@ A later preview choice must not change a paused or completed job.
 Do not merge concurrent Japanese and Chinese editions into one translated utterance.
 Keep an All versions choice. Do not guess a language and silently discard uncertain styles.
 Use declared ASS style language hints for version labels. Retain unclassified styles as separate choices.
+Text detection can suggest a group for unlabelled events. It must not remove the All or individual-style choices.
+Combine Traditional and Simplified Chinese scores when the choice is a Chinese edition.
+Retain neutral standalone text in a declared edition when it has no concurrent alternative.
+An explicit selected edition language takes precedence over a later mixed-text language guess.
+Do not merge concurrent opposite-language dialogue into one edition.
 A manual language/style choice is not an extra AI repair or a new permission to change audio.
 WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 keep their existing generation, length and budget rules.
 
-Alignment register: iPad264 is pending implementation and native evidence. iPhone and desktop are pending owner review and uptake.
-Actual iPad evidence: Mobile Suit E00 ASS contains concurrent Dial_JP and Dial_CH events. The current parser flattens them.
-This section defines target behaviour. It does not certify installation or whole-film acceptance.
+Alignment register: iPad264 is pending implementation and native evidence. iPhone is pending owner review and uptake. Desktop267 has a reproduced defect; implementation and native acceptance remain pending.
+Actual iPad evidence: The Mobile Suit E00 ASS retains all 700 events. The new explicit groups have 346 Chinese rows and 344 Japanese rows, including three neutral rows in the Japanese edition. The selected SRT snapshot retains exact authored times. See mobile/Validation/ipad-ass-cloud-import-264-2026-10-30.json.
+This section defines shared target behaviour and the stated iPad boundary evidence. Actual Google Drive provider behaviour and whole-film acceptance remain open.
+
+Desktop audit, 2026-10-30: An isolated three-second ASS fixture has concurrent Dial_JP and Dial_CH dialogue plus standalone Default text. Desktop267 exposes one external-file choice. Preview and conversion both retain all three cues; the later language guess is Japanese. The raw file snapshot stays unchanged, but the request has no selected language/style version. No AI translation or TTS runs. Evidence: .build/ass-audit267/result.json. This is a confirmed source-selection gap, not a change to WF-01/02/03/15/16/17 or an accepted mixed-language output. Keep this work separate from the published267deployment fix.
+
 
 ### Mobile Basic review and report access, confirmed 2026-10-30: `basic-review-reset-261`
 
@@ -1042,6 +1063,29 @@ Later phone-only canonical text does not change this installed package hash.
 See mobile/Validation/ipad-followup-254-2026-10-30.json.
 
 ## Cross-platform alignment register
+
+### Duo270 normal-player presentation evidence, 2026-10-30
+
+Duo270 is installed as one AniCanto app. Four movie hashes and the normal-player catalog entry remain exact.
+Actual UI checks pass closed landscape rotation, Fit/Fill switching, camera-safe controls and the34second playback clock.
+Opened fullscreen exit restores the workspace header. The right settings slider icon opens and closes its temporary panel.
+These are display checks. They do not certify conversion, cloud imports, source versions or audio quality.
+Physical phone remains264. The latest265display source waits for complete fresh preservation evidence and compilation.
+See mobile/Validation/iphone-duo-player-270-2026-10-30.json. Earlier267acceptance limits remain historical.
+
+
+### Phone264 and Duo267 presentation evidence, 2026-10-30
+
+Phone264 is installed and launch-verified. Ten saved-job documents remain equal. Model68 and export2375 inventories remain equal.
+Duo267 is installed as one AniCanto app. Three retained movie hashes remain equal. Only the existing Duo simulator runs.
+Welcome and About follow four app languages in actual Duo checks. The unscaled About close control clears the status area.
+The opened Expert rail omits Learning and Reading. Player Learning and Welcome Reading remain available.
+The right column moves right and becomes narrower. Samuel's final visual acceptance remains open.
+The final fullscreen return check is incomplete after a Device Hub stream failure. Do not report full player acceptance.
+Both packages retain exact guide46 and control23. Main stronger Reading, Basic24 and ASS/File Provider uptake remain pending.
+No conversion, source selection, repair budget, chosen take or export policy changes in this presentation task.
+See mobile/Validation/iphone-player-language-264-2026-10-30.json and mobile/Validation/iphone-duo-welcome-player-267-2026-10-30.json.
+
 
 ### Phone and Duo258 presentation evidence, 2026-10-30
 

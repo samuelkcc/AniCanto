@@ -27,7 +27,6 @@ def resolve(root,ident):
 
 def install(root,ident):
     from dubbing_setup import download,emit
-    import shutil
     root=Path(root);row=choice(ident)
     from engine_availability import require
     require(row.get('engine'),root)
@@ -37,8 +36,9 @@ def install(root,ident):
     from model_licenses import install_notices
     install_notices(row,folder(root,row))
     root.mkdir(parents=True,exist_ok=True);path=folder(root,row)
-    required=sum(max(0,f['size']-((path/(f['path']+'.partial')).stat().st_size if (path/(f['path']+'.partial')).exists() else 0)) for f in row['files'] if not (path/f['path']).exists())
-    if shutil.disk_usage(root).free<required+2_000_000_000:raise ValueError('可用儲存空間不足，模型以外需預留 2 GB。')
+    from storage_capacity import require_space,remaining_bytes
+    required=remaining_bytes(row['files'],path)
+    if required:require_space(root,required)
     for i,f in enumerate(row['files']):
         emit(f'{row["title"]} · {i+1}/{len(row["files"])} · {f["path"]}')
         download(f'https://huggingface.co/{row["repo"]}/resolve/{row["revision"]}/{f["path"]}',path/f['path'],f['sha'],expected_size=f['size'])

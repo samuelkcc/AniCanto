@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-52-desktop-setup-reset",
+  "revision": "application-user-guide-60-desktop-deployment-capacity",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -447,6 +447,38 @@
               "ja": "モデル切り替え時は取得済みモデルを既定で保持します。検証済みの現在の構成は再インストールせず有効にします。他の構成は既存ファイルを確認し、不足・破損分だけ取得して読み込みを検証します。Welcome の「すべてのモデルを削除」は対象の確認後、もう一度承認が必要です。動画、録音、完成した出力は削除しません。"
             }
           ],
+          "controlRefs": [],
+          "steps": []
+        },
+        {
+          "id": "desktop-storage-and-cuda-268",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Download capacity and verified CUDA",
+            "zh-HK": "下載空間及已驗證 CUDA",
+            "zh-CN": "下载空间及已验证 CUDA",
+            "ja": "ダウンロード容量と検証済み CUDA"
+          },
+          "body": {
+            "en": [
+              "On Mac, model downloads use the system capacity available for important resources, including space macOS can reclaim. This can differ from ordinary free space. The download still needs its remaining file size plus reserved workspace. The app does not delete your files to make room. A real write failure retains partial downloads for retry.",
+              "On Windows, a verified Drama CUDA 12 runtime remains usable when compatible hardware selects CUDA 13 for PyTorch. These are separate processing runtimes. Model files, runtime files and speech verification must still pass. Switching models does not require deleting working models. Export a debug report if startup remains unavailable."
+            ],
+            "zh-HK": [
+              "Mac 下載模型會檢查系統可供重要資源使用嘅空間，包括 macOS 可釋放嘅空間，因此可能同一般剩餘空間唔同。仍須足夠存放未下載部分及預留工作空間。App 唔會刪除你嘅檔案騰出空間；如果實際寫入失敗，已下載部分會保留供重試。",
+              "Windows 喺兼容硬件上，即使 PyTorch 選用 CUDA 13，已驗證嘅 Drama CUDA 12 仍可繼續使用，兩者係獨立執行環境。模型、執行檔同試配音仍須通過檢查。切換模型毋須先刪除正常模型；如仍無法開始，請匯出偵錯記錄。"
+            ],
+            "zh-CN": [
+              "Mac 下载模型会检查系统可供重要资源使用的空间，包括 macOS 可释放的空间，因此可能与一般剩余空间不同。仍须足够存放未下载部分及预留工作空间。App 不会删除你的文件腾出空间；如果实际写入失败，已下载部分会保留供重试。",
+              "Windows 在兼容硬件上，即使 PyTorch 选用 CUDA 13，已验证的 Drama CUDA 12 仍可继续使用，两者是独立运行环境。模型、运行文件和试配音仍须通过检查。切换模型无需先删除正常模型；如仍无法开始，请导出调试记录。"
+            ],
+            "ja": [
+              "Mac のモデルダウンロードでは、macOS が解放できる領域を含む、重要なリソースに利用できる容量を確認します。通常の空き容量と異なる場合があります。未ダウンロード分と作業用の余裕が必要です。アプリが利用者のファイルを削除することはありません。実際の書き込みに失敗した場合も、途中のダウンロードを再試行用に保持します。",
+              "対応する Windows ハードウェアでは、PyTorch が CUDA 13 を選択しても、検証済みの Drama CUDA 12 を引き続き利用できます。両者は別の実行環境です。モデル、実行ファイル、試験音声の検証は必要です。モデル切り替えのために正常なモデルを削除する必要はありません。開始できない場合はデバッグ記録を書き出してください。"
+            ]
+          },
           "controlRefs": [],
           "steps": []
         }
@@ -3149,6 +3181,28 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "ipad-memory-voice-defaults",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "en": "8 GB class devices and voice defaults",
+            "zh-HK": "8GB 級裝置與配音預設",
+            "zh-CN": "8GB 级设备与配音默认项",
+            "ja": "8 GB級端末と音声の初期設定"
+          },
+          "body": [
+            {
+              "en": "A supported 8 GB class device does not receive the old below-12-GB system-voice recommendation. Chip, GPU and actual model-memory checks remain. Without a stored choice, the new voice default is CosyVoice. Explicit stored engines and saved jobs keep their choices. A full episode still needs real-device testing.",
+              "zh-HK": "通過支援門檻的 8GB 級裝置，不會只因記憶體低於 12GB 而建議改用系統語音。晶片、GPU 及實際模型記憶體檢查仍會保留。未有已儲存選擇時，新的配音預設為 CosyVoice；已選引擎及舊工作會保留原有設定。完整一集的效果仍須以真機測試為準。",
+              "zh-CN": "通过支持门槛的 8GB 级设备，不会仅因内存低于 12GB 而建议改用系统语音。芯片、GPU 和实际模型内存检查仍会保留。没有已保存选择时，新的配音默认项为 CosyVoice；已选引擎和旧任务保留原设置。完整一集的效果仍需实际设备测试。",
+              "ja": "対応条件を満たす8 GB級端末は、12 GB未満という理由だけでシステム音声を推奨しません。チップ、GPU、モデルの実メモリ検査は維持します。保存した選択がない場合、新しい音声の初期値はCosyVoiceです。選択済みのエンジンと保存済みジョブは変更しません。全編の結果は実機での検証が必要です。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -3508,6 +3562,12 @@
               "zh-HK": "加入字幕檔時，先選擇影片，再開啟「朗讀設定」。「匯入字幕檔」位於來源選單下方，選用內置字幕或生成字幕時亦會顯示。iPhone 的影片上方另有快捷入口。在「檔案」選擇 SRT、VTT 或 ASS；檔案名稱不同亦會關聯至目前影片，再選擇已匯入的外掛字幕朗讀。",
               "zh-CN": "添加字幕文件时，先选择视频，再打开“朗读设置”。“导入字幕文件”位于来源菜单下方，选择内置字幕或生成字幕时也会显示。iPhone 的视频上方另有快捷入口。在“文件”选择 SRT、VTT 或 ASS；文件名称不同也会关联到当前视频，再选择已导入的外挂字幕朗读。",
               "ja": "字幕ファイルを追加するには動画を選び、読み上げ設定を開きます。入力の種類に関係なく、字幕入力メニューの下に取り込みボタンを表示します。iPhoneでは動画の上にもあります。ファイルからSRT、VTT、ASSを選びます。名前が違っても選択中の動画に関連付けます。取り込んだ外部字幕を選んで読み上げます。"
+            },
+            {
+              "en": "An ASS file can contain concurrent Chinese and Japanese versions. Select its language or style version in the subtitle menu. Reading lists these versions as external tracks. All languages / styles keeps the complete file. Language groups can use style labels and text-language hints; unclassified styles stay separately available. The original file is retained. Mixed lines inside SRT or VTT do not gain an automatic language split.",
+              "zh-HK": "同一個 ASS 字幕檔可同時包含中文及日文版本。在字幕選單選擇所需語言或樣式；朗讀模式會將各版本列為外掛字幕軌。「所有語言／樣式」保留整份字幕。語言分組可參考樣式名稱及文字語言，未能分類的樣式仍可個別選擇。原檔會保留；SRT 或 VTT 內同一行混合語言不會自動分拆。",
+              "zh-CN": "同一个 ASS 字幕文件可以同时包含中文和日文版本。在字幕菜单选择所需语言或样式；朗读模式会把各版本列为外挂字幕轨。“所有语言／样式”保留整份字幕。语言分组可以参考样式名称和文本语言，无法分类的样式仍可单独选择。原文件会保留；SRT 或 VTT 同一行内混合语言不会自动拆分。",
+              "ja": "ASSには中国語と日本語の字幕が同時に含まれる場合があります。字幕メニューで言語やスタイルを選びます。読み上げでは外部トラックとして表示します。「すべての言語・スタイル」は全内容を保持します。言語グループはスタイル名や文章の言語を参考にし、不明なスタイルも個別に選べます。元ファイルは残ります。SRT・VTTの同一行の混在言語は自動分割しません。"
             }
           ],
           "controlRefs": [],
@@ -3836,6 +3896,18 @@
               "zh-CN": "全屏提供播放／暂停、前后十秒、字幕和音频菜单。闲置后控制栏隐藏，轻点画面重新显示。拖动时间轴可看缩略图和目标时间，松开定位；也可使用播放速度、音量、循环和下一条选项。",
               "en": "Full screen offers play/pause, ten-second skips, subtitles and audio menus. Controls hide when idle; tap to reveal them. Drag the timeline for a thumbnail and target time, then release to seek. Available playback options include speed, volume, repeat and next-item behavior.",
               "ja": "全画面で再生・一時停止、十秒移動、字幕、音声を操作します。操作部は待機後に隠れ、タップで戻ります。時間軸を動かすと縮小画像と移動先を確認できます。速度、音量、繰り返し、次の動画の設定も利用できます。"
+            },
+            {
+              "en": "On iPhone and Duo, fullscreen uses the complete available player area. Fit video preserves the whole frame and can leave bars when screen and movie proportions differ. Fill screen removes those bars by cropping the edges. Switch back to Fit video to see the whole frame.",
+              "zh-HK": "iPhone 與 Duo 的全螢幕播放會使用完整可用區域。「完整畫面」保留全幅；螢幕與影片比例不同時可能留有黑邊。「填滿畫面」會裁切邊緣以鋪滿螢幕，可隨時切回「完整畫面」。",
+              "zh-CN": "iPhone 与 Duo 的全屏播放使用完整可用区域。“完整画面”保留全幅；屏幕与影片比例不同时可能留有黑边。“填满画面”会裁切边缘以铺满屏幕，可随时切回“完整画面”。",
+              "ja": "iPhone と Duo の全画面再生は利用可能な領域全体を使います。「全体を表示」は映像全体を保持し、画面との比率が異なると黒帯が残ります。「画面に合わせて拡大」は端を切り取って画面を埋めます。いつでも全体表示に戻せます。"
+            },
+            {
+              "en": "A selected video on closed Duo permits automatic landscape rotation. Rotate the device to landscape to use the video-only view. Opened Duo supports both orientations. Return to portrait to restore the compact layout. Studio pages on a closed device remain portrait outside playback.",
+              "zh-HK": "Duo 摺埋後，選擇影片即可自動橫向播放；將裝置轉為橫向會顯示影片全螢幕。展開後可使用直向或橫向。轉回直向可恢復手機排版；摺埋時的其他工作室頁面維持直向。",
+              "zh-CN": "Duo 折叠后，选择影片即可自动横向播放；将设备转为横向会显示影片全屏。展开后可使用竖向或横向。转回竖向恢复手机布局；折叠时的其他工作室页面保持竖向。",
+              "ja": "閉じた Duo で動画を選択すると横向きへの自動回転が有効になります。端末を横にすると動画専用の全画面表示になります。開いた Duo は縦横の両方に対応します。縦に戻すとコンパクト表示に戻ります。閉じた端末の再生以外のスタジオ画面は縦向きを保ちます。"
             }
           ],
           "controlRefs": [],
@@ -3859,6 +3931,12 @@
               "zh-CN": "完成后在播放器打开成品，分享影片或保存影片到文件；有字幕时可另存字幕。先完成 App 内输出，再选择“文件”位置。iPhone 从菜单的播放清单选择成品；iPad 请从“播放器”进入。侧栏已移除重复的“项目与成品”入口，已存项目和成品仍然保留。分享和保存无需专家版。",
               "en": "Open the finished output to share or save the video to Files. Save a separate subtitle file when available. The app creates its output before you choose a Files destination. On iPhone, choose an output from Playlist; On iPad, use Player. The duplicate Projects and outputs sidebar entry is removed; saved projects and outputs remain. Saving and sharing do not require Expert.",
               "ja": "完成した出力から動画を共有・「ファイル」へ保存し、字幕があれば別に保存できます。アプリ内で出力を完成した後に保存先を選びます。iPhone はプレイリストから出力を選び、iPad はプレーヤーから開きます。重複する「プロジェクトと出力」のサイドバー項目は削除されますが、保存済みの内容は残ります。保存・共有に専門モードの購入は不要です。"
+            },
+            {
+              "en": "On iPhone, share and save actions stay below the scrollable movie details, just above the playlist button. Opened Duo uses one bottom action row. The playback controls remain with the movie.",
+              "zh-HK": "iPhone 的分享及儲存操作固定在可捲動的影片資料下方，位於播放清單按鈕上方。Duo 展開後以一行底部操作列顯示；播放控制維持在影片區。",
+              "zh-CN": "iPhone 的分享及保存操作固定在可滚动的影片资料下方，位于播放列表按钮上方。Duo 展开后显示一行底部操作栏；播放控制保留在影片区。",
+              "ja": "iPhone の共有と保存は、スクロールする動画情報の下、再生リストボタンの上に固定します。開いた Duo は下部の一列に表示し、再生操作は動画内に保ちます。"
             }
           ],
           "controlRefs": [],
@@ -4022,6 +4100,37 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "authored-subtitle-versions",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Subtitle versions and cloud imports",
+            "zh-HK": "字幕版本及雲端匯入",
+            "zh-CN": "字幕版本和云端导入",
+            "ja": "字幕版とクラウド取り込み"
+          },
+          "body": [
+            {
+              "en": "In Edit and Preview, open Subtitles and the imported ASS file, then select Chinese subtitles, Japanese subtitles or an individual style. The same choice supplies a new Subtitles > Speech conversion. The app freezes the chosen text and original times in that new job. Changing Preview later does not replace an existing job source. All languages / styles keeps the whole file and can show concurrent versions. Version discovery runs in the background. Wait for Reading subtitle versions to finish before selecting a language or style.",
+              "zh-HK": "在「編輯與預覽」開啟「字幕」，再開啟已匯入的 ASS 檔，選擇「中文字幕」、「日文字幕」或個別樣式。新建「字幕 > 語音」轉換會使用同一選擇，並保存所選文字及原有時間碼。之後更改預覽不會替換舊工作的來源。「所有語言／樣式」保留整份檔案，可能同時顯示多種版本。 字幕版本會在背景分析；請等候「正在讀取字幕版本…」完成，再選擇語言或樣式。",
+              "zh-CN": "在“编辑与预览”打开“字幕”，再打开已导入的 ASS 文件，选择“中文字幕”“日文字幕”或单独的样式。新建“字幕 > 语音”转换会使用相同选择，并保存所选文本和原时间码。以后更改预览不会替换旧任务的来源。“所有语言／样式”保留整份文件，可能同时显示多个版本。 字幕版本会在后台分析；请等待“正在读取字幕版本…”完成，再选择语言或样式。",
+              "ja": "編集とプレビューの字幕メニューから取り込んだASSを開き、中国語字幕・日本語字幕・個別スタイルを選びます。新しい「字幕 > 音声」変換もこの選択を使い、選択した文章と元の時刻をジョブへ保存します。後からプレビューを変更しても既存ジョブの入力は変わりません。「すべて」は同時刻の複数版も含めます。 字幕版の解析はバックグラウンドで行います。「字幕版を読み込み中…」が終わってから言語やスタイルを選びます。"
+            },
+            {
+              "en": "For Google Drive and other Files providers, the app coordinates access before importing a local copy. A waiting screen appears while the file is prepared. Copy progress starts only when readable bytes and file size are available. The app does not invent a cloud-download percentage. Cancel stops this import request and retains the provider original. A provider can also show its own system download interface before returning the file.",
+              "zh-HK": "從 Google Drive 或其他「檔案」供應商匯入時，App 會先協調存取，再匯入本機副本。準備期間會顯示等候畫面；取得可讀取的資料及檔案大小後，才顯示本機複製進度，不會假報雲端下載百分比。按「取消」會停止今次匯入要求，供應商原檔仍會保留。供應商亦可能在交付檔案前顯示自己的系統下載畫面。",
+              "zh-CN": "从 Google Drive 或其他“文件”提供方导入时，App 会先协调访问，再导入本地副本。准备期间显示等待画面；取得可读数据和文件大小后，才显示本地复制进度，不会虚构云端下载百分比。点击“取消”会停止本次导入请求，并保留提供方原文件。提供方也可能在交付文件前显示自己的系统下载界面。",
+              "ja": "Google Driveなどのファイル提供元から取り込む際は、アクセスを調整してからローカルコピーを作ります。準備中は待機画面を表示し、読み取り可能なデータとサイズを取得してからコピー進捗を表示します。クラウドのダウンロード率は推測しません。取消は今回の取り込みを止め、元ファイルを残します。提供元が先にシステムのダウンロード画面を表示する場合もあります。"
+            }
+          ],
+          "controlRefs": [
+            "sourceWorkflowDefaults"
+          ],
+          "steps": false
         }
       ]
     },
@@ -4137,6 +4246,12 @@
               "zh-CN": "在“关于及许可”打开“第三方许可及通知”，查看程序库、模型、字典及素材的许可文本。不同版本包含的项目可能不同，请以该版本内的清单为准。",
               "en": "In About and Licences, open Third-party licences and notices. View the library, model, dictionary and asset notices. Items can differ by version. Use the list included with that version.",
               "ja": "「情報とライセンス」の「第三者ライセンスと通知」で、ライブラリ、モデル、辞書、素材のライセンスを確認できます。含まれる項目はバージョンにより異なります。使用中のバージョンの一覧を確認してください。"
+            },
+            {
+              "en": "Welcome About and Licenses follows the selected app language immediately. The About interface uses that language. Original third-party legal notices retain their supplied language.",
+              "zh-HK": "歡迎頁的「關於及授權」會即時跟隨所選介面語言；關於頁面的操作文字亦使用相同語言。第三方授權原文保留提供者的原有語言。",
+              "zh-CN": "欢迎页的“关于及授权”会立即跟随所选界面语言；关于页面的操作文字也使用相同语言。第三方许可原文保留提供方的原有语言。",
+              "ja": "開始画面のアプリ情報とライセンスは、選択した表示言語にすぐ切り替わります。情報画面の操作も同じ言語を使います。第三者のライセンス原文は配布元の言語を保持します。"
             }
           ],
           "controlRefs": [],

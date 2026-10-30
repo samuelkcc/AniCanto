@@ -83,7 +83,8 @@ def maintain(root,ident,mode='repair',platform=None):
         if work and row.get('licenseReviewRequired'):
             raise ValueError('This model download is paused for licence review. Existing files were kept. Choose a reviewed model variant.')
         needed=sum(f['size'] for f in work)
-        if work and shutil.disk_usage(root).free<needed+2_000_000_000:raise ValueError('Insufficient free storage; reserve model download size plus 2 GB.')
+        from storage_capacity import require_space
+        if work:require_space(root,needed)
         stage=root/'downloads/model-maintenance'/key
         for i,f in enumerate(work):
             target=(stage if mode=='redownload' else base)/f['path']

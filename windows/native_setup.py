@@ -60,7 +60,8 @@ def plan(engine='drama3',hardware=None,allow_cpu_drama=False,backend='auto',requ
  result['setupBackend']={'cuda':'nvidia','rocm':'amd'}.get(h.get('backend'),'cpu')
  result['requestedDramaBackend']=requested_drama_backend
  from memory_plan import pools
- from drama_full_cuda import components,ready as cuda_ready
+ from drama_full_cuda import components,ready as cuda_ready,deployment_hardware
+ h=deployment_hardware(root,h) if result.get('engine')=='drama3' and result.get('voiceBackend')=='cuda' else h
  classifier=next(r for r in rows if r['id']=='audio-classifier-native')
  def enrich(value):
   if not value.get('downloads'):return

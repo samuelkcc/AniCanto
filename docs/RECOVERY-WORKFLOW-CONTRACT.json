@@ -242,7 +242,7 @@
     "savedJobs": "freeze source identity; do not silently rewrite completed scripts/takes",
     "multilingualAuthoredSubtitles": {
       "id": "authored-subtitle-variants-264",
-      "status": "target; iPad, iPhone and desktop implementation and native evidence pending",
+      "status": "iPad implemented, native boundary tested and normal264 installed; iPhone and desktop uptake pending",
       "selection": "Expose explicit authored language/style versions and All versions. Use one selected cue set for preview and new subtitle-first requests.",
       "freeze": [
         "original file identity",
@@ -251,7 +251,37 @@
         "unchanged authored display times"
       ],
       "preservation": "Keep original files and saved-job sources unchanged. Do not silently drop uncertain styles or merge concurrent language editions.",
-      "aiPermissions": "No additional AI inspection, repair or audio mutation permission. WF-01/02/03/15/16/17 remain unchanged."
+      "aiPermissions": "No additional AI inspection, repair or audio mutation permission. WF-01/02/03/15/16/17 remain unchanged.",
+      "grouping": "Use authored style hints and bounded text-language suggestions. Combine Traditional/Simplified Chinese scores. Retain neutral standalone text when no concurrent edition exists. Keep all and individual styles; do not merge opposite-language dialogue.",
+      "selectedLanguage": "Explicit selected edition language takes precedence over a generic mixed-text guess.",
+      "desktopAudit267": {
+        "status": "defect reproduced; implementation, packaging and native acceptance pending",
+        "evidence": ".build/ass-audit267/result.json",
+        "fixture": "Synthetic three-second ASS with concurrent Japanese and Chinese dialogue plus standalone Default text.",
+        "observed": "One external-file choice; all three cues reach preview and conversion. No intra-file version is frozen; mixed input is guessed as Japanese.",
+        "preservation": "Original ASS and its full snapshot remain unchanged. No user project, AI translation or TTS was operated.",
+        "release": "Not included in desktop0.25.14/build267; generation and repair permissions remain unchanged."
+      },
+      "platforms": {
+        "ipad": {
+          "sourceImplemented": true,
+          "nativeTested": true,
+          "normalBuild": 264,
+          "installedDevices": [
+            "m4",
+            "lavina",
+            "piano"
+          ],
+          "wholeFilmAccepted": false,
+          "evidence": "mobile/Validation/ipad-ass-cloud-import-264-2026-10-30.json"
+        },
+        "iphone": {
+          "status": "pending separate private owner adoption and native evidence"
+        },
+        "desktop": {
+          "status": "pending source review and separate implementation evidence"
+        }
+      }
     }
   },
   "workModes": {
@@ -1662,19 +1692,19 @@
         "pendingDuoGuide24": "Duo layout instructions changed. Installed consumer hashes remain separate."
       },
       "ipad": {
-        "build": 255,
+        "build": 264,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
         "packaged": true,
         "installed": true,
         "launchVerified": true,
-        "manualRevision": "application-user-guide-35-resting-assistant-motion",
-        "manualSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
-        "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
-        "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
-        "receipt": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json",
-        "latestSourcePendingNextPackage": true,
+        "manualRevision": "application-user-guide-56-subtitle-version-loading",
+        "manualSHA256": "21f83be22caa4ea7c5b4f7ec4f2af0782cc75aa8fa208e9a2dcf98567d63facc",
+        "controlGuideRevision": "workflow-controls-guide-25-authored-subtitle-versions",
+        "controlGuideSHA256": "1d3c68453034cc9a08c1e1cc65de66b0660d4bb6361196b9cb6b4947b11f37e3",
+        "receipt": "mobile/Validation/ipad-ass-cloud-import-264-2026-10-30.json",
+        "latestSourcePendingNextPackage": false,
         "nativeRenderingVerified": false,
         "previousRenderingEvidence": "Guide254 native four-language captures and decoding pass. Direct user interaction remains separate.",
         "reportRenderedLocales": 4,
@@ -1711,8 +1741,8 @@
           "controlGuideSHA256": "1c054a2e156fd99ced68b50cf6ecb27063f2e04fd3e4a2af261b061882420431",
           "receipt": "mobile/Validation/ipad-repair-groups-pencil-253-2026-10-30.json"
         },
-        "latestCanonicalIpadVisibleContentMatches": true,
-        "latestChangeScope": "Guide35 includes shared pre-conversion expectations and sleeping-motion instructions. No conversion permission changes.",
+        "latestCanonicalIpadVisibleContentMatches": null,
+        "latestChangeScope": "ASS versions, background version discovery and coordinated cloud preparation. Exact package bytes are verified. Later canonical changes are not inferred.",
         "priorPackage254": {
           "build": 254,
           "manualRevision": "application-user-guide-27-duo-expert-navigation",
@@ -1722,10 +1752,18 @@
           "receipt": "mobile/Validation/ipad-followup-254-2026-10-30.json"
         },
         "nativeGuideRenderingEvidenceBuild": 254,
-        "nativeGuideRenderingEvidenceScope": "Four locales rendered guide27. Native255 tests the animation; guide35 resource bytes are separately verified."
+        "nativeGuideRenderingEvidenceScope": "Four locales rendered guide27. Native255 tests the animation; guide35 resource bytes are separately verified.",
+        "priorPackage255": {
+          "build": 255,
+          "manualRevision": "application-user-guide-35-resting-assistant-motion",
+          "manualSHA256": "8049169fe81ab82685c5dfa46ce43aedd5902caffb1cd8a0354c2ee3836ecaa6",
+          "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+          "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+          "receipt": "mobile/Validation/ipad-resting-motion-255-2026-10-30.json"
+        }
       },
       "iphone": {
-        "build": 263,
+        "build": 264,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
@@ -1736,8 +1774,8 @@
         "manualSHA256": "f871b989c0ce990b25498e385237e337a9542405c8e81f33a5cc9577a1111b8f",
         "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
         "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
-        "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
-        "status": "Normal263 installed and launched. Ten job documents and model/export inventories remain unchanged. Physical panel interaction remains open.",
+        "receipt": "mobile/Validation/iphone-player-language-264-2026-10-30.json",
+        "status": "Normal264installed and launched. Thirty metadata files checked. Ten saved-job documents and68model/2375export inventory entries remain unchanged. Physical player interaction remains open.",
         "priorPackage239": {
           "build": 239,
           "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
@@ -1745,7 +1783,7 @@
           "receipt": "mobile/Validation/iphone-assistant-manual-239-2026-10-29.json",
           "status": "Normal239 installed and launched. Final manual4/control15 native rendering, direct search/navigation and saved-job/preference checks pass."
         },
-        "latestSourcePendingNextPackage": true,
+        "latestSourcePendingNextPackage": false,
         "sourceManualRevision": "application-user-guide-23-phone-adaptive-buttons",
         "sourceManualSHA256": "3211c18e9baffaf31d83f8f0969156801faa9586cd0ab42016611dfe22f95921",
         "sourceControlRevision": "workflow-controls-guide-22-repair-groups",
@@ -1865,7 +1903,7 @@
           "nativeGuideDecodeVerified": true,
           "receipt": "mobile/Validation/iphone-button-layout-256-2026-10-30.json"
         },
-        "preferredStagedCandidate": 263,
+        "preferredStagedCandidate": 264,
         "priorInstalledPackage251": {
           "build": 251,
           "manualRevision": "application-user-guide-20-phone-player-review-layout",
@@ -1874,7 +1912,7 @@
           "controlGuideSHA256": "023f421709a8c5381afe194da4cb7e955e74b4e1a70937efca62f92413124382",
           "receipt": "mobile/Validation/iphone-layout-review-251-2026-10-30.json"
         },
-        "compiledSourceBuild": 263,
+        "compiledSourceBuild": 264,
         "priorInstalledPackage257": {
           "build": 257,
           "manualRevision": "application-user-guide-24-duo-navigation",
@@ -1923,6 +1961,18 @@
         "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
         "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
         "receipt": "mobile/Validation/iphone-duo-settings-reading-261-2026-10-30.json"
+      },
+      "iphoneDuo": {
+        "build": 270,
+        "installed": true,
+        "packaged": true,
+        "manualRevision": "application-user-guide-46-phone-timeline-settings",
+        "manualSHA256": "f871b989c0ce990b25498e385237e337a9542405c8e81f33a5cc9577a1111b8f",
+        "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
+        "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+        "receipt": "mobile/Validation/iphone-duo-player-270-2026-10-30.json",
+        "status": "One AniCanto270app and four exact movie copies. Actual normal-player closed rotation, fit/fill,34second clock, opened fullscreen return and right settings route pass. No workflow execution acceptance.",
+        "laterWorkflowCopyUptakePending": true
       }
     },
     "workflowChanged": false,
@@ -3339,13 +3389,13 @@
     "guideSHA256": "3ee3ba8cd03bb81f95a6038dcf94f6ad161134919e571d80bc886fcdc604360f",
     "workflowChanged": false,
     "duoInstalled": true,
-    "duoInstalledBuild": 261,
-    "phoneInstalledBuild": 263,
+    "duoInstalledBuild": 270,
+    "phoneInstalledBuild": 264,
     "phoneCandidateSigned": true,
     "phoneBlocker": null,
-    "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
+    "receipt": "mobile/Validation/iphone-player-language-264-2026-10-30.json",
     "nativeGeometryCaptures": 62,
-    "installedBuild": 263
+    "installedBuild": 264
   },
   "basicReviewReset261": {
     "revision": "basic-review-reset-261",
@@ -3381,14 +3431,16 @@
     "nativeCaptures": 56,
     "nativeResult": ".build/duo262/timeline.xcresult",
     "phoneInstalled": true,
-    "phoneBuild": 263,
+    "phoneBuild": 264,
     "timelinePreference": "studio.showTimeline",
     "settingsTemporarilyHidesTimelineWithoutChangingPreference": true,
     "closedExpertToggle44Points": true,
     "reportTimelineRemainsHidden": true,
     "workflowChanged": false,
-    "receipt": "mobile/Validation/iphone-timeline-settings-263-2026-10-30.json",
-    "duoFinalNavigationBuildPending": 263
+    "receipt": "mobile/Validation/iphone-duo-welcome-player-267-2026-10-30.json",
+    "duoFinalNavigationBuildPending": null,
+    "duoInstalled": true,
+    "duoBuild": 270
   },
   "desktopRuntimeSafety267": {
     "modelSwitch": "Retain downloads by default. Activate only a verified current selection; otherwise verify files and loading.",
@@ -3405,5 +3457,61 @@
     ],
     "state": "source prepared; packages and whole-film acceptance pending",
     "mobile": "Counterpart operational review remains open; no implementation or installation claim."
+  },
+  "phoneWelcomePlayerPresentation267": {
+    "sourceImplemented": true,
+    "workflowChanged": false,
+    "phoneInstalledBuild": 264,
+    "duoInstalledBuild": 270,
+    "guideCanonicalRevisionAtSourceEdit": "application-user-guide-55-welcome-about-language",
+    "frozenPackageGuideRevision": "application-user-guide-46-phone-timeline-settings",
+    "actualAboutLanguages": [
+      "zh-HK",
+      "ja",
+      "en",
+      "zh-Hans"
+    ],
+    "aboutCloseVerified": true,
+    "rightColumnUserAcceptance": false,
+    "fullscreenReturnAcceptancePending": false,
+    "receipt": "mobile/Validation/iphone-duo-player-270-2026-10-30.json"
+  },
+  "mobileVoiceMemory265": {
+    "status": "target; iPad source and live M1 checks pending",
+    "threshold": "Reuse StudioCompatibility.minimumPhysicalBytes for the system-voice new-default preference. Do not classify supported8GBhardware as low memory solely because it is below12GB.",
+    "preserve": [
+      "explicit stored engine",
+      "frozen job engine",
+      "installed models",
+      "work progress",
+      "spent recovery attempts"
+    ],
+    "runtimeGuards": "Chip, GPU and actual model-memory checks remain.",
+    "platforms": {
+      "ipad": "Source prepared; M1 run is active and must not be interrupted. Native M1 test/install deferred.",
+      "iphone": "pending separate owner adoption",
+      "desktop": "not a desktop default change"
+    },
+    "fullModeRAMClassMinimumGB": 8,
+    "scope": [
+      "ipad",
+      "iphone"
+    ],
+    "reportedPhysicalFloorBytes": 7000000000,
+    "definition": "An8GBRAMclass boundary for known supported devices; not currently available/free memory. Retain chip/GPU checks. The reported physical floor accounts for OS-reserved memory."
+  },
+  "phonePlayerDisplay270": {
+    "workflowChanged": false,
+    "sourceImplemented": true,
+    "duoInstalledBuild": 270,
+    "normalPlayerActualUIVerified": true,
+    "normalFixtureSeconds": 34,
+    "closedRotationVerified": true,
+    "fitFillVerified": true,
+    "clockAndCameraClearanceVerified": true,
+    "settingsSymbol": "slider.horizontal.3",
+    "physicalPhoneInstalledBuild": 264,
+    "physicalCounterpart265Pending": true,
+    "receipt": "mobile/Validation/iphone-duo-player-270-2026-10-30.json"
   }
 }

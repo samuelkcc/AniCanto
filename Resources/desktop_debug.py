@@ -91,6 +91,10 @@ def report(app):
             gpu=subprocess.run(['nvidia-smi','--query-gpu=name,driver_version,memory.total,memory.used,memory.free,utilization.gpu','--format=csv,noheader,nounits'],capture_output=True,text=True,timeout=3)
             header['gpuObservation']=dict(at=time.time(),status='available' if gpu.returncode==0 else 'unavailable',units='memory MiB, utilisation percent',fields=['name','driver','total','used','free','utilisation'],rows=gpu.stdout.strip().splitlines()[:8] if gpu.returncode==0 else [],meaning='Whole GPU snapshot, not attribution to a model or process.')
         except (OSError,subprocess.TimeoutExpired):header['gpuObservation']=dict(at=time.time(),status='unavailable')
+    try:
+        from storage_capacity import capacity
+        header['storageObservation']=dict(at=time.time(),**capacity(root))
+    except (OSError,ValueError):header['storageObservation']=dict(status='unavailable')
     add('@header',json.dumps(header,ensure_ascii=False,indent=2))
     for source in app.log_sources():
         ident=source['id']
@@ -102,6 +106,8 @@ def report(app):
             if not p or not p.is_file():continue
             add(ident,app.log_text(source,512*1024),sourceBytes=p.stat().st_size,truncated=p.stat().st_size>512*1024)
     for name in RECEIPTS:structured(root/name,RUNTIME_KEYS+('name','driver','torchIndex','kernelPassed','cudaVersion','runtimeTool','cudartTool','deviceProbePassed','memory','threads','model','modelVariant','speechVersions','verifiedEngines','fallbackReason'))
+    structured(root/'model-selections.json',('text','voice','drama3','speech','referenceSpeech','asr','visual'))
+    structured(root/'setup-invalidated.json',('reason','at','id','kind','operation'))
     job=owned(row.get('job') or root/'jobs/nonexistent')
     if job and job.is_relative_to(root/'jobs') and job.is_dir():
         for name in JOB_FILES:structured(job/name)

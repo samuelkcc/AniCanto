@@ -12,8 +12,22 @@ def cuda_version(hardware):
  if hardware.get('gpuRuntime',{}).get('torchIndex')=='cu130':return '13'
  return '13' if re.search(r'Blackwell|\bRTX\s*(?:50\d\d|PRO\s*\d+)|\b[BR]200\b',names,re.I) else '12'
 
+def deployment_hardware(root,hardware):
+ # Torch and the native GGML server run in separate processes. A Torch
+ # preference does not invalidate a verified native CUDA runtime pair.
+ if hardware.get('nativeDramaRuntimeVersion') in ('12','13'):return hardware
+ record=read(Path(root)/MARKER,{})
+ version=record.get('cudaVersion')
+ if version not in ('12','13') or not ready(root,require_speech=True):return hardware
+ cc=hardware.get('cudaComputeCapability')
+ if version=='12':
+  names=' '.join([str(hardware.get('acceleratorName',''))]+[str(a.get('name','')) for a in hardware.get('displayAdapters',[])])
+  if isinstance(cc,(int,float)) and cc>=10:return hardware
+  if re.search(r'Blackwell|\bRTX\s*(?:50\d\d|PRO\s*\d+)|\b[BR]200\b',names,re.I):return hardware
+ return dict(hardware,nativeDramaRuntimeVersion=version)
+
 def components(root,hardware):
- rows=json.loads((HERE/'native-tools.json').read_text());version=cuda_version(hardware);result=[]
+ rows=json.loads((HERE/'native-tools.json').read_text());version=cuda_version(deployment_hardware(root,hardware));result=[]
  for key in ('drama-full-cuda'+version,'drama-full-cudart'+version):
   row=rows[key];path=Path(root)/'tools'/key;receipt=read(path/'verified.json',{})
   present=receipt.get('sha256')==row['sha256'] and bool(receipt.get('files')) and all((path/n).is_file() and (path/n).stat().st_size==meta['bytes'] for n,meta in receipt.get('files',{}).items())
@@ -72,6 +86,7 @@ def checked_deployment(root,hardware,memory,worker,backend,emit):
  from native_setup import call
  checks=HERE/'setup_checks.py';errors=[]
  if backend=='cuda':
+  hardware=deployment_hardware(root,hardware)
   choices=[dict(hardware)]
   cc=hardware.get('cudaComputeCapability');name=str(hardware.get('acceleratorName','')).upper()
   # The registered CUDA12 native bundle includes Pascal through Ada; it is
