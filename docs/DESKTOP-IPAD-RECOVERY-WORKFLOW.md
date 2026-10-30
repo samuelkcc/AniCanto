@@ -103,6 +103,33 @@ WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 remain unchanged.
 Alignment register: iPad 265 source is prepared. Live M1 checks are deferred because Samuel is timing a conversion on Lavina. Do not interrupt that run. iPhone must adopt and verify the same RAM floor separately.
 Desktop model defaults are outside this mobile hardware preference.
 
+### Mobile combined corrections269, source in progress 2026-10-30
+
+The new native caption policy is `caption-only-no-dialogue-native-269`.
+Only new jobs freeze this policy. Legacy266requests retain their old whole-window and float-quantum decisions.
+Keep the original positive gate. The music supplement uses the calibrated Apple backend only.
+Check lexical units inside each actual authored caption. A word only in padding does not change the caption meaning.
+Require a complete near-quiet vocal window at the PCM16delivery quantum.
+Every overlapping real classifier window must meet the270music and vocal limits. Synthetic edge padding cannot prove music.
+Reserve at most two paired inspections per job before execution. Keep failed and cancelled reservations spent.
+Each classifier call has a30-second wall limit. A failure retains the normal target voice requirement.
+Keep captions, display clocks, manual choices and existing recordings.
+The report verifies bound proof files before it shows Source retained. A pending file check is not missing audio.
+Do not infer a continuation owner from blank text. The native grouping does not store desktop's continuation-owner contract.
+
+The video compatibility layer verifies each compressed frame against original Matroska blocks before it uses original presentation times.
+Change only an owned proxy's timing tables. Keep original media and all existing outputs.
+Unsupported codecs or layouts retain the previous avformat path without exact-clock acceptance.
+A composition-only correction can reuse saved recordings. It does not grant translation, TTS or repair attempts.
+Reading uses complete attributed recognizer times. It keeps the broader result when timed text is incomplete.
+Recognition, translation and narration stay separate. This adds no automatic name substitutions.
+
+Alignment register: Source and the34023-frame host clock comparison pass. Native calibration and installation are pending.
+The actual Mac270paired fixtures are copied to an isolated Piano validation folder. User M4media is not transferred.
+The iPhone owner waits for one verified combined handover. Do not infer phone installation from this source entry.
+Guide72and control27are the shared product instructions. Record each installed consumer hash separately.
+WF-01/02/03/15/16/17retain first audible selection, required bounded fill, frozen overlap settings and spent budgets.
+
 ### Desktop music-only caption correction270, source prepared 2026-10-30
 
 New desktop requests freeze caption-only-no-dialogue-270. Legacy260requests retain their existing gate and spent allowances.

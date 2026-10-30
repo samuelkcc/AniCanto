@@ -53,3 +53,11 @@ fn run(t:&Temp,mode:&str)->serde_json::Value {let mut r=json!({"root":t.0,"mode"
 #[cfg(unix)] #[test] fn reviewed_cleanup_never_follows_replaced_directory_link() {
  let t=Temp::new();let outside=Temp::new();let other=outside.put("a.gguf");t.put("models/a.gguf");let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let approved=cleanup::reviewed(&request).unwrap();fs::remove_dir_all(t.0.join("models")).unwrap();std::os::unix::fs::symlink(&outside.0,t.0.join("models")).unwrap();let result=cleanup::execute_reviewed(&approved).unwrap();assert!(other.exists());assert_eq!(result["filesDeleted"],0);
 }
+
+#[test] fn second_review_removes_retained_broken_python_without_running_it() {
+ let t=Temp::new();let python=t.put("runtimes/ui/Scripts/python.exe");let media=t.put("jobs/one/recording.wav");
+ let mut request=json!({"root":t.0,"mode":"all"});request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let approved=cleanup::reviewed(&request).unwrap();
+ fs::write(&python,"changed broken executable with no Python base").unwrap();let first=cleanup::execute_reviewed(&approved).unwrap();assert_eq!(first["retainedChangedCount"],1);assert!(python.exists());
+ request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let second=cleanup::execute_reviewed(&cleanup::reviewed(&request).unwrap()).unwrap();assert_eq!(second["complete"],true);assert!(!python.exists());assert!(media.exists());
+ request["token"]=cleanup::plan(&request).unwrap()["token"].clone();let third=cleanup::execute_reviewed(&cleanup::reviewed(&request).unwrap()).unwrap();assert_eq!(third["filesDeleted"],0);assert_eq!(third["complete"],true);assert!(media.exists());
+}

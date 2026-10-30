@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use std::process::Command;
 mod package;
 mod splash;
+mod storage_lock;
 
 // The portable EXE stays outside the downloaded runtime. Run cleanup only
 // after the desktop and its loaded Python/DLL files have exited.
@@ -17,6 +18,7 @@ fn pending_cleanup(root:&std::path::Path,executable:&std::path::Path)->Result<()
     if let (Ok(exe),Ok(storage))=(executable.canonicalize(),root.canonicalize()) {
         if exe.starts_with(storage) {return Err("Move AniCanto.exe outside the app data folder before removing downloads.".into());}
     }
+    storage_lock::phase(root,"cleaning");
     let request=serde_json::json!({"root":root,"mode":req["mode"],"token":req["token"]});
     let result=if req["approved"].is_object(){anicanto_core::cleanup::execute_reviewed(&req["approved"])}else{anicanto_core::cleanup::execute(&request)};
     // A request is one-shot, including failure; always review a new plan.
@@ -48,6 +50,11 @@ fn launch() -> Result<(), String> {
     let splash=splash::Splash::new();
     let started=std::time::Instant::now();
     let executable = std::env::current_exe().map_err(|error| error.to_string())?;
+    let root = std::env::var_os("CANTOSYNC_WINDOWS_DATA").map(PathBuf::from)
+        .or_else(||std::env::var_os("LOCALAPPDATA").map(|p|PathBuf::from(p).join("CantoSync-Windows")))
+        .ok_or("LOCALAPPDATA is unavailable")?;
+    let _storage_lock=storage_lock::acquire(&root,||splash.update("Finishing the previous reset — please wait…",0,0))?;
+    storage_lock::phase(&root,"opening");
     let folder = package::folder(&executable,&splash)?;
     let package_seconds=started.elapsed().as_secs_f64();
     let bootstrap: PathBuf = folder.join("bootstrap.ps1");

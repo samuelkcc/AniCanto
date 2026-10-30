@@ -26,11 +26,13 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 ## Beta をダウンロード · 0.25.17
 
-**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.18-beta)
+**[Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [更新内容と対応するソース](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
 
-[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[対応ソース・第三者ソースをダウンロード](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 
 ## この Beta の更新
+
+**Windows 0.25.19：** 一部が削除された Python 環境を修復し、Python が起動しなくても初期化できます。再起動時は前回の削除完了を待機します。実際の Windows 障害はユーザーテスト待ちです。
 
 **Windows 0.25.18 修正：** 元と同じチェックサムの FFmpeg ダウンロードを復旧し、初期化後の再起動を妨げる問題を修正しました。実際のパッケージ取得とインストール段階を表示します。Mac は 0.25.17 のままです。Windows の新規セットアップはユーザー実機テスト待ちです。
 
@@ -42,7 +44,7 @@ AI の生成音声には、アクセント、読み間違い、演技の不足�
 
 **既知の制限：** 制限付きの音声時刻復元を追加しましたが、未確定の OCR 区間には重複や長い字幕が残る場合があります。クラウド取得と Windows GPU 変換は提供元と実機に依存します。
 
-[0.25.18 Windows release details](docs/DESKTOP-RELEASE-0.25.18.md)
+[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## 元のデモを変換して、声を比較する
 

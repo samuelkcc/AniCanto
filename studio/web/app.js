@@ -286,12 +286,12 @@ function packagePanel(){
  `<small>${esc(t(ready?'Your selected models are ready. Existing files are reused.':'The app chooses one suitable model per purpose for your computer.'))}</small>
  ${setupReadinessHint(plan,state.language)?`<small class="setup-readiness-hint" role="status">${esc(setupReadinessHint(plan,state.language))}</small>`:''}
  ${!initializing?button(ready&&state.platform==='win32'?'change-models':'setup',ready?(state.platform==='win32'?'Change models':'Check / repair files'):runtimeReady?setupActionLabel(plan,state.language):'Prepare to use','download',ready?'':'primary',active||!termsReady()||!plan?.canDeployModels||plan?.qualityPresets?.length&&!plan.qualityPresets.some(p=>p.available)?'disabled':''):''}`}
- ${!active?.setup?button('remove-all-models',deploymentCopy('remove',state.language),'trash','danger',!runtimeReady||active?'disabled':''):''}${!active?.setup&&installationLog.text?installationDetails():''}<details id="download-management"><summary>${esc(t('Models & storage'))}</summary><div class="stack">
+ ${!active?.setup?button('remove-all-models',deploymentCopy('remove',state.language),'trash','danger',active?'disabled':''):''}${!active?.setup&&installationLog.text?installationDetails():''}<details id="download-management"><summary>${esc(t('Models & storage'))}</summary><div class="stack">
  ${screen==='welcome'&&plan?.qualityPresets?.length?'':button('change-models',screen==='welcome'?'Custom setup · compare memory':'Change models','settings','',active?'disabled':'')}
  ${missing.length?`<details id="download-details"><summary>${esc(t('To download'))} · ${bytes(missing.reduce((n,r)=>n+(Number(r.bytes)||0),0))}</summary>${missing.map(r=>{const model=modelChoices.find(m=>m.id===r.id)||r,memory=voiceMemoryNote(model);return `<div class="package-row"><div><strong>${esc(r.title)}</strong><br><small>${r.kind==='tool'?esc(t('NVIDIA CUDA program & libraries')):`${esc(label(r))} · ${esc(t('Estimated memory'))}: ${memory.need.toFixed(1)} GB ${esc(t(memory.pool))}${memory.gpuNeed?` + ${memory.gpuNeed.toFixed(1)} GB VRAM`:''}${memory.warning?' · '+esc(t('May not load on this computer')):''}`}</small></div><small>${bytes(r.bytes)}</small></div>`}).join('')}<small>${esc(t('All files will be checked; healthy packages are reused.'))}</small></details>`:''}
  ${(plan?.blockers||[]).length?`<p class="warning">${esc(t('No compatible setup is available. Check the memory and platform requirements above.'))}</p>`:''}
  <details id="installed-models"><summary>${esc(t('Downloaded models'))} (${inventory.length})</summary>${inventory.length?modelGroups(false):`<small>${esc(t('No downloaded models'))}</small>`}</details>
- <div class="row">${button('cleanup-downloads','Clean up downloads…','trash','',!runtimeReady||active?'disabled':'')}</div>
+ <div class="row">${button('cleanup-downloads','Clean up downloads…','trash','',active?'disabled':'')}</div>
  </div></details></div>`}
 
 function voiceMemoryNote(model){
@@ -867,7 +867,7 @@ async function refreshAfterPackageCleanup(){
  updateSetup();
 }
 async function choosePackageCleanup(){
- if(packageCleaning||active||!runtimeReady)return;
+ if(packageCleaning||active)return;
  await showDrawer('Clean up downloads',`<p>${esc(t('Choose what to remove. Videos, projects and finished exports are kept.'))}</p>
  <fieldset class="cleanup-options"><legend>${esc(t('Removal scope'))}</legend>
  <label class="cleanup-option"><input type="radio" name="cleanup-mode" value="models" checked><span><strong>${esc(t('Models only'))}</strong><small>${esc(t('Remove downloaded models and partial downloads. Keep the execution environments.'))}</small></span></label>
@@ -1134,8 +1134,8 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a==='remove-retired-model'){if(active)return;await rpc('remove-retired-model',{id:v});await refreshModels();acceptSetupPlan(await rpc('plan'));updateSetup();return}
  if(a==='quality-preset'){if(active)return;plan=presetPlan(plan,b.dataset.value);selectedQuality=b.dataset.value;updateSetup();return}
  if(a==='setup'){if(active||packageCleaning||!plan?.canDeployModels||!termsReady())return;if($('.drawer'))await closeDrawer();beginInstallation();await syncUseTerms();setupSelection=setupParameters(plan);if(!runtimeReady){deployAfterBootstrap=true;const r=await invoke('studio_bootstrap');active={id:r.id,setup:true,seconds:0};setupEvent={message:t('Prepare runtime')};updateSetup();return;}const r=await invoke('studio_start',{op:'setup',params:setupSelection});active={id:r.id,setup:true,seconds:0};setupEvent={message:t('Download missing components')};updateSetup();return}
- if(a==='remove-all-models'){if(!active&&runtimeReady)await showDrawer(deploymentCopy('maintenance',state.language),`<section class="stack"><h3>${esc(deploymentCopy('repair',state.language))}</h3><p>${esc(deploymentCopy('repairNote',state.language))}</p>${button('setup',deploymentCopy('repair',state.language),'refresh','primary',!plan?.canDeployModels||!termsReady()?'disabled':'')}<hr><h3>${esc(deploymentCopy('redeploy',state.language))}</h3><p>${esc(deploymentCopy('redeployNote',state.language))}</p>${button('redeploy-all',deploymentCopy('redeploy',state.language),'trash','danger')}</section>`);return}
- if(a==='redeploy-all'){if(!active&&runtimeReady)await cleanup('all');return}
+ if(a==='remove-all-models'){if(!active)await showDrawer(deploymentCopy('maintenance',state.language),`<section class="stack"><h3>${esc(deploymentCopy('repair',state.language))}</h3><p>${esc(deploymentCopy('repairNote',state.language))}</p>${button('setup',deploymentCopy('repair',state.language),'refresh','primary',!plan?.canDeployModels||!termsReady()?'disabled':'')}<hr><h3>${esc(deploymentCopy('redeploy',state.language))}</h3><p>${esc(deploymentCopy('redeployNote',state.language))}</p>${button('redeploy-all',deploymentCopy('redeploy',state.language),'trash','danger')}</section>`);return}
+ if(a==='redeploy-all'){if(!active)await cleanup('all');return}
  if(a==='cleanup-downloads'){await choosePackageCleanup();return}
  if(a==='preview-cleanup'){const mode=$('input[name=cleanup-mode]:checked')?.value;if(mode==='models'||mode==='all')await cleanup(mode);return}
  if(a==='execute-cleanup'){await executePackageCleanup(b.dataset.mode,b.dataset.token);return}
@@ -1233,7 +1233,7 @@ async function recoverCompletion(status){
  const payload=missedCompletion(status,active,finishedRunIDs);
  if(payload){finishChain=finishChain.then(()=>safely(()=>onFinished({payload})));await finishChain;}
 }
-async function poll(){if(sourcePreparation){updateProgress();return;}if(pollBusy||initializing||addingVideos||selectionPending)return;pollBusy=true;try{
+async function poll(){if(packageCleaning)return;if(sourcePreparation){updateProgress();return;}if(pollBusy||initializing||addingVideos||selectionPending)return;pollBusy=true;try{
  const status=await invoke('studio_status');runtimeReady=status.runtimeReady;
  if(status.running&&!finishedRunIDs.has(status.running.id))active={...active,...status.running};
  await recoverCompletion(status);

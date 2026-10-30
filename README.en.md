@@ -30,11 +30,13 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 ## Download the Beta · 0.25.17
 
-**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.18-beta)
+**[Download for Mac](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[Download for Windows](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [Release notes & matching source](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
 
-[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Download matching source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [Source backup & rebuild guide](docs/BUILD-AND-RECOVERY.md)
 
 ## What’s new in this Beta
+
+**Windows 0.25.19:** Repair partly removed Python environments, keep native reset available without Python, and wait for an earlier cleanup before reopening. Exact Windows fault acceptance remains user testing.
 
 **Windows 0.25.18 hotfix:** Restore the retained, checksum-verified FFmpeg download, keep reset cleanup from blocking relaunch, and show actual package download or installation status. Mac remains 0.25.17. A clean deployment on Windows is pending user testing.
 
@@ -46,7 +48,7 @@ AniCanto 以語言學習同創作實驗為本，並非用嚟取代專業配音�
 
 **Known limitation:** bounded source-clock recovery is included, but uncertain OCR windows can still collect repeated or long subtitle text. A complete cloud download and Windows GPU conversion depend on the provider and target device.
 
-[0.25.18 Windows release details](docs/DESKTOP-RELEASE-0.25.18.md)
+[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## Try the original demo and compare the voices
 

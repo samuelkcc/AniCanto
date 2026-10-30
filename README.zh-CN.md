@@ -26,11 +26,13 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 ## 下载 Beta · 0.25.17
 
-**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.18-beta)
+**[下载 Mac 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.17-beta/AniCanto-macOS-0.25.17.zip)** · **[下载 Windows 版](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/AniCanto.exe)** · [更新说明及对应源代码](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.19-beta)
 
-[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.18-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[下载对应源码及第三方来源包](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.19-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 
 ## 本次 Beta 更新
+
+**Windows 0.25.19：** 修复清理后不完整的 Python 环境；即使 Python 无法启动，仍可完全重置。重新打开时会等待上一轮清理完成。实际 Windows 故障仍待用户验收。
 
 **Windows 0.25.18 修复：** 修复失效的 FFmpeg 下载地址并保留原文件校验，避免重置清理阻止重新启动，显示实际组件下载和安装阶段。Mac 维持 0.25.17。Windows 全新部署尚待用户实机测试。
 
@@ -42,7 +44,7 @@ AI 可以帮助探索语言和尝试配音，但生成结果仍可能有口音�
 
 **已知限制：** 已加入有限度的原声时间恢复，但未确认的 OCR 区间仍可能出现重复或过长字幕。云端文件完整下载和 Windows GPU 转换仍取决于供应商及实机情况。
 
-[0.25.18 Windows release details](docs/DESKTOP-RELEASE-0.25.18.md)
+[0.25.19 Windows release details](docs/DESKTOP-RELEASE-0.25.19.md)
 
 ## 下载测试原片，听配音成品作比较
 

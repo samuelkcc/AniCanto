@@ -39,6 +39,11 @@ def base_python(root,run=subprocess.run):
 
 def ensure_env(root,folder,run=subprocess.run,recreate=False):
     root=Path(root).resolve();folder=owned(root,folder);python=python_path(folder)
+    if sys.platform=='win32' and python.is_file() and not recreate:
+        try:
+            run([str(python),'-I','-c','import ssl,json,venv,sys;assert sys.version_info[:2]==(3,12)'],env=clean_environment(root),check=True,capture_output=True,timeout=30)
+        except (OSError,subprocess.CalledProcessError,subprocess.TimeoutExpired):
+            recreate=True
     if recreate or not python.is_file():
         base=base_python(root,run)
         # Cleanup deliberately preserves symlinks. venv does not replace an

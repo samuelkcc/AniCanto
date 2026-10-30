@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-71-windows-deployment-progress",
+  "revision": "application-user-guide-73-desktop-reset-recovery",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -547,6 +547,12 @@
               "zh-HK": "Windows 部署會喺安裝程式提供資料時顯示元件名稱、已下載容量及速度；安裝及載入驗證只顯示已用時間，唔會估算百分比。計時更新唔代表重複安裝。完全重設只會移除已確認清單內未改動嘅檔案；關閉期間新增或改動嘅檔案會保留，唔會阻止下次啟動。可用「檢查並修復」繼續使用本機檔案。",
               "zh-CN": "Windows 部署会在安装程序提供数据时显示组件名称、已下载容量及速度；安装和加载验证仅显示已用时间，不估算百分比。计时更新不代表重复安装。完全重置仅移除已确认清单中未改动的文件；关闭期间新增或改动的文件会保留，不会阻止下次启动。可通过「检查并修复」继续使用本机文件。",
               "ja": "Windows のセットアップでは、取得できる場合にパッケージ名、受信量、速度を表示します。インストールと読み込みの確認中は経過時間を表示し、進捗率を推測しません。タイマー更新は再インストールではありません。初期化では確認済み一覧の変更のないファイルのみを削除します。終了時に追加または変更されたファイルを保持し、次回起動を妨げません。「確認して修復」で続行できます。"
+            },
+            {
+              "en": "Windows repair and full reset remain available when Python cannot start. An executable file alone does not mark the runtime ready. Setup checks the interpreter and reconnects an incomplete private environment while keeping downloaded models and packages. Reopening the EXE waits if the previous reset is still removing files. Repeated reset must not require a working Python installation. Cleanup and interpreter errors are saved for the support export.",
+              "zh-HK": "Windows 喺 Python 啟動唔到時，仍可檢查修復或完全重新部署；唔會只憑 python.exe 檔案存在就當就緒。部署會驗證程式，修復唔完整嘅專用環境，同時保留已下載模型同元件。若上一輪仍在清理，再開 EXE 會先等待完成。重複重設唔需要先裝好 Python；清理及執行環境錯誤會自動保存，方便匯出偵錯記錄。",
+              "zh-CN": "Windows 在 Python 无法启动时，仍可检查修复或完全重新部署；不会仅凭 python.exe 文件存在就判定就绪。部署会验证解释器，修复不完整的专用环境，同时保留已下载模型和组件。若上一轮仍在清理，重新打开 EXE 会先等待完成。重复重置不需要先装好 Python；清理和运行环境错误会自动保存，供导出调试记录。",
+              "ja": "Windows では Python が起動しない場合でも修復と初期化を利用できます。実行ファイルの存在だけでは準備完了と判定しません。セットアップは動作を確認し、モデルとパッケージを保持して不完全な専用環境を修復します。前回の初期化で削除が続いている場合、EXE を開くと完了まで待機します。再度の初期化に動作中の Python は不要です。削除と実行環境のエラーはサポート記録用に保存します。"
             }
           ],
           "controlRefs": [],
@@ -1283,6 +1289,29 @@
               "zh-HK": "休息助手會有輕微呼吸起伏、頭部微動及局部頭髮擺動，保持面部比例穩定。系統的「減少動態效果」設定會停用這些動畫。",
               "zh-CN": "休息助手会有轻微呼吸起伏、头部微动和局部头发摆动，保持面部比例稳定。系统的“减弱动态效果”设置会停用这些动画。",
               "ja": "休憩中のアシスタントは、穏やかな呼吸、わずかな頭の動き、髪の揺れで動きます。顔の比率は保ちます。システムの「視差効果を減らす」設定ではこれらの動きを停止します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-export-source-clock",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Video timing after an update",
+            "zh-HK": "更新後的影片時間",
+            "zh-CN": "更新后的视频时间",
+            "ja": "更新後の映像時刻"
+          },
+          "body": [
+            {
+              "en": "An app update does not replace an existing output movie. Rebuild the output with saved recordings to apply video timing corrections. Keep the source movie and recordings. A new full conversion is not required for a composition-only correction.",
+              "zh-HK": "更新 App 不會取代現有成品。要套用影片時間修正，請使用已保存的錄音重新合成。原片及錄音會保留；只有合成修正時毋須重新翻譯及配音。",
+              "zh-CN": "更新 App 不会替换现有成品。要应用视频时间修正，请使用已保存的录音重新合成。原片和录音会保留；仅修正合成时无需重新翻译和配音。",
+              "ja": "アプリの更新で既存の完成動画は置き換わりません。映像時刻の修正を適用するには、保存済み録音で再合成します。元動画と録音は残ります。合成のみの修正では翻訳や音声生成のやり直しは不要です。"
             }
           ],
           "controlRefs": [],
@@ -2107,6 +2136,32 @@
             }
           ],
           "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-no-dialogue-report",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Caption-only rows in the report",
+            "zh-HK": "校對報告中的非對白字幕",
+            "zh-CN": "校对报告中的非对白字幕",
+            "ja": "レポートの非会話字幕"
+          },
+          "body": [
+            {
+              "en": "A confirmed caption-only row belongs in Source retained after its evidence files pass verification. A file check still in progress is separate from a missing recording. If evidence is stale or unavailable, the normal dubbing requirement returns. A blank script alone never proves that another line covers it.",
+              "zh-HK": "非對白字幕的證據檔案通過驗證後，會歸入「保留原聲」。檔案仍在檢查與缺少錄音是不同狀態。證據過期或無法驗證時，恢復正常配音要求。文字留白並不代表已由另一句涵蓋。",
+              "zh-CN": "非对白字幕的证据文件通过验证后，归入“保留原声”。文件仍在检查与缺少录音是不同状态。证据过期或无法验证时，恢复正常配音要求。文字留白不代表已由另一句覆盖。",
+              "ja": "非会話字幕の証拠ファイルを検証した後、その行は「元音声を保持」に分類します。ファイル検査中と録音欠落は別の状態です。証拠が古い、または確認できない場合は通常の音声生成が必要です。空の台詞だけで別の行に含まれるとは判断しません。"
+            }
+          ],
+          "controlRefs": [
+            "reportClassification",
+            "captionOnlyNoDialogue"
+          ],
           "steps": false
         }
       ]
@@ -3970,6 +4025,29 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "reading-attributed-timing",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Recognition segments",
+            "zh-HK": "辨識分段",
+            "zh-CN": "识别分段",
+            "ja": "認識の区切り"
+          },
+          "body": [
+            {
+              "en": "Reading recognition uses the system’s available text times. It groups sentences and pauses without inventing word times. If timed text is incomplete, it keeps the broader result. Names and punctuation can still need manual correction. Recognition does not start translation automatically.",
+              "zh-HK": "朗讀模式會使用系統提供的文字時間，按句子及停頓分段。時間資料不完整時保留較大的段落，不會推算逐字時間。人名及標點仍可能需要修正。完成辨識後不會自動開始翻譯。",
+              "zh-CN": "朗读模式使用系统提供的文字时间，按句子和停顿分段。时间数据不完整时保留较大的段落，不推算逐字时间。人名和标点仍可能需要修正。识别完成后不会自动开始翻译。",
+              "ja": "読み上げモードはシステムが返す文字の時刻を使い、文と間で区切ります。時刻情報が不足すると広い区間を残し、単語時刻を推測しません。人名や句読点は修正が必要な場合があります。認識の完了で翻訳は自動開始しません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -4060,6 +4138,29 @@
               "zh-CN": "重录保存为独立试听版本，不覆盖原成品。生成中有处理状态并可停止；可删除单个或全部重录。参考声音不足时按提示处理，不把其他角色声音当作同一句原声。",
               "en": "Retakes are separate comparison versions and do not overwrite the original output. Generation shows progress and can stop. Delete one or all retakes as needed. Follow short-reference prompts; another character’s voice is not the same original line.",
               "ja": "再録音は比較用の別バージョンとなり、元の出力を上書きしません。生成状態を確認して停止でき、個別または全部を削除できます。参照音声が短い場合は案内に従います。別人物の声を同じ台詞の原音声とは扱いません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "desktop-demo-edited-retake-reference",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Edit a demo line and record again",
+            "zh-HK": "修改示範對白後重錄",
+            "zh-CN": "修改示范对白后重录",
+            "ja": "デモの台詞を編集して再録音"
+          },
+          "body": [
+            {
+              "en": "An edited desktop-demo line uses its selected archived target recording as the voice reference. The reference keeps its original words. The edited words are the new recording input. A different engine can change delivery; compare the new take before adopting it. The original take stays available.",
+              "zh-HK": "修改桌面示範對白後，會以已選取的原示範配音作聲線參考，並保留參考錄音的原有文字。新錄音使用修改後的對白。不同引擎的語氣可能不同，請試聽後再決定採用；原錄音會保留。",
+              "zh-CN": "修改桌面示范对白后，以已选取的原示范配音作为声音参考，并保留参考录音的原文字。新录音使用修改后的对白。不同引擎的语气可能不同，请试听后再决定采用；原录音会保留。",
+              "ja": "デスクトップデモの台詞を編集すると、選択済みの元デモ音声を参照します。参照には元の台詞を使い、新録音には編集後の台詞を渡します。エンジンが違うと表現も変わるため、試聴してから採用します。元録音は残ります。"
             }
           ],
           "controlRefs": [],

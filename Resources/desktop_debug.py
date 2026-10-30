@@ -4,7 +4,7 @@ from pathlib import Path
 
 MAX_JSON=2*1024*1024
 RUNTIME_KEYS=('engine','requestedEngine','backend','voiceBackend','device','gpu','textModel','voiceModel','variant','dramaBackend','cudaFailure','hardware','roles','drama3Memory','modelLoadPassed','speechInferencePassed','warnings','analysisFallbackReason')
-RECEIPTS=('last-download-cleanup.json','native-ready.json','gpu-runtime-selection.json','drama-full-cuda-ready.json','drama3-windows-ready.json','gpt-windows-ready.json','cosy-windows-ready.json')
+RECEIPTS=('logs/python-readiness.json','logs/cleanup-error.json','last-download-cleanup.json','native-ready.json','gpu-runtime-selection.json','drama-full-cuda-ready.json','drama3-windows-ready.json','gpt-windows-ready.json','cosy-windows-ready.json')
 JOB_FILES=('processing-time.json','production-progress.json','report.json','segment-issues.json','normal-script-rescue.json','source-timing-review.json','normal-checks.json','english-overlap.json','concise-dialogue.json','dialogue-delivery-audit.json','translation-brevity.json','natural-repair.json','natural-placement.json','automatic-recovery.json','input-source.json','ocr-status.json','ocr-region.json','ocr-metrics.json','ocr-discovery/ocr-progress.json','frames-pts/ocr-progress.json','source-performance-policy.json','whisper-compute.json','reference-whisper/whisper-compute.json')
 SECRET=re.compile(r'(?i)("?(?:api[_-]?key|access[_-]?token|authorization|password|secret)"?\s*[:=]\s*)("[^"\n]*"|[^\s,}\n]+)')
 

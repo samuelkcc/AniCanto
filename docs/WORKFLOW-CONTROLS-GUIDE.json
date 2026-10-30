@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-26-native-caption-only",
+  "revision": "workflow-controls-guide-27-native-caption-music-proof",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -595,10 +595,10 @@
         "ja": "会話のない字幕は表示のみ"
       },
       "body": {
-        "en": "Production settings has this independent switch on by default for new Basic and Expert subtitle-led jobs. Keep translated captions at their authored display times without TTS only when complete original and separated-audio activity checks agree, the completed source speech check has no words, and the complete vocal window is near digital silence. Missing recognition, failed TTS, quiet or offscreen speech, and uncertain or incomplete evidence keep normal dubbing. The check can leave ambiguous captions dubbed. It does not enable extra content review, grant retakes or change saved jobs. Old mobile jobs with no stored switch remain unchanged. Each platform records testing and installation separately.",
-        "zh-HK": "「製作設定」提供獨立開關，基本及專家模式的新字幕優先工作預設開啟。只有原聲與分離音訊的完整活動檢查一致、已完成的原聲辨識沒有對白文字，而且整段人聲接近數碼靜音，才保留翻譯字幕及原顯示時間，不生成配音。辨識失敗、配音失敗、細聲或畫外對白，以及不完整或未確定的證據，仍按正常流程配音；不確定的字幕可能繼續配音。此開關不開啟額外內容核對、不增加重錄次數，亦不改變已保存工作。未保存此選項的舊手機／平板工作保持原設定。各平台的測試及安裝狀態分開記錄。",
-        "zh-CN": "“制作设置”提供独立开关，基本及专家模式的新字幕优先任务默认开启。只有原声与分离音频的完整活动检查一致、已完成的原声识别没有对白文字，而且完整人声片段接近数字静音，才保留翻译字幕及原显示时间，不生成配音。识别失败、配音失败、轻声或画外对白，以及不完整或未确定的证据，仍按正常流程配音；不确定的字幕可能继续配音。此开关不开启额外内容检查、不增加重录次数，也不改变已保存任务。未保存此选项的旧手机／平板任务保持原设置。各平台的测试及安装状态分别记录。",
-        "ja": "制作設定の独立したスイッチは、基本・エキスパートの新しい字幕優先ジョブで初期状態がオンです。元音声と分離音声の完全な活動検査が一致し、完了した音声認識に発話がなく、人声区間全体がデジタル無音に近い場合のみ、元の表示時刻で翻訳字幕を残し、音声を生成しません。認識失敗、音声生成失敗、小さな声、画面外の発話、不完全・不確かな証拠では通常の吹き替えを続けます。不確かな字幕には音声が付く場合があります。追加の内容検査や再録音を許可せず、保存済みジョブも変更しません。この選択がない古いモバイルジョブは従来設定を保持します。テストと導入状況は各プラットフォームで別に記録します。"
+        "en": "This independent switch is on for new Basic and Expert subtitle-led jobs. Complete source and separated-audio evidence must confirm no dialogue. Keep captions and their display times. A supported music-only check also requires no recognized words inside the actual caption, a near-silent vocal window and continuous music/activity evidence. It reserves at most two paired inspections per job; failure or resume does not restore attempts. Uncertain, quiet or offscreen speech keeps normal dubbing. Saved jobs retain their frozen policy. Each platform needs its own tests and installation.",
+        "zh-HK": "這是獨立開關，新建以字幕為主要來源的基本及專家工作預設開啟。原聲及分離音訊的完整證據必須確認沒有對白，並保留字幕及顯示時間。支援的純音樂檢查亦要求字幕實際時段沒有辨識到文字、分離人聲接近靜音，以及連續的音樂與活動證據。每份工作最多預留兩次雙音訊檢查；失敗或續做不會恢復次數。不確定、細聲或畫面外的對白仍會配音。已保存工作沿用原有規則，各平台須分別測試及安裝。",
+        "zh-CN": "这是独立开关，新建以字幕为主要来源的基本及专家任务默认开启。原声和分离音频的完整证据必须确认没有对白，并保留字幕及显示时间。支持的纯音乐检查还要求字幕实际时段没有识别文字、分离人声接近静音，以及连续的音乐和活动证据。每个任务最多预留两次双音频检查；失败或继续处理不会恢复次数。不确定、轻声或画面外的对白仍会配音。已保存任务沿用原有规则，各平台须分别测试和安装。",
+        "ja": "独立したスイッチで、字幕を主入力とする新規Basic・Expert作業ではオンです。元音声と分離音声の完全な証拠で発話がないと確認し、字幕と表示時刻を残します。対応する音楽のみの検査には、実際の字幕区間に認識語がないこと、ほぼ無音の分離ボーカル、連続した音楽・活動の証拠も必要です。1作業につき2組までの検査を事前確保し、失敗や再開で回数を戻しません。不確か、小声、画面外の発話は通常どおり生成します。保存済み作業の規則は維持し、各プラットフォームで個別にテスト・導入します。"
       }
     },
     {

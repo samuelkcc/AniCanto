@@ -3860,5 +3860,84 @@
     "manualDemoReference": "Use selected archived desktop-demo target recording and its exact transcript for manual retake only.",
     "iphone": "Pending narrow adoption; do not infer installation from guide consumption.",
     "nativeCaptionOnlyIncluded": false
+  },
+  "mobile269Combined": {
+    "revision": "mobile269-clock-caption-reading",
+    "status": "Source prepared. Host exact-clock packet check passes. Native execution and normal installation remain pending.",
+    "videoClock": {
+      "policy": "matroska-verified-clock-269",
+      "source": "Original Matroska H264 or HEVC block presentation times with a declared frame duration.",
+      "mapping": "Verify every normalized VCL frame hash before use. Reject unexplained sample loss, mismatched tracks, lacing or encoding.",
+      "mutation": "Write an owned MP4 proxy. Retain the input, old proxies, recordings and frozen request.",
+      "unsupported": "Keep the existing avformat path. Do not claim exact source timing for that path.",
+      "hostFramesVerified": 34023,
+      "sourcePackets": 34024,
+      "omittedFinalPacket": 1,
+      "maxPresentationErrorSeconds": 0,
+      "nativeTests": "Pending."
+    },
+    "captionOnly": {
+      "newRevision": "caption-only-no-dialogue-native-269",
+      "legacyRevision": "caption-only-no-dialogue-native-266",
+      "newJobsOnly": true,
+      "actualCaptionWordsBlock": true,
+      "outsideCaptionWords": "Do not block a new music-only decision solely because a word lies in inspection padding. Keep the old whole-window rule for legacy266.",
+      "keepOldPositiveGate": true,
+      "musicSupplement": {
+        "backend": "apple-soundanalysis-v1",
+        "originalMusicMinimum": 0.5,
+        "allVocalClassesMaximum": 0.05,
+        "peakMaximum": 3.0517578125e-05,
+        "rmsMaximum": 7.62939453125e-06,
+        "completeRealWindowCoverage": true,
+        "pairedInspectionsMaximum": 2,
+        "reserveBeforeExecution": true,
+        "failedOrCancelledReservationReused": false,
+        "callWallSecondsMaximum": 30
+      },
+      "captionTextAndDisplayTimesRetained": true,
+      "quietAndOffscreenSpeech": "Retain TTS unless complete evidence confirms no dialogue.",
+      "nativeCalibration": "Pending actual desktop music input and real quiet/offscreen speech execution.",
+      "revalidateBeforeVoiceAndExport": "Recheck the completed exact Whisper receipt and its waveform SHA. Missing or changed source-clock evidence restores required TTS without refund."
+    },
+    "report": {
+      "captionOnly": "Verify bound evidence files before Source retained. Show incomplete file checks separately. Invalid proof restores required dubbing.",
+      "coveredContinuation": "No owner field exists in the native grouping. The saved Mobile Suit snapshot has340translated dialogue cues and250noSpeechcues. No required blank dialogue is found. Do not fabricate an owner from blank text.",
+      "metadataIsNotListeningAcceptance": true
+    },
+    "reading": {
+      "timing": "Use complete attributed system times. Group sentence ends and measured pauses. Keep the broad system interval when timed text is incomplete.",
+      "recognitionTranslationNarrationSeparate": true,
+      "names": "System recognition can still need manual correction. No fabricated name substitution is added."
+    },
+    "protectedRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "frozenSettingsChanged": false,
+    "spentBudgetsReset": false,
+    "counterparts": {
+      "iphone": "Wait for one combined verified handover. Do not replace private phone UI files wholesale.",
+      "desktop": "270 provides music-only fixtures. Native timing and report implementation have independent evidence."
+    },
+    "manualRevision": "application-user-guide-73-production-settings-groups",
+    "controlRevision": "workflow-controls-guide-27-native-caption-music-proof",
+    "finalPackageBuild": 270,
+    "productionLayout": {
+      "groups": [
+        "Models and languages",
+        "Source and output",
+        "Processing options"
+      ],
+      "switchesTogether": true,
+      "captionOnlyInlineExplanation": false,
+      "detailsInSharedGuide": true,
+      "frozenBindingsUnchanged": true,
+      "phonePrivateLayoutUptake": "Pending owner review."
+    }
   }
 }

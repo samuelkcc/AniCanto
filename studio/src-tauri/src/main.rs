@@ -6,6 +6,7 @@ use tauri::{Emitter,Manager,State};
 use fs2::FileExt;
 mod appearance;
 mod support_export;
+mod runtime_probe;
 mod preview_stream;
 mod task_lifecycle;
 mod native_queue;
@@ -35,7 +36,7 @@ impl OwnedJob {
 #[cfg(windows)] impl Drop for OwnedJob {fn drop(&mut self){#[link(name="kernel32")] unsafe extern "system" {fn CloseHandle(handle:isize)->i32;}unsafe{CloseHandle(self.0);}}}
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
-    recovery_checked:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
+    recovery_checked:AtomicBool, cleanup_pending:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
 const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
 
 impl Host {
@@ -113,7 +114,7 @@ impl Host {
         instance.try_lock_exclusive().map_err(|_|"AniCanto Studio is already open for this library.".to_string())?;
         let helper=if packaged{exe.parent().unwrap().join("AniCanto-worker")}else{
             std::env::var_os("CANTOSYNC_MAC_HELPER").map(PathBuf::from).unwrap_or(development.join("dist/AniCanto.app/Contents/MacOS/AniCanto"))};
-        Ok(Self{root,shared,windows,backend,helper,recovery_checked:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance})
+        Ok(Self{root,shared,windows,backend,helper,recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance})
     }
     fn debug_contents(&self)->String {
         let report=self.rpc("export-logs",json!({})).and_then(|r|r.as_str().map(str::to_owned).ok_or_else(||"The Python debug report returned invalid output.".to_owned()));
@@ -129,7 +130,9 @@ impl Host {
     fn python(&self)->Option<PathBuf> {
         let candidates=if cfg!(windows){vec![self.root.join("runtimes/ui/Scripts/python.exe"),self.root.join("runtimes/worker/Scripts/python.exe")]}else{
             vec![self.root.join("runtime/bin/python3"),self.shared.join("runtimes/runtime/bin/python3")]};
-        std::env::var_os("CANTOSYNC_STUDIO_PYTHON").map(PathBuf::from).filter(|p|p.is_file()).or_else(||candidates.into_iter().find(|p|p.is_file()))
+        let found=std::env::var_os("CANTOSYNC_STUDIO_PYTHON").map(PathBuf::from).filter(|p|p.is_file()).or_else(||candidates.into_iter().find(|p|p.is_file()));
+        #[cfg(windows)] {found.filter(|p|runtime_probe::usable(p,&self.root))}
+        #[cfg(not(windows))] {found}
     }
     fn environment(&self,cmd:&mut Command) {
         cmd.env("PYTHONUTF8","1").env("PYTHONUNBUFFERED","1").env("PYTHONDONTWRITEBYTECODE","1")
@@ -141,6 +144,7 @@ impl Host {
     }
     fn rpc(&self,op:&str,params:Value)->Result<Value,String> {
         let _lock=self.rpc_lock.lock().map_err(|e|e.to_string())?;
+        if self.cleanup_pending.load(Ordering::SeqCst){return Err("Native reset is finishing. Reopen the EXE after it closes.".into());}
         // About must remain useful before first-run Python deployment.
         if op=="licenses" && self.python().is_none(){
             let raw=std::fs::read_to_string(self.shared.join("license-inventory.json")).map_err(|e|e.to_string())?;
@@ -166,7 +170,7 @@ impl Host {
         #[cfg(unix)] if ["media","media-subtitles"].contains(&op) {use std::os::unix::process::CommandExt;cmd.process_group(0);}
         let mut child=cmd.spawn().map_err(|e|e.to_string())?;
         let media_pid=if ["media","media-subtitles"].contains(&op){self.media.lock().unwrap().insert(child.id());Some(child.id())}else{None};
-        #[cfg(windows)] let _media_job=if ["media","media-subtitles"].contains(&op){Some(OwnedJob::assign(&child)?)}else{None};
+        #[cfg(windows)] let _rpc_job=Some(OwnedJob::assign(&child)?);
         let recover=!self.recovery_checked.load(Ordering::SeqCst)&&self.active.lock().unwrap().is_none()&&!self.older_app_open();
         child.stdin.take().unwrap().write_all(json!({"op":op,"params":params,"recoverOrphans":recover}).to_string().as_bytes()).map_err(|e|e.to_string())?;
         let output=child.wait_with_output().map_err(|e|e.to_string())?;
@@ -467,7 +471,7 @@ async fn studio_media(params:Value,host:State<'_,Arc<Host>>)->Result<Value,Strin
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         // Media transcoding must not hold the state lock for its whole duration.
         // A separate adapter instance only reads state for this operation.
-        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
+        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
         let mut result=shadow.rpc("media",params)?;
         if result["mode"]=="demand" {
             let python=host.python().ok_or("The playback runtime is missing.")?;
@@ -484,7 +488,7 @@ async fn studio_thumbnail(params:Value,host:State<'_,Arc<Host>>)->Result<Value,S
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         // Media transcoding must not hold the state lock for its whole duration.
         // A separate adapter instance only reads state for this operation.
-        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
+        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
         shadow.rpc("media-thumbnail",params)
     }).await.map_err(|e|e.to_string())?
 }
@@ -493,7 +497,7 @@ async fn studio_subtitles(params:Value,host:State<'_,Arc<Host>>)->Result<Value,S
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         // Media transcoding must not hold the state lock for its whole duration.
         // A separate adapter instance only reads state for this operation.
-        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
+        let shadow=Host{root:host.root.clone(),shared:host.shared.clone(),windows:host.windows.clone(),backend:host.backend.clone(),helper:host.helper.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:host.media.clone(),_instance:host._instance.try_clone().map_err(|e|e.to_string())?};
         shadow.rpc("media-subtitles",params)
     }).await.map_err(|e|e.to_string())?
 }
@@ -506,12 +510,14 @@ async fn studio_bootstrap(app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result
 #[tauri::command]
 async fn studio_cleanup(mode:String,token:Option<String>,operation:Option<String>,app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let host=host.inner().clone();
-    tauri::async_runtime::spawn_blocking(move||{
+    let error_root=host.root.clone();
+    let result=tauri::async_runtime::spawn_blocking(move||{
         let _gate=host.task_lock.lock().map_err(|e|e.to_string())?;
         if host.active.lock().unwrap().is_some(){return Err("Pause and finish the active task before removing packages.".into());}
         if host.older_app_open(){return Err("Close the previous AniCanto app before removing downloaded packages.".into());}
         let operation=operation.unwrap_or_default();
         if operation.len()>80 || !operation.bytes().all(|c|c.is_ascii_alphanumeric()||c==b'-'){return Err("Invalid cleanup operation.".into());}
+        let _rpc=host.rpc_lock.lock().map_err(|e|e.to_string())?;
         let request=json!({"root":host.root,"mode":mode,"token":token});
         let mut notify=|mut status:Value|{status["operationID"]=json!(operation);let _=app.emit("studio-cleanup-progress",status);};
         notify(json!({"phase":"checking"}));
@@ -519,11 +525,14 @@ async fn studio_cleanup(mode:String,token:Option<String>,operation:Option<String
             let launcher=std::env::var("CANTOSYNC_LAUNCHER_PID").ok().and_then(|s|s.parse::<u32>().ok()).ok_or("Open the portable AniCanto.exe to remove runtimes safely on exit.")?;
             let approved=anicanto_core::cleanup::reviewed(&request)?;
             std::fs::write(host.root.join("download-cleanup-request.json"),json!({"mode":mode,"token":token,"launcherPID":launcher,"approved":approved}).to_string()).map_err(|e|e.to_string())?;
+            host.cleanup_pending.store(true,Ordering::SeqCst);
             notify(json!({"phase":"deferred"}));
             return Ok(json!({"deferred":true}));
         }
         if token.is_some(){anicanto_core::cleanup::execute_with_progress(&request,&mut notify)}else{anicanto_core::cleanup::plan(&request)}
-    }).await.map_err(|e|e.to_string())?
+    }).await.map_err(|e|e.to_string())?;
+    if let Err(error)=&result {let logs=error_root.join("logs");if std::fs::create_dir_all(&logs).is_ok(){let _=std::fs::write(logs.join("cleanup-error.json"),json!({"operation":"download-cleanup","error":error,"version":env!("CARGO_PKG_VERSION"),"at":std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d|d.as_secs()).unwrap_or(0)}).to_string());}}
+    result
 }
 // Exported movies may live in the user's chosen folder, outside app storage.
 // Permit those exact registered files, not arbitrary paths or parent folders.
@@ -622,7 +631,7 @@ mod cleanup_progress_tests {
         std::fs::create_dir_all(&root).unwrap();
         let child=Command::new("/bin/sleep").arg("10").spawn().unwrap();
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
-        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(Some(Active{child,id:"owned".into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()})),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
+        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(Some(Active{child,id:"owned".into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()})),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
         assert_eq!(host.desktop_rpc("source-language",json!({"id":"next"})).unwrap_err(),"Pause processing before checking another source language.");
         assert_eq!(host.desktop_rpc("reset-video",json!({"id":"next"})).unwrap_err(),"Pause processing before resetting a video.");
         assert_eq!(host.desktop_rpc("remove-model",json!({"id":"unused"})).unwrap_err(),"Pause processing before removing a model.");
@@ -637,7 +646,7 @@ mod cleanup_progress_tests {
         let receipt=root.join("project-cache-progress.json");
         std::fs::write(&receipt,json!({"operationID":"test-operation","phase":"deleting","processed":2,"total":4}).to_string()).unwrap();
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
-        let host=Arc::new(Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance});
+        let host=Arc::new(Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance});
         let held=host.rpc_lock.lock().unwrap();let reader=host.clone();let (tx,rx)=std::sync::mpsc::channel();
         let worker=std::thread::spawn(move||{let _=tx.send(reader.desktop_rpc("project-cache-status",json!({"operationID":"test-operation"})));});
         let result=rx.recv_timeout(std::time::Duration::from_secs(2));

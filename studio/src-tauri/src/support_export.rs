@@ -16,7 +16,7 @@ pub fn report(root:&Path,paths:&[(&str,&Path)],cause:&str,version:&str)->String 
         text.push_str(&format!("\n{name}: {}\nFile present: {} · Bytes: {}\n",path.display(),info.as_ref().is_ok_and(|m|m.is_file()),info.map(|m|m.len()).unwrap_or(0)));
     }
     let base=match root.canonicalize(){Ok(p)=>p,Err(_)=>return text};
-    for name in ["logs/studio/process.log","developer-process.log","logs/native-ollama.log","logs/launcher-startup.json","first-run-deployment.json","native-ready.json","gpu-runtime-selection.json","drama3-windows-ready.json","model-selections.json","setup-invalidated.json"] {
+    for name in ["logs/python-readiness.json","logs/cleanup-error.json","last-download-cleanup.json","logs/studio/process.log","developer-process.log","logs/native-ollama.log","logs/launcher-startup.json","first-run-deployment.json","native-ready.json","gpu-runtime-selection.json","drama3-windows-ready.json","model-selections.json","setup-invalidated.json"] {
         if text.len()>1024*1024 {text.push_str("\n[Remaining sections omitted: report size limit]\n");break;}
         let path=match root.join(name).canonicalize(){Ok(p) if p.starts_with(&base)&&p.is_file()=>p,_=>continue};
         let result=(||->std::io::Result<String>{
