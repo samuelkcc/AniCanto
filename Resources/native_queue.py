@@ -37,4 +37,20 @@ def dispatch(app,op,p):
             # never repeatedly retried in the same session.
             session['errors'].append(dict(id=row['id'],message=str(error)))
             row['queueNotice']=str(error);write(path,session);app.store.save()
+    # One automatic second pass over a worker the native host had to stop. Saved
+    # progress, the frozen request and spent attempts stay as they are. A row is
+    # retried once per queue session, so a repeated stall ends the session.
+    retried=set(session.get('stalledRetried',[]))
+    for row in app.store.queue:
+        if row['id'] in retried or not row.get('stallRecovery') or row.get('status') not in ('attention','paused'):continue
+        session['stalledRetried']=sorted(retried|{row['id']});write(path,session)
+        try:
+            app.store.selected=row['id'];app.store.save()
+            spec=app.dispatch('start',dict(id=row['id']))
+            spec['nativeQueue']=p['epoch'];return spec
+        except __import__('source_preparation').SourcePreparationCancelled:
+            session['enabled']=False;write(path,session);return None
+        except Exception as error:
+            session['errors'].append(dict(id=row['id'],message=str(error)))
+            row['queueNotice']=str(error);write(path,session);app.store.save()
     session['enabled']=False;write(path,session);return None

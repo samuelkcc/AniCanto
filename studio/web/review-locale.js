@@ -137,3 +137,8 @@ export const reviewLocale={
 Object.assign(reviewLocale["zh-HK"],{"Checking recordings":"正在檢查錄音"});
 Object.assign(reviewLocale["zh-CN"],{"Checking recordings":"正在检查录音"});
 Object.assign(reviewLocale["ja"],{"Checking recordings":"録音を確認中"});
+
+// Build 277 review report: one filter row, one search field, and the empty states.
+Object.assign(reviewLocale["zh-HK"],{"Line number or dialogue words":"行號或者對白文字","All dialogue":"全部對白","No dialogue matches this search":"冇對白符合呢個搜尋","No dialogue needs dubbing":"冇對白需要補配音","No review notes here":"呢個分類冇覆核提示","No dialogue in this category":"呢個分類冇對白","Open All dialogue to listen to every saved recording.":"想聽晒所有已保存錄音，請揀「全部對白」。"});
+Object.assign(reviewLocale["zh-CN"],{"Line number or dialogue words":"行号或对白文字","All dialogue":"全部对白","No dialogue matches this search":"没有对白符合此搜索","No dialogue needs dubbing":"没有需要补配音的对白","No review notes here":"此分类没有复核提示","No dialogue in this category":"此分类没有对白","Open All dialogue to listen to every saved recording.":"要收听全部已保存录音，请选择“全部对白”。"});
+Object.assign(reviewLocale["ja"],{"Line number or dialogue words":"行番号またはセリフ","All dialogue":"すべてのセリフ","No dialogue matches this search":"この検索に一致するセリフはありません","No dialogue needs dubbing":"吹き替えの要対応はありません","No review notes here":"この分類の確認メモはありません","No dialogue in this category":"この分類のセリフはありません","Open All dialogue to listen to every saved recording.":"保存済みの録音をすべて試聴するには「すべてのセリフ」を選んでください。"});

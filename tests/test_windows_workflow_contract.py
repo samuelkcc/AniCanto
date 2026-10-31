@@ -24,13 +24,13 @@ class WindowsWorkflowContractTests(unittest.TestCase):
     cfg=defaults(language);self.assertEqual(cfg['translationSource'],translation_source.COMBINED);translation_source.configure(cfg)
  def test_old_state_is_migrated_without_rewriting_submitted_request(self):
   with tempfile.TemporaryDirectory() as d:
-   root=Path(d);store=Store(root);store.add([root/'episode.mkv']);row=store.row();request=store.submit(row);old=read(request);old['translationSource']='combined';write(request,old);row['status']='paused';store.settings['translationSource']='combined';store.save();before=request.read_bytes()
+   root=Path(d);(root/'episode.mkv').write_bytes(b'fixture-video');store=Store(root);store.add([root/'episode.mkv']);row=store.row();request=store.submit(row);old=read(request);old['translationSource']='combined';write(request,old);row['status']='paused';store.settings['translationSource']='combined';store.save();before=request.read_bytes()
    restored=Store(root);self.assertEqual(restored.settings['translationSource'],COMBINED);self.assertEqual(restored.submit(restored.row()),request);self.assertEqual(request.read_bytes(),before)
    package,ready=self.fixture(root);projection=project_request('batch',read(request),ready,root,package)
    self.assertEqual(projection['translationSource'],COMBINED);self.assertEqual(request.read_bytes(),before)
  def test_fresh_submission_is_canonical_even_if_legacy_preset_is_in_memory(self):
   with tempfile.TemporaryDirectory() as d:
-   store=Store(d);store.add([Path(d)/'episode.mkv']);store.settings['translationSource']='combined';request=store.submit(store.row());self.assertEqual(read(request)['translationSource'],COMBINED)
+   (Path(d)/'episode.mkv').write_bytes(b'fixture-video');store=Store(d);store.add([Path(d)/'episode.mkv']);store.settings['translationSource']='combined';request=store.submit(store.row());self.assertEqual(read(request)['translationSource'],COMBINED)
  def test_legacy_nested_editor_and_preview_are_projected_without_source_changes(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);package,ready=self.fixture(root);review=root/'review.json';write(review,dict(config=dict(storage=str(root),translationSource='combined',ttsBackend='drama3',selectedEngines=['drama3']),cues=[]))

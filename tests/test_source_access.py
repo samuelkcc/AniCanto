@@ -26,7 +26,7 @@ class SourceAccessTests(unittest.TestCase):
             root = Path(directory)
             original = root/'original.mkv'
             original.write_bytes(b'video source bytes')
-            def probe(path, _tool):
+            def probe(path, _tool, *_args):
                 if path == original:
                     raise RuntimeError('Cloud drive read failed')
                 self.assertEqual(path.read_bytes(), original.read_bytes())
@@ -64,7 +64,7 @@ class SourceAccessTests(unittest.TestCase):
                     opened += 1
                     return EarlyEnd(stream) if opened == 1 else stream
                 return stream
-            def probe(path, _tool):
+            def probe(path, _tool, *_args):
                 if path == original: raise RuntimeError('Cloud stream ended early')
                 self.assertEqual(path.read_bytes(), b'complete video bytes')
                 return b'{"format":{}}'

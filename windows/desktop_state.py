@@ -30,6 +30,7 @@ def defaults(language='en'):
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
         subtitleSource='embedded',batchAutoSubtitles=True,sourceWorkflow='auto',defaultSubtitleWorkflow='subtitles-speech',defaultOCRWorkflow='speech-ocr',workMode='performance',workModeRevision=__import__('work_modes').REVISION,fullAIReview=False,productionMode='fast',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
+        autoApproveSourceLanguage=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
         speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
         repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=True,translationTextReview=False,safeEndpointCheck=False,analyzeBackgroundGaps=False,
@@ -166,7 +167,7 @@ class Store:
         settings['videos']=[dict(id=row['id'],video=row['video'])]
         path=self.root/'requests'/('submitted-'+request_id+'.json');write(path,settings)
         row.update(request=str(path),progress=0,partial=False);self.save();return path
-    def event(self,row,event):
+    def event(self,row,event,save=True):
         from output_delivery import public_event
         event=public_event(self.root,event)
         if event.get('trackOutput'):row['workingOutput']=event['trackOutput']
@@ -192,7 +193,8 @@ class Store:
         if event.get('partial'):row['partial']=True
         row['stage']=event.get('stage','');row['message']=event.get('message','')
         if event.get('batchStatus'):row['batchStatus']=event['batchStatus']
-        self.save()
+        # A batch of events saves the state once, after the last row change.
+        if save:self.save()
     def finish(self,row,code,paused=False,finalize_diagnostics=True):
         output=Path(row.get('output') or '')
         if row.get('attempt'):
@@ -231,6 +233,11 @@ def job_snapshot(row):
         paths=list(dict.fromkeys(paths+retained_folders))
     candidate_roots=[root.resolve()]+retained_folders
     seen_candidates=set()
+    seen_takes={}
+    def file_time(path):
+        """Real creation time for ordering; a manifest row rarely carries one."""
+        try:return Path(path).stat().st_mtime
+        except OSError:return 0
     def add_candidate(path,index,engine,language,kind,reason='',created=0,spoken_text=None):
         if type(index) is not int or index<1 or not path:return
         try:
@@ -242,7 +249,7 @@ def job_snapshot(row):
         seen_candidates.add(identity)
         cue=review.get('cues',[])[index-1] if index<=len(review.get('cues',[])) else {}
         text=spoken_text if spoken_text is not None else cue.get(__import__('output_language').field(language),'')
-        result['recordingCandidates'].append(dict(path=str(file),index=index,engine=engine,language=language,kind=kind,reason=reason,created=created,text=text))
+        result['recordingCandidates'].append(dict(path=str(file),index=index,engine=engine,language=language,kind=kind,reason=reason,created=created or file_time(file),text=text))
     for folder in paths:
         local_review=read(folder/'review.json',{});cfg=local_review.get('config',{})
         local_cues_by_index={c.get('reviewIndex',n):c for n,c in enumerate(local_review.get('cues',[]))}
@@ -284,13 +291,48 @@ def job_snapshot(row):
                 if profile:provenance['reference']=reference_signature(profile)
                 spoken_key=__import__('output_language').field(language)
                 if spoken_key in local_cue:provenance['text']=local_cue[spoken_key]
-                result['takes'].append(dict(take,audio=audio,engine=engine,language=language,index=cue_index or take.get('index',take.get('reviewIndex',index)+1),versionOutput=version.get('output'),versionStatus=version.get('status'),recordingProvenance=provenance))
+                # The engine writes one record per generation. It names the separated
+                # voice and the sampling seed that produced the take, so a later retake
+                # can be compared with the first take without another run.
+                traces=[take.get('generationTrace')]
+                if take.get('generationSourceAudio'):traces.append(Path(take['generationSourceAudio']).with_suffix('.generation.json'))
+                traces.append(Path(audio).with_suffix('.generation.json'))
+                generation=next((read(path,{}) for path in traces if path and Path(path).is_file()),{})
+                if generation.get('reference'):provenance['recordedReference']=str(generation['reference'])
+                if generation.get('referenceSHA256'):provenance['recordedReferenceSHA256']=str(generation['referenceSHA256'])
+                if type(generation.get('seed')) is int:provenance['recordedSeed']=generation['seed']
+                file=Path(audio).resolve()
+                line=cue_index or take.get('index',take.get('reviewIndex',index)+1)
+                identity=(str(file),line,language)
+                # One recording is one row. The same take can appear in the job
+                # manifest and again in its track manifest.
+                earlier=seen_takes.get(identity)
+                if earlier:
+                    if not earlier.get('versionOutput') and version.get('output'):
+                        earlier.update(versionOutput=version.get('output'),versionStatus=version.get('status'))
+                    continue
+                row=dict(take,audio=str(file),engine=engine,language=language,index=line,created=take.get('created') or file_time(file),
+                         versionOutput=version.get('output'),versionStatus=version.get('status'),recordingProvenance=provenance)
+                seen_takes[identity]=row
+                result['takes'].append(row)
         for path in sorted((folder/'recording-history').glob('*/take.json')):
             history=read(path,{})
             if history:
-                history['path']=str(path.parent/history.get('audio','audio.wav'));result['history'].append(history)
+                # One path spelling for the report, the guard, and the hidden list.
+                history['path']=str((path.parent/history.get('audio','audio.wav')).resolve())
+                if not history.get('created'):history['created']=file_time(history['path'])
+                result['history'].append(history)
     from review_report import project
     result.update(project(root,review,row))
+    # A user-removed recording stays hidden across scans and resumes.
+    from review_take_removal import blocks
+    removed=blocks(root)
+    hidden={str(Path(record['path']).resolve()) for record in removed}
+    if hidden:
+        result['takes']=[x for x in result['takes'] if x.get('audio') and str(Path(x['audio']).resolve()) not in hidden]
+        result['history']=[x for x in result['history'] if x.get('path') and str(Path(x['path']).resolve()) not in hidden]
+        result['recordingCandidates']=[x for x in result['recordingCandidates'] if x.get('path') and str(Path(x['path']).resolve()) not in hidden]
+    result['removedTakes']=removed
     result['currentOutput']=row.get('output')
     # One source pair serves every dialogue row, including lines without a
     # quality warning. Only advertise audio that is actually present.

@@ -23,7 +23,7 @@ def start(root,row,action,request):
         from conversion_details import start as conversion_start
         conversion_start(root,row,request,record)
     except (OSError,ValueError,TypeError,KeyError) as error:record['conversionDetailsWarning']=str(error)[:500]
-    row.update(attempt=record,lastError=None,outputThisAttempt=None,resultSummary='',partial=False,workflowSequence=0,workflowSignature=None)
+    row.update(attempt=record,lastError=None,outputThisAttempt=None,resultSummary='',partial=False,workflowSequence=0,workflowSignature=None,stallRecovery=None)
     return record
 
 def finish(root,row,code,paused=False,stderr='',error_string='',success_without_movie=False):

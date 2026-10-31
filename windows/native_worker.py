@@ -29,8 +29,13 @@ def configure(submitted,ready,package=HERE,emit=lambda *a,**k:None):
         if not path.is_file():raise ValueError(f'The verified native {key} is missing; repair setup.')
         cfg[key]=str(path)
     from source_access import accessible, cloud_or_remote
+    from source_preparation import requires_hydration
+    def provider_held(video):
+        # Recall attributes, not a folder name, prove a provider still owns the bytes.
+        try:return requires_hydration(video)
+        except OSError:return False
     def local_video(video):
-        if not cloud_or_remote(video,cfg['storage']):return video
+        if not (cloud_or_remote(video,cfg['storage']) or provider_held(video)):return video
         local_source,_=accessible(video,cfg['ffprobe'],cfg['storage'],emit)
         return str(local_source)
     if cfg.get('video'):
@@ -115,7 +120,9 @@ def project_request(action,submitted,ready,requests,package=HERE,emit=lambda *a,
         review=Path(draft['review'])
         base=review.parent/'editor-base.json'
         source=json.loads((base if base.is_file() else review).read_text(encoding='utf-8'))
-        settings=dict(source['config'],**draft.get('settings',{}),storage=submitted['storage'])
+        # Both sides can already carry a storage path. Merge in order so the
+        # submitted request wins without passing the same keyword twice.
+        settings={**source['config'],**draft.get('settings',{}),'storage':submitted['storage']}
         draft['settings']=configure(settings,ready,package,emit)
         if draft.get('previewEngine')=='drama3' and draft['settings'].get('nativeEngineFallback'):
             draft['previewEngine']=draft['settings']['nativeEngineFallback']['selected']

@@ -213,9 +213,9 @@ def render(w, request):
     original_emit=w.emit
     try:
         cues=materialize(source_review,draft)
-        __import__('terminology').apply(dict(source_review.get('config',{}),**draft.get('settings',{})),cues)
+        __import__('terminology').apply({**source_review.get('config',{}),**draft.get('settings',{})},cues)
         if draft.get('settings',{}).get('subtitlesOnly'):
-            cfg=dict(source_review['config'],**draft['settings'])
+            cfg={**source_review['config'],**draft['settings']}
             cfg.update({k:request[k] for k in ('port','ffmpeg','ffprobe','executable') if k in request})
             from script_revision import save
             generated,missing,subtitles=save(w,cfg,folder,draft,cues)
@@ -248,7 +248,7 @@ def render(w, request):
                         cue['editorAudioLanguage']=provenance_config.get('targetLanguage','yue')
                         cue['editorAudioVersion']=provenance_config.get('gsvVersion','v2')
                         break
-        cfg=dict(source_review['config'],**draft.get('settings',{}))
+        cfg={**source_review['config'],**draft.get('settings',{})}
         cfg.pop('_generationGuardRoot',None);cfg.pop('_explicitRetakeToken',None)
         from fast_mode import configure
         configure(cfg)

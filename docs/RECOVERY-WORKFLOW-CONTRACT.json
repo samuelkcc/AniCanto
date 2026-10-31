@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "status": "shared requirements; each platform must separately record implementation, deployment and acceptance",
   "alignmentGovernance": {
     "revision": "shared-workflow-controls-4-language-budget-overlap",
@@ -841,20 +841,21 @@
     }
   },
   "desktopSharedGuideConsumer": {
-    "revision": "workflow-controls-guide-6-source-fallback",
+    "revision": "workflow-controls-guide-34-caption-only-platform-scope",
     "source": "docs/WORKFLOW-CONTROLS-GUIDE.json",
-    "sha256": "e5293510328611b31ae29147982c40b7f1f880c801a1cd65701dc9a1dba6cd16",
+    "sha256": "6062fb5e814d6dd719a353f0d2a99081cafa8d1be7406a9a90e691155c5f9b92",
     "consumer": "studio/web/workflow-guide.js",
     "installedMacBuild": "252",
     "includesCostWarning": true,
     "windowsInstalled": false,
     "sourceRevision": "workflow-controls-guide-6-source-fallback",
     "sourceSHA256": "e5293510328611b31ae29147982c40b7f1f880c801a1cd65701dc9a1dba6cd16",
-    "candidateMacBuild": "252",
-    "candidateState": "Mac252 installed with guarded replacement. Isolated startup and 114 embedded interface hashes pass. Compact control header is implemented.",
+    "candidateMacBuild": "277",
+    "candidateState": "Mac 0.25.23/277 and Windows 0.25.23/277 are installed in dist. Isolated native startup, exact embedded interface manifest, deep/strict signature and a 3064-file privacy scan pass. guide30 adds item reportSearch for the review report search box.",
     "mobileOnlyControls": "not advertised as desktop controls; retain their exact common source copy",
     "heldFrameTail": "not implemented in this desktop build; Help records the limitation",
-    "sourceFallback": "The guide describes the new iPad203 missing-text fallback. Desktop source_workflow.py does not implement it in this patch. Help states the limitation. Counterpart work remains pending."
+    "sourceFallback": "The guide describes the new iPad203 missing-text fallback. Desktop source_workflow.py does not implement it in this patch. Help states the limitation. Counterpart work remains pending.",
+    "latestSourcePendingNextPackage": false
   },
   "iPhoneFeasibility": {
     "revision": "iphone-standard-first-take-196",
@@ -1611,11 +1612,12 @@
     "receipt": "mobile/Validation/iphone-basic-upgrade-build236-2026-10-29.json"
   },
   "applicationUserGuide": {
-    "revision": "application-user-guide-43-phone-chooser-reading",
+    "revision": "application-user-guide-90-cloud-source-wait",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "3ee3ba8cd03bb81f95a6038dcf94f6ad161134919e571d80bc886fcdc604360f",
-    "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
-    "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
+    "sha256": "d265e0c65917a2318399dca777ea22d345e4387aeefcf15fb58131df4812fe21",
+    "sourceChangeNote": "Build 278 adds two desktop sections. auto-approve-source-language in the basic chapter explains the new switch under the Global scope switch. preview-notice-badge in the preview chapter explains the wide warning and error band in the preview column and the short chip on each video card. Control guide adds item autoApproveSourceLanguage. Guide87 also names desktop, iPad and iPhone in the non-dialogue caption-only copy so the shared Help text states its platform scope. Guide88 adds build 278 desktop retake copy: section retakes-2 states that a retake keeps the line recording seed and therefore the same separated voice and voice character, and section retakes-3 names the recording seed field and states that the review report warns when a saved recording used another separated voice. Sections retakes-2 and retakes-3 keep platform scope desktop. Guide89 adds the same retake rule to the iPad and iPhone section mobile-review-actions in all four locales, and changes no other mobile copy. No mobile package holds guide89 yet. Guide90 adds the shared source-loading wait copy: section source-loading-wait in chapter start names the real provider, states the 45-second question, states that Keep waiting resumes the same read with a 10-minute grant, states that Stop waiting keeps the bytes already read, and states the 15-second local quiet limit, in all four locales with platform scope desktop, iPad and iPhone. Paragraph 2 of desktop-cloud-source-preparation now names the 45-second question. No mobile package holds guide90 yet, and no desktop package holds it yet.",
+    "controlGuideRevision": "workflow-controls-guide-34-caption-only-platform-scope",
+    "controlGuideSHA256": "6062fb5e814d6dd719a353f0d2a99081cafa8d1be7406a9a90e691155c5f9b92",
     "maintenance": "docs/USER-GUIDE-MAINTENANCE.md",
     "platformFilter": "chapter and section",
     "locales": [
@@ -1642,10 +1644,10 @@
         "receipt": ".build/rest262/install-receipt.json",
         "manualRevision": "application-user-guide-18-desktop-rest-scenes",
         "manualSHA256": "e97abc13d2618c25124e63b3b9b49df3dc16300a5916afc9e7dfe4e3185e6b94",
-        "latestSourcePendingNextPackage": true,
-        "latestChangeScope": "Installed rest artwork and guide18. Later guide/control source remains pending.",
-        "controlGuideRevision": "workflow-controls-guide-19-caption-only-hk",
-        "controlGuideSHA256": "574c9fa4ee0b2d987fcf00076dc4d25cfcb64b591dc88c75191627df76022b91",
+        "latestSourcePendingNextPackage": false,
+        "latestChangeScope": "Review report list: one summary, one filter row, one search box and 25 lines per page. Build 277 carries guide30 and manual84 in both installed desktop packages.",
+        "controlGuideRevision": "workflow-controls-guide-29-subtitle-track-preference",
+        "controlGuideSHA256": "0aff72bc2b92563624ddb24b4d58c2b83241a69f9ac50157ef8e5cc64c04622b",
         "candidate257": {
           "version": "0.25.4",
           "build": 257,
@@ -1689,7 +1691,57 @@
         },
         "pendingPhoneOnlyGuide23": "Phone layout instructions changed. Installed counterpart package hashes remain separate.",
         "guide23SchemaCorrectionPendingPackage": "One empty steps array becomes false. A mobile Bool decoder rejected the prior copy. Adopt and verify this resource in the next owned package.",
-        "pendingDuoGuide24": "Duo layout instructions changed. Installed consumer hashes remain separate."
+        "pendingDuoGuide24": "Duo layout instructions changed. Installed consumer hashes remain separate.",
+        "candidate275": {
+          "version": "0.25.21",
+          "build": 275,
+          "manualRevision": "application-user-guide-80-desktop-review-line-actions",
+          "manualSHA256": "f893193a42dc3c2ac130067fd66c88452cc43e4d907342a3496ae90f52405c1e",
+          "controlGuideRevision": "workflow-controls-guide-28-desktop-review-line-actions",
+          "controlGuideSHA256": "1133066b717fd9c534a6ccf3fa798891b9d8e223b688b9fe0e0a0b97107315d3",
+          "macPackage": ".build/shared-release/0.25.21/AniCanto.app",
+          "macInstalledInDist": true,
+          "macPrivacyScannedFiles": 3063,
+          "macPrivateIdentifierHits": 0,
+          "macDeepStrictSignature": true,
+          "macIsolatedStartup": true,
+          "windowsPackage": ".build/setup275/AniCanto-combined.exe",
+          "windowsSHA256": "8429b010613a7e374ec94a4bb99dfb7a23a179d331c51faf6aece7c5cff5a7db",
+          "windowsPayloadFiles": 3042,
+          "windowsExecutedOnDevice": false,
+          "webFiles": 161,
+          "receipt": ".build/setup275/candidate-verification.json"
+        },
+        "candidate276": {
+          "version": "0.25.22",
+          "build": 276,
+          "manualRevision": "application-user-guide-81-subtitle-track-preference",
+          "manualSHA256": "ca659481f5cc35f746d9832f9817decf5a54ce5b89c0368192cdb7d2fe97b8ac",
+          "controlGuideRevision": "workflow-controls-guide-29-subtitle-track-preference",
+          "controlGuideSHA256": "0aff72bc2b92563624ddb24b4d58c2b83241a69f9ac50157ef8e5cc64c04622b",
+          "installed": true,
+          "macStartup": true,
+          "signatureVerified": true,
+          "receipt": ".build/setup276/install-receipt.json",
+          "windowsExeSHA256": "95442cec38e1e1dedd66977cad6fc63e8d9b057746e7c6675783c9a2c3c3b00b",
+          "windowsPayloadFiles": 3043,
+          "wholeFilmAcceptance": false
+        },
+        "candidate277": {
+          "version": "0.25.23",
+          "build": 277,
+          "manualRevision": "application-user-guide-85-review-folder-name",
+          "manualSHA256": "b7d8c8fff83b66ecea19f0ff8071a17180bfb76c8001a8d6bcb47a309cc129e8",
+          "controlGuideRevision": "workflow-controls-guide-31-review-folder-name",
+          "controlGuideSHA256": "237767a8fb419b8026e922433613a7e89870ded5d72668690294d0e9040f579f",
+          "installed": true,
+          "macStartup": true,
+          "signatureVerified": true,
+          "receipt": ".build/setup277/install-receipt.json",
+          "windowsExeSHA256": "2da3c3dfa3d0726761c2a9e5205d02d73eef034eb6117b53a7cc4e5182b50337",
+          "windowsPayloadFiles": 3043,
+          "wholeFilmAcceptance": false
+        }
       },
       "ipad": {
         "build": 264,
@@ -1776,19 +1828,24 @@
         "otherDevicesRetainBuild264": true
       },
       "iphone": {
-        "build": 264,
+        "build": 280,
         "sourceIntegrated": true,
         "renderedLocales": 0,
         "chapters": 17,
         "packaged": true,
         "installed": true,
         "launchVerified": true,
-        "manualRevision": "application-user-guide-46-phone-timeline-settings",
-        "manualSHA256": "f871b989c0ce990b25498e385237e337a9542405c8e81f33a5cc9577a1111b8f",
-        "controlGuideRevision": "workflow-controls-guide-23-detailed-repair-help",
-        "controlGuideSHA256": "2d38f68718fe80e59faee95167326b00ca83211ea463175a05228e388f8f2312",
-        "receipt": "mobile/Validation/iphone-player-language-264-2026-10-30.json",
-        "status": "Normal264installed and launched. Thirty metadata files checked. Ten saved-job documents and68model/2375export inventory entries remain unchanged. Physical player interaction remains open.",
+        "manualRevision": "application-user-guide-83-iphone-subtitle-track-preference",
+        "manualSHA256": "000152cec8306222d530588b4ebd4da5900ac4e526e9055580ea87ebd4ae059c",
+        "controlGuideRevision": "workflow-controls-guide-29-subtitle-track-preference",
+        "controlGuideSHA256": "0aff72bc2b92563624ddb24b4d58c2b83241a69f9ac50157ef8e5cc64c04622b",
+        "receipt": "mobile/Validation/iphone-subtitle-track-preference-280-2026-10-31.json",
+        "status": "Normal280 installed and launched on the iPhone 17 Pro. The package embeds manual83 and controls guide29. The container listing holds 7786 entries before and after with no size change, and 574 saved-job and subtitle documents stay present. Whole-film conversion acceptance remains open.",
+        "priorInstalledPackage279": {
+          "build": 279,
+          "receipt": "mobile/Validation/iphone-subtitle-edition-279-2026-10-30.json",
+          "status": "Normal279 installed and launched. The selected external subtitle edition freezes correctly in three native capture cases."
+        },
         "priorPackage239": {
           "build": 239,
           "manualSHA256": "c2b00354c07fe49f7216113d6416347b52341fb42094b57b46bf2c5170e9c873",
@@ -3320,7 +3377,9 @@
       "macos": "Mac0.25.11/build264installed. Focused source/UI/native/animation checks pass. Actual blocked provider read cancels in20.04seconds with queue unchanged; full download acceptance pending.",
       "windows": "Shared source only; installed executable remains262. Native test pending.",
       "ipad": "Explicit handover sent; owner implementation and File Provider tests pending.",
-      "iphone": "Explicit handover sent; owner implementation and File Provider tests pending."
+      "iphone": "Explicit handover sent; owner implementation and File Provider tests pending.",
+      "ipadFollowUp": "Superseded by sourceLoadingKeepWaiting278: owner rule, preparation panel and host harness now present in the build 272 source tree. No package, no device run.",
+      "iphoneFollowUp": "Superseded by sourceLoadingKeepWaiting278: same rule in the build 280 private tree. No package, no device run."
     },
     "ruleAudit": {
       "WF-01": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
@@ -3330,6 +3389,60 @@
       "WF-16": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source.",
       "WF-17": "No generation, translation, timing or repair permission change. New conversion waits for source readiness; preview can also prepare a source."
     }
+  },
+  "sourceLoadingKeepWaiting278": {
+    "rule": "A source movie that must come from a cloud provider or a network share never fails on a timer the user never saw. The app names the real provider, shows bytes as they arrive, keeps its elapsed clock visible, and asks before any wait ends.",
+    "revision": "cloud-source-preparation-264 with the consent step added; the base rule revision is unchanged",
+    "noTotalHydrationDeadline": true,
+    "askAfterQuietSeconds": 45,
+    "keepWaitingGrantSeconds": 600,
+    "localQuietSeconds": 15,
+    "resumeFromOffsetOnKeepWaiting": true,
+    "stopKeeps": ["list", "saved work", "bytes already read", "frozen settings", "spent repair allowances"],
+    "sourceLocations": {
+      "desktopPython": ["Resources/source_preparation.py", "Resources/source_access.py"],
+      "desktopInterface": ["studio/web/source-preparation-copy.js", "studio/web/app.js", "studio/web/styles.css"],
+      "desktopHost": ["studio/src-tauri/src/main.rs"],
+      "ipad": ["mobile/AniCantoApp/VideoImportService.swift", "mobile/AniCantoApp/VideoDocumentPicker.swift"],
+      "iphone": [".build/iphone201/workspace/mobile/AniCantoApp/VideoImportService.swift", ".build/iphone201/workspace/mobile/AniCantoApp/VideoDocumentPicker.swift"]
+    },
+    "tests": ["tests/test_source_wait278.py", "tests/test_source_cloud278.py", "tests/test_source_preparation264.py", "tests/desktop_source_ready278.mjs", "mobile/scripts/check-source-reading-host.sh"],
+    "guideRevision": "application-user-guide-90-cloud-source-wait",
+    "guideSHA256": "d265e0c65917a2318399dca777ea22d345e4387aeefcf15fb58131df4812fe21",
+    "guideConsumers": [
+      {"path": "studio/web/assets/application-user-guide.json", "sha256": "d265e0c65917a2318399dca777ea22d345e4387aeefcf15fb58131df4812fe21"},
+      {"path": "studio/web/assets/application-user-guide.js", "sha256": "d881af496338b194dc7643a76712575d1b78f28585183fe95c646e4a2ce363b4"}
+    ],
+    "implementationState": {
+      "macos": "Implemented and tested in Mac source. cargo check --offline clean. 65 focused Python cases and the desktop Node check pass.",
+      "windows": "Partial uptake. The worker keeps the no-total-timeout rule and reports quiet stalls, but Windows has no worker-to-interface question channel, so the user stops the movie in the queue instead of answering a dialog.",
+      "ipad": "Implemented in the build 272 source tree. Host rule harness passes. xcodebuild build-for-testing ran on 2026-10-31 and finished with zero errors.",
+      "iphone": "Implemented in the build 280 private source tree. Swift source files are byte-identical to iPad. The host rule harness passes after the phone catalogues gained the provider-named source-loading keys. xcodebuild build-for-testing ran on 2026-10-31 and finished with zero errors."
+    },
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 hold the desktop side in dist. iPad build 273 is installed on the M4 iPad, and iPhone build 281 is installed on the iPhone 17 Pro. No real Google Drive or OneDrive load has run yet.",
+    "deviceRun": false,
+    "xcodebuildRunThisTask": true,
+    "register": "See the cross-platform alignment register entry \"Cloud source loading and keep-waiting consent on three platforms, 2026-10-31\" and the two build 278 notes at the end of docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md.",
+    "openLimit": "While Apple's Files screen is fetching a provider file, this app is not on screen and Apple gives no callback. UIDocumentPickerDelegate exposes only didPickDocumentsAtURLs and documentPickerWasCancelled, and UIDocumentPickerViewController has no allowsPreview property. A stall inside Files cannot be observed, measured or answered by this app.",
+    "compileBlockersFixed": [
+      "mobile/AniCantoApp/VideoDocumentPicker.swift set picker.allowsPreview = false, a property that does not exist; removed from both mobile trees.",
+      "studio/src-tauri/src/main.rs re-cloned host, app, log and stderr after the stdout thread took them; the monitor handles are now cloned before that thread starts.",
+      "mobile/AniCantoApp/VideoDocumentPicker.swift called bridge.ask with no argument labels; the call now uses idleSeconds:, copied: and total:.",
+      "mobile/AniCantoApp/VideoLibrary.swift built .copying(bytes:total:) without the origin: label in both trees; every call now passes SourceOrigin.detect.",
+      "mobile/AniCantoApp/VideoImportService.swift kept an unused copied binding after the copier began to throw SourceCopyStall; the binding is now discarded.",
+      "The iPhone catalogues held no entry for the provider-named source-loading lines, so check-source-reading-host.sh stopped on the phone tree; the phone en, zh-Hans and ja catalogues now carry the same keys as iPad."
+    ],
+    "deviceInventory278": "Read-only devicectl check on 2026-10-31 with DEVELOPER_DIR set. Samuel's iPad Pro 13-inch M4 (UDID 00008132-000478D23C69001C) is connected and carries com.sckc.anicanto.ipad.prototype 0.1.0 at build 272. Samuel's iPhone 17 Pro (UDID 00008150-001215911480401C) is available (paired) and carries the same bundle at build 280. Neither device carries this build 278 work. No install, no launch, no run.",
+    "catalogueParity278": {
+      "ipadCheck": "python3 mobile/scripts/check-localization.py passes on the iPad tree: 566 extracted Chinese interface keys, no missing translation in en, zh-HK, zh-Hans or ja, and every format argument count preserved.",
+      "iphoneGapClosed": "The phone build extracts 583 Chinese interface keys. Thirteen had no catalogue entry, so an English, Japanese or Simplified Chinese phone user read Cantonese for the source-language control, the dialogue-segment stepper and the caption toggle. iPad supplied eight values. The phone-only keys 對白段落, 上一段, 下一段, 更多 and 顯示字幕 were authored.",
+      "ipadGapClosed": "顯示字幕 had no entry in any iPad catalogue. 繼續等 and 唔再等 had no entry in the iPad zh-HK catalogue.",
+      "duplicateKeys": "No catalogue holds a duplicate key.",
+      "verified": "plutil -lint is OK for all eight catalogues. A re-check against both build intermediate sets reports zero missing keys."
+    },
+    "platformCopy": "Mobile wait buttons read 繼續等 and 唔再等. Copy exists in en, zh-Hans, zh-HK and ja catalogues. Desktop shows the same question inside the source preparation card."
   },
   "phoneDuoToolbarInspector259": {
     "sourceImplemented": true,
@@ -3976,5 +4089,488 @@
       }
     },
     "wholeFilmListeningAccepted": false
+  },
+  "mobileSelectedSubtitleEdition279": {
+    "rule": "Freeze the exact selected external record and authored language edition for a new conversion.",
+    "phoneSource": "implemented279; three native execution tests pass; normal279 installed and launched; full user conversion pending",
+    "duoSource": "implemented; not built or installed",
+    "ipadSource": "verified in frozen normal271 source; no new device test",
+    "legacyWholeFileSelection": "retained",
+    "savedJobs": "Do not replace frozen captions or reset spent budgets.",
+    "workflowRules": "WF-01/02/03/15/16/17 retain their frozen meaning.",
+    "receipt": "mobile/Validation/iphone-subtitle-edition-279-2026-10-30.json",
+    "consumer": {
+      "APPLICATION-USER-GUIDE.json": {
+        "revision": "application-user-guide-77-mobile-selected-subtitle-edition",
+        "sha256": "cdf9907e9da6664db4bfa7f60b4c4da693b892cead3e4b9ee0fb42b67fbaaa1d"
+      },
+      "WORKFLOW-CONTROLS-GUIDE.json": {
+        "revision": "workflow-controls-guide-27-native-caption-music-proof",
+        "sha256": "410f100acac978be14e8b6e651f19eba7587b7fa2fa4d18d3708af49aa2e22d8"
+      }
+    }
+  },
+  "desktopSourceGate274": {
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "japaneseSecondConfirmation": false,
+    "nonJapaneseConfirmation": "existing-policy",
+    "retainMetadataConflict": true,
+    "frozenRequestsChanged": false,
+    "mobilePolicyChanged": false,
+    "status": "implemented-tested-installed-as-277; windows package not run on device",
+    "verifiedDate": "2026-10-31",
+    "verifiedBy": "Codex Follow Up (Qwen 3.8 Flash Next, local 4090)",
+    "sourceLocation": "Resources/source_language.py line 136: needsConfirmation=bool(language!='ja')",
+    "tests": [
+      "tests/test_source_language.py::test_japanese_never_requires_a_second_confirmation_on_either_desktop",
+      "tests/test_source_language.py::test_detected_japanese_with_conflicting_track_tag_is_automatic"
+    ],
+    "installedMacPackage": "dist/AniCanto.app is 0.25.23/build277. The bundle carries the rule at Contents/Resources/source_language.py.",
+    "installedWindowsPackage": "dist/AniCanto.exe is 0.25.23/build277. Codex did not run the payload on the 4090 device.",
+    "followUpD5State": "Register item D5 needs no new source work. Device acceptance and the whole-film run remain open.",
+    "build277DetectionRecord": "source_language.py now records the detection as well as the answer, and a frozen start request carries config.sourceLanguageDetection. Three cases in tests/test_source_language.py and two cases in tests/test_review_line277.py cover this. Register item D5 is closed for source and tests."
+  },
+  "desktopReviewLineActions275": {
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "actions": [
+      "Edit and save the dubbing words for one line and one language track.",
+      "Choose an installed engine and regenerate one take for that line only.",
+      "Remove one retained recording that is not in use."
+    ],
+    "protections": "Audio in the current export, a saved review choice, a completed version take, and the segment link stay protected. Processing blocks all three actions.",
+    "removalBehaviour": "The WAV moves to discarded-recordings/<id>/audio.wav with removal.json. review-take-blocks.json hides it from takes, history, recording candidates and the snapshot.",
+    "sourceImplemented": true,
+    "sourceFiles": [
+      "Resources/review_take_removal.py",
+      "studio/backend.py",
+      "studio/src-tauri/src/main.rs",
+      "windows/desktop_state.py",
+      "studio/web/review-page.js",
+      "studio/web/app.js"
+    ],
+    "tested": true,
+    "testEvidence": "python3 tests/test_review_take_removal275.py (6 cases), node tests/desktop_review_line275.mjs, python3 tests/test_desktop_operation_contract.py (2 cases), python3 tests/test_windows_workflow_contract.py (7 cases) and python3 tests/test_windows_desktop_state.py (16 cases) pass.",
+    "guideRevision": "workflow-controls-guide-28-desktop-review-line-actions",
+    "guideItemIDs": [
+      "reviewLineWords",
+      "reviewLineEngineRetake",
+      "reviewLineTakeRemoval"
+    ],
+    "manualRevision": "application-user-guide-80-desktop-review-line-actions",
+    "candidateBuild": 275,
+    "installed": true,
+    "userListeningAcceptance": "pending",
+    "ipadCounterpart": "requested 2026-10-31; the iPad Build thread received the full requirement, the protection rule, the desktop defect list and the build275 evidence. Registered in docs/IPAD-FOLLOWUP-REGISTER.md. No iPad implementation, install or acceptance yet.",
+    "automaticBehaviourChanged": false,
+    "repairBudgetChanged": false,
+    "frozenRequestsChanged": false,
+    "status": "source-tested-packaged-and-installed-on-mac-dist-pending-user-acceptance-and-windows-device-run",
+    "hostGuard": "Tauri allowlist now contains review-take-removal, activate-models and reset-production-parameters. The last two were missing, so both front-end actions failed with Unsupported desktop operation. The host takes the model-mutation task lock for activate-models and refuses both while a job runs.",
+    "guideSHA256": "1133066b717fd9c534a6ccf3fa798891b9d8e223b688b9fe0e0a0b97107315d3",
+    "manualSHA256": "f893193a42dc3c2ac130067fd66c88452cc43e4d907342a3496ae90f52405c1e",
+    "windowsCandidate": ".build/setup275/AniCanto-combined.exe",
+    "windowsSHA256": "8429b010613a7e374ec94a4bb99dfb7a23a179d331c51faf6aece7c5cff5a7db",
+    "windowsPayloadFiles": 3042,
+    "windowsExecutedOnDevice": false,
+    "copyStyle": "zh-HK control and manual paragraphs use written Traditional Chinese and quote exact product labels.",
+    "macCandidate": "<workspace>/.build/shared-release/0.25.21/AniCanto.app",
+    "macInstalledPath": "dist/AniCanto.app",
+    "macWindowsBothInstalled": true
+  },
+  "subtitleTrackPreference276": {
+    "revision": "subtitle-track-preference-1",
+    "date": "2026-10-31",
+    "extends": "basic-source-defaults-231",
+    "rule": "With readable text subtitles, keep subtitles > speech. Choose the meaning-carrying subtitle track in this order.",
+    "trackOrder": [
+      "cantonese",
+      "traditional",
+      "simplified",
+      "chinese-unknown-script",
+      "other-language",
+      "unlabeled"
+    ],
+    "scriptFromTitle": "Read the language tag first. When the tag states only a language, read the track title or file-name marker for a script word.",
+    "noChineseTrack": "Use another readable language as translation help and state the reason.",
+    "noTextSubtitle": "speech-ocr from basic-source-defaults-231. OCR stays auxiliary proofreading.",
+    "sidecars": "Same order by file-name marker. Chinese-marked beats plain same-name beats foreign-marked.",
+    "explicitChoice": "An explicit user track or edition choice outranks the automatic order. Never reorder a frozen job.",
+    "freeze": [
+      "chosen track family",
+      "trackPreferenceRevision"
+    ],
+    "guideRevision": "workflow-controls-guide-29-subtitle-track-preference",
+    "guideItem": "sourceWorkflowDefaults",
+    "manualSection": "subtitle-track-preference-276",
+    "desktop": "Implemented, unit tested, packaged and installed as 0.25.22/build276 on both desktops. Frozen jobs and saved source choices stay unchanged. See register entry Automatic subtitle track preference276.",
+    "iPad": "Implemented in iPad build 272 source (mobile/AniCantoApp/SubtitleTrackPreference.swift, wired into StandardSubtitleEvidence.captureSelected in three automatic branches). Device build 272 compiled and contains the rule strings. Build 272 is installed on Samuel's iPad Pro M4; the device inventory confirms 0.1.0 / 272. The native test run stays open: the test request stopped at the iPad lock screen. Whole-film acceptance open. Receipt: mobile/Validation/ipad-subtitle-track-preference-272-2026-10-31.json.",
+    "iPhone": "Implemented in iPhone build 280 source (.build/iphone201/workspace/mobile/AniCantoApp/SubtitleTrackPreference.swift, byte-identical to the iPad module, called from StandardSubtitleEvidence.captureSelected in three automatic branches; StandardProject.swift adds sourceTrackFamily and sourceTrackPreferenceRevision). Tested on the physical iPhone 17 Pro: Tests/SubtitlePreference280Tests.swift (12 cases) plus SubtitleEdition279Tests regression = 15 tests, 0 failures (.build/iphone280/test.log). Packaged as normal package .build/iphone280/delivery/AniCanto.app with guide83 and controls guide29, no test plug-in, signatures verified. Installed and launched on UDID 00008150-001215911480401C; the app inventory reports 0.1.0 / 280 and the container listing shows 7786 entries equal before and after with no size change. Whole-film acceptance open. Receipt: mobile/Validation/iphone-subtitle-track-preference-280-2026-10-31.json.",
+    "unchanged": "WF-01, WF-02, WF-03, WF-15, WF-16, WF-17, frozen requests, spent budgets and recordings.",
+    "evidence": [
+      ".build/setup276/verification.json",
+      ".build/setup276/candidate-verification.json",
+      ".build/setup276/install-receipt.json",
+      ".build/setup276/python-regression.log"
+    ],
+    "notAccepted": "No whole-film run on either desktop. The three test movies are absent from the Mac library. Windows has not run on the 4090 device."
+  },
+  "whisperWindowContinuationMobile272": {
+    "date": "2026-10-31",
+    "checkedBy": "Codex Follow Up (Qwen 3.8 Flash Next, local 4090)",
+    "reason": "The two mobile apps carry different generations of the same failed-window continuation family. This entry records the observed state only.",
+    "targetScope": "Undecided. Samuel must decide whether iPad and iPhone run one stamp, and whether desktop adopts a continuation rule at all.",
+    "iPad": {
+      "stamp": "unconfirmed-source-window-251",
+      "source": "mobile/AniCantoApp/StandardSourceTiming.swift lines 834 and 866",
+      "policy": "quarterFirstRecoveryPolicy, two rounds, budget file whisper-source-attempts.json",
+      "installedBuild": 272,
+      "state": "Implemented and installed in build 272. The 12 native cases passed on iPad build 251. Build 272 has no new run of those cases."
+    },
+    "iPhone": {
+      "stamp": "unwitnessed-source-window-after-two-attempts-242",
+      "source": ".build/iphone201/workspace/mobile/AniCantoApp/StandardSourceTiming.swift line 635",
+      "absentFromPhoneSource": [
+        "quarterFirstRecoveryPolicy",
+        "unconfirmedReason",
+        "unconfirmed-source-window-251"
+      ],
+      "installedBuild": 280,
+      "state": "The older generation is implemented and installed. The 251 generation is absent from the phone source."
+    },
+    "desktop": {
+      "stamp": null,
+      "state": "No matching strategy string exists in Resources, Sources or windows. Desktop has no equivalent continuation."
+    },
+    "userGuideScope": "docs/APPLICATION-USER-GUIDE.json section phone-unwitnessed-window carries platforms [iphone] only.",
+    "notClaimed": "No device run, no conversion and no code change took place during this check."
+  },
+  "desktopReviewReport277": {
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "registerItems": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5"
+    ],
+    "reportShape": "One summary card, one filter row (reportMissing, reportAdvisory, reportAvailable, All dialogue), one search box, twenty-five lines per page with a pager, and one card per dialogue line. The classification panel, the separate report tables and the history block no longer render.",
+    "searchRule": "The box matches an exact line number, or a case-insensitive word inside the saved dialogue text for any track field. An empty box shows the whole selected category. The page resets when the text changes.",
+    "takeOrder": "The first generated recording lists first. Later takes follow in creation order. Take rows carry created, or the audio file time when no time is saved.",
+    "firstTakeRemoval": "job_snapshot keeps one row per audio path, engine, language and line. review_take_removal.protection() is the single owner of the in-use list. snapshot publishes it as protectedTakes with one reason per path. The web list disables Remove only for those paths, and the server repeats the guard.",
+    "protectionsUnchanged": "Current export audio, a saved review choice, a completed version take and the segment recording link stay protected. Processing blocks the action.",
+    "duplicateStorageKeyword": "The retry-review and render paths merge settings first and set storage last in studio/backend.py, windows/native_worker.py and Resources/project_edit.py.",
+    "sourceDetectionRecord": "source_language.py _preflight returns detection{language,detectedLanguage,method,stream,explicitOverride,confirmationSkipped}, a top-level detectedLanguage, and detectionSource. A frozen start request carries config.sourceLanguageDetection.",
+    "guideRevision": "workflow-controls-guide-31-review-folder-name",
+    "guideSHA256": "237767a8fb419b8026e922433613a7e89870ded5d72668690294d0e9040f579f",
+    "guideItemIDs": [
+      "reportSearch"
+    ],
+    "manualRevision": "application-user-guide-85-review-folder-name",
+    "manualSHA256": "b7d8c8fff83b66ecea19f0ff8071a17180bfb76c8001a8d6bcb47a309cc129e8",
+    "manualSection": "desktop-review-report-list-277",
+    "sourceImplemented": true,
+    "sourceFiles": [
+      "studio/web/review-page.js",
+      "studio/web/app.js",
+      "studio/web/review-locale.js",
+      "studio/web/styles.css",
+      "studio/backend.py",
+      "windows/desktop_state.py",
+      "windows/native_worker.py",
+      "Resources/project_edit.py",
+      "Resources/review_take_removal.py",
+      "Resources/source_language.py"
+    ],
+    "tested": true,
+    "testEvidence": "node tests/desktop_review_line277.mjs, tests/desktop_review_line275.mjs, tests/shared_report259.mjs, tests/shared_report90.mjs, tests/shared_manual256.mjs, tests/shared_recovery_guide.mjs and tests/shared_interface_locales.mjs pass. python3 -m unittest tests.test_review_line277 (10 cases), tests.test_source_language (13 cases), tests.test_windows_desktop_state (17 cases), tests.test_review_take_removal275 (6 cases), tests.test_desktop_operation_contract and tests.test_windows_workflow_contract pass. Full regression: 2062 tests with the same 14 failures and 46 errors as build 276.",
+    "candidateBuild": 277,
+    "version": "0.25.23",
+    "macCandidate": ".build/shared-release/0.25.23/AniCanto.app",
+    "macPrivacyScannedFiles": 3064,
+    "macPrivateIdentifierHits": 0,
+    "macDeepStrictSignature": true,
+    "macIsolatedStartup": true,
+    "macPayloadCheck": "The shipped front-end payload carries the search box and the four filter values. Manifest hashes match review-page.js, app.js, review-locale.js and styles.css.",
+    "windowsCandidate": ".build/setup277/AniCanto-combined.exe",
+    "windowsSHA256": "2da3c3dfa3d0726761c2a9e5205d02d73eef034eb6117b53a7cc4e5182b50337",
+    "windowsBytes": 322040832,
+    "windowsPayloadFiles": 3043,
+    "windowsExecutedOnDevice": false,
+    "installed": true,
+    "macInstalledPath": "dist/AniCanto.app",
+    "windowsInstalledPath": "dist/AniCanto.exe",
+    "replacedCopies": [
+      ".build/setup277/replaced-mac-0.25.22-276.app",
+      ".build/setup277/replaced-windows-0.25.22-276.exe"
+    ],
+    "receipts": [
+      ".build/setup277/verification.json",
+      ".build/setup277/candidate-verification.json",
+      ".build/setup277/install-receipt.json",
+      ".build/setup277/python-regression.log"
+    ],
+    "userListeningAcceptance": "pending",
+    "wholeFilmAcceptance": false,
+    "ipadCounterpart": "open. Split the workflow controls, keep one standard pipeline (the former fast pipeline), keep AI repair off by default, keep the first audible take policy and fill only missing audio. Registered in docs/IPAD-FOLLOWUP-REGISTER.md. No iPad implementation, install or acceptance is claimed.",
+    "automaticBehaviourChanged": false,
+    "repairBudgetChanged": false,
+    "frozenRequestsChanged": false,
+    "status": "source-tested-packaged-and-installed-on-both-desktops; windows device run and user listening acceptance open",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md section Desktop review report list277"
+  }
+  ,"desktopSourceLanguageApproval278": {
+    "platforms": ["macos", "windows"],
+    "setting": "autoApproveSourceLanguage",
+    "default": true,
+    "controlLocation": "under the Global production scope switch, in the Production settings panel and in the Additional AI repair panel",
+    "onBehaviour": "the app starts with the language it detected and shows no language dialog, both from the inspector and from the native queue",
+    "stillAsks": ["no language was detected", "the selected voice engine cannot read the detected language"],
+    "japaneseConfirmation": "never asks, with the switch on or off",
+    "metadataConflict": "the heard language is used when the switch is on, and the conflict stays in the detection record",
+    "settingAllowlist": "windows/desktop_state.py defaults() holds the key, so studio/backend.py SETTING_KEYS accepts it",
+    "copy": {
+      "controlGuideItem": "autoApproveSourceLanguage",
+      "userGuideSection": "auto-approve-source-language"
+    },
+    "sourceLocation": "Resources/source_language.py _preflight: auto_approve defaults to true; confirm = language != ja and not (language and engine supports it and auto approve)",
+    "tests": [
+      "tests/test_source_language.py::test_auto_approval_starts_with_the_detected_language_and_never_asks",
+      "tests/test_source_language.py::test_turning_auto_approval_off_restores_the_confirmation",
+      "tests/test_source_language.py::test_auto_approval_still_asks_when_no_language_was_heard",
+      "tests/test_source_language.py::test_auto_approval_still_asks_when_the_voice_engine_cannot_read_the_language",
+      "tests/test_source_language.py::test_japanese_never_asks_even_when_auto_approval_is_off",
+      "tests/test_source_language.py::test_a_metadata_conflict_autopicks_the_heard_language_when_the_switch_is_on",
+      "tests/verify_desktop_operations.py packaged native RPC check"
+    ],
+    "implementationState": "implemented and tested in Mac source only",
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. No desktop conversion ran on them yet.",
+    "deviceRun": false,
+    "windowsQtPages": "not updated; the switch is absent from the legacy Windows Qt settings pages",
+    "mobilePolicyChanged": false,
+    "frozenRequestsChanged": false,
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md section Desktop source-language gate274, build 278 note"
+  }
+  ,"desktopPreviewNoticeBadge278": {
+    "platforms": ["macos", "windows"],
+    "change": "warnings and errors for the selected video render in one wide band under the player; the video card keeps a short chip and puts the full message in its tooltip",
+    "presentationOnly": true,
+    "queuePauseRuleUnchanged": true,
+    "savedWorkUnchanged": true,
+    "copy": {
+      "userGuideSection": "preview-notice-badge"
+    },
+    "sourceLocation": "studio/web/app.js functions previewNotices, previewNoticeBadge and queueNoticeChip; studio/web/styles.css",
+    "tests": ["tests/desktop_notice_badge278.mjs"],
+    "implementationState": "implemented and tested in Mac source only",
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. No desktop conversion ran on them yet.",
+    "deviceRun": false,
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 278 preview notice note"
+  }
+  ,"desktopRetakeVoice278": {
+    "platforms": ["macos", "windows"],
+    "report": "A user reported that a retake after an edited line changed the character voice, from a female-sounding first take to a male-sounding retake.",
+    "measuredCause": "The desktop review retake drew a new random recording seed. The engine sampling seed changes the voice character. The separated voice reference was identical.",
+    "measuredEvidence": {
+      "job": "cde605ec4eac2a04",
+      "line": 1,
+      "reference": "line-references/754159a965aa103b350d/reference.wav",
+      "referenceSHA256": "a009bdde611ffa365b8a2fd87bae852207cb927e8d86861ec6251f8beccd1608",
+      "firstTake": "recorded seed 42; requested text held fansub credit text; measured delivery 18.48 s for a 2.94 s slot; measured pitch 100.2 Hz",
+      "retake": "recorded seed 2145860346; 15 characters of dialogue; measured delivery 2.83 s; measured pitch 250.6 Hz",
+      "voiceReference": "identical referenceSHA256 in both engine records; measured pitch of the retake is nearer the 267.3 Hz character reference than the first take is",
+      "method": "reference.wav, rendered-takes/1.wav and the retake file were measured with Resources/natural_voices.py pitch_samples on the bundled separator runtime"
+    },
+    "fixOne": "studio/web/app.js action review-retake-now keeps the line recording seed. A manual retake still gets a fresh audioRerunToken, so the take is generated again and is never a cached reuse.",
+    "fixTwo": "windows/desktop_state.py reads each engine generation record through generationTrace and stores recordedReference, recordedReferenceSHA256 and recordedSeed in recordingProvenance. Resources/review_workbench.py voice_references() compares each recording with the first recorded digest for that line and publishes snapshot.voiceReferences. studio/web/review-page.js warns once per recording when a take used another separated voice.",
+    "regenerationUnchanged": "voice_references() never adds a stale_recordings() reason, so automatic review retry keeps its existing targets and a bulk conversion keeps its saved recordings.",
+    "reviewFingerprintUnchanged": "reference_signature() keeps its field set, so saved human review states do not reset.",
+    "copy": {
+      "userGuideSections": ["retakes-2", "retakes-3"],
+      "interfaceString": "Used a different separated voice than the first recording of this line."
+    },
+    "sourceLocation": "studio/web/app.js action review-retake-now; windows/desktop_state.py job_snapshot take loop; Resources/review_workbench.py voice_references; studio/web/review-page.js candidates and recordingList",
+    "tests": ["tests/desktop_voice_reference278.mjs", "tests/test_voice_reference278.py"],
+    "realJobCheck": "job_snapshot on job cde605ec4eac2a04 gave 437 recordings, 437 with a recorded reference, states first 435 and same 2, and stale_recordings still empty.",
+    "implementationState": "implemented and tested in Mac source only",
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. No desktop conversion ran on them yet.",
+    "deviceRun": false,
+    "windowsQtPages": "not updated; the review report is the Tauri web page in both desktop builds",
+    "mobilePolicyChanged": false,
+    "frozenRequestsChanged": false,
+    "openObservation": "Line 1 of that job kept fansub credit text as dialogue in the first take, so caption-only classification remains a separate open item.",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 278 retake voice continuity note"
+  },
+  "mobileRetakeVoice278": {
+    "platforms": [
+      "ipad",
+      "iphone"
+    ],
+    "report": "Samuel asked whether the retake fault that hit both desktops is also present in the iPad and iPhone review report flow.",
+    "finding": "Both mobile sources drew a new random recording seed in the review retake path. The separated voice reference was already correct: manualReviewReference resolves the line voice reference, and the take record keeps a SHA256 guard.",
+    "sourceRule": "StandardRecordingSeed holds one seed per line. The first automatic take uses seed 42, which is 41 plus the one-based attempt, and matches the desktop default. A manual retake reuses the stored line seed, so an edited script changes only the words. Re-recording words that already exist advances the seed once per matching take, so a deliberate re-roll can still differ.",
+    "ipad": "mobile/AniCantoApp: StandardProject.swift adds optional StandardCue.recordingSeed. StandardVoiceTakes.swift adds StandardVoiceTake.seed, the StandardRecordingSeed rule and a seed argument on capture(). StandardPipeline.swift uses the rule in retakeForReview and stores the seed from the generation loop.",
+    "iphone": ".build/iphone201/workspace/mobile/AniCantoApp holds the same three edits. The private phone source is a separate tree.",
+    "eventRecord": "Each saved retake event now names the seed that was used.",
+    "compiled": "xcodebuild build-for-testing with the iphoneos device SDK and no signing gave TEST BUILD SUCCEEDED in both projects. Logs are /tmp/anicanto-278-ipad-testbuild.log and /tmp/anicanto-278-iphone-testbuild.log.",
+    "tests": [
+      "mobile/Tests/RetakeVoice278Tests.swift",
+      ".build/iphone201/workspace/mobile/Tests/RetakeVoice278Tests.swift"
+    ],
+    "nativeTestCases": 4,
+    "nativeTestsRun": false,
+    "nativeTestNote": "The cases compile inside the AniCantoMediaTests target of both projects. They were not executed. CLiteRTLM.xcframework has no iOS Simulator slice, so mobile/scripts/build-simulator.sh cannot build a simulator target on this Mac.",
+    "copy": {
+      "userGuideSections": [
+        "mobile-review-actions"
+      ],
+      "guideRevision": "application-user-guide-89-mobile-retake-voice-continuity"
+    },
+    "copyNotAdded": "No new on-screen Swift string was added. Mobile interface strings need an extraction and localisation pass that this task cannot run.",
+    "deliberateRandomSeedsLeft": "SavedOutputLibrary.swift comparison takes and SpeechStudio.swift auditions still draw a random seed on purpose. Those features ask for variety and are not a review retake.",
+    "implementationState": "implemented in iPad source and private iPhone source, and compiled in both",
+    "packaged": true,
+    "installed": true,
+    "package279": "iPad build 273 and iPhone build 281 carry this change. Both apps are installed on Samuel's devices on 2026-10-31. No conversion ran on either device yet.",
+    "deviceRun": false,
+    "ipadSourceBuild": 272,
+    "iphoneSourceBuild": 280,
+    "installNote": "CURRENT_PROJECT_VERSION was not raised. Registering the test file created no new package.",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 278 mobile retake note and the alignment register entry"
+  },
+  "desktopReviewStatusTabs278": {
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "change": "The review report filters by the user's own listening state. Tabs reviewChecked and reviewPending sit beside the AI category filters and combine with the report search box.",
+    "stateOwner": "Resources/review_workbench.py reads review-triage.json and publishes snapshot.reviewTriage with one state per line (pending, checked, deferred), a triageID and a triageFingerprint.",
+    "render": "studio/web/review-page.js renders both tabs, the summary counts and one mark control per line. A snapshot without the projection still renders the report.",
+    "copy": {
+      "controlItems": [
+        "reviewChecked",
+        "reviewPending"
+      ],
+      "userGuideSection": "review-status-tabs",
+      "userGuideScope": "desktop"
+    },
+    "tests": [
+      "tests/desktop_review_status278.mjs",
+      "tests/test_review_status278.py"
+    ],
+    "recordingsUnchanged": true,
+    "reviewChoiceUnchanged": true,
+    "regenerationTargetUnchanged": true,
+    "implementationState": "implemented and tested in Mac source only",
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. No desktop conversion ran on them yet.",
+    "deviceRun": false,
+    "mobileParity": "The iPad and iPhone review report has no equivalent tab. Adding one needs new localised Swift strings, which this task cannot produce.",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 278 review status tabs note"
+  },
+  "desktopTakeLabels278": {
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "change": "One line names one first take. The earliest first-kind recording keeps the first label; later duplicates read as generated takes. The first take lists first and later takes follow creation order.",
+    "sourceLocation": "studio/web/review-page.js keeps kind first on the earliest first-kind recording only, relabels later duplicates, and ranks the first take above the rest.",
+    "presentationOnly": true,
+    "takeFilesUnchanged": true,
+    "reviewStateUnchanged": true,
+    "exportTargetUnchanged": true,
+    "tests": [
+      "tests/desktop_take_labels278.mjs"
+    ],
+    "implementationState": "implemented and tested in Mac source only",
+    "packaged": true,
+    "installed": true,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. No desktop conversion ran on them yet.",
+    "deviceRun": false,
+    "mobileParity": "No mobile defect found. The mobile review card lists takes as 配音 1, 配音 2 and never repeated a first-take label.",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 278 take labels note"
+  }
+,
+  "inspectorScopeScroll279": {
+    "rule": "The two production scope switches scroll with the settings body. They are not pinned above it, and their switch column matches every other switch in the same body.",
+    "platforms": [
+      "macos",
+      "windows"
+    ],
+    "owners": [
+      "studio/web/app.js",
+      "studio/web/styles.css"
+    ],
+    "implementationState": "Implemented in Mac and Windows source. The scope block now comes from inspectorHTML, so every partial refresh keeps it inside #inspector-content, and the block carries no side padding and no position rule.",
+    "tests": [
+      "tests/desktop_scope_scroll279.mjs"
+    ],
+    "packaged": true,
+    "installed": true,
+    "deviceRun": false,
+    "package279": "Mac 0.25.25 build 279 and Windows 0.25.25 build 279 carry this change. Both files sit in dist on 2026-10-31. The layout was not inspected by eye in a running app.",
+    "mobileParity": "No mobile panel holds these two switches. Neither mobile tree carries a production scope control, so there is nothing to scroll or align on iPad or iPhone.",
+    "register": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md build 279 inspector scope note"
+  },
+  "packageInstall279": {
+    "version": "0.25.25",
+    "build": "279",
+    "macos": {
+      "file": "dist/AniCanto.app",
+      "cfBundleShortVersionString": "0.25.25",
+      "cfBundleVersion": "279",
+      "codesign": "codesign --verify --deep --strict passed",
+      "staged": ".build/shared-release/0.25.25/AniCanto.app",
+      "rollback": ".build/setup279/replaced-mac-0.25.24-278.app"
+    },
+    "windows": {
+      "file": "dist/AniCanto.exe",
+      "bytes": 322078720,
+      "sha256": "f021a237b7c275858e4b64172b4a9d4ec9b7cac7446fdc3fef8679a3176967de",
+      "embeddedFiles": 3043,
+      "embeddedHostSha256": "0b78fb61f283fe3486fb70d50faa7eb238d9de4cd95b92f651d19ccc904382a6",
+      "staged": ".build/setup279/AniCanto-combined.exe",
+      "rollback": ".build/setup279/replaced-windows-0.25.24-278.exe",
+      "windowsExecutionTested": false,
+      "gpuInferenceTested": false
+    },
+    "ipad": {
+      "bundle": "com.sckc.anicanto.ipad.prototype",
+      "build": 273,
+      "device": "Samuel‘s iPad Pro M4 00008132-000478D23C69001C",
+      "state": "installed with devicectl; device inventory reads 273; app not launched by Codex"
+    },
+    "iphone": {
+      "bundle": "com.sckc.anicanto.ipad.prototype",
+      "build": 281,
+      "device": "Samuel’s iPhone 17 Pro 00008150-001215911480401C",
+      "state": "installed with devicectl; device inventory reads 281; app not launched by Codex"
+    },
+    "desktopOperationProbe": {
+      "file": "tests/verify_desktop_operations.py",
+      "against": "dist/AniCanto.app/Contents/MacOS/AniCanto",
+      "result": "pass",
+      "autoApproveSkipsConfirmationForKnownLanguage": true,
+      "unconfirmedAudioStillAsksEvenWhenAutoApproved": true,
+      "sourceLanguageNativeBoundary": true,
+      "userLibraryChanged": false
+    },
+    "englishResourceGap": "Resources/en.lproj/Localizable.strings was missing one English entry for the short-reference line in Sources/RoleManager.swift. An English reader saw the raw Cantonese key. The entry is added, and tests/test_ui_localization.py now passes.",
+    "acceptance": "No package has passed a real whole-film conversion on this build. Windows real-machine start, and a real Google Drive or OneDrive load, are still open."
   }
 }

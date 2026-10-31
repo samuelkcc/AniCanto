@@ -78,8 +78,10 @@ class Workflow70Tests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    video=Path(d)/'video';video.write_bytes(b'fixture');meta=dict(format=dict(duration='100'),streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn'))])
    heard=dict(language='ko',stream=1,method='three-audio-samples',samples=[])
-   with patch.object(source_language.subprocess,'check_output',side_effect=[json.dumps(meta).encode(),json.dumps(heard).encode()]):
-    result=source_language.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),dict(selectedEngines=['drama3']))
+   # The probe reader runs inside the preparation reader, so the mock must be the
+   # preparation capture; a subprocess mock no longer sees the real call.
+   with patch('source_preparation.Preparation.capture',side_effect=[json.dumps(meta).encode(),json.dumps(heard).encode()]):
+    result=source_language.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),dict(selectedEngines=['drama3'],autoApproveSourceLanguage=False))
    self.assertTrue(result['metadataConflict']);self.assertTrue(result['needsConfirmation']);self.assertEqual(result['language'],'ko')
    manual=source_language.preflight(d,str(video),{},dict(selectedEngines=['drama3'],sourceLanguageOverride='ja'))
    self.assertEqual(manual['language'],'ja');self.assertNotEqual(manual['token'],result['token'])

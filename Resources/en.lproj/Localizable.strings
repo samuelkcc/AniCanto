@@ -2250,3 +2250,5 @@
 "逐句模仿原聲；局部處理 OP／ED、人名、普通話及缺聲，不用通用角色卡。" = "Use each original utterance as its voice reference; repair OP / ED, names, Mandarin and missing speech locally, without generic character voices.";
 
 "香港廣東話 · 普通話 · English · Just for fun" = "Hong Kong Cantonese · Mandarin · English · Just for fun";
+
+"短於 3 秒：以同場環境音補足引擎所需錄音長度，並先核對音量；唔借相鄰對白。有效語音太短時需重新試聽或換參考。" = "Under 3 seconds: adds silence only to reach the recording length the engine needs, and never borrows adjacent dialogue; check the volume first. If the audible speech is too short, audition again or change the voice reference.";

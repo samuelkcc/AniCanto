@@ -85,7 +85,18 @@ def probe(request):
         votes.append(dict(language=lang,confidence=float(confidence),start=start))
     confident=[v['language'] for v in votes if v['confidence']>=.85]
     winner=max(set(confident),key=confident.count) if confident else None
-    return dict(language=winner if winner and confident.count(winner)>=2 else None,method='three-audio-samples',samples=votes,stream=request['stream'])
+    language=winner if winner and confident.count(winner)>=2 else None
+    method='three-audio-samples'
+    # Shared rule "Automatic queue source selection248": a probe can carry a valid
+    # consensus without a second dialog. When the samples agree with each other and
+    # with the audio stream label, two agreeing samples are a consensus even if one
+    # sits under the confidence bar. The rule is recorded, never hidden.
+    heard=[v['language'] for v in votes]
+    label=str(request.get('metadataLanguage') or '').casefold()
+    label=ALIASES.get(label,label)
+    if language is None and len(heard)>=2 and len(set(heard))==1 and heard[0] in NAMES and heard[0]==label:
+        language=heard[0];method='three-audio-samples+stream-metadata'
+    return dict(language=language,method=method,samples=votes,stream=request['stream'])
 
 
 def _preflight(root,video,tools,settings,preparation=None):
@@ -115,7 +126,7 @@ def _preflight(root,video,tools,settings,preparation=None):
         # A file label is evidence, never a substitute for available listening.
         if duration>0 and result.get('stream') is not None:
             from runtime_paths import python_for
-            request=folder/'request.json';request.write_text(json.dumps(dict(storage=str(root),video=str(media_source),stream=result['stream'],duration=duration,startOffset=start,ffmpeg=tools['ffmpeg'],speechModel=settings.get('speechModel'))))
+            request=folder/'request.json';request.write_text(json.dumps(dict(storage=str(root),video=str(media_source),stream=result['stream'],duration=duration,startOffset=start,ffmpeg=tools['ffmpeg'],speechModel=settings.get('speechModel'),metadataLanguage=info.get('language'))))
             python=python_for(root,'speech-runtime' if sys.platform=='win32' else 'runtime')
             try:
                 command=[str(python),str(Path(__file__).resolve()),str(request)]
@@ -132,26 +143,49 @@ def _preflight(root,video,tools,settings,preparation=None):
     engines=settings.get('selectedEngines') or [settings.get('ttsBackend','drama3')]
     language=result.get('language');available=supported(language,engines)
     token=hashlib.sha256(json.dumps([key,language,engines,override],sort_keys=True).encode()).hexdigest()
+    # One switch decides whether the app asks again. With the switch on, the app
+    # uses the language it detected. It still asks when nothing was detected, or
+    # when the selected voice engine cannot read that language.
+    auto_approve=settings.get('autoApproveSourceLanguage',True) is not False
+    confirm=bool(language!='ja') and not bool(language and available and auto_approve)
+    # Detected Japanese continues without a second confirmation. Record what was
+    # detected and how it was detected, so the request carries the decision
+    # source. Other languages and an uncertain detection still ask the user.
+    detected=result.get('detectedLanguage') or (None if override else language)
+    heard=[s for s in result.get('samples') or [] if isinstance(s,dict) and s.get('language')==detected]
+    detection=dict(language=language,detectedLanguage=detected,method=result.get('method') or '',
+                   stream=result.get('stream'),explicitOverride=bool(override),
+                   confidence=max([s.get('confidence',0) for s in heard] or [0]),
+                   confirmationSkipped=not confirm,autoApproveSetting=bool(auto_approve))
     return dict(result,name=NAMES.get(language,language or 'Unconfirmed'),supported=available,cacheKey=key,
-                needsConfirmation=bool(language!='ja' or result.get('metadataConflict') or override),token=token,
+                needsConfirmation=confirm,token=token,detection=detection,
+                detectedLanguage=detected,detectionSource=detection['method'],
                 reason=result.get('reason') or ('' if available else 'Select a supported source language.'))
 
 
 def preflight(root,video,tools,settings,operation_id=None,row_id=None):
-    from source_preparation import Preparation,SourcePreparationCancelled,CLOUD_ERROR,READ_ERROR
+    from source_preparation import Preparation,SourcePreparationCancelled,CLOUD_ERROR,READ_ERROR,STALLED_ERROR,ProviderNotReady,ProviderReadInterrupted,MediaUnreadable
     preparation=Preparation(root,video,operation_id,row_id)
+    def report(error,message):
+        # One message per fault: provider not ready, provider stalled, or unreadable media.
+        preparation.fail(RuntimeError(message))
+        from atomic_files import write_json
+        import source_preparation
+        try:reason=source_preparation.hydration_reason(video)
+        except OSError:reason='source-unreadable'
+        write_json(preparation.folder/'diagnostic.json',dict(kind=type(error).__name__,detail=str(error)[:1200],readerError=(getattr(error,'stderr',b'') or b'').decode('utf-8',errors='replace')[-4000:] if isinstance(getattr(error,'stderr',None),bytes) else str(getattr(error,'stderr',''))[-4000:],source=str(video),phase=preparation.state['phase'],provider=source_preparation.provider(video),hydrationReason=reason))
+        raise RuntimeError(message) from error
     try:
         preparation.ensure_local();preparation.update(phase='probing')
         result=_preflight(root,video,tools,settings,preparation)
         preparation.finish();return result
     except SourcePreparationCancelled as error:
         preparation.fail(error);raise
+    except ProviderNotReady as error:report(error,CLOUD_ERROR)
+    except ProviderReadInterrupted as error:report(error,STALLED_ERROR)
+    except MediaUnreadable as error:report(error,READ_ERROR)
     except (OSError,ValueError,subprocess.SubprocessError) as error:
-        message=CLOUD_ERROR if preparation.state['phase']=='reading' and __import__('source_preparation').cloud(video) else READ_ERROR
-        preparation.fail(RuntimeError(message))
-        from atomic_files import write_json
-        write_json(preparation.folder/'diagnostic.json',dict(kind=type(error).__name__,detail=str(error)[:1200],source=str(video),phase=preparation.state['phase']))
-        raise RuntimeError(message) from error
+        report(error,CLOUD_ERROR if preparation.state['phase']=='reading' and __import__('source_preparation').cloud(video) else READ_ERROR)
     except RuntimeError as error:
         preparation.fail(error);raise
 

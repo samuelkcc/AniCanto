@@ -235,6 +235,49 @@ This decision supersedes the earlier no-subtitle OCR > speech default. Four manu
 Use guide12 item `sourceWorkflowDefaults`. Mobile source is prepared; runtime boundary tests and package delivery are pending.
 Desktop and phone owners must record separate implementation, execution, installation, and whole-film acceptance.
 
+### Automatic subtitle track preference, confirmed 2026-10-31: `subtitle-track-preference-1`
+
+Samuel set this rule on 2026-10-31. It extends `basic-source-defaults-231`. It changes no flow pair.
+When readable text subtitles exist, subtitles > speech stays the flow. Speech still supplies the speech clock.
+Select the subtitle that carries the meaning in this order: written Cantonese, Traditional Chinese,
+Simplified Chinese, Chinese with an unknown script, another readable language, then an unlabelled track.
+When no Chinese track exists, use the next readable language as translation help and state the reason.
+Read the stream language tag first. When the tag states only a language, read the track title or the
+file-name marker for a script word such as Traditional or Simplified.
+An explicit user track or edition choice outranks this order. Never reorder a frozen job.
+For sidecar files in the video folder, apply the same order to file-name markers. A Chinese-marked sidecar
+ranks above a plain same-name file. A plain same-name file ranks above a file marked with a foreign language.
+With no readable text subtitle, keep speech > OCR from `basic-source-defaults-231`. OCR remains auxiliary proofreading.
+Freeze the chosen track family and the rule revision with the request. Do not re-select a track on resume.
+Older dated sections that state OCR > speech for a no-subtitle source are superseded by `basic-source-defaults-231`.
+WF-01, WF-02, WF-03, WF-15, WF-16 and WF-17 keep their length, budget, first-audible and clock rules.
+This rule changes source selection only. It grants no new AI repair permission.
+
+Alignment register: Desktop implements and tests the rule. Twelve focused cases pass in
+`tests/test_subtitle_preference276.py`. iPad implements the same order in code (`mobile/AniCantoApp/SubtitleTrackPreference.swift`,
+wired into `StandardSubtitleEvidence.captureSelected` in three branches: Matroska tracks, AVFoundation tracks, and the imported
+subtitle files for the video). `mobile/Tests/SubtitlePreference272Tests.swift` holds 10 focused cases. The device build compiled,
+but the native test run stays open because the test request stopped at the iPad lock screen. Build 272 is installed on Samuel's
+iPad Pro M4, and the device app inventory confirms 0.1.0 / 272. iPhone implements the same order in build 280 source
+(`.build/iphone201/workspace/mobile/AniCantoApp/SubtitleTrackPreference.swift`, copied byte-identical from the iPad module,
+wired into `StandardSubtitleEvidence.captureSelected` in three automatic branches). Twelve focused cases and three regression
+cases ran on Samuel's iPhone 17 Pro with 0 failures. Build 280 is installed and launched on that phone. Whole-film acceptance
+stays open on all three platforms. Record packaging and installation separately below.
+
+iPad mapping notes (2026-10-31, build 272 source). The iPad has no scan of loose files beside the video. The sidecar order applies
+to the subtitle files the user imported for that video. The rule reads the marker in the stored original file name. An explicit
+subtitle choice outranks the order, as before. A job freezes the chosen family in `sourceTrackFamily` and the rule in
+`sourceTrackPreferenceRevision`. Old jobs keep a nil value and keep their saved track. The app records no re-selection on resume.
+Two shared-table gaps are open for review. The tag table has no `cmn` entry, so a plain Mandarin tag reads as another language on
+both platforms. For an external subtitle file the contract records the family as `external-file` and no rule revision, on both platforms.
+
+iPhone mapping notes (2026-10-31, build 280 source). The iPhone has no scan of loose files beside the video, the same as the iPad.
+The sidecar order applies to the subtitle files the user imported for that video, and the rule reads the marker in the stored original
+file name. The one-file rule in the earlier iPhone code is gone; an imported file now goes through the same track order. The Matroska
+branch no longer filters on a `zh` tag prefix. A job freezes the chosen family in `sourceTrackFamily` and the rule in
+`sourceTrackPreferenceRevision`. Older jobs keep a nil value and keep their saved track, and the app records no re-selection on resume.
+The two shared gaps above apply on iPhone too. See `docs/IPHONE-SUBTITLE-TRACK-PREFERENCE-280.md`.
+
 ### Original-audio report visibility, confirmed 2026-10-29: `original-delivery-report-233`
 
 A preserved original is not proof of delivered target-language speech.
@@ -946,7 +989,9 @@ Phone and desktop mapping remain pending. Their source or installation cannot be
 An explicit speech/subtitle workflow can find no readable selected text subtitle.
 In that case, select speech > OCR and show the effective workflow notice.
 Burned-in captions are picture content. They are not selectable text-subtitle tracks.
-Keep the automatic defaults: subtitles > speech with text subtitles, OCR > speech without them.
+Superseded sentence, kept for history: the older automatic default was OCR > speech without text subtitles.
+`basic-source-defaults-231` replaced that default with speech > OCR on 2026-10-29.
+`subtitle-track-preference-1` sets the subtitle track order inside the subtitles > speech flow on 2026-10-31.
 A missing track and a corrupt explicitly selected file are different errors. Do not hide file-read errors as absence.
 
 A failed source-selection initialization may have no frozen workflow yet.
@@ -1197,6 +1242,274 @@ Later phone-only canonical text does not change this installed package hash.
 See mobile/Validation/ipad-followup-254-2026-10-30.json.
 
 ## Cross-platform alignment register
+
+### Cloud source loading and keep-waiting consent on three platforms, 2026-10-31: one rule, one open platform limit
+
+Target behaviour: a source movie that must come from a cloud provider or a network share never fails on a timer the user
+never saw. The app names the real provider, shows bytes as they arrive, keeps its own clock visible, and asks before any
+wait ends. The user chooses to keep waiting or to stop. The app never claims a generic cloud source when it knows the
+owner. A loaded file must be complete before any media probe, and the original stays in place.
+
+Rule (unchanged revision `cloud-source-preparation-264`, plus the new consent step): a provider read has no total deadline.
+After 45 seconds with no new byte, the app asks. "Keep waiting" resumes the same read from its current offset and grants a
+10 minute window; the app asks again when that window ends. "Stop waiting" keeps the list, the saved work and the bytes
+already read, and names the provider in the fault line. A local file uses a 15 second quiet limit instead. Source,
+frozen settings, recordings and spent allowances stay unchanged. No WF rule changed.
+
+Implemented: desktop owns `Resources/source_preparation.py` (idle, ask, grant), `Resources/source_access.py` (Windows
+worker quiet-report rule) and `studio/web/source-preparation-copy.js`, `studio/web/app.js`, `studio/web/styles.css`
+(`.source-wait` band with the two buttons). The Rust host answers `source-prepare-wait` itself and writes the grant file,
+because the Python RPC stays blocked during the read. iPad and iPhone own `mobile/AniCantoApp/VideoImportService.swift`
+(`SourceOrigin`, `SourceCopyRule` waitAfterIdle 45 / waitGrace 600 / providerIdleLimit 600 / localIdleLimit 15) and
+`mobile/AniCantoApp/VideoDocumentPicker.swift` (preparation panel, provider name, byte progress, elapsed seconds, wait
+card, `PreparationWaitBridge`).
+
+Tested: `tests/test_source_wait278.py` (5 cases), `tests/test_source_cloud278.py`, `tests/test_source_preparation264.py`
+(12 cases), `tests/desktop_source_ready278.mjs`, and `mobile/scripts/check-source-reading-host.sh`, which compiles the
+shipped mobile rule and prints one PASS line for provider naming, offset, retry, long read, ask-before-end and short-copy
+rejection. Mobile wait copy is present in all four shipped catalogues.
+The host harness passes in both mobile trees on 2026-10-31. It first failed on the phone tree, because the phone
+catalogues held no entry for the provider-named loading lines; the phone `en`, `zh-Hans` and `ja` catalogues now hold the
+same keys as iPad.
+
+Not claimed, and this is the open platform limit: while Apple's own Files screen is fetching a provider file, the app is
+not on screen and Apple gives no owner callback. `UIDocumentPickerDelegate` exposes only `didPickDocumentsAtURLs` and
+`documentPickerWasCancelled`. There is no `allowsPreview` property on `UIDocumentPickerViewController`. A stall inside
+Files therefore cannot be observed, measured or answered by this app. The app owns the phase after the pick, which is
+where the loading panel, the provider name, the byte count and the keep-waiting question now live.
+
+Status: implemented in Mac source, iPad source (build 272 tree) and iPhone source (build 280 tree). Tested by the desktop
+and host-rule suites named above. `xcodebuild build-for-testing` with the `iphoneos` SDK and no signing gave
+`** TEST BUILD SUCCEEDED **` for both mobile projects on 2026-10-31, after four mobile compile blockers were closed. Not
+packaged at that time. Later on 2026-10-31 the rule reached packages: Mac and Windows 0.25.25 build 279 hold the desktop
+side, iPad build 273 and iPhone build 281 are installed on Samuel's devices. See the build 279 packaging note at the end of
+this file. No device conversion run and no whole-film run. Mirror keys: `cloudSourcePreparation264`,
+`sourceLoadingKeepWaiting278`.
+
+### Retake voice continuity on three platforms, 2026-10-31: one rule, two mobile source trees
+
+Rule: a retake of one dialogue line keeps that line's recording seed, so only the words change and the voice character
+stays the same. Codex changed source and compiled it. Codex built no package, ran no device and ran no conversion.
+Desktop (build 277 installed) keeps the line seed in the review action `review-retake-now`, with default 42; see the
+build 278 desktop retake note at the end of this file. Mirror key: `desktopRetakeVoice278`.
+iPad (source build 272) now holds the same rule in `mobile/AniCantoApp`: `StandardRecordingSeed` sets the first
+automatic take to seed 42, which is 41 plus the one-based attempt, and `retakeForReview` reuses the stored line seed in
+`StandardCue.recordingSeed`. The separated voice reference path `manualReviewReference` was already correct and is
+unchanged. Mirror key: `mobileRetakeVoice278`.
+iPhone (private source build 280 in `.build/iphone201/workspace/mobile`) holds the same three edits in its own tree and
+compiles the same way. This closes the counterpart item that the iPad change opened.
+Not claimed: no mobile package contains this change, and no mobile native test ran. `Tests/RetakeVoice278Tests.swift`
+(4 cases) compiles in the `AniCantoMediaTests` target of both projects but was not executed. `CLiteRTLM.xcframework` has
+no iOS Simulator slice, so no simulator target builds on this Mac. WF-01/02/03/15/16/17, frozen requests and spent
+allowances stay unchanged. A retake still writes a new take file, so it never reuses an earlier recording.
+
+### Review report presentation on three platforms, checked 2026-10-31: two desktop-only items, one open mobile gap
+
+Samuel asked whether the build 278 review report changes also apply to iPad and iPhone. Codex read both mobile source trees
+and changed no mobile code for these three items. Codex ran no device and ran no conversion.
+Notice badge: desktop-only. The mobile review card already shows a per-take issue line in orange, and the standard panel
+shows worker and engine errors as inline red or orange text. Mobile has no queue card and no short chip, so the desktop
+badge has no mobile counterpart. The desktop queue-pause rule is unchanged, and the mobile automatic continuation rules
+are unchanged.
+One first take per line: no mobile defect. `StandardView.swift` labels takes by position ("配音 1", "配音 2"), so no line
+ever repeated a first-take label. Mirror key: `desktopTakeLabels278`, desktop only.
+Review status tabs (已覆核 and 待處理): desktop only today. The mobile review report has no filter tab for the user's own
+listening state, and `StandardCue` holds no per-line record of that state; `review-triage.json` belongs to the desktop
+workbench only. An equivalent mobile tab needs both a new stored state and new localised Swift strings, which needs an
+extraction and localisation pass. Not claimed: no mobile control and no mobile stored state exist for this idea.
+Mirror key: `desktopReviewStatusTabs278`, desktop only. Samuel must decide whether a mobile tab is required, and if so in
+which release.
+
+### Mobile failed-window continuation, checked 2026-10-31: two generations, no shared stamp
+
+Target behaviour: not decided. Samuel must state whether iPad and iPhone run one continuation stamp, and whether desktop
+adopts one at all. This entry records the observed state only. Codex changed no code, ran no device, and ran no conversion.
+iPad carries `unconfirmed-source-window-251` in `mobile/AniCantoApp/StandardSourceTiming.swift` (lines 834 and 866), with
+`quarterFirstRecoveryPolicy`, two rounds and the budget file `whisper-source-attempts.json`. The iPad app holds this rule in
+build 272, which is installed on Samuel's iPad Pro M4. The 12 native cases for this rule passed on iPad build 251. Build 272
+has no new run of those cases.
+iPhone carries the older stamp `unwitnessed-source-window-after-two-attempts-242` in
+`.build/iphone201/workspace/mobile/AniCantoApp/StandardSourceTiming.swift` (line 635). The phone source holds no
+`quarterFirstRecoveryPolicy`, no `unconfirmedReason` and no `unconfirmed-source-window-251`. iPhone build 280 is installed.
+Desktop holds no matching strategy string in `Resources`, `Sources` or `windows`.
+`docs/APPLICATION-USER-GUIDE.json` section `phone-unwitnessed-window` carries platforms `[iphone]` only, so the guide does not
+claim iPad or desktop uptake. Mirror key: `whisperWindowContinuationMobile272`.
+
+### iPhone automatic subtitle track preference280, 2026-10-31
+
+Rule revision: `subtitle-track-preference-1`, the same rule the desktop and iPad carry. It changes no flow pair.
+Control copy: `workflow-controls-guide-29-subtitle-track-preference`, item `sourceWorkflowDefaults` (unchanged, sha256
+0aff72bc2b92563624ddb24b4d58c2b83241a69f9ac50157ef8e5cc64c04622b).
+Manual copy: `application-user-guide-83-iphone-subtitle-track-preference`, sha256
+000152cec8306222d530588b4ebd4da5900ac4e526e9055580ea87ebd4ae059c. Section `subtitle-track-preference-276` now carries
+platforms desktop, ipad and iphone. The section text is unchanged; only the platform scope widened.
+Implemented: yes, in the private iPhone source `.build/iphone201/workspace/mobile`. `AniCantoApp/SubtitleTrackPreference.swift`
+is byte-identical to the iPad module (sha256 6b7cfe83db8e3e7996581b35a5560ad6ba3726e58eb0018ce6a7e735c1f56aea).
+`AniCantoApp/PlaybackSubtitles.swift` calls it in three automatic branches: imported subtitle files for the video, Matroska
+embedded tracks, and AVFoundation embedded tracks. The imported-file branch no longer uses a "only one file" test, and the
+Matroska branch no longer filters on a `zh` tag prefix. `AniCantoApp/StandardProject.swift` adds optional `sourceTrackFamily`
+and `sourceTrackPreferenceRevision`. Explicit track and edition choices, and the `freeze()` path, are unchanged.
+Tested: `Tests/SubtitlePreference280Tests.swift` (12 cases, one of them a real `.mkv` fixture with four subtitle streams).
+The compiled test host ran on Samuel's iPhone 17 Pro (UDID 00008150-001215911480401C) with `SubtitleEdition279Tests` as
+regression: 15 tests, 0 failures, `** TEST EXECUTE SUCCEEDED **`. Evidence: `.build/iphone280/test.log` and
+`.build/iphone280/phone.xcresult`.
+Packaged: normal package `.build/iphone280/delivery/AniCanto.app`, build 280, no test plug-in, deep and strict signature
+verification passed, 17 notice files exact, 781 historical demo assets exact, embedded guide83 and controls guide29.
+Candidate record: `.build/iphone280/candidate.json`.
+Installed: yes. `devicectl` installed build 280 and the app inventory reports 0.1.0 / 280. The app launched (process 7223) and
+was still running after 10 seconds. Evidence: `.build/iphone280/install.json`, `.build/iphone280/launch.json`.
+Preservation: the app data container listing holds 7786 entries before and after the install, with no missing path and no size
+change. Documents 2954, AniCantoMobile 4162 and tmp 3 files are equal. Of 595 job metadata documents hashed before the install,
+the 10 comparable documents after it are equal: 9 byte-identical, and one small playback document holds the same content with a
+different key order. The hidden `.catalog` and `.deleted` folders under Documents/Exports are not readable through the device file
+service, so they are compared by path and size only. Evidence: `.build/iphone280/files-before.json`, `files-after.json`,
+`before-current/hashes.json`, `after-current/hashes.json`.
+Not accepted: no whole-film conversion run on a real movie, so dubbing quality and caption acceptance stay open. No output check
+ran, so `mobile/Validation/phone-conversion-measurements.json` is unchanged.
+iPad counterpart: build 272 source carries the same rule; its native test run stopped at the iPad lock screen and stays open.
+Desktop counterpart: 0.25.22/build276 installed on both desktops, whole-film acceptance open.
+Receipt: `mobile/Validation/iphone-subtitle-track-preference-280-2026-10-31.json`. Mirror key: `subtitleTrackPreference276`.
+
+### Desktop automatic subtitle track preference276, 2026-10-31
+
+Rule revision: `subtitle-track-preference-1`. It extends `basic-source-defaults-231` and changes no flow pair.
+Control copy: `workflow-controls-guide-29-subtitle-track-preference`, item `sourceWorkflowDefaults`.
+Manual copy: `application-user-guide-81-subtitle-track-preference`, section `subtitle-track-preference-276` in the shared `subtitles` chapter, desktop scope.
+Order inside the subtitles > speech flow: written Cantonese, Traditional Chinese, Simplified Chinese,
+Chinese with an unknown script, another readable language, then an unlabelled track.
+Read the language tag first. When the tag states only a language, the track title or the file-name marker
+decides the script, for example a `zho` tag with the title `繁體`.
+External subtitle files in the video folder use the same order by name marker. A Chinese-marked file beats a
+plain same-name file. A plain same-name file beats a file marked with a foreign language.
+An explicit track or edition choice outranks this order. `batchExplicitStream` and `batchExplicitSubtitle` keep a user selection exact.
+Freeze record: `sourceWorkflowResolution` now carries `trackPreferenceRevision` and `trackFamily`.
+Owner module: `Resources/subtitle_preference.py`. `worker.select_batch_subtitle` delegates to it.
+New `worker.select_sidecar_subtitle` scans the video folder. `source_workflow.py` uses the shared text-stream test.
+Implemented: yes. Tested: `tests/test_subtitle_preference276.py` (12 cases), `tests/test_batch_subtitles.py` (4),
+`tests/test_source86.py` (6), `tests/test_delivery85.py` (10), `tests/test_work_modes85.py` (9),
+`tests/test_final_delivery86.py` (5) and `tests/test_translation_source.py` (5).
+Real-media fixture check, isolated folder `.build/setup276/fixture`: one generated MKV carries four subtitle tracks
+(unlabelled, `eng`, `chi`, and `zho` titled `繁體`). The automatic path selects the `zho`/`繁體` track. With Chinese
+tracks removed it selects `eng`. With no embedded track, `fixture.zh-Hant.srt` wins over `fixture.srt` and `fixture.en.srt`.
+An explicit English choice still selects `eng`. Evidence: `.build/setup276/fixture/result.json`.
+Full Python regression: 2048 tests, 14 failures and 46 errors. The failure set is byte-identical to the build275
+baseline. See `.build/setup276/python-regression.log`. Eight shared node suites pass. Two node checks fail for
+unrelated pre-existing reasons: `tests/quality_presets.mjs` (old mode-selector expectation) and the frozen build260
+receipt check `tests/shared_caption_only260.mjs`.
+Packaged: Mac candidate `.build/shared-release/0.25.22/AniCanto.app` passes isolated native startup, an exact embedded
+interface manifest, deep/strict signature verification and a 3064-file privacy scan with 0 private identifier hits.
+Windows candidate `.build/setup276/AniCanto-combined.exe` is 322037248 bytes with sha256
+95442cec38e1e1dedd66977cad6fc63e8d9b057746e7c6675783c9a2c3c3b00b and 3043 payload files verified.
+Receipts: `.build/setup276/verification.json`, `.build/setup276/candidate-verification.json`, `.build/setup276/install-receipt.json`.
+Installed: `dist/AniCanto.app` and `dist/AniCanto.exe` are both 0.25.22/build276. The installed Mac app starts in an
+isolated data folder, reports `sourceWorkflow=auto`, and embeds the current interface manifest. Samuel pre-approved
+replacing the open Mac app. The prior copies are `.build/setup276/replaced-mac-0.25.21-275.app` and
+`.build/setup276/replaced-windows-0.25.21-275.exe`.
+Not accepted: no whole-film run exists on either desktop. The three test movies are not in the Mac library, so dubbing
+quality, caption coverage and listening acceptance stay open. The Windows package has not run on the 4090 device.
+iPad counterpart: shared target rule. Implementation, installation and whole-film acceptance are open. The request and
+the desktop evidence are recorded in `docs/IPAD-FOLLOWUP-REGISTER.md`. No iPad message was sent during this task.
+WF-01/02/03/15/16/17, frozen requests, repair allowances, recordings and exports are unchanged.
+Mirror key: `subtitleTrackPreference276`.
+
+### Desktop review line actions275, 2026-10-31
+
+Control copy: `workflow-controls-guide-28-desktop-review-line-actions`, items `reviewLineWords`, `reviewLineEngineRetake`, `reviewLineTakeRemoval`.
+Manual copy: `application-user-guide-80-desktop-review-line-actions`, section `desktop-review-line-actions-275` in the shared `review` chapter, desktop scope only.
+Words: the report holds one text box and one Save words button per line and language track. Save writes that track field in the editor draft. No recording starts, and the selected export audio does not change.
+Retake: one line, one track. A fresh take identifier replaces the saved choice for that language and engine pair, then one segment regenerates. Other lines and tracks stay untouched.
+Removal: explicit and confirmed only. The WAV moves to `discarded-recordings/<id>/audio.wav` with `removal.json`, and `review-take-blocks.json` hides it from takes, history, recording candidates and the snapshot. Only a listed `.wav` inside the job folder can move.
+Protection: audio used by the current export row, a saved review choice, a completed version take, or the segment recording link cannot move. The web list disables those Remove buttons, and the server repeats the guard.
+All three operations are refused while a job runs. Web, Tauri host and backend guards match.
+WF-01/02/03/15/16/17, frozen requests, repair allowances, saved choices and exports are unchanged. No automatic behaviour changed.
+Desktop already runs one standard pipeline for new jobs (`desktopStandardMode`, singlePipeline = the former fast pipeline). No mode selector returns.
+Implemented: source, four interface locales, and web asset sync. Tested: `tests/test_review_take_removal275.py` (6 cases), `tests/desktop_review_line275.mjs`, `tests/shared_manual256.mjs`, `tests/shared_recovery_guide.mjs`, `tests/shared_interface_locales.mjs`, `tests/shared_report259.mjs`, `tests/shared_report90.mjs`.
+Separate defect closed in the same candidate: the Tauri host allowlist omitted `activate-models` and `reset-production-parameters`, so both front-end actions failed with `Unsupported desktop operation`. The host now allows both, takes the model-mutation task lock for `activate-models`, and refuses both while a job runs. `tests/test_desktop_operation_contract.py` passes.
+Copy style: the new `zh-HK` control and manual paragraphs use written Traditional Chinese. They quote the exact product labels, for example `呢句嘅配音台詞` and `移除呢段錄音`. Existing `zh-HK` interface labels keep their current wording until a planned style pass covers the whole review panel.
+Packaged: Mac candidate `.build/shared-release/0.25.21/AniCanto.app` passes isolated native startup, an exact embedded interface manifest, deep/strict signature verification and a 3063-file privacy scan with 0 private identifier hits. Windows candidate `.build/setup275/AniCanto-combined.exe` is 322032640 bytes with 3042 payload files verified.
+Installed: yes, on both desktop packages in `dist` (0.25.21 / build 275). Samuel pre-approved replacing the open Mac app. The Windows package has not run on the 4090 device.
+User listening acceptance: pending. No whole-film run of the three test movies exists yet, so dubbing quality and caption coverage stay unverified on either desktop.
+iPad counterpart: requested on 2026-10-31 and recorded in `docs/IPAD-FOLLOWUP-REGISTER.md`; no iPad implementation, install or acceptance yet. The iPad line actions in `manualLearningLineActions` remain the reference model.
+Mirror key: `desktopReviewLineActions275`.
+
+### Desktop review report list277, 2026-10-31
+
+This entry closes register items D1 to D5 in `docs/IPAD-FOLLOWUP-REGISTER.md` for both desktops.
+Control copy: `workflow-controls-guide-31-review-folder-name`, 44 items, sha256 237767a8fb419b8026e922433613a7e89870ded5d72668690294d0e9040f579f. New item: `reportSearch` (zh-HK 搜尋對白,
+en Search dialogue). The three build275 line-action items keep their copy.
+Manual copy: `application-user-guide-85-review-folder-name`, 166 sections, sha256 b7d8c8fff83b66ecea19f0ff8071a17180bfb76c8001a8d6bcb47a309cc129e8. New section `desktop-review-report-list-277` in the
+shared `review` chapter, desktop scope, control references `reportMissing`, `reportAdvisory`, `reportAvailable`, `reportSearch`.
+Report shape (D4): one summary card sits on top. It holds the export button, the three category counts, the repaired count, the
+user-choice count, workflow notices and the Repair delivery issues button. One filter row sits below it: `reportMissing`,
+`reportAdvisory`, `reportAvailable`, and `All dialogue`. One search box and one "Showing n / total" counter sit on the same row.
+Twenty-five lines show per page, with Previous and Next buttons. Each line is one card. The classification panel, the separate
+report tables and the history block no longer render. Their data stays in the job files and inside each card.
+Search rule: the box matches an exact line number, or a case-insensitive word inside the saved dialogue text for any track
+field. An empty box shows the whole selected category. The page resets to the first page when the text changes, and the caret
+keeps its place while you type.
+Take order (D3): the first generated recording lists first. Later takes follow in creation order. Take rows now carry
+`created`; a row with no saved time uses the audio file time (`windows/desktop_state.py` `job_snapshot`).
+First take removal (D2): `job_snapshot` keeps one row per audio path, engine, language and line, so the first recording no
+longer appears twice. `Resources/review_take_removal.py` `protection()` is the single owner of the in-use list.
+`studio/backend.py` `snapshot` publishes that list as `protectedTakes`, one path with one reason. The web list disables Remove
+only for those paths, and the server repeats the guard. A first take that is not in use can move like any later take. The
+build275 protection set is unchanged: current export audio, a saved review choice, a completed version take and the segment
+recording link stay protected. Processing still blocks the action.
+Duplicate keyword (D1): the retry-review and render paths merge settings first and set `storage` last
+(`{**draft['settings'],**self.tools(),'storage':...,'submission':...}` in `studio/backend.py`, and the same order in
+`windows/native_worker.py` and `Resources/project_edit.py`). A saved editor draft can no longer pass `storage` twice, so
+"Generate a new take for this line" no longer fails with `dict() got multiple values for keyword argument 'storage'`.
+Detection record (D5): `Resources/source_language.py` `_preflight` returns the detection itself
+(`detection{language,detectedLanguage,method,stream,explicitOverride,confirmationSkipped}`), a top-level `detectedLanguage`,
+and `detectionSource`. A frozen start request carries the same record as `config.sourceLanguageDetection`. Detected Japanese
+still skips the second confirmation. Other or unconfirmed languages still confirm.
+Folder-name copy fix, same candidate: the removal copy used to name a folder that does not exist. The app moves the WAV into `discarded-recordings/`. English now says discarded-recordings. Traditional Chinese, Simplified Chinese and Japanese keep their local gloss and add the literal folder name, for example 「已移除錄音」(discarded-recordings) 資料夾. Copy owners: `docs/WORKFLOW-CONTROLS-GUIDE.json` item `reviewLineTakeRemoval`, `docs/APPLICATION-USER-GUIDE.json` sections `desktop-review-line-actions-275` and `desktop-review-report-list-277` (12 strings, four locales), and the front-end strings in `studio/web/i18n.js`, `studio/web/locales/zh-CN.js`, `studio/web/locales/ja.js` and `studio/web/app.js`. The server message in `Resources/review_take_removal.py` and the two focused tests `tests/desktop_review_line275.mjs` and `tests/test_review_take_removal275.py` follow the same name. This closes record correction 5 in the 2026-10-31 combined-line check. A host rebuild was needed: the Tauri host embeds the web bundle at compile time, so a front-end copy change needs `scripts/build_shared_host.py` before packaging.
+Copy style: the new `zh-HK` control and report labels use Hong Kong written Cantonese, for example 搜尋對白, 全部對白,
+冇對白符合呢個搜尋. The other three locales carry the same meaning.
+Tested: `tests/desktop_review_line277.mjs`, `tests/test_review_line277.py` (10 cases), `tests/test_source_language.py`
+(13 cases), `tests/test_windows_desktop_state.py` (17 cases, including
+`test_a_saved_editor_draft_cannot_pass_the_storage_path_twice`), `tests/desktop_review_line275.mjs`,
+`tests/shared_report259.mjs` (updated: it now requires the search box and forbids the classification panel),
+`tests/shared_report90.mjs`, `tests/shared_manual256.mjs`, `tests/shared_recovery_guide.mjs`,
+`tests/shared_interface_locales.mjs`, `tests/test_review_take_removal275.py` (6 cases),
+`tests/test_desktop_operation_contract.py`, `tests/test_windows_workflow_contract.py`. Full Python regression: 2062 tests, with
+the same 14 failures and 46 errors as build 276. The failure name set matches byte for byte
+(`.build/setup277/python-regression.log` against `.build/setup276/python-regression.log`). Two Node suites stay red for known
+reasons: `tests/shared_caption_only260.mjs` pins an older guide and control revision plus a stale staged copy hash, and
+`tests/quality_presets.mjs` predates this entry. Playwright suites (`tests/*_ui.cjs`) did not run in this environment.
+Packaged: Mac candidate `.build/shared-release/0.25.23/AniCanto.app` passes isolated native startup, an exact embedded
+interface manifest, deep/strict signature verification, the packaged native contract probe, and a 3064-file privacy scan with
+0 private identifier hits. The payload check also confirms the search box and the four filter values, and checks that the
+manifest hashes match `review-page.js`, `app.js`, `review-locale.js` and `styles.css`. Windows candidate
+`.build/setup277/AniCanto-combined.exe` is 322040832 bytes, sha256
+`2da3c3dfa3d0726761c2a9e5205d02d73eef034eb6117b53a7cc4e5182b50337`, with 3043 payload files verified.
+Receipts: `.build/setup277/verification.json`, `.build/setup277/candidate-verification.json`,
+`.build/setup277/install-receipt.json`, `.build/setup277/mac-startup.txt`, `.build/setup277/installed-startup.txt`.
+Installed: yes, on both desktop packages in `dist` (0.25.23 / build 277). The replaced copies are
+`.build/setup277/replaced-mac-0.25.22-276.app` and `.build/setup277/replaced-windows-0.25.22-276.exe`. Samuel pre-approved
+replacing the open Mac app. The installed Mac app starts in an isolated data folder and reports the same interface manifest.
+The Windows package has not run on the 4090 device.
+User listening acceptance: pending. No whole-film run of the three test movies exists on either desktop, so dubbing quality
+and caption coverage stay unverified.
+iPad counterpart: open. The iPad line must split the workflow controls and keep one standard pipeline (the former fast
+pipeline), keep AI repair off by default, keep the first audible take policy, and fill only missing audio. Register those asks
+in `docs/IPAD-FOLLOWUP-REGISTER.md`. No iPad implementation, install or acceptance is claimed here.
+WF-01/02/03/15/16/17, frozen requests, repair allowances, saved choices, recordings and exports are unchanged. No automatic
+behaviour changed.
+Mirror key: `desktopReviewReport277`.
+
+### Selected external subtitle edition279, 2026-10-30
+
+New conversions must freeze the exact selected record and authored language edition.
+Phone274 preview accepts edition identifiers, but conversion incorrectly parses the complete identifier as a UUID.
+Private phone279 and Duo source now use ExternalSubtitleSelection and freeze only the selected edition.
+Frozen iPad271 source already has this implementation. No new iPad device test occurs.
+Phone279 has three passing native capture cases and is installed and launched. User full-conversion acceptance remains open.
+Duo compilation and installation are pending.
+Existing whole-file selections remain valid. Saved snapshots and spent budgets remain unchanged.
+WF-01/02/03/15/16/17 retain source priority, required voice, first audible take, timing and allowance rules.
+Desktop is unchanged. Phone279 consumes exact guide77/control27; hashes are in the receipt. Other consumers remain unchanged.
+See mobile/Validation/iphone-subtitle-edition-279-2026-10-30.json.
 
 ### Duo270 normal-player presentation evidence, 2026-10-30
 
@@ -1762,3 +2075,123 @@ Production-parameter reset applies to future global settings, or to one video wi
 Optional source-performance refinement reuses complete local PCM from the source job across tracks and versions. Shared PCM must match the source, offset, stream and duration. Without valid PCM, do not read a cloud movie again for this optional stage. Bound each optional media or classifier child to90seconds. A failed optional check keeps existing conservative sound rules and allows export to continue. This does not prove that all nonverbal sounds were preserved.
 
 WF-01/02/03/15/16/17 and submitted settings stay unchanged. Caption-only suppression still requires confirmed no-dialogue evidence; an unconfirmed result does not prove silence. Desktop source and isolated tests are under review. Mac and Windows installation and real-film acceptance remain separate. Mobile owners must review this operational safeguard where their tools differ. No mobile uptake is claimed.
+
+## Desktop source-language gate274
+
+Mac and Windows use the same source preflight. Detected or explicitly selected Japanese continues without a second confirmation, including retained metadata-conflict evidence. Other or unconfirmed languages retain the current desktop confirmation. This narrow desktop gate does not migrate saved requests, alter source-content priority or change mobile queue source policy248. Source and focused test status are distinct from package and device acceptance.
+
+Verification pass, 2026-10-31 (Codex Follow Up, read-only check). `Resources/source_language.py` line 136 holds
+`needsConfirmation=bool(language!='ja')`. The same line is present in the installed Mac package at
+`dist/AniCanto.app/Contents/Resources/source_language.py`. Two focused cases pass in `tests/test_source_language.py`:
+`test_japanese_never_requires_a_second_confirmation_on_either_desktop` and
+`test_detected_japanese_with_conflicting_track_tag_is_automatic`. `dist/AniCanto.exe` reports 0.25.22/build276, but this
+check did not open its payload and no run took place on the 4090 device. Register item D5 therefore needs no new source
+work. Device acceptance and a whole-film run stay open. Mirror key: `desktopSourceGate274`.
+
+Build 277 note, 2026-10-31 (desktop line). `Resources/source_language.py` now records the decision as well as the answer. `_preflight` returns `detection{language,detectedLanguage,method,stream,explicitOverride,confirmationSkipped}`, a top-level `detectedLanguage`, and `detectionSource`. A frozen start request carries the same record under `config.sourceLanguageDetection`. Three cases in `tests/test_source_language.py` cover the record fields, an unchanged non-Japanese confirmation, and an explicit user selection that keeps `detectedLanguage` with `method='user-selected-source'`. Two cases in `tests/test_review_line277.py` show the record inside the frozen request. Both desktops are installed as 0.25.23/build277. Register item D5 is closed for source and tests. Device acceptance and a whole-film run stay open.
+
+Build 278 note, 2026-10-31 (combined desktop line). `autoApproveSourceLanguage` is a new desktop production setting. Its default is on, and it sits under the Global scope switch in both the Production settings panel and the Additional AI repair panel. With the switch on, `_preflight` returns `needsConfirmation=false` when the app detected a language and the selected voice engine can read that language. The app then starts without a language dialog, both from the inspector and from the native queue. Two cases still ask: no language was detected, or the selected engine cannot read the detected language. Japanese still never asks, with the switch on or off. A metadata conflict no longer asks when the switch is on; the heard language is used and the conflict stays in the record. `windows/desktop_state.py` `defaults()` holds the new key, so the `studio/backend.py` settings allowlist accepts it. Control copy lives in `docs/WORKFLOW-CONTROLS-GUIDE.json` item `autoApproveSourceLanguage`; Help copy lives in `docs/APPLICATION-USER-GUIDE.json` section `auto-approve-source-language`. Focused cases are in `tests/test_source_language.py`, and `tests/verify_desktop_operations.py` checks the switch through the packaged native RPC boundary. Status: implemented and tested in Mac source only. The change is not packaged, not installed, and not run on the 4090 device. The Windows Qt pages do not show this switch yet. Mirror key: `desktopSourceLanguageApproval278`.
+
+Build 278 note, 2026-10-31 (combined desktop line). Warnings and errors for the selected video now read in one wide band under the player in the preview column. The video card in the queue keeps a short chip and puts the full message in its tooltip. This is presentation only. It does not change what counts as a warning, when the queue pauses on a failed video, or what work is kept. Help copy lives in `docs/APPLICATION-USER-GUIDE.json` section `preview-notice-badge`. `tests/desktop_notice_badge278.mjs` checks the band, the chip, the four interface languages and escaped worker text. Status: implemented and tested in Mac source only; not packaged, not installed, not inspected on a device. Mirror key: `desktopPreviewNoticeBadge278`.
+
+Build 278 note, 2026-10-31 (combined desktop and mobile line). Samuel asked whether the retake fault in the desktop review report also exists on iPad and iPhone. It does, and both mobile trees are now corrected in source. iPad and iPhone share one Swift flow, and `.build/iphone201/workspace/mobile` is a separate private phone tree; both held `seed: UInt64.random(in: 1...999_999)` in `retakeForReview`. The separated voice reference was already correct on mobile: `manualReviewReference` resolves the line's own voice and the take record keeps a SHA256 guard, so mobile never needed a reference fix. New rule `StandardRecordingSeed` (in `StandardVoiceTakes.swift`) gives one seed per line. First automatic take uses seed 42, which is 41 plus the one-based attempt, and that matches the desktop default. A manual retake reuses the line seed stored in the new optional `StandardCue.recordingSeed`, so an edited script changes only the words and keeps the same voice character. Re-recording words that already exist advances the seed once per matching take, so a deliberate re-roll can still produce a different take. Each retake writes a new take file and records the seed in the event line. Seed values are unchanged where variety is the point: `SavedOutputLibrary.swift` comparison takes and `SpeechStudio.swift` auditions still draw a random seed on purpose. Help copy is the iPad and iPhone section `mobile-review-actions` in four locales, in guide `application-user-guide-89-mobile-retake-voice-continuity`; no new on-screen Swift string was added, because mobile interface strings need an extraction and localisation pass that this task cannot run. Verification: `xcodebuild build-for-testing` with the `iphoneos` device SDK and no signing gave `** TEST BUILD SUCCEEDED **` for both projects, and the new `Tests/RetakeVoice278Tests.swift` (4 cases) compiled in the `AniCantoMediaTests` target of both. The cases were not executed, because no simulator slice exists for `CLiteRTLM.xcframework` and no device run was requested. `CURRENT_PROJECT_VERSION` was not raised, so no new package state is implied: iPad source stays build 272 and iPhone source stays build 280. Status: implemented and compiled in iPad and iPhone source; not packaged, not installed, not run on a device. Mirror key: `mobileRetakeVoice278`.
+
+Build 278 note, 2026-10-31 (combined desktop line). A desktop retake keeps the recording seed of its line. The review action `review-retake-now` no longer draws a random seed. The engine sampling seed sets the voice character, so an edited-word retake now re-records the same voice and only the words change. Each render request still carries a fresh `audioRerunToken`, so a retake is generated again and is never a cached reuse. Expert mode can raise the recording seed on purpose. Measured cause on job `cde605ec4eac2a04`, line 1: the first take and both retakes used the same separated voice file and the same `referenceSHA256` `a009bdde611ffa365b8a2fd87bae852207cb927e8d86861ec6251f8beccd1608`. Only the recorded seed differed, 42 against 2145860346. The first take also read fansub credit text as dialogue, which gave a measured 18.48 s delivery in a 2.94 s slot and a measured 100.2 Hz pitch; the retake measured 2.83 s and 250.6 Hz against a 267.3 Hz character reference. The voice change was therefore not a wrong-reference fault. Every desktop recording now also carries its recorded reference: `windows/desktop_state.py` reads the engine record through `generationTrace` and stores `recordedReference`, `recordedReferenceSHA256` and `recordedSeed`; `Resources/review_workbench.py` `voice_references()` compares each recording with the first recorded digest for that line and publishes `snapshot.voiceReferences`; the review card warns once when a saved recording used another separated voice. This report changes no recording, no review state and no regeneration target, so `stale_recordings()` and automatic review retry keep their existing behaviour and a bulk conversion keeps its saved recordings. `reference_signature()` keeps its field set, so saved human review states do not reset. Help copy lives in `docs/APPLICATION-USER-GUIDE.json` sections `retakes-2` and `retakes-3`, chapter scope desktop only. Cases are `tests/desktop_voice_reference278.mjs` and `tests/test_voice_reference278.py`. A read-only projection of job `cde605ec4eac2a04` gave 437 recordings, 437 with a recorded reference, states `first` 435 and `same` 2, and `stale_recordings()` still empty. Status: implemented and tested in Mac source only; not packaged, not installed, not run on the 4090 device. The fansub credit text in that first take stays a separate open caption-only classification item. Mirror key: `desktopRetakeVoice278`.
+
+Build 278 note, 2026-10-31 (combined desktop line). The review report now filters by the user's own listening state. Two tabs sit beside the AI category filters: `reviewChecked` lists lines the user marked as checked, and `reviewPending` lists lines still pending or deferred. The state lives in `Resources/review_workbench.py`, which reads `review-triage.json` and publishes `snapshot.reviewTriage` with one state per line (`pending`, `checked`, `deferred`) plus a `triageID` and `triageFingerprint`. `studio/web/review-page.js` renders both tabs, the summary counts, and one mark control per line; the tabs combine with the report search box. A snapshot without the projection still renders the report. Copy lives in `docs/WORKFLOW-CONTROLS-GUIDE.json` items `reviewChecked` and `reviewPending`, and in `docs/APPLICATION-USER-GUIDE.json` section `review-status-tabs`, which is scoped to desktop. Cases are `tests/desktop_review_status278.mjs` and `tests/test_review_status278.py`. A mark changes no recording, no review choice and no regeneration target. Status: implemented and tested in Mac source only; not packaged, not installed, not inspected on a device. The iPad and iPhone review report has no equivalent tab today, and adding one needs new localised Swift strings, which this task cannot produce. Mirror key: `desktopReviewStatusTabs278`.
+
+Build 278 note, 2026-10-31 (combined desktop line). The recording list for one line now names one first take. `studio/web/review-page.js` keeps the `first` kind on the earliest first-kind recording and relabels later duplicates as generated takes, so the list and the choice dropdown read "First generated recording" once and "Generated recording" for the rest. The rank rule keeps the first take at the top of the list and later takes in creation order. This is naming and order only: no take file, audio path, review state or export target changed. Case: `tests/desktop_take_labels278.mjs`, which checks the four interface languages, one first label in the list, the dropdown repeat, and that later take files stay listed. Status: implemented and tested in Mac source only; not packaged, not installed, not inspected on a device. The mobile review card lists takes as "配音 1", "配音 2" and never repeated a first-take label, so this defect does not exist on iPad or iPhone. Mirror key: `desktopTakeLabels278`.
+
+Build 278 note, 2026-10-31 (combined desktop line). Source loading now names the real owner and asks before a wait ends. `Resources/source_preparation.py` reads the whole provider file with no total deadline, publishes exact bytes read, and after 45 quiet seconds asks the front end to seek consent; "Keep waiting" resumes the same read at its offset and grants 600 seconds, then asks again. A local path uses a 15 second quiet limit. The text no longer says a file is coming from a cloud supplier when the path is local, on a network share, or on a named provider such as Google Drive or OneDrive. One dead-code fault was fixed in this pass: the wait block sat behind `if wait_name:`, so an unnamed operation never reached it and the focused case hung; the block now runs for every provider read. The Rust host answers `source-prepare-wait` and writes `wait.json` itself, because the Python RPC stays blocked while a provider read runs; `DESKTOP_OPERATIONS` gained that operation, and `SOURCE_WAIT_GRACE_SECONDS` is 600. The front end shows one band under the player with the provider name, bytes, elapsed seconds and the two buttons. `Resources/source_access.py` gives the Windows worker the same no-total-timeout rule with `QUIET_REPORT_STALLS=20`. Windows has no worker-to-interface question channel, so on Windows the worker now waits instead of timing out and the user stops the movie in the queue; this is a partial uptake, not parity. Two compile blockers were found and fixed in this pass: the monitor block in `studio/src-tauri/src/main.rs` re-cloned `host`, `app`, `log` and `stderr` after the stdout thread had taken them, which stopped the desktop binary from compiling. Verification: `cargo check --offline` finishes with no error; `tests/test_source_wait278.py` (5 cases) plus `tests/test_source_cloud278.py`, `tests/test_source_cloud274.py`, `tests/test_source_access.py`, `tests/test_source_language.py` and `tests/test_source_preparation264.py` give 65 cases OK; `tests/desktop_source_ready278.mjs` PASS. Help copy is `docs/APPLICATION-USER-GUIDE.json` section `source-loading-wait` in chapter `start`, plus a second paragraph in `desktop-cloud-source-preparation`. Status: implemented and tested in Mac source only; not packaged, not installed, and no run on the 4090 device. Mirror key: `sourceLoadingKeepWaiting278`.
+
+Build 278 note, 2026-10-31 (combined iPad and iPhone line). The same source-loading rule now runs after the pick, on a screen this app owns. `mobile/AniCantoApp/VideoImportService.swift` holds `SourceOrigin` (names Google Drive, OneDrive, iCloud, a network share, an on-device file or a file provider), `SourceCopyRule` with `waitAfterIdle` 45, `waitGrace` 600, `providerIdleLimit` 600 and `localIdleLimit` 15, `SourceStreamCopy`, and the shared stall text that names the real owner and keeps the bytes already copied. `mobile/AniCantoApp/VideoDocumentPicker.swift` shows `PickerPreparationView` as soon as Files hands the file over: the provider name, the file name, bytes read out of the total, a one-second elapsed counter, and a wait card with 繼續等 and 唔再等 after 45 quiet seconds. `asCopy: false` is kept on purpose, so Files hands over one provider file that this app reads; a second copy into the app container would only hide the wait behind a Files screen that reports nothing. New on-screen copy is present in all four shipped catalogues (`en`, `zh-Hans`, `zh-HK`, `ja`). The import entry buttons are already disabled while an import runs, so repeat taps cannot stack a second import. Two limits are open and are Apple's, not ours: `UIDocumentPickerDelegate` has only `didPickDocumentsAtURLs` and `documentPickerWasCancelled`, so a fetch still inside Files cannot be observed by this app, and `UIDocumentPickerViewController` has no `allowsPreview` property. A line that set `picker.allowsPreview = false` was found in `VideoDocumentPicker.swift` and removed; that property does not exist, and the line would have stopped both mobile projects from compiling. Verification: `xcrun swiftc -parse` is clean on every file in both app trees; `mobile/scripts/check-source-reading-host.sh` compiles the shipped rule and prints PASS for provider naming, offset retention, failed-read retry, long read, ask-before-any-wait-ends and short-copy rejection. Status: implemented in the iPad source tree (build 272) and the iPhone source tree (build 280, `.build/iphone201/workspace/mobile`); the Swift files are byte-identical. Tested by the host rule harness, which now passes in both trees. Not packaged, not installed, and no device run. `CURRENT_PROJECT_VERSION` was not raised. Mirror key: `sourceLoadingKeepWaiting278`. See the build 278 mobile catalogue note at the end of this file for the `xcodebuild` result.
+
+Build 278 note, 2026-10-31 (combined iPad and iPhone line). Mobile catalogue parity was checked against the
+compiled apps, not against the source text. The phone host harness `check-source-reading-host.sh` aborted with
+`Precondition failed: en: no catalogue entry for Google Drive 正在傳送檔案…`, because the phone catalogues still held the older
+generic keys (正在等檔案供應商傳送檔案…, 檔案供應商要先傳送完整檔案…, 已開始收到檔案資料。) instead of the
+provider-named keys the shipped rule composes at run time. The phone `en`, `zh-Hans` and `ja` catalogues now carry the same
+seven source-loading keys as iPad, and the unused generic keys were removed. A second check then compared every Chinese
+interface key that Xcode extracts from each app against that tree's four catalogues: the phone build extracts 583 keys and
+thirteen had no entry at all, so an English, Japanese or Simplified Chinese phone user read Cantonese for the source-language
+control (自動選擇原聲語言, 選擇原聲語言, 開始辨識, 正在讀取聲道資料…, 正在準備語音辨識…, 正在讀取字幕版本… and the two
+source-language explanation lines), the phone-only dialogue-segment stepper (對白段落, 上一段, 下一段), 更多 on the reading menu,
+and 顯示字幕 on the full-screen caption toggle. iPad supplied eight values verbatim; 對白段落, 上一段, 下一段, 更多 and 顯示字幕
+were authored (“Dialogue segment”, “Previous segment”, “Next segment”, “More”, “Show captions”). 顯示字幕 was missing from all four iPad
+catalogues too, and 繼續等 and 唔再等 were missing from the iPad zh-HK catalogue; both gaps are closed. Eight catalogue files
+changed in total: md5 iPad en e58fd1b4145cd6294b0289f95ae565af, zh-HK 05f0ea3f338b8b22acc3bac1d9c2a73d, zh-Hans
+5d458ff01cdd1db79facdd615d6bacff, ja 271fa699b70046a8ee13b966510596ba; iPhone en a8efff6a2dcb2cb680a56b13b1bda2cb, zh-HK
+c04650d79b975636c46cd36a59886b76, zh-Hans f3034381b90c0476dd4d18358c0c530b, ja 900fc7ccd6c32336dac0e163d180696f. No Swift
+source changed in this note. Verification: `xcrun plutil -lint` is OK for all eight files; the key comparison reports zero
+missing keys and zero duplicate keys in both trees; `python3 mobile/scripts/check-localization.py` passes on the iPad tree
+(“English coverage passed: 566 extracted Chinese interface keys; no missing translations”, then the same line for zh-HK,
+zh-Hans and ja) where it failed before with `Missing English: 顯示字幕`; `check-source-reading-host.sh` prints one PASS line in
+both trees; and `xcodebuild build-for-testing` with the `iphoneos` device SDK and no signing gave `** TEST BUILD SUCCEEDED **`
+for both projects on 2026-10-31. The Swift test targets compiled but were not executed, because no simulator slice exists for
+`CLiteRTLM.xcframework` and no device run was requested. Samuel also asked whether the “tap does nothing, then the file loads
+all at once” pattern inside Files can be improved. The answer from the shipped code: the app cannot stack a second import, because
+`FullScreenDocumentPicker` forces `.fullScreen`, and `PickerPresenter.showPreparation` replaces the picker with the loading panel
+before any byte is read, so the import buttons are unreachable during a hand-off; `Coordinator` also guards a second delegate
+delivery with `delivered` and `cancelled`, and `VideoLibrary.importVideos` refuses a second batch while `isImporting` is true. The
+unanswered phase stays Apple's: the app is off screen while Apple's Files screen fetches a provider file, and Apple gives no
+fetch-started, progress or preview callback. Status: catalogues corrected and verified in iPad and iPhone source; not packaged,
+not installed, no device run, and `CURRENT_PROJECT_VERSION` was not raised. Device inventory read on the same date with a
+read-only `devicectl` call: `Samuel‘s iPad Pro M4` is connected and carries `com.sckc.anicanto.ipad.prototype 0.1.0` at
+build 272; `Samuel’s iPhone` (iPhone 17 Pro) is available (paired) and carries the same bundle at build 280. Neither
+device carries this work. `DEVELOPER_DIR` must point at Xcode for `devicectl` to run. Mirror key:
+`sourceLoadingKeepWaiting278`, fields `catalogueParity278` and `deviceInventory278`.
+
+## Inspector scope switches, English resource gap, and build 279 packaging, 2026-10-31
+
+Build 279 note, combined desktop line. The two production scope switches no longer sit in a fixed panel above the settings
+body. `studio/web/app.js` now returns them from `inspectorHTML()`, so the block lives inside `#inspector-content` and scrolls
+with the rest of Production settings and the Additional AI repair panel. Every partial refresh of that body keeps the block.
+`.production-scope` in `studio/web/styles.css` now carries vertical spacing only, so both switches share the one switch column
+that every other switch in the same body uses. Measured cause in a screenshot: the pinned block sat outside the scrolling
+body, so the body padding and the scrollbar moved the two switch columns about 21 px apart. `tests/desktop_scope_scroll279.mjs`
+checks the template position, the four partial refresh sites, and the CSS geometry. Status: implemented and tested in source;
+packaged and installed; not inspected by eye in a running app. Mobile parity was read before and after the change: neither
+`mobile/AniCantoApp` nor `.build/iphone201/workspace/mobile` holds a production scope control or the auto-approve
+source-language switch, so no mobile panel can scroll or misalign. The shared control guide keeps
+`autoApproveSourceLanguage` with platforms `macOS` and `Windows` only. Mirror keys: `inspectorScopeScroll279`,
+`packageInstall279`.
+
+Build 279 note, combined line. `tests/test_ui_localization.py` found one English resource gap in the Mac Swift layer. The
+short-reference line in `Sources/RoleManager.swift` uses a Cantonese key that had no entry in
+`Resources/en.lproj/Localizable.strings`, so an English reader saw the raw Cantonese key on screen. The entry now exists, and
+its English value matches the current zh-HK copy, which says silence only and not ambience. No other key is missing, and the
+second case in the same file still passes. Status: fixed in source, packaged in 0.25.25 build 279, not inspected in a running app.
+
+Build 279 packaging and install record, 2026-10-31. `VERSION.json` is now 0.25.25 / build 279 / Beta.
+
+- Mac: `scripts/prepare_shared_studio.py` refreshed the versioned web resources, `scripts/build_shared_host.py` rebuilt the
+  Tauri host, `scripts/stage_release.py` staged `.build/releases/0.25.25/AniCanto.app`, and
+  `scripts/package_shared_studio.py --refresh` produced `.build/shared-release/0.25.25/AniCanto.app`. `dist/AniCanto.app`
+  reports `0.25.25` and `279`, and `codesign --verify --deep --strict` passes. Rollback copy kept:
+  `.build/setup279/replaced-mac-0.25.24-278.app`.
+- Windows: `scripts/build_shared_host.py --target x86_64-pc-windows-msvc` rebuilt the host, then
+  `CANTOSYNC_OUTPUT_EXE=.build/setup279/AniCanto-combined.exe scripts/build_portable_windows.py` produced
+  `dist/AniCanto.exe` at 322,078,720 bytes, sha256 `f021a237b7c275858e4b64172b4a9d4ec9b7cac7446fdc3fef8679a3176967de`, with
+  3043 embedded files. The payload manifest hash for `tools/AniCanto-Studio.exe` equals the host binary built in the same run,
+  and the embedded `VERSION.json` hash equals the source file. Rollback copy kept:
+  `.build/setup279/replaced-windows-0.25.24-278.exe`. Windows start on a Windows machine is still untested.
+- Desktop probe against the installed app: `CANTOSYNC_STUDIO_PYTHON=.build/qa249/local-tts-runtime/bin/python3
+  python3 tests/verify_desktop_operations.py dist/AniCanto.app/Contents/MacOS/AniCanto` passed, with
+  `autoApproveSkipsConfirmationForKnownLanguage: true`, `unconfirmedAudioStillAsksEvenWhenAutoApproved: true`,
+  `sourceLanguageNativeBoundary: true`, and `userLibraryChanged: false`.
+- iPad: `CURRENT_PROJECT_VERSION` moved from 272 to 273. The device build succeeded, and `xcrun devicectl device install app`
+  installed it on `Samuel‘s iPad Pro M4` (UDID 00008132-000478D23C69001C). The device inventory now reads build 273. Codex did
+  not launch or operate the app.
+- iPhone: `CURRENT_PROJECT_VERSION` moved from 280 to 281 in `.build/iphone201/workspace`. The device build succeeded and
+  installed on `Samuel’s iPhone 17 Pro` (UDID 00008150-001215911480401C). The device inventory now reads build 281. Codex did
+  not launch or operate the app.
+- Test state in this pass: all 21 `tests/*.mjs` files pass, including the new `tests/desktop_scope_scroll279.mjs`; the eleven
+  focused Python modules from the build 278 notes give 95 cases with one error caused by a missing `numpy` in the system
+  Python; `tests/test_ui_localization.py` passes after the new English entry; `mobile/scripts/check-source-reading-host.sh`
+  prints PASS in both mobile trees. A full `python3 -m unittest discover -s tests` run gives 1850 cases with 11 failures and
+  159 errors, and 163 of them stop on missing third-party modules in this sandbox; that entry point is not the green gate for
+  this project.
+- Still open: Windows real-machine start; one real Google Drive and OneDrive load on any platform; the Windows Qt pages still
+  lack the auto-approve switch and the 已覆核 and 待處理 tabs; iPad and iPhone still hold no stored per-line review state, no
+  review status tab, and no production scope control; `scripts/public_source.py` still pins 0.25.21; the `.cjs` Playwright UI
+  files still need a runner and a browser, so no browser geometry check was run for the switch layout.

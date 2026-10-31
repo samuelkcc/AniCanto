@@ -14,7 +14,10 @@ for(const language of ['en','zh-HK','zh-CN','ja']){
   const visible=[...html.matchAll(/class="review-result" data-report-group="([^"]+)"/g)].map(m=>m[1]);
   assert.deepEqual(visible,filter==='all'?groups:[filter]);
   for(const g of groups.slice(0,3))assert(html.includes(controlCopy(g,language,'title')));
-  assert(html.includes(controlCopy('reportClassification',language)));
+  // Build 277 keeps the four canonical labels but drops the long classification
+  // note from the list; one search field replaces it.
+  assert(!html.includes(controlCopy('reportClassification',language)));
+  assert(html.includes('id="review-search"'));
   if(filter==='reportAvailable'||filter==='all')assert(html.includes('data-path="/current.wav"'));
   assert(!html.includes('undefined'));assert(!html.includes('data-value="issues"'));
  }

@@ -9,6 +9,8 @@ from atomic_files import write_json
 class PreparationTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.source=self.root/'CloudStorage/GoogleDrive/movie.mkv';self.source.parent.mkdir(parents=True);self.source.write_bytes(b'frame'*400000)
+  # These fixtures exercise the provider-read path; the local-window proof has its own tests.
+  window=patch.object(prep,'local_window_readable',return_value=False);window.start();self.addCleanup(window.stop)
  def test_three_cloud_providers_and_local_path(self):
   for p in ['/fixture/Library/CloudStorage/GoogleDrive/film.mkv','/fixture/Library/CloudStorage/OneDrive/film.mkv','/fixture/Library/Mobile Documents/com~apple~CloudDocs/film.mkv']:
    self.assertTrue(prep.cloud(p))
@@ -38,6 +40,14 @@ class PreparationTests(unittest.TestCase):
   ctx=prep.Preparation(self.root/'app',self.source);progress=ctx.folder/'read-progress.json'
   code='import time,json,pathlib; time.sleep(.2); pathlib.Path('+repr(str(progress))+').write_text(json.dumps(dict(bytesRead=100)));time.sleep(.4)'
   ctx.capture([sys.executable,'-c',code],reading=True);self.assertEqual(ctx.state['bytesRead'],100)
+ def test_plain_capture_never_reads_the_progress_file(self):
+  # A probe or source-language read is not a provider read. It owns no progress file, and the
+  # keep-waiting question must stay inside the reading branch: the 0.25.24 candidate raised
+  # "cannot access local variable 'progress'" for every plain capture.
+  ctx=prep.Preparation(self.root/'app',self.source);progress=ctx.folder/'read-progress.json'
+  code='import json,pathlib,time; pathlib.Path('+repr(str(progress))+').write_text(json.dumps(dict(bytesRead=999,waitingForDecision=True))); time.sleep(.4)'
+  ctx.capture([sys.executable,'-c',code])
+  self.assertEqual(ctx.state['bytesRead'],0);self.assertNotIn('waitingForDecision',ctx.state)
  def test_cancel_kills_only_owned_blocked_reader_and_keeps_source(self):
   ctx=prep.Preparation(self.root/'app',self.source);before=prep.identity(self.source);pidfile=ctx.folder/'pid'
   code='import os,time,pathlib;pathlib.Path('+repr(str(pidfile))+').write_text(str(os.getpid()));time.sleep(30)'
@@ -56,7 +66,7 @@ class PreparationTests(unittest.TestCase):
   expected=prep.identity(self.source);expected['bytes']+=100
   request=dict(source=str(self.source),identity=expected,progress=str(self.root/'progress.json'),result=str(self.root/'result.json'))
   with patch.object(prep,'identity',return_value=expected):
-   with self.assertRaisesRegex(RuntimeError,'incomplete'):prep.read_source(request)
+   with self.assertRaisesRegex(RuntimeError,'incomplete'):prep.read_source(request,max_idle=0)
   self.assertFalse((self.root/'result.json').exists())
  def test_cancelled_native_preparation_does_not_start_next_video(self):
   from types import SimpleNamespace

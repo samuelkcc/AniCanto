@@ -228,9 +228,11 @@ class Studio:
         return report(self)
 
     def dispatch(self,op,p):
-        if op in ('source-prepare-status','source-prepare-cancel'):
+        if op in ('source-prepare-status','source-prepare-cancel','source-prepare-wait'):
             import source_preparation
-            return source_preparation.status(self.root,p.get('operationID')) if op=='source-prepare-status' else source_preparation.cancel(self.root,p.get('operationID'))
+            if op=='source-prepare-status':return source_preparation.status(self.root,p.get('operationID'))
+            if op=='source-prepare-wait':return source_preparation.grant_wait(self.root,p.get('operationID'),p.get('seconds') or source_preparation.WAIT_GRACE)
+            return source_preparation.cancel(self.root,p.get('operationID'))
         if op=='use-terms':
             from use_terms import document,accepted
             return dict(document(),accepted=accepted(self.root))
@@ -567,6 +569,11 @@ class Studio:
                     snapshot.setdefault('reviewState',{})['userChoicesApplied']=applied
                     for record in snapshot.get('reportRows',[]):record['pendingExport']=bool(record.get('pendingExport') and not applied)
                 except ValueError:pass
+            # The report and the removal guard must agree on which recordings are
+            # in use, so the server publishes that one list.
+            from review_take_removal import protection
+            snapshot['protectedTakes']=[dict(path=path,reason=record['reason'])
+                                        for path,record in protection(snapshot,snapshot.get('draft') or {}).items()]
             snapshot['rowID']=row['id']
             from review_workbench import project
             result=project(snapshot.get('root',str(Path(row.get('review') or row.get('job') or self.root/'jobs/nonexistent').parent)),snapshot)
@@ -590,6 +597,13 @@ class Studio:
             draft=select(path.parent,review,draft,job_snapshot(row),p.get('index'),p.get('engine'),p.get('language'),p.get('action'),p.get('audio'),p.get('confirmDefect',False))
             self.dispatch('save-draft',dict(id=row['id'],draft=draft))
             return dict(draft=draft,snapshot=job_snapshot(row),saved=True)
+        if op=='review-take-removal':
+            row=self.row(p.get('id'))
+            if row.get('status')=='running':raise ValueError('Pause and save before removing a recording.')
+            path=self.review_path(row)
+            from review_take_removal import remove
+            remove(path.parent,self.dispatch('snapshot',dict(id=row['id'])),self.draft(row),p.get('index'),p.get('language'),p.get('engine'),p.get('path'),p.get('confirm',False))
+            return self.dispatch('snapshot',dict(id=row['id']))
         if op=='save-draft':
             row=self.row(p.get('id'));path=self.review_path(row);draft=copy.deepcopy(p['draft'])
             source=read(path,{})
@@ -627,6 +641,12 @@ class Studio:
                 if source.get('language'):
                     from source_language import apply
                     apply(cfg,source['language']);cfg['sourceAudioStream']=source.get('stream')
+                # The frozen request keeps the detection record: which language
+                # was heard, and the method that produced it.
+                if source.get('detection') or source.get('method'):
+                    cfg['sourceLanguageDetection']=source.get('detection') or dict(
+                        language=source.get('language'),method=source.get('method') or '',
+                        confirmationSkipped=not bool(source.get('needsConfirmation')))
                 cfg.update(self.tools());cfg['storage']=str(self.root)
                 if p.get('reanalyze'):cfg.update(forceRetranslate=True,rebuildDialogue=True,analysisRerunToken=uuid.uuid4().hex)
                 if self.platform!='win32':
@@ -651,7 +671,9 @@ class Studio:
             draft=submission(self.root,self.review_path(row),self.dispatch('snapshot',dict(id=row['id'])),p.get('mode','pending'),self.draft(row))
             requests=self.root/'requests';requests.mkdir(exist_ok=True)
             path=requests/('review-retry-'+draft['id']+'.json');write(path,draft)
-            cfg=dict(draft['settings'],storage=str(self.root),submission=str(path),**self.tools())
+            # A saved draft keeps the storage path from its own source review, so
+            # merge in order instead of passing the same keyword twice.
+            cfg={**draft['settings'],**self.tools(),'storage':str(self.root),'submission':str(path)}
             request=requests/('review-retry-config-'+draft['id']+'.json');write(request,cfg)
             return self.task('render-project',request,row)
         if op=='update-recording-plan':
@@ -671,22 +693,31 @@ class Studio:
                 draft.update(previewSegment=p['segment'],previewEngine=p.get('engine') or self.store.settings['ttsBackend'],previewLanguage=p.get('language','yue'))
             request_dir=self.root/'requests';request_dir.mkdir(exist_ok=True)
             submission=request_dir/('studio-edit-'+uuid.uuid4().hex+'.json');write(submission,draft)
-            config=dict(draft['settings'],storage=str(self.root),submission=str(submission),**self.tools())
+            config={**draft['settings'],**self.tools(),'storage':str(self.root),'submission':str(submission)}
             request=request_dir/('studio-render-'+uuid.uuid4().hex+'.json');write(request,config)
             return self.task('render-project',request,row,preview)
-        if op=='record-event':
-            row=self.row(p['id']);event=p['event']
+        if op in ('record-event','record-events'):
+            # The native host sends one event or a small batch. A batch keeps the
+            # worker's stdout pipe free and writes the saved state once per batch.
+            row=self.row(p['id'])
+            events=[p['event']] if op=='record-event' else [e for e in (p.get('events') or []) if isinstance(e,dict)]
             from workflow_log import record
-            try:record(self.root,row,event,self.store.language)
-            except (OSError,ValueError,TypeError) as error:row['workflowLogWarning']=str(error)[:300]
-            if row.get('previewAttempt'):
-                if event.get('job'):row['previewJob']=event['job']
-                if event.get('output'):row['previewOutput']=event['output']
-                self.store.event(row,{k:v for k,v in event.items() if k not in ('job','output','review','journey','progress','partial')})
-            else:self.store.event(row,event)
+            for event in events:
+                try:record(self.root,row,event,self.store.language)
+                except (OSError,ValueError,TypeError) as error:row['workflowLogWarning']=str(error)[:300]
+                if row.get('previewAttempt'):
+                    if event.get('job'):row['previewJob']=event['job']
+                    if event.get('output'):row['previewOutput']=event['output']
+                    self.store.event(row,{k:v for k,v in event.items() if k not in ('job','output','review','journey','progress','partial')},save=False)
+                else:self.store.event(row,event,save=False)
+            self.store.save()
             return {}
         if op=='finish':
             row=self.row(p['id']);preview=row.pop('previewAttempt',False)
+            if p.get('stalled'):
+                # The native host ended a worker that stopped reporting. Saved
+                # work stays in the job folder; the queue may take one more attempt.
+                row['stallRecovery']=dict(reason='worker-silent',detectedBy='native-host',at=time.time())
             from diagnostics import finish
             try:
                 finish(self.root,row,p['code'],p.get('paused',False),p.get('stderr',''),success_without_movie=preview)

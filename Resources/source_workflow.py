@@ -17,7 +17,8 @@ def configure(cfg,meta,select_track):
  validate(cfg)
  if cfg.get('translationSource')=='audio-only':
   cfg.update(sourceWorkflowEffective='speech-only',sourceContentPriority='speech');return cfg
- tracks=[s for s in meta.get('streams',[]) if s.get('codec_type')=='subtitle' and s.get('codec_name') in ('subrip','ass','ssa','mov_text','webvtt','text')]
+ import subtitle_preference
+ tracks=[s for s in meta.get('streams',[]) if subtitle_preference.is_text_stream(s)]
  from pathlib import Path
  external=bool(cfg.get('subtitle') and Path(cfg['subtitle']).is_file())
  track=next((s for s in tracks if s.get('index')==cfg.get('subtitleStream')),None) if cfg.get('batchExplicitStream') else select_track(tracks,cfg.get('subtitleLanguage'),cfg.get('subtitleTitle'))
@@ -36,7 +37,9 @@ def configure(cfg,meta,select_track):
   cfg.update(translationSource='audio-and-ocr',subtitleSource='burned',subtitle=None,ocr=True,ocrAutoRegion=True,sourceContentPriority='speech' if effective=='speech-ocr' else 'ocr')
  if cfg.get('sourceSelectionRevision')=='basic-source-defaults-231':cfg['sourceSelectionMode']=requested
  cfg['sourceWorkflowEffective']=effective
- cfg['sourceWorkflowResolution']=dict(revision=cfg['sourceWorkflowRevision'],requested=requested,effective=effective,hasTextSubtitles=bool(has_text),ocrUsed=not has_text,automatic=requested=='auto' or requested not in choices,clocks='original-speech')
+ cfg['sourceWorkflowResolution']=dict(revision=cfg['sourceWorkflowRevision'],requested=requested,effective=effective,hasTextSubtitles=bool(has_text),ocrUsed=not has_text,automatic=requested=='auto' or requested not in choices,clocks='original-speech',
+  trackPreferenceRevision=(subtitle_preference.REVISION if has_text and not external else None),
+  trackFamily=(subtitle_preference.reason(track) if has_text and not external and track is not None else ('external-file' if external else None)))
  return cfg
 
 def priority(cfg):return cfg.get('sourceContentPriority','') if enabled(cfg) else ''

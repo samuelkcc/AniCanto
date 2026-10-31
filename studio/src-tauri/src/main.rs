@@ -37,7 +37,49 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, cleanup_pending:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","models","model-choices","model-removal-plan","remove-model","remove-retired-model","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","compute-status","project-terms","set-project-terms","performance-choice","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment"];
+const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","review-take-removal","models","model-choices","model-removal-plan","remove-model","remove-retired-model","activate-models","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","source-prepare-wait","compute-status","project-terms","set-project-terms","performance-choice","reset-production-parameters","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment","record-events"];
+// A conversion worker that stops reporting must not hold the automatic queue
+// forever. The longest measured silent stretch on the reference Mac is 301
+// seconds, so thirty minutes is a wide margin over legitimate model loading.
+const WORKER_STALL_SECONDS:u64=1800;
+const WORKER_STALL_TERM_GRACE:u64=20;
+const WORKER_STALL_POLL_SECONDS:u64=5;
+const WORKER_STALL_ENVIRONMENT:&str="CANTOSYNC_WORKER_STALL_SECONDS";
+// Worker events reach Python in small batches. One interpreter per event line
+// can fill the stdout pipe and freeze the worker inside print().
+const WORKER_EVENT_FLUSH_COUNT:usize=64;
+const WORKER_EVENT_FLUSH_MS:u128=1000;
+// A slow provider may still be delivering a large movie. One "keep waiting" answer buys
+// this much more quiet time, then the loading panel asks again. The reader process owns
+// the same rule; keep this equal to WAIT_GRACE in Resources/source_preparation.py.
+const SOURCE_WAIT_GRACE_SECONDS:u64=600;
+const SOURCE_WAIT_FILE:&str="wait.json";
+
+fn stall_bound(raw:Option<String>)->u64{
+    raw.and_then(|value|value.trim().parse::<u64>().ok()).filter(|seconds|*seconds>0).unwrap_or(WORKER_STALL_SECONDS)
+}
+#[derive(PartialEq,Debug)]
+enum WorkerLiveness{ Working, Terminate, ForceKill }
+fn worker_liveness(silent:u64,bound:u64,since_termination:Option<u64>)->WorkerLiveness{
+    if silent<bound{return WorkerLiveness::Working;}
+    match since_termination{None=>WorkerLiveness::Terminate,Some(waited) if waited<WORKER_STALL_TERM_GRACE=>WorkerLiveness::Working,Some(_)=>WorkerLiveness::ForceKill}
+}
+// Ask the owned worker to close. The force path also closes its process tree,
+// because an inherited child keeps the stdout pipe open after the worker dies.
+fn terminate_worker(host:&Host,task_id:&str,force:bool)->bool{
+    let mut active=host.active.lock().unwrap();
+    let Some(task)=active.as_mut().filter(|task|task.id==task_id) else{return false};
+    #[cfg(unix)]{
+        let pid=task.child.id() as i32;
+        if force{unsafe{libc::kill(-pid,libc::SIGKILL);}}
+        unsafe{libc::kill(pid,if force{libc::SIGKILL}else{libc::SIGTERM});}
+    }
+    #[cfg(windows)]{
+        if force{task._job.take();}
+        let _=task.child.kill();
+    }
+    true
+}
 
 impl Host {
     fn desktop_rpc(&self,op:&str,params:Value)->Result<Value,String>{
@@ -45,7 +87,7 @@ impl Host {
         if op=="export-logs" {return Ok(json!(self.debug_contents()));}
         // Hydration can wait for a File Provider. Progress and cancellation
         // must remain available while the normal Python RPC is occupied.
-        if ["source-prepare-status","source-prepare-cancel"].contains(&op) {
+        if ["source-prepare-status","source-prepare-cancel","source-prepare-wait"].contains(&op) {
             let directory=self.root.join("source-preparation");
             let token=params["operationID"].as_str();
             let path=if let Some(id)=token {
@@ -58,6 +100,23 @@ impl Host {
                 let id=token.ok_or("Missing source preparation operation.")?;
                 if value.is_null()||value["state"]=="preparing" {let own=directory.join(id);if own.symlink_metadata().is_ok_and(|m|m.file_type().is_symlink()){return Err("Invalid preparation directory.".into());}std::fs::create_dir_all(&own).map_err(|e|e.to_string())?;std::fs::write(own.join("cancel"),b"cancel").map_err(|e|e.to_string())?;}
                 return Ok(json!({"cancelRequested":true}));
+            }
+            // The Python RPC stays blocked while a provider read runs, so the host answers
+            // this request itself. The reader checks the grant on a wall clock, because it
+            // runs as its own process.
+            if op=="source-prepare-wait" {
+                let id=token.ok_or("Missing source preparation operation.")?;
+                let mut until=0.0;
+                if value.is_null()||value["state"]=="preparing" {
+                    let own=directory.join(id);
+                    if own.symlink_metadata().is_ok_and(|m|m.file_type().is_symlink()){return Err("Invalid preparation directory.".into());}
+                    std::fs::create_dir_all(&own).map_err(|e|e.to_string())?;
+                    let now=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_err(|e|e.to_string())?.as_secs_f64();
+                    until=now+SOURCE_WAIT_GRACE_SECONDS as f64;
+                    let grant=serde_json::to_vec(&json!({"until":until,"granted":now,"seconds":SOURCE_WAIT_GRACE_SECONDS})).map_err(|e|e.to_string())?;
+                    std::fs::write(own.join(SOURCE_WAIT_FILE),grant).map_err(|e|e.to_string())?;
+                }
+                return Ok(json!({"waitGrantedUntil":until}));
             }
             return Ok(if value["state"]=="preparing"&&value["hostPID"].as_u64()!=Some(std::process::id() as u64){Value::Null}else{value});
         }
@@ -72,14 +131,19 @@ impl Host {
             return Ok(if value["operationID"]==id{value}else{Value::Null});
         }
         let removing_model=["model-removal-plan","remove-model","remove-retired-model","project-cache-plan","clear-project-cache","source-language"].contains(&op);
+        // A model switch rewrites the installed-role settings, so it shares the
+        // model-mutation task lock and must not run over a live conversion.
+        let activating_model=op=="activate-models";
         let speech_mutation=["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op);
         let reset_mutation=["reset-video-plan","reset-video"].contains(&op);
-        let _task=if removing_model || speech_mutation || reset_mutation {Some(self.task_lock.lock().unwrap())} else {None};
+        let _task=if removing_model || activating_model || speech_mutation || reset_mutation {Some(self.task_lock.lock().unwrap())} else {None};
         if removing_model && (self.active.lock().unwrap().is_some() || self.older_app_open()){
             return Err(if op=="source-language"{"Pause processing before checking another source language."}else if op.contains("cache"){"Pause processing before clearing cache."}else{"Pause processing before removing a model."}.into());
         }
+        if activating_model && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing models.".into());}
+        if op=="reset-production-parameters" && self.active.lock().unwrap().is_some(){return Err("Pause processing before resetting production settings.".into());}
         if ["speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before changing saved speech recordings.".into());}
-        if ["review-resolution","review-triage","set-subtitle-source","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan","set-subtitle-alignment"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
+        if ["review-resolution","review-take-removal","review-triage","set-subtitle-source","set-external-subtitle","set-project-terms","performance-choice","update-recording-plan","set-subtitle-alignment"].contains(&op) && self.active.lock().unwrap().is_some(){return Err("Pause processing before making an explicit review choice.".into());}
         if reset_mutation && (self.active.lock().unwrap().is_some() || self.older_app_open()){return Err("Pause processing before resetting a video.".into());}
         if op=="remove" && self.active.lock().unwrap().is_some(){return Err("Pause processing before deleting a project.".into());}
         if self.python().is_none(){
@@ -378,19 +442,49 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
     std::fs::create_dir_all(&log_dir).map_err(|e|e.to_string())?;
     let log=Arc::new(Mutex::new(OpenOptions::new().create(true).append(true).open(log_dir.join("process.log")).map_err(|e|e.to_string())?));
     let stderr=Arc::new(Mutex::new(String::new()));
-    let errbuf=stderr.clone();let errlog=log.clone();let errapp=app.clone();
+    // Last worker output stamp. The liveness monitor below reads it.
+    let liveness=Arc::new(Mutex::new(Instant::now()));
+    // Set when this host ended a stalled worker, so the saved row records why.
+    let stalled=Arc::new(AtomicBool::new(false));
+    let monitored=row.is_some();
+    let errbuf=stderr.clone();let errlog=log.clone();let errapp=app.clone();let errlive=liveness.clone();
     let err_thread=std::thread::spawn(move||{for line in BufReader::new(err).lines().map_while(Result::ok){
+        *errlive.lock().unwrap()=Instant::now();
         let _=writeln!(errlog.lock().unwrap(),"{line}");let mut b=errbuf.lock().unwrap();b.push_str(&line);b.push('\n');if b.len()>24000 {let cut=b.len()-12000;let cut=(cut..b.len()).find(|i|b.is_char_boundary(*i)).unwrap();b.drain(..cut);}drop(b);
         let _=errapp.emit("studio-log",line);
     }});
     let run_id=id.clone();
+    let outline=log.clone();let outlive=liveness.clone();let stall_flag=stalled.clone();
+    // Clone the handles the liveness monitor needs before the stdout thread takes
+    // its own. The monitor runs after that thread is spawned, so it cannot borrow
+    // the originals here.
+    let mon_host=host.clone();let mon_app=app.clone();let mon_log=log.clone();
+    let mon_stderr=stderr.clone();let mon_live=liveness.clone();let monitor_id=id.clone();
     std::thread::spawn(move||{
+        // Persist worker events in small batches. A Python interpreter per event
+        // line can back up the stdout pipe and freeze the worker inside print().
+        let record_events=|events:&[Value]|{
+            let Some(ref row_id)=row else{return Ok(serde_json::Value::Null)};
+            host.rpc("record-events",json!({"id":row_id,"events":events}))
+        };
+        let mut pending:Vec<Value>=Vec::new();let mut flushed=Instant::now();
         for line in BufReader::new(out).lines().map_while(Result::ok){
-            let _=writeln!(log.lock().unwrap(),"{line}");
+            *outlive.lock().unwrap()=Instant::now();
+            let _=writeln!(outline.lock().unwrap(),"{line}");
             if let Ok(event)=serde_json::from_str::<Value>(&line){if event.is_object(){
-                if let Some(ref row)=row{let _=host.rpc("record-event",json!({"id":row,"event":event}));}
+                if row.is_some(){
+                    pending.push(event.clone());
+                    if pending.len()>=WORKER_EVENT_FLUSH_COUNT || flushed.elapsed().as_millis()>=WORKER_EVENT_FLUSH_MS {
+                        if let Err(error)=record_events(&pending){let _=writeln!(outline.lock().unwrap(),"Event journal write failed: {error}");}
+                        pending.clear();flushed=Instant::now();
+                    }
+                }
                 let _=app.emit("studio-event",json!({"runID":run_id,"rowID":row,"event":event}));continue;
             }}let _=app.emit("studio-log",line);
+        }
+        if !pending.is_empty(){
+            if let Err(error)=record_events(&pending){let _=writeln!(outline.lock().unwrap(),"Event journal write failed: {error}");}
+            pending.clear();
         }
         let (mut code,paused)=loop {
             let result={let mut active=host.active.lock().unwrap();match active.as_mut(){
@@ -405,7 +499,8 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
             }
         }
         let mut finalization_error=None;
-        if let Some(ref row)=row{if let Err(error)=host.rpc("finish",json!({"id":row,"code":code,"paused":paused,"stderr":*stderr.lock().unwrap()})){
+        let worker_stalled=stalled.load(Ordering::SeqCst);
+        if let Some(ref row)=row{if let Err(error)=host.rpc("finish",json!({"id":row,"code":code,"paused":paused,"stderr":*stderr.lock().unwrap(),"stalled":worker_stalled})){
             code=1;let _=writeln!(log.lock().unwrap(),"Queue finalization failed: {error}");
             let _=app.emit("studio-log",format!("Queue finalization failed: {error}"));finalization_error=Some(error);
         }}
@@ -414,7 +509,7 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
                 code=1;finalization_error=Some(error);
             }
         }
-        let payload=json!({"runID":run_id,"rowID":row,"code":code,"paused":paused,"action":spec["action"],"modelID":spec["modelID"],"finalizationError":finalization_error,"nativeQueue":spec["nativeQueue"]});
+        let payload=json!({"runID":run_id,"rowID":row,"code":code,"paused":paused,"action":spec["action"],"modelID":spec["modelID"],"finalizationError":finalization_error,"nativeQueue":spec["nativeQueue"],"workerStalled":worker_stalled});
         // Publish status and clear ownership atomically with respect to status
         // polling. A poll must never see idle without its completion receipt.
         {let mut active=host.active.lock().unwrap();app.state::<TaskLifecycle>().finished(payload.clone());active.take();}
@@ -431,6 +526,44 @@ fn launch(host:Arc<Host>,app:tauri::AppHandle,spec:Value)->Result<Value,String> 
             let active=grace_host.active.lock().unwrap();if active.is_none()&&!grace_app.state::<QueueControl>().enabled(){grace_app.state::<TaskLifecycle>().release(&completed_id);}
         });
     });
+    // Conversion workers only. A setup or download task can stay silent for a
+    // long time on a slow connection, and it holds no saved conversion to lose.
+    if monitored {
+        let mon_stalled=stall_flag;
+        std::thread::spawn(move||{
+            let bound=stall_bound(std::env::var(WORKER_STALL_ENVIRONMENT).ok());
+            let mut termination:Option<Instant>=None;
+            loop {
+                std::thread::sleep(std::time::Duration::from_secs(WORKER_STALL_POLL_SECONDS));
+                let (mine,paused)= { let active=mon_host.active.lock().unwrap();
+                    (active.as_ref().is_some_and(|task|task.id==monitor_id),active.as_ref().map(|task|task.paused).unwrap_or(false)) };
+                if !mine{break;}
+                // A user pause is intentional work, not a stall. Keep the clock fresh.
+                if paused{*mon_live.lock().unwrap()=Instant::now();termination=None;continue;}
+                let silent=mon_live.lock().unwrap().elapsed().as_secs();
+                let waited=termination.map(|at|at.elapsed().as_secs());
+                match worker_liveness(silent,bound,waited) {
+                    WorkerLiveness::Working=>{},
+                    WorkerLiveness::Terminate=>{
+                        let note=format!("Worker produced no output for {} seconds. AniCanto ended this worker so the automatic queue could continue. Saved work stays in its job folder.",silent);
+                        mon_stalled.store(true,Ordering::SeqCst);
+                        {let mut buffer=mon_stderr.lock().unwrap();buffer.push_str(&note);buffer.push('\n');}
+                        let _=writeln!(mon_log.lock().unwrap(),"{note}");
+                        let _=mon_app.emit("studio-log",note);
+                        if !terminate_worker(&mon_host,&monitor_id,false){break;}
+                        termination=Some(Instant::now());
+                    },
+                    WorkerLiveness::ForceKill=>{
+                        let note="Worker did not close after the stop request. AniCanto closed the worker process tree.";
+                        {let mut buffer=mon_stderr.lock().unwrap();buffer.push_str(note);buffer.push('\n');}
+                        let _=writeln!(mon_log.lock().unwrap(),"{note}");
+                        let _=mon_app.emit("studio-log",note);
+                        terminate_worker(&mon_host,&monitor_id,true);break;
+                    }
+                }
+            }
+        });
+    }
     Ok(json!({"id":id}))
 }
 #[tauri::command]
@@ -671,6 +804,41 @@ mod cleanup_progress_tests {
         for path in [&output,&preview,&root]{assert!(reveal_target(&root,path.to_str().unwrap()).is_ok());}
         for path in [&unrelated,&outside]{assert!(reveal_target(&root,path.to_str().unwrap()).is_err());}
         std::fs::remove_dir_all(folder).unwrap();
+    }
+    #[test]
+    fn stall_bound_keeps_the_default_and_accepts_the_diagnostic_override(){
+        assert_eq!(stall_bound(None),WORKER_STALL_SECONDS);
+        assert_eq!(stall_bound(Some("45".into())),45);
+        assert_eq!(stall_bound(Some("  45  ".into())),45);
+        for unusable in ["0","","off","-5","1.5"]{assert_eq!(stall_bound(Some(unusable.into())),WORKER_STALL_SECONDS,"{unusable} must fall back to the default bound");}
+    }
+    #[test]
+    fn silent_output_escalates_once_and_only_after_the_stop_grace(){
+        assert_eq!(worker_liveness(WORKER_STALL_SECONDS-1,WORKER_STALL_SECONDS,None),WorkerLiveness::Working);
+        assert_eq!(worker_liveness(WORKER_STALL_SECONDS,WORKER_STALL_SECONDS,None),WorkerLiveness::Terminate);
+        assert_eq!(worker_liveness(WORKER_STALL_SECONDS+30,WORKER_STALL_SECONDS,Some(WORKER_STALL_TERM_GRACE-1)),WorkerLiveness::Working);
+        assert_eq!(worker_liveness(WORKER_STALL_SECONDS+120,WORKER_STALL_SECONDS,Some(WORKER_STALL_TERM_GRACE)),WorkerLiveness::ForceKill);
+    }
+    #[test]
+    #[cfg(unix)]
+    fn only_the_owned_worker_is_stopped_and_both_paths_reach_it(){
+        let nonce=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos();
+        let root=std::env::temp_dir().join(format!("anicanto-stall-{}-{nonce}",std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
+        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
+        let own=|host:&Host,id:&str|{let child=Command::new("/bin/sleep").arg("300").stdout(Stdio::piped()).spawn().unwrap();
+            *host.active.lock().unwrap()=Some(Active{child,id:id.into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()});};
+        own(&host,"owned");
+        assert!(!terminate_worker(&host,"another-task",false),"a finished or replaced task must not be stopped twice");
+        assert!(host.active.lock().unwrap().is_some(),"the wrong id must leave the owned worker alone");
+        assert!(terminate_worker(&host,"owned",false));
+        {let mut active=host.active.lock().unwrap();let status=active.as_mut().unwrap().child.wait().unwrap();
+            assert_ne!(status.code(),Some(0),"a stopped worker never reports success");}
+        own(&host,"forced");
+        assert!(terminate_worker(&host,"forced",true));
+        {let mut active=host.active.lock().unwrap();assert!(active.as_mut().unwrap().child.wait().unwrap().code().is_none(),"the force path ends the worker by signal");}
+        drop(host);std::fs::remove_dir_all(root).unwrap();
     }
 
 }

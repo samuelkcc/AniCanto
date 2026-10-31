@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-27-native-caption-music-proof",
+  "revision": "workflow-controls-guide-34-caption-only-platform-scope",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -38,6 +38,25 @@
         "zh-HK": "全域設定預設開啟，製作設定的改動會套用至沿用全域設定的影片。關閉後，目前影片會獨立儲存設定，不受之後的全域改動影響。重新開啟便會沿用全域設定。已開始或暫停的工作保留提交時的設定。",
         "zh-CN": "全局默认开启，制作改动会应用于沿用全局设置的视频。关闭后，当前视频会独立保存设置，不再受之后的全局改动影响。重新开启则沿用全局设置。已开始或暂停的任务保留提交时的设置。",
         "ja": "共通設定は初期状態でオンです。共通設定を使う動画に制作設定の変更を適用します。オフにすると、選択中の動画の設定を個別に保存し、その後の共通設定の変更は反映しません。再びオンにすると共通設定を使います。実行中・一時停止中のジョブは送信済み設定を保持します。"
+      },
+      "platforms": [
+        "macOS",
+        "Windows"
+      ]
+    },
+    {
+      "id": "autoApproveSourceLanguage",
+      "title": {
+        "en": "Desktop: Auto-approve the detected source language",
+        "zh-HK": "桌面：自動接納偵測到的原聲語言",
+        "zh-CN": "桌面：自动接受检测到的原声语言",
+        "ja": "デスクトップ：検出した元音声の言語を自動で承認"
+      },
+      "body": {
+        "en": "This switch is on by default. The app uses the source language it detected and does not ask you to confirm it again. This holds for one video and for the whole queue. Turn it off to confirm the language yourself before each new conversion. The app still asks when it found no language, or when the selected voice engine cannot read that language. Detected Japanese never needs a second confirmation. Saved and paused jobs keep the language they were submitted with.",
+        "zh-HK": "呢個掣預設開啟。程式直接用佢偵測到嘅原聲語言，唔會再要你確認；一條影片同成個佇列都一樣。關掉後，每次開始新轉換前都要自己確認語言。偵測唔到語言，或者所選聲音引擎讀唔通嗰種語言，程式仍會詢問。偵測到日文一向唔使再確認。已保存或暫停嘅工作保留提交時嘅語言。",
+        "zh-CN": "此开关默认开启。程序直接使用它检测到的原声语言，不再要求你确认；单个视频和整个队列都一样。关闭后，每次开始新任务前需自行确认语言。若未检测到语言，或所选声音引擎不支持该语言，程序仍会询问。检测到日语一向不需再次确认。已保存或暂停的任务保留提交时的语言。",
+        "ja": "このスイッチは初期状態でオンです。アプリは検出した元音声の言語をそのまま使い、再確認を求めません。1本の動画もキュー全体も同じです。オフにすると、新しい変換のたびに言語を自分で確認します。言語を特定できない場合や、選択中の音声エンジンがその言語に対応していない場合は確認します。日本語の検出は再確認が不要です。保存済み・一時停止中のジョブは送信時の言語を保持します。"
       },
       "platforms": [
         "macOS",
@@ -430,10 +449,10 @@
         "ja": "翻訳ソースの自動検出"
       },
       "body": {
-        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。 如字幕選單提供語言或樣式版本，請先選擇所需版本再新建轉換，保留所選文字及原有顯示時間。舊工作沿用已保存來源，之後更改預覽不會替換來源。",
-        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。 如果字幕菜单提供语言或样式版本，请先选择所需版本再新建转换，保留所选文本和原显示时间。旧任务保留已保存来源，以后更改预览不会替换来源。",
-        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow. If the subtitle menu offers language or style versions, select the required version before a new conversion. Keep its selected text and original display times. Saved jobs retain their earlier source; a later preview change does not replace it.",
-        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。 字幕メニューに言語やスタイルの選択がある場合は、新規変換前に選びます。選択した文章と元の表示時刻を保ちます。保存済みジョブの入力は、後からのプレビュー変更で置き換えません。"
+        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。 如字幕選單提供語言或樣式版本，請先選擇所需版本再新建轉換，保留所選文字及原有顯示時間。舊工作沿用已保存來源，之後更改預覽不會替換來源。 一部影片有多條字幕軌時，自動偵測先讀中文字幕：先繁體中文，後簡體中文；沒有中文字幕時才用其他語言輔助翻譯。你手動選擇的字幕軌會取代這個次序。",
+        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。 如果字幕菜单提供语言或样式版本，请先选择所需版本再新建转换，保留所选文本和原显示时间。旧任务保留已保存来源，以后更改预览不会替换来源。 一部影片有多条字幕轨时，自动检测先读中文字幕：先繁体中文，后简体中文；没有中文字幕时才用其他语言辅助翻译。手动选择的字幕轨会取代该顺序。",
+        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow. If the subtitle menu offers language or style versions, select the required version before a new conversion. Keep its selected text and original display times. Saved jobs retain their earlier source; a later preview change does not replace it. When a movie has several subtitle tracks, Automatic reads the Chinese track first: Traditional Chinese, then Simplified Chinese. Another language assists only when no Chinese track exists. Your own track choice replaces this order.",
+        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。 字幕メニューに言語やスタイルの選択がある場合は、新規変換前に選びます。選択した文章と元の表示時刻を保ちます。保存済みジョブの入力は、後からのプレビュー変更で置き換えません。 字幕トラックが複数ある動画では、自動検出が中国語トラックを先に読みます。順序は繁体字中国語、次に簡体字中国語です。中国語トラックがない場合だけ他の言語が翻訳を補助します。手動選択は自動の順序より優先します。"
       }
     },
     {
@@ -509,6 +528,51 @@
         "zh-CN": "当前已有可用配音；AI 核对结果另行显示，不等于内容已验收。",
         "en": "A usable target recording is available. Optional check status is separate from content acceptance.",
         "ja": "利用できる対象録音があります。任意検査の状態と内容の承認は別です。"
+      }
+    },
+    {
+      "id": "reportSearch",
+      "title": {
+        "zh-HK": "搜尋對白",
+        "zh-CN": "搜索对白",
+        "en": "Search dialogue",
+        "ja": "台詞を検索"
+      },
+      "body": {
+        "zh-HK": "輸入文字或行號。報告只顯示符合嘅對白行。搜尋唔會改變分類、錄音或設定。",
+        "zh-CN": "输入文字或行号。报告仅显示匹配的对白行。搜索不会改变分类、录音或设置。",
+        "en": "Type words or a line number. The report shows only the matching dialogue lines. The search does not change categories, recordings, or settings.",
+        "ja": "単語または行番号を入力します。レポートには一致する台詞行だけが表示されます。検索は分類、録音、設定を変えません。"
+      }
+    },
+    {
+      "id": "reviewChecked",
+      "title": {
+        "zh-HK": "我已覆核",
+        "zh-CN": "我已复核",
+        "en": "Checked by me",
+        "ja": "確認した"
+      },
+      "body": {
+        "zh-HK": "只顯示你標為「我已覆核」嘅對白。呢個狀態記錄你親身聽過嘅聲音。佢唔會改成品，亦唔係 AI 品質通過。",
+        "zh-CN": "仅显示你标为“我已复核”的对白。该状态记录你亲自听过的声音。它不会改变成品，也不是 AI 质量通过。",
+        "en": "Shows only the lines you marked Checked by me. The state records your own listening. It does not change exported audio and is not an AI quality pass.",
+        "ja": "「確認した」と印を付けた台詞だけを表示します。この状態はあなたの試聴記録です。書き出し音声は変更されず、AI品質合格ではありません。"
+      }
+    },
+    {
+      "id": "reviewPending",
+      "title": {
+        "zh-HK": "待處理",
+        "zh-CN": "待处理",
+        "en": "Not checked yet",
+        "ja": "未確認"
+      },
+      "body": {
+        "zh-HK": "顯示你尚未標「我已覆核」嘅對白，包括揀咗「稍後處理」嘅。改台詞、時段或採用錄音後，呢句會返回待處理。",
+        "zh-CN": "显示你尚未标为“我已复核”的对白，包括选择“稍后处理”的。改动台词、时段或采用录音后，该对白回到待处理。",
+        "en": "Shows the lines you have not marked Checked by me, including lines set to Review later. A script, time slot, or recording change returns the line to this list.",
+        "ja": "「確認した」が付いていない台詞を表示します。「後で確認」の行も含まれます。台詞・時刻・採用音声が変わると、この行に戻ります。"
       }
     },
     {
@@ -595,10 +659,10 @@
         "ja": "会話のない字幕は表示のみ"
       },
       "body": {
-        "en": "This independent switch is on for new Basic and Expert subtitle-led jobs. Complete source and separated-audio evidence must confirm no dialogue. Keep captions and their display times. A supported music-only check also requires no recognized words inside the actual caption, a near-silent vocal window and continuous music/activity evidence. It reserves at most two paired inspections per job; failure or resume does not restore attempts. Uncertain, quiet or offscreen speech keeps normal dubbing. Saved jobs retain their frozen policy. Each platform needs its own tests and installation.",
-        "zh-HK": "這是獨立開關，新建以字幕為主要來源的基本及專家工作預設開啟。原聲及分離音訊的完整證據必須確認沒有對白，並保留字幕及顯示時間。支援的純音樂檢查亦要求字幕實際時段沒有辨識到文字、分離人聲接近靜音，以及連續的音樂與活動證據。每份工作最多預留兩次雙音訊檢查；失敗或續做不會恢復次數。不確定、細聲或畫面外的對白仍會配音。已保存工作沿用原有規則，各平台須分別測試及安裝。",
-        "zh-CN": "这是独立开关，新建以字幕为主要来源的基本及专家任务默认开启。原声和分离音频的完整证据必须确认没有对白，并保留字幕及显示时间。支持的纯音乐检查还要求字幕实际时段没有识别文字、分离人声接近静音，以及连续的音乐和活动证据。每个任务最多预留两次双音频检查；失败或继续处理不会恢复次数。不确定、轻声或画面外的对白仍会配音。已保存任务沿用原有规则，各平台须分别测试和安装。",
-        "ja": "独立したスイッチで、字幕を主入力とする新規Basic・Expert作業ではオンです。元音声と分離音声の完全な証拠で発話がないと確認し、字幕と表示時刻を残します。対応する音楽のみの検査には、実際の字幕区間に認識語がないこと、ほぼ無音の分離ボーカル、連続した音楽・活動の証拠も必要です。1作業につき2組までの検査を事前確保し、失敗や再開で回数を戻しません。不確か、小声、画面外の発話は通常どおり生成します。保存済み作業の規則は維持し、各プラットフォームで個別にテスト・導入します。"
+        "en": "On desktop, iPad and iPhone this independent switch is on for new Basic and Expert subtitle-led jobs. Complete source and separated-audio evidence must confirm no dialogue. Keep captions and their display times. A supported music-only check also requires no recognized words inside the actual caption, a near-silent vocal window and continuous music/activity evidence. It reserves at most two paired inspections per job; failure or resume does not restore attempts. Uncertain, quiet or offscreen speech keeps normal dubbing. Saved jobs retain their frozen policy. Each platform needs its own tests and installation.",
+        "zh-HK": "桌面版、iPad 及 iPhone 的這個獨立開關，在新建以字幕為主要來源的基本及專家工作預設開啟。原聲及分離音訊的完整證據必須確認沒有對白，並保留字幕及顯示時間。支援的純音樂檢查亦要求字幕實際時段沒有辨識到文字、分離人聲接近靜音，以及連續的音樂與活動證據。每份工作最多預留兩次雙音訊檢查；失敗或續做不會恢復次數。不確定、細聲或畫面外的對白仍會配音。已保存工作沿用原有規則，各平台須分別測試及安裝。",
+        "zh-CN": "桌面版、iPad 及 iPhone 的这个独立开关，在新建以字幕为主要来源的基本及专家任务默认开启。原声和分离音频的完整证据必须确认没有对白，并保留字幕及显示时间。支持的纯音乐检查还要求字幕实际时段没有识别文字、分离人声接近静音，以及连续的音乐和活动证据。每个任务最多预留两次双音频检查；失败或继续处理不会恢复次数。不确定、轻声或画面外的对白仍会配音。已保存任务沿用原有规则，各平台须分别测试和安装。",
+        "ja": "デスクトップ、iPad、iPhone では、この独立スイッチは字幕を主入力とする新規Basic・Expert作業でオンです。元音声と分離音声の完全な証拠で発話がないと確認し、字幕と表示時刻を残します。対応する音楽のみの検査には、実際の字幕区間に認識語がないこと、ほぼ無音の分離ボーカル、連続した音楽・活動の証拠も必要です。1作業につき2組までの検査を事前確保し、失敗や再開で回数を戻しません。不確か、小声、画面外の発話は通常どおり生成します。保存済み作業の規則は維持し、各プラットフォームで個別にテスト・導入します。"
       }
     },
     {
@@ -614,6 +678,51 @@
         "zh-HK": "桌面新廣東話稿在首輪翻譯加入共用語境例子：「廢話少說」可用「廢話少講」；「搞不好」要分清「可能／分分鐘」與「整唔好」的意思，不能機械替換。保留「小說」等名詞、專案人名及引號內文字，不會全局把「說」換成「講」或「不好」換成「唔好」。例子不增加 AI 呼叫或修復輪次，亦不改寫已保存稿件或錄音；模型實際用字仍需試聽。iPad／iPhone 實作待完成。",
         "zh-CN": "桌面新粤语稿在首轮翻译加入共用语境示例：“廢話少說”可用“廢話少講”；“搞不好”要区分“可能／分分鐘”和“整唔好”的含义，不能机械替换。保留“小說”等名词、项目人名与引号内文字，不会全局把“說”换成“講”或“不好”换成“唔好”。示例不增加 AI 调用或修复轮次，也不改写已保存稿件与录音；模型实际用字仍需试听。iPad／iPhone 实现待完成。",
         "ja": "新しいデスクトップの広東語原稿では、最初の翻訳に共通の文脈例を加えます。「廢話少說」は「廢話少講」へ、「搞不好」は可能性の「可能・分分鐘」と修理不能の「整唔好」を区別します。「小說」などの名詞、登録名、引用文を守り、「說」や「不好」を一括置換しません。AI呼出しや修復の回数を増やさず、保存済みの原稿・録音も変更しません。モデルの実際の言い回しは試聴確認が必要です。iPad・iPhoneの実装は未完了です。"
+      }
+    },
+    {
+      "id": "reviewLineWords",
+      "title": {
+        "zh-HK": "在校對報告編輯此行的配音稿",
+        "zh-CN": "在校对报告编辑此行配音稿",
+        "en": "Edit one line in the review report",
+        "ja": "校正レポートで1行の台詞を編集"
+      },
+      "body": {
+        "zh-HK": "在校對報告每條聲道下方的「呢句嘅配音台詞」輸入文字，然後按「儲存台詞」。儲存只會更新此行的配音稿；不會開始錄音，也不會更改現正成品所使用的聲音。之後按「為呢句重新生成錄音」，系統才會按新稿錄音。舊錄音、舊成品及已儲存的選擇會保留。",
+        "zh-CN": "在校对报告每条声道下方的“此行配音台词”输入文字，再点击“保存台词”。保存只更新此行的配音稿；不会开始录音，也不会改变当前采用的声音或成片。之后点击“为此行生成新录音”才会按新稿录音。旧录音、旧成片与已保存选择会保留。",
+        "en": "Type the target words in the box under the voice track, then select Save words. Saving updates the script for that line only. It does not start a recording and does not change the audio in the current export. Select Generate a new take for this line to record the new words. Older recordings, older exports and saved choices stay unchanged.",
+        "ja": "音声トラックの下の欄に目的言語の台詞を入力し、「台詞を保存」を押します。保存はその行の原稿だけを更新します。録音は始まらず、現在の出力の音声も変わりません。「この行の新しいテイクを生成」を押すと新しい台詞で録音します。以前の録音・出力・選択はそのまま残ります。"
+      }
+    },
+    {
+      "id": "reviewLineEngineRetake",
+      "title": {
+        "zh-HK": "為一行選擇配音引擎並重新錄音",
+        "zh-CN": "为一行选择配音引擎并重录",
+        "en": "Choose an engine and re-record one line",
+        "ja": "1行のエンジンを選んで再録音"
+      },
+      "body": {
+        "zh-HK": "當有兩個或以上已部署的配音引擎時，每行會顯示「新錄音使用的配音引擎」。選擇一個引擎，然後按「為呢句重新生成錄音」；系統只會重新錄音此行和這條聲道。其他行、其他聲道及舊錄音會保留。只有一個配音引擎時不會顯示這個選單。此動作不會重新錄音其他行，也不會增加自動修復次數。",
+        "zh-CN": "有两个或以上已部署的配音引擎时，每行会显示“新录音使用的配音引擎”。选择一个，再点击“为此行生成新录音”，只重录此行此声道。其他行、其他声道和旧录音会保留。只有两个引擎时才显示此菜单。该操作不会重录其他行，也不会增加自动修复次数。",
+        "en": "When two or more voice engines are deployed, each line shows Voice engine for a new recording. Select one engine, then select Generate a new take for this line. Only that line and that language track are recorded again. Other lines, other tracks and older recordings stay unchanged. The menu stays hidden when only one engine is available. This action takes no other line and adds no automatic repair allowance.",
+        "ja": "2つ以上の音声エンジンを配置している場合、各行に「新しい録音に使う音声エンジン」が表示されます。エンジンを選んで「この行の新しいテイクを生成」を押すと、その行とその言語トラックだけを再録音します。他の行・他のトラック・以前の録音はそのままです。エンジンが1つのときはこのメニューを表示しません。他の行を再録音せず、自動修復の回数も増えません。"
+      }
+    },
+    {
+      "id": "reviewLineTakeRemoval",
+      "title": {
+        "zh-HK": "移除不使用的錄音",
+        "zh-CN": "移除不使用的录音",
+        "en": "Remove an unused recording",
+        "ja": "未使用の録音を削除"
+      },
+      "body": {
+        "zh-HK": "移除錄音由使用者決定，程式不會自動執行。只有在處理停止時，這個按鈕才可以使用。現正成品所使用的錄音、你已選擇的錄音，以及與成品有關聯的錄音，其「移除呢段錄音」按鈕會停用。移除動作會把該 WAV 檔案移到這條影片的「已移除錄音」(discarded-recordings) 資料夾，並在該處保留一份記錄檔；校對報告不會再列出該錄音。此動作不會更改成品、已儲存的選擇、校對狀態或自動修復次數，也不代表確認此行正確。",
+        "zh-CN": "移除录音只由用户决定，程序不会自动执行。只有处理停止时才能使用。当前成片采用、你已选择或有关联成品的录音，其 Remove 按钮会禁用。Remove 会把该 WAV 移入此视频的已移除录音 (discarded-recordings) 文件夹，并保留一份记录文件；校对报告不再列出该录音。该操作不改成片、已保存选择、校对状态或自动修复次数，也不表示确认此行正确。",
+        "en": "You decide. The app never removes a recording on its own. The control is available only while processing is stopped. The Remove button stays disabled for audio used by the current export, audio in a saved choice, and audio linked to an export. Remove moves that WAV into the discarded-recordings folder for the video and keeps a record file there. The review report no longer lists it. This changes no export, saved choice, review status or repair allowance, and it does not certify the line.",
+        "ja": "削除は利用者が決めます。アプリが自動で削除することはありません。処理が停止している時だけ使えます。現在の出力で使用済み、保存済みの選択にある、または出力に関連付けられた録音の Remove ボタンは無効です。Remove はその WAV をこの動画の削除済み録音 (discarded-recordings) フォルダへ移動し、記録ファイルを保存します。校正レポートには表示されません。出力、保存済みの選択、確認状態、修復回数、いずれも変わらず、行の正しさの認証でもありません。"
       }
     }
   ],

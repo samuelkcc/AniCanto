@@ -2,6 +2,8 @@
 export const LOCALE={
   "ui": {
 "Selected location unavailable. Debug report saved to:": "所选位置无法保存，调试记录已保存至：",
+// Review: the recorded voice reference behind each saved recording.
+"Used a different separated voice than the first recording of this line.": "采用了与本句首次录音不同的分离语音。",
 "Retained source audio":"保留原声",
 "Shared subtitle continuation":"共用字幕延续片段",
 "No assigned subtitle wording":"尚无配对字幕文字",
@@ -869,6 +871,16 @@ export const LOCALE={
     "The finished video is saved even when review notes remain.": "即使仍有审核备注，完成的视频也会被保存。",
     "Normal mode keeps the first audible take and only replaces a missing recording.": "普通模式保留第一个可听录音，仅替换缺失的录音。",
     "Saved choice pending a new video export.": "已保存的选择等待新的视频导出。",
+    "Dubbing words for this line": "此行配音台词",
+    "Voice engine for a new recording": "新录音使用的配音引擎",
+    "Save words": "保存台词",
+    "Remove this recording": "移除此录音",
+    "Words saved. Generate a new take to record them.": "台词已保存。生成新录音后才会按新台词录制。",
+    "Recording removed. It stays in the discarded-recordings folder.": "录音已移除。文件移入此视频的“已移除录音”(discarded-recordings) 文件夹。",
+    "Confirm recording removal": "确认移除录音",
+    "The recording moves to the discarded-recordings folder of this video. Nothing else changes.": "此录音移入此视频的“已移除录音”(discarded-recordings) 文件夹。其他内容不变。",
+    "The current export, your saved choices and the review notes stay as they are. This does not certify the line as correct.": "当前导出、您保存的选择和审核备注保持不变。此操作不表示确认此行正确。",
+    "Remove recording": "移除录音",
     "Review note": "审查笔记",
     "Original English voice": "原始英语语音",
     "Normal mode prefers the first take, but retries confirmed language, missing-word and timing problems.": "普通模式优先选择第一个录音，但会重试确认的语言、缺词和时序问题。",

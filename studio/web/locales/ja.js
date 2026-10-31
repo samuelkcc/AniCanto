@@ -2,6 +2,8 @@
 export const LOCALE={
   "ui": {
 "Selected location unavailable. Debug report saved to:": "選択した場所に保存できません。デバッグ記録の保存先：",
+// レビュー：保存済み各録音に使った分離音声の記録。
+"Used a different separated voice than the first recording of this line.": "この行の最初の録音とは異なる分離音声を使用しました。",
 "Retained source audio":"保持した原音",
 "Shared subtitle continuation":"共有字幕の継続区間",
 "No assigned subtitle wording":"割り当てられた字幕がありません",
@@ -869,6 +871,16 @@ export const LOCALE={
     "The finished video is saved even when review notes remain.": "レビューノートが残っていても、完成した動画は保存されます。",
     "Normal mode keeps the first audible take and only replaces a missing recording.": "通常モードは最初の明瞭なテイクを保持し、欠落した録音のみを置き換えます。",
     "Saved choice pending a new video export.": "新しい動画エクスポートを待機中の選択が保存されました。",
+    "Dubbing words for this line": "この行の吹き替え台詞",
+    "Voice engine for a new recording": "新しい録音に使う音声エンジン",
+    "Save words": "台詞を保存",
+    "Remove this recording": "この録音を削除",
+    "Words saved. Generate a new take to record them.": "台詞を保存しました。新しいテイクを生成すると新しい台詞で録音されます。",
+    "Recording removed. It stays in the discarded-recordings folder.": "録音を削除しました。ファイルはこの動画の「削除済み録音」(discarded-recordings) フォルダに移動します。",
+    "Confirm recording removal": "録音の削除を確認",
+    "The recording moves to the discarded-recordings folder of this video. Nothing else changes.": "この録音はこの動画の「削除済み録音」(discarded-recordings) フォルダに移動します。他の内容は変わりません。",
+    "The current export, your saved choices and the review notes stay as they are. This does not certify the line as correct.": "現在のエクスポート、保存済みの選択、レビューノートはそのままです。この行が正しいことを保証するものではありません。",
+    "Remove recording": "録音を削除",
     "Review note": "レビューノート",
     "Original English voice": "元の英語音声",
     "Normal mode prefers the first take, but retries confirmed language, missing-word and timing problems.": "通常モードは最初のテイクを優先しますが、確認された言語、単語欠落、タイミングの問題については再試行します。",

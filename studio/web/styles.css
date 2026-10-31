@@ -176,6 +176,7 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .review-list-tools>.row{flex-wrap:wrap;gap:6px;min-width:0}.review-triage{margin-top:12px}.activity-status{font-size:12px;color:var(--muted);margin:6px 0}.activity-status small{display:block}.stale-recordings button{margin:4px}.review-category-summary{margin:12px 0}
 
 .review-category-label{display:flex;align-items:center;gap:8px;white-space:nowrap}.review-category-label select{max-width:190px}
+.review-search{display:flex;align-items:center;gap:8px;white-space:nowrap}.review-search input{max-width:230px;min-width:150px}
 
 /* Basic and Expert share a flexible player that fills the available workspace. */
 .basic .preview-column{gap:0;padding:0;overflow:hidden;min-height:0}
@@ -279,7 +280,7 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .performance-list>summary{cursor:pointer;padding:10px 0;font-weight:600}
 .issue-card pre,.review-diagnostics pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:240px;overflow:auto}
 
-.production-scope{padding:8px 14px;border-bottom:1px solid var(--line)}.production-scope .setting-switch{margin:0}.inspector-tabs .segmented{display:flex;overflow-x:auto}.inspector-tabs .segmented button{flex:1 0 auto;white-space:nowrap}.ai-cost-warning{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--tint);line-height:1.6}.scope-badge{display:inline-block;color:var(--accent);font-size:10px;margin-bottom:5px}
+.production-scope{padding:0 0 13px;border-bottom:1px solid var(--line);margin:0 0 -6px}.production-scope .setting-switch{margin:0;padding:8px 0}.inspector-tabs .segmented{display:flex;overflow-x:auto}.inspector-tabs .segmented button{flex:1 0 auto;white-space:nowrap}.ai-cost-warning{padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--tint);line-height:1.6}.scope-badge{display:inline-block;color:var(--accent);font-size:10px;margin-bottom:5px}
 /* Shared desktop assistant work scene and isolated settings preview. */
 .assistant-workflow{width:min(520px,100%);min-width:0;--work-accent:var(--accent);color:var(--text)}
 .work-illustration{position:relative;width:100%;aspect-ratio:5/3;isolation:isolate}.work-equipment{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.assistant-workflow .busy-assistant{position:absolute;left:0;top:0;width:60%;height:100%;z-index:1;animation:none;transform:none}.assistant-workflow .assistant-sprite{width:100%;height:100%;display:block}.work-shadow{fill:var(--work-accent);opacity:.1}.desk-top{fill:#c59a78;stroke:#705749;stroke-width:2}.desk-leg,.desk-brace{fill:#626178}.device{fill:#343147;stroke:#a69bc2;stroke-width:3;stroke-linejoin:round}.screen{fill:#211e35}.keyboard{fill:#807b99;stroke:#bbb0ce;stroke-width:1.5}.work-wave{fill:var(--work-accent);transform-box:fill-box;transform-origin:center bottom}.screen-lines{stroke:#aaa0cd;stroke-width:2;opacity:.6}.paper{fill:#f4eddd;stroke:#b7a993;stroke-width:2}.paper-lines{fill:none;stroke:#8a83a8;stroke-width:2}.work-pen{stroke:var(--work-accent);stroke-width:6;stroke-linecap:round;transform-origin:305px 150px}.ink-dot{fill:var(--work-accent)}.book-cover{fill:var(--work-accent);stroke:#746882;stroke-width:2}.work-bookmark{fill:#e796aa}.mug{fill:#d6caeb;stroke:#9383b3;stroke-width:2}.steam{fill:none;stroke:#b2a8c1;stroke-width:2}.mic-stand{fill:none;stroke:#878298;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.microphone{fill:#535164;stroke:#b4a9cb;stroke-width:2}.pop-filter{fill:#282535;stroke:#847d9d;stroke-width:2;fill-opacity:.9}.landscape{fill:#767b9f;opacity:.45}.work-caption{display:flex;justify-content:space-between;gap:12px;font-size:12px;line-height:1.5;padding:0 8px}.work-percent{font-variant-numeric:tabular-nums;white-space:nowrap}.work-progress{margin:6px 8px;height:6px;border-radius:9px;background:color-mix(in srgb,var(--work-accent) 15%,var(--line));overflow:hidden}.work-progress i{display:block;height:100%;border-radius:inherit;background:var(--work-accent);transition:width .2s linear}.is-working .work-wave{animation:work-level 1.1s ease-in-out infinite alternate;animation-delay:var(--delay)}.is-working .work-pen{animation:work-write 1.5s ease-in-out infinite}.is-working .steam{animation:work-steam 2.8s ease-in-out infinite}.is-resting .work-wave,.is-resting .work-pen,.is-resting .steam{animation:none}.assistant-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.assistant-choice{display:flex;align-items:center;gap:7px;min-width:0}.assistant-color{width:10px;height:10px;flex:none;border-radius:50%;background:var(--work-accent)}.assistant-activity-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.assistant-preview-card .assistant-workflow{align-self:center}.assistant-preview-card button{white-space:normal;min-height:32px}.assistant-choice.active,.assistant-activity-tabs .active{border-color:var(--accent);background:var(--tint)}.waiting-stage:has(.assistant-workflow){width:min(56%,520px);height:auto;aspect-ratio:auto;display:block}.waiting-stage .assistant-workflow{margin:auto}.waiting-stage .work-illustration{max-height:290px}.waiting-stage:has(.assistant-workflow)>.floating-note,.waiting-stage:has(.assistant-workflow)>.waiting-meter{display:none}
@@ -383,6 +384,14 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .repair-group input[type=range]{width:94px;flex:0 0 94px}.repair-group output{font-variant-numeric:tabular-nums;min-width:12px}.repair-group .setting-switch{gap:10px}.repair-group .setting-switch>.switch-copy{flex:1;min-width:0}
 
 .source-indeterminate .fill{animation:source-wait 1.8s ease-in-out infinite alternate}@keyframes source-wait{from{transform:translateX(0)}to{transform:translateX(180%)}}@media(prefers-reduced-motion:reduce){.source-indeterminate .fill{animation:none}}
+/* A quiet provider asks inside the loading card: the band stays full width so the
+   question and both answers read at a glance. */
+.source-wait{display:grid;gap:6px;margin:11px 0 0;padding:9px 11px;border:1px solid var(--line);border-left:3px solid var(--work-accent);border-radius:8px;background:var(--surface)}
+.source-wait strong{font-size:12.5px;line-height:1.4}
+.source-wait>span{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.source-wait p{margin:0;font-size:11.5px;line-height:1.5;color:var(--muted)}
+.source-wait .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.source-wait .row button{min-height:30px;padding:5px 11px;font-size:12px}
 
 /* Keep scrolling separate from rail geometry. WebKit mis-sizes percentage
    buttons when both-edge scrollbar gutters are reserved on their flex parent. */
@@ -390,3 +399,19 @@ button.action-start{background:#217347;border-color:#217347;color:#fff}button.ac
 .navigation-items{display:flex;flex:1;min-width:0;min-height:0;flex-direction:column;gap:2px;overflow-x:hidden;overflow-y:auto;scrollbar-width:none}
 .navigation-items::-webkit-scrollbar{display:none}
 .navigation-items>button{box-sizing:border-box;width:100%;align-self:stretch}
+
+.review-words-field{display:grid;gap:5px;font-size:11px;margin:6px 0}.review-words-field textarea{min-height:64px;resize:vertical;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}.review-engine-field{display:grid;gap:5px}.review-take-row>button{flex-shrink:0}
+
+/* One wide notice band under the player carries every warning and error for the selected
+   video, so the message stays readable; the queue card keeps only a short chip. */
+.preview-notice{display:flex;flex-direction:column;gap:7px;flex:none;margin:0;padding:11px 14px;border:1px solid #e8c79a;border-left:4px solid #c8862f;border-radius:9px;background:#fff7ec;color:#8a5314;font-size:13px;line-height:1.65}
+.preview-notice.has-error{border-color:#e6b3b3;border-left-color:#b23c41;background:#fdf0f0;color:#8f2f36}
+.preview-notice-line{display:flex;align-items:flex-start;gap:9px;overflow-wrap:anywhere}
+.preview-notice-line svg{width:16px;height:16px;flex:0 0 16px;margin-top:2px;color:#c8862f}
+.preview-notice.has-error .preview-notice-line svg{color:#b23c41}
+.basic .preview-column>.preview-notice,.expert .preview-column>.preview-notice{margin:0;border-radius:0}
+.queue-notice-chip{display:inline-flex;align-items:center;gap:5px;max-width:100%;margin:6px 0 0;padding:4px 8px;border-radius:6px;background:#fff3e5;color:#9a5816;font-size:10px;line-height:1.4}
+.queue-notice-chip.error{background:#fcecec;color:#a2373f}
+.queue-notice-chip svg{width:12px;height:12px;flex:0 0 12px}
+.queue-notice-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.production-scope .source-approval-switch{margin-top:3px;padding-top:11px;border-top:1px solid var(--line)}

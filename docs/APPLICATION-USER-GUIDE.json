@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-74-desktop-visible-reset-cuda-choice",
+  "revision": "application-user-guide-90-cloud-source-wait",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -196,16 +196,97 @@
               "ja": "クラウド上のファイルは、内容をダウンロードする前でも元のサイズが表示される場合があります。クラウドサービスへの接続を維持してください。大きな動画は、Finderやエクスプローラーで先にオフライン利用を有効にすることもできます。ダウンロードが遅いだけでは吹き替えの失敗を意味しません。"
             },
             {
-              "en": "Before conversion or Mac preview, AniCanto reads the complete cloud source first. Preparation shows bytes read and the total size when available. It shows a waiting state when the provider supplies no bytes yet. There is no fixed total download deadline. A separate short media check runs only after the complete file is readable.",
-              "zh-HK": "開始轉換或開啟 Mac 預覽前，AniCanto 會先完整讀取雲端原片。準備期間會按可用資料顯示已讀取大小及總大小；雲端服務尚未提供資料時顯示等待狀態，不設固定的整體下載時限。完整檔案可讀後，才進行獨立的影片資料檢查。",
-              "zh-CN": "开始转换或打开 Mac 预览前，AniCanto 会先完整读取云端原片。准备期间会按可用信息显示已读取大小和总大小；云服务尚未提供数据时显示等待状态，不设固定的整体下载时限。完整文件可读后，才进行独立的视频信息检查。",
-              "ja": "変換やMacのプレビューを開始する前に、クラウド上の元動画全体を読み取ります。準備中は取得できる読み取り済みサイズと全体サイズを表示し、データがまだ届かない場合は待機状態を表示します。ダウンロード全体に固定の制限時間は設けません。ファイル全体を読み取れる状態になってから、別途動画情報を確認します。"
+              "en": "Before conversion or Mac preview, AniCanto reads the complete cloud source first. Preparation shows bytes read and the total size when available. It shows a waiting state when the provider supplies no bytes yet. There is no fixed total download deadline. A separate short media check runs only after the complete file is readable. When one read stays quiet for 45 seconds, AniCanto asks whether to keep waiting. Read the next note for the two answers.",
+              "zh-HK": "開始轉換或開啟 Mac 預覽前，AniCanto 會先完整讀取雲端原片。準備期間會按可用資料顯示已讀取大小及總大小；雲端服務尚未提供資料時顯示等待狀態，不設固定的整體下載時限。完整檔案可讀後，才進行獨立的影片資料檢查。若一次讀取連續 45 秒冇新資料，AniCanto 會問你係咪繼續等；兩個選項見下面嘅提示。",
+              "zh-CN": "开始转换或打开 Mac 预览前，AniCanto 会先完整读取云端原片。准备期间会按可用信息显示已读取大小和总大小；云服务尚未提供数据时显示等待状态，不设固定的整体下载时限。完整文件可读后，才进行独立的视频信息检查。若一次读取连续 45 秒没有新数据，AniCanto 会询问是否继续等待；两个选项见下面的说明。",
+              "ja": "変換やMacのプレビューを開始する前に、クラウド上の元動画全体を読み取ります。準備中は取得できる読み取り済みサイズと全体サイズを表示し、データがまだ届かない場合は待機状態を表示します。ダウンロード全体に固定の制限時間は設けません。ファイル全体を読み取れる状態になってから、別途動画情報を確認します。一度の読み取りが 45 秒間静かな場合、アプリは待ち続けるか尋ねます。2つの選択肢は次の説明に載せます。"
             },
             {
               "en": "Cancel preparation to stop the current read without deleting the video or its queue entry. If the provider disconnects or supplies an incomplete file, check the connection, make the file available offline and retry. Existing settings, recordings and conversion progress stay intact. Mac reuses the original file and does not create a second full preview movie.",
               "zh-HK": "可按「取消準備」停止目前讀取，不會刪除影片或清單項目。若雲端斷線或只提供部分檔案，請檢查連線、設為可離線使用後重試；現有設定、錄音及轉換進度會保留。Mac 會重用原檔，不另製完整預覽影片。",
               "zh-CN": "可按“取消准备”停止当前读取，不会删除视频或列表项目。若云服务断线或只提供部分文件，请检查连接、设为可离线使用后重试；现有设置、录音和转换进度会保留。Mac 会重用原文件，不另外制作完整预览视频。",
               "ja": "「準備をキャンセル」で現在の読み取りを停止できます。動画やリスト項目は削除しません。クラウドの切断や不完全な読み取りが発生した場合は、接続を確認し、オフライン利用を有効にして再試行してください。設定、録音、変換の進捗は保持します。Macは元ファイルを再利用し、動画全体のプレビュー複製を作りません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "source-loading-wait",
+          "platforms": [
+            "desktop",
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Slow cloud movie: keep waiting or stop",
+            "zh-HK": "雲端影片傳送慢：繼續等或者唔再等",
+            "zh-CN": "云端视频传输慢：继续等待或停止等待",
+            "ja": "クラウド動画の転送が遅い場合：待ち続けるか停止か"
+          },
+          "body": [
+            {
+              "en": "A file held by Google Drive, OneDrive or iCloud Drive needs a full transfer before AniCanto can read it. The app names the provider that owns the file and shows the bytes it has copied. A provider file has no fixed total time limit.",
+              "zh-HK": "Google Drive、OneDrive 或 iCloud Drive 嘅檔案要先完整傳送，AniCanto 先读到。程式會寫明邊間供應商持有呢個檔案，又會顯示已經複製嘅資料量。雲端檔案冇固定嘅總時限。",
+              "zh-CN": "Google Drive、OneDrive 或 iCloud Drive 中的文件要先完整传输，AniCanto 才能读取。应用会写明哪家供应商持有该文件，并显示已复制的数据量。云端文件没有固定的总时限。",
+              "ja": "Google Drive、OneDrive、iCloud Drive のファイルは完全に転送されてから読み取ります。アプリは保持元とコピー済みのデータ量を表示します。クラウドのファイルに全体の時間制限はありません。"
+            },
+            {
+              "en": "When no new byte arrives for 45 seconds, the app asks whether to keep waiting. Choose Keep waiting. The copy continues from the bytes it already has, and the app allows a wait of 10 minutes before it asks again. A one gigabyte movie can take several minutes.",
+              "zh-HK": "連續 45 秒冇收到新資料，程式會問你係咪繼續等。揀「繼續等」，複製會由已有嘅資料繼續，程式一次批 10 分鐘，時間到再問。1 GB 嘅影片可能要幾分鐘。",
+              "zh-CN": "连续 45 秒没有收到新数据时，应用会询问是否继续等待。选择“继续等待”后，复制会从已有数据继续，应用一次批准 10 分钟，到时再询问。1 GB 的视频可能要几分钟。",
+              "ja": "45 秒間新しいデータが届かない場合、アプリは待ち続けるか尋ねます。「待ち続ける」を選ぶと、コピー済みの位置から続けます。アプリは 10 分間待ち、その後再び尋ねます。1 GB の動画は数分かかることがあります。"
+            },
+            {
+              "en": "On iPad and iPhone this note sits inside the prepare-file panel, and the two buttons read 繼續等 and 唔再等. On desktop it sits inside the source preparation card. Choose Stop waiting to end the wait. The message names the provider and tells you to retry, or to make the file available offline in that provider first. The queue entry, the saved work and the recordings stay. A file that is already on this device keeps a short 15 second limit, because a short local file is a real fault.",
+              "zh-HK": "喺 iPad 同 iPhone，呢個提示會出現喺「正在準備檔案」面板內，兩個按鈕係「繼續等」同「唔再等」。喺 desktop，提示會出現喺原片準備卡片。揀「唔再等」會結束等待。訊息會寫明邊間供應商，又會叫你重試，或者先喺該供應商設為可離線使用。清單項目、已保存工作同錄音都會保留。已經喺呢部裝置嘅檔案沿用 15 秒短時限，因為本地短檔案係真正故障。",
+              "zh-CN": "在 iPad 和 iPhone 上，该提示出现在“正在准备文件”面板内，两个按钮是“继续等待”和“不再等待”。在桌面上，提示出现在源文件准备卡片中。选择“不再等待”会结束等待。消息会写明供应商，并提示重试或先在该供应商中设为可离线使用。列表项、已保存工作和录音都会保留。已在本设备上的文件沿用 15 秒短时限，因为本地短文件是真实故障。",
+              "ja": "iPad と iPhone ではこの案内が「ファイルを準備中」パネルに出ます。ボタンは現在 繼續等 と 唔再等 の中国語表示のみです。デスクトップでは原画面準備カードに出ます。「待つのをやめる」を選ぶと待機が終わります。メッセージは保持元を示し、再試行またはそのサービスでオフライン利用の設定を案内します。キュー項目、保存済みの作業、録音は残ります。端末内のファイルは 15 秒の短い制限を使い、短い局所ファイルは実際の障害です。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "duo-open-landscape",
+          "platforms": [
+            "iphone"
+          ],
+          "title": {
+            "en": "Duo screen direction",
+            "zh-HK": "Duo 螢幕方向",
+            "zh-CN": "Duo 屏幕方向",
+            "ja": "Duo の画面方向"
+          },
+          "body": [
+            {
+              "en": "The open Duo screen uses landscape orientation. The closed screen uses the iPhone layout. Full-screen playback on the closed screen can rotate with the device. Reading preferences use the same content width as ordinary preferences. Close returns to Reading.",
+              "zh-HK": "Duo 打開後的螢幕使用橫向。摺合後使用 iPhone 排版；摺合螢幕的全螢幕播放器可隨裝置旋轉。朗讀模式與一般偏好設定使用相同內容寬度，關閉後返回朗讀模式。",
+              "zh-CN": "Duo 展开后的屏幕使用横向。折叠后使用 iPhone 排版；折叠屏幕的全屏播放器可随设备旋转。朗读模式与一般偏好设置使用相同内容宽度，关闭后返回朗读模式。",
+              "ja": "Duo を開いた画面は横向きで使用します。閉じた画面は iPhone のレイアウトを使用し、全画面プレーヤーは端末の向きに合わせて回転できます。読み上げモードの環境設定は通常の環境設定と同じ本文幅を使用し、閉じると読み上げモードに戻ります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-selected-subtitle-edition",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Convert the selected subtitle edition",
+            "zh-HK": "使用所選字幕版本轉換",
+            "zh-CN": "使用所选字幕版本转换",
+            "ja": "選択した字幕版で変換"
+          },
+          "body": [
+            {
+              "en": "After importing a multilingual ASS file, select the required language edition in the preview subtitle menu. A new conversion saves only that edition as its source text. Later preview choices do not change a saved conversion. Resume a job that stopped before subtitle capture after updating the app. A missing or removed edition still requires a valid selection.",
+              "zh-HK": "匯入多語言 ASS 字幕後，請在預覽字幕選單選擇所需語言版本。新轉換只保存該版本作為來源文字；之後更改預覽選擇不會改動已保存的轉換。若工作在保存來源字幕前停止，更新程式後可繼續轉換。已刪除或不存在的版本仍需重新選擇。",
+              "zh-CN": "导入多语言 ASS 字幕后，请在预览字幕菜单选择所需语言版本。新转换只保存该版本作为来源文字；之后更改预览选择不会改动已保存的转换。若任务在保存来源字幕前停止，更新程序后可继续转换。已删除或不存在的版本仍需重新选择。",
+              "ja": "多言語ASS字幕を読み込んだら、プレビューの字幕メニューで必要な言語版を選びます。新しい変換はその版だけを入力テキストとして保存します。後でプレビューの選択を変えても、保存済みの変換は変わりません。字幕保存前に停止した処理は、アプリ更新後に再開できます。削除済みまたは存在しない版は、再選択が必要です。"
             }
           ],
           "controlRefs": [],
@@ -565,6 +646,18 @@
               "zh-HK": "Drama3 處理預設自動偵測；亦可為相容 NVIDIA 顯示卡手動揀 CUDA 12 或 CUDA 13。規劃、下載同裝置驗證會用同一個原生版本。手動選擇唔會略過模型載入同試音檢查；唔相容嘅顯示卡世代會被拒絕。PyTorch 加速會獨立驗證。",
               "zh-CN": "Drama3 处理默认自动检测；也可为兼容 NVIDIA 显卡手动选择 CUDA 12 或 CUDA 13。规划、下载和设备验证使用同一原生版本。手动选择不会跳过模型加载和试音检查；不兼容的显卡代际会被拒绝。PyTorch 加速单独验证。",
               "ja": "Drama3 は標準で自動検出します。対応する NVIDIA GPU では CUDA 12 または CUDA 13 を手動選択できます。計画、取得、装置検証は同じネイティブ版を使用します。手動選択でもモデル読み込みと音声試験は必須で、非対応世代は拒否します。PyTorch 加速は別に検証します。"
+            },
+            {
+              "en": "Windows checks the file offline/recall attributes before cloud preparation. A regular locally available file inside a cloud folder goes directly to media checks. Files still requiring recall retain their read progress across temporary empty reads or read errors. Only a stalled read with no new bytes for120seconds fails; active downloading has no total deadline. A failed media check is not labelled as waiting for the cloud provider.",
+              "zh-HK": "Windows 會先檢查檔案嘅離線／取回標記；雲端資料夾入面已喺本機可用嘅一般檔案會直接檢查影片資料。仍需取回嘅檔案遇到暫時空讀或讀取錯誤，會保留進度繼續等待；只有連續 120 秒冇新資料先報錯，持續下載冇總時限。影片檢查失敗唔會再標示為等待雲端。",
+              "zh-CN": "Windows 会先检查文件的离线／取回标记；云端文件夹中已在本地可用的普通文件会直接检查视频信息。仍需取回的文件遇到临时空读或读取错误，会保留进度继续等待；仅连续 120 秒没有新数据才报错，持续下载无总时限。视频检查失败不会再标为等待云端。",
+              "ja": "Windows はファイルのオフライン／再取得属性を先に確認します。クラウドフォルダー内でもローカルに存在する通常ファイルは動画情報の確認へ進みます。再取得が必要なファイルでは一時的な空読みや読み取りエラー後も進捗を保持します。新しいデータが120秒間ない場合のみ失敗し、継続中の取得には総時間制限を設けません。動画確認の失敗をクラウド待機とは表示しません。"
+            },
+            {
+              "en": "Mac and Windows share the retrying provider reader. A confirmed or explicitly selected Japanese source continues without another language-confirmation dialog. Other or unconfirmed source languages retain their existing confirmation. A metadata conflict remains evidence in the source result; it does not reopen a Japanese confirmation. Saved conversion requests remain unchanged.",
+              "zh-HK": "Mac 同 Windows 共用可重試嘅雲端讀取流程。已辨識或明確選定日文原聲會直接繼續，唔再彈第二次語言確認；其他或未確認語言維持原有確認。音軌標記有衝突仍會保留記錄，但唔會因此再確認日文。已儲存嘅轉換要求唔會改動。",
+              "zh-CN": "Mac 和 Windows 共用可重试的云端读取流程。已识别或明确选定日语原声会直接继续，不再弹出第二次语言确认；其他或未确认语言保留原有确认。音轨标记冲突仍会保留记录，但不会因此再次确认日语。已保存的转换请求不变。",
+              "ja": "Mac と Windows は再試行可能なクラウド読み取りを共用します。検出または明示選択された日本語は追加の言語確認なしで続行します。他の言語と未確定言語は従来の確認を維持します。音声トラックのメタデータ矛盾は記録しますが、日本語の再確認は開きません。保存済み変換要求は変更しません。"
             }
           ],
           "controlRefs": [],
@@ -633,6 +726,36 @@
           "body": [],
           "controlRefs": [
             "globalScope"
+          ],
+          "steps": false
+        },
+        {
+          "id": "auto-approve-source-language",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Auto-approve the detected language",
+            "zh-HK": "自動接納偵測到的語言",
+            "zh-CN": "自动接受检测到的语言",
+            "ja": "検出した言語を自動で承認"
+          },
+          "body": [
+            {
+              "en": "The switch under Global is on by default. AniCanto uses the source language it detected and starts without a language panel, for one video or for a whole automatic queue. A detected Japanese source never asks, whatever this switch does.",
+              "zh-HK": "「全域」下面嘅掣預設開啟。AniCanto 会用偵測到嘅原聲語言直接開始，唔會彈出語言面板；一條影片定成個自動佇列都一樣。偵測到日文原聲一向唔會詢問，與呢個掣開原定關咗無關。",
+              "zh-CN": "「全局」下面的开关默认开启。AniCanto 使用它检测到的原声语言直接开始，不会弹出语言面板；单个视频或整个自动队列都一样。检测到日语原声一向不会询问，与此开关开启或关闭无关。",
+              "ja": "「共通設定」の下にあるスイッチは初期状態でオンです。アプリは検出した元音声の言語でそのまま開始し、言語パネルを表示しません。1本の動画も自動キュー全体も同じです。日本語の検出はスイッチに関係なく確認しません。"
+            },
+            {
+              "en": "Turn the switch off to confirm the language yourself before each new conversion. The app still asks when it found no language, or when the selected voice engine cannot read that language. Jobs you already started or paused keep the language they were submitted with.",
+              "zh-HK": "關咗呢個掣，每次開始新轉換前就要自己確認語言。偵測唔到語言，或者所選聲音引擎讀唔通嗰種語言，程式仍會詢問。已經開始或暫停嘅工作保留提交時嘅語言。",
+              "zh-CN": "关闭此开关后，每次开始新任务前需自行确认语言。若未检测到语言，或所选声音引擎不支持该语言，程序仍会询问。已开始或暂停的任务保留提交时的语言。",
+              "ja": "オフにすると、新しい変換のたびに言語を自分で確認します。言語を特定できない場合や、選択中の音声エンジンがその言語に対応していない場合は確認します。開始済み・一時停止中のジョブは送信時の言語を保持します。"
+            }
+          ],
+          "controlRefs": [
+            "autoApproveSourceLanguage"
           ],
           "steps": false
         },
@@ -739,6 +862,38 @@
             "ja": "ソースの自動選択"
           },
           "body": [],
+          "controlRefs": [
+            "sourceWorkflowDefaults"
+          ],
+          "steps": false
+        },
+        {
+          "id": "subtitle-track-preference-276",
+          "platforms": [
+            "desktop",
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Which subtitle track Automatic uses",
+            "zh-HK": "自動使用哪條字幕軌",
+            "zh-CN": "自动使用哪条字幕轨",
+            "ja": "自動が使う字幕トラック"
+          },
+          "body": [
+            {
+              "en": "Automatic selects one subtitle track as the translation basis. Chinese tracks come first. Traditional Chinese ranks above Simplified Chinese. When a track label does not state the script, the app reads the track title. Another language assists only when no Chinese track exists.",
+              "zh-HK": "自動選擇會選定一條字幕軌作為翻譯根據。中文字幕優先：繁體中文排喺簡體中文之前。字幕軌標籤沒有寫明用字時，程式會閱讀字幕軌名稱。沒有中文字幕時，其他語言才用作輔助翻譯。",
+              "zh-CN": "自动选择会选定一条字幕轨作为翻译依据。中文字幕优先：繁体中文排在简体中文之前。字幕轨标签未注明用字时，程序会读取字幕轨名称。没有中文字幕时，其他语言才用于辅助翻译。",
+              "ja": "自動選択は翻訳の基準になる字幕トラックを1本選びます。中国語トラックが優先です。順序は繁体字中国語、次に簡体字中国語です。トラック名札に文字種がない場合、アプリはトラックタイトルを読みます。中国語トラックがない場合だけ他の言語が翻訳を補助します。"
+            },
+            {
+              "en": "To use a different track, open Subtitle sources and select it before a new conversion. Your choice replaces the automatic order. A running or saved job keeps the source it already froze. A subtitle file in the same folder follows the same order: a Chinese-marked file comes before a plain file with the movie name.",
+              "zh-HK": "如果想改用其他字幕軌，請喺新轉換開始前開「字幕來源」手動選擇。你的選擇會取代自動次序。進行中或已儲存的工作會保留已經凍結的來源。同一個文件夾內的字幕檔案也跟同樣次序：標明中文的檔案排喺同名的普通檔案之前。",
+              "zh-CN": "如需改用其他字幕轨，请在新任务开始前打开“字幕来源”手动选择。你的选择会取代自动顺序。进行中或已保存的任务保留已冻结的来源。同一文件夹内的字幕文件也按相同顺序：标明中文的文件排在同名的普通文件之前。",
+              "ja": "別のトラックを使うには、新しい変換を始める前に「字幕ソース」で選びます。手動選択が自動の順序に代わります。進行中または保存済みのジョブは、既に固定したソースを維持します。同じフォルダー内の字幕ファイルも同じ順序です。中文と記入されたファイルが動画名と同じ普通のファイルより先に読まれます。"
+            }
+          ],
           "controlRefs": [
             "sourceWorkflowDefaults"
           ],
@@ -873,10 +1028,10 @@
           },
           "body": [
             {
-              "en": "Non-dialogue captions only is on by default in Basic and Expert. Advertisement cards and other text stay visible without TTS when complete source and separated-audio evidence confirms no dialogue. Missing ASR text alone is not silence; uncertain or quiet speech keeps the normal dubbing path. Each platform records its own tested and installed state.",
-              "zh-HK": "基本模式及專家模式預設開啟「無對白字幕只顯示文字」。原片及分離音訊的完整證據確認沒有對白時，廣告字卡等字幕只顯示文字，不生成配音。語音辨識沒有文字並不代表靜音；細聲或未確認語音仍按正常流程處理。各平台須分別記錄測試及安裝狀態。",
-              "zh-CN": "基本模式及专家模式默认开启「无对白字幕仅显示文字」。原片和分离音频的完整证据确认没有对白时，广告字卡等字幕仅显示文字，不生成配音。语音识别没有文字不代表静音；轻声或未确认语音仍按正常流程处理。各平台须分别记录测试和安装状态。",
-              "ja": "基本・エキスパートの両モードで、発話のない字幕は文字のみ表示する設定が初期状態で有効です。元音声と分離音声の完全な証拠で発話がないと確認できた広告などは、字幕を残して音声を生成しません。認識文がないだけでは無音と判定しません。小さな声や不確かな発話は通常どおり処理します。テストと導入状況は各プラットフォームで別に記録します。"
+              "en": "Non-dialogue captions only is on by default on desktop, iPad and iPhone in Basic and Expert. Advertisement cards and other text stay visible without TTS when complete source and separated-audio evidence confirms no dialogue. Missing ASR text alone is not silence; uncertain or quiet speech keeps the normal dubbing path. Each platform records its own tested and installed state.",
+              "zh-HK": "桌面版、iPad 及 iPhone 的基本模式及專家模式預設開啟「無對白字幕只顯示文字」。原片及分離音訊的完整證據確認沒有對白時，廣告字卡等字幕只顯示文字，不生成配音。語音辨識沒有文字並不代表靜音；細聲或未確認語音仍按正常流程處理。各平台須分別記錄測試及安裝狀態。",
+              "zh-CN": "桌面版、iPad 及 iPhone 的基本模式及专家模式默认开启「无对白字幕仅显示文字」。原片和分离音频的完整证据确认没有对白时，广告字卡等字幕仅显示文字，不生成配音。语音识别没有文字不代表静音；轻声或未确认语音仍按正常流程处理。各平台须分别记录测试和安装状态。",
+              "ja": "デスクトップ、iPad、iPhone の基本・エキスパートの両モードで、発話のない字幕は文字のみ表示する設定が初期状態で有効です。元音声と分離音声の完全な証拠で発話がないと確認できた広告などは、字幕を残して音声を生成しません。認識文がないだけでは無音と判定しません。小さな声や不確かな発話は通常どおり処理します。テストと導入状況は各プラットフォームで別に記録します。"
             }
           ],
           "controlRefs": [
@@ -1211,6 +1366,34 @@
               "zh-HK": "轉換期間可開啟「跟隨處理」，將播放位置同時間線移到目前處理位置；關閉就可以自由檢查其他位置。播放／暫停圖示會跟返實際狀態。",
               "zh-CN": "转换期间可开启「跟随处理」，将播放位置与时间线移到当前处理位置；关闭后可自由检查其他位置。播放／暂停图标对应实际状态。",
               "ja": "変換中に追従をオンにすると、再生位置とタイムラインが現在の処理位置へ移ります。オフなら自由に確認できます。再生・一時停止のアイコンは実際の状態に連動します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "preview-notice-badge",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Warnings and errors under the player",
+            "zh-HK": "播放器下方嘅提示與錯誤",
+            "zh-CN": "播放器下方的提示与错误",
+            "ja": "プレーヤー下の警告とエラー"
+          },
+          "body": [
+            {
+              "en": "Every warning and error for the selected video shows in one wide band under the player. The band uses the full width of the preview column, so a long message stays readable. These notices never stop conversion. A red band carries a failed task message; an amber band carries a review or delivery notice.",
+              "zh-HK": "目前影片嘅所有提示同錯誤會顯示喺播放器下面一個加闊嘅橫條，用哂預覽欄嘅成行寬度，長句子都容易睇。呢啲提示唔會中止轉換。紅色橫條表示工作失敗；琥珀色橫條表示校對或成品提示。",
+              "zh-CN": "当前视频的所有提示与错误显示在播放器下方一个加宽的横条里，使用预览栏的整行宽度，长句子也容易读。这些提示不会停止转换。红色横条表示任务失败；琥珀色横条表示校对或成品提示。",
+              "ja": "選択中の動画の警告とエラーは、プレーヤー下の広い帯に表示し、プレビュー欄の幅をすべて使います。長い文章も読みやすくなります。これらの表示は変換を停止しません。赤い帯はジョブの失敗、アンバーの帯は確認・出力の通知です。"
+            },
+            {
+              "en": "The queue card keeps only a short chip, so the list stays readable. Point at the chip to read the full text. The Work queue page keeps the full message for every video at once.",
+              "zh-HK": "佇列卡片只會留一個短標籤，等清單保持易讀。指標停留喺標籤上可以睇完整文字。「工作佇列」頁面會一次過顯示每條影片嘅完整訊息。",
+              "zh-CN": "队列卡片只保留一个短标签，让列表保持易读。把指针停在标签上可以看到完整文字。“工作队列”页面会一次显示每个视频的完整信息。",
+              "ja": "キューのカードには短い表示だけを残し、一覧を読みやすく保ちます。表示にポインターを合わせると全文が読めます。「作業キュー」ページでは各動画の全文を一度に確認できます。"
             }
           ],
           "controlRefs": [],
@@ -1593,10 +1776,10 @@
           },
           "body": [
             {
-              "en": "Select a dialogue line and choose Retake. Edit the text for the selected language, choose an installed engine and generate that line. The model must be ready. Existing project audio is retained while a new take is produced. Listen to the result, choose the take you want, save the draft and export a new movie version.",
-              "zh-HK": "選對白後進入重錄，修改目前語言台詞，選已部署引擎並生成本句。模型須已準備好；產生新錄音時會保留現有專案錄音。聽過結果後採用所需版本、儲存草稿，再匯出新版影片。",
-              "zh-CN": "选择对话行并选择重录。编辑所选语言的文本，选择已安装的引擎并生成该行。模型必须就绪。现有项目音频将被保留，同时生成新的录音。聆听结果，选择您想要的录音，保存草稿并导出新的电影版本。",
-              "ja": "対話行を選択し、リテイクを選択します。選択した言語のテキストを編集し、インストールされたエンジンを選択してその行を生成します。モデルは準備完了している必要があります。既存のプロジェクトオーディオは保持され、新しいテイクが生成されます。結果を再生し、希望のテイクを選択し、ドラフトを保存して新しい映画バージョンをエクスポートします。"
+              "en": "Select a dialogue line and choose Retake. Edit the text for the selected language, choose an installed engine and generate that line. The model must be ready. Existing project audio is retained while a new take is produced. The retake keeps the line’s recording seed. The new take uses the same separated voice and the same voice character, so only the words change. Listen to the result, choose the take you want, save the draft and export a new movie version.",
+              "zh-HK": "選對白後進入重錄，修改目前語言台詞，選已部署引擎並生成本句。模型須已準備好；產生新錄音時會保留現有專案錄音。重新生成會沿用呢句嘅錄音種子，新錄音用返同一把分離聲音同相同音色，所以只會改變台詞。聽過結果後採用所需版本、儲存草稿，再匯出新版影片。",
+              "zh-CN": "选择对话行并选择重录。编辑所选语言的文本，选择已安装的引擎并生成该行。模型必须就绪。现有项目音频将被保留，同时生成新的录音。重录会沿用本行的录音种子。新录音使用同一分离语音和相同音色，因此只改变台词。聆听结果，选择您想要的录音，保存草稿并导出新的电影版本。",
+              "ja": "対話行を選択し、リテイクを選択します。選択した言語のテキストを編集し、インストールされたエンジンを選択してその行を生成します。モデルは準備完了している必要があります。既存のプロジェクトオーディオは保持され、新しいテイクが生成されます。リテイクはその行の録音シードを維持します。新しいテイクは同じ分離音声と同じ声質を使い、変更されるのはテキストだけです。結果を再生し、希望のテイクを選択し、ドラフトを保存して新しい映画バージョンをエクスポートします。"
             }
           ],
           "controlRefs": [],
@@ -1615,10 +1798,10 @@
           },
           "body": [
             {
-              "en": "Adjust exposes the line’s enabled state, timing, rate and trim fields available in the inspector. Earlier or rejected recordings may be listed in history and the review report. Listen to a retained failure before deciding whether it is acceptable; incomplete speech is different from a merely imperfect accent. Availability depends on which attempts were recorded.",
-              "zh-HK": "調整頁可修改檢查器提供的啟用、時段、語速及修剪欄位。歷史與校對報告可能列出先前或未採用錄音。先聽保留的失敗版本再判斷是否接受；缺少半句與口音未臻理想是不同問題，歷史內容取決於已有處理紀錄。",
-              "zh-CN": "调整功能可显示检查器中该行的启用状态、时间、速率和修剪字段。较早或已被拒绝的录音可能列在历史记录和审查报告中。在决定是否可接受之前，请聆听保留的失败录音；不完整的语音与仅仅不完美的口音不同。可用性取决于已记录的尝试情况。",
-              "ja": "調整では、インスペクタで利用可能な行の有効状態、タイミング、レート、トリムフィールドが表示されます。以前の録音や却下された録音は、履歴およびレビューレポートにリストされる場合があります。受け入れ可能な判断を下す前に、保持された失敗を再生します。不完全な発話は単なる不十分なアクセントとは異なります。利用可能性は、どの試みが録音されたかによります。"
+              "en": "Adjust exposes the line’s enabled state, timing, rate, recording seed and trim fields available in the inspector. Set the recording seed yourself when you want a different take for the same words. Earlier or rejected recordings may be listed in history and the review report. The review report lists every saved recording for a line and warns when a recording was made from another separated voice. Listen to a retained failure before deciding whether it is acceptable; incomplete speech is different from a merely imperfect accent. Availability depends on which attempts were recorded.",
+              "zh-HK": "調整頁可修改檢查器提供的啟用、時段、語速、錄音種子及修剪欄位。想為同一組台詞再生成唔同版本，可自行改動錄音種子。歷史與校對報告可能列出先前或未採用錄音。校對報告會列出呢句所有已保存錄音，並喺錄音使用咗唔同分離聲音時顯示警告。先聽保留的失敗版本再判斷是否接受；缺少半句與口音未臻理想是不同問題，歷史內容取決於已有處理紀錄。",
+              "zh-CN": "调整功能可显示检查器中该行的启用状态、时间、速率、录音种子和修剪字段。要为同一台词生成不同版本时，可自行修改录音种子。较早或已被拒绝的录音可能列在历史记录和审查报告中。审查报告会列出本行的所有已保存录音，并在录音使用了不同分离语音时显示警告。在决定是否可接受之前，请聆听保留的失败录音；不完整的语音与仅仅不完美的口音不同。可用性取决于已记录的尝试情况。",
+              "ja": "調整では、行の有効状態、タイミング、レート、録音シード、トリムフィールドを編集できます。同じテキストで別のテイクを作る場合は、録音シードを自分で設定します。以前の録音や却下された録音は、履歴およびレビューレポートにリストされる場合があります。レビューレポートはその行の保存済み録音をすべて表示し、別の分離音声で作られた録音には警告を示します。受け入れ可能な判断を下す前に、保持された失敗を再生します。不完全な発話は単なる不十分なアクセントとは異なります。利用可能性は、どの試みが録音されたかによります。"
             }
           ],
           "controlRefs": [],
@@ -2085,6 +2268,31 @@
           "steps": false
         },
         {
+          "id": "review-status-tabs",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Filter by your own listening",
+            "zh-HK": "用你嘅覆核狀態篩選",
+            "zh-CN": "按你的复核状态筛选",
+            "ja": "自分の確認状態で絞り込む"
+          },
+          "body": [
+            {
+              "en": "The report has two review tabs: Checked by me and Not checked yet. Mark Checked by me on a line after you listen to its voice. Every dialogue line carries this state, not only flagged lines. A script, time slot, or recording change clears an older mark. The tabs change the list only; they never start a retake or change exported audio.",
+              "zh-HK": "報告有兩個覆核標籤：「我已覆核」同「待處理」。聽完一句聲音後喺嗰句掣「我已覆核」。每一句對白都有呢個狀態，唔使有提示先可以標。改台詞、時段或採用錄音會清走舊標記。標籤只改顯示清單，唔會開始重錄，亦唔會改成品聲音。",
+              "zh-CN": "报告有两个复核标签：“我已复核”和“待处理”。听完一句的声音后，在该句点“我已复核”。每句对白都有这个状态，不需要先有问题提示。改动台词、时段或采用录音会清除旧标记。标签只改变显示清单，不会开始重录，也不会改变成品声音。",
+              "ja": "レポートには「確認した」と「未確認」の2つの確認タブがあります。台詞の音声を試聴した後、その行で「確認した」を押します。この状態は指摘の有無に関係なく全台詞にあります。台詞・時刻・採用音声が変わると古い印は消えます。タブは表示だけを変え、再録音を開始せず書き出し音声も変更しません。"
+            }
+          ],
+          "controlRefs": [
+            "reviewChecked",
+            "reviewPending"
+          ],
+          "steps": false
+        },
+        {
           "id": "nonverbal",
           "platforms": [
             "desktop"
@@ -2173,6 +2381,71 @@
           "controlRefs": [
             "reportClassification",
             "captionOnlyNoDialogue"
+          ],
+          "steps": false
+        },
+        {
+          "id": "desktop-review-line-actions-275",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Edit, re-record and remove one line",
+            "zh-HK": "逐句改字、重新錄音與移除錄音",
+            "zh-CN": "逐行改字、重录与移除录音",
+            "ja": "行ごとの編集・再録音・録音削除"
+          },
+          "body": [
+            {
+              "en": "The review report holds the words for each voice track. Edit the text and select Save words. Saving changes only the script for that line. No recording starts, and the audio in the current export does not change. Select Generate a new take for this line to record the new words. When two or more voice engines are deployed, choose the engine first.",
+              "zh-HK": "校對報告的每條聲道都有配音稿。修改文字後按「儲存台詞」，系統只會更新此行的配音稿；不會開始錄音，現正成品所使用的聲音亦不會改變。按「為呢句重新生成錄音」，系統才會按新稿錄音。當有兩個或以上已部署的配音引擎時，請先選擇引擎。",
+              "zh-CN": "校对报告每条声道都有配音稿。修改文字后点击“保存台词”，只更改此行的稿。不会开始录音，当前成片使用的声音也不变。点击“为此行生成新录音”才会按新稿录音。有两个或以上配音引擎时，先选择引擎。",
+              "ja": "校正レポートの各音声トラックに台詞欄があります。編集して「台詞を保存」を押すと、その行の原稿だけが変わります。録音は始まらず、現在の出力の音声も変わりません。「この行の新しいテイクを生成」で新しい台詞を録音します。エンジンが2つ以上の場合は先に選んでください。"
+            },
+            {
+              "en": "The Remove button on a recording is off until processing stops. It also stays off for audio that the current export uses or that you selected before. Remove moves one unused WAV into the discarded-recordings folder of the video. The file stays there with a record file, and the report stops listing it. Exports, saved choices, review status and repair allowance do not change.",
+              "zh-HK": "錄音項目旁的「移除呢段錄音」按鈕在處理停止前會停用；現正成品所使用的錄音，以及你之前已選擇的錄音，均不能移除。移除動作會把一段未使用的 WAV 移到這條影片的「已移除錄音」(discarded-recordings) 資料夾，並與記錄檔一同保存；校對報告不會再列出該錄音。成品、已儲存的選擇、校對狀態與自動修復次數不會改變。",
+              "zh-CN": "录音项旁的“移除此录音”在处理停止前会禁用；当前成片采用或你之前选过的录音也不能移除。移除会把一段未使用的 WAV 移入此视频的已移除录音 (discarded-recordings) 文件夹，连同记录文件一起保存，校对报告不再列出该录音。成片、已保存选择、校对状态与修复次数不变。",
+              "ja": "録音の横の「この録音を削除」は処理が止まるまで使えません。現在の出力で使用済みや、以前選んだ録音も削除できません。未使用の WAV をこの動画の削除済み録音 (discarded-recordings) フォルダへ移動し、記録ファイルと一緒に残ります。校正レポートには表示されません。出力、保存済みの選択、確認状態、修復回数は変わりません。"
+            }
+          ],
+          "controlRefs": [
+            "reviewLineWords",
+            "reviewLineEngineRetake",
+            "reviewLineTakeRemoval"
+          ],
+          "steps": false
+        },
+        {
+          "id": "desktop-review-report-list-277",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Find one line in the review report",
+            "zh-HK": "喺校對報告搵出需要處理嘅對白",
+            "zh-CN": "在校对报告中找到需要处理的对白",
+            "ja": "校正レポートで対象の行を探す"
+          },
+          "body": [
+            {
+              "en": "Three counts sit at the top of the report: Needs dubbing, Review suggested and Audio available. Select one count name to list only those lines. Type words or a line number in Search dialogue to narrow the list again. One page shows 25 dialogue lines. Use Previous and Next to read the rest.",
+              "zh-HK": "報告頂部有三個數目：待補配音、建議覆核、已有配音。點選其中一個名稱，列表只會顯示呢類對白。喺「搜尋對白」輸入文字或者行號，可以再縮窄結果。每頁顯示 25 行對白，其餘用「上一頁」同「下一頁」睇。",
+              "zh-CN": "报告顶部有三个数量：待补配音、建议复核、已有配音。点选其中一个名称，列表只显示这类对白。在“搜索对白”输入文字或行号，可再次缩小结果。每页显示 25 行对白，其余用“上一页”和“下一页”查看。",
+              "ja": "レポートの上部に3つの件数があります。吹き替え要対応、確認推奨、録音済みです。名称を選ぶと、その行だけが表示されます。「台詞を検索」に単語または行番号を入れると、結果をさらに絞れます。1ページは25行です。残りは「前へ」と「次へ」で読みます。"
+            },
+            {
+              "en": "One card is one dialogue line. The recordings in step 3 follow one order, and the first generated recording stays first. The app marks the recording that the current export uses. Remove stays off for that recording, for a recording you already selected, for a recording inside a finished version, and for the recording the script still points at. Any other unused recording can move to the discarded-recordings folder.",
+              "zh-HK": "一張卡片等於一句對白。第 3 步嘅錄音跟一個次序排列，首次生成嘅錄音會排喺最前。程式會標明目前成品採用嘅錄音。以下錄音嘅「移除呢段錄音」會停用：目前成品採用、你已經選擇、已收錄喺完成版本，同埋配音稿仍然指向嘅錄音。其餘未使用嘅錄音可以移入「已移除錄音」(discarded-recordings) 資料夾。",
+              "zh-CN": "一张卡片对应一行对白。第 3 步的录音按同一顺序排列，首次生成的录音排在最前。程序会标明当前成片采用的录音。以下录音的“移除此录音”会禁用：当前成片采用、你已选择、已收录在完成版本，以及配音稿仍指向的录音。其余未使用的录音可移入“已移除录音”(discarded-recordings) 文件夹。",
+              "ja": "カード1枚が台詞1行です。3番の録音は同じ順序で並び、最初に生成した録音が一番前です。現在の出力で使う録音には印を付けます。次の録音は「この録音を削除」を使えません。現在の出力で使用中、既に選択済み、完成版に収録済み、台詞欄が指している録音です。他の未使用の録音は削除済み録音 (discarded-recordings) フォルダーへ移動できます。"
+            }
+          ],
+          "controlRefs": [
+            "reportMissing",
+            "reportAdvisory",
+            "reportAvailable",
+            "reportSearch"
           ],
           "steps": false
         }
@@ -2967,10 +3240,10 @@
               "ja": "開始画面でモードを選び、スタジオに入ります。基本モードの歯車は環境設定を開きます。専門モードは左のナビゲーションを使い、右上のアイコンで各パネルを表示・非表示にします。環境設定を閉じると元の画面に戻ります。"
             },
             {
-              "zh-HK": "專家模式的「播放器」及「配音器」位於左側功能表，均由下方彈出全螢幕。使用返回按鈕可回到原有工作畫面。基本模式保留原有入口。",
-              "zh-CN": "专家模式的“播放器”和“配音器”位于左侧菜单，均从下方弹出全屏。使用返回按钮可回到原工作画面。基本模式保留原入口。",
-              "en": "Expert opens Player and Dubbing studio from the left menu. Both slide up in full screen. Use Return to restore the previous workspace. Basic keeps its existing shortcuts.",
-              "ja": "エキスパートでは左メニューからプレーヤーと音声スタジオを開きます。どちらも下から全画面で表示されます。戻るボタンで元の作業画面へ戻ります。基本モードの入口は変わりません。"
+              "zh-HK": "專家模式的「播放器」及「配音器」位於左側功能表，會直接切換至全螢幕。使用返回按鈕可回到原有工作畫面。基本模式保留原有入口。",
+              "zh-CN": "专家模式的“播放器”和“配音器”位于左侧菜单，直接切换至全屏。使用返回按钮可回到原工作画面。基本模式保留原入口。",
+              "en": "Expert opens Player and Dubbing studio from the left menu. Both switch directly to full screen. Use Return to restore the previous workspace. Basic keeps its existing shortcuts.",
+              "ja": "エキスパートでは左メニューからプレーヤーと音声スタジオを開き、すぐに全画面へ切り替わります。戻るボタンで元の作業画面へ戻ります。基本モードの入口は変わりません。"
             }
           ],
           "controlRefs": [],
@@ -3229,6 +3502,28 @@
             "captionOnlyNoDialogue",
             "contentReview"
           ],
+          "steps": false
+        },
+        {
+          "id": "ipad-guide-index",
+          "platforms": [
+            "ipad"
+          ],
+          "title": {
+            "en": "User guide navigation",
+            "zh-HK": "使用手冊導覽",
+            "zh-CN": "使用手册导航",
+            "ja": "ガイドの操作"
+          },
+          "body": [
+            {
+              "en": "On iPad, the chapter index stays beside the selected chapter. Search filters the index. Choose a chapter to open its contents. In a narrow window, use the Chapters menu. Close the guide with the top-right cross. Preferences keeps its close button above the scrolling settings.",
+              "zh-HK": "在 iPad，章節目錄會固定顯示在內容左側。搜尋可篩選目錄，選取章節即可閱讀。在較窄視窗，請使用「章節目錄」選單。按右上角交叉可關閉手冊；偏好設定的關閉按鈕會固定在頂欄，不會隨內容捲動。",
+              "zh-CN": "在 iPad，章节目录固定显示在内容左侧。搜索可筛选目录，选取章节即可阅读。在较窄窗口，请使用“章节目录”菜单。按右上角叉号可关闭手册；偏好设置的关闭按钮固定在顶栏，不随内容滚动。",
+              "ja": "iPadでは章一覧を本文の左側に固定します。検索で一覧を絞り込み、章を選ぶと本文を表示します。狭いウインドウでは章メニューを使います。右上の閉じるボタンでガイドを閉じます。環境設定の閉じるボタンは上部に固定され、本文と一緒にスクロールしません。"
+            }
+          ],
+          "controlRefs": [],
           "steps": false
         }
       ]
@@ -3692,10 +3987,10 @@
           },
           "body": [
             {
-              "zh-HK": "在專家模式校對報告編輯原文及譯稿，試聽原聲與配音候選。可選引擎及參數重新錄製個別對白，處理中可停止；完成後明確選擇採用哪一條錄音，再使用「按所選聲音重新合併成品」建立新版本。單句重錄不會立即改寫整條成品；舊錄音及成品保留，不需要的候選可個別刪除。",
-              "zh-CN": "在专家校对报告编辑原文和译稿，试听原声与配音候选。可选择引擎和参数重录个别对白，处理中可停止；完成后明确选择采用的录音，再使用“按所选声音重新合并成品”建立新版本。单句重录不会立即改写整条成品；旧录音和成品保留，不需要的候选可单独删除。",
-              "en": "Edit source text and translations in Expert Review, then compare source audio and candidate takes. Choose engine settings to retake individual lines; generation can stop. Explicitly select a take, then use Rebuild output with selected voices to create a new version. A line retake alone does not rewrite the finished movie. Earlier recordings and outputs remain; delete unwanted candidates individually.",
-              "ja": "専門モードの校正レポートで原文・訳文を編集し、原音と候補を試聴します。エンジンと設定を選んで一行を再録音し、生成中は停止できます。使用する録音を明示的に選び、選択した音声で出力を再結合して新しい版を作ります。一行の再録音だけでは完成動画を書き換えません。以前の録音と出力を保持し、不要な候補だけを削除できます。"
+              "zh-HK": "在專家模式校對報告編輯原文及譯稿，試聽原聲與配音候選。可選引擎及參數重新錄製個別對白，處理中可停止；完成後明確選擇採用哪一條錄音，再使用「按所選聲音重新合併成品」建立新版本。單句重錄不會立即改寫整條成品；舊錄音及成品保留，不需要的候選可個別刪除。手動重錄會沿用該句嘅錄音種子，因此改稿後重錄只會改變台詞，同一把分離聲音同音色保持不變；重新錄製已經保存嘅相同台詞會另製一條新候選錄音。",
+              "zh-CN": "在专家校对报告编辑原文和译稿，试听原声与配音候选。可选择引擎和参数重录个别对白，处理中可停止；完成后明确选择采用的录音，再使用“按所选声音重新合并成品”建立新版本。单句重录不会立即改写整条成品；旧录音和成品保留，不需要的候选可单独删除。手动重录会沿用本行的录音种子，因此修改台词后重录只改变文本，同一分离语音和音色保持不变。重新录制已保存的相同台词会另建一条新候选录音。",
+              "en": "Edit source text and translations in Expert Review, then compare source audio and candidate takes. Choose engine settings to retake individual lines; generation can stop. Explicitly select a take, then use Rebuild output with selected voices to create a new version. A line retake alone does not rewrite the finished movie. Earlier recordings and outputs remain; delete unwanted candidates individually. A manual retake keeps that line's recording seed, so an edited script changes only the words and the voice character stays the same. Re-recording words that are already saved creates one new candidate take.",
+              "ja": "専門モードの校正レポートで原文・訳文を編集し、原音と候補を試聴します。エンジンと設定を選んで一行を再録音し、生成中は停止できます。使用する録音を明示的に選び、選択した音声で出力を再結合して新しい版を作ります。一行の再録音だけでは完成動画を書き換えません。以前の録音と出力を保持し、不要な候補だけを削除できます。手動リテイクはその行の録音シードを維持するため、テキストを編集して再録音しても変更されるのはテキストだけで、声質は同じままです。既に保存済みの同じテキストを再録音すると、新しい候補テイクが1つ作られます。"
             }
           ],
           "controlRefs": [

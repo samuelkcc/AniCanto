@@ -1090,20 +1090,38 @@ def opening_end(meta):
 
 
 def select_batch_subtitle(streams, language=None, title=None):
-    """Resolve per-file indices; UI labels for missing language are not language codes."""
-    def canonical(value):
-        value=(value or '').lower()
-        if value in ('chi','zho','zh','zh-cn','zh-tw','zh-hans','zh-hant'): return 'zh'
-        if value in ('jpn','ja'): return 'ja'
-        if value in ('eng','en'): return 'en'
-        if value in ('','und','未標示語言'): return ''
-        return value
-    wanted=canonical(language)
-    def score(s):
-        tags=s.get('tags',{}); lang=canonical(tags.get('language'))
-        return (bool(wanted and lang==wanted), bool(title and tags.get('title')==title),
-                lang in ('zh','yue'), not lang, bool(s.get('disposition',{}).get('default')))
-    return max(streams,key=score) if streams else None
+    """Resolve per-file indices; UI labels for missing language are not language codes.
+
+    Automatic order: Cantonese, Traditional Chinese, Simplified Chinese, other
+    Chinese, another readable language, then an unlabeled track. An explicit
+    language or title choice always outranks that order.
+    """
+    import subtitle_preference
+    return subtitle_preference.pick(streams, language, title)
+
+
+def select_sidecar_subtitle(video):
+    """Find an external subtitle beside the video, preferring a Chinese one.
+
+    Names such as movie.zh-Hant.srt carry a language marker. A plain movie.srt
+    stays useful but ranks below a Chinese-marked file.
+    """
+    import subtitle_preference
+    video = Path(video)
+    folder = video.parent
+    if not folder.is_dir():
+        return None
+    candidates = []
+    for path in sorted(folder.iterdir()):
+        if path.suffix.lower() not in subtitle_preference.SUBTITLE_SUFFIXES or not path.is_file():
+            continue
+        if path.stem != video.stem and not path.stem.startswith(video.stem + '.'):
+            continue
+        marker = path.stem[len(video.stem) + 1:] if path.stem != video.stem else ''
+        candidates.append(dict(name=str(path), marker=marker))
+    if not candidates:
+        return None
+    return Path(min(candidates, key=subtitle_preference.sidecar_key)['name'])
 
 
 def batch_convert(cfg):
@@ -1126,23 +1144,22 @@ def batch_convert(cfg):
             from translation_source import configure as source_policy
             source_policy(current)
             if current.get('batchAutoSubtitles') and current.get('subtitleSource') != 'none':
-                sidecar = next((Path(item['video']).with_suffix(ext) for ext in ('.srt','.ass','.ssa','.vtt') if Path(item['video']).with_suffix(ext).is_file()),None)
+                sidecar = select_sidecar_subtitle(item['video'])
                 if sidecar:
                     current.update(subtitleSource='external',subtitle=str(sidecar),ocr=False)
                 else:
                     metadata=json.loads(run([current['ffprobe'],'-v','error','-show_streams','-of','json',current['video']]))
-                    has_text=any(s.get('codec_type')=='subtitle' and s.get('codec_name') in ('subrip','ass','ssa','mov_text','webvtt','text') for s in metadata.get('streams',[]))
+                    has_text=any(__import__('subtitle_preference').is_text_stream(s) for s in metadata.get('streams',[]))
                     current.update(subtitleSource='embedded' if has_text else 'none',subtitle=None,ocr=False) if __import__('primary_source').enabled(current) else current.update(subtitleSource='embedded' if has_text else 'burned',subtitle=None,ocr=not has_text)
                 forward('字幕', '本集自動字幕來源：'+current['subtitleSource'])
             if current.get('subtitleSource') == 'external':
-                matches = [Path(item['video']).with_suffix(ext) for ext in ('.srt', '.ass', '.ssa', '.vtt')]
-                sub = Path(current['subtitle']) if current.get('batchExplicitSubtitle') and current.get('subtitle') else next((p for p in matches if p.is_file()), None)
+                sub = Path(current['subtitle']) if current.get('batchExplicitSubtitle') and current.get('subtitle') else select_sidecar_subtitle(item['video'])
                 if sub is None: raise ValueError('搵唔到同名外掛字幕；請放喺影片旁邊，或者改用畫面字幕／語音辨識。')
                 if not sub.is_file():raise ValueError('匯入嘅外掛字幕檔案已移動或刪除，請重新選擇。')
                 current['subtitle'] = str(sub)
             elif current.get('subtitleSource') == 'embedded':
                 meta = json.loads(run([current['ffprobe'], '-v', 'error', '-show_streams', '-of', 'json', current['video']]))
-                subs = [s for s in meta['streams'] if s.get('codec_type') == 'subtitle' and s.get('codec_name') in ('subrip','ass','ssa','mov_text','webvtt','text')]
+                subs = [s for s in meta['streams'] if __import__('subtitle_preference').is_text_stream(s)]
                 selected = next((s for s in subs if s['index']==current.get('subtitleStream')),None) if current.get('batchExplicitStream') else select_batch_subtitle(subs, current.get('subtitleLanguage'), current.get('subtitleTitle'))
                 if current.get('batchExplicitStream') and selected is None:raise ValueError('本片指定字幕軌不存在，請檢查設定。')
                 if selected is None:
@@ -1150,7 +1167,9 @@ def batch_convert(cfg):
                     forward('字幕', '呢集冇可用文字字幕，改由日語原聲辨識；字幕只作輔助。')
                 else:
                     current.update(subtitleStream=selected['index'], subtitle=None, ocr=False)
-                    forward('字幕', f"自動選擇本集字幕軌 {selected['index']}（{selected.get('tags',{}).get('language','未標示語言')}）。")
+                    import subtitle_preference
+                    chosen_language = selected.get('tags', {}).get('language', '未標示語言')
+                    forward('字幕', f"自動選擇本集字幕軌 {selected['index']}（{chosen_language}；{subtitle_preference.reason(selected)} 優先）。")
             convert(current)
             entry['status'] = '需要處理' if entry.get('partial') else '完成' if entry.get('output') else '等待校稿'
         except Exception as error:

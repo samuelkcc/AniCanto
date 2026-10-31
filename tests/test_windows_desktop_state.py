@@ -1,4 +1,5 @@
 import copy,json,sys,tempfile,unittest,wave
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'windows'))
 from desktop_state import Store,write,read,job_snapshot,editor_draft,load_draft,find_take,accept_history
@@ -81,7 +82,8 @@ class DesktopStateTests(unittest.TestCase):
    write(version/'version.json',dict(engine='gpt-sovits',language='en',segment='cue-1'))
    write(version/'timing.json',[dict(start=3,end=4,audio=str(wav))])
    data=job_snapshot(dict(review=str(job/'review.json')))
-   self.assertEqual(find_take(data,1,'gpt-sovits','en')['audio'],str(wav));self.assertIsNone(find_take(data,0,'gpt-sovits','en'))
+   # build277: snapshot rows carry one resolve-normalised spelling for every path.
+   self.assertEqual(find_take(data,1,'gpt-sovits','en')['audio'],str(wav.resolve()));self.assertIsNone(find_take(data,0,'gpt-sovits','en'))
  def test_editor_projection_preserves_original_immutable_snapshot(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);package=root/'package';(package/'tools').mkdir(parents=True);(package/'tools/AniCanto-helper.exe').touch()
@@ -102,7 +104,8 @@ class DesktopStateTests(unittest.TestCase):
    write(track/'audio-preview.json',dict(engine='drama3',language='yue'))
    write(track/'timing.json',[dict(reviewIndex=0,start=1,end=2,renderedAudio=str(wav))])
    take=find_take(job_snapshot(dict(job=str(root))),0,'drama3','yue')
-   self.assertEqual(take['audio'],str(wav));self.assertEqual(take['index'],1)
+   # build277: take rows store the resolved path, the same spelling the removal guard uses.
+   self.assertEqual(take['audio'],str(wav.resolve()));self.assertEqual(take['index'],1)
  def test_review_lists_first_and_rejected_takes_even_without_open_issue(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);track=root/'tracks/drama';track.mkdir(parents=True)
@@ -113,6 +116,21 @@ class DesktopStateTests(unittest.TestCase):
    write(track/'normal-checks.json',dict(repairs=[dict(index=1,originalAudio=str(first),attempts=[dict(candidateAudio=str(retry),repaired=False)])]))
    candidates=job_snapshot(dict(job=str(root)))['recordingCandidates']
    self.assertEqual([(p['index'],p['kind'],p['path']) for p in candidates],[(1,'first',str(first.resolve())),(1,'rejected',str(retry.resolve()))])
+ def test_a_saved_editor_draft_cannot_pass_the_storage_path_twice(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);job=root/'job';job.mkdir();requests=root/'requests';requests.mkdir()
+   review=job/'review.json'
+   write(review,dict(config=dict(video='episode.mkv',storage=str(root/'stale'),ttsBackend='drama3'),cues=[dict(start=1,end=2,cantonese='你好')]))
+   draft=dict(review=str(review),settings=dict(storage=str(job),productionMode='normal'),segments=[])
+   write(job/'editor-draft-windows.json',draft)
+   submitted=dict(storage=str(root),submission=str(job/'editor-draft-windows.json'))
+   # build276 shape: both sides carried a storage path, so the keyword arrived twice.
+   with self.assertRaises(TypeError):dict(read(review)['config'],**draft['settings'],storage=str(root))
+   with patch('native_worker.configure',lambda submitted,ready,package,emit:dict(submitted)):
+    cfg=project_request('render-project',submitted,{},requests)
+   saved=read(Path(cfg['submission']))
+   self.assertEqual(saved['settings']['storage'],str(root),'the submitted request owns the storage path')
+   self.assertEqual(saved['settings']['productionMode'],'normal','the draft keeps its own edit settings')
  def test_cleanup_keeps_original_export_and_models(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);job=root/'jobs/episode';job.mkdir(parents=True);write(job/'review.json',{})

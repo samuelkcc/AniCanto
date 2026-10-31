@@ -41,13 +41,29 @@ class SourceLanguageTests(unittest.TestCase):
   model.detect_language.side_effect=[('en',.4,[]),('ja',.3,[]),('en',.5,[])]
   with patch.dict(sys.modules,{'faster_whisper':SimpleNamespace(WhisperModel=constructor)}),patch('model_catalog.resolve',return_value=Path('model')),patch.object(source.subprocess,'check_output',return_value=samples.tobytes()):
    self.assertIsNone(source.probe(request)['language'])
+ def test_japanese_never_requires_a_second_confirmation_on_either_desktop(self):
+  for platform in ['win32','darwin']:
+   with self.subTest(platform=platform),tempfile.TemporaryDirectory() as d:
+    video=Path(d)/'source.mkv';video.write_bytes(b'fixture');meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn'))])
+    with patch.object(source.sys,'platform',platform),patch('source_access.accessible',return_value=(video,json.dumps(meta).encode())),patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()):
+     result=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3'],sourceLanguageOverride='ja'))
+    self.assertEqual(result['language'],'ja');self.assertFalse(result['needsConfirmation']);self.assertTrue(result['explicitOverride'])
+ def test_detected_japanese_with_conflicting_track_tag_is_automatic(self):
+  for platform in ['win32','darwin']:
+   with self.subTest(platform=platform),tempfile.TemporaryDirectory() as d:
+    video=Path(d)/'source.mkv';video.write_bytes(b'fixture');meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='eng'))],format=dict(duration='100'))
+    heard=dict(language='ja',method='audio-probe',probability=.95)
+    samples=[json.dumps(heard).encode()] if platform=='win32' else [json.dumps(meta).encode(),json.dumps(heard).encode()]
+    with patch.object(source.sys,'platform',platform),patch('source_access.accessible',return_value=(video,json.dumps(meta).encode())),patch('runtime_paths.python_for',return_value=Path(sys.executable)),patch('source_preparation.Preparation.capture',side_effect=samples):
+     result=source.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),dict(selectedEngines=['drama3']))
+    self.assertEqual(result['language'],'ja');self.assertTrue(result['metadataConflict']);self.assertFalse(result['needsConfirmation'])
  def test_metadata_probe_is_cached_but_confirmation_token_tracks_engine_choice(self):
   with tempfile.TemporaryDirectory() as d:
    video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
    meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='eng'))])
    with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()) as probe:
-    a=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3']))
-    b=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['gpt-sovits-v2']))
+    a=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3'],autoApproveSourceLanguage=False))
+    b=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['gpt-sovits-v2'],autoApproveSourceLanguage=False))
     self.assertEqual(probe.call_count,1);self.assertTrue(a['needsConfirmation']);self.assertTrue(a['supported'])
     self.assertNotEqual(a['token'],b['token'])
  def test_windows_preflight_uses_readable_cloud_copy(self):
@@ -60,3 +76,122 @@ class SourceLanguageTests(unittest.TestCase):
    self.assertEqual(result['language'],'ja')
    readable.assert_called_once_with(str(video),'probe',d)
    direct.assert_not_called()
+ def test_the_request_records_how_the_source_language_was_detected(self):
+  with tempfile.TemporaryDirectory() as d:
+   video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+   meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn'))])
+   with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()):
+    result=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3']))
+   self.assertEqual(result['detectedLanguage'],'ja');self.assertEqual(result['detectionSource'],'audio-stream-metadata')
+   self.assertEqual(result['name'],'Japanese');self.assertFalse(result['needsConfirmation'])
+   detection=result['detection']
+   for field,value in [('language','ja'),('detectedLanguage','ja'),('method','audio-stream-metadata'),('stream',1)]:
+    self.assertEqual(detection[field],value)
+   self.assertFalse(detection['explicitOverride']);self.assertTrue(detection['confirmationSkipped'])
+ def test_a_non_japanese_source_still_asks_and_keeps_the_detected_language(self):
+  with tempfile.TemporaryDirectory() as d:
+   video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+   meta=dict(streams=[dict(index=2,codec_type='audio',tags=dict(language='eng'))])
+   with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()):
+    result=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3'],autoApproveSourceLanguage=False))
+   self.assertEqual(result['language'],'en');self.assertEqual(result['detectedLanguage'],'en')
+   self.assertTrue(result['needsConfirmation'])
+   self.assertFalse(result['detection']['confirmationSkipped']);self.assertFalse(result['detection']['explicitOverride'])
+   self.assertEqual(result['detection']['stream'],2)
+ def test_an_explicit_selection_keeps_the_detected_language(self):
+  with tempfile.TemporaryDirectory() as d:
+   video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+   meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='eng'))])
+   with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()):
+    result=source.preflight(d,str(video),dict(ffprobe='probe'),dict(selectedEngines=['drama3'],sourceLanguageOverride='ko',autoApproveSourceLanguage=False))
+   self.assertEqual(result['language'],'ko');self.assertEqual(result['detectedLanguage'],'en')
+   self.assertTrue(result['explicitOverride']);self.assertTrue(result['needsConfirmation'])
+   detection=result['detection']
+   self.assertEqual(detection['method'],'user-selected-source');self.assertTrue(detection['explicitOverride'])
+   self.assertEqual(detection['detectedLanguage'],'en');self.assertFalse(detection['confirmationSkipped'])
+ def detected_language_preflight(self,d,language_tag,engines,**settings):
+  video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+  meta=dict(format=dict(duration='120'),streams=[dict(index=1,codec_type='audio',tags=dict(language=language_tag))])
+  params=dict(dict(selectedEngines=engines),**settings)
+  # The second capture is the audio probe. An empty result means the probe
+  # heard nothing, so the file label decides the language.
+  with patch('source_preparation.Preparation.capture',side_effect=[json.dumps(meta).encode(),b'{}']):
+   return source.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),params)
+ def test_auto_approval_starts_with_the_detected_language_and_never_asks(self):
+  with tempfile.TemporaryDirectory() as d:
+   result=self.detected_language_preflight(d,'eng',['drama3'])
+   self.assertEqual(result['language'],'en');self.assertFalse(result['needsConfirmation'])
+   self.assertTrue(result['supported']);self.assertTrue(result['detection']['confirmationSkipped'])
+   self.assertTrue(result['detection']['autoApproveSetting'])
+ def test_turning_auto_approval_off_restores_the_confirmation(self):
+  with tempfile.TemporaryDirectory() as d:
+   result=self.detected_language_preflight(d,'eng',['drama3'],autoApproveSourceLanguage=False)
+   self.assertTrue(result['needsConfirmation'])
+   self.assertFalse(result['detection']['confirmationSkipped'])
+   self.assertFalse(result['detection']['autoApproveSetting'])
+ def test_auto_approval_still_asks_when_no_language_was_heard(self):
+  with tempfile.TemporaryDirectory() as d:
+   result=self.detected_language_preflight(d,'und',['drama3'])
+   self.assertIsNone(result['language']);self.assertTrue(result['needsConfirmation'])
+   self.assertFalse(result['detection']['confirmationSkipped'])
+ def test_auto_approval_still_asks_when_the_voice_engine_cannot_read_the_language(self):
+  with tempfile.TemporaryDirectory() as d:
+   result=self.detected_language_preflight(d,'fra',['gpt-sovits-v2'])
+   self.assertEqual(result['language'],'fr');self.assertFalse(result['supported'])
+   self.assertTrue(result['needsConfirmation']);self.assertTrue(result['reason'])
+   self.assertFalse(result['detection']['confirmationSkipped'])
+ def test_japanese_never_asks_even_when_auto_approval_is_off(self):
+  with tempfile.TemporaryDirectory() as d:
+   result=self.detected_language_preflight(d,'jpn',['drama3'],autoApproveSourceLanguage=False)
+   self.assertEqual(result['language'],'ja');self.assertFalse(result['needsConfirmation'])
+   self.assertTrue(result['detection']['confirmationSkipped'])
+ def test_a_metadata_conflict_autopicks_the_heard_language_when_the_switch_is_on(self):
+  with tempfile.TemporaryDirectory() as d:
+   video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+   meta=dict(format=dict(duration='100'),streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn'))])
+   heard=dict(language='ko',stream=1,method='three-audio-samples',samples=[])
+   with patch('source_preparation.Preparation.capture',side_effect=[json.dumps(meta).encode(),json.dumps(heard).encode()]):
+    result=source.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),dict(selectedEngines=['drama3']))
+   self.assertTrue(result['metadataConflict']);self.assertEqual(result['language'],'ko')
+   self.assertFalse(result['needsConfirmation']);self.assertTrue(result['detection']['confirmationSkipped'])
+ def three_agreeing_samples_below_one_confidence_bar(self):
+  from types import SimpleNamespace
+  model=Mock();model.detect_language.side_effect=[('ja',.9462,[]),('ja',.7943,[]),('ja',.8468,[])]
+  numpy_stub=SimpleNamespace(frombuffer=lambda raw,dtype=None:[1.0]*32000,float32=float,
+    abs=lambda values:values,max=lambda values,initial=0:max(values,default=initial))
+  return model,numpy_stub
+ def test_agreeing_samples_and_a_matching_stream_label_form_a_consensus(self):
+  model,numpy_stub=self.three_agreeing_samples_below_one_confidence_bar()
+  request=dict(storage='root',video='movie',duration=120,stream=1,ffmpeg='ffmpeg',speechModel='whisper',metadataLanguage='ja')
+  with patch.dict(sys.modules,{'numpy':numpy_stub}),patch('whisper_accel.load',return_value=model),patch.object(source.subprocess,'check_output',return_value=b'\0'*65536):
+   result=source.probe(request)
+  self.assertEqual(result['language'],'ja')
+  self.assertEqual(result['method'],'three-audio-samples+stream-metadata')
+  self.assertEqual(len(result['samples']),3)
+ def test_the_same_samples_without_a_matching_label_stay_unconfirmed(self):
+  for label in [None,'en','']:
+   model,numpy_stub=self.three_agreeing_samples_below_one_confidence_bar()
+   request=dict(storage='root',video='movie',duration=120,stream=1,ffmpeg='ffmpeg',speechModel='whisper')
+   if label is not None:request['metadataLanguage']=label
+   with self.subTest(label=label),patch.dict(sys.modules,{'numpy':numpy_stub}),patch('whisper_accel.load',return_value=model),patch.object(source.subprocess,'check_output',return_value=b'\0'*65536):
+    result=source.probe(request)
+   self.assertIsNone(result['language'],'audio evidence alone must not clear the gate at this confidence');self.assertEqual(result['method'],'three-audio-samples')
+ def test_a_stream_label_cannot_replace_two_agreeing_audio_samples(self):
+  from types import SimpleNamespace
+  model=Mock();model.detect_language.side_effect=[('ja',.9462,[]),('en',.9310,[]),('ja',.4,[])]
+  numpy_stub=SimpleNamespace(frombuffer=lambda raw,dtype=None:[1.0]*32000,float32=float,
+    abs=lambda values:values,max=lambda values,initial=0:max(values,default=initial))
+  request=dict(storage='root',video='movie',duration=120,stream=1,ffmpeg='ffmpeg',speechModel='whisper',metadataLanguage='ja')
+  with patch.dict(sys.modules,{'numpy':numpy_stub}),patch('whisper_accel.load',return_value=model),patch.object(source.subprocess,'check_output',return_value=b'\0'*65536):
+   result=source.probe(request)
+  self.assertIsNone(result['language'],'three audio samples must agree before a label can carry the decision')
+ def test_the_audio_probe_request_carries_the_stream_label(self):
+  with tempfile.TemporaryDirectory() as d:
+   video=Path(d)/'source.mkv';video.write_bytes(b'fixture')
+   meta=dict(streams=[dict(index=1,codec_type='audio',tags=dict(language='jpn'))],format=dict(duration='120'))
+   with patch('source_preparation.Preparation.capture',return_value=json.dumps(meta).encode()):
+    source.preflight(d,str(video),dict(ffprobe='probe',ffmpeg='ffmpeg'),dict(selectedEngines=['drama3']))
+   folder=Path(d)/'source-language';keys=list(folder.iterdir())
+   self.assertTrue(keys)
+   request=json.loads((keys[0]/'request.json').read_text(encoding='utf-8'))
+   self.assertEqual(request['metadataLanguage'],'ja');self.assertEqual(request['stream'],1)
