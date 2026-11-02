@@ -13796,8 +13796,8 @@
     },
     {
       "path": "scripts/build-retention.py",
-      "sha256": "490a09c55e0ffb7e2e781c172c4cb5218d8403f7353be8151e70304a4d753e2c",
-      "bytes": 29602
+      "sha256": "31cdb30421d766b31fff2a6c063daea4bb667908883607aa2cfae959d066158b",
+      "bytes": 29728
     },
     {
       "path": "scripts/build-website-policy-pages.py",
@@ -16951,5 +16951,10 @@
     "revision": "application-user-guide-114-cache-controls",
     "sha256": "afc310b27e364500547c06c32b287e906dc1515dafc9644b7d321ad1576323b6",
     "reason": "Use the exact delivered desktop guide. The private mobile-only guide115 change is outside this release."
+  },
+  "sourceMaintenanceAfterRelease": {
+    "releaseTag": "v0.25.44-beta",
+    "releaseCommit": "7d3e15f7e2ce64b94b89663bfcfa46cc57c178d7",
+    "change": "Protect pinned third-party source inputs from scratch retention. Published application packages and the release source attachment remain unchanged."
   }
 }

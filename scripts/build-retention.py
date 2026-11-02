@@ -41,6 +41,7 @@ BUILD = ROOT / '.build'
 
 # Entries that hold a live tree, a toolchain, or a model download that is slow to rebuild.
 PROTECTED = {
+    'compliance': 'Pinned third-party source inputs and binary verification archives required for matching source delivery.',
     'qa249': 'Required Python 3.11 test runtime. Do not remove its environment.',
     'audit822245': 'Retained user-film evidence. Do not remove recordings.',
     'iphone201': 'Active iPhone source workspace (.build/iphone201/workspace/mobile).',
