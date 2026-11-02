@@ -16,8 +16,9 @@ fn run() -> Result<i32, String> {
     let root = if let Some(value) = std::env::var_os("CANTOSYNC_WINDOWS_DATA") {
         PathBuf::from(value)
     } else {
-        PathBuf::from(std::env::var_os("LOCALAPPDATA").ok_or("LOCALAPPDATA is unavailable")?)
-            .join("CantoSync-Windows")
+        let parent=PathBuf::from(std::env::var_os("LOCALAPPDATA").ok_or("LOCALAPPDATA is unavailable")?);
+        let current=parent.join("AniCanto");let legacy=parent.join("CantoSync-Windows");
+        if current.exists() || !legacy.exists(){current}else{legacy}
     };
     let python = root.join("runtimes").join(runtime).join("Scripts/python.exe");
     let script = package.join("native_tools.py");

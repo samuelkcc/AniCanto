@@ -1,0 +1,10 @@
+{
+  "package": "hls.js",
+  "version": "1.7.3",
+  "source": "https://registry.npmjs.org/hls.js/-/hls.js-1.7.3.tgz",
+  "integrity": "sha512-MsPlx6yVW4Qv4C7mEVou4/gk/5cN2dVxOTnrNjPSmyH2f0Ln+/UkG10Ax1PE6OvrmTVPKgQYozTtBaPOuCzq7A==",
+  "files": {
+    "LICENSE": "ca8773cf798c7ed997d4dd7c8e23c348699f8d5b7462636694cc14de6cda12db",
+    "hls.light.min.mjs": "c60e98c83e5b2ce6875ea6ca27e51f63b7a6f00e9d9b64b588c92261bd69d439"
+  }
+}

@@ -10,6 +10,7 @@ mod runtime_probe;
 mod preview_stream;
 mod task_lifecycle;
 mod native_queue;
+mod data_root;
 use native_queue::QueueControl;
 use task_lifecycle::TaskLifecycle;
 use appearance::{StartupWindow,studio_appearance};
@@ -37,7 +38,7 @@ impl OwnedJob {
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
     recovery_checked:AtomicBool, cleanup_pending:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
-const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","review-take-removal","models","model-choices","model-removal-plan","remove-model","remove-retired-model","activate-models","project-cache-plan","project-cache-status","clear-project-cache","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","source-prepare-wait","compute-status","project-terms","set-project-terms","performance-choice","reset-production-parameters","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment","record-events"];
+const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","review-take-removal","models","model-choices","model-removal-plan","remove-model","remove-retired-model","activate-models","project-cache-plan","project-cache-status","clear-project-cache","storage-health","repair-storage","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","source-prepare-wait","compute-status","project-terms","set-project-terms","performance-choice","reset-production-parameters","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment","record-events"];
 // A conversion worker that stops reporting must not hold the automatic queue
 // forever. The longest measured silent stretch on the reference Mac is 301
 // seconds, so thirty minutes is a wide margin over legitimate model loading.
@@ -130,7 +131,7 @@ impl Host {
             let value=std::fs::read(path).ok().filter(|v|v.len()<65536).and_then(|raw|serde_json::from_slice::<Value>(&raw).ok()).unwrap_or(Value::Null);
             return Ok(if value["operationID"]==id{value}else{Value::Null});
         }
-        let removing_model=["model-removal-plan","remove-model","remove-retired-model","project-cache-plan","clear-project-cache","source-language"].contains(&op);
+        let removing_model=["model-removal-plan","remove-model","remove-retired-model","project-cache-plan","clear-project-cache","storage-health","repair-storage","source-language"].contains(&op);
         // A model switch rewrites the installed-role settings, so it shares the
         // model-mutation task lock and must not run over a live conversion.
         let activating_model=op=="activate-models";
@@ -171,8 +172,8 @@ impl Host {
         let shared=if packaged{resources.clone()}else if let Some(p)=std::env::var_os("CANTOSYNC_SHARED_RESOURCES"){p.into()}else if cfg!(windows)&&windows.join("shared").is_dir(){windows.join("shared")}else{development.join("Resources")};
         let backend=if packaged{resources.join("studio/backend.py")}else if cfg!(windows)&&windows.join("studio/backend.py").is_file(){windows.join("studio/backend.py")}else{development.join("studio/backend.py")};
         let root=if let Some(root)=std::env::var_os("CANTOSYNC_STUDIO_DATA"){PathBuf::from(root)}else if cfg!(windows){
-            PathBuf::from(std::env::var_os("LOCALAPPDATA").ok_or("LOCALAPPDATA is unavailable")?).join("CantoSync-Windows")
-        }else{PathBuf::from(std::env::var_os("HOME").ok_or("HOME is unavailable")?).join("Library/Application Support/SamCantoSync")};
+            data_root::select(&PathBuf::from(std::env::var_os("LOCALAPPDATA").ok_or("LOCALAPPDATA is unavailable")?),"CantoSync-Windows")?
+        }else{data_root::select(&PathBuf::from(std::env::var_os("HOME").ok_or("HOME is unavailable")?).join("Library/Application Support"),"SamCantoSync")?};
         std::fs::create_dir_all(root.join("studio")).map_err(|e|e.to_string())?;
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("studio/instance.lock")).map_err(|e|e.to_string())?;
         instance.try_lock_exclusive().map_err(|_|"AniCanto Studio is already open for this library.".to_string())?;

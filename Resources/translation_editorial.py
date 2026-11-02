@@ -16,6 +16,7 @@ def review(w,cfg,job,cues):
  for language,field in [('yue','cantonese'),('en','english'),('zh','mandarin')]:
   pending=[]
   for n,cue in enumerate(cues):
+   if __import__('caption_speech_guard').selected(cfg,cue):continue
    text=cue.get(field,'');key=language+':'+str(cue.get('reviewIndex',n));old=saved['rows'].get(key)
    if not cue.get('enabled',True) or cue.get('sourcePolicyBlocked') or not text or cue.get('editorAudio') or cue.get('editorDecisions'):continue
    if old:

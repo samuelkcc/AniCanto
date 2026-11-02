@@ -112,4 +112,7 @@ def build():
                  'versioned-exports','local-terminal','hardware-aware-setup','four-language-guide','about-mit-notices'])
     (output/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt,indent=2))
 
-if __name__=='__main__':build()
+if __name__=='__main__':
+    import argparse
+    argparse.ArgumentParser(description=__doc__).parse_args()
+    build()

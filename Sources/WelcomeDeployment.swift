@@ -48,7 +48,7 @@ struct WelcomeDeployment:View {
                         ForEach(runtimes.indices,id:\.self) {i in
                             HStack {Text(runtimes[i]["name"] as? String ?? "");Spacer();Text(runtimes[i]["ready"] as? Bool==true ? text("已檢查 · 沿用","Verified · reuse"):text("檢查並補齊","Check & install missing"))}.font(.caption)
                         }
-                        Text(text("儲存於 ~/Library/Application Support/SamCantoSync；只補齊缺少或損壞項目。","Stored in ~/Library/Application Support/SamCantoSync. Only missing or damaged components are installed.")).font(.caption).foregroundStyle(.secondary)
+                        Text(text("儲存於 ~/Library/Application Support/AniCanto；只補齊缺少或損壞項目。","Stored in ~/Library/Application Support/AniCanto. Only missing or damaged components are installed.")).font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 if !inventory.isEmpty {

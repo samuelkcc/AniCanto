@@ -39,9 +39,11 @@ def base_python(root,run=subprocess.run):
 
 def ensure_env(root,folder,run=subprocess.run,recreate=False):
     root=Path(root).resolve();folder=owned(root,folder);python=python_path(folder)
-    if sys.platform=='win32' and python.is_file() and not recreate:
+    if python.is_file() and not recreate:
         try:
-            run([str(python),'-I','-c','import ssl,json,venv,sys;assert sys.version_info[:2]==(3,12)'],env=clean_environment(root),check=True,capture_output=True,timeout=30)
+            expected=(3,12) if sys.platform=='win32' else (3,11)
+            code='import ssl,json,venv,sys,pathlib;assert sys.version_info[:2]=='+repr(expected)+';assert sys.prefix!=sys.base_prefix;assert pathlib.Path(sys.prefix).resolve()==pathlib.Path(sys.argv[1]).resolve()'
+            run([str(python),'-I','-c',code,str(folder)],env=clean_environment(root),check=True,capture_output=True,timeout=30)
         except (OSError,subprocess.CalledProcessError,subprocess.TimeoutExpired):
             recreate=True
     if recreate or not python.is_file():

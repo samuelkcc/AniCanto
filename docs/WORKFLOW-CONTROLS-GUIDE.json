@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-34-caption-only-platform-scope",
+  "revision": "workflow-controls-guide-46-production-reset-entry",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -28,16 +28,16 @@
     {
       "id": "globalScope",
       "title": {
-        "en": "Desktop: Global and individual settings",
-        "zh-HK": "桌面：全域及個別設定",
-        "zh-CN": "桌面：全局及单独设置",
-        "ja": "デスクトップ：共通設定と個別設定"
+        "en": "Shared defaults or this video",
+        "zh-HK": "共用預設或本片自訂",
+        "zh-CN": "共享默认或本片自定义",
+        "ja": "共通設定と動画別設定"
       },
       "body": {
-        "en": "Global is on by default. Production changes apply to videos using global settings. Turn it off to save separate settings for the selected video. Later global changes do not replace those settings. Turn it on again to use the global settings. Running and paused jobs keep their submitted settings.",
-        "zh-HK": "全域設定預設開啟，製作設定的改動會套用至沿用全域設定的影片。關閉後，目前影片會獨立儲存設定，不受之後的全域改動影響。重新開啟便會沿用全域設定。已開始或暫停的工作保留提交時的設定。",
-        "zh-CN": "全局默认开启，制作改动会应用于沿用全局设置的视频。关闭后，当前视频会独立保存设置，不再受之后的全局改动影响。重新开启则沿用全局设置。已开始或暂停的任务保留提交时的设置。",
-        "ja": "共通設定は初期状態でオンです。共通設定を使う動画に制作設定の変更を適用します。オフにすると、選択中の動画の設定を個別に保存し、その後の共通設定の変更は反映しません。再びオンにすると共通設定を使います。実行中・一時停止中のジョブは送信済み設定を保持します。"
+        "en": "Choose Shared defaults or This video only. Shared defaults affect videos that inherit those settings. This video only first copies the current defaults, then stores changes for that video. Choosing Shared defaults again removes its individual overrides. Running and paused jobs retain their submitted settings. This selector replaces the earlier Global switch.",
+        "zh-HK": "選擇「共用預設」或「本片自訂」。共用預設會套用於沿用這些設定的影片。「本片自訂」先複製目前預設，再獨立保存本片變更。再次選擇「共用預設」會移除本片自訂。處理中及已暫停的工作保留提交時設定。此選擇取代原有「全域」開關。",
+        "zh-CN": "选择“共享默认”或“本片自定义”。共享默认用于沿用这些设置的视频。本片自定义先复制当前默认，再单独保存本片变更。再次选择共享默认会移除本片自定义。处理中及已暂停任务保留提交时设置。此选择替代原有全局开关。",
+        "ja": "共通の初期設定か、この動画のみを選びます。共通設定はそれを継承する動画に適用します。動画別設定は現在の初期設定をコピーし、以後の変更を個別に保存します。共通設定に戻すと個別変更を削除します。実行中と一時停止中の作業は送信済み設定を保持します。従来の全体スイッチを置き換えます。"
       },
       "platforms": [
         "macOS",
@@ -47,16 +47,16 @@
     {
       "id": "autoApproveSourceLanguage",
       "title": {
-        "en": "Desktop: Auto-approve the detected source language",
-        "zh-HK": "桌面：自動接納偵測到的原聲語言",
-        "zh-CN": "桌面：自动接受检测到的原声语言",
-        "ja": "デスクトップ：検出した元音声の言語を自動で承認"
+        "en": "Accept detected language",
+        "zh-HK": "接納偵測語言",
+        "zh-CN": "接受检测语言",
+        "ja": "検出した言語を使う"
       },
       "body": {
-        "en": "This switch is on by default. The app uses the source language it detected and does not ask you to confirm it again. This holds for one video and for the whole queue. Turn it off to confirm the language yourself before each new conversion. The app still asks when it found no language, or when the selected voice engine cannot read that language. Detected Japanese never needs a second confirmation. Saved and paused jobs keep the language they were submitted with.",
-        "zh-HK": "呢個掣預設開啟。程式直接用佢偵測到嘅原聲語言，唔會再要你確認；一條影片同成個佇列都一樣。關掉後，每次開始新轉換前都要自己確認語言。偵測唔到語言，或者所選聲音引擎讀唔通嗰種語言，程式仍會詢問。偵測到日文一向唔使再確認。已保存或暫停嘅工作保留提交時嘅語言。",
-        "zh-CN": "此开关默认开启。程序直接使用它检测到的原声语言，不再要求你确认；单个视频和整个队列都一样。关闭后，每次开始新任务前需自行确认语言。若未检测到语言，或所选声音引擎不支持该语言，程序仍会询问。检测到日语一向不需再次确认。已保存或暂停的任务保留提交时的语言。",
-        "ja": "このスイッチは初期状態でオンです。アプリは検出した元音声の言語をそのまま使い、再確認を求めません。1本の動画もキュー全体も同じです。オフにすると、新しい変換のたびに言語を自分で確認します。言語を特定できない場合や、選択中の音声エンジンがその言語に対応していない場合は確認します。日本語の検出は再確認が不要です。保存済み・一時停止中のジョブは送信時の言語を保持します。"
+        "en": "This switch is on by default. The app uses the source language it detected and does not ask you to confirm it again. This holds for one video and for the whole queue. Turn it off to confirm the language yourself before each new conversion. The app reads three kinds of evidence: the language label inside the file, short audio samples, and the words inside the subtitle tracks. When every audio sample names one language, the app uses that language, even when a sample sits under the strict confidence bar. When nothing was heard and the file carries no language label, the app works in Japanese and shows one line about it in the preview column; that line names the reason it had, for example the speech model did not run, or the dialogue words come from the subtitles inside this file. A subtitle language states the words only. It never replaces the audio language used for speech recognition, because recognition must match what was recorded. The app asks only when you turned this switch off, or when the selected voice engine cannot read that language. Detected Japanese never needs a second confirmation. Saved and paused jobs keep the language they were submitted with. New desktop jobs use the first audio track, unless you select another. A container default flag does not override this.",
+        "zh-HK": "呢個掣預設開啟。程式直接用佢偵測到嘅原聲語言，唔會再要你確認；一條影片同成個佇列都一樣。關掉後，每次開始新轉換前都要自己確認語言。程式會睇三種證據：檔案內嘅語言標籤、短音訊樣本，以及字幕軌入面嘅文字。如果每個音訊樣本都講同一種語言，程式就用返呢種語言，即使某個樣本嘅信心未去到嚴格門檻。聽唔到語音同埋檔案冇語言標籤時，程式會用日文工作，並且喺預覽欄顯示一句提示；呢一句會講明佢實際攞到嘅原因，例如語音模型未能運行，或者對白文字取自呢個檔案嘅字幕。字幕語言只講對白文字，永遠唔會取代語音辨識所用嘅原聲語言，因為辨識必須配合實際錄音。程式只喺你關咗呢個掣，或者所選聲音引擎讀唔通嗰種語言時先會詢問。偵測到日文一向唔使再確認。已保存或暫停嘅工作保留提交時嘅語言。 新桌面工作使用第一條音軌，除非另行選取。影片的預設音軌標記不會覆蓋此規則。",
+        "zh-CN": "此开关默认开启。程序直接使用它检测到的原声语言，不再要求你确认；单个视频和整个队列都一样。关闭后，每次开始新任务前需自行确认语言。程序查看三类证据：文件内的语言标签、短音频样本，以及字幕轨中的文字。当所有音频样本都指向同一语言时，程序就使用该语言，即使某个样本的置信度未达到严格门槛。若未听到语音且文件没有语言标签，程序会使用日语工作，并在预览栏显示一行提示；该行会说明它实际掌握的原因，例如语音模型未运行，或对白文字来自该文件中的字幕。字幕语言只说明对白文字，永不取代语音识别所使用的原声语言，因为识别必须与实际录音一致。只有在你关闭此开关，或所选声音引擎不支持该语言时，程序才会询问。检测到日语一向不需再次确认。已保存或暂停的任务保留提交时的语言。 新桌面任务使用第一条音轨，除非另行选择。视频的默认音轨标记不会覆盖此规则。",
+        "ja": "このスイッチは初期状態でオンです。アプリは検出した元音声の言語をそのまま使い、再確認を求めません。1本の動画もキュー全体も同じです。オフにすると、新しい変換のたびに言語を自分で確認します。アプリは3種類の証拠を読みます。ファイル内の言語ラベル、短い音声サンプル、字幕トラックの文字です。すべての音声サンプルが同じ言語を指す場合、サンプルの確信度が厳密なしきいを下回っていても、その言語を使用します。音声を聞き取えずファイルに言語ラベルが無い場合、アプリは日本語で作業し、プレビュー欄に1行表示します。その行は実際の理由を示します。例えば音声モデルが実行できなかった、またはセリフの文字はこのファイルの字幕から取得した、という内容です。言語ラベルの表記はセリフの文字だけを意味し、音声認識の言語を置き換えることはありません。音声認識は実際の録音に一致する必要があります。アプリが確認するのは、このスイッチがオフの場合、または選択中の音声エンジンがその言語に対応していない場合だけです。日本語の検出は再確認が不要です。保存済み・一時停止中のジョブは送信時の言語を保持します。 新しいデスクトップ処理は別の音声を選ばない限り最初のトラックを使います。動画の既定フラグはこの規則を上書きしません。"
       },
       "platforms": [
         "macOS",
@@ -443,16 +443,31 @@
     {
       "id": "sourceWorkflowDefaults",
       "title": {
-        "zh-HK": "翻譯來源自動偵測",
-        "zh-CN": "翻译来源自动检测",
-        "en": "Automatic translation source",
-        "ja": "翻訳ソースの自動検出"
+        "en": "Translation source workflow",
+        "zh-HK": "翻譯來源流程",
+        "zh-CN": "翻译来源流程",
+        "ja": "翻訳ソースのフロー"
       },
       "body": {
-        "zh-HK": "基本模式自動偵測：有可讀取的已選內置字幕或外掛字幕，使用「字幕 > 語音」；沒有文字字幕，使用「語音 > OCR」。專家模式預設「自動偵測」，亦可手動選擇四種流程。左邊決定意思，右邊只作輔助。只套用新轉換，舊工作沿用已保存流程。 如字幕選單提供語言或樣式版本，請先選擇所需版本再新建轉換，保留所選文字及原有顯示時間。舊工作沿用已保存來源，之後更改預覽不會替換來源。 一部影片有多條字幕軌時，自動偵測先讀中文字幕：先繁體中文，後簡體中文；沒有中文字幕時才用其他語言輔助翻譯。你手動選擇的字幕軌會取代這個次序。",
-        "zh-CN": "基本模式自动检测：有可读取的已选内置字幕或外挂字幕，使用“字幕 > 语音”；没有文字字幕，使用“语音 > OCR”。专家模式默认“自动检测”，也可手动选择四种流程。左边决定含义，右边仅作辅助。仅用于新转换，旧任务保留已保存流程。 如果字幕菜单提供语言或样式版本，请先选择所需版本再新建转换，保留所选文本和原显示时间。旧任务保留已保存来源，以后更改预览不会替换来源。 一部影片有多条字幕轨时，自动检测先读中文字幕：先繁体中文，后简体中文；没有中文字幕时才用其他语言辅助翻译。手动选择的字幕轨会取代该顺序。",
-        "en": "Basic detects the source automatically. Readable selected embedded or external text subtitles use Subtitles > Speech. Without text subtitles, use Speech > OCR. Expert defaults to Automatic detection and offers four manual flows. The left source determines meaning; the right source assists. Only new conversions use this rule. Saved jobs keep their frozen flow. If the subtitle menu offers language or style versions, select the required version before a new conversion. Keep its selected text and original display times. Saved jobs retain their earlier source; a later preview change does not replace it. When a movie has several subtitle tracks, Automatic reads the Chinese track first: Traditional Chinese, then Simplified Chinese. Another language assists only when no Chinese track exists. Your own track choice replaces this order.",
-        "ja": "基本はソースを自動検出します。選択した内蔵・外部テキスト字幕を読める場合は「字幕 > 音声」、文字字幕がない場合は「音声 > OCR」を使います。エキスパートは「自動検出」が初期設定で、4種類の手動フローも選べます。左側が意味を決め、右側は補助します。新規変換のみ適用し、保存済みジョブのフローは保持します。 字幕メニューに言語やスタイルの選択がある場合は、新規変換前に選びます。選択した文章と元の表示時刻を保ちます。保存済みジョブの入力は、後からのプレビュー変更で置き換えません。 字幕トラックが複数ある動画では、自動検出が中国語トラックを先に読みます。順序は繁体字中国語、次に簡体字中国語です。中国語トラックがない場合だけ他の言語が翻訳を補助します。手動選択は自動の順序より優先します。"
+        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts.",
+        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。",
+        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。",
+        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。"
+      }
+    },
+    {
+      "id": "openingTreatment",
+      "title": {
+        "zh-HK": "片頭／片尾處理",
+        "zh-CN": "片头／片尾处理",
+        "en": "OP / ED treatment",
+        "ja": "OP／ED 処理"
+      },
+      "body": {
+        "en": "Detect automatically is on by default. It first checks named opening and ending chapters, then local singing, music and speech evidence in the first and last 300 seconds. A confirmed song keeps original audio without translation or dubbing. Background music alone is not a song. Uncertain ranges and classifier failures continue as dialogue. On desktop, Translate dialogue is a separate switch and defaults off. iPad and iPhone currently show automatic detection only. New jobs use these preferences; resumed jobs keep their frozen policy.",
+        "zh-HK": "「自動偵測」預設開啟。系統先檢查片頭及片尾章節，再檢查首尾 300 秒內的歌唱、音樂及語音證據。確認為歌曲時會保留原聲，不翻譯或配音。背景音樂本身不等於歌曲；範圍不確定或分類失敗時仍按對白處理。桌面版另有「翻譯對白」開關，預設關閉。iPad 及 iPhone 目前只提供自動偵測。新工作使用偏好設定；續做沿用已保存政策。",
+        "zh-CN": "自动检测默认开启。系统先检查片头片尾章节，再检查首尾 300 秒内的歌唱、音乐及语音证据。确认歌曲后保留原声，不翻译或配音。背景音乐本身不等于歌曲；范围不确定或分类失败时仍按对白处理。桌面版另有翻译对白开关，默认关闭。iPad 和 iPhone 当前仅提供自动检测。新任务使用偏好设置；继续处理沿用已保存规则。",
+        "ja": "自動検出は既定でオンです。章名を先に調べ、先頭と末尾の300秒の歌唱・音楽・音声をローカルで確認します。歌と確認した区間は元音声を保持し、翻訳や吹替を行いません。背景音楽だけでは歌と判定しません。不確かな区間や分類失敗では会話として処理します。デスクトップの会話を翻訳スイッチは既定でオフです。iPadとiPhoneは現在、自動検出だけを表示します。新規作業は現在の設定を使い、再開は保存済み規則を維持します。"
       }
     },
     {
@@ -644,25 +659,25 @@
         "ja": "プリセットの導入済みモデル"
       },
       "body": {
-        "zh-HK": "iPad 製作預設會將未完整下載的本機模型顯示為灰色，不能選取。iPhone 基本模式及製作預設會隱藏這些模型；模型中心保留下載入口。檔案齊全但尚未載入記憶體的模型仍可選擇。此限制不會下載模型、清除原有選擇或更改舊工作。系統翻譯與朗讀按裝置服務及已安裝聲線提供。",
-        "zh-CN": "iPad 制作预设会将未完整下载的本地模型显示为灰色，无法选择。iPhone 基本模式和制作预设会隐藏这些模型；模型中心保留下载入口。文件齐全但尚未载入内存的模型仍可选择。此限制不会下载模型、清除原选择或改变旧任务。系统翻译和朗读依设备服务及已安装声线提供。",
-        "en": "iPad defaults show incomplete local models as gray and disabled. iPhone Basic and defaults hide them. Models keeps download entries. Complete files remain selectable before runtime loading. This gate does not download, clear stored choices or change saved jobs. System translation and speech depend on OS services and installed voices.",
-        "ja": "iPad の制作プリセットでは未導入・不完全なモデルを灰色で無効表示します。iPhone の基本モードとプリセットでは非表示にします。モデル画面には導入項目を残します。ファイルが揃っていれば実行時の読み込み前でも選択できます。自動ダウンロード、保存済み選択の消去、保存済み作業の変更は行いません。システム翻訳と読み上げは OS 機能・導入済み音声に従います。"
+        "zh-HK": "iPad 製作預設會將未完整下載的本機模型顯示為灰色，不能選取。iPhone 基本模式及製作預設會隱藏這些模型；模型中心保留下載入口。檔案齊全但尚未載入記憶體的模型仍可選擇。此限制不會下載模型、清除原有選擇或更改舊工作。系統翻譯與朗讀按裝置服務及已安裝聲線提供。 iPhone 與 iPad 的新安裝預設選擇 Qwen 3.5 4B（4-bit），排列在可選 Gemma 之前。啟動只要求一個已驗證文字模型；刪除另一個不會要求補回預設模型。新工作可使用剩下的模型，已保存工作的模型識別與預算不變。",
+        "zh-CN": "iPad 制作预设会将未完整下载的本地模型显示为灰色，无法选择。iPhone 基本模式和制作预设会隐藏这些模型；模型中心保留下载入口。文件齐全但尚未载入内存的模型仍可选择。此限制不会下载模型、清除原选择或改变旧任务。系统翻译和朗读依设备服务及已安装声线提供。 iPhone 与 iPad 新安装默认选择 Qwen 3.5 4B（4-bit），排列在可选 Gemma 之前。启动只要求一个已验证文字模型；删除另一个不会要求补回默认模型。新任务可使用剩下的模型，已保存任务的模型标识和预算不变。",
+        "en": "iPad defaults show incomplete local models as gray and disabled. iPhone Basic and defaults hide them. Models keeps download entries. Complete files remain selectable before runtime loading. This gate does not download, clear stored choices or change saved jobs. System translation and speech depend on OS services and installed voices. New iPhone and iPad installs default to Qwen 3.5 4B, 4-bit, listed before optional Gemma. Startup requires one verified text model. Removing the other model does not require restoring the default. New jobs can use the remaining model. Saved model IDs and budgets remain unchanged.",
+        "ja": "iPad の制作プリセットでは未導入・不完全なモデルを灰色で無効表示します。iPhone の基本モードとプリセットでは非表示にします。モデル画面には導入項目を残します。ファイルが揃っていれば実行時の読み込み前でも選択できます。自動ダウンロード、保存済み選択の消去、保存済み作業の変更は行いません。システム翻訳と読み上げは OS 機能・導入済み音声に従います。 iPhone と iPad の新規導入では Qwen 3.5 4B（4-bit）が既定で、追加の Gemma より先に表示します。検証済みのテキストモデルが1つあれば起動条件を満たします。別のモデルを削除しても既定モデルの復元は不要です。新規ジョブは残るモデルを使用でき、保存済みモデルIDと予算は保持します。"
       }
     },
     {
       "id": "captionOnlyNoDialogue",
       "title": {
-        "en": "Non-dialogue captions only",
-        "zh-HK": "無對白字幕只顯示文字",
-        "zh-CN": "无对白字幕只显示文字",
-        "ja": "会話のない字幕は表示のみ"
+        "en": "Dub dialogue only",
+        "zh-HK": "只配對白",
+        "zh-CN": "仅配对白",
+        "ja": "会話だけ吹替"
       },
       "body": {
-        "en": "On desktop, iPad and iPhone this independent switch is on for new Basic and Expert subtitle-led jobs. Complete source and separated-audio evidence must confirm no dialogue. Keep captions and their display times. A supported music-only check also requires no recognized words inside the actual caption, a near-silent vocal window and continuous music/activity evidence. It reserves at most two paired inspections per job; failure or resume does not restore attempts. Uncertain, quiet or offscreen speech keeps normal dubbing. Saved jobs retain their frozen policy. Each platform needs its own tests and installation.",
-        "zh-HK": "桌面版、iPad 及 iPhone 的這個獨立開關，在新建以字幕為主要來源的基本及專家工作預設開啟。原聲及分離音訊的完整證據必須確認沒有對白，並保留字幕及顯示時間。支援的純音樂檢查亦要求字幕實際時段沒有辨識到文字、分離人聲接近靜音，以及連續的音樂與活動證據。每份工作最多預留兩次雙音訊檢查；失敗或續做不會恢復次數。不確定、細聲或畫面外的對白仍會配音。已保存工作沿用原有規則，各平台須分別測試及安裝。",
-        "zh-CN": "桌面版、iPad 及 iPhone 的这个独立开关，在新建以字幕为主要来源的基本及专家任务默认开启。原声和分离音频的完整证据必须确认没有对白，并保留字幕及显示时间。支持的纯音乐检查还要求字幕实际时段没有识别文字、分离人声接近静音，以及连续的音乐和活动证据。每个任务最多预留两次双音频检查；失败或继续处理不会恢复次数。不确定、轻声或画面外的对白仍会配音。已保存任务沿用原有规则，各平台须分别测试和安装。",
-        "ja": "デスクトップ、iPad、iPhone では、この独立スイッチは字幕を主入力とする新規Basic・Expert作業でオンです。元音声と分離音声の完全な証拠で発話がないと確認し、字幕と表示時刻を残します。対応する音楽のみの検査には、実際の字幕区間に認識語がないこと、ほぼ無音の分離ボーカル、連続した音楽・活動の証拠も必要です。1作業につき2組までの検査を事前確保し、失敗や再開で回数を戻しません。不確か、小声、画面外の発話は通常どおり生成します。保存済み作業の規則は維持し、各プラットフォームで個別にテスト・導入します。"
+        "en": "Off by default for new desktop, iPad and iPhone jobs. Turn on to keep confirmed no-dialogue captions as text. For suspicious short speech under a long caption, require agreeing original/stem recognition, translate actual speech without captions, then compare that meaning with the caption. Omit generated dubbing only for a clear unrelated advertisement or screen overlay. Keep original sound, caption text and display times. Related wording, uncertain recognition or failure retains normal dubbing. This option does not remove existing recordings. It permits at most 12 candidate windows and a 600-second soft job allowance. Reservations stay spent on failure or resume. Saved jobs retain their frozen rules. The changed control requires a fresh opt-in.",
+        "zh-HK": "桌面版、iPad 及 iPhone 的新工作預設關閉。開啟後，確認無對白的字幕只保留文字。遇到短句配長字幕的可疑情況，必須先取得一致的原聲及分離人聲辨識，再獨立翻譯實際語音，最後與字幕比較意思。只有明確不相關的廣告或畫面字句才略過生成配音，並保留原聲、字幕文字及顯示時間。意思相關、辨識不確定或比對失敗時仍會正常配音。不會移除已有錄音。每份工作最多處理 12 個候選時段，共有 600 秒軟性預算；失敗或續做不會恢復已用次數及時間。舊工作保留原有規則；新功能須重新主動開啟。",
+        "zh-CN": "桌面版、iPad 和 iPhone 的新任务默认关闭。开启后，确认无对白的字幕仅保留文字。遇到短句配长字幕的可疑情况，先取得一致的原声及分离人声识别，再独立翻译实际语音，最后与字幕比较含义。只有明确不相关的广告或画面文字才跳过生成配音，保留原声、字幕及显示时间。含义相关、识别不确定或比对失败时仍正常配音。不删除已有录音。每个任务最多处理 12 个候选时段，共有 600 秒软性预算；失败或继续处理不会恢复次数及时间。旧任务保留原有规则；新功能须重新主动开启。",
+        "ja": "デスクトップ、iPad、iPhone の新規作業では既定でオフです。オンにすると発話がないと確認した字幕は文字だけを残します。短い発話と長い字幕の疑わしい組合せでは、元音声と分離音声の認識一致を確認し、字幕を使わず発話を翻訳してから字幕の意味と比較します。明確に無関係な広告や画面表示だけ、生成吹替を省き、元音声・字幕・表示時刻を保持します。意味が関連する場合や認識不確実・比較失敗では通常の吹替を保持します。既存録音は削除しません。1作業12候補、合計600秒のソフト制限を使い、失敗や再開で使用量を戻しません。保存済み作業の規則は維持し、新機能は改めてオンにする必要があります。"
       }
     },
     {
@@ -724,6 +739,25 @@
         "en": "You decide. The app never removes a recording on its own. The control is available only while processing is stopped. The Remove button stays disabled for audio used by the current export, audio in a saved choice, and audio linked to an export. Remove moves that WAV into the discarded-recordings folder for the video and keeps a record file there. The review report no longer lists it. This changes no export, saved choice, review status or repair allowance, and it does not certify the line.",
         "ja": "削除は利用者が決めます。アプリが自動で削除することはありません。処理が停止している時だけ使えます。現在の出力で使用済み、保存済みの選択にある、または出力に関連付けられた録音の Remove ボタンは無効です。Remove はその WAV をこの動画の削除済み録音 (discarded-recordings) フォルダへ移動し、記録ファイルを保存します。校正レポートには表示されません。出力、保存済みの選択、確認状態、修復回数、いずれも変わらず、行の正しさの認証でもありません。"
       }
+    },
+    {
+      "id": "reviewLineTakeList",
+      "platforms": [
+        "macOS",
+        "Windows"
+      ],
+      "title": {
+        "zh-HK": "試聽同揀已保存嘅錄音",
+        "zh-CN": "试听并选择已保存的录音",
+        "en": "Listen to and pick a saved recording",
+        "ja": "保存済み録音の試聴と選択"
+      },
+      "body": {
+        "zh-HK": "此行每一段已保存嘅錄音只會顯示一次，順序按錄音時間排列。第一段顯示「首次生成錄音」，之後各段顯示「生成錄音」。其中一個標記顯示現正成品使用嘅錄音，或者你喺新成品之前已儲存嘅選擇。按該行嘅「試聽」就可以收聽。卡片下方嘅選單決定下一次成品使用邊段錄音。系統不會再用第二個區塊重複顯示同一錄音。如現正成品使用原片聲音，會有一行簡短說明，並提供該聲音嘅試聽。",
+        "zh-CN": "该行每段已保存的录音只显示一次，按录音时间排列。第一段显示“首次生成录音”，其余显示“生成录音”。其中一个标记显示当前成片采用的录音，或你在新生成之前已保存的选择。点该行的“试听”即可收听。卡片下方的菜单决定下一次成片用哪段录音。系统不会用第二个区块重复显示同一录音。若当前成片采用原片声音，会有一行简短说明并提供该声音的试听。",
+        "en": "Each saved recording for the line shows once, in the order it was made. The first take reads First generated recording. Later takes read Generated recording. One mark shows the recording the current export uses, or a choice you saved before a new export. Select Listen on that row to hear it. The menu under the card picks the recording for the next export. No second block repeats the same recording. When the export uses the original source voice instead, one short line states that and offers Listen for it.",
+        "ja": "この行の保存済み録音は1回だけ表示し、録音順に並べます。1番目は「初回生成テイク」、以降は「生成テイク」と表示します。現在の出力が使う録音、または新しい出力前に保存した選択にマークを1つ付けます。各行の「試聴」で再生できます。カード下のメニューで次の出力に使う録音を選びます。同じ録音を別ブロックに繰り返し表示しません。現在の出力が元の音声を使う場合は、短い説明が1行表示され、その試聴も使えます。"
+      }
     }
   ],
   "presentation": {
@@ -738,6 +772,168 @@
       "zh-CN": "处理时间可能增至 2–3 倍或更长，效果未必更好。",
       "en": "May take 2–3 times as long or longer. Better results are not guaranteed.",
       "ja": "処理時間が2〜3倍以上になる場合があります。品質向上は保証されません。"
+    },
+    "settingsScope": {
+      "en": "Settings scope",
+      "zh-HK": "設定範圍",
+      "zh-CN": "设置范围",
+      "ja": "設定の範囲"
+    },
+    "sharedDefaults": {
+      "en": "Shared defaults",
+      "zh-HK": "共用預設",
+      "zh-CN": "共享默认",
+      "ja": "共通の初期設定"
+    },
+    "settingsThisVideo": {
+      "en": "This video only",
+      "zh-HK": "本片自訂",
+      "zh-CN": "本片自定义",
+      "ja": "この動画のみ"
+    },
+    "scopeSharedHint": {
+      "en": "Edits apply to videos using shared defaults.",
+      "zh-HK": "修改會套用於沿用預設的影片。",
+      "zh-CN": "修改将用于沿用默认设置的视频。",
+      "ja": "共通設定を使う動画に変更を適用します。"
+    },
+    "scopeVideoHint": {
+      "en": "Edits affect this video only.",
+      "zh-HK": "修改只套用於目前影片。",
+      "zh-CN": "修改仅用于当前视频。",
+      "ja": "現在の動画だけに変更を適用します。"
+    },
+    "settingsVoice": {
+      "en": "Voice & language",
+      "zh-HK": "聲音與語言",
+      "zh-CN": "声音与语言",
+      "ja": "音声と言語"
+    },
+    "settingsSubtitles": {
+      "en": "Subtitles & source",
+      "zh-HK": "字幕與來源",
+      "zh-CN": "字幕与来源",
+      "ja": "字幕と入力"
+    },
+    "settingsOpening": {
+      "en": "Opening & ending",
+      "zh-HK": "片頭與片尾",
+      "zh-CN": "片头与片尾",
+      "ja": "オープニングとエンディング"
+    },
+    "settingsAdvanced": {
+      "en": "Advanced",
+      "zh-HK": "進階設定",
+      "zh-CN": "高级设置",
+      "ja": "詳細設定"
+    },
+    "settingsHelp": {
+      "en": "About these settings",
+      "zh-HK": "設定說明",
+      "zh-CN": "设置说明",
+      "ja": "設定の説明"
+    },
+    "settingsMore": {
+      "en": "More options",
+      "zh-HK": "更多選項",
+      "zh-CN": "更多选项",
+      "ja": "その他の設定"
+    },
+    "settingsAutomaticSubtitles": {
+      "en": "Match dubbing languages",
+      "zh-HK": "跟隨配音語言",
+      "zh-CN": "跟随配音语言",
+      "ja": "吹替言語に合わせる"
+    },
+    "settingsSubtitleFile": {
+      "en": "Subtitle file",
+      "zh-HK": "字幕檔案",
+      "zh-CN": "字幕文件",
+      "ja": "字幕ファイル"
+    },
+    "settingsSource": {
+      "en": "Source",
+      "zh-HK": "來源",
+      "zh-CN": "来源",
+      "ja": "入力"
+    },
+    "settingsDetect": {
+      "en": "Detect automatically",
+      "zh-HK": "自動偵測",
+      "zh-CN": "自动检测",
+      "ja": "自動検出"
+    },
+    "settingsTranslate": {
+      "en": "Translate dialogue",
+      "zh-HK": "翻譯對白",
+      "zh-CN": "翻译对白",
+      "ja": "会話を翻訳"
+    },
+    "settingsOn": {
+      "en": "On",
+      "zh-HK": "開啟",
+      "zh-CN": "开启",
+      "ja": "オン"
+    },
+    "settingsOff": {
+      "en": "Off",
+      "zh-HK": "關閉",
+      "zh-CN": "关闭",
+      "ja": "オフ"
+    },
+    "settingsNewJobs": {
+      "en": "New conversion preferences",
+      "zh-HK": "新轉換偏好",
+      "zh-CN": "新转换偏好",
+      "ja": "新しい変換の設定"
+    },
+    "settingsSavedJob": {
+      "en": "Saved conversion settings",
+      "zh-HK": "已保存工作設定",
+      "zh-CN": "已保存任务设置",
+      "ja": "保存済み変換の設定"
+    },
+    "settingsMobileScope": {
+      "en": "Resume keeps saved settings. Preference changes apply to new conversions.",
+      "zh-HK": "續做沿用已保存設定；偏好變更套用於新轉換。",
+      "zh-CN": "继续处理沿用已保存设置；偏好变更用于新转换。",
+      "ja": "再開時は保存済み設定を使い、設定の変更は新しい変換に適用します。"
+    },
+    "settingsModels": {
+      "en": "Translation & recognition models",
+      "zh-HK": "翻譯與辨識模型",
+      "zh-CN": "翻译与识别模型",
+      "ja": "翻訳・認識モデル"
+    },
+    "settingsOutput": {
+      "en": "Output",
+      "zh-HK": "輸出",
+      "zh-CN": "输出",
+      "ja": "出力"
+    },
+    "settingsInherited": {
+      "en": "Use shared defaults",
+      "zh-HK": "沿用共用預設",
+      "zh-CN": "沿用共享默认",
+      "ja": "共通設定を使う"
+    },
+    "settingsNoSubtitles": {
+      "en": "No readable text subtitles: uses Speech first; OCR stays off.",
+      "zh-HK": "沒有可讀文字字幕：使用語音優先，不會自動啟用 OCR。",
+      "zh-CN": "没有可读文本字幕：使用语音优先，不会自动启用 OCR。",
+      "ja": "読み取れる字幕がないため音声優先を使い、OCRは自動で有効にしません。"
+    },
+    "costNotice": {
+      "en": "Extra AI processing takes longer.",
+      "zh-HK": "額外 AI 處理需時較長。",
+      "zh-CN": "额外 AI 处理耗时较长。",
+      "ja": "追加の AI 処理には時間がかかります。"
+    },
+    "settingsResetEntry": {
+      "en": "Reset / rebuild",
+      "zh-HK": "重設／重新製作",
+      "zh-CN": "重设／重新制作",
+      "ja": "リセット・再作成"
     }
   },
   "groups": [

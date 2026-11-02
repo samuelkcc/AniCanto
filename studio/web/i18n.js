@@ -1,7 +1,9 @@
+import {sourceModesTranslation} from './source-modes-copy.js';
 import {preparationTranslation} from './source-preparation-copy.js';
 import {editorLocale} from './editor-locale.js';
 import {reviewLocale} from './review-locale.js';
 import {localeData} from './locale-data.js';
+import {storageTranslation} from './storage-copy.js';
 const zh={
 "Retained source audio":"保留原聲",
 "Shared subtitle continuation":"共用字幕延續片段",
@@ -293,6 +295,7 @@ const zh={
  "Source language":"原聲語言",
  "Detecting source language…":"正在辨識原聲語言…",
  "Detected language":"偵測到語言",
+ "No source language was found, so this app is working in Japanese. Check it before export.":"偵測唔到原聲語言，所以呢次用日文處理。輸出前請檢查。",
  "Convert this language":"確認並轉換",
  "English source":"英文原文",
  "Chinese source":"中文原文",
@@ -369,6 +372,7 @@ const zh={
  "system RAM":"系統 RAM",
  "unified memory":"統一記憶體",
  "CPU / GPU acceleration not confirmed":"CPU／GPU 加速尚未確認",
+  "CPU only":"只用 CPU",
  "The best Cantonese results tested so far use full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Smaller setups may differ in expression, pronunciation and translation detail.":"目前實測廣東話效果最佳嘅組合，係 Apple Silicon 64 GB 記憶體配合完整 Drama 3 同 Qwen 35B。較小規格組合喺聲線表情、發音同翻譯細節方面可能有差異。",
  "SCKC’s best Cantonese results so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results.":"目前實測廣東話效果最佳：Apple Silicon 64 GB 記憶體，完整 Drama 3 + Qwen 35B。其他硬件同模型格式尚未證實可達到相同效果。",
  "GPT-SoVITS V2 Pro Plus + Qwen 9B. A lower-memory alternative; voice expression, pronunciation and translation detail may differ from the highest-quality setup.":"GPT-SoVITS V2 Pro Plus + Qwen 9B。較低記憶體嘅替代方案；聲線表情、發音同翻譯細節可能同最高品質組合有差異。",
@@ -546,7 +550,7 @@ Object.assign(zh,{"Download publisher": "下載版本發佈者", "Download repos
 Object.assign(zh,{'Prepare models before starting conversion.':'請先完成模型準備，再開始轉換。'});
 const phases={prepare:'Preparation',recognition:'Japanese speech',roles:'Voice references',translation:'Translation',voice:'Dubbing',repair:'Repair / review',export:'Export'};
 Object.assign(zh,{"Automatic processing is running": "自動處理進行中", "Review status": "校對狀態", "AI repair runs automatically. These controls are optional fallbacks after pausing or completion.": "AI 會自動修復；以下只係暫停或完成後可揀嘅後備選項。", "Pending": "待處理", "Repaired": "已修復", "User choices": "用戶選擇", "Pause and save before changing a review choice.": "請先暫停保存，先可以更改校對選擇。", "The last attempt needs attention. Detailed process output is retained in Terminal.": "上次工作仍有問題，詳細程序紀錄保留喺終端機。", "Review checks pending": "校對檢查未完成", "No unresolved review issues": "沒有未解決校對項目", "No line-level issues reported": "暫未有逐句問題紀錄", "Review not available yet": "暫未有完整校對結果", "Processing and automatic checks are still running. This is not a quality pass.": "處理同自動檢查仍進行中，呢個唔代表品質通過。", "The completed automatic checks reported no unresolved lines.": "已完成嘅自動檢查沒有報告未解決對白。", "A complete quality verdict is not available. Processing details remain in Terminal.": "暫未有完整品質判定，處理詳情仍保留喺終端機。", "Recording too long": "錄音超出可用時段", "Translation missing": "欠缺翻譯稿", "Voice missing": "缺少配音", "Voice generation failed": "配音生成失敗", "Reference voice problem": "參考聲音有問題", "Language or completeness needs checking": "語言或完整度需要核對", "Automatic recovery": "自動修復", "Automatic repair in progress": "自動修復中", "Awaiting automatic recheck": "等待自動重新核對", "Not resolved": "仍未解決", "User choice saved": "已保存用戶選擇", "Dubbing needs attention": "配音需要處理", "Additional automatic recovery attempts recorded": "次額外自動修復已記錄", "Original audio selected for this line.": "本句已選擇保留原聲。", "Reported defects accepted for this recording.": "已明確接受呢段錄音嘅已報告缺陷。", "Export a new version to apply saved choices.": "匯出新版本先會套用已保存選擇。", "Original diagnostic evidence": "原始診斷證據", "Optional fallback": "可選後備處理", "Keep original Japanese voice": "保留日文原聲", "Keep original source voice": "保留來源原聲", "Accept a retained recording with defects": "接受有缺陷嘅保留錄音", "Remove my override": "移除我嘅覆寫選擇", "Retained recording": "保留錄音", "Reported defects": "有缺陷紀錄", "Listen to selection": "試聽所選錄音", "Save fallback choice": "保存後備選擇", "Repaired automatically": "已自動修復", "Confirm fallback choice": "確認後備選擇", "This line will keep its original source voice. The translated captions are retained.": "本句會保留來源原聲，翻譯字幕仍然保留。", "This recording may contain wrong pronunciation, a different language or missing words. Accepting it is your explicit editorial choice, not an AI quality pass.": "呢段錄音可能有讀音錯誤、語言唔同或漏字；接受係你明確嘅編輯選擇，唔代表 AI 品質通過。", "The saved override will be removed.": "已保存嘅覆寫選擇會移除。", "Earlier exports and recordings are retained. Export a new version to apply this choice.": "舊成品同錄音會保留，匯出新版本先會套用呢個選擇。", "Save choice": "保存選擇", "Fallback choice saved. Export a new version to apply it.": "後備選擇已保存，請匯出新版本套用。"});
-export const translate=(text,lang)=>{const prep=preparationTranslation(text,lang);if(prep)return prep;const editor=editorLocale(text,lang);if(editor)return editor;if(reviewLocale[lang]?.[text])return reviewLocale[lang][text];if(lang==='zh-HK')return zh[text]??text;const locale=localeData(lang);return locale?.ui[text]??locale?.ui[phases[text]]??phases[text]??text;};
+export const translate=(text,lang)=>{const sourceMode=sourceModesTranslation(text,lang)||sourceModesTranslation(phases[text],lang);if(sourceMode)return sourceMode;const storage=storageTranslation(text,lang);if(storage)return storage;const prep=preparationTranslation(text,lang);if(prep)return prep;const editor=editorLocale(text,lang);if(editor)return editor;if(reviewLocale[lang]?.[text])return reviewLocale[lang][text];if(lang==='zh-HK')return zh[text]??text;const locale=localeData(lang);return locale?.ui[text]??locale?.ui[phases[text]]??phases[text]??text;};
 
 Object.assign(zh,{"Initial voice attempt":"原本聲線首次生成","Try another installed voice model":"試用另一個已下載嘅配音模型","Download another voice model":"下載另一個配音模型","Download without switching":"只下載，不切換","Automatically try another installed voice model for failed lines":"失敗對白自動試用另一個已下載配音模型","Only verified target-language recordings replace the original take.":"只會用通過目標語言核對嘅錄音代替原本錄音。"});
 Object.assign(zh,{"Download only":"只下載","Download":"下載","estimated memory":"預計記憶體","This model may not load on this computer. You can still download it without switching.":"呢個模型可能超出本機記憶體，載入時或會失敗；仍可只下載，唔會切換目前模型。"});
@@ -636,5 +640,17 @@ Object.assign(zh,{"One first take kept; only fully silent takes retry, at most t
 
 Object.assign(zh,{"Selected location unavailable. Debug report saved to:": "所選位置無法儲存，偵錯記錄已儲存至："});
 
+// The preview panel states which content-priority flow the frozen request actually uses.
+Object.assign(zh,{"Manual Expert choice":"專家模式手動選擇"});
+
 // Review: the separated voice recorded behind each saved recording.
 Object.assign(zh,{"Used a different separated voice than the first recording of this line.": "採用了同呢句首次錄音唔同嘅分離聲音。"});
+
+// Source language dialog: state why the confirmation appeared, and what a failed listen means.
+Object.assign(zh,{"You turned off auto-approve, so this app asks you to confirm the language before it starts.":"你關咗「自動接納偵測到的原聲語言」，所以開始之前要你自己確認語言。","The selected voice model cannot read this source language. Choose another language, or choose a voice model that supports it.":"所選配音模型讀唔通呢種原聲語言。請轉用另一種語言，或者揀支持呢種語言嘅配音模型。","This app could not listen to the audio on this computer, so it asks you to confirm the language itself.":"呢部電腦未能聆聽音訊，所以要你自己確認原聲語言。","No source language was found, so choose the language that is spoken in this video.":"偵測唔到原聲語言，請選擇呢條影片實際使用嘅語言。","Speech recognition did not run on this computer, so the language label inside the file was used. Install the speech model in Model centre, then check the language again.":"語音辨識未能喺呢部電腦運行，所以用咗檔案內嘅語言標籤。請喺模型中心安裝語音模型，再重新核對語言。"});
+
+// Preview notice: name the evidence the app actually had before it used Japanese.
+Object.assign(zh,{"Speech recognition could not run on this computer, so this app used Japanese. Install the speech model in Model centre, then check the language again.":"呢部電腦未能進行語音辨識，所以呢次用日文處理。請喺模型中心安裝語音模型，再重新核對語言。","Speech recognition could not confirm the spoken language, so it uses Japanese for timing. The dialogue words come from the subtitles inside this file.":"語音辨識未能確定原片講緊嘅語言，所以時間定位繼續用日文。對白文字取自呢個檔案入面嘅字幕。"});
+
+// Switch groups in the Production settings panel name the block, not each row.
+Object.assign(zh,{"Scope": "處理範圍", "Content priority": "內容優先次序", "Subtitles": "字幕", "OP / ED treatment": "片頭／片尾處理", "Voice and dubbing": "聲音與配音", "Models and output": "模型與輸出", "AI review": "AI 覆核"});

@@ -17,7 +17,8 @@ extension Engine {
     func ensurePythonEnvironment(_ name:String) throws {
         guard !name.isEmpty, name.range(of:"^[a-z][a-z0-9-]*$",options:.regularExpression) != nil else {throw AppFailure(message:"Invalid runtime name")}
         let target=root.appendingPathComponent("\(name)/bin/python3")
-        if FileManager.default.isExecutableFile(atPath:target.path) {return}
+        if FileManager.default.isExecutableFile(atPath:target.path),
+           FileManager.default.fileExists(atPath:root.appendingPathComponent("\(name)/pyvenv.cfg").path) {return}
         try run(URL(fileURLWithPath:"/bin/sh"),[resources.appendingPathComponent("python-bootstrap.sh").path,root.path,resources.path],protocolOutput:true)
         let data=try Data(contentsOf:resources.appendingPathComponent("python-installer.json"))
         guard let catalog=try JSONSerialization.jsonObject(with:data) as? [String:Any],

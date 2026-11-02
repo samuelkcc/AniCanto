@@ -374,8 +374,8 @@ def gsv_audio(cfg,job,cues,run,emit):
   except (ValueError,RuntimeError) as error:
    if not cfg.get('continueOnError',True):raise
    from project_store import record_issue
-   record_issue(cfg,job,cue,'missing-script' if cue.get('missingScript') else 'reference',error)
    emit('跳過待修正',f"第 {cue.get('reviewIndex',0)+1} 段參考聲音無效：{error}；繼續其他對白。")
+   record_issue(cfg,job,cue,'missing-script' if cue.get('missingScript') else 'reference',error)
    silence=job/f"skipped-{backend}-{cue.get('reviewIndex',count)}.wav"
    with wave.open(str(silence),'wb') as f:
     f.setparams((1,2,24000,0,'NONE','not compressed'));f.writeframes(bytes(round(max(.1,cue['end']-cue['start'])*24000)*2))
@@ -405,9 +405,9 @@ def gsv_audio(cfg,job,cues,run,emit):
     failure=path.with_suffix('.failure.json')
     try:detail=json.loads(failure.read_text()).get('error') or str(error)
     except (OSError,ValueError):detail=str(error)
-    record_issue(cfg,job,cue,'user-skipped' if skipped else 'tts-generation',detail)
     notice="高速模式不重錄，缺聲已記錄" if one_pass(cfg) else "稍後自動補聲"
     emit('跳過待修正',f"{backend} 第 {cue.get('reviewIndex',i)+1} 段：本次生成未完成，{notice}；繼續其他對白。{detail[:180]}")
+    record_issue(cfg,job,cue,'user-skipped' if skipped else 'tts-generation',detail)
     silence=job/f"skipped-{backend}-{cue.get('reviewIndex',i)}.wav"
     with wave.open(str(silence),'wb') as f:
      f.setparams((1,2,24000,0,'NONE','not compressed'));f.writeframes(bytes(round(max(.1,cue['end']-cue['start'])*24000)*2))

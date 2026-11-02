@@ -11,3 +11,9 @@ MLX-LM 0.32.0 (MIT): https://github.com/ml-explore/mlx-lm
 Optional Qwen3.5-35B-A3B 4-bit MLX model (Apache-2.0 model card): see MODEL-NOTICES.txt and mlx-text-model.json. No large weights included in the bundle.
 Searchable versioned inventory: license-inventory.json, generated from this bundle's native licences and Python package metadata. Full package notices remain alongside the corresponding distributions and can be read in About AniCanto.
 FFmpeg includes GPL codec libraries; native notices are under Licenses/. The shared desktop no longer bundles the unused legacy VLC stack. Noto CJK font notices are retained with fonts/. Source/build-material obligations remain to be reviewed before external redistribution.
+
+HLS.js 1.7.3
+Copyright (c) 2017 Dailymotion
+Source: https://github.com/video-dev/hls.js/tree/v1.7.3
+Licence: Apache-2.0. The upstream notice is bundled at licenses/hls.js/LICENSE. The full licence is at licenses/common/Apache-2.0.txt.
+Used only for desktop source playback through Media Source Extensions.

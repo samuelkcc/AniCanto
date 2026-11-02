@@ -43,7 +43,14 @@ def record_issue(cfg, job, cue, kind, message):
     row=dict(index=index,start=cue['start'],end=cue['end'],engine=cfg.get('ttsBackend',''),language=cfg.get('targetLanguage','yue'),kind=kind,message=str(message),status='skipped')
     if cue.get('editorID'):row['editorID']=cue['editorID']
     rows=[r for r in rows if (r['index'],r['kind'])!=(index,kind)]+[row]
-    temporary=path.with_suffix('.tmp');temporary.write_text(json.dumps(rows,ensure_ascii=False,indent=2));temporary.replace(path)
+    # A denied checkpoint rename (Windows file locks report WinError 5) must not
+    # stop the audio line it describes. The unique-temp writer retries the lock,
+    # and a checkpoint that still cannot land is dropped: the skipped take stays
+    # in timing.json and the run keeps its other recordings.
+    from atomic_files import write_json
+    try:
+        write_json(path,rows,indent=2)
+    except OSError:pass
     if cfg.get('storage'):
         with connect(cfg['storage']) as db:
             db.execute('INSERT OR REPLACE INTO issues VALUES(?,?,?,?,?,?)',(str(job/'review.json'),row['engine'],row['language'],index,kind,json.dumps(row,ensure_ascii=False)))

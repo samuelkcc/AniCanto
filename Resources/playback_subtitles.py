@@ -4,7 +4,7 @@ from pathlib import Path
 TEXT={'subrip','srt','ass','ssa','webvtt','mov_text','text'}
 REVISION='movie-subtitles-1'
 
-def read(root,row,tools,choice='auto',output=False):
+def read(root,row,tools,choice='auto',output=False,target='yue'):
  source=Path((row.get('output') if output else row.get('video')) or '').resolve()
  if not source.is_file():raise ValueError('The selected media file is missing.')
  st=source.stat();identity=[REVISION,str(source),st.st_size,st.st_mtime_ns]
@@ -20,7 +20,10 @@ def read(root,row,tools,choice='auto',output=False):
  if external and external.is_file():tracks.append(dict(id='external',title=external.name,supported=True,default=True))
  result=dict(tracks=tracks,streams=info.get('streams',[]),cues=[],selected='off')
  if choice in ('list','off'):return result
- if choice=='auto':choice='external' if external and external.is_file() else next((x['id'] for x in tracks if x['supported'] and x['default']),next((x['id'] for x in tracks if x['supported']),'off'))
+ if choice=='auto':
+  from subtitle_preference import pick
+  preferred=pick([s for s in info.get('streams',[]) if s.get('codec_type')=='subtitle' and s.get('codec_name') in TEXT],target=target)
+  choice='external' if external and external.is_file() else 'embedded:'+str(preferred['index']) if preferred else 'off'
  if choice=='off':return result
  selected=next((x for x in tracks if x['id']==choice),None)
  if not selected or not selected['supported']:raise ValueError('This subtitle track is unavailable or uses image subtitles unsupported by this player.')

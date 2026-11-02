@@ -179,9 +179,82 @@
     "一般補回缺聲": "Restoring missing audio",
     "獨立覆聽": "Independent listening",
     "有聲錄音保留；語言及漏句疑點供人工覆聽，未標為檢查通過。": "Audible recordings retained; language and missing-word concerns remain for review, not certified as passed.",
-    "安全時長檢查": "Safe duration check"
+    "安全時長檢查": "Safe duration check",
+    "來源流程": "Content priority workflow",
+    "字幕 > 語音": "Subtitles > speech",
+    "語音 > 字幕": "Speech > subtitles",
+    "語音 > OCR": "Speech > OCR",
+    "OCR > 語音": "OCR > speech",
+    "語音辨識": "Speech recognition",
+    "自動偵測": "Automatic detection",
+    "專家模式手動選擇": "Manual Expert choice",
+    "來源設定揀咗只用原聲語音辨識": "The source setting uses speech recognition only.",
+    "偵測到文字字幕": "Readable text subtitles found.",
+    "專家所選嘅內容優先流程唔適用呢片；已自動改用匹配嘅流程。": "The Expert content-priority choice does not fit this video. The matching flow was used instead.",
+    "字幕優先": "Subtitle first",
+    "語音優先": "Speech first",
+    "語音 / OCR": "Speech / OCR",
+    "字幕校對": "Caption proofreading",
+    "語音翻譯已完成；正在以同句字幕校對配音稿。": "Speech translation is complete. Proofreading the draft with same-turn captions.",
+    "字幕校對未完成；已保留語音翻譯稿。": "Caption proofreading did not finish. The speech draft was kept.",
+    "僅以 OCR 讀取畫面字幕，忽略內置及外掛字幕": "Read screen captions with OCR only; ignore embedded and imported subtitles.",
+    "使用外掛字幕檔案": "Use the imported subtitle file.",
+    "沒有可用文字字幕，使用語音，不自動啟用 OCR": "No readable text subtitles. Use speech without automatic OCR.",
+    "字幕語音比對": "Caption speech comparison",
+    "比對記錄無法讀取；保留正常配音。": "The comparison record cannot be read. Keep normal dubbing.",
+    "先辨識及翻譯實際短句，再比較同時段字幕；不確定時保留配音。": "Recognize and translate actual speech before comparing the same-window caption. Keep dubbing when uncertain.",
+    "比對證據未能確認；保留正常配音。": "Comparison evidence is unconfirmed. Keep normal dubbing.",
+    "原聲短句與畫面字幕內容明顯不相關；已略過生成配音，保留原聲及字幕。": "The short source utterance is clearly unrelated to the screen caption. Keep original audio and captions without generated dubbing."
   },
   "patterns": [
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；跟返配音語言 廣東話）$",
+      "Readable text subtitles found (embedded subtitle track $1 is already Cantonese, which is the dub language)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；跟返配音語言 普通話）$",
+      "Readable text subtitles found (embedded subtitle track $1 is already Mandarin, which is the dub language)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；跟返配音語言 英文）$",
+      "Readable text subtitles found (embedded subtitle track $1 is already English, which is the dub language)."
+    ],
+    [
+      "^自動選擇本集字幕軌 (\\d+)（([^）]*)；配音語言 [^）]*；([^）]*) 優先）。$",
+      "Selected subtitle track $1 ($2; the dub output language leads; $3 ranks first)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；配音語言 廣東話；[^）]*優先）$",
+      "Readable text subtitles found (embedded subtitle track $1; no Cantonese track exists, so the closest available track ranks first)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；配音語言 普通話；[^）]*優先）$",
+      "Readable text subtitles found (embedded subtitle track $1; no Mandarin track exists, so the closest available track ranks first)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；配音語言 英文；[^）]*優先）$",
+      "Readable text subtitles found (embedded subtitle track $1; no English track exists, so the closest available track ranks first)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)；[^）]*優先）$",
+      "Readable text subtitles found (embedded subtitle track $1 preferred)."
+    ],
+    [
+      "^偵測到文字字幕（內置字幕軌 (\\d+)）$",
+      "Readable text subtitles found (embedded subtitle track $1)."
+    ],
+    [
+      "^偵測到文字字幕（外掛字幕檔案）$",
+      "Readable text subtitles found (external subtitle file)."
+    ],
+    [
+      "^只有圖片字幕（([^）]*)），冇可讀文字字幕$",
+      "Image subtitles only ($1); no readable text subtitles."
+    ],
+    [
+      "^冇任何字幕軌$",
+      "No subtitle tracks in this video."
+    ],
     [
       "^只核對 (\\d+) 段疑似尾噪；保護末字，未確認唔裁尾或縮稿。$",
       "Check only $1 suspected noisy tails; protect final words and retain uncertain recordings without trimming or shortening."
@@ -349,6 +422,10 @@
     [
       "^保留 (\\d+)/(\\d+) 句有聲錄音；冇按語言標籤、口音或漏句疑點自動重錄。$",
       "Retained $1/$2 audible recordings; language labels, accent and suspected missing words did not trigger retakes."
+    ],
+    [
+      "^使用內置字幕軌 (\\d+)$",
+      "Using embedded subtitle track $1."
     ]
   ]
 }

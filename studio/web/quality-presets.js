@@ -23,3 +23,13 @@ export function presetReasons(p){
  if(!reasons.length&&!p.available)reasons.push('This combination is not supported on this computer');
  return [...new Set(reasons)];
 }
+// A Windows plan adds a CPU copy of each preset with the id "<preset>-cpu". The
+// copy is a real choice, not a duplicate, so the card must name the difference.
+// The id stays intact everywhere else; only the displayed label is split.
+export function presetCardTitle(p){
+ const id=String(p?.id||'');
+ const cpuOnly=id.length>4&&id.endsWith('-cpu');
+ const base=cpuOnly?id.slice(0,-4):id;
+ const label=base.startsWith('quality')?'Full Drama 3':base.startsWith('balanced')?'Balanced':'Memory saving';
+ return {id,base,label,cpuOnly};
+}

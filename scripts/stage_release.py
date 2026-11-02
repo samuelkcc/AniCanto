@@ -70,6 +70,9 @@ def main():
     info=target/'Contents/Info.plist'
     with info.open('rb') as f:metadata=plistlib.load(f)
     shutil.copy2(ROOT/'Resources/AniCanto.icns',resources/'AniCanto.icns')
+    # The staged copy starts from an older base bundle, so the bundled version
+    # file must carry this release's identity before signing.
+    shutil.copy2(ROOT/'VERSION.json',resources/'VERSION.json')
     metadata.update(CFBundleShortVersionString=release['version'],CFBundleVersion=release['build'],CFBundleExecutable='AniCanto',CFBundleName='AniCanto',CFBundleDisplayName='AniCanto',CFBundleIconFile='AniCanto.icns',NSHumanReadableCopyright='Copyright © 2026 SCKC')
     with info.open('wb') as f:plistlib.dump(metadata,f)
     from license_inventory import generate

@@ -41,7 +41,7 @@ def compatible(folder, identity, body, fingerprint):
     if saved:
         return (saved.get('schemaVersion') == SCHEMA
                 and saved.get('fingerprint') == fingerprint
-                and saved.get('identity') == body)
+                and __import__('data_root_identity').canonical(folder.parent.parent,saved.get('identity')) == body)
     # A review alone is insufficient: it may describe media changed in place.
     # Reconstruct the old key with today's source stat and caption checksum.
     previous = read(folder/'review.json').get('config')
@@ -53,10 +53,11 @@ def compatible(folder, identity, body, fingerprint):
             legacy[key] = copy.deepcopy(previous[key])
         else:
             legacy.pop(key, None)
-    return digest(legacy)[:16] == folder.name
+    return digest(__import__('data_root_identity').canonical(folder.parent.parent,legacy))[:16] == folder.name
 
 
 def resolve(storage, identity, emit=None, *, persist=True):
+    identity=__import__('data_root_identity').canonical(storage,identity)
     jobs = Path(storage)/'jobs'
     body = canonical(identity)
     fingerprint = digest(body)

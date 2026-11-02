@@ -89,7 +89,12 @@ def detect(cfg,meta,run,emit):
         (folder/'classification-errors.json').write_text(json.dumps(failures,ensure_ascii=False,indent=2))
         cfg['openingDetectionWarnings']=[dict(kind=f['kind'],code='opening-classifier-unavailable') for f in failures]
         return found
-    tmp=result.with_suffix('.tmp');tmp.write_text(json.dumps(found));tmp.replace(result)
+    # The song cache is optional. A locked rename on Windows (WinError 5) must not
+    # stop dialogue work; the next run analyses the ranges again.
+    from atomic_files import write_json
+    try:
+        write_json(result,found)
+    except OSError:pass
     return found
 
 

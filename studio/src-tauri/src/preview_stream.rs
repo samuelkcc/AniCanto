@@ -1,11 +1,12 @@
 //! Owned source playback. No loopback service can outlive the native host.
 use std::{io::{BufRead,BufReader,Write},process::{Child,Command,Stdio},sync::{Mutex,OnceLock},time::Duration};
 use serde_json::Value;
-struct Stream { child:Child,id:String }
+struct Stream { child:Child,id:String, #[cfg(windows)] _job:Option<crate::OwnedJob> }
 static STREAMS:OnceLock<Mutex<Vec<Stream>>>=OnceLock::new();
 fn streams()-> &'static Mutex<Vec<Stream>> {STREAMS.get_or_init(||Mutex::new(Vec::new()))}
 fn terminate(stream:&mut Stream){
     #[cfg(unix)] unsafe {libc::kill(-(stream.child.id() as i32),libc::SIGTERM);}
+    #[cfg(windows)] stream._job.take();
     let _=stream.child.kill();let _=stream.child.wait();
 }
 pub fn stop(id:&str){let mut rows=streams().lock().unwrap();if let Some(n)=rows.iter().position(|s|s.id==id){terminate(&mut rows.remove(n));}}
@@ -15,6 +16,7 @@ pub fn start(python:&std::path::Path,script:&std::path::Path,mut config:Value)->
     let mut command=Command::new(python);command.arg(script).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
     #[cfg(unix)] {use std::os::unix::process::CommandExt;unsafe{command.pre_exec(||{if libc::setpgid(0,0)==-1{return Err(std::io::Error::last_os_error());}Ok(())});}}
     let mut child=command.spawn().map_err(|e|e.to_string())?;
+    #[cfg(windows)] let owned_job=match crate::OwnedJob::assign(&child){Ok(job)=>job,Err(error)=>{let _=child.kill();let _=child.wait();return Err(error)}};
     let input=format!("{}\n",config);if let Err(e)=child.stdin.take().unwrap().write_all(input.as_bytes()){let _=child.kill();let _=child.wait();return Err(e.to_string());}
     let output=child.stdout.take().unwrap();let(tx,rx)=std::sync::mpsc::channel();
     std::thread::spawn(move||{let mut line=String::new();let result=BufReader::new(output).read_line(&mut line).map(|_|line);let _=tx.send(result);});
@@ -23,7 +25,7 @@ pub fn start(python:&std::path::Path,script:&std::path::Path,mut config:Value)->
     let mut rows=streams().lock().unwrap();rows.retain_mut(|s|s.child.try_wait().ok().flatten().is_none());
     // The page closes previous streams. Bound even stale or failed IPC callers.
     while rows.len()>=2 {terminate(&mut rows.remove(0));}
-    rows.push(Stream{child,id:result["streamID"].as_str().unwrap().into()});Ok(result)
+    rows.push(Stream{child,id:result["streamID"].as_str().unwrap().into(),#[cfg(windows)] _job:Some(owned_job)});Ok(result)
 }
 
 #[cfg(all(test,unix))]

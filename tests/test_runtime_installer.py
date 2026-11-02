@@ -25,7 +25,7 @@ class RuntimeInstallerTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);py=installer.python_path(root/'runtime');py.parent.mkdir(parents=True);py.touch()
    with patch.object(installer,'base_python',side_effect=AssertionError('No Python download expected')):
-    self.assertEqual(installer.ensure_env(root,root/'runtime'),py)
+    self.assertEqual(installer.ensure_env(root,root/'runtime',run=lambda *args,**kwargs:None),py)
  def test_stale_python_aliases_are_repaired_without_clearing_packages(self):
   with tempfile.TemporaryDirectory() as d:
    root=Path(d);folder=root/'runtime';(folder/'bin').mkdir(parents=True)
@@ -45,6 +45,20 @@ class RuntimeInstallerTests(unittest.TestCase):
    with patch.object(installer,'base_python',return_value=root/'python/new/bin/python3'),patch.object(installer.sys,'platform','darwin'):
     with self.assertRaisesRegex(ValueError,'inside application data'):installer.ensure_env(root,folder,run=lambda *a,**k:None)
    self.assertTrue(alias.is_symlink())
+ def test_executable_base_alias_without_venv_is_recreated(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d).resolve();base=root/'python/base/bin/python3';base.parent.mkdir(parents=True);base.touch()
+   folder=root/'runtime';(folder/'bin').mkdir(parents=True);(folder/'bin/python3').symlink_to(base)
+   kept=folder/'saved-package';kept.write_bytes(b'keep')
+   calls=[]
+   def run(command,**kwargs):
+    calls.append(command)
+    if len(calls)==1:raise subprocess.CalledProcessError(1,command)
+   with patch.object(installer,'base_python',return_value=base),patch.object(installer.sys,'platform','darwin'):
+    installer.ensure_env(root,folder,run=run)
+   self.assertEqual(len(calls),2);self.assertIn('sys.prefix!=sys.base_prefix',calls[0][3])
+   self.assertEqual(calls[1][1:5],['-I','-m','venv','--without-pip']);self.assertNotIn('--clear',calls[1])
+   self.assertEqual(kept.read_bytes(),b'keep')
  def test_environment_removes_installer_overrides_without_exposing_user_packages(self):
   with patch.dict(os.environ,{'PIP_INDEX_URL':'https://invalid.test','UV_PYTHON':'external','PYTHONPATH':'external','PYTHONHOME':'external','VIRTUAL_ENV':'external','CANTOSYNC_UI_LANGUAGE':'en'}):
    env=installer.clean_environment('/tmp/app')

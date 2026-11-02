@@ -33,7 +33,7 @@ def defaults(language='en'):
         autoApproveSourceLanguage=True,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
         speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
-        repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=True,translationTextReview=False,safeEndpointCheck=False,analyzeBackgroundGaps=False,
+        repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=False,translationTextReview=False,safeEndpointCheck=False,analyzeBackgroundGaps=False,
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=False,preferFirstAudibleTake=True,
         failedVoicePolicy='first-take',automaticSystemVoice=False,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
@@ -67,6 +67,13 @@ class Store:
             if recover_running and row.get('status')=='running':row['status']='paused'
         self.selected=saved.get('selected');self.ui=saved.get('ui',{})
         self.ui.setdefault('interfaceLanguageInitialized',saved.get('language') in ('en','zh-HK','zh-CN','ja'))
+        # The expanded AI exclusion policy requires a fresh opt-in for new jobs.
+        marker=self.root/'migrations/caption-speech-opt-in-300.json'
+        if not marker.exists():
+            self.settings['skipNonDialogueCaptions']=False
+            for row in self.queue:
+                if isinstance(row.get('productionSettings'),dict):row['productionSettings']['skipNonDialogueCaptions']=False
+            self.save();write(marker,dict(revision='caption-speech-comparison-300',default=False))
         # Older builds forced AI repair on; the switch is opt-in from build 245.
         self.retire_forced_ai_repair(saved.get('settings',{}))
         if not self.ui.get('aniCantoThemeDefaultApplied'):
@@ -114,6 +121,9 @@ class Store:
         settings['basicFlowRevision']=__import__('basic_flow').REVISION
         settings['ownTurnGateRevision']=__import__('own_turn').REVISION
         settings['captionOnlyRevision']=__import__('caption_only').REVISION
+        settings['captionSpeechGuardRevision']=__import__('caption_speech_guard').REVISION if settings.get('skipNonDialogueCaptions') is True else None
+        settings['captionSpeechGuardMaxWindows']=12
+        settings['captionSpeechGuardBudgetSeconds']=600
         settings['hongKongStyleRevision']=__import__('hk_spoken_style').REVISION
         settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
         settings['sourceClockRecoveryRevision']=__import__('source_clock_recovery').REVISION
@@ -125,6 +135,7 @@ class Store:
         from source_workflow import REVISION as workflow_revision,validate as validate_workflow
         validate_workflow(settings)
         settings['sourceWorkflowRevision']=workflow_revision
+        settings['sourceWorkflow']=__import__('source_modes').choice(settings.get('sourceWorkflow','auto'))
         if self.mode=='basic':settings['sourceWorkflow']='auto'
         from voice_parameters import validate as validate_voice_parameters
         validate_voice_parameters(settings)
@@ -142,12 +153,14 @@ class Store:
         settings['termRules']=validate_terms(row.get('termRules',[]))
         if row.get('subtitleAlignment'):settings['subtitleAlignment']=copy.deepcopy(row['subtitleAlignment'])
         choice=row.get('conversionSubtitleChoice','auto')
+        if choice in ('audio-only','ocr'):choice='auto'  # New modes own source policy; frozen requests return above.
         if choice=='auto':settings.update(translationSource=COMBINED,subtitleSource='embedded',subtitle=None,ocr=False,batchAutoSubtitles=True,batchExplicitStream=False)
         if choice.startswith('embedded:'):
             settings.update(translationSource=COMBINED,subtitleSource='embedded',subtitleStream=int(choice.split(':')[1]),batchExplicitStream=True,batchAutoSubtitles=False,subtitle=None,ocr=False)
         elif choice=='audio-only':settings.update(translationSource='audio-only',subtitleSource='none',subtitle=None,ocr=False,batchAutoSubtitles=False)
         elif choice=='ocr':settings.update(translationSource='audio-and-ocr',subtitleSource='burned',subtitle=None,ocr=True,batchAutoSubtitles=False)
-        if row.get('externalSubtitle') and choice!='audio-only':
+        ocr_only=settings.get('sourceWorkflow')=='speech-ocr'
+        if row.get('externalSubtitle') and choice!='audio-only' and not ocr_only:
             subtitle=Path(row['externalSubtitle'])
             if not subtitle.is_file():raise ValueError('The imported subtitle file is missing. Choose it again before converting.')
             settings.update(translationSource=COMBINED,subtitleSource='external',subtitle=str(subtitle),
@@ -159,6 +172,10 @@ class Store:
         if choice=='auto' and not row.get('externalSubtitle') and settings.get('translationSource')=='audio-and-subtitles':
             sidecar=next((Path(row['video']).with_suffix(ext) for ext in ('.srt','.ass','.ssa','.vtt') if Path(row['video']).with_suffix(ext).is_file()),None)
             if sidecar:settings.update(subtitleSource='external',subtitle=str(sidecar),batchExplicitSubtitle=True,batchAutoSubtitles=False,ocr=False)
+        if row.get('subtitleSelection'):
+            settings['subtitleLanguageSelection']=copy.deepcopy(row['subtitleSelection'])
+            settings['sourceCaptionLanguageSelected']=row['subtitleSelection']['language']
+        __import__('source_modes').prepare_request(settings)
         media=Path(row['video']);stat=media.stat()
         settings['sourceVideoSnapshot']=dict(path=str(media),bytes=stat.st_size,mtimeNS=stat.st_mtime_ns)
         if settings.get('subtitle') and settings.get('subtitleSource')=='external':
@@ -166,6 +183,7 @@ class Store:
             freeze(settings,self.root,request_id)
         settings['videos']=[dict(id=row['id'],video=row['video'])]
         path=self.root/'requests'/('submitted-'+request_id+'.json');write(path,settings)
+        row.pop('sourceFlow',None)
         row.update(request=str(path),progress=0,partial=False);self.save();return path
     def event(self,row,event,save=True):
         from output_delivery import public_event
@@ -184,6 +202,8 @@ class Store:
         for key in ('previewOutput','missingDialogue','incompleteDialogue'):
             if key in event:row[key]=event[key]
         if event.get('stage')=='結果摘要':row['resultSummary']=event.get('message','')
+        # The automatic source rule stays silent unless the app states the flow it used.
+        if isinstance(event.get('sourceFlow'),dict):row['sourceFlow']=event['sourceFlow']
         for key in ('review','output','job','nativeEngineFallback'):
             if event.get(key):row[key]=event[key]
         journey=event.get('journey')

@@ -19,6 +19,7 @@ const COPY={
  'Limit dubbing to original speech duration':['限制配音至原聲時長','限制配音至原声时长','吹き替えを原音の長さに制限'],
  'Caption only · no dialogue':['僅字幕・無對白','仅字幕・无对白','字幕のみ・会話なし'],
  'Non-dialogue captions only':['無對白字幕只顯示文字','无对白字幕只显示文字','会話のない字幕は表示のみ'],
+ 'OP / ED treatment':['片頭／片尾處理','片头／片尾处理','OP／ED 処理'],
  'Detect openings and endings':['偵測片頭／片尾','检测片头／片尾','オープニング・エンディングを検出'],
  'Translate dialogue in OP / ED':['翻譯片頭／片尾對白','翻译片头／片尾对白','OP・ED 内の台詞を翻訳'],
  'Try another installed voice model':['嘗試其他已安裝配音模型','尝试其他已安装配音模型','他のインストール済み音声モデルを試す'],

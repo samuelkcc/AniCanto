@@ -15,7 +15,7 @@ class Playback(unittest.TestCase):
  def test_source_selection_and_no_movie_cache(self):
   source=W/'日本語 source.mkv';before=hashlib.sha256(source.read_bytes()).hexdigest()
   for track in [1,2]:
-   m=studio_preview.prepare(W/'unused-root',source,dict(ffmpeg=FF,ffprobe=PROBE),'darwin',audio_stream=track);self.assertEqual(m['path'],str(source.resolve()));self.assertEqual(m['selectedAudioStream'],track);self.assertEqual(m['mode'],'demand');self.assertFalse((W/'unused-root').exists())
+   m=studio_preview.prepare(W/'unused-root',source,dict(ffmpeg=FF,ffprobe=PROBE),'darwin',audio_stream=track);self.assertEqual(m['path'],str(source.resolve()));self.assertEqual(m['selectedAudioStream'],track);self.assertEqual(m['mode'],'demand');self.assertFalse((W/'unused-root/cache/studio-preview').exists())
   self.assertEqual(before,hashlib.sha256(source.read_bytes()).hexdigest())
   for invalid in [-1,0,99,'1',True]:
    with self.assertRaises(ValueError):studio_preview.source_playback(source,dict(ffmpeg=FF,ffprobe=PROBE),invalid)

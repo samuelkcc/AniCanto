@@ -17,6 +17,21 @@ class DesktopStateTests(unittest.TestCase):
    new=copy.deepcopy(old);new['cues'][0].update(start=4,end=5,cantonese='新翻譯')
    loaded=load_draft(path,new,new['config']);self.assertEqual(loaded['segments'][0]['text'],'新翻譯');self.assertEqual(loaded['segments'][0]['start'],4)
    backups=list(root.glob('editor-draft-superseded-*.json'));self.assertEqual(len(backups),1);self.assertEqual(read(backups[0])['segments'][0]['text'],'用戶編輯')
+ def test_draft_round_trip_keeps_the_voice_identity_of_a_recorded_line(self):
+  # build282: a script edit must not change which voice a line re-records with.
+  # The role reference and the recording seed travel with the line in both directions.
+  with tempfile.TemporaryDirectory() as tmp:
+   root=Path(tmp);path=root/'review.json'
+   review=dict(config=dict(video='same.mkv',duration=20),cues=[dict(start=1,end=2,text='日本語',cantonese='舊稿',speakerId='role-female',_seed=4242)])
+   draft=editor_draft(path,review,review['config'])
+   self.assertEqual((draft['segments'][0]['take'],draft['segments'][0]['speakerId']),(4242,'role-female'))
+   draft['segments'][0]['text']='經編輯嘅台詞'
+   write(root/'editor-draft-windows.json',draft)
+   kept=load_draft(path,review,review['config'])['segments'][0]
+   self.assertEqual((kept['text'],kept['take'],kept['speakerId']),('經編輯嘅台詞',4242,'role-female'))
+   # A cue with no recorded seed still starts at the default take, never a random one.
+   plain=dict(config=dict(video='same.mkv',duration=20),cues=[dict(start=1,end=2,text='日本語',cantonese='舊稿',speakerId='role-female')])
+   self.assertEqual(editor_draft(path,plain,plain['config'])['segments'][0]['take'],42)
  def test_only_speech_probed_versions_are_deployed_and_multiversion_setup_terminates(self):
   with tempfile.TemporaryDirectory() as tmp:
    root=Path(tmp);marker=root/'gpt-windows-ready.json'

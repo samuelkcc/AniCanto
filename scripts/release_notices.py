@@ -65,6 +65,7 @@ def records(resources):
     rows.append(dict(name='Reference recordings',version='3',license='CC0-1.0; generators Apache-2.0 and MIT',origin='Original synthetic English mixtures and Cantonese generation; no human reference clips',files=['natural-voices/NOTICE.txt','licenses/common/CC0-1.0.txt','licenses/common/Kokoro-Apache-2.0.txt','licenses/common/GPT-SoVITS-MIT.txt','natural-voices/catalog.json','natural-voices/cantonese-generation.json','natural-voices/english-generation.json']))
     rows.append(dict(name='AniCanto original brand icon',version='2026-10-18',license='MIT',origin='Original SCKC vector artwork',files=['licenses/BRANDING-NOTICE.txt']))
     rows.append(dict(name='Shared interface icon geometry',version='Feather 4.29.2; AniCanto adaptations',license='MIT',origin='Upstream geometry acknowledgement',files=['licenses/INTERFACE-NOTICE.txt','licenses/common/Feather-MIT.txt']))
+    rows.append(dict(name='HLS.js',version='1.7.3',license='Apache-2.0',origin='https://github.com/video-dev/hls.js/tree/v1.7.3',files=['licenses/hls.js/LICENSE','licenses/hls.js/provenance.json','licenses/common/Apache-2.0.txt']))
     auxiliary=resources/'licenses/auxiliary-models.json'
     if auxiliary.is_file():
         for record in json.loads(auxiliary.read_text())['components']:

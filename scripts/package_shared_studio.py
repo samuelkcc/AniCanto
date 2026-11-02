@@ -71,6 +71,7 @@ def bundle():
     from resource_assets import prune
     prune(resources)
     from release_notices import install as install_release_notices
+    shutil.copy2(ROOT/'Resources/THIRD-PARTY-NOTICES.txt',resources/'THIRD-PARTY-NOTICES.txt')
     extra=install_release_notices(resources)
     shutil.rmtree(resources/'Licenses/cantosync-core',ignore_errors=True)
     from license_inventory import generate
@@ -103,7 +104,7 @@ def bundle():
     # cannot detect a stale Swift snapshot inside an otherwise matching bundle.
     import tempfile
     with tempfile.TemporaryDirectory(prefix='anicanto-contract-') as scratch:
-        env=dict(os.environ,SAM_CANTO_DATA=scratch)
+        env=dict(os.environ,SAM_CANTO_DATA=scratch,CANTOSYNC_STUDIO_DATA=scratch,CANTOSYNC_WINDOWS_DATA=scratch)
         result=subprocess.run([str(contents/'MacOS/AniCanto-worker'),'--studio-validate-contract'],env=env,capture_output=True,text=True,timeout=30)
         if result.returncode:
             raise RuntimeError('Packaged Swift/core contract verification failed: '+(result.stdout+result.stderr)[-2000:])

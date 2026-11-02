@@ -53,7 +53,8 @@ def synthesize(cfg, emit):
     result_path.parent.mkdir(parents=True,exist_ok=True)
     def record(item,attempts,status):
         results.append(dict(output=item['output'],reviewIndex=item.get('reviewIndex'),status=status,attempts=attempts))
-        tmp=result_path.with_suffix('.tmp');tmp.write_text(json.dumps(dict(requestId=cfg.get('requestId'),items=results),ensure_ascii=False,indent=2));tmp.replace(result_path)
+        from atomic_files import write_json
+        write_json(result_path,dict(requestId=cfg.get('requestId'),items=results),indent=2)
     result_path.write_text(json.dumps(dict(requestId=cfg.get('requestId'),items=[])))
     for i,item in enumerate(cfg['items']):
         from track_control import check

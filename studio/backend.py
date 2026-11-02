@@ -347,6 +347,12 @@ class Studio:
             if p.get('language') is not None:row['sourceLanguageOverride']=p['language']
             settings.update({k:row[k] for k in ('sourceAudioStream','sourceLanguageOverride') if k in row})
             if self.store.mode=='basic':settings['selectedEngines']=[settings['ttsBackend']]
+            settings['interfaceMode']=self.store.mode
+            import subtitle_choice
+            caption_choice=subtitle_choice.preflight(row['video'],self.tools(),settings,row,p.get('subtitleKey'),p.get('subtitleLanguage'))
+            if caption_choice.get('needsConfirmation'):
+                row['sourcePreflight']=caption_choice;self.store.save();return caption_choice
+            subtitle_choice.apply_to_row(row,caption_choice)
             result=preflight(self.root,row['video'],self.tools(),settings,operation_id=p.get('operationID'),row_id=row['id'])
             row.update(sourceLanguage=result.get('language'),sourcePreflight=result)
             self.store.save();return result
@@ -631,9 +637,19 @@ class Studio:
             selected_voice=selected.get('drama3Model') or selected_models.get('drama3') or selected_models.get('voice')
             if not resuming and 'drama3' in selected.get('selectedEngines',[selected.get('ttsBackend')]) and selected_voice=='drama3-small-iq3':raise ValueError('Drama3-small has been retired. Choose a compatible quality preset in Welcome before starting a new conversion.')
             source=row.get('sourcePreflight') or {}
+            if not resuming and source.get('kind')=='subtitle' and source.get('needsConfirmation'):
+                raise ValueError('Confirm the subtitle language before conversion.')
             if not resuming and source.get('needsConfirmation'):
                 if not source.get('supported'):raise ValueError(source.get('reason') or 'Unsupported source language.')
                 if p.get('sourceConfirmed')!=source.get('token'):raise ValueError('Confirm the detected source language before conversion.')
+            if not resuming:
+                import subtitle_choice
+                caption_settings=dict(selected,interfaceMode=self.store.mode)
+                caption_choice=subtitle_choice.preflight(row['video'],self.tools(),caption_settings,row)
+                if caption_choice.get('needsConfirmation'):
+                    row['sourcePreflight']=caption_choice;self.store.save()
+                    raise ValueError('Confirm the subtitle language before conversion.')
+                subtitle_choice.apply_to_row(row,caption_choice)
             # Keep all frozen requests, including an older audiovisual choice.
             request=self.store.submit(row,force_new=True) if restart else self.store.submit(row)
             cfg=read(request,{})
@@ -736,7 +752,9 @@ class Studio:
             return self.state()
         if op=='media-subtitles':
             from playback_subtitles import read as movie_subtitles
-            return movie_subtitles(self.root,self.row(p.get('id')),self.tools(),p.get('choice','auto'),bool(p.get('output')))
+            row=self.row(p.get('id'))
+            target=(self.store.settings_for(row).get('dubLanguages') or ['yue'])[0]
+            return movie_subtitles(self.root,row,self.tools(),p.get('choice','auto'),bool(p.get('output')),target)
         if op in ('media','media-status','media-thumbnail'):
             row=self.row(p.get('id'));source=Path((row.get('output') if p.get('output') else row['video']) or '').resolve()
             if not source.is_file():raise ValueError('The selected media file is missing.')
@@ -747,6 +765,10 @@ class Studio:
         if op=='project-cache-status':
             from project_cache import cleanup_status
             return cleanup_status(self.root,p.get('operationID'))
+        if op in ('storage-health','repair-storage'):
+            if any(row.get('status')=='running' for row in self.store.queue):raise ValueError('Pause processing before checking application storage.')
+            from storage_health import inspect,repair
+            return inspect(self.root) if op=='storage-health' else repair(self.root)
         if op in ('project-cache-plan','clear-project-cache'):
             if any(row.get('status')=='running' for row in self.store.queue):raise ValueError('Pause processing before clearing cache.')
             from project_cache import plan,tracked_execute

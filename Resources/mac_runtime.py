@@ -5,6 +5,7 @@ Homebrew or compiler is required on the user's Mac. Receipts follow successful
 package and import checks; interrupted installs retain the private pip cache.
 """
 import argparse,hashlib,json,os,re,subprocess,sys,time
+import atomic_files
 from pathlib import Path
 from runtime_installer import clean_environment,ensure_env,pip_command,repair_command
 HERE=Path(__file__).resolve().parent
@@ -24,7 +25,7 @@ def spec(name):
     data=catalog()
     if name not in data['runtimes']:raise ValueError('Unknown Mac runtime')
     row=data['runtimes'][name];lock=HERE/row['requirements']
-    identity=hashlib.sha256(lock.read_bytes()+row['probe'].encode()+b'mac-runtime-1-py311').hexdigest()
+    identity=hashlib.sha256(lock.read_bytes()+row['probe'].encode()+b'mac-runtime-2-isolated-prefix').hexdigest()
     return dict(row,identity=identity,packages=requirements(lock))
 def environment(root):
     root=Path(root)
@@ -33,7 +34,7 @@ def environment(root):
              NUMBA_CACHE_DIR=str(root/'cache/numba'))
     env.pop('PYTHONHOME',None);env.pop('PYTHONPATH',None);return env
 def package_state(python,env):
-    code="import importlib.metadata as m,json,platform,sys,re; print(json.dumps(dict(python=list(sys.version_info[:2]),machine=platform.machine(),packages={re.sub(r'[-_.]+','-',d.metadata['Name'].lower()):d.version for d in m.distributions() if d.metadata['Name']})))"
+    code="import importlib.metadata as m,json,platform,sys,re; print(json.dumps(dict(python=list(sys.version_info[:2]),machine=platform.machine(),prefix=sys.prefix,basePrefix=sys.base_prefix,packages={re.sub(r'[-_.]+','-',d.metadata['Name'].lower()):d.version for d in m.distributions() if d.metadata['Name']})))"
     return json.loads(subprocess.check_output([str(python),'-c',code],env=env,text=True,timeout=60))
 def damaged_packages(python,env,expected):
     # Inspect wheel RECORD hashes only after a failed import. Do not download or
@@ -57,6 +58,7 @@ print(json.dumps(broken))'''
 def check(root,name):
     root=Path(root);python=root/name/'bin/python3';env=environment(root);row=spec(name)
     current=package_state(python,env)
+    if current.get('prefix')==current.get('basePrefix') or Path(current['prefix']).resolve()!=(root/name).resolve():return False
     if current.get('python')!=[3,11] or current.get('machine') not in ('arm64','aarch64'):return False
     if any(current['packages'].get(key)!=version for key,version in row['packages'].items()):return False
     subprocess.run([str(python),'-c',row['probe']],env=env,check=True,timeout=180)
@@ -68,11 +70,14 @@ def ensure(root,name,run=subprocess.run,state=package_state,damage=damaged_packa
     if bundled.is_file():raise ValueError('This installer only manages external runtimes; rebuild the app as a lightweight package.')
     # A previous successful receipt must not survive a subsequent failed check.
     target.unlink(missing_ok=True)
-    if not python.is_file():
+    if not python.is_file() or not (root/name/'pyvenv.cfg').is_file():
         emit(text('下載／準備 Python 3.11 · ','Preparing private Python 3.11 · ')+name)
         ensure_env(root,root/name,run=run)
     try:current=state(python,env)
     except (OSError,subprocess.CalledProcessError,ValueError):
+        ensure_env(root,root/name,run=run,recreate=True)
+        current=state(python,env)
+    if 'prefix' in current and (current['prefix']==current.get('basePrefix') or Path(current['prefix']).resolve()!=(root/name).resolve()):
         ensure_env(root,root/name,run=run,recreate=True)
         current=state(python,env)
     if current.get('python')!=[3,11] or current.get('machine') not in ('arm64','aarch64'):
@@ -99,8 +104,8 @@ def ensure(root,name,run=subprocess.run,state=package_state,damage=damaged_packa
     if cleanup:run(cleanup,env=env,check=True)
     receipt=dict(schemaVersion=1,name=name,identity=row['identity'],python=str(python),verifiedAt=time.time(),
                  importsPassed=True,packageCount=len(row['packages']),installedOrRepaired=sorted(set(missing+repaired)))
-    folder.mkdir(parents=True,exist_ok=True);temp=target.with_suffix('.tmp')
-    temp.write_text(json.dumps(receipt,indent=2));temp.replace(target)
+    folder.mkdir(parents=True,exist_ok=True)
+    atomic_files.write_json(target, receipt,indent=2)
     try:
         from runtime_licenses import update
         update(root)

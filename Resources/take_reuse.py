@@ -6,6 +6,7 @@ review code. A failed/fragmentary recording is never promoted by this migration.
 import copy
 import hashlib
 import json
+import atomic_files
 from pathlib import Path
 import shutil
 import time
@@ -62,7 +63,7 @@ def archive(job,request,engine):
     folder=Path(job)/'generation-requests';folder.mkdir(parents=True,exist_ok=True)
     path=folder/(engine+'-'+hashlib.sha256(raw).hexdigest()+'.json')
     if not path.exists():
-        temp=path.with_suffix('.tmp');temp.write_bytes(raw);temp.replace(path)
+        atomic_files.write_bytes(path, raw)
     return path
 
 def plan(job,request,engine):
@@ -107,20 +108,18 @@ def recover(job,request,engine,emit):
     receipt=[]
     for row in rows:
         source=Path(row['source']);target=Path(row['output']);target.parent.mkdir(parents=True,exist_ok=True)
-        temp=target.with_suffix('.reuse.partial.wav')
-        try:
+        with atomic_files.temporary_path(target, suffix='.reuse.partial.wav') as temp:
             shutil.copy2(source,temp)
             digest=hashlib.sha256(temp.read_bytes()).hexdigest()
             if digest!=hashlib.sha256(source.read_bytes()).hexdigest():continue
-            temp.replace(target);target.with_suffix('.failure.json').unlink(missing_ok=True)
+            atomic_files.replace_file(temp,target);target.with_suffix('.failure.json').unlink(missing_ok=True)
             for suffix in ('.level.json','.generation.json'):
                 old=source.with_suffix(suffix)
                 if old.is_file():shutil.copy2(old,target.with_suffix(suffix))
             record={k:v for k,v in row.items() if k!='generation'}
             record.update(audioSHA256=digest,reusedAt=time.time(),matching='same-full-text-model-reference-and-generation-inputs',qualityCertified=False)
-            target.with_suffix('.reuse.json').write_text(json.dumps(record,ensure_ascii=False,indent=2),encoding='utf-8')
+            atomic_files.write_json(target.with_suffix('.reuse.json'), record, indent=2)
             receipt.append(record)
-        finally:temp.unlink(missing_ok=True)
     if receipt:
         from worker import atomic_json
         file=Path(job)/'take-reuse.json';old=read(file)

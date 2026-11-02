@@ -6,6 +6,15 @@ export const LOCALE={
 "Used a different separated voice than the first recording of this line.": "この行の最初の録音とは異なる分離音声を使用しました。",
 "Retained source audio":"保持した原音",
 "Shared subtitle continuation":"共有字幕の継続区間",
+// 元音声の言語ダイアログ：確認が出た理由と、音声解析が走らなかった時の案内。
+"You turned off auto-approve, so this app asks you to confirm the language before it starts.":"「自動承認」がオフのため、開始前に言語をご確認ください。",
+"The selected voice model cannot read this source language. Choose another language, or choose a voice model that supports it.":"選択中の音声エンジンはこの原音の言語に対応していません。他の言語を選ぶか、対応した音声エンジンを選んでください。",
+"This app could not listen to the audio on this computer, so it asks you to confirm the language itself.":"このコンピューターで音声を解析できなかったため、言語をご確認ください。",
+"No source language was found, so choose the language that is spoken in this video.":"原音の言語を特定できませんでした。この動画の言語を選択してください。",
+ "No source language was found, so this app is working in Japanese. Check it before export.":"元の言語を検出できなかったため、今回は日本語で処理しています。書き出し前に確認してください。",
+ "Speech recognition could not run on this computer, so this app used Japanese. Install the speech model in Model centre, then check the language again.":"このパソコンでは音声認識を実行できなかったため、今回は日本語で処理しました。モデルセンターで音声モデルをインストールした後、言語を再確認してください。",
+ "Speech recognition could not confirm the spoken language, so it uses Japanese for timing. The dialogue words come from the subtitles inside this file.":"音声認識で元の言語を確定できなかったため、タイミング合わせには日本語を使用します。セリフのテキストはこのファイル内の字幕から取得します。",
+"Speech recognition did not run on this computer, so the language label inside the file was used. Install the speech model in Model centre, then check the language again.":"このコンピューターでは音声認識が実行されなかったため、ファイル内の言語ラベルを使いました。モデルセンターで音声モデルをインストールし、言語を再確認してください。",
 "No assigned subtitle wording":"割り当てられた字幕がありません",
 "Source retention does not certify target dubbing or complete meaning coverage.":"原音の保持は、対象言語の吹替や意味の完全な網羅を保証しません。",
 "Open dialogue":"セリフを開く",
@@ -370,6 +379,7 @@ export const LOCALE={
     "system RAM": "システム RAM",
     "unified memory": "統一メモリ",
     "CPU / GPU acceleration not confirmed": "CPU/GPU アクセラレーションが確認されていません",
+    "CPU only": "CPU のみ",
     "The best Cantonese results tested so far use full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Smaller setups may differ in expression, pronunciation and translation detail.": "これまでにテストされた最も優れた広東語の結果は、64 GB メモリを備えた Apple Silicon 上のフル Drama 3 + Qwen 35B を使用しています。より小さなセットアップでは、表現、発音、翻訳の詳細が異なる場合があります。",
     "SCKC’s best Cantonese results so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results.": "SCKC のこれまでにテストされた最も優れた広東語の結果：64 GB メモリを備えた Apple Silicon 上のフル Drama 3 + Qwen 35B。他のハードウェアやモデル形式は、これらの結果に匹敵することが示されていません。",
     "GPT-SoVITS V2 Pro Plus + Qwen 9B. A lower-memory alternative; voice expression, pronunciation and translation detail may differ from the highest-quality setup.": "GPT-SoVITS V2 Pro Plus + Qwen 9B。メモリ使用量の少ない代替案です。最も高品質なセットアップとは異なり、表現、発音、翻訳の詳細が異なる場合があります。",
@@ -827,6 +837,7 @@ export const LOCALE={
     "Download only; deploy this voice engine before it can join automatic repair.": "ダウンロードのみ；自動修復に参加するには、この音声エンジンを展開してください。",
     "External subtitles for this video": "このビデオの外部字幕",
     "Automatic detection": "自動検出",
+    "Manual Expert choice": "専門家モードの手動選択",
     "Import subtitle file": "字幕ファイルのインポート",
     "Replace subtitle file": "字幕ファイルの置換",
     "Remove subtitle file": "字幕ファイルの削除",
@@ -1244,3 +1255,5 @@ Object.assign(LOCALE.ui,{"One first take; no content listening or shortening. Re
 Object.assign(LOCALE.ui,{"Automatic processing": "自動処理", "Full AI review": "完全AI検査", "Detect openings and endings": "オープニング・エンディングを検出", "Translate dialogue in OP / ED": "OP／ED内の台詞を翻訳", "Try another installed voice model": "別の導入済み音声モデルを試す", "Installed system voice fallback": "導入済みシステム音声で補完", "Voice fallback options": "代替音声の設定", "Full AI review adds slow frame analysis. System fallback uses installed target-language voices; the voice may differ.": "完全AI検査は画像分析を追加するため時間がかかります。システム補完は目的言語の導入済み音声のみ使用し、声質が変わる場合があります。", "These settings apply to new work. Paused conversions keep their saved settings.": "設定は新しい処理に適用します。一時停止中の変換は保存済み設定を維持します。"});
 
 Object.assign(LOCALE.ui,{"One first take kept; only fully silent takes retry, at most twice, with no alternate or system voice substitution. Repair time adapts to measured work, capped at 5 minutes.": "初回1回を保持。完全な無音のみ最大2回再生成し、代替・システム音声へ切り替えません。実測に応じた復旧時間、上限5分。", "Keep fitting first takes. One measured timing rewrite; repair first, then optional suspect listening. Repair cap: 15 minutes; listening: 1 minute.": "時刻に合う初回を保持。実測超過時は最大1回短縮・再生成。復旧後に限定検査。復旧上限15分、検査は別途1分。", "Up to three initial attempts and two measured timing repairs. Repair first, then broader listening. Repair cap: 30 minutes; listening: 3 minutes.": "初回最大3回、実測の時刻修復最大2回。復旧後に広範囲の検査。復旧上限30分、検査は別途3分。"});
+
+Object.assign(LOCALE.ui,{"Scope": "処理範囲", "Content priority": "内容の優先度", "Subtitles": "字幕", "OP / ED treatment": "OP/ED処理", "Voice and dubbing": "音声と吹き替え", "Models and output": "モデルと出力", "AI review": "AI検査"});

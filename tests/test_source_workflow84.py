@@ -19,8 +19,12 @@ class WorkflowTests(unittest.TestCase):
   cfg=self.cfg();cfg.update(interfaceMode='basic',sourceWorkflow='speech-subtitles');self.route(cfg);self.assertEqual(cfg['sourceWorkflowEffective'],'subtitles-speech')
   cfg=self.cfg();cfg.update(interfaceMode='basic',defaultSubtitleWorkflow='speech-subtitles',defaultOCRWorkflow='speech-ocr');self.route(cfg);self.assertEqual(f.priority(cfg),'speech');self.route(cfg,False);self.assertEqual(cfg['sourceWorkflowEffective'],'speech-ocr')
  def test_ocr_is_not_used_when_text_track_exists(self):
+  # 290: a manual Expert OCR flow on a video with readable text is corrected, never a stop.
   cfg=self.cfg();cfg.update(sourceWorkflow='ocr-speech',ocr=True,translationSource='audio-and-ocr',subtitleSource='burned');
-  with self.assertRaisesRegex(ValueError,'does not match'):self.route(cfg)
+  out=self.route(cfg)
+  self.assertEqual(out['sourceWorkflowEffective'],'subtitles-speech');self.assertFalse(out['ocr'])
+  self.assertEqual(out['sourceContentPriority'],'subtitles');self.assertTrue(out['sourceWorkflowResolution']['requestedMismatch'])
+  self.assertEqual(out['sourceFlow']['correction'],f.FLOW_MISMATCH_NOTICE)
  def test_explicit_missing_track_is_an_error_and_audio_only_stays_audio_only(self):
   cfg=self.cfg();cfg.update(batchExplicitStream=True,subtitleStream=7)
   with self.assertRaises(ValueError):self.route(cfg)

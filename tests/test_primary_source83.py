@@ -80,9 +80,9 @@ class SubmissionTests(unittest.TestCase):
   from desktop_state import read,write
   ident=self.f.add();row=self.app.row(ident);first=self.app.store.submit(row);cfg=read(first,{});self.assertEqual(cfg['sourcePolicyRevision'],p.REVISION)
   cfg.pop('sourcePolicyRevision');write(first,cfg);row['status']='paused';self.assertEqual(self.app.store.submit(row),first);self.assertNotIn('sourcePolicyRevision',read(first,{}))
- def test_explicit_source_choice_freezes_into_submission_and_guards_paused(self):
+ def test_legacy_audio_only_preference_normalizes_only_for_new_submission_and_guards_paused(self):
   from desktop_state import read
-  ident=self.f.add();self.app.dispatch('set-subtitle-source',dict(id=ident,choice='audio-only'));cfg=read(self.app.store.submit(self.app.row(ident)),{});self.assertEqual(cfg['translationSource'],'audio-only');self.assertFalse(cfg['ocr']);self.assertFalse(cfg['batchAutoSubtitles'])
+  ident=self.f.add();self.app.dispatch('set-subtitle-source',dict(id=ident,choice='audio-only'));cfg=read(self.app.store.submit(self.app.row(ident)),{});self.assertEqual(cfg['sourceWorkflow'],'auto');self.assertEqual(cfg['translationSource'],'audio-and-subtitles');self.assertFalse(cfg['ocr']);self.assertTrue(cfg['batchAutoSubtitles'])
   self.app.row(ident)['status']='paused'
   with self.assertRaisesRegex(ValueError,'Finish'):self.app.dispatch('set-subtitle-source',dict(id=ident,choice='auto'))
  def test_auto_sidecar_is_frozen_and_source_video_changes_are_rejected(self):

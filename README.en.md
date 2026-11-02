@@ -15,10 +15,20 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.25](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.25-beta/AniCanto-macOS-0.25.25.zip)** · **[Windows 0.25.25](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.25-beta/AniCanto.exe)**
+**[Mac 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto-macOS-0.25.44.zip)** · **[Windows 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.25-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.25-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.44-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
+
+## Recent update · 0.25.44 / build 304
+
+- **Simpler controls:** four closed Production groups, named settings scopes, compact Expert AI repair and one **Reset / rebuild** entry.
+- **Source playback:** compatible files open directly. Other codecs use bounded preview segments. Audio and subtitle choices load before playback.
+- **Four source modes:** Automatic detection, Subtitle first, Speech first and Speech / OCR. Speech supplies dubbing timing.
+- **Optional caption filter:** **Dub dialogue only** compares independent speech meaning with captions. It defaults off.
+- **Storage and recovery:** inspect storage, clear temporary files and repair application folders. Runtime redeployment and temporary writes are safer.
+
+Mac startup, package identity and signatures pass. The Windows payload passes structural checks; this build has not run on Windows. Whole-film and listening acceptance remain open.
 
 [Download](#download) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
 
@@ -91,7 +101,7 @@ If your configuration behaves differently, please [report the problem](https://g
 | Feature | How you can use it |
 | --- | --- |
 | **Cantonese / Mandarin / English dubbing** | Choose one language or a combination, with separate audio and subtitle tracks in one movie, switchable in a compatible player. |
-| **Chinese subtitles as context** | Selected readable text subtitles provide meaning by default; source speech provides timing. Without text tracks, compare OCR and recognised speech. |
+| **Chinese subtitles as context** | Selected readable text subtitles provide meaning by default; source speech provides timing. Without text tracks, Automatic uses Speech first. Choose Speech / OCR explicitly for burned-in captions. |
 | **Opening and ending preservation** | Automatically detect OP / ED regions and keep their original Japanese songs and audio by default. |
 | **Basic and Expert modes** | Start with automatic processing, or use the timeline to edit scripts, adjust timing and work on individual lines. |
 | **Audition, retake and review** | Compare original, separated and generated speech; retake a line or choose a saved recording, then export another version while retaining the previous movie. |
@@ -102,7 +112,7 @@ If your configuration behaves differently, please [report the problem](https://g
 
 ### New: Mandarin video dubbing
 
-In **Production settings → Dubbing languages**, choose **Mainland Mandarin** alone or combine it with Hong Kong Cantonese and English, including all three. Mandarin has its own script and recording, with Mainland wording and Simplified Chinese subtitles. Keep the original audio too if selected, then switch tracks in a compatible player.
+In **Production settings → Voice & language → Dubbing languages**, choose **Mainland Mandarin** alone or combine it with Hong Kong Cantonese and English, including all three. Mandarin has its own script and recording, with Mainland wording and Simplified Chinese subtitles. Keep the original audio too if selected, then switch tracks in a compatible player.
 
 Available in Basic and Expert video workflows. Changing the interface language does not add dubbing tracks. **Standalone Dubbing studio currently outputs Cantonese**, and the downloadable comparison demo remains Cantonese / Mandarin / English / Japanese.
 
@@ -136,16 +146,22 @@ Beyond Japanese animation, AniCanto can try converting other detected source lan
 
 ## Your subtitles, your language tracks
 
-By default, **selected readable embedded or external subtitles provide the meaning** and recognised speech supplies the start/end times. Chinese subtitles are adapted into spoken Cantonese, Mandarin or English. Without usable text subtitles, OCR and speech are compared under the selected policy. Expert mode can change source priority; OCR does not set the speech clock.
+Speech supplies dubbing start and end times. Choose the content source in Expert **Production settings → Subtitles & source**.
 
-| Source or output | What happens |
+| Mode | Meaning and proofreading |
 | --- | --- |
-| **External subtitle file** | Use **Subtitle source → Import subtitle file** to attach SRT, ASS, SSA or VTT to the selected video. |
-| **Embedded text subtitles** | Read available text tracks inside containers such as MKV and MP4. |
-| **Burned-in Chinese captions** | Try OCR when readable text tracks are unavailable. Picture quality and layout affect recognition. |
-| **Original, Cantonese, Mandarin and English tracks** | Keep the original audio if selected, add your selected dubbing languages, and choose independent or bilingual learning subtitles. Switch tracks in a compatible player. |
+| **Automatic detection** | Use Subtitle first when readable embedded or imported subtitles exist. Otherwise use Speech first. |
+| **Subtitle first** | Translate the selected subtitles. Use source speech for dubbing timing. |
+| **Speech first** | Translate recognised speech, then proofread the draft against available subtitles from the same turn. |
+| **Speech / OCR** | Use speech with OCR captions. Ignore embedded and imported subtitle tracks. |
 
-Automatic subtitle selection checks a matching external file, then embedded text, then screen OCR. **Original subtitle timestamps are preserved separately from dubbing timing.** Changing the interface language does not change the languages of the finished movie.
+For Cantonese or Mandarin output, automatic selection prefers Chinese subtitles, including Traditional and Simplified Chinese. English output prefers English subtitles and can use Chinese when English is absent. Uncertain subtitle language asks for a choice. Spoken-language approval does not approve an uncertain subtitle choice.
+
+Use **Subtitle source → Import subtitle file** for SRT, ASS, SSA or VTT. Preview subtitle selection changes playback only. Original caption display times remain separate from dubbing times.
+
+**Dub dialogue only** is optional and off by default. It can exclude captions that differ clearly from independently recognised speech. Missing or uncertain recognition does not prove wrong speech. The control does not authorize retakes.
+
+Keep the original audio and add Cantonese, Mandarin or English tracks as selected. Change tracks in a compatible player.
 
 ## Supported formats
 
@@ -187,55 +203,25 @@ Recordings and previous exports are retained. New languages, models or changed s
 
 ## Inside the current app
 
-Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
+Native Mac captures from **0.25.44 / build 304**, taken on 2 November 2026. The isolated demo uses original test media. Preview is off and assistants retain their facial features. These images show controls, not conversion results or Windows execution.
 
-### Welcome and setup
+### Welcome
 
-![Welcome and setup](docs/images/welcome-en.png?v=0.25.17)
+![Welcome](docs/images/welcome-en.png?v=0.25.44)
 
-Choose the interface language, prepare local models, and enter Basic or Expert mode.
+### Basic mode · grouped Production settings
 
-### Basic mode: progress and audition
+![Basic mode · grouped Production settings](docs/images/basic-en.png?v=0.25.44)
 
-![Basic mode: progress and audition](docs/images/basic-en.png?v=0.25.17)
+### Expert mode · timeline and Production settings
 
-Add a queue, choose dubbing languages and an output folder, then follow processing and audition individual lines. Preview can stay off while the assistant keeps you company.
+![Expert mode · timeline and Production settings](docs/images/timeline-en.png?v=0.25.44)
 
-### Expert mode: timeline and line editing
+### Expert mode · Additional AI repair
 
-![Expert mode: timeline and line editing](docs/images/timeline-en.png?v=0.25.17)
+![Expert mode · Additional AI repair](docs/images/ai-repair-en.png?v=0.25.44)
 
-![AI Repair](docs/images/ai-repair-en.png?v=0.25.17)
-
-Use the full-width timeline to compare source dialogue and dubbing scripts, adjust timing and generate another take for a selected line.
-
-### Restart or add a voice track
-
-Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
-
-![ Restart or add a voice track ](docs/images/restart-en.png?v=0.25.17)
-
-### Review report: issues and recording comparison
-
-![Review report: issues and recording comparison](docs/images/review-en.png?v=0.25.17)
-
-See what was flagged and what was tried. Compare retained recordings, make a choice and export another version while keeping the previous movie.
-
-### Dubbing studio and saved clips
-
-![Dubbing studio](docs/images/speech-studio-en.png?v=0.25.17)
-
-Create a Cantonese clip, check the text and keep independent takes. The saved player compares source speech, generated audio and both texts.
-
-![Saved clips](docs/images/speech-player-en.png?v=0.25.17)
-
-### Windows: NVIDIA CUDA setup
-
-![NVIDIA CUDA setup](docs/images/nvidia-cuda-en.png?v=0.25.17)
-
-Choose automatic detection, NVIDIA CUDA or CPU. Setup separates system RAM, VRAM and the extra CUDA download; the screenshot illustrates the setup controls, not a speed benchmark.
-
-[See every interface screenshot](docs/en/SCREENSHOTS.md)
+[See the current interface gallery](docs/en/SCREENSHOTS.md)
 
 ## A work in progress, shaped by listening
 
@@ -266,7 +252,7 @@ No cloud translation or dubbing service is required for this workflow. Once mode
 
 ## Before you start
 
-AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Selected readable authored subtitles are primary by default; source speech supplies timing. Without usable text subtitles, OCR and recognised speech supply evidence under the selected source policy. Separate original, Cantonese, Mandarin and English tracks and protected OP/ED are supported; results vary by scene.
+AI can still produce accents, mistranslations, missing words and voice changes. Listen to important scenes. Selected readable authored subtitles are primary by default; source speech supplies timing. Without usable text subtitles, Automatic uses Speech first. Speech / OCR is a separate choice. Separate original, Cantonese, Mandarin and English tracks and protected OP/ED are supported; results vary by scene.
 
 A hobby project by SCKC. Original code uses MIT; third-party components and models retain their own terms. Built with Fish Audio; Drama 3 uses the Fish Audio Community License 1.0. Use only video, subtitles and voices you have permission to process.
 

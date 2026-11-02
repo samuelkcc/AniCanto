@@ -31,5 +31,6 @@ class WhisperAudioTests(unittest.TestCase):
             model=SimpleNamespace(transcribe=transcribe)
             with patch('whisper_accel.load',return_value=model):
                 profile=dict(id='line-199',name='第 199 句原聲',reference=str(p),referenceRanges=[],referenceCandidates=[])
-                speakers.transcribe_profiles(dict(independentVoiceMapping=True),root,[profile],root,lambda *a:None)
+                # The reference pass now reports per-line progress, so emit accepts workID kwargs.
+                speakers.transcribe_profiles(dict(independentVoiceMapping=True),root,[profile],root,lambda *a,**k:None)
             self.assertEqual(profile['promptText'],'こんにちは。');self.assertEqual(seen[0].shape,(16000,))

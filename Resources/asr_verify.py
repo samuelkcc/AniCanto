@@ -2,6 +2,7 @@
 from runtime_installer import ensure_env, pip_command
 import json
 import os
+import atomic_files
 from pathlib import Path
 import sys
 
@@ -116,7 +117,7 @@ def verify(request):
     data=dict(identity=[[c['start'],c['end'],c.get('enabled',True)] for c in request['cues']],model=request.get('asrModel') or selected(request['storage'],'asr'),rows=rows)
     filename=request.get('output','asr-verification.json')
     if filename not in ('asr-verification.json','isolated-asr-result.json'):raise ValueError('Invalid ASR output')
-    path=Path(request['job'])/filename;tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(data,ensure_ascii=False));tmp.replace(path)
+    path=Path(request['job'])/filename;atomic_files.write_json(path, data)
 
 
 if __name__=='__main__':

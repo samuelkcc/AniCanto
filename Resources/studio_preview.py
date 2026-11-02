@@ -54,12 +54,12 @@ def status(root,source,compatible=False,audio_stream=None):
     return data
 
 def prepare(root,source,tools,platform,compatible=False,audio_stream=None):
-    if platform=='darwin':
+    if platform in ('darwin','win32'):
         from source_preparation import Preparation
         preparation=Preparation(root,source)
         try:
             preparation.ensure_local();preparation.update(phase='probing')
-            result=source_playback(source,tools,audio_stream,compatible,preparation)
+            result=source_playback(source,tools,audio_stream,compatible,preparation,platform)
             preparation.finish();return result
         except Exception as error:
             preparation.fail(error);raise
@@ -139,8 +139,8 @@ def thumbnail(root,source,tools,seconds):
     return dict(path=str(target),seconds=point)
 
 
-def source_playback(source,tools,audio_stream=None,compatible=False,preparation=None):
-    """Describe source playback. Mac never creates a full preview movie."""
+def source_playback(source,tools,audio_stream=None,compatible=False,preparation=None,platform='darwin'):
+    """Describe source playback without a full preview movie."""
     source=Path(source).resolve()
     from source_access import probe as media_probe
     command=[tools['ffprobe'],'-v','error','-show_format','-show_streams','-of','json',str(source)]
@@ -154,7 +154,7 @@ def source_playback(source,tools,audio_stream=None,compatible=False,preparation=
     start=float(info['format'].get('start_time',0) or 0)
     duration=float(info['format']['duration'])-max(0,start)
     if not math.isfinite(duration) or duration<=0:raise ValueError('Invalid preview duration.')
-    direct=not compatible and source.suffix.lower() in ('.mp4','.mov','.m4v') and video.get('codec_name') in ('h264','hevc') and video.get('pix_fmt') in ('yuv420p','yuv420p10le') and (not tracks or audio==tracks[0]) and (not audio or audio.get('codec_name') in ('aac','mp3','alac'))
+    direct=not compatible and source.suffix.lower() in ('.mp4','.mov','.m4v') and video.get('codec_name') in (('h264','hevc') if platform=='darwin' else ('h264',)) and video.get('pix_fmt') in ('yuv420p','yuv420p10le') and (not tracks or audio==tracks[0]) and (not audio or audio.get('codec_name') in ('aac','mp3','alac'))
     result=dict(path=str(source),duration=duration,streams=streams,selectedAudioStream=audio.get('index'),mode='direct' if direct else 'demand',fallbackAvailable=direct,sourceUnchanged=True,fullMovieCopy=False)
     if not direct:result['streamConfig']=dict(source=str(source),duration=duration,audioStream=audio.get('index'),ffmpeg=str(tools['ffmpeg']))
     return result

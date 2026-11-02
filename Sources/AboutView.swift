@@ -21,7 +21,12 @@ struct LicensesView: View {
         return (try? JSONDecoder().decode([LicenseRecord].self,from:data)) ?? []
     }()
     private var records:[LicenseRecord] {Self.inventory+query.external}
-    private static var support:URL {ProcessInfo.processInfo.environment["SAM_CANTO_DATA"].map {URL(fileURLWithPath:$0)} ?? FileManager.default.urls(for:.applicationSupportDirectory,in:.userDomainMask)[0].appendingPathComponent("SamCantoSync")}
+    private static var support:URL {
+        if let override = ProcessInfo.processInfo.environment["SAM_CANTO_DATA"] { return URL(fileURLWithPath:override) }
+        let parent = FileManager.default.urls(for:.applicationSupportDirectory,in:.userDomainMask)[0]
+        let current = parent.appendingPathComponent("AniCanto"), legacy = parent.appendingPathComponent("SamCantoSync")
+        return FileManager.default.fileExists(atPath:current.path) || !FileManager.default.fileExists(atPath:legacy.path) ? current : legacy
+    }
     var body: some View {
         LazyVStack(alignment:.leading,spacing:12) {
             Label(L("第三方程式庫與授權"),systemImage:"doc.text.magnifyingglass").font(.title2.bold())

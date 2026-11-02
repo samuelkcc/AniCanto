@@ -4,6 +4,7 @@ No lip reading, character-name recognition or source-speaker separation. Conserv
 fusion requires repeated visual evidence AND compatible original voice embeddings.
 """
 import hashlib,json,os,subprocess,sys
+import atomic_files
 from pathlib import Path
 
 REVISION='episode-multihead-temporal-fusion-11'
@@ -224,7 +225,7 @@ def analyze(request):
             errors=job/'visual-rejections.json'
             prior=json.loads(errors.read_text()) if errors.exists() else []
             prior+=rejections;errors.write_text(json.dumps(prior,ensure_ascii=False,indent=2))
-        temp=cache.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=cfg['key'],status='partial',rows=rows,roster=roster),ensure_ascii=False));temp.replace(cache)
+        atomic_files.write_json(cache, dict(key=cfg['key'],status='partial',rows=rows,roster=roster))
         print(json.dumps(dict(message=f'畫面核對 {len(rows)}/{len(selected)} 段；已保存進度。',workID='character-visual-observations',workCompleted=len(rows),workTotal=len(selected)),ensure_ascii=False),flush=True)
         clear_vision_cache()
     gallery=verified_gallery()
@@ -239,7 +240,7 @@ def analyze(request):
     inspected_ids={p['visualId'] for p in final_gallery}
     for row in rows:row['portraitInspected']=row.get('visualId') in inspected_ids
     saved=dict(key=cfg['key'],status='complete',rows=rows,roster=roster,eligibleCount=len(selected),analyzedCount=len(rows),inventory='all eligible dialogue intervals',method=REVISION)
-    temp=cache.with_suffix('.tmp');temp.write_text(json.dumps(saved,ensure_ascii=False,indent=2));temp.replace(cache)
+    atomic_files.write_json(cache, saved,indent=2)
 
 def inspect_crops(model,processor,image,observations):
     fields=dict(index=dict(type='integer',enum=list(range(len(observations)))),usableHead=dict(type='boolean'),singleHead=dict(type='boolean'),matchesAppearance=dict(type='boolean'),confidence=dict(type='number',minimum=0,maximum=1))

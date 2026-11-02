@@ -133,6 +133,8 @@ def translate(w,cfg,job,cues):
                 if cues[i][field]:cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,cues[i][field],fresh=True)
                 if not cues[i][field]:cues[i].setdefault('fastDefects',[]).append('missing-'+field)
             w.atomic_json(Path(job)/'cues.json',cues)
+    __import__('source_proofread').review(w,cfg,job,cues)
+    __import__('caption_speech_guard').review(w,cfg,job,cues)
     __import__('translation_editorial').review(w,cfg,job,cues)
     # Bounded pass before synthesis: a line that cannot fit its own source window is
     # rewritten once here, instead of failing after the voice engine spent time on it.
@@ -158,7 +160,7 @@ def convert(w,cfg):
     if not video.is_file():raise ValueError('原影片不存在。')
     meta=json.loads(w.run([cfg['ffprobe'],'-v','error','-show_format','-show_streams','-show_chapters','-of','json',video]))
     if __import__('delivery_policy').enabled(cfg):
-        __import__('source_workflow').configure(cfg,meta,w.select_batch_subtitle)
+        __import__('source_workflow').configure(cfg,meta,w.select_batch_subtitle,emit=w.emit)
     from source_language import metadata,apply
     source=metadata(meta)
     if cfg.get('sourceLanguage') or source['language']:

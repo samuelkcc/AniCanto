@@ -15,6 +15,29 @@ from pathlib import Path
 REVISION='independent-source-lines-native-2-scene-tone'
 
 
+# One reference is one cue's own utterance, so the wording that cue already owns is
+# the cheapest honest transcript of that clip. Guard it anyway: the clip must really
+# cover the cue window, the wording must be in the spoken source language, and no
+# source policy may have already set that wording aside.
+SOURCE_SCRIPT={'ja':'ja','zh':'zh','yue':'zh','en':'en'}
+
+
+def cue_wording(cue,profile,language):
+    """Return this cue's own source wording, or an empty string when it is not safe."""
+    from primary_source import language as script
+    if any(cue.get(key) for key in ('captionOnly','subtitleContentOnlyGap','sourcePolicyBlocked','sourceClockUnconfirmed')):return ''
+    try:
+        window=float(cue.get('speechEnd',cue['end']))-float(cue.get('speechStart',cue['start']))
+        covered=float(profile.get('originalReferenceSeconds',0))
+    except (TypeError,ValueError):return ''
+    if covered+.05<window:return ''
+    wanted=SOURCE_SCRIPT.get(language,'ja')
+    for text in (cue.get('japanese',''),(cue.get('primarySource') or {}).get('text','')):
+        text=str(text or '').strip()
+        if text and script(text)==wanted:return text
+    return ''
+
+
 def prepare(cfg, emit):
     import numpy as np
     import soundfile as sf
@@ -80,6 +103,17 @@ def assign(cfg,job,cues,emit):
         saved=json.loads(cache.read_text())
         speech=folder(root,choice(cfg.get('referenceSpeechModel') or selected(root,'referenceSpeech')))
         ready=[p for p in saved['profiles'] if p.get('reference')]
+        # Attach the wording each cue already owns before any model runs. A job with
+        # readable captions or a saved episode transcript owns nearly every line, so
+        # the reference pass costs no inference at all for those lines.
+        language=cfg.get('sourceLanguage','ja');owned=0
+        for profile in ready:
+            if profile.get('promptText','').strip():continue
+            index=profile.get('sourceIndex')
+            if not isinstance(index,int) or not 0<=index<len(cues):continue
+            text=cue_wording(cues[index],profile,language)
+            if text:profile['promptText']=text;profile['transcriptSource']='cue-source-wording';owned+=1
+        if ready:emit('角色參考',f'{len(ready)} 句獨立原聲參考：{owned} 句直接用返本句時段嘅原文，其餘 {len(ready)-owned} 句先需要逐句辨識。',.29)
         transcribe_profiles(dict(cfg,independentVoiceMapping=True),job,ready,speech,emit)
         saved['key']=key
         from worker import atomic_json

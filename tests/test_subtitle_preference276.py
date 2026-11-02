@@ -99,7 +99,7 @@ class ResolutionRecord(unittest.TestCase):
         self.assertEqual(cfg['sourceWorkflowResolution']['trackPreferenceRevision'],
                          subtitle_preference.REVISION)
 
-    def test_no_text_subtitle_keeps_speech_primary_over_ocr(self):
+    def test_no_text_subtitle_keeps_speech_primary_without_implicit_ocr(self):
         import source_workflow
         cfg = dict(sourceWorkflowRevision=source_workflow.REVISION, interfaceMode='basic',
                    sourceWorkflow='auto', defaultSubtitleWorkflow='subtitles-speech',
@@ -107,9 +107,9 @@ class ResolutionRecord(unittest.TestCase):
         source_workflow.configure(cfg, dict(streams=[dict(index=9, codec_type='subtitle',
                                                           codec_name='pgssub', tags={})]),
                                   worker.select_batch_subtitle)
-        self.assertEqual(cfg['sourceWorkflowEffective'], 'speech-ocr')
+        self.assertEqual(cfg['sourceWorkflowEffective'], 'speech-subtitles')
         self.assertEqual(cfg['sourceContentPriority'], 'speech')
-        self.assertTrue(cfg['ocr'])
+        self.assertFalse(cfg['ocr'])
 
 
 if __name__ == '__main__':

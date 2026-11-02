@@ -6,6 +6,15 @@ export const LOCALE={
 "Used a different separated voice than the first recording of this line.": "采用了与本句首次录音不同的分离语音。",
 "Retained source audio":"保留原声",
 "Shared subtitle continuation":"共用字幕延续片段",
+// Source language dialog: why a confirmation appeared, and what a failed listen means.
+"You turned off auto-approve, so this app asks you to confirm the language before it starts.":"你关闭了“自动接受检测到的原声语言”，因此开始前需要你自行确认语言。",
+"The selected voice model cannot read this source language. Choose another language, or choose a voice model that supports it.":"所选配音模型不支持该原声语言。请改用其他语言，或选择支持该语言的配音模型。",
+"This app could not listen to the audio on this computer, so it asks you to confirm the language itself.":"该电脑未能听取音频，因此需要你自行确认原声语言。",
+"No source language was found, so choose the language that is spoken in this video.":"未检测到原声语言，请选择该视频实际使用的语言。",
+ "No source language was found, so this app is working in Japanese. Check it before export.":"未检测到原声语言，因此本次使用日语处理。导出前请检查。",
+ "Speech recognition could not run on this computer, so this app used Japanese. Install the speech model in Model centre, then check the language again.":"该电脑未能进行语音识别，因此本次使用日语处理。请在模型中心安装语音模型，然后重新核对语言。",
+ "Speech recognition could not confirm the spoken language, so it uses Japanese for timing. The dialogue words come from the subtitles inside this file.":"语音识别未能确定原片语言，因此时间定位继续使用日语。对白文字来自该文件中的字幕。",
+"Speech recognition did not run on this computer, so the language label inside the file was used. Install the speech model in Model centre, then check the language again.":"该电脑未运行语音识别，因此使用了文件内的语言标签。请在模型中心安装语音模型，然后重新核对语言。",
 "No assigned subtitle wording":"尚无配对字幕文字",
 "Source retention does not certify target dubbing or complete meaning coverage.":"保留原声不代表已交付目标配音，也不代表意思已完整覆盖。",
 "Open dialogue":"查看对白",
@@ -370,6 +379,7 @@ export const LOCALE={
     "system RAM": "系统 RAM",
     "unified memory": "统一内存",
     "CPU / GPU acceleration not confirmed": "CPU / GPU 加速未确认",
+    "CPU only": "仅用 CPU",
     "The best Cantonese results tested so far use full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Smaller setups may differ in expression, pronunciation and translation detail.": "目前测试出的最佳粤语结果使用 64 GB 内存的 Apple Silicon 上的完整 Drama 3 + Qwen 35B。较小的配置在表达、发音和翻译细节上可能有所不同。",
     "SCKC’s best Cantonese results so far: full Drama 3 + Qwen 35B on Apple Silicon with 64 GB memory. Other hardware and model formats have not been shown to match these results.": "SCKC 目前最佳的粤语结果：在 64 GB 内存的 Apple Silicon 上使用完整 Drama 3 + Qwen 35B。其他硬件和模型格式尚未显示出能匹配这些结果。",
     "GPT-SoVITS V2 Pro Plus + Qwen 9B. A lower-memory alternative; voice expression, pronunciation and translation detail may differ from the highest-quality setup.": "GPT-SoVITS V2 Pro Plus + Qwen 9B。一种低内存替代方案；其语音表达、发音和翻译细节可能与最高质量配置有所不同。",
@@ -827,6 +837,7 @@ export const LOCALE={
     "Download only; deploy this voice engine before it can join automatic repair.": "仅下载；部署此语音引擎后，它才能加入自动修复。",
     "External subtitles for this video": "此视频的外部字幕",
     "Automatic detection": "自动检测",
+    "Manual Expert choice": "专家模式手动选择",
     "Import subtitle file": "导入字幕文件",
     "Replace subtitle file": "替换字幕文件",
     "Remove subtitle file": "移除字幕文件",
@@ -1244,3 +1255,5 @@ Object.assign(LOCALE.ui,{"One first take; no content listening or shortening. Re
 Object.assign(LOCALE.ui,{"Automatic processing": "自动处理", "Full AI review": "完整 AI 复核", "Detect openings and endings": "检测片头／片尾", "Translate dialogue in OP / ED": "翻译 OP／ED 中的对白", "Try another installed voice model": "尝试其他已安装配音模型", "Installed system voice fallback": "已安装系统声线备用", "Voice fallback options": "配音备用设置", "Full AI review adds slow frame analysis. System fallback uses installed target-language voices; the voice may differ.": "完整 AI 复核会额外分析画面，较慢。系统备用只用已安装目标语声线，音色可能不同。", "These settings apply to new work. Paused conversions keep their saved settings.": "设置用于尚未开始的任务；已暂停转换沿用原先保存的设置。"});
 
 Object.assign(LOCALE.ui,{"One first take kept; only fully silent takes retry, at most twice, with no alternate or system voice substitution. Repair time adapts to measured work, capped at 5 minutes.": "首录一次并保留；只有完全无声才补录，最多两次，不改用后备或系统声线；按实测工作量分配补声时间，上限 5 分钟。", "Keep fitting first takes. One measured timing rewrite; repair first, then optional suspect listening. Repair cap: 15 minutes; listening: 1 minute.": "保留合时首录；实测过长可缩稿重配一次。先补声，再局部回听；修复上限 15 分钟，回听另限 1 分钟。", "Up to three initial attempts and two measured timing repairs. Repair first, then broader listening. Repair cap: 30 minutes; listening: 3 minutes.": "首次最多三次，实测对时最多两次。先补声，再较全面回听；修复上限 30 分钟，回听另限 3 分钟。"});
+
+Object.assign(LOCALE.ui,{"Scope": "处理范围", "Content priority": "内容优先次序", "Subtitles": "字幕", "OP / ED treatment": "OP/ED 处理", "Voice and dubbing": "声音与配音", "Models and output": "模型与输出", "AI review": "AI 复核"});

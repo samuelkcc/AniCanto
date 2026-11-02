@@ -78,7 +78,8 @@ def verify(cfg):
                 norm=np.linalg.norm(vector)
                 cache[key]=(vector/norm).tolist() if np.isfinite(vector).all() and norm>1e-8 else None
         vectors.append(cache[key])
-    temp=file.with_suffix('.tmp');temp.write_text(json.dumps(cache));temp.replace(file)
+    from atomic_files import write_json
+    write_json(file,cache)
     if cfg.get('mode')=='embeddings':
         Path(cfg['result']).write_text(json.dumps(dict(vectors=vectors)));return
     result=dict(accepted=False,reason='insufficient-speaker-evidence')

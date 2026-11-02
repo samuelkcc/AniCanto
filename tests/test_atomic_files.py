@@ -31,6 +31,27 @@ class AtomicFilesTests(unittest.TestCase):
    with ThreadPoolExecutor(max_workers=8) as pool:list(pool.map(lambda n:atomic_files.write_json(path,{'index':n,'payload':'聲'*5000}),range(60)))
    data=json.loads(path.read_text());self.assertIn(data['index'],range(60));self.assertEqual(data['payload'],'聲'*5000)
    self.assertFalse(list(Path(folder).glob('*.tmp')))
+ def test_binary_stage_failure_preserves_last_good_file(self):
+  with tempfile.TemporaryDirectory() as folder:
+   path=Path(folder)/'take.wav';original=b'complete original recording';path.write_bytes(original)
+   with self.assertRaisesRegex(ValueError,'decoder failed'):
+    with atomic_files.staged_path(path) as temp:
+     temp.write_bytes(b'incomplete replacement')
+     raise ValueError('decoder failed')
+   self.assertEqual(path.read_bytes(),original)
+   self.assertEqual(list(Path(folder).iterdir()),[path])
+ def test_binary_commit_retries_lock_and_preserves_exact_bytes(self):
+  with tempfile.TemporaryDirectory() as folder:
+   path=Path(folder)/'request.json';raw=b'{"frozen": true, "spent": 2}\n';real=atomic_files.os.replace;calls=[]
+   def denied_once(source,target):
+    calls.append(source)
+    if len(calls)==1:raise PermissionError('temporary lock')
+    real(source,target)
+   with patch.object(atomic_files.os,'replace',side_effect=denied_once),patch.object(atomic_files.time,'sleep'):
+    atomic_files.write_bytes(path,raw)
+   self.assertEqual(path.read_bytes(),raw)
+   self.assertEqual(len(calls),2)
+   self.assertEqual(list(Path(folder).iterdir()),[path])
  def test_timing_access_denied_does_not_abort_worker_events_or_export(self):
   with tempfile.TemporaryDirectory() as folder:
    job=Path(folder);(job/'processing-time.json').write_text('{"seconds":12}')

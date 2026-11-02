@@ -1,63 +1,44 @@
-# 現在のアプリ画面 · 0.25.17
+# Current desktop interface · 0.25.44 / build 304
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
 
-[← AniCanto](../../README.ja.md)
+[Back to AniCanto](../../README.ja.md)
 
-0.25.17 の実際の UI です。編集画面は薄紫色のテーマで、**動画プレビューをオフにして、アニメーションするアシスタントを表示**しています。モデルとプロジェクトの状態は表示例であり、処理性能の測定結果ではありません。
+Interface language: `ja`. Capture date: 2026-11-02.
 
-画像は Mac 0.25.17 の画面です。Windows CUDA 設定はハードウェアの表示例であり、新しい Windows ビルドの公開や検証を示すものではありません。
+These are native Mac captures from the released desktop host. The capture library uses original test media.
+Preview stays off. The assistants keep their facial features. Missing models remain visibly unavailable.
+The images are interface examples. They are not conversion benchmarks or evidence of Windows execution.
 
-## ようこそ
+## Welcome
 
-![ようこそ](../images/welcome-ja.png?v=0.25.14)
+![Welcome](../images/welcome-ja.png?v=0.25.44)
 
-## モデルとセットアップ
+## Basic mode
 
-![モデルとセットアップ](../images/models-setup-ja.png?v=0.25.14)
+![Basic mode](../images/basic-ja.png?v=0.25.44)
 
-## 基本モード
+## Expert mode
 
-![基本モード](../images/basic-ja.png?v=0.25.14)
+![Expert mode](../images/timeline-ja.png?v=0.25.44)
 
-## タイムライン
+## Additional AI repair
 
-![タイムライン](../images/timeline-ja.png?v=0.25.14)
+![Additional AI repair](../images/ai-repair-ja.png?v=0.25.44)
 
-## 校正レポート
+## Source selection, reset and storage
 
-![校正レポート](../images/review-ja.png?v=0.25.14)
+The following native captures use the English interface.
 
-## 動画キュー
+### Four source modes
 
-![動画キュー](../images/batch-ja.png?v=0.25.14)
+![Four source modes](../images/subtitles-en.png?v=0.25.44)
 
-## モデルセンター
+### Reset / rebuild in Production settings
 
-![モデルセンター](../images/model-centre-ja.png?v=0.25.14)
+![Reset / rebuild in Production settings](../images/restart-en.png?v=0.25.44)
 
-## 環境設定
+### Preferences and storage controls
 
-![環境設定](../images/preferences-ja.png?v=0.25.14)
+![Preferences and storage controls](../images/preferences-en.png?v=0.25.44)
 
-## 字幕ソース
-
-![字幕ソース](../images/subtitles-ja.png?v=0.25.14)
-
-## 吹き替えスタジオと保存した録音
-
-![Dubbing studio](../images/speech-studio-ja.png?v=0.25.14)
-
-![Saved & learning](../images/speech-player-ja.png?v=0.25.14)
-
-## Windows：NVIDIA CUDA の設定
-
-![NVIDIA CUDA](../images/nvidia-cuda-ja.png?v=0.25.14)
-
-## 再変換と音声トラックの追加
-
-動画カードの円形矢印から、全体の再変換、音声のみの再生成、言語・エンジンの追加を選べます。再読み込みは不要です。
-
-![再変換と音声トラックの追加](../images/restart-ja.png?v=0.25.14)
-
-## 休憩プレビュー
-
-![Assistant rest preview](../images/assistant-rest-ja.png?v=0.25.17)
+Older repository images are not part of this current gallery.

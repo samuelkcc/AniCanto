@@ -15,6 +15,7 @@ SKIP_PARTS={'__pycache__','target','node_modules','.git','.cargo','gen','wheels'
 DOCS={'DESKTOP-RELEASE-0.25.25.md','DESKTOP-RELEASE-0.25.21.md','DESKTOP-DOWNLOADS.json','DESKTOP-RELEASE-0.25.20.md','DESKTOP-RELEASE-0.25.19.md','DESKTOP-RELEASE-0.25.18.md','DESKTOP-RELEASE-0.25.17.md','DESKTOP-RELEASE-0.25.16.md','DESKTOP-RELEASE-0.25.15.md','DESKTOP-RELEASE-0.25.14.md','DESKTOP-RELEASE-0.25.13.md','DESKTOP-RELEASE-0.25.12.md','DESKTOP-RELEASE-0.25.9.md','APPLICATION-USER-GUIDE.json','USER-GUIDE-MAINTENANCE.md','DESKTOP-NAVIGATION-0.25.1.md','GETTING-STARTED.md','LICENSING.md','SCREENSHOTS.md','VOICE-MODELS.md','en/DEMO.md','en/GETTING-STARTED.md','en/LICENSING.md','en/SCREENSHOTS.md','ja/DEMO.md','ja/GETTING-STARTED.md','ja/LICENSING.md','ja/SCREENSHOTS.md','zh-CN/DEMO.md','zh-CN/GETTING-STARTED.md','zh-CN/LICENSING.md','zh-CN/SCREENSHOTS.md','zh-HK/DEMO.md','zh-HK/GETTING-STARTED.md','zh-HK/LICENSING.md','zh-HK/SCREENSHOTS.md','DESKTOP-WORKFLOW-0.25.0.md','WORKFLOW-CONTROLS-GUIDE.json','DOCUMENTATION-STANDARD.md','DESKTOP-WORKFLOW.md','DESKTOP-DELIVERY-0.24.85.md','DESKTOP-DELIVERY-0.24.86.md','DESKTOP-SUBTITLE-IMPORT-0.24.84.md','DESKTOP-SUBTITLE-FIRST-0.24.83.md','DESKTOP-RESET-TARGET-0.24.82.md','DESKTOP-QUEUE-RESET-0.24.81.md','DESKTOP-WORKFLOW-0.24.80.md','DESKTOP-RESTART-0.24.79.md','DESKTOP-RELIABILITY-0.24.78.md','DESKTOP-IMPROVEMENTS-0.24.77.md','DESKTOP-QUEUE-WAKE-0.24.76.md','PUBLIC-DESKTOP-PRIVATE-IPAD.md','DESKTOP-PARAMETERS-0.24.69.md','DESKTOP-WORKFLOW-0.24.70.md','DESKTOP-ACCELERATION-0.24.71.md','DESKTOP-SUBTITLE-IMPORT-0.24.72.md','DESKTOP-APPEARANCE-0.24.75.md','DESKTOP-PLAYBACK-0.24.74.md','DESKTOP-PLAYER-0.24.73.md','DESKTOP-IPAD-RECOVERY-WORKFLOW.md','RECOVERY-WORKFLOW-CONTRACT.json','DESKTOP-RECOVERY-PARITY.md','BUILD-AND-RECOVERY.md','DESKTOP-MANDARIN-OCR.md','INDEPENDENT-LISTENING.md','SPEECH-STUDIO-WORKFLOW.md','README.md','SHARED-ARCHITECTURE.md','SHARED-STUDIO.md','WINDOWS-PORT-2026-10-17.md',
       'WINDOWS-STUDIO-ALIGNMENT.md','MAC-LIGHTWEIGHT-DEPLOYMENT.md',
       'WELCOME-DOWNLOAD-MANAGEMENT.md','PUBLIC-DISTRIBUTION-REVIEW.md','ANICANTO-REBRAND.md','OCR-SAMPLING.md','SUBTITLE-IMPORT-GUIDE.md','SMARTSUB-WORKFLOW-ADAPTATION.md'}
+DOCS.add('DESKTOP-RELEASE-0.25.44.md')
 PRIVATE=re.compile(rb'(?:/'+rb'Users/[^/\s"\x27]+/|[A-Z]:\\Users\\[^\\\s"\x27]+\\|Google'+rb'Drive-[^/\s]+)',re.I)
 SECRET=re.compile(rb'(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{35,}|AKIA[0-9A-Z]{16})')
 IMAGE_SUFFIXES={'.jpg','.png','.otf','.icns','.ico'}
@@ -46,6 +47,7 @@ ACTIVITY_SOURCE_FILES=set(ACTIVITY_IMAGES)|{'studio/web/assets/assistant-activit
 
 def selected(relative):
     p=Path(relative)
+    if p.as_posix() in {'tests/test_mobile_model_defaults300.py','scripts/website-mobile-support-copy.json'}:return False
     # The public product pages cover desktop only. Keep upstream notices and
     # shared engineering rules, but exclude the separate mobile policy pages.
     if p.parts[:1]==('docs',) and p.name.startswith('IPAD-PRIVACY-POLICY'):return False
@@ -94,6 +96,43 @@ def public_text(raw,relative,root):
     home=Path.home()
     for before,after in [(str(Path(root).resolve()).encode(),b'<workspace>'),(str(home).encode(),b'<home>'),(home.name.encode(),b'<local-account>')]:
         raw=raw.replace(before,after)
+    # This quoted scanner name is prose, not a provider folder or account.
+    # Keep actual provider identifiers subject to the unchanged privacy scan.
+    raw=raw.replace(b'`Google'+b'Drive-` rule',b'cloud-provider prefix rule')
+    if Path(relative).as_posix()=='docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md' and b'## Active shared baseline:' in raw:
+        # Export the current shared rules, not private platform validation history.
+        rules=[line for line in raw.decode().splitlines() if re.match(r'^\| WF-\d+ \|',line)]
+        if len(rules)!=17:raise ValueError('Expected the 17 current shared workflow rules')
+        raw=('''# Shared workflow rules: public desktop projection
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
+
+This export copies the active shared rules without changes. Private platform implementation logs and device validation are omitted.
+Read APPLICATION-USER-GUIDE.json and WORKFLOW-CONTROLS-GUIDE.json for product controls. Read the matching release notes for verified delivery.
+The internal shared authority remains the source. This public projection does not define a separate platform workflow.
+
+| Rule ID | Shared requirement |
+| --- | --- |
+'''+ '\n'.join(rules)+'\n').encode()
+    if Path(relative).as_posix()=='docs/RECOVERY-WORKFLOW-CONTRACT.json':
+        try:document=json.loads(raw)
+        except ValueError:return raw
+        if isinstance(document,dict) and document.get('id')=='anicanto-recovery-workflow-4':
+            names=('schemaVersion','id','updated')
+            projected={key:document[key] for key in names}
+            projected.update(publicProjection=True,platforms=['macOS','Windows'],
+                status='Public desktop rules. Private platform implementation logs and device validation are omitted.')
+            guide=document['applicationUserGuide']
+            projected['applicationUserGuide']={key:guide[key] for key in ('revision','source','sha256','controlGuideRevision','controlGuideSHA256')}
+            first=document['standardFirstAudible']
+            projected['standardFirstAudible']={key:first[key] for key in ('revision','rule','defaultOverlap','timing','strictDuration','aiAsrReview','unknownEvidence','selection','preservation','optionalTimingException')}
+            modes=document['fourSourceModes298']
+            projected['fourSourceModes298']={key:modes[key] for key in ('revision','choices','proofreading','languageChoice','legacy')}
+            authority=Path(root)/'docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md'
+            if authority.is_file():
+                projected['activeRequirements']=[dict(id=parts[1].strip(),requirement=parts[2].strip())
+                    for line in authority.read_text().splitlines() if re.match(r'^\| WF-\d+ \|',line)
+                    for parts in [line.split('|')]]
+            raw=(json.dumps(projected,indent=2)+'\n').encode()
     return raw
 
 def export(root,output):

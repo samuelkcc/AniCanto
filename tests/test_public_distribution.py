@@ -65,6 +65,34 @@ class PublicSourceTests(unittest.TestCase):
             with self.assertRaises(ValueError):source_materials.checked_file(root,'source.tar.gz','0'*64)
             with self.assertRaises(ValueError):source_materials.checked_file(root,'../escape.tar.gz',digest)
 
+    def test_public_record_scanner_name_does_not_hide_provider_identifiers(self):
+        record='docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md'
+        raw=b'The `Google'+b'Drive-` rule checks provider folders.'
+        cleaned=public_source.public_text(raw,record,ROOT)
+        self.assertEqual(public_source.findings(cleaned,record),[])
+        actual=b'Google'+b'Drive-private-person@example.test/video.mp4'
+        self.assertIn('private-user-path',public_source.findings(
+            public_source.public_text(actual,record,ROOT),record))
+
+    def test_public_workflow_keeps_rules_and_omits_private_device_history(self):
+        authority='docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md'
+        source=(ROOT/authority).read_bytes()
+        projected=public_source.public_text(source,authority,ROOT)
+        for line in source.splitlines():
+            if line.startswith(b'| WF-') and line.split(b'|')[1].strip() in {
+                    ('WF-%02d'%index).encode() for index in range(1,18)}:
+                self.assertIn(line,projected)
+        self.assertNotIn(b'000081',projected)
+        self.assertNotIn(b'mobile/Validation',projected)
+        contract='docs/RECOVERY-WORKFLOW-CONTRACT.json'
+        projected_contract=public_source.public_text((ROOT/contract).read_bytes(),contract,ROOT)
+        self.assertNotIn(b'000081',projected_contract)
+        self.assertNotIn(b'mobile/Validation',projected_contract)
+        document=json.loads(projected_contract)
+        self.assertEqual(len(document['activeRequirements']),17)
+        self.assertEqual(document['fourSourceModes298']['proofreading']['resumeRefund'],False)
+        self.assertFalse(public_source.selected('tests/test_mobile_model_defaults300.py'))
+
 class AuxiliaryNoticeTests(unittest.TestCase):
     def test_model_attribution_is_separate_from_adapter_license(self):
         with tempfile.TemporaryDirectory() as temp:

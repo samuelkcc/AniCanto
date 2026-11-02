@@ -83,6 +83,8 @@ def needs_fit(cfg, cue, cues=None, index=None):
 
 def fit_reason(cfg, cue, cues=None, index=None):
     """Why this line must be rewritten, or None when the draft is safe."""
+    if __import__('caption_speech_guard').selected(cfg, cue):
+        return None
     text = str(cue.get('cantonese') or '')
     if not cue.get('enabled', True) or not text.strip():
         return None

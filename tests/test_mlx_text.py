@@ -8,6 +8,15 @@ class MLXTextTests(unittest.TestCase):
  def setUp(self):
   device=patch('compute_policy.mlx_device');device.start();self.addCleanup(device.stop)
 
+ def test_recovery_audit_write_cannot_discard_text_or_mask_model_error(self):
+  with tempfile.TemporaryDirectory() as folder:
+   backend=mlx_text.Backend(folder)
+   for second in ['retained text',ValueError('real generation error')]:
+    with self.subTest(second=type(second).__name__),patch.object(backend,'_generate',side_effect=[MemoryError('memory pressure'),second]),patch.object(backend,'unload'),patch('model_catalog.choice',return_value={'estimatedMemoryGB':10}),patch('model_catalog.catalog',return_value=[]),patch('atomic_files.write_json',side_effect=PermissionError('audit locked')):
+     if isinstance(second,Exception):
+      with self.assertRaisesRegex(ValueError,'real generation error'):backend.generate({'model':mlx_text.MODEL_ID})
+     else:self.assertEqual(backend.generate({'model':mlx_text.MODEL_ID}),second)
+
  def test_explicit_json_constraint_gets_fresh_matcher_after_retry(self):
   with tempfile.TemporaryDirectory() as folder:
    backend=mlx_text.Backend(folder);backend.model=object();backend.loaded_id=mlx_text.MODEL_ID;backend.tokenizer=MagicMock()

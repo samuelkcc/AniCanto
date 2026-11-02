@@ -13,7 +13,7 @@ const paths={
  terminal:'m4 6 5 5-5 5m8 0h7',settings:'M4 7h16M4 17h16M8 4v6m8 4v6',model:'m12 3 9 5v9l-9 5-9-5V8zM3 8l9 5 9-5m-9 5v9',folder:'M3 7V4h6l2 3h10v13H3z',
  home:'m3 11 9-8 9 8M5 9v12h5v-7h4v7h5V9',help:'M9.5 8a2.5 2.5 0 1 1 4 2c-1.5 1-1.5 1-1.5 3m0 3h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
  info:'M12 11v6m0-10h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',plus:'M12 5v14M5 12h14',close:'m6 6 12 12M6 18 18 6',
- play:'m8 4 13 8-13 8z',pause:'M8 5v14M16 5v14',stop:'M6 6h12v12H6z',chevron:'m9 5 7 7-7 7',back:'m15 5-7 7 7 7',
+ play:'m8 4 13 8-13 8z',pause:'M8 5v14M16 5v14',stop:'M6 6h12v12H6z',arrow:'M4 12h16m-6-6 6 6-6 6',chevron:'m9 5 7 7-7 7',back:'m15 5-7 7 7 7',
  sound:'m11 5-6 4H2v6h3l6 4zM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14',subtitles:'M3 4h18v14h-6l-4 4v-4H3zM7 9h10M7 13h7',
  undo:'M9 5 4 10l5 5M4 10h10a6 6 0 0 1 0 12',redo:'m15 5 5 5-5 5m5-5H10a6 6 0 0 0 0 12',save:'M4 3h13l4 4v14H3V3zM7 3v6h10V3M7 21v-7h10v7',
  nav:'M3 4h18v16H3zM8 4v16',browser:'M3 4h18v16H3zM3 9h18',inspector:'M3 4h18v16H3zM16 4v16',trash:'M4 7h16M9 3h6l1 4H8zM6 7l1 14h10l1-14M10 11v6m4-6v6',

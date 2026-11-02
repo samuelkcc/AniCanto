@@ -120,7 +120,8 @@ def encoder_candidates(rows, preference='auto'):
 
 
 def data_root():
-    return Path(os.environ.get('CANTOSYNC_WINDOWS_DATA', str(Path(os.environ.get('LOCALAPPDATA', str(Path.home()))) / 'CantoSync-Windows')))
+    from storage_health import default_root
+    return Path(os.environ.get('CANTOSYNC_WINDOWS_DATA', str(default_root('win32'))))
 
 
 def hardware_snapshot():

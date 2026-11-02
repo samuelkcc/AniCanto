@@ -47,6 +47,39 @@ def cpu_model(cfg):
  from faster_whisper import WhisperModel
  from model_catalog import resolve,selected
  return WhisperModel(str(resolve(cfg['storage'],cfg.get('speechModel') or selected(cfg['storage'],'speech'))),device='cpu',compute_type='int8',local_files_only=True,cpu_threads=8)
+_DLL_HANDLES=[]
+
+
+def prior_cpu_fallback(job,model_id):
+ """True when this job already proved that the same model cannot use CUDA.
+
+ Loading the same weights a second time only to fail the same way costs
+ several seconds and a second copy of a multi-gigabyte model in RAM.
+ """
+ try:saved=json.loads((Path(job)/'whisper-compute.json').read_text())
+ except (OSError,ValueError):return False
+ return saved.get('state')=='fallback' and saved.get('id')==model_id
+
+
+def cuda_library_folders(torch_path,storage=None):
+ """Existing CUDA library folders a Torch or CTranslate2 load may need on Windows.
+
+ The analysis runtime carries the selected Torch CUDA build; the native Drama
+ tools carry CUDA 12 and CUDA 13 runtime DLLs. CTranslate2 asks for one exact
+ version, so every present folder is offered and real inference stays the judge.
+ """
+ site=Path(torch_path).parent.parent
+ candidates=[Path(torch_path).parent/'lib']+[(site/pkg)/sub for pkg in ('nvidia/cublas','nvidia/cudart','nvidia/cuda_nvrtc','nvidia/cufft','nvidia/cudnn') for sub in ('bin','lib')]
+ if storage:candidates+=[(Path(storage)/'tools')/name for name in ('drama-cudart','drama-full-cudart12','drama-full-cudart13','drama-full-cuda12','drama-full-cuda13')]
+ found=[];seen=set()
+ for folder in candidates:
+  try:
+   if not folder.is_dir():continue
+  except OSError:continue
+  key=str(folder)
+  if key in seen:continue
+  seen.add(key);found.append(folder)
+ return found
 
 
 class AcceleratedWhisper:
@@ -119,7 +152,16 @@ class AcceleratedWhisper:
   from track_control import UserSkipped
   if isinstance(error,UserSkipped):self.close();raise error
   self.close();self.chosen=dict(backend='cpu',id=self.cfg.get('speechModel','whisper-large-v3'),reason=str(error)[:700]);self.cpu=cpu_model(self.cfg)
-  self.record(dict(state='fallback',**self.chosen));self.emit('語音硬件加速','加速路徑未完成，保留來源資料並改用 CPU 一次：'+str(error)[:180])
+  import re
+  text=str(error);missing=re.search(r'[A-Za-z0-9_\-]+\.dll',text)
+  if missing or any(name in text.lower() for name in ('cublas','cudart','cudnn')):
+   # Name the library the loader actually asked for instead of guessing the
+   # CUDA series, then state plainly that the line-by-line pass stays resumable.
+   part=missing.group(0) if missing else 'CUDA 執行庫'
+   notice=('語音辨識需要嘅 GPU 元件 '+part+' 喺呢個執行環境載入唔到；已改用 CPU 一次。'
+    '辨識仍然完成，每句結果即時保存，暫停或重啟唔會由第 1 句重新聽。')
+  else:notice='加速路徑未完成，保留來源資料並改用 CPU 一次：'+text[:180]
+  self.record(dict(state='fallback',**self.chosen));self.emit('語音硬件加速',notice)
  def transcribe(self,audio,**options):
   if self.chosen['backend']=='cpu':
    if self.cpu is None:self.cpu=cpu_model(self.cfg)
@@ -164,9 +206,14 @@ def serve(path):
    model=load_mlx(cfg['path'])
   else:
    import torch,ctranslate2
+   # Register every CUDA runtime folder that exists before the first CUDA probe.
+   # CTranslate2 asks for one exact cublas version by name, so the Torch build
+   # folder alone is not enough when the deployed tools carry another CUDA series.
+   if hasattr(os,'add_dll_directory'):
+    for folder in cuda_library_folders(Path(torch.__file__),cfg.get('storage')):
+     try:_DLL_HANDLES.append(os.add_dll_directory(str(folder)))
+     except OSError:pass
    if not torch.cuda.is_available():raise ValueError('CUDA runtime is unavailable')
-   dll=Path(torch.__file__).parent/'lib'
-   if hasattr(os,'add_dll_directory'):dll_handle=os.add_dll_directory(str(dll))
    from compute_policy import torch_device
    device=torch_device(torch,cfg.get('storage'),'primary-whisper',requested='cuda',minimum_gb=3.5)
    if device=='cpu':raise ValueError('Not enough free CUDA memory for Whisper; retain CPU path')

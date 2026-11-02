@@ -1,7 +1,11 @@
-# Interface gallery
+# Current desktop interface images
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
 
-[English](en/SCREENSHOTS.md) · [繁體中文](zh-HK/SCREENSHOTS.md) · [简体中文](zh-CN/SCREENSHOTS.md) · [日本語](ja/SCREENSHOTS.md)
+Version: 0.25.44 / build 304. Capture date: 2026-11-02.
 
-## 助手休息預覽
+- [English interface](en/SCREENSHOTS.md)
+- [Traditional Chinese interface](zh-HK/SCREENSHOTS.md)
+- [Simplified Chinese interface](zh-CN/SCREENSHOTS.md)
+- [Japanese interface](ja/SCREENSHOTS.md)
 
-![Assistant rest preview](images/assistant-rest-zh-HK.png?v=0.25.17)
+The native Mac captures use an isolated demo library. No user video or private device validation is published.

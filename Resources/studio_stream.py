@@ -19,7 +19,11 @@ class Media:
         self.ffmpeg=config['ffmpeg'];self.audio=config.get('audioStream')
         if self.audio is not None and (type(self.audio) is not int or self.audio<0):raise ValueError('Invalid audio stream.')
         self.count=math.ceil(self.duration/SEGMENT);self.token=secrets.token_urlsafe(32)
-        self.lock=threading.Lock();self.cache=OrderedDict();self.last=time.monotonic()
+        self.lock=threading.Lock();self.process_lock=threading.Lock();self.processes=set();self.cache=OrderedDict();self.last=time.monotonic()
+    def close(self):
+        with self.process_lock:
+            for process in self.processes:
+                if process.poll() is None:process.kill()
     def playlist(self):
         rows=['#EXTM3U','#EXT-X-VERSION:3','#EXT-X-TARGETDURATION:6','#EXT-X-MEDIA-SEQUENCE:0','#EXT-X-PLAYLIST-TYPE:VOD','#EXT-X-INDEPENDENT-SEGMENTS']
         for n in range(self.count):
@@ -41,6 +45,7 @@ class Media:
             if n in self.cache:
                 self.cache.move_to_end(n);return self.cache[n]
             process=subprocess.Popen(self.command(n),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            with self.process_lock:self.processes.add(process)
             errors=bytearray()
             def drain():
                 for block in iter(lambda:process.stderr.read(4096),b''):
@@ -63,6 +68,7 @@ class Media:
                 timer.cancel()
                 if process.poll() is None:process.kill();process.wait()
                 process.stdout.close();reader.join(timeout=1);process.stderr.close()
+                with self.process_lock:self.processes.discard(process)
             self.cache[n]=output
             while len(self.cache)>MAX_SEGMENTS or sum(map(len,self.cache.values()))>MAX_BYTES:self.cache.popitem(last=False)
             return output
@@ -98,10 +104,12 @@ def main():
     config=json.loads(sys.stdin.readline());owner=int(config['owner']);media=Media(config);server=Server(media)
     print(json.dumps(dict(url=f'http://127.0.0.1:{server.server_port}/{media.token}/index.m3u8',streamID=media.token)),flush=True)
     def watch():
+        from source_preparation import owner_alive
         while True:
             time.sleep(2)
-            try:os.kill(owner,0)
-            except OSError:os.killpg(os.getpgrp(),signal.SIGTERM);os._exit(0)
-            if time.monotonic()-media.last>600:os.killpg(os.getpgrp(),signal.SIGTERM);os._exit(0)
+            if not owner_alive(owner) or time.monotonic()-media.last>600:
+                media.close()
+                if os.name!='nt':os.killpg(os.getpgrp(),signal.SIGTERM)
+                server.shutdown();server.server_close();os._exit(0)
     threading.Thread(target=watch,daemon=True).start();server.serve_forever(poll_interval=.5)
 if __name__=='__main__':main()

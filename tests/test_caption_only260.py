@@ -94,10 +94,10 @@ class Ownership(unittest.TestCase):
  def test_primary_ownership_routes_keep_screen_text(self):
   from types import SimpleNamespace
   import primary_source
-  from source_workflow import REVISION
+  from source_workflow import SUBTITLE_REVISION
   for priority,effective,ocr in [('subtitles','subtitles-speech',False),('speech','speech-subtitles',False),('ocr','ocr-speech',True),('speech','speech-ocr',True)]:
    with self.subTest(priority=priority,effective=effective):
-    cfg=dict(self.cfg,sourcePolicyRevision=primary_source.REVISION,sourceAllocationRevision=primary_source.ALLOCATION_REVISION,sourceWorkflowRevision=REVISION,sourceContentPriority=priority,sourceWorkflowEffective=effective,translationSource='audio-and-ocr' if ocr else 'audio-and-subtitles',ocr=ocr)
+    cfg=dict(self.cfg,sourcePolicyRevision=primary_source.REVISION,sourceAllocationRevision=primary_source.ALLOCATION_REVISION,sourceWorkflowRevision=SUBTITLE_REVISION,sourceContentPriority=priority,sourceWorkflowEffective=effective,translationSource='audio-and-ocr' if ocr else 'audio-and-subtitles',ocr=ocr)
     atomic_json(self.root/'subtitle-context.json',[dict(start=1,end=2,text='三年前')])
     cues=[];w=SimpleNamespace(atomic_json=atomic_json,ollama_chat=lambda *a,**k: self.fail('No allocation inference needed for one screen caption'))
     primary_source.prepare(w,cfg,self.root,cues)
@@ -131,12 +131,12 @@ class Wording(unittest.TestCase):
  def test_new_submit_freezes_controls_and_resume_does_not_rewrite(self):
   from desktop_state import Store
   with tempfile.TemporaryDirectory() as tmp:
-   root=Path(tmp);source=root/'fixture.mp4';source.write_bytes(b'isolated submission fixture');store=Store(root);store.add([source]);row=store.queue[0];request=store.submit(row);saved=json.loads(request.read_text());self.assertIs(saved['skipNonDialogueCaptions'],True);self.assertEqual(saved['captionOnlyRevision'],gate.REVISION);self.assertEqual(saved['hongKongStyleRevision'],hk.REVISION)
+   root=Path(tmp);source=root/'fixture.mp4';source.write_bytes(b'isolated submission fixture');store=Store(root);store.settings['skipNonDialogueCaptions']=True;store.add([source]);row=store.queue[0];request=store.submit(row);saved=json.loads(request.read_text());self.assertIs(saved['skipNonDialogueCaptions'],True);self.assertEqual(saved['captionOnlyRevision'],gate.REVISION);self.assertEqual(saved['hongKongStyleRevision'],hk.REVISION)
    row['status']='paused';before=request.read_bytes();store.settings['skipNonDialogueCaptions']=False;self.assertEqual(store.submit(row),request);self.assertEqual(request.read_bytes(),before)
  def test_no_extra_inference(self):self.assertEqual(hk.rules()['extraAIRequests'],0)
  def test_future_defaults_and_validation(self):
   from desktop_state import defaults
   from workflow_settings import validated
-  self.assertIs(defaults()['skipNonDialogueCaptions'],True)
+  self.assertIs(defaults()['skipNonDialogueCaptions'],False)
   with self.assertRaises(ValueError):validated(dict(defaults(),skipNonDialogueCaptions='false'))
 if __name__=='__main__':unittest.main()

@@ -5,6 +5,7 @@ actual photographs; co-visible heads veto merging and compatible source voice
 is still required by visual_speakers.fuse. No text-name-only identity merging.
 """
 import hashlib,json
+import atomic_files
 from pathlib import Path
 
 
@@ -66,7 +67,7 @@ def consolidate(cfg,job,cues,rows,roster,gallery,compare):
             accepted=(d.get('sameAppearance') is True and d.get('distinctiveAgreement') is True and
                       type(d.get('confidence')) in (int,float) and .98<=d['confidence']<=1)
             decisions.append(dict(pair=[a,b],accepted=accepted,evidence=d,error=failure))
-        temp=target.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=fingerprint,status='partial',decisions=decisions),ensure_ascii=False));temp.replace(target)
+        atomic_files.write_json(target, dict(key=fingerprint,status='partial',decisions=decisions))
         print(json.dumps(dict(message=f'全片角色相片比對：{len(decisions)}/{len(pairs)} 組；結果已保存。',workID='character-photo-comparison',workCompleted=len(decisions),workTotal=len(pairs)),ensure_ascii=False),flush=True)
     parent={ident:ident for ident in by_id}
     def family(ident):return [x for x in parent if parent[x]==parent[ident]]
@@ -86,5 +87,5 @@ def consolidate(cfg,job,cues,rows,roster,gallery,compare):
             if selected!=ident:person.update(sourceVisualId=ident,visualId=selected)
         for field in ('visibleCharacterIds','activeCharacterIds'):
             if field in row:row[field]=[parent.get(i,i) for i in row[field]]
-    temp=target.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=fingerprint,status='complete',decisions=decisions,aliases=parent,coVisibleConflicts=[list(p) for p in sorted(conflicts)],method='local-photo-comparison; acoustic speaker fusion still required; confidence uncalibrated'),ensure_ascii=False,indent=2));temp.replace(target)
+    atomic_files.write_json(target, dict(key=fingerprint,status='complete',decisions=decisions,aliases=parent,coVisibleConflicts=[list(p) for p in sorted(conflicts)],method='local-photo-comparison; acoustic speaker fusion still required; confidence uncalibrated'),indent=2)
     return rows

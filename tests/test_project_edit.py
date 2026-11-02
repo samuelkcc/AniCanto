@@ -23,6 +23,16 @@ class EditTests(unittest.TestCase):
         row=edit.materialize(review,draft)[0];self.assertNotIn('userAcceptedRecording',row);self.assertNotIn('editorAudio',row)
         draft['segments'][0].update(audioTake='/new.wav',audioAcceptedHistoryID='new')
         row=edit.materialize(review,draft)[0];self.assertEqual((row['editorAudio'],row['userAcceptedRecording']),('/new.wav','new'))
+    def test_text_edit_keeps_the_seed_and_role_that_recorded_the_line(self):
+        # A retake after a script edit must re-record the same voice: the same role
+        # reference and the same recording seed. Only the words may change.
+        review,draft=fixture()
+        review['cues'][0].update(speakerId='role',_seed=4242)
+        draft['segments'][0].update(take=4242,text='經編輯嘅台詞')
+        row=edit.materialize(review,draft)[0]
+        self.assertEqual((row['_seed'],row['speakerId'],row['cantonese']),(4242,'role','經編輯嘅台詞'))
+        legacy=dict(copy.deepcopy(draft));legacy['segments'][0].pop('take',None)
+        self.assertEqual(edit.materialize(review,legacy)[0]['_seed'],42)
 
     def test_source_is_immutable_and_unchanged_evidence_is_preserved(self):
         review,draft=fixture();before=copy.deepcopy(review)

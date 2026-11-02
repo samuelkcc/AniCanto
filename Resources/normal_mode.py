@@ -193,6 +193,8 @@ def translate(w,cfg,job,cues):
     __import__('terminology').audit(cfg,job,cues)
     from translation_brevity import review as review_brevity
     review_brevity(w,cfg,job,cues,languages)
+    __import__('source_proofread').review(w,cfg,job,cues)
+    __import__('caption_speech_guard').review(w,cfg,job,cues)
 
 
 def ensure_scripts(w,cfg,job,cues):

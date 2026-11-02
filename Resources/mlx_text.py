@@ -1,5 +1,6 @@
 """App-owned, loopback-only MLX text backend. No cloud inference or remote code."""
 import argparse,gc,json,os,re,time,hashlib
+import atomic_files
 from pathlib import Path
 from http.server import HTTPServer,BaseHTTPRequestHandler
 MODEL_ID='mlx:qwen3.5-35b-a3b:4bit'
@@ -120,7 +121,8 @@ class Backend:
             except Exception:
                 audit['status']='failed';raise
             finally:
-                tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(audit,ensure_ascii=False));tmp.replace(path)
+                try:atomic_files.write_json(path, audit)
+                except OSError:pass
     def _generate(self,body):
         from model_catalog import choice,resolve
         ident=body.get('model',MODEL_ID)
@@ -219,7 +221,7 @@ def serve(root,ready,token):
             try:self.wfile.write(data)
             except (BrokenPipeError,ConnectionResetError):pass
     server=HTTPServer(('127.0.0.1',0),Handler);server.timeout=1
-    ready=Path(ready);tmp=ready.with_suffix('.tmp');tmp.write_text(json.dumps(dict(port=server.server_port,token=token)));tmp.replace(ready)
+    ready=Path(ready);atomic_files.write_json(ready, dict(port=server.server_port,token=token))
     try:
         while True:
             server.handle_request()

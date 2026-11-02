@@ -1,63 +1,44 @@
-# Inside the current app · 0.25.17
+# Current desktop interface · 0.25.44 / build 304
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
 
-[← AniCanto](../../README.md)
+[Back to AniCanto](../../README.md)
 
-Editing screenshots show **video preview switched off, with the animated assistant visible**, in the light-purple theme. Project and model states are illustrative, not conversion benchmarks.
+Interface language: `en`. Capture date: 2026-11-02.
 
-These images use the Mac 0.25.17 interface. The Windows CUDA panel uses illustrative hardware data; it does not certify a new Windows build.
+These are native Mac captures from the released desktop host. The capture library uses original test media.
+Preview stays off. The assistants keep their facial features. Missing models remain visibly unavailable.
+The images are interface examples. They are not conversion benchmarks or evidence of Windows execution.
 
 ## Welcome
 
-![Welcome](../images/welcome-en.png?v=0.25.14)
-
-## Models & setup
-
-![Models & setup](../images/models-setup-en.png?v=0.25.14)
+![Welcome](../images/welcome-en.png?v=0.25.44)
 
 ## Basic mode
 
-![Basic mode](../images/basic-en.png?v=0.25.14)
+![Basic mode](../images/basic-en.png?v=0.25.44)
 
-## Expert timeline
+## Expert mode
 
-![Expert timeline](../images/timeline-en.png?v=0.25.14)
+![Expert mode](../images/timeline-en.png?v=0.25.44)
 
-## Review report
+## Additional AI repair
 
-![Review report](../images/review-en.png?v=0.25.14)
+![Additional AI repair](../images/ai-repair-en.png?v=0.25.44)
 
-## Video queue
+## Source selection, reset and storage
 
-![Video queue](../images/batch-en.png?v=0.25.14)
+The following native captures use the English interface.
 
-## Model centre
+### Four source modes
 
-![Model centre](../images/model-centre-en.png?v=0.25.14)
+![Four source modes](../images/subtitles-en.png?v=0.25.44)
 
-## Preferences
+### Reset / rebuild in Production settings
 
-![Preferences](../images/preferences-en.png?v=0.25.14)
+![Reset / rebuild in Production settings](../images/restart-en.png?v=0.25.44)
 
-## Subtitle source
+### Preferences and storage controls
 
-![Subtitle source](../images/subtitles-en.png?v=0.25.14)
+![Preferences and storage controls](../images/preferences-en.png?v=0.25.44)
 
-## Dubbing studio and saved clips
-
-![Dubbing studio](../images/speech-studio-en.png?v=0.25.14)
-
-![Saved & learning](../images/speech-player-en.png?v=0.25.14)
-
-## Windows: NVIDIA CUDA setup
-
-![NVIDIA CUDA](../images/nvidia-cuda-en.png?v=0.25.14)
-
-## Restart or add a voice track
-
-Use the circular arrow on a video to restart conversion, regenerate only its voices, or add a language / engine track without re-importing the file.
-
-![Restart or add a voice track](../images/restart-en.png?v=0.25.14)
-
-## Assistant rest preview
-
-![Assistant rest preview](../images/assistant-rest-en.png?v=0.25.17)
+Older repository images are not part of this current gallery.

@@ -4,6 +4,7 @@ The gallery is appearance evidence only. Source audio and speaking evidence rema
 mandatory in visual_speakers.fuse; a face on screen does not identify the speaker.
 """
 import hashlib,json,subprocess
+import atomic_files
 from pathlib import Path
 
 def prepare_storyboards(cfg,job,cues,selected):
@@ -22,7 +23,8 @@ def prepare_storyboards(cfg,job,cues,selected):
                 subprocess.run([cfg['ffmpeg'],'-v','error','-y','-ss',str(cue['start']+cfg.get('offset',0)+span*fraction),'-threads','1','-i',cfg['video'],'-frames:v','1','-vf',f'scale={width}:{height}:force_original_aspect_ratio=decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2','-update','1',str(frame)],check=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
                 with Image.open(frame) as image:sheet.paste(image.convert('RGB').resize((width,height)),(width*j,24))
             frame.unlink(missing_ok=True)
-            temp=target.with_suffix('.tmp');sheet.save(temp,format='JPEG');temp.replace(target)
+            with atomic_files.staged_path(target) as temp:
+                sheet.save(temp,format='JPEG')
         return i,target
     result={}
     # Bounded CPU-only extraction; never load two large inference models together.
@@ -30,8 +32,8 @@ def prepare_storyboards(cfg,job,cues,selected):
       for n,(i,target) in enumerate(pool.map(extract,selected)):
         result[i]=target
         if n%8==0 or n+1==len(selected):print(json.dumps(dict(message=f'建立角色畫面：{n+1}/{len(selected)} 段。',workID='character-frame-inventory',workCompleted=n+1,workTotal=len(selected)),ensure_ascii=False),flush=True)
-    manifest=folder/'inventory.json';temp=manifest.with_suffix('.tmp')
-    temp.write_text(json.dumps(dict(key=cfg['key'],eligibleIndices=list(selected),frames={str(i):str(p) for i,p in result.items()},frameWidth=width,coverage='all eligible dialogue intervals; four samples per interval'),ensure_ascii=False));temp.replace(manifest)
+    manifest=folder/'inventory.json'
+    atomic_files.write_json(manifest, dict(key=cfg['key'],eligibleIndices=list(selected),frames={str(i):str(p) for i,p in result.items()},frameWidth=width,coverage='all eligible dialogue intervals; four samples per interval'))
     return result
 
 def photo_atlas(cfg,job,cues,rows,roster):
@@ -64,8 +66,8 @@ def photo_atlas(cfg,job,cues,rows,roster):
                 observations.append(dict(avatar=str(dest),sourceFrame=str(original) if original.exists() else '',time=local,index=row['index'],visualId=ident))
             except (OSError,ValueError,subprocess.SubprocessError):continue
         if photos:gallery.append(dict(visualId=ident,photos=photos,observations=observations))
-    target=Path(job)/('visual-photo-candidates.json' if cfg.get('requireVerifiedPhotos') else 'visual-photo-atlas.json');temp=target.with_suffix('.tmp')
-    temp.write_text(json.dumps(dict(key=cfg['key'],gallery=gallery,method='observed appearance; not speaker proof'),ensure_ascii=False,indent=2));temp.replace(target)
+    target=Path(job)/('visual-photo-candidates.json' if cfg.get('requireVerifiedPhotos') else 'visual-photo-atlas.json')
+    atomic_files.write_json(target, dict(key=cfg['key'],gallery=gallery,method='observed appearance; not speaker proof'),indent=2)
     return gallery
 
 def comparison_sheet(gallery,storyboards,batch,target):

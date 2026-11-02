@@ -156,6 +156,15 @@ def prepare(w,cfg,job,cues):
    c['captionRecords']=local;c['subtitleHint']=' ／ '.join(r['text'] for r in local)
    spoken=c.get('japanese') or c.get('text','')
    attach(c,'asr-with-subtitles',spoken,[r['id'] for r in local]);c['primarySource']['language']=cfg.get('sourceLanguage','ja');c['captionEvidenceOnly']=True
+   if __import__('source_modes').current(cfg):
+    c['sourceProofreadEvidence']=[dict(id=r['id'],text=r['text'],start=r['start'],end=r['end']) for r in local]
+    c['sourceProofreadEvidenceKind']='ocr' if cfg.get('sourceWorkflowEffective')=='speech-ocr' else 'subtitles'
+    c['subtitleHint']='';c['captionRecords']=[]
+    for field in ('ocrEvidence','hybridEvidence','sourceCaptionRecords','captionAllocation'):
+     if field in c:c.setdefault('sourceProofreadContext',{})[field]=c.pop(field)
+    if not spoken.strip() or spoken.strip() in ('[NO_SPEECH]','[UNCONFIRMED_SOURCE]'):
+     c.update(sourcePolicyBlocked=True,preserveOriginalSpeech=True,originalSpeechReason='source-recognition-unconfirmed')
+    continue
    if not spoken.strip():
     if local:
      attach(c,'missing-speech-caption-fallback',' '.join(r['text'] for r in local),[r['id'] for r in local]);c['sourcePrimaryFallback']=True;c['primarySource']['fallbackReason']='missing-primary'

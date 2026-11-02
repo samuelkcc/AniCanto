@@ -765,7 +765,11 @@ def extract_cues(cfg, job, meta):
         cfg['sourceCaptionLanguage']=cfg.get('sourceLanguage','ja')
         return transcribe(cfg, job, ffmpeg)
     if subtitle:
-        run([ffmpeg, "-v", "error", "-y", "-i", subtitle, srt])
+        selected_text=None
+        if __import__('source_modes').current(cfg) and Path(subtitle).suffix.lower() in ('.ass','.ssa') and cfg.get('sourceCaptionLanguageSelected'):
+            selected_text=__import__('subtitle_versions').selected_srt(__import__('subtitle_versions').decode(Path(subtitle).read_bytes()),cfg['sourceCaptionLanguageSelected'])
+        if selected_text is not None:srt.write_text(selected_text,encoding='utf-8')
+        else:run([ffmpeg, "-v", "error", "-y", "-i", subtitle, srt])
         __import__("subtitle_snapshot").record_extracted(cfg,job,srt)
         captions=parse_srt(srt.read_text(encoding="utf-8-sig"))
         if __import__('primary_source').enabled(cfg):cfg['sourceCaptionLanguage']=__import__('primary_source').language(' '.join(c['text'] for c in captions))
@@ -784,6 +788,11 @@ def extract_cues(cfg, job, meta):
     if streams:
         cfg['sourceCaptionLanguage']=streams[0].get('tags',{}).get('language','')
         run([ffmpeg, "-v", "error", "-y", "-i", cfg["video"], "-map", f"0:{streams[0]['index']}", srt])
+        if __import__('source_modes').current(cfg) and streams[0].get('codec_name') in ('ass','ssa') and cfg.get('sourceCaptionLanguageSelected'):
+            authored=job/'source-authored.ass'
+            run([ffmpeg,'-v','error','-y','-i',cfg['video'],'-map',f"0:{streams[0]['index']}",authored])
+            selected_text=__import__('subtitle_versions').selected_srt(authored.read_text(encoding='utf-8-sig'),cfg['sourceCaptionLanguageSelected'])
+            if selected_text is not None:srt.write_text(selected_text,encoding='utf-8')
         __import__("subtitle_snapshot").record_extracted(cfg,job,srt,streams[0]["index"])
         result = parse_srt(srt.read_text(encoding="utf-8-sig"))
         if result:
@@ -852,7 +861,7 @@ def convert(cfg):
         raise ValueError("原影片不存在。")
     meta = json.loads(run([cfg['ffprobe'], '-v', 'error', '-show_format', '-show_streams', '-show_chapters', '-of', 'json', video]))
     from source_workflow import configure as configure_workflow
-    configure_workflow(cfg,meta,select_batch_subtitle)
+    configure_workflow(cfg,meta,select_batch_subtitle,emit=emit)
     if __import__('delivery_policy').enabled(cfg):freeze(cfg)
     import opening
     opening.prepare(cfg,meta,run,emit)
@@ -875,6 +884,8 @@ def convert(cfg):
     identity['voiceStyleMode']=cfg.get('voiceStyleMode','clone')
     identity['visualModel']=cfg.get('visualModel')
     identity["startOffset"] = float(cfg.get("startOffset", 0))
+    if cfg.get('captionSpeechGuardRevision'):
+        for key in ('captionSpeechGuardRevision','captionSpeechGuardMaxWindows','captionSpeechGuardBudgetSeconds'):identity[key]=cfg.get(key)
     if cfg.get("ocr"):
         identity["ocr_revision"] = 8
         identity["ocr_settings"] = {k:cfg.get(k) for k in ("ocrRect", "ocrTop", "ocrBottom", "ocrMargin", "ocrColor", "ocrStable")}
@@ -883,6 +894,7 @@ def convert(cfg):
         identity["subtitle"]=cfg["subtitleSnapshot"]["originalName"]
     if cfg.get("subtitle"):
         identity["sub_hash"] = hashlib.sha256(Path(cfg["subtitle"]).read_bytes()).hexdigest()
+    identity=__import__('data_root_identity').canonical(cfg['storage'],identity)
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:16]
     job = Path(cfg["storage"]) / "jobs" / key
     job.mkdir(parents=True, exist_ok=True)
@@ -1065,6 +1077,8 @@ def convert(cfg):
     audit_caption_timing(sys.modules[__name__],cfg,job,cues)
     import dub_languages, dialogue
     if 'en' in dub_languages.selected(cfg):dub_languages.english_script(sys.modules[__name__],cfg,job,cues)
+    __import__('source_proofread').review(sys.modules[__name__],cfg,job,cues)
+    __import__('caption_speech_guard').review(sys.modules[__name__],cfg,job,cues)
     coverage=dialogue.coverage_report(cfg,job,cues)
     if coverage['status']=='needs-review':emit('對白覆蓋需覆核',f"{len(coverage['uncovered'])} 段可能有原聲但未有配音台詞、{len(coverage['disabled'])} 段已停用；請喺編輯器覆核。",.54)
     review = {"config":cfg, "meta":meta, "cues":cues, "status":"pending"}
@@ -1089,22 +1103,23 @@ def opening_end(meta):
     return None
 
 
-def select_batch_subtitle(streams, language=None, title=None):
+def select_batch_subtitle(streams, language=None, title=None, target=None):
     """Resolve per-file indices; UI labels for missing language are not language codes.
 
-    Automatic order: Cantonese, Traditional Chinese, Simplified Chinese, other
-    Chinese, another readable language, then an unlabeled track. An explicit
-    language or title choice always outranks that order.
+    Automatic order follows the dub output language. For Cantonese: Cantonese,
+    Traditional Chinese, Simplified Chinese, Chinese with no script, an unlabeled
+    track, then a track in another language. For English, an English track leads. An
+    explicit language or title choice always outranks that order.
     """
     import subtitle_preference
-    return subtitle_preference.pick(streams, language, title)
+    return subtitle_preference.pick(streams, language, title, target)
 
 
-def select_sidecar_subtitle(video):
-    """Find an external subtitle beside the video, preferring a Chinese one.
+def select_sidecar_subtitle(video, target=None):
+    """Find an external subtitle beside the video, preferring the dub language.
 
     Names such as movie.zh-Hant.srt carry a language marker. A plain movie.srt
-    stays useful but ranks below a Chinese-marked file.
+    stays useful but ranks below a file whose marker matches the output language.
     """
     import subtitle_preference
     video = Path(video)
@@ -1121,11 +1136,13 @@ def select_sidecar_subtitle(video):
         candidates.append(dict(name=str(path), marker=marker))
     if not candidates:
         return None
-    return Path(min(candidates, key=subtitle_preference.sidecar_key)['name'])
+    return Path(min(candidates, key=lambda path: subtitle_preference.sidecar_key(path, target))['name'])
 
 
 def batch_convert(cfg):
+    __import__('source_modes').prepare_request(cfg)
     global emit
+    from source_workflow import dub_language as dub_target
     original_emit = emit
     summary = []
     for index, item in enumerate(cfg.get('videos', [])):
@@ -1144,7 +1161,7 @@ def batch_convert(cfg):
             from translation_source import configure as source_policy
             source_policy(current)
             if current.get('batchAutoSubtitles') and current.get('subtitleSource') != 'none':
-                sidecar = select_sidecar_subtitle(item['video'])
+                sidecar = select_sidecar_subtitle(item['video'], dub_target(current))
                 if sidecar:
                     current.update(subtitleSource='external',subtitle=str(sidecar),ocr=False)
                 else:
@@ -1153,14 +1170,15 @@ def batch_convert(cfg):
                     current.update(subtitleSource='embedded' if has_text else 'none',subtitle=None,ocr=False) if __import__('primary_source').enabled(current) else current.update(subtitleSource='embedded' if has_text else 'burned',subtitle=None,ocr=not has_text)
                 forward('字幕', '本集自動字幕來源：'+current['subtitleSource'])
             if current.get('subtitleSource') == 'external':
-                sub = Path(current['subtitle']) if current.get('batchExplicitSubtitle') and current.get('subtitle') else select_sidecar_subtitle(item['video'])
+                sub = Path(current['subtitle']) if current.get('batchExplicitSubtitle') and current.get('subtitle') else select_sidecar_subtitle(item['video'], dub_target(current))
                 if sub is None: raise ValueError('搵唔到同名外掛字幕；請放喺影片旁邊，或者改用畫面字幕／語音辨識。')
                 if not sub.is_file():raise ValueError('匯入嘅外掛字幕檔案已移動或刪除，請重新選擇。')
                 current['subtitle'] = str(sub)
             elif current.get('subtitleSource') == 'embedded':
                 meta = json.loads(run([current['ffprobe'], '-v', 'error', '-show_streams', '-of', 'json', current['video']]))
                 subs = [s for s in meta['streams'] if __import__('subtitle_preference').is_text_stream(s)]
-                selected = next((s for s in subs if s['index']==current.get('subtitleStream')),None) if current.get('batchExplicitStream') else select_batch_subtitle(subs, current.get('subtitleLanguage'), current.get('subtitleTitle'))
+                target_language = dub_target(current)
+                selected = next((s for s in subs if s['index']==current.get('subtitleStream')),None) if current.get('batchExplicitStream') else select_batch_subtitle(subs, current.get('subtitleLanguage'), current.get('subtitleTitle'), target_language)
                 if current.get('batchExplicitStream') and selected is None:raise ValueError('本片指定字幕軌不存在，請檢查設定。')
                 if selected is None:
                     current.update(subtitleSource='none', subtitle=None, ocr=False)
@@ -1169,7 +1187,8 @@ def batch_convert(cfg):
                     current.update(subtitleStream=selected['index'], subtitle=None, ocr=False)
                     import subtitle_preference
                     chosen_language = selected.get('tags', {}).get('language', '未標示語言')
-                    forward('字幕', f"自動選擇本集字幕軌 {selected['index']}（{chosen_language}；{subtitle_preference.reason(selected)} 優先）。")
+                    target_label = subtitle_preference.target_label(target_language)
+                    forward('字幕', f"自動選擇本集字幕軌 {selected['index']}（{chosen_language}；配音語言 {target_label}；{subtitle_preference.reason(selected)} 優先）。")
             convert(current)
             entry['status'] = '需要處理' if entry.get('partial') else '完成' if entry.get('output') else '等待校稿'
         except Exception as error:

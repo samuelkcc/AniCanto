@@ -5,6 +5,7 @@ recognizable single head, appearance agreement, no hand/hair-only/group crop.
 Decisions are cached, with at most eight inspections per appearance identity.
 """
 import hashlib,json
+import atomic_files
 from pathlib import Path
 
 
@@ -43,12 +44,12 @@ def validate(gallery,roster,job,infer,key):
             evidence=matches[0] if len(matches)==1 else {}
             accepted=(evidence.get('usableHead') is True and evidence.get('singleHead') is True and evidence.get('matchesAppearance') is True and type(evidence.get('confidence')) in (int,float) and .9<=evidence['confidence']<=1)
             decisions[photo['fingerprint']]=dict(visualId=photo['visualId'],accepted=accepted,photo=photo['avatar'],evidence=evidence,error=failure)
-        temp=target.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=key,decisions=decisions,method='local crop inspection; not certified identity'),ensure_ascii=False,indent=2));temp.replace(target)
+        atomic_files.write_json(target, dict(key=key,decisions=decisions,method='local crop inspection; not certified identity'),indent=2)
         print(json.dumps(dict(message=f'頭像品質核對：已檢查 {len(decisions)} 張；只保留獨立、可辨識頭像。'),ensure_ascii=False),flush=True)
     result=[]
     for entry in gallery:
         passed=[p for p in entry.get('observations',[]) if decisions.get(lookups.get(p['avatar'],''),{}).get('accepted')]
         if passed:result.append(dict(entry,observations=passed[:2],photos=[p['avatar'] for p in passed[:2]],portraitEvidence='local crop inspection; not speaker proof'))
-    temp=target.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=key,decisions=decisions,method='local crop inspection; not certified identity'),ensure_ascii=False,indent=2));temp.replace(target)
-    atlas=job/'visual-photo-atlas.json';temp=atlas.with_suffix('.tmp');temp.write_text(json.dumps(dict(key=key,gallery=result,method='inspected single-head appearance; not speaker proof'),ensure_ascii=False,indent=2));temp.replace(atlas)
+    atomic_files.write_json(target, dict(key=key,decisions=decisions,method='local crop inspection; not certified identity'),indent=2)
+    atlas=job/'visual-photo-atlas.json';atomic_files.write_json(atlas, dict(key=key,gallery=result,method='inspected single-head appearance; not speaker proof'),indent=2)
     return result

@@ -9,6 +9,7 @@ uses for every other per-line action. Snapshot rows number the same line from
 one, so this module adds one internally.
 """
 import hashlib,json,shutil,time,uuid
+import atomic_files
 from pathlib import Path
 
 BLOCKS='review-take-blocks.json';DISCARDED='discarded-recordings'
@@ -101,5 +102,5 @@ def remove(root,snapshot,draft,index,language,engine,path,confirm=False):
     shutil.move(str(target),str(folder/'audio.wav'))
     (folder/'removal.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
     path_file=root/BLOCKS;rows=blocks(root);rows.append(record)
-    temporary=path_file.with_suffix('.tmp');temporary.write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n');temporary.replace(path_file)
+    atomic_files.write_bytes(path_file, (json.dumps(rows,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
     return record

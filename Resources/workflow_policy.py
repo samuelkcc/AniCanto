@@ -6,6 +6,7 @@ def reserve(folder,namespace,identity,limit=4):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     path=folder/(namespace+'-budget.json')
     rows=json.loads(path.read_text()) if path.exists() else {}
+    identity=__import__('data_root_identity').for_folder(folder,identity)
     key=hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
     row=rows.get(key,dict(attempts=0))
     if row['attempts']>=limit:return False
@@ -15,6 +16,8 @@ def reserve(folder,namespace,identity,limit=4):
     return True
 
 def original_allowed(cfg,cue):
+    if cue.get('originalSpeechReason')=='unrelated-caption-overlay':
+        return __import__('caption_speech_guard').selected(cfg,cue)
     # Only deliberate source preservation/nonverbal performance is permitted.
     return bool(cue.get('preserveOriginalSpeech') and cue.get('originalSpeechReason') not in ('missing-script','unresolved-overlap'))
 

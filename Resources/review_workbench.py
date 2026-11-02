@@ -4,6 +4,7 @@ Human review is distinct from model verification and from an export choice.
 Decisions bind to the line, track, edited words and diagnostic evidence.
 """
 import hashlib,json,time
+import atomic_files
 from pathlib import Path
 
 CATEGORIES=('missing','content','timing','reference','fallback','other')
@@ -163,5 +164,5 @@ def mark(root,snapshot,ident,expected,state):
         history.append(dict(id=ident,previous=decisions.get(ident)));data['history']=history[-50:]
         decisions[ident]=dict(state=state,fingerprint=expected,at=time.time(),qualityCertified=False)
     data.update(schemaVersion=1,updatedAt=time.time())
-    temporary=path.with_suffix('.tmp');temporary.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n');temporary.replace(path)
+    atomic_files.write_bytes(path, (json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
     return project(root,snapshot)

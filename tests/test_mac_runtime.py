@@ -10,6 +10,7 @@ import mac_runtime,runtime_licenses,lightweight_mac
 class MacRuntimeTests(unittest.TestCase):
  def fixture(self,root):
   python=root/'runtime/bin/python3';python.parent.mkdir(parents=True);python.touch()
+  (root/'runtime/pyvenv.cfg').write_text('home = private-python\n')
   receipt=root/'runtime-receipts/runtime.json';receipt.parent.mkdir();receipt.write_text('{"importsPassed":true}')
   return receipt
  def row(self):return dict(requirements='test.lock',probe='import example',identity='lock-v1',packages={'example':'1','soundfile':'2'})

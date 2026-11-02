@@ -1,6 +1,7 @@
 """Inventory external Mac runtime notices without importing model packages."""
 from email.parser import Parser
 import hashlib,json
+import atomic_files
 from pathlib import Path
 
 def update(root):
@@ -26,5 +27,5 @@ def update(root):
                 row['noticeSources'].setdefault(primary,[]).append(relative)
     rows=sorted(grouped.values(),key=lambda r:(r['name'].lower(),r['version']))
     for row in rows:row['origin']=' · '.join(row['origins'])
-    path=root/'runtime-license-inventory.json';temp=path.with_suffix('.tmp');temp.write_text(json.dumps(rows,ensure_ascii=False,indent=2));temp.replace(path)
+    path=root/'runtime-license-inventory.json';atomic_files.write_json(path, rows,indent=2)
     return rows

@@ -241,7 +241,10 @@ final class Engine: @unchecked Sendable {
         if let override = ProcessInfo.processInfo.environment["SAM_CANTO_DATA"] {
             root = URL(fileURLWithPath: override)
         } else {
-            root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("SamCantoSync")
+            let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            let current = support.appendingPathComponent("AniCanto")
+            let legacy = support.appendingPathComponent("SamCantoSync")
+            root = FileManager.default.fileExists(atPath: current.path) || !FileManager.default.fileExists(atPath: legacy.path) ? current : legacy
         }
         try? FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
     }

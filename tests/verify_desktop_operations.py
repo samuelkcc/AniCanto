@@ -62,17 +62,24 @@ with tempfile.TemporaryDirectory(prefix='anicanto-native-rpc-') as folder:
     final=call('remove-model',dict(id='v2ProPlus'));assert final['freedBytes']==14 and not common.exists()
     assert 'v2ProPlus' not in {r['id'] for r in call('models')}
     language=call('source-language',dict(id=added['selected']))
-    # This fixture is a colour card with tones, so it carries no speech. Audio detection stays
-    # unconfirmed on every build, and the metadata track is the English one at index 2.
+    # This fixture is a colour card with tones, so it carries no speech. The speech listen cannot
+    # run here, and the default audio track carries an English metadata label at index 2.
     assert language['detection']['stream']==2 and language['metadataLanguage']=='en'
-    assert language['method']=='unconfirmed-audio' and language['needsConfirmation'] is True
-    # Auto approval must never invent a language: an unconfirmed source still asks the user.
+    # A listen that cannot run keeps the language label the file itself carries, so the panel does
+    # not ask and the switch is never seen as ignored.
+    assert language['method']=='audio-stream-metadata' and language['language']=='en'
+    assert language['detection']['listenFailure'] is True and language['detection']['confirmReason']==''
+    assert language['needsConfirmation'] is False and language['detection']['confirmationSkipped'] is True
+    # Auto approval must never invent a language: the file label is the only accepted source here.
     assert call('configure',dict(settings=dict(autoApproveSourceLanguage=True)))['settings']['autoApproveSourceLanguage'] is True
-    unconfirmed=call('source-language',dict(id=added['selected']))
-    assert unconfirmed['needsConfirmation'] is True and unconfirmed['detection']['autoApproveSetting'] is True
-    assert unconfirmed['detection']['confirmationSkipped'] is False
-    # With auto approval off the packaged host must still ask for a chosen language.
+    kept=call('source-language',dict(id=added['selected']))
+    assert kept['needsConfirmation'] is False and kept['detection']['autoApproveSetting'] is True
+    assert kept['detection']['confirmationSkipped'] is True and kept['language']=='en'
+    # With auto approval off the packaged host must still ask and must name the switch as the reason.
     assert call('configure',dict(settings=dict(autoApproveSourceLanguage=False)))['settings']['autoApproveSourceLanguage'] is False
+    switch_off=call('source-language',dict(id=added['selected']))
+    assert switch_off['needsConfirmation'] is True and switch_off['detection']['confirmReason']=='switch-off'
+    assert switch_off['detection']['confirmationSkipped'] is False
     asked=call('source-language',dict(id=added['selected'],language='en'))
     assert asked['language']=='en' and asked['detection']['explicitOverride'] is True
     assert asked['needsConfirmation'] is True and asked['detection']['confirmationSkipped'] is False
@@ -83,4 +90,4 @@ with tempfile.TemporaryDirectory(prefix='anicanto-native-rpc-') as folder:
     assert approved['detection']['confirmationSkipped'] is True and approved['detection']['autoApproveSetting'] is True
     assert call('state')['queue'][0]['sourceLanguage']=='en'
     assert not (Path(folder)/'use-terms-acceptance.json').exists()
-print(json.dumps(dict(nativeDesktopBoundary=True,queueMovesPersist=True,sharedVariantRemoval=True,staleRecovery=True,termsReadAcceptRevoke=True,sourceLanguageNativeBoundary=True,unconfirmedAudioStillAsksEvenWhenAutoApproved=True,autoApproveSkipsConfirmationForKnownLanguage=True,languages=['en','zh-HK'],staleConsentRejected=True,unknownOperationsRejected=True,userLibraryChanged=False)))
+print(json.dumps(dict(nativeDesktopBoundary=True,queueMovesPersist=True,sharedVariantRemoval=True,staleRecovery=True,termsReadAcceptRevoke=True,sourceLanguageNativeBoundary=True,listenFaultKeepsFileLabelAndSkipsAsk=True,switchOffStillAsksAndNamesThatReason=True,autoApproveSkipsConfirmationForKnownLanguage=True,languages=['en','zh-HK'],staleConsentRejected=True,unknownOperationsRejected=True,userLibraryChanged=False)))

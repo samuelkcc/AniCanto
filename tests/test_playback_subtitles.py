@@ -20,6 +20,13 @@ class PlaybackSubtitlesTests(unittest.TestCase):
   self.assertEqual(result['cues'][0]['text'],'原裝中文字幕');self.assertAlmostEqual(result['cues'][0]['start'],.5,delta=.03)
   en=sub.read(self.root,self.row(),self.tools,result['tracks'][1]['id']);self.assertEqual(en['cues'][0]['text'],'Original English')
   self.assertEqual(sub.read(self.root,self.row(),self.tools,'off')['cues'],[]);self.assertEqual(hashlib.sha256(self.source.read_bytes()).digest(),before)
+ def test_target_language_beats_container_default_and_explicit_choice_still_wins(self):
+  en=sub.read(self.root,self.row(),self.tools,target='en')
+  self.assertEqual(en['cues'][0]['text'],'Original English')
+  zh=sub.read(self.root,self.row(),self.tools,target='yue')
+  self.assertEqual(zh['cues'][0]['text'],'原裝中文字幕')
+  explicit=sub.read(self.root,self.row(),self.tools,en['selected'],target='yue')
+  self.assertEqual(explicit['cues'][0]['text'],'Original English')
  def test_external_choice_is_independent_and_invalid_choice_rejected(self):
   row=dict(self.row(),externalSubtitle=str(self.zh));before=self.zh.read_bytes();result=sub.read(self.root,row,self.tools)
   self.assertEqual(result['selected'],'external');self.assertEqual(result['cues'][1]['text'],'第二句');self.assertEqual(self.zh.read_bytes(),before)

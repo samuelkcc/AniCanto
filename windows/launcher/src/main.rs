@@ -5,6 +5,8 @@ use std::process::Command;
 mod package;
 mod splash;
 mod storage_lock;
+#[path = "../../../studio/src-tauri/src/data_root.rs"]
+mod data_root;
 
 // The portable EXE stays outside the downloaded runtime. Run cleanup only
 // after the desktop and its loaded Python/DLL files have exited.
@@ -58,9 +60,10 @@ fn launch() -> Result<(), String> {
     let splash=splash::Splash::new();
     let started=std::time::Instant::now();
     let executable = std::env::current_exe().map_err(|error| error.to_string())?;
-    let root = std::env::var_os("CANTOSYNC_WINDOWS_DATA").map(PathBuf::from)
-        .or_else(||std::env::var_os("LOCALAPPDATA").map(|p|PathBuf::from(p).join("CantoSync-Windows")))
-        .ok_or("LOCALAPPDATA is unavailable")?;
+    let root = if let Some(root)=std::env::var_os("CANTOSYNC_WINDOWS_DATA"){PathBuf::from(root)}else{
+        data_root::select(&PathBuf::from(std::env::var_os("LOCALAPPDATA").ok_or("LOCALAPPDATA is unavailable")?),"CantoSync-Windows")?
+    };
+    std::env::set_var("CANTOSYNC_WINDOWS_DATA",&root);
     let _storage_lock=storage_lock::acquire(&root,||splash.update(&storage_lock::waiting_message(&root),0,0))?;
     storage_lock::phase(&root,"opening");
     let folder = package::folder(&executable,&splash)?;

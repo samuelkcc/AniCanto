@@ -97,7 +97,8 @@ def verify(request):
         detected=getattr(result,'language','') or ''
         if isinstance(detected,(list,tuple)):detected=detected[0] if detected else ''
         cache[item['key']]=evidence(item['expected'],heard,detected,request.get('targetLanguage','yue'))
-        temp=file.with_suffix('.tmp');temp.write_text(json.dumps(cache,ensure_ascii=False,indent=2));temp.replace(file)
+        from atomic_files import write_json
+        write_json(file,cache,indent=2)
         print(json.dumps(dict(stage='配音核對',message=f'已覆聽第 {index+1}/{len(request["items"])} 段配音。',progress=.87+.01*(index+1)/len(request['items']),result=cache[item['key']]),ensure_ascii=False),flush=True)
 
 

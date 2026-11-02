@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {esc} from '../studio/web/model.js';
 import {icon} from '../studio/web/icons.js';
 import {translate} from '../studio/web/i18n.js';
-import {controlCopy} from '../studio/web/workflow-guide.js';
+import {controlCopy,panelCopy} from '../studio/web/workflow-guide.js';
 import {projectWarning} from '../studio/web/workflow-text.js';
 
 const source=fs.readFileSync(new URL('../studio/web/app.js',import.meta.url),'utf8');
@@ -14,12 +14,14 @@ const body=name=>{const start=source.indexOf(`function ${name}(`);assert(start>=
  const next=[...rest.matchAll(/^(?=function |const |let )/gm)].filter(match=>match.index>0).map(match=>match.index);
  const stops=[...closes,...next];
  assert(stops.length,`${name}: unterminated`);return rest.slice(0,Math.min(...stops))};
-const names=['previewNotices','previewNoticeBadge','queueNoticeChip','sourceLanguageApprovalControl','productionScopeControl'];
+const names=['previewNotices','previewNoticeBadge','queueNoticeChip','settingsText','sourceLanguageApprovalControl','productionScopeControl'];
 // The desktop shell owns these templates; the stub mirrors the browser globals.
-const shell=(row,language,settings={})=>new Function('d',`const {esc,icon,t,controlCopy,projectWarning,settingSwitch,productionConfig,individualProduction,row,state,active}=d;
+const groupStub="const switchGroup=(label,html,extraClass='')=>`<section class=\"switch-group${extraClass?' '+extraClass:''}\"><h4 class=\"switch-group-label\">${label}</h4><div class=\"switch-list\">${html}</div></section>`;";
+const shell=(row,language,settings={})=>new Function('d',`const {esc,icon,t,controlCopy,panelCopy,projectWarning,settingSwitch,productionConfig,individualProduction,row,state,active}=d;
+${groupStub}
 ${names.map(body).join('\n')}
 return {previewNotices,previewNoticeBadge,queueNoticeChip,sourceLanguageApprovalControl,productionScopeControl}`)({
- esc,icon,t:text=>translate(text,language),controlCopy,projectWarning,
+ esc,icon,t:text=>translate(text,language),controlCopy,panelCopy,projectWarning,
  settingSwitch:(key,label,value,extra='')=>`<label class="setting-switch"><span class="switch-copy">${esc(translate(label,language))}</span><input type="checkbox" role="switch" data-setting="${key}" ${value?'checked':''} ${extra}></label>`,
  productionConfig:()=>settings,individualProduction:()=>row?.useGlobalSettings===false,row:()=>row,state:{language},active:false});
 
@@ -54,16 +56,18 @@ for(const language of ['en','zh-HK','zh-CN','ja']){
  assert.equal(shell(clean,language).queueNoticeChip(clean),'',language);
  // The auto-approve switch sits under the Global scope switch in both inspectors.
  for(const settings of [{},{autoApproveSourceLanguage:true}]){
-  const scope=shell(clean,language,settings).productionScopeControl();
-  const approval=scope.indexOf('data-setting="autoApproveSourceLanguage"');
-  assert(approval>scope.indexOf('data-setting="productionScopeGlobal"'),`${language}: ${scope}`);
+  const scope=shell(clean,language,settings).productionScopeControl()+shell(clean,language,settings).sourceLanguageApprovalControl();
+  assert(scope.includes('<select data-setting="productionScopeGlobal"'),`${language}: ${scope}`);
   assert(/data-setting="autoApproveSourceLanguage" checked/.test(scope),`${language}: ${scope}`);
   assert(scope.includes(controlCopy('autoApproveSourceLanguage',language,'title')),language);
  }
  // The switch reads as off only when the stored setting is false.
  const off=shell(clean,language,{autoApproveSourceLanguage:false}).sourceLanguageApprovalControl();
  assert(!/data-setting="autoApproveSourceLanguage" checked/.test(off),`${language}: ${off}`);
- assert(off.includes(controlCopy('autoApproveSourceLanguage',language)),`${language}: tooltip`);
+ // The switch carries no hover hint, the same as every other switch in that panel.
+ assert(!off.includes('title="'),`${language}: no hover hint: ${off}`);
+ assert(off.includes(`aria-label="${esc(controlCopy('autoApproveSourceLanguage',language,'title'))}"`),`${language}: accessible name: ${off}`);
+ assert(controlCopy('autoApproveSourceLanguage',language).length>0,`${language}: Help copy still resolves`);
  assert(!shell(clean,language).productionScopeControl().includes('undefined'),language);
 }
 
@@ -86,4 +90,4 @@ const css=fs.readFileSync(new URL('../studio/web/styles.css',import.meta.url),'u
 for(const rule of ['.preview-notice{','.preview-notice.has-error{','.queue-notice-chip{','.production-scope .source-approval-switch{'])
  assert(css.includes(rule),rule);
 
-console.log('PASS wide preview notice badge, short card chip, four languages, escaped text, switch under Global scope');
+console.log('PASS wide preview notice badge, short card chip, four languages, escaped text, named scope and grouped source switch');

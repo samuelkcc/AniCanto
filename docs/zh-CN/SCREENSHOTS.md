@@ -1,63 +1,44 @@
-# 新版界面 · 0.25.17
+# Current desktop interface · 0.25.44 / build 304
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
 
-[← AniCanto](../../README.zh-CN.md)
+[Back to AniCanto](../../README.zh-CN.md)
 
-以下为 0.25.17 真实界面。剪辑画面统一使用浅紫色主题，**关闭视频预览，显示动画小助手**；模型及项目状态仅作演示，不代表转换性能测试。
+Interface language: `zh-CN`. Capture date: 2026-11-02.
 
-图片采用 Mac 0.25.17 界面。Windows CUDA 设置使用示例硬件资料，不代表已发布或验证新 Windows 版本。
+These are native Mac captures from the released desktop host. The capture library uses original test media.
+Preview stays off. The assistants keep their facial features. Missing models remain visibly unavailable.
+The images are interface examples. They are not conversion benchmarks or evidence of Windows execution.
 
-## 欢迎画面
+## Welcome
 
-![欢迎画面](../images/welcome-zh-CN.png?v=0.25.14)
+![Welcome](../images/welcome-zh-CN.png?v=0.25.44)
 
-## 模型与部署
+## Basic mode
 
-![模型与部署](../images/models-setup-zh-CN.png?v=0.25.14)
+![Basic mode](../images/basic-zh-CN.png?v=0.25.44)
 
-## 基本模式
+## Expert mode
 
-![基本模式](../images/basic-zh-CN.png?v=0.25.14)
+![Expert mode](../images/timeline-zh-CN.png?v=0.25.44)
 
-## 专家时间轴
+## Additional AI repair
 
-![专家时间轴](../images/timeline-zh-CN.png?v=0.25.14)
+![Additional AI repair](../images/ai-repair-zh-CN.png?v=0.25.44)
 
-## 校对报告
+## Source selection, reset and storage
 
-![校对报告](../images/review-zh-CN.png?v=0.25.14)
+The following native captures use the English interface.
 
-## 视频列表
+### Four source modes
 
-![视频列表](../images/batch-zh-CN.png?v=0.25.14)
+![Four source modes](../images/subtitles-en.png?v=0.25.44)
 
-## 模型中心
+### Reset / rebuild in Production settings
 
-![模型中心](../images/model-centre-zh-CN.png?v=0.25.14)
+![Reset / rebuild in Production settings](../images/restart-en.png?v=0.25.44)
 
-## 偏好设置
+### Preferences and storage controls
 
-![偏好设置](../images/preferences-zh-CN.png?v=0.25.14)
+![Preferences and storage controls](../images/preferences-en.png?v=0.25.44)
 
-## 字幕来源
-
-![字幕来源](../images/subtitles-zh-CN.png?v=0.25.14)
-
-## 配音器与已保存片段
-
-![Dubbing studio](../images/speech-studio-zh-CN.png?v=0.25.14)
-
-![Saved & learning](../images/speech-player-zh-CN.png?v=0.25.14)
-
-## Windows：NVIDIA CUDA 部署
-
-![NVIDIA CUDA](../images/nvidia-cuda-zh-CN.png?v=0.25.14)
-
-## 重新开始或新增音轨
-
-点击视频卡的圆形箭头，可重新转换、只重配声音，或新增语言／引擎音轨，无需删除再导入。
-
-![重新开始或新增音轨](../images/restart-zh-CN.png?v=0.25.14)
-
-## 助手休息预览
-
-![Assistant rest preview](../images/assistant-rest-zh-CN.png?v=0.25.17)
+Older repository images are not part of this current gallery.

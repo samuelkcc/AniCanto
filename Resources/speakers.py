@@ -202,8 +202,8 @@ def analyze(cfg, emit):
     np.savez(job/'speaker-embeddings.npz', vectors=matrix, indices=[e['index'] for e in entries])
     # Very short replies and OCR fragments cannot establish a reliable new voice.
     labels,identity_evidence = stable_assignments(matrix, entries,with_evidence=True)
-    target=job/'speaker-evidence.json';temp=target.with_suffix('.tmp')
-    temp.write_text(json.dumps(dict(revision=REVISION,entries=[dict(row,group=int(group),identityEvidence=proof) for row,group,proof in zip(entries,labels,identity_evidence)]),ensure_ascii=False,indent=2));temp.replace(target)
+    from atomic_files import write_json
+    write_json(job/'speaker-evidence.json',dict(revision=REVISION,entries=[dict(row,group=int(group),identityEvidence=proof) for row,group,proof in zip(entries,labels,identity_evidence)]),indent=2)
     groups = sorted(set(labels))
     centers = np.stack([matrix[np.array(labels)==g].mean(axis=0) for g in groups])
     centers /= np.linalg.norm(centers, axis=1, keepdims=True)
@@ -260,46 +260,139 @@ def analyze(cfg, emit):
         assignments.append(dict(index=index, speakerId=f'auto-{job.name}-{labels[nearest]+1}', speakerNote='呢句聲音太短或太弱，暫按鄰近角色自動配對。',previousSpeakerSimilarity=0,identityEvidence=dict(state='uncertain',reason='no-usable-source-voice')))
     result = dict(profiles=profiles, assignments=assignments, revision=REVISION)
     target = job / 'speaker-analysis.json'
-    temp = target.with_suffix('.tmp'); temp.write_text(json.dumps(result, ensure_ascii=False, indent=2)); temp.replace(target)
+    from atomic_files import write_json
+    write_json(target,result,indent=2)
     emit('自動配角色', f'已按原聲分出 {len(profiles)} 個聲線，自動抽取角色參考。', progress=.29)
 
 
-def transcribe_profiles(cfg,job,profiles,speech_path,emit):
-    from whisper_accel import load as load_whisper
-    model = None
-    analysis = job/'japanese-analysis.json'
-    source_words = [w for s in json.loads(analysis.read_text()).get('segments',[]) for w in s.get('words',[])] if analysis.exists() else []
-    for i, profile in enumerate(profiles):
-        profile['language']=cfg.get('sourceLanguage','ja')
-        if cfg.get('independentVoiceMapping') and not profile.get('reference'):continue
-        if source_words:
-            parts=[]
-            for start,end in profile.get('referenceRanges',[]):
-                parts.append(''.join(w['word'] for w in source_words if start <= (w['start']+w['end'])/2 < end))
-            profile['promptText']=''.join(parts).strip()
-            if profile['promptText']:
-                profile['transcriptSource']='original-japanese-words'
-                continue
-        if model is None:model=load_whisper(dict(cfg,speechModel=cfg.get('referenceSpeechModel') or cfg.get('speechModel','whisper-large-v3')),Path(job)/'reference-whisper',emit)
-        emit('角色參考', f'自動辨識 {profile["name"]} 嘅日語參考原文。', .29)
-        segments, _ = model.transcribe(whisper_pcm(profile['reference']), language=cfg.get('sourceLanguage','ja'), vad_filter=True, condition_on_previous_text=False)
+def reference_word_clock(job):
+    """Index the episode word clock once so each reference costs a bisect, not a full scan."""
+    analysis = Path(job)/'japanese-analysis.json'
+    try: rows = json.loads(analysis.read_text()).get('segments',[])
+    except (OSError,ValueError): return [],[]
+    words = sorted((w for row in rows for w in row.get('words',[])),key=lambda w:(w['start']+w['end'])/2)
+    return words,[(w['start']+w['end'])/2 for w in words]
+
+
+def quoted_words(words,mids,ranges):
+    """Return the word-clock text whose word midpoint falls inside the given ranges."""
+    import bisect
+    return ''.join(words[i]['word'] for a,b in ranges for i in range(bisect.bisect_left(mids,a),bisect.bisect_left(mids,b))).strip()
+
+
+LINE_CACHE = 'reference-line-cache-1'
+
+
+def reference_model_id(cfg):
+    """Model identity a saved line transcript may be reused for."""
+    return cfg.get('referenceSpeechModel') or cfg.get('speechModel', 'whisper-large-v3')
+
+
+def line_transcript_path(profile):
+    """Sidecar folder name is already a content digest of this exact reference clip."""
+    reference = profile.get('reference') or ''
+    if not reference or not Path(reference).is_absolute(): return None
+    folder = Path(reference).parent
+    try:
+        if not folder.is_dir(): return None
+    except OSError: return None
+    return folder / 'transcript.json'
+
+
+def read_line_transcript(profile, cfg, language):
+    """Return a saved answer for this reference only when the same model and language made it."""
+    path = line_transcript_path(profile)
+    if path is None: return ''
+    try: saved = json.loads(path.read_text())
+    except (OSError, ValueError): return ''
+    if not isinstance(saved, dict): return ''
+    if saved.get('revision') != LINE_CACHE or saved.get('model') != reference_model_id(cfg) or saved.get('language') != language: return ''
+    return str(saved.get('text', '')).strip()
+
+
+def write_line_transcript(profile, text, language, cfg):
+    """Store each answer beside its own clip so a pause, crash or retry never re-listens."""
+    path = line_transcript_path(profile)
+    if path is None: return
+    from atomic_files import write_json
+    try: write_json(path, dict(revision=LINE_CACHE, model=reference_model_id(cfg), language=language, text=text))
+    except OSError: pass  # A cache must never be the reason a conversion stops.
+
+
+def load_reference_model(cfg, job, emit):
+    """Load the reference transcriber once and honour a CUDA failure this job already proved."""
+    from whisper_accel import load as load_whisper, prior_cpu_fallback
+    model_id = reference_model_id(cfg)
+    options = dict(cfg, speechModel=model_id)
+    if prior_cpu_fallback(job, model_id): options['speechAcceleration'] = 'cpu'
+    return load_whisper(options, Path(job) / 'reference-whisper', emit)
+
+
+def transcribe_profiles(cfg, job, profiles, speech_path, emit):
+    """Give every reference clip the wording it really says, and never re-listen on resume.
+
+    Order matters. Text the job already owns costs nothing: the episode word clock
+    first, then wording the caller attached to the same cue, then this clip's own
+    saved answer. Only a line with none of those reaches the model, and each model
+    answer is stored beside its clip the moment it lands, so a pause, a crash or a
+    retry continues at the first unfinished line instead of returning to line 1.
+    """
+    import time
+    from production_progress import advance
+    job = Path(job); stage = '角色參考'; language = cfg.get('sourceLanguage', 'ja')
+    words, mids = reference_word_clock(job)
+    pending = []; owned = 0; saved_lines = 0
+    for profile in profiles:
+        profile['language'] = language
+        if cfg.get('independentVoiceMapping') and not profile.get('reference'): continue
+        if profile.get('promptText', '').strip():
+            profile.setdefault('transcriptSource', 'saved-reference-transcript'); owned += 1; continue
+        text = quoted_words(words, mids, profile.get('referenceRanges', [])) if mids else ''
+        if text:
+            profile['promptText'] = text; profile['transcriptSource'] = 'original-japanese-words'; owned += 1; continue
+        text = read_line_transcript(profile, cfg, language)
+        if text:
+            profile['promptText'] = text; profile['transcriptSource'] = 'saved-line-transcript'; saved_lines += 1; continue
+        pending.append(profile)
+    model = None; total = len(pending); done = 0; samples = []
+    if total >= 40:
+        emit(stage, f'{total} 段原聲需要逐句辨識；每段完成即時保存，暫停或重啟都會沿用，唔會由第 1 句重新聽。', .29, workID='reference-transcript', workCompleted=0, workTotal=total)
+    for profile in pending:
+        started = time.monotonic()
+        if model is None: model = load_reference_model(cfg, job, emit)
+        emit(stage, f'{profile["name"]} 原聲參考：逐句辨識 {done+1}/{total}。', .29, workID='reference-transcript', workCompleted=done, workTotal=total)
+        segments, _ = model.transcribe(whisper_pcm(profile['reference']), language=language, vad_filter=True, condition_on_previous_text=False)
         profile['promptText'] = ''.join(s.text for s in segments).strip()
         if not profile['promptText']:
-            segments, _ = model.transcribe(whisper_pcm(profile['reference']), language=cfg.get('sourceLanguage','ja'), vad_filter=False, condition_on_previous_text=False)
+            segments, _ = model.transcribe(whisper_pcm(profile['reference']), language=language, vad_filter=False, condition_on_previous_text=False)
             profile['promptText'] = ''.join(s.text for s in segments).strip()
+        if profile['promptText']:
+            profile['transcriptSource'] = 'line-transcription'; write_line_transcript(profile, profile['promptText'], language, cfg)
         if not profile['promptText']:
-            message=f'{profile["name"]} 參考原聲辨識失敗；請檢查呢段片嘅對白品質。'
-            if cfg.get('independentVoiceMapping') and cfg.get('continueOnError',True):
-                profile['referenceIssue']=message;emit('逐句參考待覆核',message,.29)
-            else:raise ValueError(message)
+            message = f'{profile["name"]} 參考原聲辨識失敗；請檢查呢段片嘅對白品質。'
+            if cfg.get('independentVoiceMapping') and cfg.get('continueOnError', True):
+                profile['referenceIssue'] = message; emit('逐句參考待覆核', message, .29)
+            else: raise ValueError(message)
+        done += 1; samples.append(time.monotonic() - started)
+        # The reference pass sits inside the running phase window, so it must move
+        # that window; a skipped role phase keeps its own advance() inert.
+        advance('roles', done/total); advance('translation', done/total)
+        if done >= 8 and (done % 20 == 0 or done == total):
+            recent = samples[-24:]; rate = sum(recent)/len(recent)
+            emit(stage, f'逐句辨識已完成 {done}/{total} 段；每段平均 {rate:.1f} 秒，本步驟尚餘約 {int(rate*(total-done))} 秒。已完成內容即時保存。', .29, workID='reference-transcript', workCompleted=done, workTotal=total)
+    if total:
+        # Closing the count at the real total lets the elapsed-time estimate finish
+        # instead of leaving the last line uncounted on the status bar.
+        emit(stage, f'原聲參考整理完成：{owned} 句沿用已有文字，{saved_lines} 句沿用上次逐句辨識，{total} 句逐句辨識。', .29,
+             workID='reference-transcript', workCompleted=total, workTotal=total)
     for profile in profiles:
         for candidate in profile.get('referenceCandidates',[]):
-            ranges=candidate.get('ranges') or ([candidate['range']] if candidate.get('range') else [])
-            candidate['promptText']=''.join(w['word'] for w in source_words for a,b in ranges if a<=(w['start']+w['end'])/2<b).strip()
+            ranges = candidate.get('ranges') or ([candidate['range']] if candidate.get('range') else [])
+            candidate['promptText'] = quoted_words(words, mids, ranges) if mids else ''
             if not candidate['promptText']:
-                if model is None:model=load_whisper(dict(cfg,speechModel=cfg.get('referenceSpeechModel') or cfg.get('speechModel','whisper-large-v3')),Path(job)/'reference-whisper',emit)
-                segments,_=model.transcribe(whisper_pcm(candidate['reference']),language=cfg.get('sourceLanguage','ja'),vad_filter=False,condition_on_previous_text=False)
-                candidate['promptText']=''.join(s.text for s in segments).strip()
+                if model is None: model = load_reference_model(cfg, job, emit)
+                segments, _ = model.transcribe(whisper_pcm(candidate['reference']), language=language, vad_filter=False, condition_on_previous_text=False)
+                candidate['promptText'] = ''.join(s.text for s in segments).strip()
 
 
 def assign(cfg, job, cues, run, emit):
@@ -324,7 +417,8 @@ def assign(cfg, job, cues, run, emit):
         model_job(cfg, 'speakers', dict(storage=str(root), job=str(job), audio=cfg['dialoguePath'],backgroundPath=cfg.get('backgroundPath'), cues=cues), emit)
         result = json.loads((job/'speaker-analysis.json').read_text())
         result['key'] = key
-        temp = cache.with_suffix('.tmp'); temp.write_text(json.dumps(result, ensure_ascii=False, indent=2)); temp.replace(cache)
+        from atomic_files import write_json
+        write_json(cache,result,indent=2)
     for row in result['assignments']:
         cues[row['index']].update(speakerId=row['speakerId'], speakerNote=row['speakerNote'],mixedVoices=row.get('mixedVoices',False),previousSpeakerSimilarity=row.get('previousSpeakerSimilarity',0),identityEvidence=row.get('identityEvidence',{}))
     profiles=json.loads(json.dumps(result['profiles']))
@@ -334,7 +428,8 @@ def assign(cfg, job, cues, run, emit):
     # Final references are transcribed only after audiovisual identity fusion.
     transcribe_profiles(cfg,job,profiles,speech_path,emit)
     plan=dict(revision=REVISION,status='ready-for-dubbing',acousticGroups=len(result['profiles']),finalVoiceGroups=len(profiles),visuallySupported=sum(p.get('identityStatus')=='audiovisual' for p in profiles),provisionalGroups=sum(p.get('identityStatus')=='provisional' for p in profiles),uncertainSegments=[i+1 for i,c in enumerate(cues) if c.get('identityEvidence',{}).get('state') in ('uncertain','provisional')],identities=[dict(id=p['id'],status=p.get('identityStatus','acoustic'),reference=p['reference'],visualId=p.get('visualId'),cueIndices=[i+1 for i,c in enumerate(cues) if c.get('speakerId')==p['id']]) for p in profiles],policy='Fixed per-identity reference before translation and TTS; voice groups are not certified people.')
-    target=job/'character-plan.json';temp=target.with_suffix('.tmp');temp.write_text(json.dumps(plan,ensure_ascii=False,indent=2));temp.replace(target)
+    from atomic_files import write_json
+    write_json(job/'character-plan.json',plan,indent=2)
     emit('角色歸類',f"已整理 {len(profiles)} 組配音參考；畫面支持 {plan['visuallySupported']} 組，待確認 {plan['provisionalGroups']} 組。",.29)
     cfg['voiceProfiles'] = profiles; cfg['defaultSpeaker'] = ''
     return cues

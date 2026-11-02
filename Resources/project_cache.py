@@ -20,7 +20,10 @@ def walk(root,folder):
         dirs[:]=[n for n in dirs if safe(root,Path(base)/n)]
         for name in names:
             path=Path(base)/name
-            if path.is_file() and safe(root,path):yield path
+            # Each parent directory passed the link guard above. Do not resolve
+            # every ancestor again for every saved WAV during a read-only scan.
+            # execute() still checks every selected path before any deletion.
+            if not path.is_symlink() and path.is_file():yield path
 
 
 @contextmanager
