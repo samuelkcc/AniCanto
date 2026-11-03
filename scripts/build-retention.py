@@ -144,7 +144,7 @@ def protected_names() -> dict:
         # The first records are the newest. Read the nine most recent blocks.
         for block in re.split(r'\n### ', head)[1:10]:
             for match in re.finditer(r'\.build/([A-Za-z0-9_.\-]+)', block):
-                keep.setdefault(match.group(1), 'Named in the newest handover records.')
+                keep.setdefault(match.group(1).rstrip('.'), 'Named in the newest handover records.')
     return keep
 
 

@@ -13801,8 +13801,8 @@
     },
     {
       "path": "scripts/build-retention.py",
-      "sha256": "5c922c5ab02ea7774004a771d99d607c247f8929759a68cb69c2544b883b1610",
-      "bytes": 29837
+      "sha256": "6a2457a6797921e24ad712970b7b66cdd75bd3b02e65d2a5bd6a380ea2b4fe7d",
+      "bytes": 29849
     },
     {
       "path": "scripts/build.py",
@@ -15321,8 +15321,8 @@
     },
     {
       "path": "tests/test_build_retention297.py",
-      "sha256": "8a62d6da63bb88c0e40f30e0779281d320d14730c96c744028941f7a53b9357f",
-      "bytes": 10170
+      "sha256": "9361b87c44dad64461327789801633128217309a678319356e7887dba91a4f83",
+      "bytes": 10642
     },
     {
       "path": "tests/test_cantonese_alignment.py",

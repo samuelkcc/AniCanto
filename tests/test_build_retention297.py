@@ -37,6 +37,14 @@ class RetentionTests(unittest.TestCase):
         p.write_bytes(data)
         return p
 
+    def test_handover_sentence_punctuation_does_not_change_protected_names(self):
+        docs=self.root/'docs';docs.mkdir()
+        (docs/'CODEX-HANDOVER.md').write_text('# Record\n## Work Records\n### Current\nProtect .build/lan-diagnostics-2026-11-02.\nKeep .build/archive.app.\n')
+        keep=retention.protected_names()
+        self.assertIn('lan-diagnostics-2026-11-02',keep)
+        self.assertIn('archive.app',keep)
+        self.assertNotIn('archive.app.',keep)
+
     def test_equal_name_and_length_are_not_duplicate_proof(self):
         a = self.file('_retained-models/a/model.bin', b'first')
         b = self.file('_retained-models/b/model.bin', b'other')
