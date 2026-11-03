@@ -15,13 +15,14 @@
 
 ## ダウンロード
 
-**[Mac 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto-macOS-0.25.45.zip)** · **[Windows 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto.exe)**
+**[Mac 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto-macOS-0.25.46.zip)** · **[Windows 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.45-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.46-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 最近の更新 · 0.25.45 / build 305
+## 最近の更新 · 0.25.46 / build 306
 
+- **ソースの自動承認：**「検出した言語を使う」がオンなら、別の選択がない限り最初の音声トラックを使い、広東語・標準中国語では中国語字幕を優先します。言語未指定の字幕文字も調べ、適切な字幕がなければ字幕確認やOCRなしで音声から続行します。英語出力では英語、次に中国語を使います。
 - **校正レポートを整理：**検出翻訳、保存した編集、元音声と分離音声、保護された初回録音、モデル設定、追加録音、最終選択を分けて表示します。
 - **セリフ単位の再録音：**文章を保存し、モデルとパラメーターを選んで録音します。処理中の表示と、各録音の試聴ボタンを用意しました。
 - **初回録音を保持：**初回録音は削除できません。後から追加した未使用録音は削除できます。選択済み・出力済みの録音も保護します。

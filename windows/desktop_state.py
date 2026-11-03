@@ -175,6 +175,14 @@ class Store:
         if row.get('subtitleSelection'):
             settings['subtitleLanguageSelection']=copy.deepcopy(row['subtitleSelection'])
             settings['sourceCaptionLanguageSelected']=row['subtitleSelection']['language']
+        automatic=row.get('automaticSubtitleSelection') or {}
+        if settings.get('autoApproveSourceLanguage') is True and automatic.get('revision')==__import__('subtitle_choice').AUTO_REVISION:
+            settings['automaticSubtitleSelection']=copy.deepcopy(automatic)
+            if automatic.get('speechOnly'):
+                settings.update(translationSource='audio-only',subtitleSource='none',subtitle=None,
+                                subtitleStream=None,batchAutoSubtitles=False,batchExplicitStream=False,batchExplicitSubtitle=False)
+                settings.pop('subtitleLanguageSelection',None)
+                settings.pop('sourceCaptionLanguageSelected',None)
         __import__('source_modes').prepare_request(settings)
         media=Path(row['video']);stat=media.stat()
         settings['sourceVideoSnapshot']=dict(path=str(media),bytes=stat.st_size,mtimeNS=stat.st_mtime_ns)

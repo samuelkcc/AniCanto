@@ -33,7 +33,10 @@ def configure(cfg, meta, select_track, emit=None):
     requested = cfg.get('sourceWorkflow','auto') if cfg.get('interfaceMode') == 'expert' else 'auto'
     tracks = [s for s in meta.get('streams',[]) if subtitle_preference.is_text_stream(s)]
     explicit_ocr = requested == 'speech-ocr'
-    external = not explicit_ocr and bool(cfg.get('subtitle') and Path(cfg['subtitle']).is_file())
+    automatic=cfg.get('automaticSubtitleSelection') or {}
+    speech_only=automatic.get('revision')==__import__('subtitle_choice').AUTO_REVISION and automatic.get('speechOnly') is True
+    if speech_only:tracks=[]
+    external = not explicit_ocr and not speech_only and bool(cfg.get('subtitle') and Path(cfg['subtitle']).is_file())
     track = None
     if not explicit_ocr and not external:
         track = next((s for s in tracks if s['index'] == cfg.get('subtitleStream')),None) if cfg.get('batchExplicitStream') else select_track(tracks,cfg.get('subtitleLanguage'),cfg.get('subtitleTitle'),source_workflow.dub_language(cfg))
@@ -63,7 +66,8 @@ def configure(cfg, meta, select_track, emit=None):
         trackFamily=subtitle_preference.reason(track) if track else 'external-file' if external else None,
         trackPreferenceRevision=subtitle_preference.REVISION if track else None,
         selectedSubtitleLanguage=cfg.get('sourceCaptionLanguageSelected'),
-        subtitleLanguageChoice=cfg.get('subtitleLanguageSelection'))
+        subtitleLanguageChoice=cfg.get('subtitleLanguageSelection'),
+        automaticSubtitleSelection=automatic or None)
     reason = '僅以 OCR 讀取畫面字幕，忽略內置及外掛字幕' if explicit_ocr else '使用外掛字幕檔案' if external else ('使用內置字幕軌 '+str(track['index']) if track else '沒有可用文字字幕，使用語音，不自動啟用 OCR')
     cfg['sourceFlow']=dict(revision=REVISION,flow=effective,label=LABELS[effective],reason=reason,manual=requested!='auto',automatic=requested=='auto',track=track['index'] if track else None)
     if emit is not None:emit('來源流程',source_workflow._flow_message(cfg['sourceFlow']),sourceFlow=cfg['sourceFlow'])

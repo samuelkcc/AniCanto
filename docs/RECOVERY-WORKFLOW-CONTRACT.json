@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-126-mobile-introductions",
+    "revision": "application-user-guide-128-automatic-subtitle-language",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "2897f57a72dee55c5c9bc5c128a7e527ef0521b4729ba9e55f00114e3d9f65aa",
-    "controlGuideRevision": "workflow-controls-guide-50-ordered-review-recordings",
-    "controlGuideSHA256": "554afda738080682916c3c549d5533c8682a74d2c34395773ad36b12c7722491"
+    "sha256": "5fcdc13730cc46893da2fffa56ab0c071ac6a87f5080c4abe8c47c28c3d3f091",
+    "controlGuideRevision": "workflow-controls-guide-52-automatic-subtitle-language",
+    "controlGuideSHA256": "ff5c54c06c6166912c1919844b041da9f114e802b6f5077447f01f220e3cb72a"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",
@@ -65,9 +65,38 @@
         "en",
         "zh"
       ],
-      "uncertain": "Prompt for subtitle source and language independently of spoken-language auto-approval."
+      "uncertain": "Desktop automatic approval follows automaticCaptionLanguage20261103. With that switch off, retain the independent subtitle prompt. Mobile adoption is pending."
     },
     "legacy": "Freeze v1 and v2 jobs unchanged. Map removed OCR-first selection only for a new submission."
+  },
+  "automaticCaptionLanguage20261103": {
+    "revision": "automatic-caption-language-20261103",
+    "scope": "New desktop requests with autoApproveSourceLanguage true.",
+    "audio": "First audio track unless explicitly selected. Container default does not override.",
+    "subtitles": {
+      "yue": [
+        "zh"
+      ],
+      "zh": [
+        "zh"
+      ],
+      "en": [
+        "en",
+        "zh"
+      ],
+      "metadataFirst": true,
+      "unknownTextSample": {
+        "maxTracks": 3,
+        "maxSourceSeconds": 600,
+        "maxBytes": 65536,
+        "timeoutPerTrackSeconds": 8
+      },
+      "confirmedManualChoice": "Preserve.",
+      "noSuitableCaption": "Freeze speech-only fallback. No subtitle prompt or implicit OCR.",
+      "switchOff": "Retain prior subtitle confirmation."
+    },
+    "preservation": "Resume retains frozen sources, scripts, recordings, choices and spent budgets.",
+    "permissions": "WF-01/02/03/15/16/17 unchanged. No model call for text inspection."
   },
   "activeRequirements": [
     {

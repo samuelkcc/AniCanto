@@ -3,6 +3,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from public_source import selected
 class PrivateIPadBoundaryTests(unittest.TestCase):
+ def test_private_website_capture_audits_are_excluded(self):
+  self.assertFalse(selected('scripts/audit-website-interface-locales.py'))
  def test_private_app_and_nested_accidental_copies_are_excluded(self):
   for name in ['docs/IPAD-PRIVACY-POLICY.md','docs/IPAD-PRIVACY-POLICY.zh-HK.md','docs/IPAD-PRIVACY-POLICY.zh-CN.md','docs/IPAD-PRIVACY-POLICY.ja.md','mobile/AniCanto/VoiceRuntime.swift','ipad/Info.plist','iOS/App.swift','Sources/mobile/App.swift','tests/ipad/Private.swift','Resources/Private.xcodeproj/project.pbxproj','Sources/Private.xcarchive/Info.plist','docs/mobile/internal.md','Resources/device.mobileprovision','windows/private.ipa','Sources/iPadPurchase.swift','Sources/StoreKitRuntime.swift']:
    with self.subTest(name=name):self.assertFalse(selected(name))

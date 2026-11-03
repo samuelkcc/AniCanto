@@ -15,13 +15,14 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto-macOS-0.25.45.zip)** · **[Windows 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto.exe)**
+**[Mac 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto-macOS-0.25.46.zip)** · **[Windows 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.45-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.46-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.45 / build 305
+## Recent update · 0.25.46 / build 306
 
+- **Automatic source acceptance:** with Accept detected language on, use the first audio track unless explicitly changed, prefer Chinese captions for Cantonese/Mandarin, and inspect unlabelled subtitle text. When no suitable captions are found, continue from speech without a subtitle prompt or OCR. English output prefers English, then Chinese.
 - **Clearer Review report:** separate read-only system translation, saved edits, original and separated audio, protected first recording, model parameters, new takes and the final voice choice.
 - **Record one line:** save edited words, choose a voice model and parameters, then record with a visible progress indicator. Each take has its own Listen button.
 - **Keep the original take:** the first recording cannot be removed. Later unused takes can be removed; selected and exported recordings stay protected.

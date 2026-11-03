@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-126-mobile-introductions",
+  "revision": "application-user-guide-128-automatic-subtitle-language",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -1096,14 +1096,15 @@
           },
           "body": [
             {
-              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts.",
-              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。",
-              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。",
-              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。"
+              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts.",
+              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。",
+              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。",
+              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。"
             }
           ],
           "controlRefs": [
-            "sourceWorkflowDefaults"
+            "sourceWorkflowDefaults",
+            "autoApproveSourceLanguage"
           ],
           "steps": false
         },
@@ -1122,14 +1123,15 @@
           },
           "body": [
             {
-              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts.",
-              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。",
-              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。",
-              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。"
+              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts.",
+              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。",
+              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。",
+              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。"
             }
           ],
           "controlRefs": [
-            "sourceWorkflowDefaults"
+            "sourceWorkflowDefaults",
+            "autoApproveSourceLanguage"
           ],
           "steps": false
         },
@@ -1148,14 +1150,15 @@
           },
           "body": [
             {
-              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts.",
-              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。",
-              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。",
-              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。"
+              "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts.",
+              "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。",
+              "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。",
+              "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。"
             }
           ],
           "controlRefs": [
-            "sourceWorkflowDefaults"
+            "sourceWorkflowDefaults",
+            "autoApproveSourceLanguage"
           ],
           "steps": false
         },
@@ -3876,16 +3879,16 @@
           },
           "body": [
             {
-              "zh-HK": "首次準備預設使用 Qwen 3.5 4B（4-bit）與 CosyVoice，並準備必要的 Whisper 與 HTDemucs。先查看下載容量並確認，再逐組準備。已有任何一個已驗證文字模型便會沿用；刪除另一個不會在每次開啟時要求重新下載。",
-              "zh-CN": "首次准备默认使用 Qwen 3.5 4B（4-bit）与 CosyVoice，并准备必要的 Whisper 与 HTDemucs。先查看下载容量并确认，再逐组准备。已有任一经过验证的文字模型便会复用；删除另一个不会在每次启动时要求重新下载。",
-              "en": "Initial setup defaults to Qwen 3.5 4B, 4-bit, with CosyVoice, Whisper and HTDemucs. Review and approve downloads first. Setup reuses one verified text model. Removing the other text model does not cause another default-model download request at each launch.",
-              "ja": "初期設定の既定は Qwen 3.5 4B（4-bit）、CosyVoice、Whisper、HTDemucs です。容量を確認して承認すると順番に準備します。検証済みのテキストモデルが1つあれば再利用し、別のモデルを削除しても起動のたびに再ダウンロードを求めません。"
+              "en": "Initial setup defaults to Gemma 4 E4B with CosyVoice, Whisper and HTDemucs. Review and approve downloads first. Setup reuses one verified text model. Removing the other text model does not cause a default-model download request at each launch.",
+              "zh-HK": "首次準備預設使用 Gemma 4 E4B、CosyVoice、Whisper 及 HTDemucs。先查看下載容量並確認，再逐組準備。已有一個已驗證文字模型便會沿用；刪除另一個不會在每次開啟時要求重新下載。",
+              "zh-CN": "首次准备默认使用 Gemma 4 E4B、CosyVoice、Whisper 和 HTDemucs。先查看下载容量并确认，再逐组准备。已有一个经过验证的文字模型便会复用；删除另一个不会在每次启动时要求重新下载。",
+              "ja": "初期設定の既定は Gemma 4 E4B、CosyVoice、Whisper、HTDemucs です。容量を確認して承認すると順番に準備します。検証済みのテキストモデルが1つあれば再利用し、別のモデルを削除しても起動のたびに再ダウンロードを求めません。"
             },
             {
-              "zh-HK": "模型中心及文字模型選單會先顯示 Qwen，再顯示可選的 Gemma。現有可用選擇會保留；新工作的選擇已刪除時會使用剩下的已驗證模型。已保存工作仍使用原本的模型，欠缺時須補回該模型。GPT 模型仍須已安裝或匯入，不會自動下載。",
-              "zh-CN": "模型中心和文字模型菜单先显示 Qwen，再显示可选的 Gemma。保留现有可用选择；新任务的选择被删除时使用剩下的已验证模型。已保存任务仍使用原来的模型，缺失时须补回该模型。GPT 模型仍须已安装或导入，不会自动下载。",
-              "en": "Models and text-model menus list Qwen before optional Gemma. Keep an available saved preference. New jobs can use the remaining verified text model after the preferred model is removed. Saved jobs retain their original model and still require it. GPT requires an installed or imported package.",
-              "ja": "モデルセンターと選択メニューは Qwen、追加の Gemma の順に表示します。利用可能な既存の設定は保持します。選択済みモデルを削除した場合、新規ジョブは残る検証済みモデルを使えます。保存済みジョブは元のモデルが必要です。GPT は導入済みまたは読み込み済みパッケージが必要です。"
+              "en": "The model list keeps Qwen before Gemma. Gemma is the new-job default. This update changes an earlier Qwen preference to Gemma once. A later manual choice is retained. If only Qwen is verified, reuse it without requiring Gemma. Saved jobs retain their original model and still require it. GPT requires an installed or imported package.",
+              "zh-HK": "模型清單維持先列 Qwen，再列 Gemma；新工作預設使用 Gemma。此更新會將原有 Qwen 偏好改為 Gemma 一次，之後保留手動選擇。只有 Qwen 已驗證時會繼續使用 Qwen，毋須補回 Gemma。已保存工作沿用原本模型，欠缺時須補回。GPT 模型仍須已安裝或匯入。",
+              "zh-CN": "模型列表保持先列 Qwen，再列 Gemma；新任务默认使用 Gemma。此次更新会将原有 Qwen 偏好改为 Gemma 一次，之后保留手动选择。只有 Qwen 已验证时会继续使用 Qwen，无需补回 Gemma。已保存任务保留原模型，缺失时须补回。GPT 模型仍须已安装或导入。",
+              "ja": "一覧は Qwen、Gemma の順を維持します。新規ジョブの既定は Gemma です。この更新では以前の Qwen 設定を一度だけ Gemma に変更し、その後の手動選択は保持します。Qwen のみ検証済みなら Gemma を求めず再利用します。保存済みジョブは元のモデルが必要です。GPT は導入済みまたは読み込み済みパッケージが必要です。"
             },
             {
               "zh-HK": "Whisper 語音辨識支援日語、英文及其他支援語言，並非只供日語使用。Whisper 先將原聲辨識為文字及時間；所選文字模型或內置翻譯再處理翻譯。語言支援不代表各語言的辨識品質相同。",
@@ -3912,16 +3915,16 @@
           },
           "body": [
             {
-              "zh-HK": "首次準備預設使用 Qwen 3.5 4B（4-bit）與 CosyVoice，並準備必要的 Whisper 與 HTDemucs。先查看下載容量並確認，再逐組準備。已有任何一個已驗證文字模型便會沿用；刪除另一個不會在每次開啟時要求重新下載。",
-              "zh-CN": "首次准备默认使用 Qwen 3.5 4B（4-bit）与 CosyVoice，并准备必要的 Whisper 与 HTDemucs。先查看下载容量并确认，再逐组准备。已有任一经过验证的文字模型便会复用；删除另一个不会在每次启动时要求重新下载。",
-              "en": "Initial setup defaults to Qwen 3.5 4B, 4-bit, with CosyVoice, Whisper and HTDemucs. Review and approve downloads first. Setup reuses one verified text model. Removing the other text model does not cause another default-model download request at each launch.",
-              "ja": "初期設定の既定は Qwen 3.5 4B（4-bit）、CosyVoice、Whisper、HTDemucs です。容量を確認して承認すると順番に準備します。検証済みのテキストモデルが1つあれば再利用し、別のモデルを削除しても起動のたびに再ダウンロードを求めません。"
+              "en": "Initial setup defaults to Gemma 4 E4B with CosyVoice, Whisper and HTDemucs. Review and approve downloads first. Setup reuses one verified text model. Removing the other text model does not cause a default-model download request at each launch.",
+              "zh-HK": "首次準備預設使用 Gemma 4 E4B、CosyVoice、Whisper 及 HTDemucs。先查看下載容量並確認，再逐組準備。已有一個已驗證文字模型便會沿用；刪除另一個不會在每次開啟時要求重新下載。",
+              "zh-CN": "首次准备默认使用 Gemma 4 E4B、CosyVoice、Whisper 和 HTDemucs。先查看下载容量并确认，再逐组准备。已有一个经过验证的文字模型便会复用；删除另一个不会在每次启动时要求重新下载。",
+              "ja": "初期設定の既定は Gemma 4 E4B、CosyVoice、Whisper、HTDemucs です。容量を確認して承認すると順番に準備します。検証済みのテキストモデルが1つあれば再利用し、別のモデルを削除しても起動のたびに再ダウンロードを求めません。"
             },
             {
-              "zh-HK": "模型中心及文字模型選單會先顯示 Qwen，再顯示可選的 Gemma。現有可用選擇會保留；新工作的選擇已刪除時會使用剩下的已驗證模型。已保存工作仍使用原本的模型，欠缺時須補回該模型。GPT 模型仍須已安裝或匯入，不會自動下載。",
-              "zh-CN": "模型中心和文字模型菜单先显示 Qwen，再显示可选的 Gemma。保留现有可用选择；新任务的选择被删除时使用剩下的已验证模型。已保存任务仍使用原来的模型，缺失时须补回该模型。GPT 模型仍须已安装或导入，不会自动下载。",
-              "en": "Models and text-model menus list Qwen before optional Gemma. Keep an available saved preference. New jobs can use the remaining verified text model after the preferred model is removed. Saved jobs retain their original model and still require it. GPT requires an installed or imported package.",
-              "ja": "モデルセンターと選択メニューは Qwen、追加の Gemma の順に表示します。利用可能な既存の設定は保持します。選択済みモデルを削除した場合、新規ジョブは残る検証済みモデルを使えます。保存済みジョブは元のモデルが必要です。GPT は導入済みまたは読み込み済みパッケージが必要です。"
+              "en": "The model list keeps Qwen before Gemma. Gemma is the new-job default. This update changes an earlier Qwen preference to Gemma once. A later manual choice is retained. If only Qwen is verified, reuse it without requiring Gemma. Saved jobs retain their original model and still require it. GPT requires an installed or imported package.",
+              "zh-HK": "模型清單維持先列 Qwen，再列 Gemma；新工作預設使用 Gemma。此更新會將原有 Qwen 偏好改為 Gemma 一次，之後保留手動選擇。只有 Qwen 已驗證時會繼續使用 Qwen，毋須補回 Gemma。已保存工作沿用原本模型，欠缺時須補回。GPT 模型仍須已安裝或匯入。",
+              "zh-CN": "模型列表保持先列 Qwen，再列 Gemma；新任务默认使用 Gemma。此次更新会将原有 Qwen 偏好改为 Gemma 一次，之后保留手动选择。只有 Qwen 已验证时会继续使用 Qwen，无需补回 Gemma。已保存任务保留原模型，缺失时须补回。GPT 模型仍须已安装或导入。",
+              "ja": "一覧は Qwen、Gemma の順を維持します。新規ジョブの既定は Gemma です。この更新では以前の Qwen 設定を一度だけ Gemma に変更し、その後の手動選択は保持します。Qwen のみ検証済みなら Gemma を求めず再利用します。保存済みジョブは元のモデルが必要です。GPT は導入済みまたは読み込み済みパッケージが必要です。"
             },
             {
               "zh-HK": "Whisper 語音辨識支援日語、英文及其他支援語言，並非只供日語使用。Whisper 先將原聲辨識為文字及時間；所選文字模型或內置翻譯再處理翻譯。語言支援不代表各語言的辨識品質相同。",
@@ -5105,6 +5108,12 @@
               "zh-CN": "桌面示范由桌面版制作，不是此设备自动转换结果。示范提供原日语、粤语、普通话和英语切换按钮；一般成品使用播放器音轨和字幕菜单。示范不代表所有设备、模型或影片的结果。",
               "en": "The desktop demonstration was made on desktop, not automatically by this device. Its dedicated controls switch original Japanese, Cantonese, Mandarin and English. Normal outputs use the player’s audio and subtitle menus. The demonstration does not certify every device, model or movie.",
               "ja": "デスクトップデモはデスクトップ版で作成したもので、この端末で自動変換した結果ではありません。専用操作で日本語原音、広東語、普通話、英語を切り替えます。通常の出力は音声・字幕メニューを使います。結果は端末、モデル、動画で異なります。"
+            },
+            {
+              "en": "If the bundled demonstration is missing its library movie or subtitles, AniCanto restores the missing copies from verified bundled files. It keeps existing changed files. A demonstration error is named separately and does not stop other outputs from loading. Your source movie, saved conversion and recordings remain unchanged.",
+              "zh-HK": "內置示範在成品庫的影片或字幕遺失時，AniCanto 會從已驗證的隨附檔案補回缺少的副本，不會覆寫已修改的檔案。示範錯誤會獨立標示，不會阻止其他成品載入。原片、已保存轉換及錄音保持不變。",
+              "zh-CN": "内置示范在成品库的视频或字幕丢失时，AniCanto 会从已验证的随附文件补回缺失副本，不会覆盖已修改的文件。示范错误会单独标示，不会阻止其他成品加载。原片、已保存转换和录音保持不变。",
+              "ja": "内蔵デモの動画や字幕が出力ライブラリから失われた場合、検証済みの同梱ファイルから不足分だけを復元します。変更済みのファイルは上書きしません。デモのエラーは別に表示し、他の出力の読み込みを妨げません。元動画、保存済み変換、録音は保持します。"
             }
           ],
           "controlRefs": [],
