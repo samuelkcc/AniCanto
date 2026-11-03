@@ -1,7 +1,7 @@
 //! Emergency diagnostics must work without Python, models or the policy helper.
 use std::{fs,io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},time::{SystemTime,UNIX_EPOCH}};
 const LIMIT:u64=128*1024;
-fn redact(text:&str)->String {
+pub(crate) fn redact(text:&str)->String {
     text.lines().map(|line|{
         let lower=line.to_ascii_lowercase();
         if ["api_key","api-key","apikey","access_token","access-token","accesstoken","authorization","password","secret","\"token\"","ghp_","github_pat_","akia"].iter().any(|key|lower.contains(key)){

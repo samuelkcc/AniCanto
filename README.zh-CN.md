@@ -15,23 +15,20 @@
 
 ## 下载
 
-**[Mac 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto-macOS-0.25.44.zip)** · **[Windows 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto.exe)**
+**[Mac 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto-macOS-0.25.45.zip)** · **[Windows 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto.exe)**
 
-[版本说明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.44-beta) · [对应源码](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
+[版本说明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.45-beta) · [对应源码](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/available-source-materials.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 近期更新 · 0.25.44／304
+## 近期更新 · 0.25.45／305
 
-- **简化设置：**制作设置分成四个折叠分组，清楚区分共享默认与本片自定义；专家 AI 修复也采用分组。
-- **单一重置入口：**只在制作设置保留重置／重建，移除视频卡片上的重复按钮。
-- **来源播放：**兼容文件直接打开；其他编码使用有界限的预览分段。播放前可读取音轨与字幕选项。
-- **四种来源流程：**自动检测、字幕优先、语音优先、语音／OCR；语音负责配音时间。
-- **可选字幕过滤：**「仅配对白」默认关闭，开启后比较独立语音识别与字幕意思。
-- **空间与修复：**提供存储检查、缓存清理及目录修复，并改善重新部署与临时文件写入。
+- **更清晰的校对报告：**分别显示只读系统翻译、已保存修改、原声及分离声音、受保护的首次录音、模型参数、新录音与最终选择。
+- **单句重新录音：**保存修改后，选择语音模型及参数，再重新录音；处理期间有进度提示，每段录音都有独立试听按钮。
+- **保留首次录音：**首次录音不可移除。后续未使用的录音可移除，已选择和已输出的录音仍受保护。
+- **重新输出：**保存录音选择后，按报告顶部按钮制作新成片，保留先前输出。
+- **局域网诊断：**默认关闭。在欢迎页使用手册的最后一章按开关，即可显示设备 IP、自动端口和登录码；只读网页每三秒更新设置与日志。请使用可信任的专用网络，HTTP 不加密。
 
-Mac 启动、安装包身份与签名通过检查。Windows 安装包通过结构检查，本版本仍待实机运行。整片转换与试听验收尚未完成。
-
-[下载](#download) · [功能](#应用可以做什么) · [处理流程](#从视频到另一种声音) · [界面图](#新版界面) · [技术支持](SUPPORT.zh-CN.md) · [支持项目](#让更多人认识粤语) · [演示视频](#下载测试原片听配音成品作比较)
+本次版本的 Windows 实机执行、整片推理和听感验收仍待验证；安装包检查和隔离界面测试属于不同证据。
 
 ## 为什么会有 AniCanto
 

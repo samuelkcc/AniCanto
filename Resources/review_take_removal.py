@@ -55,19 +55,30 @@ def protected(snapshot,draft,line,language):
             if record.get('index') in (None,line) and record.get('language') in (None,language)}
 
 
+def first_recordings(snapshot):
+    """Keep the earliest known initial recording for each line and language."""
+    groups={}
+    rows=list(snapshot.get('recordingCandidates') or [])
+    rows += [dict(r,path=r.get('audio')) for r in snapshot.get('takes') or []]
+    for row in rows:
+        if row.get('path'):
+            groups.setdefault((row.get('index'),row.get('language') or 'yue'),[]).append(row)
+    for key,rows in groups.items():
+        yield min(rows,key=lambda r:(float(r.get('created') or float('inf')),0 if r.get('kind')=='first' else 1))
+
+
 def protection(snapshot,draft):
     """The whole protection rule, in one place, for the guard and the report.
 
-    Only these four links protect a recording: the audio in the current export,
-    a saved review choice, a take inside a completed version, and the recording
-    link on the dialogue segment. A recording with none of them is removable,
-    including the first generated take. Paths are resolve-normalised so the
-    report and this guard always compare the same spelling.
+    Keep the first generated recording, plus all delivered and saved links.
+    Paths use the same resolved spelling as the report.
     """
     kept={}
     def add(path,reason,index=None,language=None):
         if not isinstance(path,str) or not path:return
         kept.setdefault(str(Path(path).resolve()),dict(reason=reason,index=index,language=language))
+    for row in first_recordings(snapshot):
+        add(row['path'],'first generated recording',row.get('index'),row.get('language') or 'yue')
     for row in snapshot.get('reportRows') or []:
         add(row.get('selectedAudio'),'current export',row.get('index'),row.get('language') or 'yue')
         add(row.get('audio'),'current export',row.get('index'),row.get('language') or 'yue')
@@ -77,7 +88,9 @@ def protection(snapshot,draft):
     for segment in (draft or {}).get('segments') or []:
         add(segment.get('audioTake'),'recording saved on this line')
         for decision in (segment.get('reviewDecisions') or {}).values():
-            if isinstance(decision,dict):add(decision.get('audio'),'saved review choice')
+            if isinstance(decision,dict):
+                add(decision.get('audio'),'saved review choice')
+                add(decision.get('sourceAudio'),'saved review choice')
     return kept
 
 
@@ -93,7 +106,7 @@ def remove(root,snapshot,draft,index,language,engine,path,confirm=False):
     if target.is_relative_to(root/DISCARDED):raise ValueError('This recording is already in the discarded-recordings folder.')
     candidates=listed(snapshot,line,language)
     if str(target) not in candidates:raise ValueError('This recording is not listed on this line. Refresh the review report.')
-    if str(target) in protected(snapshot,draft,line,language):raise ValueError('This recording is used by the current export or a saved choice.')
+    if str(target) in protected(snapshot,draft,line,language):raise ValueError('This recording is protected: first generated recording, current export or a saved choice.')
     if not target.is_relative_to(root) or target.suffix.lower()!='.wav' or not target.is_file():raise ValueError('The recording does not belong to this project.')
     digest=hashlib.sha256(target.read_bytes()).hexdigest()
     ident=uuid.uuid4().hex;folder=root/DISCARDED/ident;folder.mkdir(parents=True)

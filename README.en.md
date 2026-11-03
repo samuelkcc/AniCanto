@@ -15,22 +15,20 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto-macOS-0.25.44.zip)** · **[Windows 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto.exe)**
+**[Mac 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto-macOS-0.25.45.zip)** · **[Windows 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.44-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.45-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.44 / build 304
+## Recent update · 0.25.45 / build 305
 
-- **Simpler controls:** four closed Production groups, named settings scopes, compact Expert AI repair and one **Reset / rebuild** entry.
-- **Source playback:** compatible files open directly. Other codecs use bounded preview segments. Audio and subtitle choices load before playback.
-- **Four source modes:** Automatic detection, Subtitle first, Speech first and Speech / OCR. Speech supplies dubbing timing.
-- **Optional caption filter:** **Dub dialogue only** compares independent speech meaning with captions. It defaults off.
-- **Storage and recovery:** inspect storage, clear temporary files and repair application folders. Runtime redeployment and temporary writes are safer.
+- **Clearer Review report:** separate read-only system translation, saved edits, original and separated audio, protected first recording, model parameters, new takes and the final voice choice.
+- **Record one line:** save edited words, choose a voice model and parameters, then record with a visible progress indicator. Each take has its own Listen button.
+- **Keep the original take:** the first recording cannot be removed. Later unused takes can be removed; selected and exported recordings stay protected.
+- **Export again:** save the recording choice, then create a new output from the button at the top. Earlier outputs remain available.
+- **LAN diagnostics:** off by default. One switch in Welcome → Help centre → LAN diagnostics displays the device IP, automatic port and access code. A read-only browser view refreshes settings and logs every three seconds. Use a trusted private network; HTTP is not encrypted.
 
-Mac startup, package identity and signatures pass. The Windows payload passes structural checks; this build has not run on Windows. Whole-film and listening acceptance remain open.
-
-[Download](#download) · [Features](#what-the-app-does) · [Workflow](#from-video-to-a-new-voice) · [Screenshots](#inside-the-current-app) · [Technical support](SUPPORT.md) · [Support the project](#help-more-people-discover-cantonese) · [Demo](#try-the-original-demo-and-compare-the-voices)
+Windows execution, whole-film inference and listening acceptance for this release remain unverified. Package checks and isolated interface tests are separate evidence.
 
 ## Why AniCanto exists
 

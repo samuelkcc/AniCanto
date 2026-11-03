@@ -2,10 +2,11 @@
 use std::{collections::HashSet, fs::{File,OpenOptions}, io::{BufRead,BufReader,Write}, path::PathBuf,
     process::{Child,Command,Stdio}, sync::{Arc,Mutex,atomic::{AtomicBool,Ordering}}, time::Instant};
 use serde_json::{json,Value};
-use tauri::{Emitter,Manager,State};
+use tauri::{Emitter,Listener,Manager,State};
 use fs2::FileExt;
 mod appearance;
 mod support_export;
+mod lan_debug;
 mod runtime_probe;
 mod preview_stream;
 mod task_lifecycle;
@@ -699,6 +700,10 @@ async fn studio_open_project()->Result<(),String>{
     #[cfg(not(any(target_os="macos",windows)))] let mut cmd=Command::new("xdg-open");
     cmd.arg(URL).spawn().map_err(|e|e.to_string())?;Ok(())
 }
+#[tauri::command]
+async fn studio_diagnostics(action:String,address:Option<String>,port:Option<u16>,service:State<'_,lan_debug::Service>,host:State<'_,Arc<Host>>)->Result<Value,String>{
+ match action.as_str(){"status"=>Ok(service.status()),"stop"=>{service.stop();Ok(service.status())},"start"=>service.start(host.root.clone(),address.as_deref().unwrap_or("0.0.0.0"),port.unwrap_or(8765)),_=>Err("Unknown diagnostic action".into())}
+}
 fn main(){
     let host=match Host::discover(){Ok(h)=>Arc::new(h),Err(error)=>{rfd::MessageDialog::new().set_title("AniCanto").set_description(&error).show();return}};
     // Headless verification exercises the exact same allowlist and dispatch as
@@ -715,8 +720,10 @@ fn main(){
         let result=host.rpc("state",json!({})).and_then(|state|host.rpc("models",json!({})).map(|models|json!({"ok":true,"state":state,"installedModels":models,"sharedResources":host.shared,"adapter":host.backend,"interfaceManifest":serde_json::from_str::<Value>(include_str!("../../web/assets/interface-manifest.json")).unwrap()})));
         match result{Ok(value)=>println!("{value}"),Err(error)=>{eprintln!("{error}");std::process::exit(1)}}return;
     }
-    tauri::Builder::default().manage(host).manage(TaskLifecycle::default()).manage(QueueControl::default()).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
+    tauri::Builder::default().manage(host).manage(lan_debug::Service::default()).manage(TaskLifecycle::default()).manage(QueueControl::default()).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
         .setup(|app|{
+            let log_root=app.state::<Arc<Host>>().root.clone();
+            app.listen("studio-log",move |event|{let folder=log_root.join("logs");let _=std::fs::create_dir_all(&folder);let path=folder.join("native-host.log");if path.metadata().is_ok_and(|m|m.len()>2*1024*1024){let _=std::fs::rename(&path,folder.join("native-host.previous.log"));}if let Ok(mut file)=OpenOptions::new().create(true).append(true).open(path){let _=writeln!(file,"{} {}",std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs(),support_export::redact(event.payload()));}});
             let preference=appearance::saved(&app.state::<Arc<Host>>().root);
             let window=tauri::WebviewWindowBuilder::from_config(app.handle(),&app.config().app.windows[0])?
                 .visible(false).theme(appearance::theme(&preference))
@@ -746,10 +753,10 @@ fn main(){
             }
             #[cfg(not(windows))] let _=(webview,payload);
         })
-        .invoke_handler(tauri::generate_handler![studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_stop_stream,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
+        .invoke_handler(tauri::generate_handler![studio_diagnostics,studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_stop_stream,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
             let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
-            else {preview_stream::stop_all();#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}
+            else {window.state::<lan_debug::Service>().stop();preview_stream::stop_all();#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}
         }})
         .run(tauri::generate_context!()).expect("AniCanto desktop could not start");
 }

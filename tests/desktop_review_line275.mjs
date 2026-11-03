@@ -19,8 +19,8 @@ const render=(snapshot,over={})=>reviewPage({snapshot,t:s=>translate(s,'en'),lan
 // One card per audio track offers the words box, the engine menu and a single-line retake.
 {
  const html=render(base());
- assert.match(html,/<textarea data-review-words="0" rows="2"\s*>/);
- assert.match(html,/<select data-review-engine="0">/);
+ assert.match(html,/<textarea data-review-words="0" rows="3"\s*>/);
+ assert.match(html,/<select data-review-engine="0"\s*>/);
  for(const [id] of engines)assert(html.includes(`value="${id}"`),id);
  for(const action of ['review-save-words','review-retake-now','review-choice']){
   const rows=tags(html,action);
@@ -34,7 +34,7 @@ const render=(snapshot,over={})=>reviewPage({snapshot,t:s=>translate(s,'en'),lan
 {
  const rows=tags(render(base()),'review-remove-take');
  const used=rows.filter(tag=>tag.includes('data-path="/job/takes/first.wav"'));
- assert(used.length,rows.join(' | '));
+ assert.equal(used.length,0,'First recordings have no Remove control');
  assert(used.every(tag=>tag.includes('disabled')&&!tag.includes('data-index')),used.join(' | '));
  const spare=rows.filter(tag=>tag.includes('data-path="/job/history/failed.wav"'));
  assert(spare.length&&spare.every(tag=>tag.includes('data-index="0"')&&!tag.includes('disabled')),rows.join(' | '));
@@ -47,17 +47,17 @@ const render=(snapshot,over={})=>reviewPage({snapshot,t:s=>translate(s,'en'),lan
  const snapshot=base();snapshot.removedTakes=[{path:'/job/history/failed.wav'}];
  const hidden=render(snapshot);
  assert(!hidden.includes('/job/history/failed.wav'),hidden.slice(0,200));
- assert(tags(hidden,'review-remove-take').length,hidden.slice(0,200));
+ assert.equal(tags(hidden,'review-remove-take').length,0,'Only the protected first recording remains');
  const busy=render(base(),{active:true});
- assert.match(busy,/<textarea data-review-words="0" rows="2" disabled>/);
- assert.match(busy,/<select data-review-engine="0">/);
+ assert.match(busy,/<textarea data-review-words="0" rows="3" disabled>/);
+ assert.match(busy,/<select data-review-engine="0" disabled>/);
  for(const action of ['review-save-words','review-retake-now'])for(const tag of tags(busy,action))assert(tag.includes('disabled'),`${action}: ${tag}`);
  for(const tag of tags(busy,'review-remove-take'))assert(tag.includes('disabled'),tag);
 }
 // One installed engine offers no engine menu; every interface language renders clean copy.
 {
  const single=render(base(),{engineOptions:[['drama3','Drama3']]});
- assert(!single.includes('data-review-engine='),single.slice(0,200));
+ assert(single.includes('data-review-engine='),'The model control stays visible with one engine');
  const copies=['Dubbing words for this line','Voice engine for a new recording','Save words','Remove this recording','Words saved. Generate a new take to record them.','Recording removed. It stays in the discarded-recordings folder.'];
  for(const language of ['en','zh-HK','zh-CN','ja']){
   const localized=reviewPage({snapshot:base(),t:s=>translate(s,language),language,button:(a,label,ico,klass,attrs)=>translated(t2=>translate(t2,language),a,label,ico,klass,attrs),engineName:e=>e,active:false,sourceLanguage:'ja',filter:'all',engineOptions:engines});

@@ -20,7 +20,7 @@ class ReviewTakeRemoval275(unittest.TestCase):
  # A report projection with one listed candidate, written by hand so each guard is tested alone.
  def listed(self,*paths):
   return dict(review=dict(config=dict(dubLanguages=['yue'],selectedEngines=['drama3'])),takes=[],history=[],issues=[],resolvedIssues=[],reportRows=[],
-              recordingCandidates=[dict(path=str(p),index=1,engine='drama3',language='yue',kind='first') for p in paths])
+              recordingCandidates=[dict(path=str(self.first),index=1,engine='drama3',language='yue',kind='first',created=1)]+[dict(path=str(p),index=1,engine='drama3',language='yue',kind='generated',created=2) for p in paths if p!=self.first])
 
  def test_removed_recording_moves_with_manifest_and_stays_hidden(self):
   record=remove(self.root,self.snapshot(),{},0,'yue','drama3',str(self.retry),True)
@@ -35,6 +35,11 @@ class ReviewTakeRemoval275(unittest.TestCase):
   self.assertIn(str(self.first.resolve()),[x['path'] for x in after['recordingCandidates']])
   self.assertEqual([x['path'] for x in after['removedTakes']],[str(self.retry.resolve())])
   self.assertEqual(len(blocks(self.root)),1)
+
+ def test_first_generated_recording_is_protected_without_an_export(self):
+  with self.assertRaisesRegex(ValueError,'first generated recording'):
+   remove(self.root,self.snapshot(),{},0,'yue','drama3',str(self.first),True)
+  self.assertTrue(self.first.is_file())
 
  def test_line_one_uses_the_same_zero_based_position_as_the_report(self):
   self.assertEqual(remove(self.root,self.snapshot(),{},0,'yue','drama3',str(self.retry),True)['index'],1)

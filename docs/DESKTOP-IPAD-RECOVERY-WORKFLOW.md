@@ -14,7 +14,7 @@ The internal shared authority remains the source. This public projection does no
 | WF-05 | Inspection and mutation are distinct permissions. Review alone reports findings; a separate enabled repair control authorizes recording changes. |
 | WF-06 | Content repair does not enable timing repair. Timing repair does not enable global content or visual review. |
 | WF-07 | Freeze finite per-stage counts and whole-job time limits. Reserve before inference. Resume never refunds spent budgets. |
-| WF-08 | Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission. |
+| WF-08 | Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission. Low available memory grants no fallback permission. |
 | WF-09 | Attempt final output with saved valid work and report genuine missing target dubs. Storage, source, or encode failure stays an explicit error. |
 | WF-10 | New jobs use four source modes. Automatic selects Subtitle first with readable authored text, otherwise Speech first. Speech / OCR is explicit and ignores authored tracks/files. Speech supplies dubbing clocks. Speech-first drafts receive later same-turn caption proofreading. |
 | WF-11 | Preserve OP/ED and nonverbal performances. A subtitle gap does not authorize new translated dialogue or prove silence. |

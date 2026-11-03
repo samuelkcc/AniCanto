@@ -707,6 +707,11 @@ class Studio:
             if preview:
                 if p['segment'] not in {r['id'] for r in draft['segments']}:raise ValueError('Unknown dialogue.')
                 draft.update(previewSegment=p['segment'],previewEngine=p.get('engine') or self.store.settings['ttsBackend'],previewLanguage=p.get('language','yue'))
+                from voice_parameters import effective,keys as parameter_keys
+                parameters=p.get('voiceParameters') or {}
+                if not isinstance(parameters,dict) or set(parameters)-parameter_keys():raise ValueError('Invalid line voice parameters.')
+                draft['settings'].update(effective(dict(draft['settings'],**parameters),draft['previewEngine']))
+
             request_dir=self.root/'requests';request_dir.mkdir(exist_ok=True)
             submission=request_dir/('studio-edit-'+uuid.uuid4().hex+'.json');write(submission,draft)
             config={**draft['settings'],**self.tools(),'storage':str(self.root),'submission':str(submission)}

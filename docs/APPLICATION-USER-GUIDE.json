@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-114-cache-controls",
+  "revision": "application-user-guide-126-mobile-introductions",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -344,6 +344,76 @@
               "zh-HK": "桌面歡迎頁採用與 iPad 相近的排版。寬視窗的主題色位於助手下方，與「進入工作室」按鈕並排；語言選單位於右上方。模式卡片採用斜邊設計。窄視窗會改為上下排列，並可捲動。助手保留五官。",
               "zh-CN": "桌面欢迎页采用与 iPad 相近的布局。宽窗口的主题色位于助手下方，与“进入工作室”按钮并排；语言菜单位于右上方。模式卡片采用斜边设计。窄窗口改为上下排列，并可滚动。助手保留五官。",
               "ja": "デスクトップのようこそ画面は iPad と同様の配置です。広いウィンドウでは助手の下のテーマ色と「スタジオに入る」ボタンが同じ行に並びます。言語は右上、モードカードは斜めの辺を使います。狭い画面では縦に並び、スクロールできます。助手の顔はそのまま保持します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-source-preparation-progress-305",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Source audio preparation and progress",
+            "zh-HK": "原聲準備與進度",
+            "zh-CN": "原声准备与进度",
+            "ja": "原音声の準備と進捗"
+          },
+          "body": [
+            {
+              "en": "During source preparation, This step shows measured preparation or speech-window progress. A spinner means the current operation has no reliable percentage yet. It is not an overall completion estimate. The saved overall progress and elapsed processing time keep their existing meaning.",
+              "zh-HK": "準備原聲時，「本步驟」顯示實際準備或語音分段進度。暫未能取得可靠百分比時會顯示轉動圖示，這並非整體完成比例或剩餘時間估算。已保存的整體進度及累計處理時間維持原有意思。",
+              "zh-CN": "准备原声时，“本步骤”显示实际准备或语音分段进度。暂时无法取得可靠百分比时显示转动图标，这不是整体完成比例或剩余时间估算。已保存的整体进度和累计处理时间保持原有含义。",
+              "ja": "原音声の準備中は「この段階」に準備または音声区間処理の実測進捗を表示します。信頼できる割合がない間は回転表示になります。全体の完了率や残り時間の予測ではありません。保存済みの全体進捗と累積処理時間の意味は変わりません。"
+            },
+            {
+              "en": "The whole-source cache is optional. It uses unpaced decoding only, with at most90seconds of VLC waiting. If it cannot pass verification, conversion uses bounded source windows. Resume reuses saved windows and does not rebuild the complete source cache. Failed optional cache creation is not repeated for the same job.",
+              "zh-HK": "完整原聲快取只屬可選的加速步驟，只使用非實時解碼，VLC 等待上限為 90 秒。未能通過驗證時，轉換會改用有限長度的原聲分段；續跑會沿用已保存分段，不會重新建立整條影片的快取。同一工作不會重複失敗的快取準備。",
+              "zh-CN": "完整原声缓存只是可选的加速步骤，只使用非实时解码，VLC 等待上限为 90 秒。未能通过验证时，转换改用有限长度的原声分段；继续处理会复用已保存分段，不会重新生成整段视频的缓存。同一任务不会重复失败的缓存准备。",
+              "ja": "全原音声キャッシュは任意の高速化処理です。実時間再生に依存しない復号だけを使い、VLC の待機上限は90秒です。検証できない場合は長さを制限した原音声区間を使います。再開時は保存済み区間を再利用し、全体のキャッシュを作り直しません。同じ処理で失敗したキャッシュ作成を繰り返しません。"
+            },
+            {
+              "en": "A verified audio-free video tail is different from incomplete decoding. Supported continuous AAC packet clocks can bound the final unsaved speech window. Saved windows and spent recognition attempts remain. Unknown audio gaps never become evidence of silence or wrong speech.",
+              "zh-HK": "影片末段經封包驗證沒有音訊，與解碼不完整是兩回事。支援的連續 AAC 聲音封包時間可限定最後一個未保存語音分段的範圍，已保存分段及已使用的辨識次數會保留。未確認的音訊缺段不會當作靜音或錯誤對白的證據。",
+              "zh-CN": "视频末段经数据包验证没有音频，与解码不完整是两回事。支持的连续 AAC 音频包时间可限定最后一个未保存语音分段的范围，已保存分段和已使用的识别次数会保留。未确认的音频缺段不会视为静音或错误对白的证据。",
+              "ja": "パケットで音声がないと確認した映像末尾と、復号不足は区別します。対応する連続 AAC パケット時刻で最後の未保存音声区間を制限できます。保存済み区間と消費済み認識回数は保持します。不明な音声欠落を無音や誤発話の証拠にはしません。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-actual-video-range",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Actual video length",
+            "zh-HK": "實際影片長度",
+            "zh-CN": "实际视频长度",
+            "ja": "実際の映像の長さ"
+          },
+          "body": [
+            {
+              "en": "For supported MKV and WebM files, new imports use the end of the video track. Subtitles that end later do not extend the video. The app checks a new conversion range before speech recognition, translation and dubbing. Existing jobs keep their saved range and recordings. An export failure does not require a new conversion.",
+              "zh-HK": "對於支援的 MKV 及 WebM 檔案，新匯入影片以影像軌道的結束時間為準。較晚結束的字幕不會延長影片。應用程式在語音辨識、翻譯及配音之前檢查新工作的轉換範圍。現有工作保留已儲存的範圍及錄音。輸出失敗不代表需要重新轉換。",
+              "zh-CN": "对于支持的 MKV 和 WebM 文件，新导入视频以影像轨道的结束时间为准。较晚结束的字幕不会延长视频。应用在语音识别、翻译和配音之前检查新任务的转换范围。现有任务保留已保存的范围和录音。导出失败不代表需要重新转换。",
+              "ja": "対応する MKV と WebM の新規読み込みでは、映像トラックの終了時刻を使用します。字幕の終了が遅くても映像は延長しません。新しい変換範囲は音声認識・翻訳・吹き替えの前に確認します。既存の作業は保存済みの範囲と録音を保持します。書き出しの失敗だけで最初から変換する必要はありません。"
+            },
+            {
+              "en": "Continue checks the saved range before recognition, translation or dubbing. A rejected range stays blocked. Previous scripts, recordings and spent allowances remain. The app does not silently shorten the range or extend the last frame.",
+              "zh-HK": "繼續工作時，會在辨識、翻譯或配音前檢查已保存的範圍。範圍未通過檢查便不會開始模型處理；原有譯稿、錄音及已用次數保留，不會自動縮短範圍或延長最後畫面。",
+              "zh-CN": "继续任务时，会在识别、翻译或配音前检查已保存的范围。范围未通过检查便不会开始模型处理；原有译稿、录音和已用次数保留，不会自动缩短范围或延长最后画面。",
+              "ja": "再開時も認識・翻訳・吹き替えの前に保存済み範囲を確認します。不正な範囲ではモデル処理を開始せず、原稿・録音・使用済み枠を保持します。範囲の短縮や最終フレームの延長は自動では行いません。"
+            },
+            {
+              "en": "A new whole-video conversion checks the video track again, including after Reset or Restart. You do not need to import an old entry again to update its length. An explicit partial range stays unchanged or is rejected if it exceeds the video. Continue keeps the saved job range, scripts, recordings and spent allowances.",
+              "zh-HK": "開始新的全片轉換時，包括重設或重新開始後，應用程式會重新檢查影像軌道，無須重新匯入舊條目來更新片長。手動設定的部分範圍保持不變；如超出影片便不會開始。繼續現有工作則保留已保存的範圍、譯稿、錄音及已用次數。",
+              "zh-CN": "开始新的全片转换时，包括重置或重新开始后，应用会重新检查影像轨道，无须重新导入旧条目来更新片长。手动设置的部分范围保持不变；如超出视频便不会开始。继续现有任务则保留已保存的范围、译稿、录音和已用次数。",
+              "ja": "リセットや最初から開始を含め、新しい全編変換では映像トラックを再確認します。古い項目の長さを更新するための再読み込みは不要です。指定した部分範囲は変更せず、映像を超える場合は開始しません。再開では保存済みの範囲、原稿、録音、使用済み枠を保持します。"
             }
           ],
           "controlRefs": [],
@@ -2575,28 +2645,10 @@
           },
           "body": [
             {
-              "en": "The review report holds the words for each voice track. Edit the text and select Save words. Saving changes only the script for that line. No recording starts, and the audio in the current export does not change. Select Generate a new take for this line to record the new words. When two or more voice engines are deployed, choose the engine first.",
-              "zh-HK": "校對報告的每條聲道都有配音稿。修改文字後按「儲存台詞」，系統只會更新此行的配音稿；不會開始錄音，現正成品所使用的聲音亦不會改變。按「為呢句重新生成錄音」，系統才會按新稿錄音。當有兩個或以上已部署的配音引擎時，請先選擇引擎。",
-              "zh-CN": "校对报告每条声道都有配音稿。修改文字后点击“保存台词”，只更改此行的稿。不会开始录音，当前成片使用的声音也不变。点击“为此行生成新录音”才会按新稿录音。有两个或以上配音引擎时，先选择引擎。",
-              "ja": "校正レポートの各音声トラックに台詞欄があります。編集して「台詞を保存」を押すと、その行の原稿だけが変わります。録音は始まらず、現在の出力の音声も変わりません。「この行の新しいテイクを生成」で新しい台詞を録音します。エンジンが2つ以上の場合は先に選んでください。"
-            },
-            {
-              "en": "The Remove button on a recording is off until processing stops. It also stays off for audio that the current export uses or that you selected before. Remove moves one unused WAV into the discarded-recordings folder of the video. The file stays there with a record file, and the report stops listing it. Exports, saved choices, review status and repair allowance do not change.",
-              "zh-HK": "錄音項目旁的「移除呢段錄音」按鈕在處理停止前會停用；現正成品所使用的錄音，以及你之前已選擇的錄音，均不能移除。移除動作會把一段未使用的 WAV 移到這條影片的「已移除錄音」(discarded-recordings) 資料夾，並與記錄檔一同保存；校對報告不會再列出該錄音。成品、已儲存的選擇、校對狀態與自動修復次數不會改變。",
-              "zh-CN": "录音项旁的“移除此录音”在处理停止前会禁用；当前成片采用或你之前选过的录音也不能移除。移除会把一段未使用的 WAV 移入此视频的已移除录音 (discarded-recordings) 文件夹，连同记录文件一起保存，校对报告不再列出该录音。成片、已保存选择、校对状态与修复次数不变。",
-              "ja": "録音の横の「この録音を削除」は処理が止まるまで使えません。現在の出力で使用済みや、以前選んだ録音も削除できません。未使用の WAV をこの動画の削除済み録音 (discarded-recordings) フォルダへ移動し、記録ファイルと一緒に残ります。校正レポートには表示されません。出力、保存済みの選択、確認状態、修復回数は変わりません。"
-            },
-            {
-              "en": "The new take uses the same separated source voice and the same recording seed as the earlier takes of that line, so only the words change and the voice keeps its character. The report shows one warning when a saved recording used a different separated voice.",
-              "zh-HK": "新錄音會沿用此行之前各段錄音嘅分離原聲同錄音種子，所以只會改動台詞，聲線特色保持不變。如某段已保存錄音用咗唔同嘅分離原聲，校對報告會顯示一個提示。",
-              "zh-CN": "新录音沿用该行此前各段录音的分离原声与录音种子，因此只改动台词，声音特色保持不变。若某段已保存录音用了不同的分离原声，校对报告会显示一条提示。",
-              "ja": "新しいテイクはその行の以前のテイクと同じ分離元音声と同じ録音シードを使うため、台詞だけが変わり、声質はそのままです。保存済み録音が別の分離元音声を使った場合、レポートに警告が1件表示されます。"
-            },
-            {
-              "en": "Each saved recording of the line shows once in the list, oldest first. One mark shows the recording the current export uses, or a choice you saved before a new export. Select Listen on that row to hear it, and use the menu under the card to pick the recording for the next export. No second block repeats a recording that is already in the list. When the export uses the original source voice instead, one short line states that and offers Listen for it.",
-              "zh-HK": "此行每一段已保存嘅錄音喺清單入面只會顯示一次，按錄音時間排列。其中一個標記顯示現正成品使用嘅錄音，或者你喺新成品之前已儲存嘅選擇。按該行嘅「試聽」就可以收聽，並用卡片下方嘅選單決定下一次成品使用邊段錄音。清單以外唔會有第二個區塊重複顯示同一錄音。如現正成品使用原片聲音，會有一行簡短說明，並提供該聲音嘅試聽。",
-              "zh-CN": "该行每段已保存的录音在列表中只显示一次，按录音时间排列。其中一个标记显示当前成片采用的录音，或你在新生成之前已保存的选择。点该行的“试听”即可收听，并用卡片下方的菜单决定下一次成片用哪段录音。列表外不会有第二个区块重复显示同一录音。若当前成片采用原片声音，会有一行简短说明并提供该声音的试听。",
-              "ja": "この行の保存済み録音はリストに1回だけ表示し、古い順に並べます。現在の出力が使う録音、または新しい出力前に保存した選択にマークを1つ付けます。各行の「試聴」で再生でき、カード下のメニューで次の出力に使う録音を選びます。リストの外に同じ録音を繰り返すブロックはありません。現在の出力が元の音声を使う場合は、短い説明が1行表示され、その試聴も使えます。"
+              "en": "Manual retakes keep the source reference and recording seed. Model parameters can change the generated result. Existing recordings stay unchanged.",
+              "zh-HK": "手動重錄會保留原聲參考及錄音種子。模型參數可能改變生成結果，現有錄音保持不變。",
+              "zh-CN": "手动重录会保留原声参考及录音种子。模型参数可能改变生成结果，现有录音保持不变。",
+              "ja": "手動の再録音は元の参照音声とシードを保持します。モデル設定によって生成結果は変わる場合があります。既存の録音は保持します。"
             }
           ],
           "controlRefs": [
@@ -2626,10 +2678,10 @@
               "ja": "レポートの上部に3つの件数があります。吹き替え要対応、確認推奨、録音済みです。名称を選ぶと、その行だけが表示されます。「台詞を検索」に単語または行番号を入れると、結果をさらに絞れます。1ページは25行です。残りは「前へ」と「次へ」で読みます。"
             },
             {
-              "en": "One card is one dialogue line. The recordings in step 3 follow one order, and the first generated recording stays first. The app marks the recording that the current export uses. Remove stays off for that recording, for a recording you already selected, for a recording inside a finished version, and for the recording the script still points at. Any other unused recording can move to the discarded-recordings folder.",
-              "zh-HK": "一張卡片等於一句對白。第 3 步嘅錄音跟一個次序排列，首次生成嘅錄音會排喺最前。程式會標明目前成品採用嘅錄音。以下錄音嘅「移除呢段錄音」會停用：目前成品採用、你已經選擇、已收錄喺完成版本，同埋配音稿仍然指向嘅錄音。其餘未使用嘅錄音可以移入「已移除錄音」(discarded-recordings) 資料夾。",
-              "zh-CN": "一张卡片对应一行对白。第 3 步的录音按同一顺序排列，首次生成的录音排在最前。程序会标明当前成片采用的录音。以下录音的“移除此录音”会禁用：当前成片采用、你已选择、已收录在完成版本，以及配音稿仍指向的录音。其余未使用的录音可移入“已移除录音”(discarded-recordings) 文件夹。",
-              "ja": "カード1枚が台詞1行です。3番の録音は同じ順序で並び、最初に生成した録音が一番前です。現在の出力で使う録音には印を付けます。次の録音は「この録音を削除」を使えません。現在の出力で使用中、既に選択済み、完成版に収録済み、台詞欄が指している録音です。他の未使用の録音は削除済み録音 (discarded-recordings) フォルダーへ移動できます。"
+              "en": "Each dialogue card separates translation, source listening, protected first recording, model controls, new recordings and final choice. The first recording cannot be removed. Later unused recordings can move to discarded-recordings. Exported and chosen recordings remain protected.",
+              "zh-HK": "每段對白卡片會分開顯示翻譯、原聲試聽、受保護的首次錄音、模型控制、新增錄音及最終選擇。首次錄音不可移除，其後未使用的錄音可移至 discarded-recordings。已輸出及已選擇的錄音仍受保護。",
+              "zh-CN": "每段对白卡片分别显示翻译、原声试听、受保护的首次录音、模型控件、新增录音及最终选择。首次录音不可移除，后续未使用的录音可移至 discarded-recordings。已输出和已选择的录音仍受保护。",
+              "ja": "各カードは翻訳、元音声の試聴、保護された初回録音、モデル設定、追加録音、最終選択を分けて表示します。初回録音は削除できません。後から追加した未使用録音は discarded-recordings に移動できます。出力や選択で使用中の録音も保護します。"
             }
           ],
           "controlRefs": [
@@ -2639,6 +2691,28 @@
             "reportSearch"
           ],
           "steps": false
+        },
+        {
+          "id": "desktop-ordered-review-recordings",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Edit, record, select, then export",
+            "zh-HK": "修改、錄音、選擇及重新輸出",
+            "zh-CN": "修改、录音、选择及重新输出",
+            "ja": "編集・録音・選択・再出力"
+          },
+          "steps": false,
+          "body": [
+            {
+              "en": "Each desktop dialogue card separates the read-only system translation, edited translation, video audio, separated voice, protected first recording, model settings, new recordings and final choice. Recordings and source playback each have their own button.",
+              "zh-HK": "桌面版每段對白卡片會分開顯示唯讀系統翻譯、修改翻譯、影片聲音、分離聲音、受保護的首次錄音、模型設定、新增錄音及最終選擇。錄音及原聲均有獨立試聽按鈕。",
+              "zh-CN": "桌面版每段对白卡片分别显示只读系统翻译、修改翻译、视频声音、分离声音、受保护的首次录音、模型设置、新增录音及最终选择。录音和原声均有独立试听按钮。",
+              "ja": "デスクトップの各カードは、検出翻訳、編集、元音声、分離音声、保護された初回録音、モデル設定、追加録音、最終選択を分けて表示します。それぞれの音声に試聴ボタンがあります。"
+            }
+          ],
+          "controlRefs": []
         }
       ]
     },
@@ -3717,6 +3791,52 @@
           ],
           "controlRefs": [],
           "steps": false
+        },
+        {
+          "id": "mobile-purchase-price",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Expert purchase price",
+            "zh-HK": "專家模式購買價格",
+            "zh-CN": "专家模式购买价格",
+            "ja": "エキスパートモードの購入価格"
+          },
+          "body": [
+            {
+              "en": "The purchase button uses the price supplied by the App Store for your account. If the price cannot load, use Reload price. Reloading does not buy or unlock Expert mode. After a valid price appears, select Purchase to open the Apple purchase confirmation. Restore purchases restores eligible Expert access; Basic, Reading, Learning and export remain free.",
+              "zh-HK": "購買按鈕顯示 App Store 按帳戶提供的價格。如未能載入價格，可按「重新載入價格」；重新載入不會購買或解鎖專家模式。顯示有效價格後，按「購買」才會開啟 Apple 購買確認。「恢復購買」用於恢復符合資格的專家模式；基本模式、朗讀、學習及匯出維持免費。",
+              "zh-CN": "购买按钮显示 App Store 按账户提供的价格。如未能加载价格，可按“重新加载价格”；重新加载不会购买或解锁专家模式。显示有效价格后，按“购买”才会打开 Apple 购买确认。“恢复购买”用于恢复符合资格的专家模式；基本模式、朗读、学习和导出保持免费。",
+              "ja": "購入ボタンには App Store がアカウントに提供する価格を表示します。価格を取得できない場合は「価格を再読み込み」を押してください。再読み込みだけで購入やロック解除は行いません。有効な価格が表示された後、「購入」で Apple の購入確認を開きます。購入の復元は対象のエキスパートモードへのアクセスを復元します。基本、朗読、学習、書き出しは無料のままです。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-feature-introductions",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Expert and Reading introductions",
+            "zh-HK": "專家及朗讀模式介紹",
+            "zh-CN": "专家及朗读模式介绍",
+            "ja": "エキスパートと朗読モードの紹介"
+          },
+          "body": [
+            {
+              "en": "Expert uses feature cards for production controls, line review, the timeline and saved versions. Basic and Learning illustrations use localized app captures. The cards describe features and do not start processing. Use Previous and Next to turn pages. On iPhone, swipe horizontally to turn pages. Reading shows device requirements, Basic and Expert. Continue enters Reading; viewing the introduction does not buy or unlock another mode. Full operating instructions remain in this guide.",
+              "zh-HK": "專家模式以功能卡介紹製作設定、逐句校對、時間軸及保存版本；基本模式及學習模式使用相應語言的 App 畫面。功能卡不會啟動處理。按上一頁、下一頁翻頁，iPhone 亦可左右滑動。朗讀介紹分為裝置要求、基本模式及專家模式；繼續後進入朗讀模式。瀏覽介紹不會購買或解鎖其他模式，完整操作說明保留在本手冊。",
+              "zh-CN": "专家模式以功能卡介绍制作设置、逐句校对、时间轴和保存版本；基本模式和学习模式使用对应语言的 App 画面。功能卡不会启动处理。点击上一页、下一页翻页，iPhone 也可左右滑动。朗读介绍分为设备要求、基本模式和专家模式；继续后进入朗读模式。浏览介绍不会购买或解锁其他模式，完整操作说明保留在本手册。",
+              "ja": "エキスパートの紹介は制作設定、台詞の校正、タイムライン、保存したバージョンを機能カードで示します。基本・学習の画像は各言語のアプリ画面です。カードは処理を開始しません。前へ・次へで移動し、iPhone では左右のスワイプも使えます。朗読の紹介は端末要件、基本、エキスパートの3ページです。続けると朗読モードに入ります。紹介を見るだけで購入や他のモードの解除は行いません。詳しい操作はこのガイドをご覧ください。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
         }
       ]
     },
@@ -4075,22 +4195,22 @@
           },
           "body": [
             {
-              "en": "Before opening Files, AniCanto recommends saving the video to On My iPhone or On My iPad, then importing it. USB storage is another option.",
-              "zh-HK": "開啟「檔案」前，AniCanto 建議先將影片儲存至「我的 iPhone」或「我的 iPad」，再匯入；亦可使用 USB 儲存裝置。",
-              "zh-CN": "打开“文件”前，AniCanto 建议先将视频存到“我的 iPhone”或“我的 iPad”，再导入；也可使用 USB 存储设备。",
-              "ja": "「ファイル」を開く前に、動画を「この iPhone 内」または「この iPad 内」へ保存してから読み込むことを推奨します。USB ストレージも使えます。"
+              "en": "Use the Files app to save the video locally before importing it into AniCanto. USB storage is another option.",
+              "zh-HK": "建議先使用「檔案」App 將影片儲存至本機，再匯入 AniCanto；亦可從 USB 儲存裝置匯入。",
+              "zh-CN": "建议先使用“文件”App 将视频保存到本机，再导入 AniCanto；也可从 USB 存储设备导入。",
+              "ja": "「ファイル」アプリで動画を本体に保存してから、AniCanto に読み込んでください。USB ストレージからも読み込めます。"
             },
             {
-              "en": "Google Drive and other providers must download cloud files. Files can show only a spinner before handing the file to AniCanto. Do not select it again. The AniCanto progress panel starts after that handoff; it cannot measure the earlier provider download.",
-              "zh-HK": "Google Drive 等供應商須先下載雲端檔案。交給 AniCanto 前，「檔案」可能只顯示轉動圖示，請勿重複點選。AniCanto 收到檔案後才會顯示準備進度，無法量度交接前的下載進度。",
-              "zh-CN": "Google Drive 等提供商须先下载云端文件。交给 AniCanto 前，“文件”可能只显示转动图标，请勿重复点选。AniCanto 收到文件后才显示准备进度，无法测量交接前的下载进度。",
-              "ja": "Google Drive などはクラウドファイルを先にダウンロードします。AniCanto に渡すまでは回転表示だけの場合があります。繰り返し選択しないでください。AniCanto の進捗表示は受け取り後に始まり、それ以前のダウンロードは測定できません。"
+              "en": "Cloud files must download before Files hands them to AniCanto. Files may show only a loading indicator during this wait. Do not select the file again. AniCanto shows preparation progress after receiving the file. It cannot measure the earlier cloud download.",
+              "zh-HK": "雲端檔案須先下載，「檔案」才會交給 AniCanto。等候期間可能只顯示載入圖示，請勿重複點選。AniCanto 收到檔案後才會顯示準備進度，無法量度交接前的雲端下載進度。",
+              "zh-CN": "云端文件须先下载，“文件”才会交给 AniCanto。等待期间可能只显示加载图标，请勿重复点选。AniCanto 收到文件后才显示准备进度，无法测量交接前的云端下载进度。",
+              "ja": "クラウドファイルはダウンロード後に「ファイル」から AniCanto へ渡されます。待機中は読み込み表示だけの場合があります。繰り返し選択しないでください。AniCanto の準備進捗は受け取り後に始まり、それ以前のクラウドダウンロードは測定できません。"
             },
             {
-              "en": "In Google Drive, use Open in, then Save to Files, and choose local storage. This version does not register AniCanto as an Open in destination. Direct Drive account access is not included.",
-              "zh-HK": "在 Google Drive 選「開啟方式」，再選「儲存到檔案」，並選擇本機位置。此版本尚未將 AniCanto 登記為「開啟方式」的接收程式，亦未提供直接登入 Drive。",
-              "zh-CN": "在 Google Drive 选“打开方式”，再选“存储到文件”，并选择本机位置。此版本尚未将 AniCanto 注册为“打开方式”的接收应用，也未提供直接登录 Drive。",
-              "ja": "Google Drive の「アプリで開く」から「ファイルに保存」を選び、本体へ保存します。この版は AniCanto を受信アプリとして登録せず、Drive アカウントへの直接接続も提供しません。"
+              "en": "Download the video from its cloud storage app, then import it through Files. This version does not receive files directly from other apps or sign in to cloud accounts.",
+              "zh-HK": "先從雲端儲存 App 下載影片，再透過「檔案」匯入。此版本未提供從其他 App 直接接收檔案或登入雲端帳戶的功能。",
+              "zh-CN": "先从云端存储 App 下载视频，再通过“文件”导入。此版本未提供从其他 App 直接接收文件或登录云端账户的功能。",
+              "ja": "クラウドストレージのアプリから動画をダウンロードし、「ファイル」から読み込みます。この版は他のアプリからの直接受信やクラウドアカウントへのログインに対応しません。"
             },
             {
               "en": "The notice includes the rights reminder. Continue opens Files; Back closes it. Do not show again applies to this notice. Reset reminders and demos restores it. The updated local-storage advice appears once even if the older notice was hidden. Export does not show this notice.",
@@ -4345,6 +4465,64 @@
             }
           ],
           "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-first-take-speed310",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Fast first-take conversion",
+            "zh-HK": "快速保留首次配音",
+            "zh-CN": "快速保留首次配音",
+            "ja": "初回の音声を使う高速変換"
+          },
+          "body": [
+            {
+              "en": "Keep optional AI checks and repair off for the fastest baseline. The app retains the first audible recording. Timing or quality concerns alone do not trigger another recording. Required missing, silent or damaged audio still receives bounded fill attempts. Existing jobs keep their saved settings and recordings.",
+              "zh-HK": "如要使用最快的基本流程，請關閉額外 AI 檢查及修復。應用程式保留首次有聲錄音，不會只因時間或品質疑慮而重新錄製。缺失、無聲或損壞的必要配音仍會有限度補錄。現有工作保留已儲存的設定及錄音。",
+              "zh-CN": "如需使用最快的基本流程，请关闭额外 AI 检查和修复。应用保留首次有声录音，不会仅因时间或质量疑虑而重新录制。缺失、无声或损坏的必要配音仍会有限度补录。现有任务保留已保存的设置和录音。",
+              "ja": "最速の基本処理には追加の AI 確認と修復をオフにします。最初に音が出た録音を保持し、時間や品質の懸念だけでは録り直しません。必要な音声が欠落・無音・破損している場合は、上限内で補完します。既存の作業は保存済みの設定と録音を保持します。"
+            }
+          ],
+          "controlRefs": [
+            "firstDraftLength",
+            "durationOff"
+          ],
+          "steps": false
+        },
+        {
+          "id": "mobile-automatic-source-default-314",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Automatic source selection",
+            "zh-HK": "自動選擇來源",
+            "zh-CN": "自动选择来源",
+            "ja": "ソースの自動選択"
+          },
+          "body": [
+            {
+              "en": "On iPhone and iPad, Basic mode (Automatic) uses automatic source detection and has no source selector. Expert mode also starts with automatic detection. Select another Expert source only when you want that path. Reset status and Restart restore automatic detection for the new job. Existing saved jobs keep their frozen source.",
+              "zh-HK": "iPhone 及 iPad 的「基本模式（自動偵測）」固定自動選擇來源，不提供來源選項。專家模式亦預設自動偵測；如需其他流程，才手動選擇。「重設狀態」及「重新開始」會為新工作還原自動偵測。已保存工作保留原有來源。",
+              "zh-CN": "iPhone 和 iPad 的“基本模式（自动检测）”固定自动选择来源，不提供来源选项。专家模式也默认自动检测；需要其他流程时再手动选择。“重设状态”和“重新开始”为新任务恢复自动检测。已保存任务保留原有来源。",
+              "ja": "iPhoneとiPadの「基本モード（自動検出）」はソースを自動で選び、選択欄はありません。エキスパートモードも自動検出から始まります。別のフローが必要な場合のみ手動で選びます。状態リセットと最初から再開は、新しい作業を自動検出に戻します。保存済み作業のソースは保持します。"
+            },
+            {
+              "en": "The update restores the automatic preference once. It does not change a running or saved job. If a source check stops a new job, Continue keeps its requested source choice and checks the saved video range again before model work.",
+              "zh-HK": "此更新會一次性還原自動偵測偏好，不會更改正在處理或已保存的工作。新工作被來源檢查攔截後，繼續時保留原先選擇，並在模型處理前重新檢查已保存的影片範圍。",
+              "zh-CN": "此更新会一次性恢复自动检测偏好，不会更改正在处理或已保存的任务。新任务被来源检查拦截后，继续时保留原先选择，并在模型处理前重新检查已保存的视频范围。",
+              "ja": "この更新は自動検出の設定を一度だけ復元します。実行中・保存済みの作業は変更しません。新規作業がソース確認で停止した場合、再開時も元の選択を保持し、モデル処理前に保存済みの映像範囲を再確認します。"
+            }
+          ],
+          "controlRefs": [
+            "sourceWorkflowDefaults",
+            "resume"
+          ],
           "steps": false
         }
       ]
@@ -5144,9 +5322,23 @@
               "zh-HK": "偏好設定可切換四種介面語言或跟隨系統，亦可選深色、淺色或系統外觀，以及主題同 App 圖示。配音後備集中喺製作設定；流動版基本模式亦可喺操作選項設定。製作選擇只影響新工作，已保存轉換保留提交時設定。",
               "zh-CN": "偏好设置可切换四种界面语言或跟随系统，也可选择深色、浅色或系统外观，以及主题和 App 图标。配音后备集中在制作设置；移动版基本模式也可在操作选项设置。制作选择只影响新任务，已保存转换保留提交时设置。",
               "ja": "環境設定で四言語またはシステム追従、ダーク・ライト・システム外観、テーマやアプリアイコンを選べます。代替音声は制作設定にあり、モバイル基本モードでは操作オプションからも設定できます。制作の変更は新規作業だけに適用し、保存済み変換は送信時の設定を保持します。"
+            },
+            {
+              "en": "In dark appearance, production and AI Repair group titles use bright text. Their summaries use light grey. Light appearance keeps the theme colours.",
+              "zh-HK": "深色外觀的製作設定及 AI 修復分組標題使用明亮文字，摘要使用淺灰色。淺色外觀保留原有主題色。",
+              "zh-CN": "深色外观的制作设置及 AI 修复分组标题使用明亮文字，摘要使用浅灰色。浅色外观保留原有主题色。",
+              "ja": "ダーク外観では制作設定と AI 修復のグループ見出しを明るく、概要を薄いグレーで表示します。ライト外観では元のテーマ色を保ちます。"
+            },
+            {
+              "en": "The selected AI voice remains selected when memory is low. If it cannot load, AniCanto reports the failure. System voice fallback follows its separate saved controls and confirmation. See Installed system voice fallback.",
+              "zh-HK": "可用記憶體不足時，仍會保留已選的 AI 配音引擎；無法載入時會顯示錯誤。系統聲線後備須依照另行保存的控制及確認，詳見「已安裝系統聲線後備」。",
+              "zh-CN": "可用内存不足时，仍保留已选的 AI 配音引擎；无法加载时显示错误。系统声音后备须依照另行保存的控制及确认，详见“已安装系统声音后备”。",
+              "ja": "空きメモリが少なくても、選択した AI 音声エンジンを保ちます。読み込めない場合はエラーを表示します。システム音声の代替処理は別の保存設定と確認に従います。「インストール済みシステム音声の代替」を参照してください。"
             }
           ],
-          "controlRefs": [],
+          "controlRefs": [
+            "systemVoice"
+          ],
           "steps": false
         },
         {
@@ -5482,6 +5674,61 @@
               "ja": "新しいデスクトップデータは AniCanto フォルダを使用します。既存の保存先は安全な場合に移動し、旧パスへの参照を保持します。移動できない場合は元の保存先を保持します。独立した二つの保存先を自動統合しません。"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "desktop-lan-diagnostics",
+      "aliases": [],
+      "platforms": [
+        "desktop"
+      ],
+      "title": {
+        "en": "LAN diagnostics",
+        "zh-HK": "區域網絡診斷",
+        "zh-CN": "局域网诊断",
+        "ja": "LAN 診断"
+      },
+      "summary": {
+        "en": "Enable a read-only browser view of settings and diagnostic logs on your local network.",
+        "zh-HK": "在區域網絡開啟唯讀網頁，查看設定及診斷記錄。",
+        "zh-CN": "在局域网开启只读网页，查看设置及诊断日志。",
+        "ja": "ローカルネットワークで設定と診断ログを読み取り専用で確認します。"
+      },
+      "sections": [
+        {
+          "id": "desktop-lan-diagnostics-access",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Connect from another computer",
+            "zh-HK": "從另一部電腦連接",
+            "zh-CN": "从另一台电脑连接",
+            "ja": "別のコンピュータから接続"
+          },
+          "body": [
+            {
+              "en": "Diagnostics is off each time the app starts. Open Welcome, Help centre, then this last chapter. Turn on the switch. AniCanto selects the device IP and an available port. Advanced connection settings lets you change the bind address and port when diagnostics is off.",
+              "zh-HK": "每次啟動程式時，診斷模式均為關閉。在歡迎頁開啟使用手冊的最後一章，按開關即可使用。AniCanto 會自動選擇裝置 IP 及可用連接埠。如需手動更改，可在診斷關閉時展開「進階連線設定」。",
+              "zh-CN": "每次启动程序时，诊断模式均为关闭。在欢迎页打开使用手册的最后一章，按开关即可使用。AniCanto 会自动选择设备 IP 及可用端口。如需手动更改，可在诊断关闭时展开“高级连接设置”。",
+              "ja": "起動時は常にオフです。Welcome のヘルプセンターから最後の章を開き、スイッチをオンにします。デバイスの IP と空きポートを自動選択します。オフのときに詳細な接続設定で手動変更できます。"
+            },
+            {
+              "en": "Open a displayed LAN URL on the other computer. Enter the access code. The read-only page refreshes every three seconds. It shows saved settings, frozen requests and bounded log tails. Missing sources and omitted earlier bytes are marked. Not every failure produces a log.",
+              "zh-HK": "在另一部電腦開啟顯示的區域網絡網址，輸入登入碼。唯讀頁面每三秒更新，顯示已儲存設定、固定請求及有限長度的最新記錄。缺少的來源及省略的舊記錄會有標示，並非所有故障均會產生記錄。",
+              "zh-CN": "在另一台电脑打开显示的局域网网址，输入登录码。只读页面每三秒更新，显示已保存设置、固定请求及有限长度的最新日志。缺少的来源及省略的旧日志会标注，并非所有故障都会产生日志。",
+              "ja": "表示された LAN URL を別のコンピュータで開き、アクセスコードを入力します。3 秒ごとに保存済み設定、固定リクエスト、ログ末尾を更新します。不足や省略を表示します。すべての障害がログを生成するとは限りません。"
+            },
+            {
+              "en": "Use a trusted private network. HTTP is not encrypted. The page can include dialogue and local paths. Allow private-network firewall access if needed. Stop diagnostics after use. Restarting the service creates a new code. To change the address or port, stop it first. App exit stops the service.",
+              "zh-HK": "請使用可信任的私人網絡。HTTP 不會加密，頁面可能包含對白及本機路徑。如有需要，請允許防火牆的私人網絡存取。使用後請停止診斷。重新啟動服務會產生新登入碼。更改位址或連接埠前，請先停止服務。退出程式會停止服務。",
+              "zh-CN": "请使用可信任的专用网络。HTTP 不加密，页面可能包含对白及本机路径。如有需要，请允许防火墙的专用网络访问。使用后请停止诊断。重新启动服务会生成新登录码。更改地址或端口前，请先停止服务。退出程序会停止服务。",
+              "ja": "信頼できるプライベートネットワークで使用してください。HTTP は暗号化されず、台詞やローカルパスが含まれる場合があります。必要ならファイアウォールの接続を許可します。使用後は停止してください。再起動でコードが変わります。アドレスやポートの変更前に停止してください。終了時にサービスも停止します。"
+            }
+          ],
+          "steps": false,
+          "controlRefs": []
         }
       ]
     }

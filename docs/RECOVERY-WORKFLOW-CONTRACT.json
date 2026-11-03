@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-11-01",
+  "updated": "2026-11-03",
   "publicProjection": true,
   "platforms": [
     "macOS",
@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-114-cache-controls",
+    "revision": "application-user-guide-126-mobile-introductions",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "afc310b27e364500547c06c32b287e906dc1515dafc9644b7d321ad1576323b6",
-    "controlGuideRevision": "workflow-controls-guide-46-production-reset-entry",
-    "controlGuideSHA256": "383f2d400564d77f36ba964ce182ea7d2dc8740aa3eac887b2a67d6d9e71bf83"
+    "sha256": "2897f57a72dee55c5c9bc5c128a7e527ef0521b4729ba9e55f00114e3d9f65aa",
+    "controlGuideRevision": "workflow-controls-guide-50-ordered-review-recordings",
+    "controlGuideSHA256": "554afda738080682916c3c549d5533c8682a74d2c34395773ad36b12c7722491"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",
@@ -26,6 +26,16 @@
     "selection": "report band does not change a take; human listening decides acceptability",
     "preservation": "no recording deletion, generation replay, frozen-setting migration, or budget renewal on resume",
     "optionalTimingException": "WF-17 permits one explicitly enabled overlap-timing repair after more than two seconds of confirmed simultaneous speech; default zero/off keeps the first audible take."
+  },
+  "desktopOrderedReview20261102": {
+    "rule": "Ordered dialogue cards separate immutable system translation, saved edits, original/stem audio, protected first recording, manual model parameters, new recordings and the saved export choice.",
+    "firstRecording": "Cannot remove the earliest retained initial recording for a line and language. Do not reverse old removal records.",
+    "retake": "Saved words and explicit bounded engine parameters enter only the manual single-line submission. Show busy state before launch and until completion. Existing recordings remain available.",
+    "export": "Save the chosen recording, then use Export again. Preserve earlier exports.",
+    "automaticPermissionsChanged": false,
+    "frozenRequestsChanged": false,
+    "repairBudgetsChanged": false,
+    "choiceIdentity": "Keep sourceAudio and the protected accepted copy. Highlight the original row and protect both files. Mandarin choices use saved Mandarin words."
   },
   "fourSourceModes298": {
     "revision": "four-source-modes-298",
@@ -90,7 +100,7 @@
     },
     {
       "id": "WF-08",
-      "requirement": "Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission."
+      "requirement": "Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission. Low available memory grants no fallback permission."
     },
     {
       "id": "WF-09",

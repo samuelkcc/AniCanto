@@ -13,7 +13,7 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
     if segment is None:raise ValueError('This line was split or merged. Open the editor to choose its audio.')
     key=language+':'+engine;choices=segment.setdefault('reviewDecisions',{})
     if action=='automatic':choices.pop(key,None);return draft
-    text=segment.get('english' if language=='en' else 'text','')
+    text=segment.get('english' if language=='en' else 'mandarin' if language=='zh' else 'text','')
     decision=dict(action=action,engine=engine,language=language,text=text,acceptedByUser=True,acceptedAt=time.time(),qualityCertified=False)
     if action=='original':
         if not Path(cfg['video']).is_file():raise ValueError('Original video is unavailable.')
@@ -46,7 +46,7 @@ def select(root,review,draft,snapshot,index,engine,language,action,audio=None,co
         if seconds<=0 or seconds>b-a+2.0 or a+seconds>cfg['duration']+.015:raise ValueError('The full recording is more than two seconds over its slot or exceeds the video. Adjust timing in the editor.')
         ident=uuid.uuid4().hex;folder=root/'accepted-recordings'/ident;folder.mkdir(parents=True)
         target=folder/'audio.wav';shutil.copy2(source,target);digest=hashlib.sha256(target.read_bytes()).hexdigest()
-        decision.update(audio=str(target),audioSHA256=digest,seconds=seconds,sourceEngine=match.get('engine') or engine,defectsAccepted=True,timingOverlapSeconds=round(max(0,seconds-(b-a)),3))
+        decision.update(audio=str(target),sourceAudio=str(source),audioSHA256=digest,seconds=seconds,sourceEngine=match.get('engine') or engine,defectsAccepted=True,timingOverlapSeconds=round(max(0,seconds-(b-a)),3))
         (folder/'acceptance.json').write_text(json.dumps(decision,indent=2)+'\n')
     choices[key]=decision
     return draft

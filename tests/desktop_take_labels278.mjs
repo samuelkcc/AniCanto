@@ -16,8 +16,8 @@ for(const language of ['en','zh-HK','zh-CN','ja']){
  // The recording list and the choice dropdown repeat each label once.
  const list=html.split('data-review-recording')[0];
  const count=(text,where)=>(where.match(new RegExp(translate(text,language),'g'))||[]).length;
- assert.equal(count('First generated recording',list),1,`${language}: ${count('First generated recording',list)} first-take labels`);
- assert.equal(count('First generated recording',html),2,`${language}: dropdown repeat`);
+ assert.equal(count('First generated recording',list),2,`${language}: ${count('First generated recording',list)} first-take labels`);
+ assert.equal(count('First generated recording',html),3,`${language}: dropdown repeat`);
  assert(count('Generated recording',list)>=2,language);
  assert(html.includes('/job/takes/two.wav')&&html.includes('/job/takes/three.wav'),language);
  assert(!html.includes('undefined'),language);

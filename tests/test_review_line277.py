@@ -74,8 +74,8 @@ class ReviewLine277(unittest.TestCase):
   with patch('backend.job_snapshot',return_value=frozen):
    snapshot=self.app.dispatch('snapshot',dict(id=ident))
   published={row['path']:row['reason'] for row in snapshot['protectedTakes']}
-  self.assertEqual(published,{str(used.resolve()):'current export'})
-  self.assertNotIn(str(spare.resolve()),published)
+  self.assertEqual(published[str(used.resolve())],'current export')
+  self.assertEqual(published[str(spare.resolve())],'first generated recording')
  # D5: the detection record travels into the frozen request, not only the session.
  def test_the_frozen_request_records_the_detected_source_language(self):
   ident=self.project()[0]
@@ -84,7 +84,8 @@ class ReviewLine277(unittest.TestCase):
   row=self.app.row(ident);row['sourcePreflight']=dict(language='ja',name='Japanese',supported=True,stream=1,
                                                      needsConfirmation=False,detection=detection)
   self.app.store.save()
-  spec=self.app.dispatch('start',dict(id=ident))
+  with patch('subtitle_choice.preflight',return_value={'default':{'kind':'none'}}):
+   spec=self.app.dispatch('start',dict(id=ident))
   cfg=read(Path(spec['args'][-1]))
   self.assertEqual(cfg['sourceLanguage'],'ja','a Japanese source needs no second confirmation')
   self.assertEqual(cfg['sourceLanguageDetection'],detection)
@@ -94,7 +95,8 @@ class ReviewLine277(unittest.TestCase):
   row=self.app.row(ident);row['sourcePreflight']=dict(language='en',name='English',supported=True,
                                                      needsConfirmation=False,method='audio-probe')
   self.app.store.save()
-  cfg=read(Path(self.app.dispatch('start',dict(id=ident))['args'][-1]))
+  with patch('subtitle_choice.preflight',return_value={'default':{'kind':'none'}}):
+   cfg=read(Path(self.app.dispatch('start',dict(id=ident))['args'][-1]))
   self.assertEqual(cfg['sourceLanguageDetection'],dict(language='en',method='audio-probe',confirmationSkipped=True))
 
 class ReviewSnapshotLine277(unittest.TestCase):
@@ -133,25 +135,26 @@ class ReviewSnapshotLine277(unittest.TestCase):
   history=self.snapshot()['history']
   self.assertEqual([x['path'] for x in history],[str(archived.resolve())])
   self.assertTrue(history[0]['created'])
- def test_an_unused_first_take_is_not_protected_and_can_be_removed(self):
+ def test_an_unused_first_take_stays_protected(self):
   snapshot=self.snapshot()
-  self.assertEqual(protection(snapshot,{}),{})
-  record=remove(self.root,snapshot,{},0,'yue','drama3',str(self.first),True)
-  self.assertEqual(record['index'],1);self.assertFalse(self.first.exists())
-  self.assertNotIn(str(self.first.resolve()),[x['path'] for x in self.snapshot()['recordingCandidates']])
+  self.assertEqual(protection(snapshot,{})[str(self.first.resolve())]['reason'],'first generated recording')
+  with self.assertRaisesRegex(ValueError,'first generated recording'):
+   remove(self.root,snapshot,{},0,'yue','drama3',str(self.first),True)
+  self.assertTrue(self.first.exists())
+
  def test_the_four_build275_links_still_protect_a_recording(self):
   first=str(self.first.resolve())
   base=self.snapshot()
   exported=dict(base,reportRows=[dict(index=1,language='yue',engine='drama3',selectedAudio=str(self.first))])
   completed=dict(base,takes=base['takes']+[dict(index=1,language='yue',engine='drama3',audio=str(self.first),versionStatus='complete')])
   for frozen in (exported,completed):
-   self.assertEqual(sorted(protection(frozen,{})),[first])
+   self.assertIn(first,protection(frozen,{}))
    with self.assertRaisesRegex(ValueError,'current export or a saved choice'):
     remove(self.root,frozen,{},0,'yue','drama3',str(self.first),True)
   drafts=[dict(segments=[dict(sources=[0],audioTake=str(self.first))]),
           dict(segments=[dict(sources=[0],reviewDecisions={'yue:drama3':dict(audio=str(self.first))})])]
   for draft in drafts:
-   self.assertEqual(sorted(protection(self.snapshot(),draft)),[first])
+   self.assertIn(first,protection(self.snapshot(),draft))
    with self.assertRaisesRegex(ValueError,'current export or a saved choice'):
     remove(self.root,self.snapshot(),draft,0,'yue','drama3',str(self.first),True)
   self.assertTrue(self.first.exists())

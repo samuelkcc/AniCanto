@@ -15,23 +15,20 @@
 
 ## ダウンロード
 
-**[Mac 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto-macOS-0.25.44.zip)** · **[Windows 0.25.44](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/AniCanto.exe)**
+**[Mac 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto-macOS-0.25.45.zip)** · **[Windows 0.25.45](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.44-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.44-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.45-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.45-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 最近の更新 · 0.25.44 / build 304
+## 最近の更新 · 0.25.45 / build 305
 
-- **設定を整理：**制作設定を4つの折りたたみグループに整理。共通設定と動画別設定を区別し、追加 AI 修復もグループ化しました。
-- **リセット入口を統一：**制作設定の入口だけを残し、動画カードの重複ボタンを削除しました。
-- **ソース再生：**対応ファイルは直接開きます。他のコーデックは上限付きのプレビュー分割を使用。再生前に音声・字幕の選択肢を読み込みます。
-- **4つのソースフロー：**自動検出、字幕優先、音声優先、音声／OCR。吹き替え時刻は音声から取得します。
-- **任意の字幕フィルター：**「会話だけ吹替」は初期値オフ。独立した音声認識の意味と字幕を比較します。
-- **保存領域と修復：**ストレージ検査、一時ファイル削除、アプリフォルダー修復に対応。再セットアップと一時書き込みも改善しました。
+- **校正レポートを整理：**検出翻訳、保存した編集、元音声と分離音声、保護された初回録音、モデル設定、追加録音、最終選択を分けて表示します。
+- **セリフ単位の再録音：**文章を保存し、モデルとパラメーターを選んで録音します。処理中の表示と、各録音の試聴ボタンを用意しました。
+- **初回録音を保持：**初回録音は削除できません。後から追加した未使用録音は削除できます。選択済み・出力済みの録音も保護します。
+- **再出力：**録音の選択を保存し、レポート上部から新しい動画を作成します。以前の出力は保持します。
+- **LAN 診断：**既定ではオフです。Welcome のヘルプセンターの最後の章でオンにすると、デバイス IP、自動ポート、アクセスコードを表示します。読み取り専用ページは3秒ごとに設定とログを更新します。信頼できるプライベートネットワークで使用してください。HTTP は暗号化されません。
 
-Mac の起動、パッケージ識別、署名を確認しました。Windows は構造検査済みですが、本ビルドの実機実行は未確認です。全編変換と試聴の検証は未完了です。
-
-[ダウンロード](#download) · [機能](#アプリでできること) · [処理の流れ](#動画から新しい声へ) · [画面](#現在のアプリ画面) · [サポート](SUPPORT.ja.md) · [応援](#広東語に出会うきっかけを増やすために) · [デモ](#元のデモを変換して声を比較する)
+本版の Windows 実機実行、全編推論、聴感確認は未検証です。パッケージ検査と隔離 UI テストは別の証拠です。
 
 ## AniCanto を作った理由
 

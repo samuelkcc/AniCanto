@@ -92,6 +92,8 @@ class PublicSourceTests(unittest.TestCase):
         self.assertEqual(len(document['activeRequirements']),17)
         self.assertEqual(document['fourSourceModes298']['proofreading']['resumeRefund'],False)
         self.assertFalse(public_source.selected('tests/test_mobile_model_defaults300.py'))
+        for path in ['scripts/build-website-interface-story.py','scripts/website-interface-story-sources.json','scripts/install-website-interface-captures.py','scripts/package-website-public.py']:
+            self.assertFalse(public_source.selected(path),path)
 
 class AuxiliaryNoticeTests(unittest.TestCase):
     def test_model_attribution_is_separate_from_adapter_license(self):

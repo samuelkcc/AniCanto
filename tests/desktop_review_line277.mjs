@@ -71,7 +71,7 @@ const rows=html=>[...html.matchAll(/data-report-group="([^"]+)"/g)].map(match=>m
  const removes=tags(html,'review-remove-take');
  const disabled=removes.filter(tag=>tag.includes('disabled')).map(tag=>tag.match(/data-path="([^"]+)"/)[1]);
  assert.deepEqual(disabled,['/job/second.wav'],removes.join(' | '));
- assert(removes.some(tag=>tag.includes('data-path="/job/first.wav"')&&!tag.includes('disabled')),removes.join(' | '));
+ assert(!removes.some(tag=>tag.includes('data-path="/job/first.wav"')),removes.join(' | '));
 }
 // The list copy is translated in every interface language.
 {

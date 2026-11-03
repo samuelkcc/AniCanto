@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-46-production-reset-entry",
+  "revision": "workflow-controls-guide-50-ordered-review-recordings",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -192,10 +192,10 @@
         "ja": "インストール済みシステム音声の代替"
       },
       "body": {
-        "zh-HK": "需要同時開啟「配音內容修復」，並在處理前確認系統聲音提示。AI 後備仍失敗時，才可使用已安裝的目標語言系統聲音補配；不等同原角色聲線，也不保證可選 Siri 聲音。記錄實際引擎並沿用已保存預算。此項不是朗讀模式的聲線選擇；系統聲音的發布及使用條款仍須另行核實。",
-        "zh-CN": "需要同时开启“配音内容修复”，并在处理前确认系统声音提示。AI 后备仍失败时，才可使用已安装的目标语言系统声音补配；不等于原角色声音，也不保证可选 Siri 声音。记录实际引擎并沿用保存预算。不是朗读模式的声音选择；系统声音发布和使用条款仍须另行核实。",
-        "en": "Requires Repair dubbing content and confirmation before processing. If AI fallback still fails, use an installed target-language system voice within saved limits. This is not the original character voice and does not promise Siri voices. Record the actual engine. This is separate from Reading voice selection. Public distribution and system-audio use terms still require separate verification.",
-        "ja": "内容修復の許可と処理前の確認が必要です。AI の代替処理でも失敗した場合、保存予算内で目標言語の導入済みシステム音声を使います。元の役の声ではなく、Siri 音声も保証しません。実際のエンジンを記録します。読み上げモードの声選択とは別です。公開配布やシステム音声の利用条件は別途確認が必要です。"
+        "zh-HK": "需要同時開啟「配音內容修復」，並在處理前確認系統聲音提示。AI 後備仍失敗時，才可使用已安裝的目標語言系統聲音補配；不等同原角色聲線，也不保證可選 Siri 聲音。記錄實際引擎並沿用已保存預算。此項不是朗讀模式的聲線選擇；系統聲音的發布及使用條款仍須另行核實。 可用記憶體不足不會開啟此後備，也不會改變已選的 AI 引擎。曾經確認系統聲音提示，不等於已保存工作獲准使用系統聲線。",
+        "zh-CN": "需要同时开启“配音内容修复”，并在处理前确认系统声音提示。AI 后备仍失败时，才可使用已安装的目标语言系统声音补配；不等于原角色声音，也不保证可选 Siri 声音。记录实际引擎并沿用保存预算。不是朗读模式的声音选择；系统声音发布和使用条款仍须另行核实。 可用内存不足不会开启此后备，也不会改变已选的 AI 引擎。曾经确认系统声音提示，不等于已保存任务获准使用系统声音。",
+        "en": "Requires Repair dubbing content and confirmation before processing. If AI fallback still fails, use an installed target-language system voice within saved limits. This is not the original character voice and does not promise Siri voices. Record the actual engine. This is separate from Reading voice selection. Public distribution and system-audio use terms still require separate verification. Low available memory does not enable this fallback or change the selected AI engine. A previous system-voice confirmation is not a saved job permission.",
+        "ja": "内容修復の許可と処理前の確認が必要です。AI の代替処理でも失敗した場合、保存予算内で目標言語の導入済みシステム音声を使います。元の役の声ではなく、Siri 音声も保証しません。実際のエンジンを記録します。読み上げモードの声選択とは別です。公開配布やシステム音声の利用条件は別途確認が必要です。 空きメモリ不足でこの代替処理を有効にしたり、選択した AI エンジンを変更したりしません。過去のシステム音声の確認は、保存ジョブの使用許可ではありません。"
       }
     },
     {
@@ -388,10 +388,10 @@
         "ja": "原音声の時間を目安に翻訳"
       },
       "body": {
-        "zh-HK": "共用規則：廣東話、普通話及英文在首次翻譯時，按原聲時間及各語言的發音長度寫成精簡完整的對白。字數只作參考，不可刪減原意；容許重疊不代表可以擴寫。這是初稿指引，不增加核對或重錄次數。",
-        "zh-CN": "共同规则：粤语、普通话和英语在首次翻译时，按原声时间及各语言的发音长度写成简洁完整的对白。字数仅供参考，不可删减原意；允许重叠不代表可以扩写。这是初稿指引，不增加核对或重录次数。",
-        "en": "Shared target: draft concise, complete Cantonese, Mandarin, and English against the original speech time using language-aware spoken-length estimates. Preserve meaning; allowed overlap is not extra writing space. This first-draft guidance adds no review or retake.",
-        "ja": "共通の目標：広東語・普通話・英語の初回翻訳で、原音声の時間と言語別の発音量を目安に、意味を保った簡潔な台詞を書きます。重なりの許可は説明を増やす許可ではありません。追加確認・再録音は行いません。"
+        "zh-HK": "共用規則：廣東話、普通話及英文在首次翻譯時，按原聲時間及各語言的發音長度寫成精簡完整的對白。字數只作參考，不可刪減原意；容許重疊不代表可以擴寫。這是初稿指引，不增加核對或重錄次數。 iPhone 及 iPad 的「字幕優先」在首次翻譯只使用本句主要字幕，不加入前後句對白。獨立無線電呼號保留名稱及數字，不增加自動校對或重錄。",
+        "zh-CN": "共同规则：粤语、普通话和英语在首次翻译时，按原声时间及各语言的发音长度写成简洁完整的对白。字数仅供参考，不可删减原意；允许重叠不代表可以扩写。这是初稿指引，不增加核对或重录次数。 iPhone 和 iPad 的“字幕优先”在首次翻译只使用本句主要字幕，不加入前后句对白。独立无线电呼号保留名称和数字，不增加自动校对或重录。",
+        "en": "Shared target: draft concise, complete Cantonese, Mandarin, and English against the original speech time using language-aware spoken-length estimates. Preserve meaning; allowed overlap is not extra writing space. This first-draft guidance adds no review or retake. On iPhone and iPad, Subtitle first translates only the current primary subtitle in its initial request. It does not add neighbouring dialogue. An isolated radio call sign keeps its name and number. No extra automatic review or retake is added.",
+        "ja": "共通の目標：広東語・普通話・英語の初回翻訳で、原音声の時間と言語別の発音量を目安に、意味を保った簡潔な台詞を書きます。重なりの許可は説明を増やす許可ではありません。追加確認・再録音は行いません。 iPhone と iPad の「字幕優先」では、初回翻訳に現在の主要字幕だけを使い、前後の台詞を追加しません。独立した無線のコールサインは名称と番号を保ちます。自動確認や再録音の回数は増えません。"
       }
     },
     {
@@ -449,10 +449,10 @@
         "ja": "翻訳ソースのフロー"
       },
       "body": {
-        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts.",
-        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。",
-        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。",
-        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。"
+        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. If the subtitle language cannot be selected reliably, choose its source and language in the prompt. This prompt is separate from automatic approval of the spoken language. Saved jobs keep their frozen source, recordings, and spent attempts. Automatic detection is the default. Speech / OCR requires an explicit choice. A continued job uses its saved source choice, never an unrelated current preference.",
+        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。未能可靠選擇字幕語言時，請在提示中選擇來源及語言。這個提示與自動接納原聲語言分開。已保存工作保留凍結來源、錄音及已花費次數。預設為自動偵測；「語音 / OCR」需要明確選擇。繼續工作使用該工作已保存的來源選擇，不會改用其他目前偏好。",
+        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。未能可靠选择字幕语言时，请在提示中选择来源及语言。该提示与自动接受原声语言分开。已保存任务保留冻结来源、录音及已花费次数。默认为自动检测；“语音 / OCR”需要明确选择。继续任务使用该任务已保存的来源选择，不会改用其他当前偏好。",
+        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。字幕言語を確実に選べない場合は、表示された画面でソースと言語を選んでください。この確認は音声言語の自動承認とは別です。保存済みジョブのソース、録音、使用済み回数は維持します。初期設定は自動検出です。「音声 / OCR」は明示的に選びます。再開時は作業に保存したソースを使用し、現在の別設定には切り替えません。"
       }
     },
     {
@@ -704,10 +704,10 @@
         "ja": "校正レポートで1行の台詞を編集"
       },
       "body": {
-        "zh-HK": "在校對報告每條聲道下方的「呢句嘅配音台詞」輸入文字，然後按「儲存台詞」。儲存只會更新此行的配音稿；不會開始錄音，也不會更改現正成品所使用的聲音。之後按「為呢句重新生成錄音」，系統才會按新稿錄音。舊錄音、舊成品及已儲存的選擇會保留。",
-        "zh-CN": "在校对报告每条声道下方的“此行配音台词”输入文字，再点击“保存台词”。保存只更新此行的配音稿；不会开始录音，也不会改变当前采用的声音或成片。之后点击“为此行生成新录音”才会按新稿录音。旧录音、旧成片与已保存选择会保留。",
-        "en": "Type the target words in the box under the voice track, then select Save words. Saving updates the script for that line only. It does not start a recording and does not change the audio in the current export. Select Generate a new take for this line to record the new words. Older recordings, older exports and saved choices stay unchanged.",
-        "ja": "音声トラックの下の欄に目的言語の台詞を入力し、「台詞を保存」を押します。保存はその行の原稿だけを更新します。録音は始まらず、現在の出力の音声も変わりません。「この行の新しいテイクを生成」を押すと新しい台詞で録音します。以前の録音・出力・選択はそのまま残ります。"
+        "en": "The system translation is read-only. Edit the separate translation field, then select Save words. Record again to use the saved words. Saving alone changes no existing recording or exported audio.",
+        "zh-HK": "系統翻譯為唯讀。請在獨立的「修改翻譯」欄位編輯，再按「儲存台詞」。重新錄音會使用已儲存台詞；單獨儲存不會改動現有錄音或已輸出聲音。",
+        "zh-CN": "系统翻译为只读。请在独立的“修改翻译”字段编辑，再按“保存文字”。重新录音会使用已保存文字；仅保存不会改变现有录音或已输出声音。",
+        "ja": "システム翻訳は読み取り専用です。別の編集欄で修正し、文章を保存します。保存した文章は次の再録音で使用します。保存だけでは既存の録音や出力音声を変更しません。"
       }
     },
     {
@@ -719,10 +719,10 @@
         "ja": "1行のエンジンを選んで再録音"
       },
       "body": {
-        "zh-HK": "當有兩個或以上已部署的配音引擎時，每行會顯示「新錄音使用的配音引擎」。選擇一個引擎，然後按「為呢句重新生成錄音」；系統只會重新錄音此行和這條聲道。其他行、其他聲道及舊錄音會保留。只有一個配音引擎時不會顯示這個選單。此動作不會重新錄音其他行，也不會增加自動修復次數。",
-        "zh-CN": "有两个或以上已部署的配音引擎时，每行会显示“新录音使用的配音引擎”。选择一个，再点击“为此行生成新录音”，只重录此行此声道。其他行、其他声道和旧录音会保留。只有两个引擎时才显示此菜单。该操作不会重录其他行，也不会增加自动修复次数。",
-        "en": "When two or more voice engines are deployed, each line shows Voice engine for a new recording. Select one engine, then select Generate a new take for this line. Only that line and that language track are recorded again. Other lines, other tracks and older recordings stay unchanged. The menu stays hidden when only one engine is available. This action takes no other line and adds no automatic repair allowance.",
-        "ja": "2つ以上の音声エンジンを配置している場合、各行に「新しい録音に使う音声エンジン」が表示されます。エンジンを選んで「この行の新しいテイクを生成」を押すと、その行とその言語トラックだけを再録音します。他の行・他のトラック・以前の録音はそのままです。エンジンが1つのときはこのメニューを表示しません。他の行を再録音せず、自動修復の回数も増えません。"
+        "en": "Select the voice engine and parameters inside the line card, then generate a new take. Save edited translation first. The progress indicator stays visible while recording. The new take appears below the protected first recording. Parameters affect this manual recording only. Other lines, frozen conversion settings and spent repair allowances stay unchanged.",
+        "zh-HK": "在對白卡片選擇語音模型及參數，再產生新錄音。請先儲存修改後的翻譯。錄音期間會顯示處理提示；新錄音會加入首次錄音下方的清單。參數只套用於本次手動錄音，不會改動其他對白、固定轉換設定或已用修復次數。",
+        "zh-CN": "在对白卡片选择语音模型及参数，再生成新录音。请先保存修改后的翻译。录音期间显示处理提示；新录音加入首次录音下方的列表。参数仅用于本次手动录音，不改变其他对白、固定转换设置或已用修复次数。",
+        "ja": "カード内で音声モデルとパラメーターを選び、新しい録音を生成します。編集した翻訳は先に保存します。録音中は処理表示が出て、完了後は初回録音の下に追加されます。今回の手動録音以外の設定や修復回数は変更しません。"
       }
     },
     {
@@ -734,10 +734,10 @@
         "ja": "未使用の録音を削除"
       },
       "body": {
-        "zh-HK": "移除錄音由使用者決定，程式不會自動執行。只有在處理停止時，這個按鈕才可以使用。現正成品所使用的錄音、你已選擇的錄音，以及與成品有關聯的錄音，其「移除呢段錄音」按鈕會停用。移除動作會把該 WAV 檔案移到這條影片的「已移除錄音」(discarded-recordings) 資料夾，並在該處保留一份記錄檔；校對報告不會再列出該錄音。此動作不會更改成品、已儲存的選擇、校對狀態或自動修復次數，也不代表確認此行正確。",
-        "zh-CN": "移除录音只由用户决定，程序不会自动执行。只有处理停止时才能使用。当前成片采用、你已选择或有关联成品的录音，其 Remove 按钮会禁用。Remove 会把该 WAV 移入此视频的已移除录音 (discarded-recordings) 文件夹，并保留一份记录文件；校对报告不再列出该录音。该操作不改成片、已保存选择、校对状态或自动修复次数，也不表示确认此行正确。",
-        "en": "You decide. The app never removes a recording on its own. The control is available only while processing is stopped. The Remove button stays disabled for audio used by the current export, audio in a saved choice, and audio linked to an export. Remove moves that WAV into the discarded-recordings folder for the video and keeps a record file there. The review report no longer lists it. This changes no export, saved choice, review status or repair allowance, and it does not certify the line.",
-        "ja": "削除は利用者が決めます。アプリが自動で削除することはありません。処理が停止している時だけ使えます。現在の出力で使用済み、保存済みの選択にある、または出力に関連付けられた録音の Remove ボタンは無効です。Remove はその WAV をこの動画の削除済み録音 (discarded-recordings) フォルダへ移動し、記録ファイルを保存します。校正レポートには表示されません。出力、保存済みの選択、確認状態、修復回数、いずれも変わらず、行の正しさの認証でもありません。"
+        "en": "The first generated recording cannot be removed. Later unused recordings can be removed while processing is stopped. Recordings used by an export or saved choice stay protected. Remove moves the WAV into discarded-recordings and keeps a record. It changes no export or repair allowance.",
+        "zh-HK": "首次錄音不可移除。處理停止時，可移除其後未使用的錄音；成品或已儲存選擇所使用的錄音仍受保護。移除會將 WAV 移至 discarded-recordings 並保留記錄，不會改動成品或修復次數。",
+        "zh-CN": "首次录音不可移除。处理停止时，可移除后续未使用的录音；成片或已保存选择所使用的录音仍受保护。移除会将 WAV 移至 discarded-recordings 并保留记录，不改变成片或修复次数。",
+        "ja": "初回録音は削除できません。処理停止中は、後から追加した未使用録音を削除できます。出力や保存済み選択で使用中の録音も保護します。WAV は discarded-recordings に移動し、記録を保持します。出力や修復回数は変更しません。"
       }
     },
     {
@@ -753,10 +753,10 @@
         "ja": "保存済み録音の試聴と選択"
       },
       "body": {
-        "zh-HK": "此行每一段已保存嘅錄音只會顯示一次，順序按錄音時間排列。第一段顯示「首次生成錄音」，之後各段顯示「生成錄音」。其中一個標記顯示現正成品使用嘅錄音，或者你喺新成品之前已儲存嘅選擇。按該行嘅「試聽」就可以收聽。卡片下方嘅選單決定下一次成品使用邊段錄音。系統不會再用第二個區塊重複顯示同一錄音。如現正成品使用原片聲音，會有一行簡短說明，並提供該聲音嘅試聽。",
-        "zh-CN": "该行每段已保存的录音只显示一次，按录音时间排列。第一段显示“首次生成录音”，其余显示“生成录音”。其中一个标记显示当前成片采用的录音，或你在新生成之前已保存的选择。点该行的“试听”即可收听。卡片下方的菜单决定下一次成片用哪段录音。系统不会用第二个区块重复显示同一录音。若当前成片采用原片声音，会有一行简短说明并提供该声音的试听。",
-        "en": "Each saved recording for the line shows once, in the order it was made. The first take reads First generated recording. Later takes read Generated recording. One mark shows the recording the current export uses, or a choice you saved before a new export. Select Listen on that row to hear it. The menu under the card picks the recording for the next export. No second block repeats the same recording. When the export uses the original source voice instead, one short line states that and offers Listen for it.",
-        "ja": "この行の保存済み録音は1回だけ表示し、録音順に並べます。1番目は「初回生成テイク」、以降は「生成テイク」と表示します。現在の出力が使う録音、または新しい出力前に保存した選択にマークを1つ付けます。各行の「試聴」で再生できます。カード下のメニューで次の出力に使う録音を選びます。同じ録音を別ブロックに繰り返し表示しません。現在の出力が元の音声を使う場合は、短い説明が1行表示され、その試聴も使えます。"
+        "en": "Each recording appears once with its own Listen button. The first recording stays in its protected block. Later recordings appear below the model controls. Select the recording for the next export, then save the choice. Export again at the top creates a new video with saved choices. Existing outputs stay unchanged.",
+        "zh-HK": "每個錄音只顯示一次，並有獨立試聽按鈕。首次錄音留在受保護區塊，後續錄音列於模型控制下方。請選擇下次輸出使用的錄音並儲存選擇，再按頂部「重新輸出」製作新影片；現有成品保持不變。",
+        "zh-CN": "每个录音只显示一次，并有独立试听按钮。首次录音保留在受保护区块，后续录音列于模型控件下方。请选择下次输出使用的录音并保存选择，再按顶部“重新输出”制作新视频；现有成片保持不变。",
+        "ja": "録音は一度だけ表示し、それぞれに試聴ボタンを付けます。初回録音は保護された区画に、追加録音はモデル設定の下に表示します。次の出力に使う録音を選択して保存し、上部の再出力で新しい動画を作ります。既存の出力は保持します。"
       }
     }
   ],
