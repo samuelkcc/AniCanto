@@ -1,3 +1,4 @@
+import contextlib
 import io
 import json
 import sys
@@ -45,13 +46,15 @@ class OfficialCosyTests(unittest.TestCase):
     def test_native_wrapper_passes_reference_and_official_instruction(self):
         seen={}
         class Model:
+            model=SimpleNamespace(llm=SimpleNamespace(sampling=lambda scores,*args,**kwargs:scores))
             def inference_instruct2(self,text,instruction,path,**kwargs):
                 seen.update(text=text,instruction=instruction,path=path,kwargs=kwargs)
                 import numpy as np
                 return [dict(tts_speech=SimpleNamespace(detach=lambda:SimpleNamespace(float=lambda:SimpleNamespace(cpu=lambda:SimpleNamespace(numpy=lambda:np.ones((1,2400)))))))]
         import numpy as np
         wrapper=cosy_native.NativeCosy(Model())
-        with patch('soundfile.write'):
+        with patch('soundfile.write'), patch.dict(sys.modules, {
+                'torch': SimpleNamespace(inference_mode=contextlib.nullcontext)}):
             chunks=list(wrapper.generate('你好',np.zeros(24000),'講廣東話'))
         self.assertEqual(len(chunks[0].audio),2400)
         self.assertEqual(seen['text'],'你好')

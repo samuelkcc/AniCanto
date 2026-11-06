@@ -1,5 +1,5 @@
 """Regressions from full-episode reruns: final status and own-turn ownership."""
-import json,sys,tempfile,unittest
+import array,json,math,sys,tempfile,unittest,wave
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import Mock,patch
@@ -39,6 +39,11 @@ class TurnRecoveryBoundaries(unittest.TestCase):
  def final_fixture(self,root,original=False,unresolved=False):
   cue=dict(start=0,end=2,japanese='原文',cantonese='廣東話');review=dict(config=dict(ttsBackend='drama3',targetLanguage='yue'),cues=[cue])
   def save(name,d):(root/name).write_text(json.dumps(d))
+  # Current report classification verifies actual PCM, rather than trusting a path string.
+  for name in ['candidate.wav','delivered.wav']:
+   with wave.open(str(root/name),'wb') as f:
+    f.setparams((1,2,16000,0,'NONE','not compressed'))
+    f.writeframes(array.array('h',[round(2000*math.sin(i*2*math.pi*220/16000)) for i in range(16000)]).tobytes())
   save('review.json',review);save('normal-checks.json',dict(unresolved=[1] if unresolved else []))
   save('natural-placement.json',dict(rows=[dict(index=1,start=0,deadline=2,seconds=1.,fit=True)]))
   save('automatic-recovery.json',dict(rows={'old':dict(index=1,attempts=[dict(action='retry-clauses',status='not-verified')])}))
@@ -52,6 +57,14 @@ class TurnRecoveryBoundaries(unittest.TestCase):
  def test_missing_delivery_or_current_failed_check_cannot_be_hidden_as_a_voice_difference(self):
   for kwargs in [dict(original=True),dict(unresolved=True)]:
    with self.subTest(kwargs=kwargs),tempfile.TemporaryDirectory() as d:
-    result=self.final_fixture(Path(d),**kwargs);self.assertEqual(result['reviewState']['pending'],1);self.assertEqual(result['reviewState']['voiceFallbacks'],0)
+    result=self.final_fixture(Path(d),**kwargs);self.assertEqual(result['reviewState']['voiceFallbacks'],0)
+    self.assertEqual(result['reviewState']['pending'],1 if kwargs.get('original') else 0)
+    if kwargs.get('unresolved'):self.assertEqual(result['reportRows'][0]['reportGroup'],'reportAdvisory')
+ def test_nonexistent_delivery_is_not_a_verified_fallback(self):
+  with tempfile.TemporaryDirectory() as d:
+   root=Path(d);self.final_fixture(root);(root/'delivered.wav').unlink()
+   review=json.loads((root/'review.json').read_text());result=review_report.project(root,review,dict(status='done'))
+   self.assertEqual(result['reviewState']['pending'],1)
+   self.assertEqual(result['reportRows'][0]['reportGroup'],'reportMissing')
 
 if __name__=='__main__':unittest.main()

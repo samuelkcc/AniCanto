@@ -62,7 +62,23 @@ MODEL_SUFFIXES = {'.gguf', '.safetensors', '.mlx', '.pt', '.pth', '.ckpt', '.onn
                   '.litertlm', '.tflite', '.mlmodel', '.h5', '.pb', '.npy', '.npz', '.weights'}
 SOURCE_SUFFIXES = {'.swift', '.py', '.mjs', '.sh', '.json', '.md', '.m', '.h', '.js',
                    '.rs', '.c', '.cc', '.cpp', '.hpp', '.toml', '.lock', '.css', '.html',
-                   '.pbxproj', '.xcconfig', '.plist', '.xcscheme', '.entitlements'}
+                   '.pbxproj', '.xcconfig', '.plist', '.xcscheme', '.entitlements',
+                   '.mak', '.am', '.in', '.ac', '.m4', '.cmake', '.patch', '.diff',
+                   '.inc', '.asm', '.nasm', '.s', '.def'}
+SOURCE_NAMES = {'makefile', 'gnumakefile', 'configure', 'bootstrap', 'bootstrap.sh',
+                'config.guess', 'config.sub', 'install-sh', 'meson.build', 'meson_options.txt',
+                'cmakelists.txt'}
+
+def source_material(file: Path) -> bool:
+    name=file.name.lower()
+    return file.suffix.lower() in SOURCE_SUFFIXES or name in SOURCE_NAMES or name.startswith(('license', 'licence', 'copying', 'notice', 'authors'))
+
+def record_source_origin(file: Path, target: Path, fingerprint: str, size: int):
+    archive=BUILD/'_retention-archive';archive.mkdir(exist_ok=True)
+    row=dict(source=str(file.relative_to(BUILD)),archive=str(target.relative_to(BUILD)),
+             sha256=fingerprint,bytes=size,rescuedAtUnix=time.time())
+    with (archive/'source-origins.jsonl').open('a') as stream:
+        stream.write(json.dumps(row,sort_keys=True)+'\n')
 SOURCE_MAX_BYTES = 5 * 1024 * 1024
 SIZES_CACHE = BUILD / '_retention-sizes.json'
 
@@ -305,13 +321,16 @@ def rescue(path: Path, live: dict, report: list, model_min_mb: int, archive_left
                 model_left[1] += size
                 report.append(f'rescued model {file.relative_to(path)} '
                               f'({size // (1024 * 1024)} MB)')
-            elif file.suffix.lower() in SOURCE_SUFFIXES and size <= SOURCE_MAX_BYTES:
+            elif source_material(file) and size <= SOURCE_MAX_BYTES:
                 fingerprint = digest(file)
                 if any(p.is_file() and p.stat().st_size == size and digest(p) == fingerprint
                        for p in live.get(name, [])):
                     continue
                 target = BUILD / '_retention-archive' / fingerprint / name
                 if target.exists() and target.stat().st_size == size and digest(target) == fingerprint:
+                    try:record_source_origin(file,target,fingerprint,size)
+                    except OSError as error:
+                        report.append(f'protected {path.name}: source origin write failed: {error}');return False
                     continue
                 if size > archive_left[0]:
                     report.append(f'protected {path.name}: source archive cap reached')
@@ -319,6 +338,7 @@ def rescue(path: Path, live: dict, report: list, model_min_mb: int, archive_left
                 target.parent.mkdir(parents=True, exist_ok=True)
                 try:
                     shutil.copy2(file, target)
+                    record_source_origin(file,target,fingerprint,size)
                 except OSError as error:
                     report.append(f'skipped source {file.relative_to(path)}: {error}')
                     return False

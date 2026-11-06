@@ -10,6 +10,9 @@ def prepare(cfg,job,profile,run):
     # Explicit per-engine references clear automatic candidates in profile_for.
     original=profile
     primary=Path(profile['reference'])
+    bound=__import__('independent_voices').content_bound(cfg)
+    if bound and profile.get('referenceSHA256') and hashlib.sha256(primary.read_bytes()).hexdigest()!=profile['referenceSHA256']:
+        raise ValueError('Voice reference bytes changed. Recordings and progress are preserved.')
     try:source_quality=conditioned_quality(measure(*read(primary)),profile.get('referenceQuality'))
     except (ValueError,wave.Error):
         # Imported float WAVs still pass through the existing FFmpeg PCM16
@@ -26,12 +29,13 @@ def prepare(cfg,job,profile,run):
     if choices:
         _,candidate,source_quality=max(choices,key=lambda row:row[0])
         profile=dict(profile,reference=candidate['reference'],promptText=candidate['promptText'],shortReference=False,
-                     referenceRanges=candidate.get('ranges') or [candidate.get('range',[])],referenceQuality=source_quality)
+                     referenceRanges=candidate.get('ranges') or [candidate.get('range',[])],referenceQuality=source_quality,referenceSHA256=candidate.get('referenceSHA256'))
     source=Path(profile['reference']);digest=hashlib.sha256(source.read_bytes()).hexdigest()
     from speech_level import REVISION as level_revision
     reference_rate=32000 if engine.startswith('gpt-sovits') else 44100 if engine=='drama3' else 24000
     identity=dict(engine=engine,sourceSHA=digest,prompt=profile['promptText'],language=profile.get('language','ja'),revision=6 if engine.startswith('gpt-sovits') else 5,levelRevision=level_revision)
     if engine.startswith('gpt-sovits') or engine=='drama3':identity['referenceSampleRate']=reference_rate
+    if bound:identity['sourceIdentityRevision']=__import__('independent_voices').IDENTITY_REVISION379
     key=hashlib.sha256(json.dumps(identity,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:24]
     folder=Path(cfg['storage'])/'engine-references'/engine/key;folder.mkdir(parents=True,exist_ok=True)
     target=folder/'reference.wav';manifest=folder/'reference.json'
@@ -46,15 +50,21 @@ def prepare(cfg,job,profile,run):
         conditioned,quality=prepare_file(cleaned,folder/'levels',reference=True)
         if 'insufficient-signal' in quality['warnings']:raise ValueError('參考錄音有效聲音太少，請重新取樣或匯入乾淨原聲。')
         target.write_bytes(conditioned.read_bytes());temporary.unlink(missing_ok=True)
+        if bound:identity['conditionedSHA256']=hashlib.sha256(target.read_bytes()).hexdigest()
         manifest.write_text(json.dumps(dict(identity,source=str(source),requestedSource=original['reference'],selectedAlternate=str(source)!=original['reference'],reference=str(target),quality=quality,sourceQuality=source_quality,cleanup=cleanup,shortReference=bool(profile.get('shortReference')),referenceRanges=profile.get('referenceRanges',[]),purityVerified=False,method='Independent engine conditioning from original recording; no generated bridge'),ensure_ascii=False,indent=2))
+    if bound:
+        saved=json.loads(manifest.read_text())
+        if saved.get('sourceSHA')!=digest or saved.get('conditionedSHA256')!=hashlib.sha256(target.read_bytes()).hexdigest():
+            raise ValueError('Conditioned voice reference changed. Recordings and progress are preserved.')
     result=dict(profile,reference=str(target),referenceProvenance=str(manifest))
+    if bound:result['referenceSHA256']=hashlib.sha256(target.read_bytes()).hexdigest()
     alternates=[]
     candidates=list(original.get('referenceCandidates',[])[:2])
     if str(source)!=original['reference']:candidates.insert(0,dict(reference=original['reference'],promptText=original['promptText'],language=original.get('language','ja'),quality=original.get('referenceQuality',{}),ranges=original.get('referenceRanges',[])))
     for candidate in candidates[:3]:
         if not candidate.get('promptText') or candidate.get('reference')==str(source):continue
         try:
-            alternate=prepare(cfg,job,dict(profile,reference=candidate['reference'],promptText=candidate['promptText'],referenceCandidates=[],mixedReference=False,referenceQuality=candidate.get('quality',{}),referenceRanges=candidate.get('ranges') or [candidate.get('range',[])]),run)
+            alternate=prepare(cfg,job,dict(profile,reference=candidate['reference'],promptText=candidate['promptText'],referenceCandidates=[],mixedReference=False,referenceQuality=candidate.get('quality',{}),referenceRanges=candidate.get('ranges') or [candidate.get('range',[])],referenceSHA256=candidate.get('referenceSHA256')),run)
             alternates.append(dict(reference=alternate['reference'],promptText=alternate['promptText'],language=alternate.get('language','ja')))
         except (ValueError,OSError):continue
         if len(alternates)>=2:break

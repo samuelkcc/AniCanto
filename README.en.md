@@ -15,21 +15,20 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto-macOS-0.25.46.zip)** · **[Windows 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto.exe)**
+**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.46-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.46 / build 306
+## Recent update · 0.25.49 / build 398
 
-- **Automatic source acceptance:** with Accept detected language on, use the first audio track unless explicitly changed, prefer Chinese captions for Cantonese/Mandarin, and inspect unlabelled subtitle text. When no suitable captions are found, continue from speech without a subtitle prompt or OCR. English output prefers English, then Chinese.
-- **Clearer Review report:** separate read-only system translation, saved edits, original and separated audio, protected first recording, model parameters, new takes and the final voice choice.
-- **Record one line:** save edited words, choose a voice model and parameters, then record with a visible progress indicator. Each take has its own Listen button.
-- **Keep the original take:** the first recording cannot be removed. Later unused takes can be removed; selected and exported recordings stay protected.
-- **Export again:** save the recording choice, then create a new output from the button at the top. Earlier outputs remain available.
-- **LAN diagnostics:** off by default. One switch in Welcome → Help centre → LAN diagnostics displays the device IP, automatic port and access code. A read-only browser view refreshes settings and logs every three seconds. Use a trusted private network; HTTP is not encrypted.
+- Preserve original speech when a bounded source-clock check remains unconfirmed.
+- Use the current source-word timing and band-limited voice-reference paths.
+- Improve source-witnessed name handling in normal and fast translation.
+- Keep the first audible recording and all spent recovery allowances on resume.
+- Include the current four-language user guide and workflow controls.
 
-Windows execution, whole-film inference and listening acceptance for this release remain unverified. Package checks and isolated interface tests are separate evidence.
+The existing interface screenshots remain. Native Windows GPU speed and complete-film listening quality need separate acceptance.
 
 ## Why AniCanto exists
 

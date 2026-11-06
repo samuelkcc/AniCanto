@@ -190,7 +190,7 @@ def profile_for(cue,cfg):
  if not profile: raise ValueError('請為每句配音選擇角色，並設定角色參考聲音。')
  key=cfg.get('ttsBackend','gpt-sovits')+':'+cfg.get('targetLanguage','yue')
  own=(profile.get('engineReferences') or {}).get(key,{})
- if own.get('enabled'):profile=dict(profile,reference=own.get('reference',''),promptText=own.get('promptText',''),language=own.get('language') or cfg.get('targetLanguage','yue'),mixedReference=False,shortReference=False,referenceRanges=[],referenceCandidates=[],referenceQuality={})
+ if own.get('enabled'):profile=dict(profile,reference=own.get('reference',''),promptText=own.get('promptText',''),language=own.get('language') or cfg.get('targetLanguage','yue'),mixedReference=False,shortReference=False,referenceRanges=[],referenceCandidates=[],referenceQuality={},referenceSHA256=own.get('referenceSHA256'))
  if cfg.get('voiceStyleMode')=='natural':
   if own.get('enabled') and profile.get('language')!=cfg.get('targetLanguage','yue'):
    raise ValueError('自然配音嘅獨立參考必須同目標語言一致。')
@@ -773,6 +773,11 @@ def render_complete_preview(cfg,job,cues,paths,report,run,emit):
     warnings.append(dict(index=row['index'],kind='signal-quality',message='時段調速後聲音品質需要留意；完整字句及原錄音保留。',evidence=row['signalQuality']))
    if rate>limit+.01:
     warnings.append(dict(index=row['index'],kind='accelerated-delivery',rate=rate,message='完整台詞已放入日文發聲時段；語速較快。'))
+  from pcm_mix import EDGE_REVISION,edge_envelope
+  if cfg.get('audioEdgeEnvelopeRevision')==EDGE_REVISION:
+   samples,edge_frames=edge_envelope(samples,sr,original=bool(cue.get('preserveOriginalSpeech')))
+   row['edgeEnvelopeFrames']=edge_frames
+   row['edgeEnvelopeRevision']=EDGE_REVISION
   end=offset+len(samples)
   if len(timeline)<end:timeline.extend(array.array('i',[0])*(end-len(timeline)))
   overlaps=[index for a,b,index in intervals if offset<b and end>a]

@@ -74,13 +74,14 @@ class Ownership(unittest.TestCase):
   rows=json.loads((self.job/'timing.json').read_text());self.assertTrue(rows[0]['captionCovered']);self.assertFalse(rows[0]['originalPreserved']);self.assertEqual(warnings,[])
 
 class Submission(unittest.TestCase):
- def test_new_basic_and_expert_freeze_caption_only_and_new_policies(self):
+ def test_new_modes_keep_optional_caption_check_off_and_freeze_policies(self):
   from desktop_state import Store,read
   for mode in ['basic','expert']:
    with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
     root=Path(tmp);video=root/'source.mp4';video.touch();store=Store(root);store.mode=mode;store.add([str(video)])
     request=store.submit(store.row());cfg=read(request,{})
-    self.assertTrue(cfg['skipNonDialogueCaptions']);self.assertEqual(cfg['sourceClockRecoveryRevision'],clock.REVISION);self.assertEqual(cfg['captionContinuationRevision'],caption_coverage.REVISION)
+    # Control300 supersedes the historical263 default. Existing requests still retain their frozen choice.
+    self.assertFalse(cfg['skipNonDialogueCaptions']);self.assertEqual(cfg['sourceClockRecoveryRevision'],clock.REVISION);self.assertEqual(cfg['captionContinuationRevision'],caption_coverage.REVISION)
     self.assertFalse(cfg['translationTextReview']);self.assertFalse(cfg['safeEndpointCheck']);self.assertFalse(cfg['analyzeBackgroundGaps'])
     before=request.read_bytes();store.row()['status']='paused';store.settings.update(skipNonDialogueCaptions=False,translationTextReview=True)
     self.assertEqual(store.submit(store.row()),request);self.assertEqual(request.read_bytes(),before)

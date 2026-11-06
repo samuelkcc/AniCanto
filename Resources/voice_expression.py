@@ -1,5 +1,27 @@
 """Explicit bounded inference settings; no invented accent-removal controls."""
 import math
+from contextlib import contextmanager
+
+
+@contextmanager
+def native_cosy_temperature(model, temperature):
+ """Apply Temperature at the pinned PyTorch log-score sampling boundary.
+
+ Keep the upstream nucleus and repetition rules. Restore the sampler after
+ completion, cancellation or failure. This does not change speaker references.
+ """
+ temperature=float(temperature)
+ if not math.isfinite(temperature) or not .3<=temperature<=1:
+  raise ValueError('CosyVoice Temperature must be between 0.3 and 1.0.')
+ llm=getattr(getattr(model,'model',None),'llm',None)
+ original=getattr(llm,'sampling',None)
+ if not callable(original) or hasattr(llm,'vllm'):
+  raise ValueError('CosyVoice Temperature requires the pinned PyTorch sampling backend.')
+ def sample(scores,*args,**kwargs):
+  return original(scores if temperature==1 else scores/temperature,*args,**kwargs)
+ llm.sampling=sample
+ try: yield
+ finally: llm.sampling=original
 
 def settings(cfg):
  out={}

@@ -1,0 +1,1244 @@
+{
+  "revision": "hk-spoken-retrieval-377",
+  "ownership": "First-party style examples authored for AniCanto. No third-party dictionary or model output is copied.",
+  "maximumExamples": 3,
+  "scope": "First-party expanded Cantonese first-draft style. Retrieve at most three matching examples; never replace source facts.",
+  "entries": [
+    {
+      "id": "support",
+      "matchesAny": [
+        [
+          "提供",
+          "支持"
+        ]
+      ],
+      "written": "他為隊友提供支持。",
+      "spoken": "佢幫隊友手。",
+      "usage": "「為某人提供支持」嘅自然講法係「幫某人手」；保留原句嗰個人名，同有冇幫手。"
+    },
+    {
+      "id": "last-year",
+      "matchesAny": [
+        [
+          "去年"
+        ],
+        [
+          "昨年"
+        ]
+      ],
+      "written": "他是去年的冠軍。",
+      "spoken": "佢係舊年嘅冠軍。",
+      "usage": "一般對白將「去年」講成「舊年」；冠軍名同連勝次數照原句。"
+    },
+    {
+      "id": "bothered-passive",
+      "matchesAny": [
+        [
+          "被",
+          "困擾"
+        ]
+      ],
+      "written": "他被這些傳聞困擾。",
+      "spoken": "啲傳聞搞到佢好煩。",
+      "usage": "被動句改成自然口語因果句，唔好調轉邊個受影響。"
+    },
+    {
+      "id": "won-aspect",
+      "matchesAny": [
+        [
+          "贏",
+          "了"
+        ]
+      ],
+      "written": "他贏了這場比賽。",
+      "spoken": "佢贏咗呢場比賽。",
+      "usage": ""
+    },
+    {
+      "id": "lost-aspect",
+      "matchesAny": [
+        [
+          "輸",
+          "了"
+        ]
+      ],
+      "written": "他輸了比賽。",
+      "spoken": "佢輸咗場比賽。",
+      "usage": ""
+    },
+    {
+      "id": "anticipation",
+      "matchesAny": [
+        [
+          "翹首"
+        ],
+        [
+          "期待"
+        ]
+      ],
+      "written": "我們對這場比賽不勝翹首。",
+      "spoken": "我哋等呢場比賽等到頸都長。",
+      "usage": ""
+    },
+    {
+      "id": "uncertain-victory",
+      "matchesAny": [
+        [
+          "能否"
+        ],
+        [
+          "是否"
+        ]
+      ],
+      "written": "他能否連續兩屆奪冠？",
+      "spoken": "佢可唔可以連續兩屆攞冠軍？",
+      "usage": ""
+    },
+    {
+      "id": "too-much-harm",
+      "matchesAny": [
+        [
+          "損害",
+          "太"
+        ]
+      ],
+      "written": "這樣對輪胎的損害太大。",
+      "spoken": "咁樣太傷條胎喇。",
+      "usage": "「太勉強」同「損害太大」係兩層意思，要兩層都保留。"
+    },
+    {
+      "id": "lower-power",
+      "matchesAny": [
+        [
+          "馬力",
+          "壓"
+        ]
+      ],
+      "written": "你把馬力壓下來。",
+      "spoken": "你將馬力壓低啲。",
+      "usage": ""
+    },
+    {
+      "id": "spectators",
+      "matchesAny": [
+        [
+          "觀眾",
+          "面前"
+        ]
+      ],
+      "written": "他在四千名觀眾面前重新出發。",
+      "spoken": "佢當住四千個觀眾重新出發。",
+      "usage": ""
+    },
+    {
+      "id": "not-yet",
+      "matchesAny": [
+        [
+          "還沒有"
+        ],
+        [
+          "尚未"
+        ]
+      ],
+      "written": "他還沒有回來。",
+      "spoken": "佢仲未返嚟。",
+      "usage": ""
+    },
+    {
+      "id": "negative-command",
+      "matchesAny": [
+        [
+          "不要"
+        ],
+        [
+          "別走"
+        ]
+      ],
+      "written": "不要離開這裡。",
+      "spoken": "唔好離開呢度。",
+      "usage": ""
+    },
+    {
+      "id": "subject-and-object",
+      "matchesAny": [
+        [
+          "告訴"
+        ]
+      ],
+      "written": "我沒有告訴他。",
+      "spoken": "我冇話畀佢知。",
+      "usage": ""
+    },
+    {
+      "id": "question-why",
+      "matchesAny": [
+        [
+          "為什麼"
+        ],
+        [
+          "為何"
+        ]
+      ],
+      "written": "你為什麼不告訴我？",
+      "spoken": "你點解唔話我知？",
+      "usage": ""
+    },
+    {
+      "id": "current-progress",
+      "matchesAny": [
+        [
+          "正在"
+        ]
+      ],
+      "written": "他正在找朋友。",
+      "spoken": "佢搵緊朋友。",
+      "usage": ""
+    },
+    {
+      "id": "directions",
+      "matchesAny": [
+        [
+          "這裡"
+        ],
+        [
+          "那裡"
+        ]
+      ],
+      "written": "你先回到這裡。",
+      "spoken": "你返嚟呢度先。",
+      "usage": ""
+    },
+    {
+      "id": "negated-condition",
+      "matchesAny": [
+        [
+          "如果",
+          "不"
+        ]
+      ],
+      "written": "如果你不答應，我就不走。",
+      "spoken": "如果你唔應承，我就唔走。",
+      "usage": ""
+    },
+    {
+      "id": "first-time",
+      "matchesAny": [
+        [
+          "第一次"
+        ]
+      ],
+      "written": "這是我第一次參加。",
+      "spoken": "呢個係我第一次參加。",
+      "usage": ""
+    },
+    {
+      "id": "speech-idiom",
+      "matchesAny": [
+        [
+          "怎麼可能"
+        ],
+        [
+          "不可能"
+        ]
+      ],
+      "written": "這怎麼可能？",
+      "spoken": "呢啲點可能呀？",
+      "usage": ""
+    },
+    {
+      "id": "speech-need",
+      "matchesAny": [
+        [
+          "不用"
+        ],
+        [
+          "不需要"
+        ]
+      ],
+      "written": "你不用擔心。",
+      "spoken": "你唔使擔心。",
+      "usage": ""
+    },
+    {
+      "id": "fall-behind",
+      "matchesAny": [
+        [
+          "甩開"
+        ]
+      ],
+      "written": "如果被對手甩開就糟了。",
+      "spoken": "如果畀對手拋離就慘喇。",
+      "usage": "「被某人甩開」講成「畀某人拋離」；保留條件同對手名。"
+    },
+    {
+      "id": "what-question",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "什麼"
+        ],
+        [
+          "甚麼"
+        ]
+      ],
+      "written": "你在看什麼？",
+      "spoken": "你睇緊乜嘢？",
+      "usage": "保留問句，唔好變成答案。"
+    },
+    {
+      "id": "how-to-proceed",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "怎麼辦"
+        ],
+        [
+          "如何是好"
+        ]
+      ],
+      "written": "現在怎麼辦？",
+      "spoken": "而家點算？",
+      "usage": "問處理方法，唔係問原因。"
+    },
+    {
+      "id": "how-known",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "怎麼知道"
+        ]
+      ],
+      "written": "你怎麼知道這件事？",
+      "spoken": "你點知呢件事？",
+      "usage": "保留知道嘅對象。"
+    },
+    {
+      "id": "which-one",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "哪一個"
+        ],
+        [
+          "哪個"
+        ]
+      ],
+      "written": "你要哪一個？",
+      "spoken": "你想要邊個？",
+      "usage": "保留選擇範圍，唔好自行揀答案。"
+    },
+    {
+      "id": "any-or-not",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "有沒有"
+        ]
+      ],
+      "written": "你有沒有看見他？",
+      "spoken": "你有冇見到佢？",
+      "usage": "有冇係問句，唔好譯成肯定或否定。"
+    },
+    {
+      "id": "first-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "我們"
+        ]
+      ],
+      "written": "我們一起離開。",
+      "spoken": "我哋一齊走。",
+      "usage": "我哋係複數，唔可以變成我。"
+    },
+    {
+      "id": "second-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "你們"
+        ]
+      ],
+      "written": "你們先走。",
+      "spoken": "你哋行先。",
+      "usage": "保留複數同先後次序。"
+    },
+    {
+      "id": "third-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "他們"
+        ],
+        [
+          "她們"
+        ]
+      ],
+      "written": "他們還在等。",
+      "spoken": "佢哋仲等緊。",
+      "usage": "佢哋係複數，唔好加其他人物。"
+    },
+    {
+      "id": "just-completed",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "剛剛"
+        ],
+        [
+          "剛才"
+        ]
+      ],
+      "written": "我剛剛到。",
+      "spoken": "我啱啱到。",
+      "usage": "保留啱啱發生嘅時間。"
+    },
+    {
+      "id": "already-ate",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "已經"
+        ]
+      ],
+      "written": "我已經吃飯了。",
+      "spoken": "我食咗飯喇。",
+      "usage": "按動作完成嘅意思用咗，唔好每個了都硬換。"
+    },
+    {
+      "id": "still-waiting",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "仍然"
+        ]
+      ],
+      "written": "他仍然在等你。",
+      "spoken": "佢仲等緊你。",
+      "usage": "保留動作仍然進行。"
+    },
+    {
+      "id": "no-longer",
+      "category": "polarity",
+      "matchesAny": [
+        [
+          "不再"
+        ]
+      ],
+      "written": "我不再相信他。",
+      "spoken": "我唔再信佢。",
+      "usage": "保留唔再，唔好變成從來都唔信。"
+    },
+    {
+      "id": "nearly",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "差點"
+        ],
+        [
+          "險些"
+        ]
+      ],
+      "written": "我差點忘記了。",
+      "spoken": "我爭啲唔記得咗。",
+      "usage": "爭啲係差少少發生，唔好變成已經發生。"
+    },
+    {
+      "id": "in-time",
+      "category": "time",
+      "matchesAny": [
+        [
+          "來得及"
+        ],
+        [
+          "來不及"
+        ]
+      ],
+      "written": "現在走還來得及。",
+      "spoken": "而家走仲趕得切。",
+      "usage": "來不及要用趕唔切，保留否定。"
+    },
+    {
+      "id": "tomorrow",
+      "category": "time",
+      "matchesAny": [
+        [
+          "明天"
+        ]
+      ],
+      "written": "明天再來吧。",
+      "spoken": "聽日再嚟啦。",
+      "usage": "保留原句日期同再做一次嘅意思。"
+    },
+    {
+      "id": "yesterday",
+      "category": "time",
+      "matchesAny": [
+        [
+          "昨天"
+        ]
+      ],
+      "written": "他昨天來過。",
+      "spoken": "佢尋日嚟過。",
+      "usage": "保留過去時間，唔好變成今日。"
+    },
+    {
+      "id": "wait-shortly",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "等一會"
+        ],
+        [
+          "等一等"
+        ]
+      ],
+      "written": "請等一會兒。",
+      "spoken": "唔該等陣。",
+      "usage": "保留請求嘅禮貌，唔好改成喝令。"
+    },
+    {
+      "id": "tell-me",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "告訴我"
+        ]
+      ],
+      "written": "請告訴我原因。",
+      "spoken": "唔該話我知點解。",
+      "usage": "保留邊個要知道同知道乜。"
+    },
+    {
+      "id": "stop-speaking",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "別說"
+        ],
+        [
+          "不要說"
+        ]
+      ],
+      "written": "別說了。",
+      "spoken": "唔好再講喇。",
+      "usage": "只改講話嘅動詞；小說、人名同引用文字唔作換字。"
+    },
+    {
+      "id": "less-nonsense",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "廢話少說"
+        ]
+      ],
+      "written": "廢話少說，快走。",
+      "spoken": "廢話少講，快啲走。",
+      "usage": "保持催促，唔好自行加入粗口。"
+    },
+    {
+      "id": "not-understand",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "聽不懂"
+        ],
+        [
+          "聽不明白"
+        ]
+      ],
+      "written": "我聽不懂你在說什麼。",
+      "spoken": "我聽唔明你講乜。",
+      "usage": "聽唔明唔等於聽唔到。"
+    },
+    {
+      "id": "not-hear",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "聽不到"
+        ],
+        [
+          "聽不見"
+        ]
+      ],
+      "written": "他聽不到你說話，但他明白你的意思。",
+      "spoken": "佢聽唔到你講嘢，但佢明你嘅意思。",
+      "usage": "聽唔到同唔理解係兩回事。保留但後面嘅肯定或否定，唔好將陳述改成係咪問句。"
+    },
+    {
+      "id": "angry",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "生氣"
+        ],
+        [
+          "憤怒"
+        ]
+      ],
+      "written": "我真的很生氣。",
+      "spoken": "我真係好嬲。",
+      "usage": "保持原有情緒強度，唔好加辱罵。"
+    },
+    {
+      "id": "afraid",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "害怕"
+        ]
+      ],
+      "written": "我有點害怕。",
+      "spoken": "我有啲驚。",
+      "usage": "有啲唔係非常，保留程度。"
+    },
+    {
+      "id": "exhausted",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "筋疲力盡"
+        ]
+      ],
+      "written": "我已經筋疲力盡。",
+      "spoken": "我攰到冇晒力喇。",
+      "usage": "保留疲累程度，唔好當成生病。"
+    },
+    {
+      "id": "shocked",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "嚇我一跳"
+        ]
+      ],
+      "written": "你嚇我一跳。",
+      "spoken": "你嚇咗我一跳。",
+      "usage": "保留係邊個嚇親邊個。"
+    },
+    {
+      "id": "cannot-accept",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "不能接受"
+        ],
+        [
+          "無法接受"
+        ]
+      ],
+      "written": "我不能接受這個結果。",
+      "spoken": "我接受唔到呢個結果。",
+      "usage": "保留唔接受嘅對象。"
+    },
+    {
+      "id": "stop-joking",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "不要開玩笑"
+        ],
+        [
+          "別開玩笑"
+        ]
+      ],
+      "written": "不要開玩笑。",
+      "spoken": "唔好講笑。",
+      "usage": "唔好擅自添加憤怒或粗口。"
+    },
+    {
+      "id": "embarrassed",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "丟臉"
+        ]
+      ],
+      "written": "這樣太丟臉了。",
+      "spoken": "咁樣真係好瘀。",
+      "usage": "保留尷尬，唔好改成生氣。"
+    },
+    {
+      "id": "no-problem",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "沒關係"
+        ],
+        [
+          "沒有關係"
+        ]
+      ],
+      "written": "沒關係，我可以等。",
+      "spoken": "唔緊要，我可以等。",
+      "usage": "「沒有關係」如講人物冇關聯，要保留嗰個意思。"
+    },
+    {
+      "id": "apology",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "不好意思"
+        ],
+        [
+          "對不起"
+        ]
+      ],
+      "written": "對不起，我來晚了。",
+      "spoken": "唔好意思，我遲咗到。",
+      "usage": "正式道歉可用對唔住；唔好無故變成輕佻。"
+    },
+    {
+      "id": "thanks-help",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "謝謝",
+          "幫"
+        ],
+        [
+          "謝謝",
+          "讓"
+        ]
+      ],
+      "written": "謝謝你幫我開門。",
+      "spoken": "唔該你幫我開門。",
+      "usage": "幫忙常用唔該；收到禮物或讚賞常用多謝，唔好一律替換。"
+    },
+    {
+      "id": "thanks-gift",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "謝謝",
+          "禮物"
+        ]
+      ],
+      "written": "謝謝你的禮物。",
+      "spoken": "多謝你份禮物。",
+      "usage": "禮物用多謝，唔好套用請人幫手嘅唔該。"
+    },
+    {
+      "id": "worry",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "擔心"
+        ]
+      ],
+      "written": "我很擔心他。",
+      "spoken": "我好擔心佢。",
+      "usage": "保留關心對象，唔好加新嘅危險。"
+    },
+    {
+      "id": "quarrel",
+      "category": "actions",
+      "matchesAny": [
+        [
+          "吵架"
+        ]
+      ],
+      "written": "他們又吵架了。",
+      "spoken": "佢哋又嗌交喇。",
+      "usage": "保留又一次同人物複數。"
+    },
+    {
+      "id": "stop-noise",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "不要吵"
+        ],
+        [
+          "別吵"
+        ]
+      ],
+      "written": "不要吵，讓我想一下。",
+      "spoken": "唔好嘈，等我諗吓。",
+      "usage": "每一分句都保留。"
+    },
+    {
+      "id": "take-care",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "小心一點"
+        ],
+        [
+          "小心點"
+        ]
+      ],
+      "written": "你小心一點。",
+      "spoken": "你小心啲。",
+      "usage": "保留提醒，唔好新增危險種類。"
+    },
+    {
+      "id": "not-necessary",
+      "category": "polarity",
+      "matchesAny": [
+        [
+          "不必"
+        ],
+        [
+          "無須"
+        ]
+      ],
+      "written": "你不必現在回答。",
+      "spoken": "你唔使而家答。",
+      "usage": "唔使係冇必要，唔好改成唔准。"
+    },
+    {
+      "id": "must-do",
+      "category": "obligation",
+      "matchesAny": [
+        [
+          "必須"
+        ]
+      ],
+      "written": "你必須今天完成。",
+      "spoken": "你一定要今日做完。",
+      "usage": "保留必須嘅強度；正式法律或引用文字可保留原有用語。"
+    },
+    {
+      "id": "should-not",
+      "category": "obligation",
+      "matchesAny": [
+        [
+          "不應該"
+        ]
+      ],
+      "written": "你不應該這樣做。",
+      "spoken": "你唔應該咁做。",
+      "usage": "唔應該唔等於做唔到。"
+    },
+    {
+      "id": "possible-weather",
+      "category": "context",
+      "matchesAny": [
+        [
+          "搞不好",
+          "明天"
+        ],
+        [
+          "搞不好",
+          "下雨"
+        ]
+      ],
+      "written": "搞不好明天會下雨。",
+      "spoken": "聽日可能會落雨。",
+      "usage": "呢度講可能性，唔係整唔好一件物件。"
+    },
+    {
+      "id": "cannot-fix",
+      "category": "context",
+      "matchesAny": [
+        [
+          "修不好"
+        ],
+        [
+          "搞不好",
+          "機器"
+        ]
+      ],
+      "written": "這台機器怎麼也修不好。",
+      "spoken": "呢部機點整都整唔好。",
+      "usage": "呢度講修理唔成功，唔好改成可能。"
+    },
+    {
+      "id": "almost-same",
+      "category": "degree",
+      "matchesAny": [
+        [
+          "差不多"
+        ]
+      ],
+      "written": "他們的速度差不多。",
+      "spoken": "佢哋嘅速度差唔多。",
+      "usage": "差唔多唔係完全一樣。"
+    },
+    {
+      "id": "fixed-title",
+      "category": "names",
+      "matchesAny": [
+        [
+          "《",
+          "》",
+          "叫"
+        ],
+        [
+          "《",
+          "》",
+          "小說"
+        ],
+        [
+          "《",
+          "》",
+          "電影"
+        ],
+        [
+          "《",
+          "》",
+          "書名"
+        ]
+      ],
+      "written": "這本小說叫《不要回來》。",
+      "spoken": "呢本小說叫《不要回來》。",
+      "usage": "《》內係書名，原樣保留，唔好改成《唔好返嚟》；書名以外嘅對白先改口語。"
+    },
+    {
+      "id": "context377-still-wait",
+      "matchesAny": [
+        [
+          "仍然"
+        ]
+      ],
+      "written": "他仍然在外面等你。",
+      "spoken": "佢仲喺出面等緊你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-already-left",
+      "matchesAny": [
+        [
+          "已經",
+          "離開"
+        ]
+      ],
+      "written": "他已經離開了。",
+      "spoken": "佢已經走咗喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-unexpected",
+      "matchesAny": [
+        [
+          "竟然"
+        ]
+      ],
+      "written": "他竟然一個人回來了。",
+      "spoken": "估唔到佢自己一個返咗嚟。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-cannot-only",
+      "matchesAny": [
+        [
+          "只能"
+        ]
+      ],
+      "written": "我們現在只能在這裡等。",
+      "spoken": "我哋而家唯有喺呢度等。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-mistaken-belief",
+      "matchesAny": [
+        [
+          "以為"
+        ]
+      ],
+      "written": "我以為你不會再來了。",
+      "spoken": "我以為你唔會再嚟添。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-feel-opinion",
+      "matchesAny": [
+        [
+          "覺得"
+        ]
+      ],
+      "written": "你覺得這樣真的可以嗎？",
+      "spoken": "你覺得咁樣真係得咩？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-fear-outcome",
+      "matchesAny": [
+        [
+          "恐怕"
+        ]
+      ],
+      "written": "恐怕趕不上最後一班車了。",
+      "spoken": "驚趕唔切尾班車喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-understand-now",
+      "matchesAny": [
+        [
+          "明白"
+        ]
+      ],
+      "written": "現在我終於明白你為什麼生氣。",
+      "spoken": "而家我終於明點解你嬲喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-hurry-action",
+      "matchesAny": [
+        [
+          "趕快"
+        ]
+      ],
+      "written": "趕快把門關上！",
+      "spoken": "快啲閂埋道門！",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-as-soon",
+      "matchesAny": [
+        [
+          "盡快"
+        ]
+      ],
+      "written": "請盡快告訴我結果。",
+      "spoken": "唔該盡快話畀我知個結果。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-rather-than",
+      "matchesAny": [
+        [
+          "與其"
+        ]
+      ],
+      "written": "與其一直擔心，不如先去看看。",
+      "spoken": "與其一路擔心，不如去睇吓先。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-contrary-result",
+      "matchesAny": [
+        [
+          "反而"
+        ]
+      ],
+      "written": "你這樣做反而會更危險。",
+      "spoken": "你咁做仲危險呀。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-deliberate",
+      "matchesAny": [
+        [
+          "故意"
+        ]
+      ],
+      "written": "你是故意不告訴我的嗎？",
+      "spoken": "你係咪特登唔話畀我知㗎？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-encounter",
+      "matchesAny": [
+        [
+          "遇到"
+        ]
+      ],
+      "written": "如果遇到他，幫我問一問。",
+      "spoken": "如果撞到佢，幫我問吓。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-yet",
+      "matchesAny": [
+        [
+          "尚未"
+        ]
+      ],
+      "written": "他們尚未找到出口。",
+      "spoken": "佢哋仲未搵到出口。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-necessarily",
+      "matchesAny": [
+        [
+          "未必"
+        ]
+      ],
+      "written": "不喜歡說話的人未必不開心。",
+      "spoken": "唔鍾意講嘢嘅人未必唔開心。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-that",
+      "matchesAny": [
+        [
+          "並非"
+        ]
+      ],
+      "written": "我並非不相信你，只是需要時間。",
+      "spoken": "我唔係唔信你，只係需要啲時間。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-otherwise",
+      "matchesAny": [
+        [
+          "否則"
+        ]
+      ],
+      "written": "現在就走，否則會遲到。",
+      "spoken": "而家就走啦，唔係會遲到㗎。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-as-long-as",
+      "matchesAny": [
+        [
+          "只要"
+        ]
+      ],
+      "written": "只要你願意，我就陪你去。",
+      "spoken": "只要你肯，我就陪你去。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-even-if",
+      "matchesAny": [
+        [
+          "即使"
+        ]
+      ],
+      "written": "即使沒有人相信，我也不會放棄。",
+      "spoken": "就算冇人信，我都唔會放棄。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-until",
+      "matchesAny": [
+        [
+          "直到"
+        ]
+      ],
+      "written": "直到昨天，我才知道這件事。",
+      "spoken": "我到噚日先知呢件事。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-almost-missed",
+      "matchesAny": [
+        [
+          "差點"
+        ]
+      ],
+      "written": "我差點忘了把信交給你。",
+      "spoken": "我爭啲唔記得畀封信你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-whether-question",
+      "matchesAny": [
+        [
+          "是否"
+        ]
+      ],
+      "written": "你是否還記得我們的約定？",
+      "spoken": "你仲記唔記得我哋嘅約定？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-rhetorical",
+      "matchesAny": [
+        [
+          "難道"
+        ]
+      ],
+      "written": "難道你真的不想回家嗎？",
+      "spoken": "唔通你真係唔想返屋企咩？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-look-like",
+      "matchesAny": [
+        [
+          "看來"
+        ]
+      ],
+      "written": "看來今天沒辦法出發了。",
+      "spoken": "睇嚟今日出發唔到喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-just-found",
+      "matchesAny": [
+        [
+          "原來"
+        ]
+      ],
+      "written": "原來你一直都在這裡。",
+      "spoken": "原來你一直都喺度。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-temporarily",
+      "matchesAny": [
+        [
+          "暫時"
+        ]
+      ],
+      "written": "我們暫時還不能告訴你。",
+      "spoken": "我哋暫時仲唔可以話畀你知。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-on-purpose-not",
+      "matchesAny": [
+        [
+          "無論"
+        ]
+      ],
+      "written": "無論發生什麼，我都會等你。",
+      "spoken": "無論發生乜嘢事，我都會等你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-please-check",
+      "matchesAny": [
+        [
+          "確認"
+        ]
+      ],
+      "written": "請先確認她是否安全。",
+      "spoken": "唔該先睇清楚佢安唔安全。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-intention",
+      "matchesAny": [
+        [
+          "打算"
+        ]
+      ],
+      "written": "你打算一個人去嗎？",
+      "spoken": "你諗住自己一個去呀？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-afterwards",
+      "matchesAny": [
+        [
+          "隨後"
+        ]
+      ],
+      "written": "他隨後把鑰匙交給了妹妹。",
+      "spoken": "跟住佢就將條鎖匙畀咗阿妹。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-permission",
+      "matchesAny": [
+        [
+          "允許"
+        ]
+      ],
+      "written": "沒有他的允許，我不能開門。",
+      "spoken": "未得佢同意，我唔可以開門。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    }
+  ]
+}

@@ -26,7 +26,7 @@ def labels(track):
     return 'zho',{'dual':'Cantonese + English (learning) / 廣東話＋英文（學習）','original-yue':'Original Chinese + Hong Kong Cantonese','original-english':'Original Chinese + English'}.get(mode,mode)
 
 def ordered(tracks):
-    return sorted(tracks,key=lambda t:({'yue':0,'zh':.5,'english':1,'dual':2,'original-yue':3,'original-english':4,'original':5}.get(t['mode'],3),t['language']!='yue'))
+    return sorted(tracks,key=lambda t:({'yue':0,'zh':.25,'english':.5,'original':1,'dual':2,'original-yue':3,'original-english':4}.get(t['mode'],3),t['language']!='yue'))
 
 def matching_cue(cue,cues):
     """Dropped draft rows cannot shift the translations of later subtitle rows."""

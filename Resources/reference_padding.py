@@ -1,15 +1,8 @@
-"""Fill a short voice reference with scene room tone instead of digital silence.
+"""Legacy scene-tone fill for previously frozen requests.
 
-Most lines in an episode are shorter than the reference floor the voice engines
-accept. The previous pass padded them with digital silence. A reference that
-ends in two or three seconds of silence gives the engine no room ambience and no
-speech energy at the end, which is one reason a finished take can sound flat.
-
-This pass fills the same length with real room tone taken from the nearest quiet
-gap in the same scene. A candidate is accepted only when it is measurably quieter
-than the speech in the reference, so music, sound effects and other speakers are
-never pulled into a reference. When no candidate is safe, the old silence padding
-is used unchanged.
+Energy checks cannot certify scene membership or exclude quiet speech. New
+own-utterance-zero-padding-342 requests bypass this legacy external-fill path.
+Do not change its output for saved legacy references.
 """
 import math
 
@@ -70,7 +63,7 @@ def tone_candidates(ranges, clip_end, duration, need_seconds):
 
 
 def is_quiet(fill, sr, speech_rms):
-    """True when the fill is room tone, not music, an effect or somebody speaking."""
+    """Check energy only. Passing does not establish speech absence."""
     import numpy as np
     frame_levels = levels(fill, sr)
     if not len(frame_levels):

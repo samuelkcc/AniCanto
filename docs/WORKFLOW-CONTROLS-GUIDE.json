@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-52-automatic-subtitle-language",
+  "revision": "workflow-controls-guide-61-source-failure-continuation",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -237,10 +237,10 @@
         "ja": "翻訳後の AI 確認"
       },
       "body": {
-        "zh-HK": "在第一稿翻譯後增加一次 AI 編輯核對，檢查意思、用詞及上下文，並可能在首次配音前修正譯稿。不是再核對音訊，也不會自動開啟配音重錄、時長或重疊修復，更不會回頭重寫已完成工作的譯稿。iPad 目前只接到 Gemma／Qwen 翻譯流程；選用內置翻譯時停用此額外 AI 核對。各平台及模型的實際能力須分別驗證。",
-        "zh-CN": "第一稿翻译后增加一次 AI 编辑核对，检查意思、用词和上下文，可能在首次配音前修正译稿。不是检查音频，不会自动开启配音重录、时长或重叠修复，也不会回头改写已完成工作的译稿。iPad 目前仅连接 Gemma／Qwen 流程；内置翻译停用此额外 AI 核对。各平台和模型能力须分别验证。",
-        "en": "Add an AI editorial pass after the first translation. It can correct meaning, wording and context before initial dubbing. It is not audio review. It does not enable voice retakes, duration or overlap repair, or rewrite completed saved drafts. On iPad, this pass is connected to Gemma/Qwen translation only; built-in translation disables it. Verify actual model and platform capabilities separately.",
-        "ja": "初稿翻訳の後に AI 編集確認を追加し、初回吹き替え前に意味・表現・文脈を修正できます。音声確認ではありません。再録音、長さ、重なり修復を有効にせず、完了済みの保存原稿も書き換えません。iPad は Gemma／Qwen 翻訳に接続し、内蔵翻訳では無効です。モデル・端末ごとの実装を別に検証します。"
+        "zh-HK": "在第一稿翻譯後增加一次 AI 編輯核對，檢查意思、用詞及上下文，並可能在首次配音前修正譯稿。不是再核對音訊，也不會自動開啟配音重錄、時長或重疊修復，更不會回頭重寫已完成工作的譯稿。iPad 目前只接到 Gemma 翻譯流程；選用內置翻譯時停用此額外 AI 核對。各平台及模型的實際能力須分別驗證。",
+        "zh-CN": "第一稿翻译后增加一次 AI 编辑核对，检查意思、用词和上下文，可能在首次配音前修正译稿。不是检查音频，不会自动开启配音重录、时长或重叠修复，也不会回头改写已完成工作的译稿。iPad 目前仅连接 Gemma 流程；内置翻译停用此额外 AI 核对。各平台和模型能力须分别验证。",
+        "en": "Add an AI editorial pass after the first translation. It can correct meaning, wording and context before initial dubbing. It is not audio review. It does not enable voice retakes, duration or overlap repair, or rewrite completed saved drafts. On iPad, this pass is connected to Gemma translation only; built-in translation disables it. Verify actual model and platform capabilities separately.",
+        "ja": "初稿翻訳の後に AI 編集確認を追加し、初回吹き替え前に意味・表現・文脈を修正できます。音声確認ではありません。再録音、長さ、重なり修復を有効にせず、完了済みの保存原稿も書き換えません。iPad は Gemma 翻訳に接続し、内蔵翻訳では無効です。モデル・端末ごとの実装を別に検証します。"
       }
     },
     {
@@ -252,10 +252,10 @@
         "ja": "回数・時間制限と再開"
       },
       "body": {
-        "zh-HK": "每段核對、重錄及修復均有獨立次數上限，整部影片亦設有處理時間上限。重新開啟 App 或恢復工作不會重置已用次數；達到上限後會保留結果並列出問題。",
-        "zh-CN": "每段的核对、重录和修复有独立上限，整片也有时间预算。重开 App 或继续处理不会重置已用次数；达到上限会保留结果并报告问题。",
-        "en": "Review, retakes and repairs have separate stage limits and whole-video time budgets. Relaunch and resume never reset spent allowances. Keep results and report issues when limits are reached.",
-        "ja": "確認、再録音、修復には工程別の回数制限と動画全体の時間制限があります。アプリ再起動や再開でも使用済み枠は戻りません。上限では結果を保持して問題を報告します。"
+        "zh-HK": "每段核對、重錄及修復均有獨立次數上限，整部影片亦設有處理時間上限。重新開啟 App 或恢復工作不會重置已用次數；達到上限後會保留結果並列出問題。 未能確認的原聲不代表無聲或已確認錯誤。即使超過八個未確認時段，或超過原片百分之十五，程式仍會自動繼續。未解決時段會保留原聲，並列入校對報告，不會等待確認或要求重新開始。每個時段保留原有兩輪上限；繼續工作會重用已完成時段，不會退還已用次數。保留原聲不代表已成功完成目標語言配音。",
+        "zh-CN": "每段的核对、重录和修复有独立上限，整片也有时间预算。重开 App 或继续处理不会重置已用次数；达到上限会保留结果并报告问题。 未能确认的原声不代表无声或已确认错误。即使超过八个未确认时段，或超过原片百分之十五，程序仍自动继续。未解决时段保留原声，并列入校对报告，不等待确认或要求重新开始。每个时段保留原有两轮上限；继续任务重用已完成时段，不退还已用次数。保留原声不代表成功完成目标语言配音。",
+        "en": "Review, retakes and repairs have separate stage limits and whole-video time budgets. Relaunch and resume never reset spent allowances. Keep results and report issues when limits are reached. Unwitnessed speech is not silence or confirmed wrong speech. The app continues automatically even after more than eight unknown windows or fifteen percent of the source. It keeps the original audio for unresolved spans and lists them in the review report. It does not wait for confirmation or require Restart. Each window keeps its existing two-round limit. Resume reuses completed windows and never refunds spent reservations. Source retention does not prove successful target-language dubbing.",
+        "ja": "確認、再録音、修復には工程別の回数制限と動画全体の時間制限があります。アプリ再起動や再開でも使用済み枠は戻りません。上限では結果を保持して問題を報告します。 確認できない原音は、無音や誤認識の確定を意味しません。未確認区間が8個または元動画の15パーセントを超えても自動で続行します。未解決区間は原音を保持し、校正レポートに記録します。確認待ちや最初からの再開は不要です。各区間の既存の2回上限は維持します。再開時は完了済み区間を再利用し、使用済み回数を戻しません。原音の保持は目標言語の吹き替え成功を意味しません。"
       }
     },
     {
@@ -449,10 +449,10 @@
         "ja": "翻訳ソースのフロー"
       },
       "body": {
-        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts. Automatic detection is the default. Speech / OCR requires an explicit choice. A continued job uses its saved source choice, never an unrelated current preference.",
-        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。預設為自動偵測；「語音 / OCR」需要明確選擇。繼續工作使用該工作已保存的來源選擇，不會改用其他目前偏好。",
-        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。默认为自动检测；“语音 / OCR”需要明确选择。继续任务使用该任务已保存的来源选择，不会改用其他当前偏好。",
-        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。初期設定は自動検出です。「音声 / OCR」は明示的に選びます。再開時は作業に保存したソースを使用し、現在の別設定には切り替えません。"
+        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts. Automatic detection is the default. Speech / OCR requires an explicit choice. A continued job uses its saved source choice, never an unrelated current preference. For new mobile conversions, the app checks distinct subtitles near the movie midpoint. Opening lyrics and repeated subtitle layers do not decide the language. It asks only when the middle text is missing or mixed. An explicitly chosen subtitle edition keeps its language. Saved conversions keep their frozen source and spent attempts. This check uses existing text and adds no speech, OCR or translation request.",
+        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。預設為自動偵測；「語音 / OCR」需要明確選擇。繼續工作使用該工作已保存的來源選擇，不會改用其他目前偏好。 流動版本的新轉換會檢查影片中段附近的字幕，並先去除重複字幕層，避免由片頭歌詞決定語言。中段文字不足或包含多種語言時才詢問。已明確選擇的字幕版本保留其語言；已保存轉換保留凍結來源及已花費次數。此檢查只讀取現有文字，不會增加語音辨識、OCR 或翻譯。",
+        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。默认为自动检测；“语音 / OCR”需要明确选择。继续任务使用该任务已保存的来源选择，不会改用其他当前偏好。 移动版本的新转换会检查影片中段附近的字幕，并先去除重复字幕层，避免由片头歌词决定语言。中段文字不足或包含多种语言时才询问。已明确选择的字幕版本保留其语言；已保存转换保留冻结来源及已花费次数。此检查只读取现有文字，不会增加语音识别、OCR 或翻译。",
+        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。初期設定は自動検出です。「音声 / OCR」は明示的に選びます。再開時は作業に保存したソースを使用し、現在の別設定には切り替えません。 モバイル版の新しい変換では、動画の中間付近の字幕を調べ、重複する字幕レイヤーを先に除きます。冒頭の歌詞だけでは言語を決めません。中間の文字が不足するか複数言語が混在する場合だけ確認します。明示的に選んだ字幕版の言語と保存済み変換のソース・使用済み回数は保持します。既存の文字を使い、音声認識・OCR・翻訳の追加処理は行いません。"
       }
     },
     {
@@ -659,10 +659,10 @@
         "ja": "プリセットの導入済みモデル"
       },
       "body": {
-        "zh-HK": "iPad 製作預設會將未完整下載的本機模型顯示為灰色，不能選取。iPhone 基本模式及製作預設會隱藏這些模型；模型中心保留下載入口。檔案齊全但尚未載入記憶體的模型仍可選擇。此限制不會下載模型、清除原有選擇或更改舊工作。系統翻譯與朗讀按裝置服務及已安裝聲線提供。 模型清單維持先列 Qwen，再列 Gemma；新工作預設使用 Gemma。此更新會將原有 Qwen 偏好改為 Gemma 一次，之後保留手動選擇。只有 Qwen 已驗證時會繼續使用 Qwen，毋須補回 Gemma。已保存工作沿用原本模型，欠缺時須補回。GPT 模型仍須已安裝或匯入。",
-        "zh-CN": "iPad 制作预设会将未完整下载的本地模型显示为灰色，无法选择。iPhone 基本模式和制作预设会隐藏这些模型；模型中心保留下载入口。文件齐全但尚未载入内存的模型仍可选择。此限制不会下载模型、清除原选择或改变旧任务。系统翻译和朗读依设备服务及已安装声线提供。 模型列表保持先列 Qwen，再列 Gemma；新任务默认使用 Gemma。此次更新会将原有 Qwen 偏好改为 Gemma 一次，之后保留手动选择。只有 Qwen 已验证时会继续使用 Qwen，无需补回 Gemma。已保存任务保留原模型，缺失时须补回。GPT 模型仍须已安装或导入。",
-        "en": "iPad defaults show incomplete local models as gray and disabled. iPhone Basic and defaults hide them. Models keeps download entries. Complete files remain selectable before runtime loading. This gate does not download, clear stored choices or change saved jobs. System translation and speech depend on OS services and installed voices. The model list keeps Qwen before Gemma. Gemma is the new-job default. This update changes an earlier Qwen preference to Gemma once. A later manual choice is retained. If only Qwen is verified, reuse it without requiring Gemma. Saved jobs retain their original model and still require it. GPT requires an installed or imported package.",
-        "ja": "iPad の制作プリセットでは未導入・不完全なモデルを灰色で無効表示します。iPhone の基本モードとプリセットでは非表示にします。モデル画面には導入項目を残します。ファイルが揃っていれば実行時の読み込み前でも選択できます。自動ダウンロード、保存済み選択の消去、保存済み作業の変更は行いません。システム翻訳と読み上げは OS 機能・導入済み音声に従います。 一覧は Qwen、Gemma の順を維持します。新規ジョブの既定は Gemma です。この更新では以前の Qwen 設定を一度だけ Gemma に変更し、その後の手動選択は保持します。Qwen のみ検証済みなら Gemma を求めず再利用します。保存済みジョブは元のモデルが必要です。GPT は導入済みまたは読み込み済みパッケージが必要です。"
+        "en": "New conversions use Gemma 4 E4B. The text-model menu remains for future models. Qwen is no longer offered in Models or new production choices. This update changes the new-job preference to Gemma once. Installed weights and saved jobs are retained. Legacy jobs still need their saved models. Voice selection stays separate; GPT-SoVITS is optional and needs a supported installed package. On iPhone and iPad, download optional GPT-SoVITS V2 Pro Plus MLX in Models after approval. CosyVoice remains the default.",
+        "zh-HK": "新轉換使用 Gemma 4 E4B，文字模型選單保留供日後加入其他模型。模型中心及新製作選項不再提供 Qwen。更新會將新工作偏好改為 Gemma 一次，已安裝模型及已保存工作會保留；舊工作仍須使用原有模型。配音模型獨立選擇，GPT-SoVITS 為選用項目，須先安裝支援的套件。 iPhone 及 iPad 可在模型管理確認下載選配的 GPT-SoVITS V2 Pro Plus MLX；預設仍為 CosyVoice。",
+        "zh-CN": "新转换使用 Gemma 4 E4B，保留文字模型菜单以便日后加入其他模型。模型中心和新制作选项不再提供 Qwen。更新会将新任务偏好改为 Gemma 一次，保留已安装模型和已保存任务；旧任务仍须使用原模型。配音模型单独选择，GPT-SoVITS 为可选项目，须先安装支持的包。 iPhone 和 iPad 可在模型管理中确认下载可选的 GPT-SoVITS V2 Pro Plus MLX；默认仍为 CosyVoice。",
+        "ja": "新規変換は Gemma 4 E4B を使います。今後のモデル追加に備えてメニューは残ります。モデル画面と新規制作では Qwen を提供しません。更新時に新規ジョブの設定を一度だけ Gemma に変更します。導入済みモデルと保存済みジョブは保持し、旧ジョブには元のモデルが必要です。音声モデルは別に選択します。GPT-SoVITS は任意で、対応パッケージの導入が必要です。 iPhoneとiPadではモデル管理で確認後、追加のGPT-SoVITS V2 Pro Plus MLXをダウンロードできます。既定はCosyVoiceのままです。"
       }
     },
     {
@@ -689,10 +689,10 @@
         "ja": "文脈に合う香港広東語"
       },
       "body": {
-        "en": "New desktop Cantonese drafts use shared contextual examples in the first translation. Use 廢話少講 for 廢話少說. For 搞不好, distinguish a possible outcome (可能 or 分分鐘) from inability to fix something (整唔好). Keep nouns such as 小說, project names and quoted text. Never globally replace 說 or 不好. The examples add no AI call or repair loop and do not rewrite saved scripts or recordings. Native model wording still needs listening checks. iPad and iPhone implementation is pending.",
-        "zh-HK": "桌面新廣東話稿在首輪翻譯加入共用語境例子：「廢話少說」可用「廢話少講」；「搞不好」要分清「可能／分分鐘」與「整唔好」的意思，不能機械替換。保留「小說」等名詞、專案人名及引號內文字，不會全局把「說」換成「講」或「不好」換成「唔好」。例子不增加 AI 呼叫或修復輪次，亦不改寫已保存稿件或錄音；模型實際用字仍需試聽。iPad／iPhone 實作待完成。",
-        "zh-CN": "桌面新粤语稿在首轮翻译加入共用语境示例：“廢話少說”可用“廢話少講”；“搞不好”要区分“可能／分分鐘”和“整唔好”的含义，不能机械替换。保留“小說”等名词、项目人名与引号内文字，不会全局把“說”换成“講”或“不好”换成“唔好”。示例不增加 AI 调用或修复轮次，也不改写已保存稿件与录音；模型实际用字仍需试听。iPad／iPhone 实现待完成。",
-        "ja": "新しいデスクトップの広東語原稿では、最初の翻訳に共通の文脈例を加えます。「廢話少說」は「廢話少講」へ、「搞不好」は可能性の「可能・分分鐘」と修理不能の「整唔好」を区別します。「小說」などの名詞、登録名、引用文を守り、「說」や「不好」を一括置換しません。AI呼出しや修復の回数を増やさず、保存済みの原稿・録音も変更しません。モデルの実際の言い回しは試聴確認が必要です。iPad・iPhoneの実装は未完了です。"
+        "en": "New desktop Cantonese drafts use shared contextual examples in the first translation. Use 廢話少講 for 廢話少說. For 搞不好, distinguish a possible outcome (可能 or 分分鐘) from inability to fix something (整唔好). Keep nouns such as 小說, project names and quoted text. Never globally replace 說 or 不好. The examples add no AI call or repair loop and do not rewrite saved scripts or recordings. Native model wording still needs listening checks. Updated mobile versions select local style examples for new subtitle-first Cantonese drafts. Existing jobs keep their saved rules. Other mobile source flows retain their current instructions. Expanded mobile examples cover questions, time, emotion and politeness. Select at most three by context. Keep book titles and fixed names. Quoted character dialogue still receives faithful translation. New drafts use a97-entry first-party style table. Each turn receives at most three matching examples, including negation, permission, conditions and rhetorical questions. Examples guide the first draft only. They never supply additional facts or authorize another model pass. Saved jobs keep their frozen policy.",
+        "zh-HK": "桌面新廣東話稿在首輪翻譯加入共用語境例子：「廢話少說」可用「廢話少講」；「搞不好」要分清「可能／分分鐘」與「整唔好」的意思，不能機械替換。保留「小說」等名詞、專案人名及引號內文字，不會全局把「說」換成「講」或「不好」換成「唔好」。例子不增加 AI 呼叫或修復輪次，亦不改寫已保存稿件或錄音；模型實際用字仍需試聽。更新後的流動版會為新的字幕優先廣東話稿選取本機口語例子；舊工作保留已儲存規則，其他流動版來源流程沿用原有指引。 擴充後的流動版例子涵蓋問句、時間、情緒及禮貌，每句按語境選取最多三組。保留書名及固定名稱；引號內的人物對白仍按意思翻譯。 新稿使用 97 組原創口語例子，每句最多按語境選取三組，涵蓋否定、許可、條件及反問。例子只引導首輪文稿，不會加入額外事實或增加模型處理輪次；舊工作沿用已儲存的規則。",
+        "zh-CN": "桌面新粤语稿在首轮翻译加入共用语境示例：“廢話少說”可用“廢話少講”；“搞不好”要区分“可能／分分鐘”和“整唔好”的含义，不能机械替换。保留“小說”等名词、项目人名与引号内文字，不会全局把“說”换成“講”或“不好”换成“唔好”。示例不增加 AI 调用或修复轮次，也不改写已保存稿件与录音；模型实际用字仍需试听。更新后的移动版会为新的字幕优先粤语稿选取本机口语示例；旧工作保留已保存规则，其他移动版来源流程沿用原有指引。 扩充后的移动版示例涵盖问句、时间、情绪和礼貌，每句按语境选取最多三组。保留书名与固定名称；引号内的人物对白仍按含义翻译。 新稿使用 97 组原创口语示例，每句最多按语境选择三组，涵盖否定、许可、条件与反问。示例只引导首轮文稿，不会加入额外事实或增加模型处理轮次；旧任务沿用已保存的规则。",
+        "ja": "新しいデスクトップの広東語原稿では、最初の翻訳に共通の文脈例を加えます。「廢話少說」は「廢話少講」へ、「搞不好」は可能性の「可能・分分鐘」と修理不能の「整唔好」を区別します。「小說」などの名詞、登録名、引用文を守り、「說」や「不好」を一括置換しません。AI呼出しや修復の回数を増やさず、保存済みの原稿・録音も変更しません。モデルの実際の言い回しは試聴確認が必要です。更新後のモバイル版は、新しい字幕優先の広東語原稿に端末内の口語例を使います。保存済みの変換は元の規則を保持します。他のモバイル入力フローは既存の指示を使います。 拡張したモバイル版の例は疑問、時制、感情、丁寧さを扱い、文脈に応じて最大3組を選びます。書名や固有名は保持し、引用された人物の台詞は意味を保って翻訳します。 新しい台本では97組の独自の口語例から、各台詞に合う例を最大3組選びます。否定、許可、条件、反語疑問も扱います。例は最初の翻訳だけを補助し、事実やモデル処理を追加しません。保存済みの変換は元の規則を保持します。"
       }
     },
     {
@@ -757,6 +757,36 @@
         "zh-HK": "每個錄音只顯示一次，並有獨立試聽按鈕。首次錄音留在受保護區塊，後續錄音列於模型控制下方。請選擇下次輸出使用的錄音並儲存選擇，再按頂部「重新輸出」製作新影片；現有成品保持不變。",
         "zh-CN": "每个录音只显示一次，并有独立试听按钮。首次录音保留在受保护区块，后续录音列于模型控件下方。请选择下次输出使用的录音并保存选择，再按顶部“重新输出”制作新视频；现有成片保持不变。",
         "ja": "録音は一度だけ表示し、それぞれに試聴ボタンを付けます。初回録音は保護された区画に、追加録音はモデル設定の下に表示します。次の出力に使う録音を選択して保存し、上部の再出力で新しい動画を作ります。既存の出力は保持します。"
+      }
+    },
+    {
+      "id": "originalAudioTrack",
+      "title": {
+        "en": "Keep original audio as a second track",
+        "zh-HK": "保留原聲為第二音軌",
+        "zh-CN": "保留原声为第二音轨",
+        "ja": "原音を第2音声トラックとして保持"
+      },
+      "body": {
+        "en": "On iPhone and iPad, this is off by default in Basic and Expert. On adds a separately selectable source-audio track to new outputs. It does not change voice references or background music. Saved jobs retain their frozen choice. A verified same-job original-audio cache can avoid a second full-source decode.",
+        "zh-HK": "iPhone 及 iPad 的基本與專家模式均預設關閉。開啟後，新成品會額外加入可切換的原聲音軌，不會改變聲線參考或背景音樂。已保存工作保留原有選擇；同一工作已驗證的原聲快取可避免再次解碼全片。",
+        "zh-CN": "iPhone 和 iPad 的基本与专家模式均默认关闭。开启后，新成品额外加入可切换的原声音轨，不改变声线参考或背景音乐。已保存任务保留原选择；同一任务经过验证的原声缓存可避免再次解码全片。",
+        "ja": "iPhoneとiPadの基本・エキスパートでは既定でオフです。オンにすると、新しい出力に切り替え可能な原音トラックを追加します。声の参照や背景音楽は変更しません。保存済み作業は従来の設定を保持し、検証済みキャッシュがあれば全体の再デコードを避けます。"
+      }
+    },
+    {
+      "id": "dubbingLanguageReuse",
+      "title": {
+        "en": "Update dubbing language",
+        "zh-HK": "更新配音語言",
+        "zh-CN": "更新配音语言",
+        "ja": "吹き替え言語の更新"
+      },
+      "body": {
+        "en": "On iPhone and iPad, Update dubbing checks the selected output language. It uses a verified saved draft in that language when available. Otherwise it translates the original source text, then generates dubbing. It reuses verified source analysis, timings and separated audio. It never uses the previous language recording as the new target. Earlier outputs stay available. Resume keeps consumed attempts. Optional target checks still require their saved permissions. Incomplete or changed source analysis must be resolved first.",
+        "zh-HK": "iPhone 及 iPad 的「更新配音」會檢查所選輸出語言。有已驗證的同語言文稿時會直接配音；否則先翻譯原文，再生成配音。流程會沿用已驗證的原聲分析、時間定位及分離音訊，不會把舊語言錄音當成新語言配音。舊成品會保留；繼續轉換不會重設已用次數。額外目標語言檢查仍按已保存的權限執行。原聲資料不完整或已改變時，須先處理來源問題。",
+        "zh-CN": "iPhone 和 iPad 的“更新配音”会检查所选输出语言。有已验证的同语言文稿时直接配音；否则先翻译原文，再生成配音。流程沿用已验证的原声分析、时间定位及分离音频，不会把旧语言录音当成新语言配音。旧成品保留；继续转换不重置已用次数。额外目标语言检查仍按保存的权限执行。原声资料不完整或已改变时，须先处理来源问题。",
+        "ja": "iPhoneとiPadの「吹き替えを更新」は出力言語を確認します。検証済みの同じ言語の台本があれば、その台本で音声を生成します。なければ元の原文を翻訳してから吹き替えます。検証済みの原音解析、時刻、分離音声を再利用し、以前の言語の録音を新しい言語として使いません。以前の出力を保持し、再開時も使用済み回数を保持します。追加の確認は保存済みの許可に従います。原音資料が不完全または変更済みの場合は、先に解決してください。"
       }
     }
   ],

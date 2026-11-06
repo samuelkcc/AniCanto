@@ -17,3 +17,20 @@ def finish(timeline,ceiling=32000):
     for i in range(0,len(view),block):
         result.frombytes(np.rint(view[i:i+block].astype(np.float64)*gain).astype('<i2').tobytes())
     return result,gain
+
+
+EDGE_REVISION = 'sample-edge-envelope-378'
+
+def edge_envelope(pcm, sr, original=False):
+    """Ramp only sample edges. Preserve length, clocks, interior and source bytes."""
+    if not isinstance(sr, int) or isinstance(sr, bool) or sr <= 0:
+        raise ValueError('Invalid PCM sample rate.')
+    result=array.array('h',pcm)
+    milliseconds=20 if original else 4
+    count=min(round(sr*milliseconds/1000),len(result)//4)
+    if count:
+        values=np.frombuffer(result,dtype=np.int16)
+        ramp=np.arange(count,dtype=np.float64)/count
+        values[:count]=np.rint(values[:count].astype(np.float64)*ramp).astype(np.int16)
+        values[-count:]=np.rint(values[-count:].astype(np.float64)*ramp[::-1]).astype(np.int16)
+    return result,count

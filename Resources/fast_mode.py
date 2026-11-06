@@ -129,6 +129,7 @@ def translate(w,cfg,job,cues):
                 result={};w.emit('高速模式記錄','翻譯未完成：'+str(error)[:300])
             for i in indices:
                 text=result.get(str(i))
+                text=__import__('target_script_guard392').normalize(cfg,cues[i],text,language)
                 cues[i][field]=(w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()) if isinstance(text,str) and text.strip() else ''
                 if cues[i][field]:cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,cues[i][field],fresh=True)
                 if not cues[i][field]:cues[i].setdefault('fastDefects',[]).append('missing-'+field)

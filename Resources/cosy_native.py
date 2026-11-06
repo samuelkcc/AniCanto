@@ -3,12 +3,15 @@ import os
 from pathlib import Path
 import sys
 import tempfile
+import threading
 from types import SimpleNamespace
+from voice_expression import native_cosy_temperature
 
 
 class NativeCosy:
     def __init__(self, model):
         self.model = model
+        self.sampling_lock = threading.RLock()
 
     def generate(self, text, ref_audio, instruct_text, temperature=0.8, **unused):
         import numpy as np
@@ -19,7 +22,7 @@ class NativeCosy:
             sf.write(name, np.asarray(ref_audio, dtype=np.float32), 24000)
             instruction = instruct_text.rstrip() + '<|endofprompt|>'
             import torch
-            with torch.inference_mode():
+            with self.sampling_lock, torch.inference_mode(), native_cosy_temperature(self.model, temperature):
                 for part in self.model.inference_instruct2(text, instruction, name,
                                                            stream=False, text_frontend=False):
                     yield SimpleNamespace(audio=part['tts_speech'].detach().float().cpu().numpy().reshape(-1))

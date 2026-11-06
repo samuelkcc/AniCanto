@@ -15,21 +15,20 @@
 
 ## ダウンロード
 
-**[Mac 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto-macOS-0.25.46.zip)** · **[Windows 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto.exe)**
+**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.46-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 最近の更新 · 0.25.46 / build 306
+## 最近の更新 · 0.25.49 / build 398
 
-- **ソースの自動承認：**「検出した言語を使う」がオンなら、別の選択がない限り最初の音声トラックを使い、広東語・標準中国語では中国語字幕を優先します。言語未指定の字幕文字も調べ、適切な字幕がなければ字幕確認やOCRなしで音声から続行します。英語出力では英語、次に中国語を使います。
-- **校正レポートを整理：**検出翻訳、保存した編集、元音声と分離音声、保護された初回録音、モデル設定、追加録音、最終選択を分けて表示します。
-- **セリフ単位の再録音：**文章を保存し、モデルとパラメーターを選んで録音します。処理中の表示と、各録音の試聴ボタンを用意しました。
-- **初回録音を保持：**初回録音は削除できません。後から追加した未使用録音は削除できます。選択済み・出力済みの録音も保護します。
-- **再出力：**録音の選択を保存し、レポート上部から新しい動画を作成します。以前の出力は保持します。
-- **LAN 診断：**既定ではオフです。Welcome のヘルプセンターの最後の章でオンにすると、デバイス IP、自動ポート、アクセスコードを表示します。読み取り専用ページは3秒ごとに設定とログを更新します。信頼できるプライベートネットワークで使用してください。HTTP は暗号化されません。
+- 限定的な音声時刻の確認で確定できない区間は、元音声を保持します。
+- 現行の単語時刻と声質参照の修正を統合します。
+- 通常・高速翻訳で、原文にある人名の処理を改善します。
+- 再開時も最初の有効な録音と使用済み修復回数を保持します。
+- 4言語の操作ガイドと処理設定の説明を更新します。
 
-本版の Windows 実機実行、全編推論、聴感確認は未検証です。パッケージ検査と隔離 UI テストは別の証拠です。
+既存の画面画像を継続使用します。Windows実機のGPU速度と全編の聴感は別途確認が必要です。
 
 ## AniCanto を作った理由
 

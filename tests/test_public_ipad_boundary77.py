@@ -3,6 +3,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from public_source import selected
 class PrivateIPadBoundaryTests(unittest.TestCase):
+ def test_private_native_build_and_implementation_tests_are_excluded(self):
+  for name in ['scripts/build_mobile_performance.py','scripts/adopt-website-reviewed-captures.py','tests/test_mobile_cantonese_draft337.py','tests/test_mobile_cantonese_draft338.py','tests/test_mobile_new_controls351.py','tests/test_mobile_spoken_delivery333.py','tests/test_caption_layers340.py','tests/test_text_runtime_boundary345.py']:
+   with self.subTest(name=name):self.assertFalse(selected(name))
  def test_private_website_capture_audits_are_excluded(self):
   self.assertFalse(selected('scripts/audit-website-interface-locales.py'))
  def test_private_app_and_nested_accidental_copies_are_excluded(self):

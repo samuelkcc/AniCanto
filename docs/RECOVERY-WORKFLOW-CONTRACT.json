@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-11-03",
+  "updated": "2026-11-06",
   "publicProjection": true,
   "platforms": [
     "macOS",
@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-128-automatic-subtitle-language",
+    "revision": "application-user-guide-165-source-failure-continuation",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "5fcdc13730cc46893da2fffa56ab0c071ac6a87f5080c4abe8c47c28c3d3f091",
-    "controlGuideRevision": "workflow-controls-guide-52-automatic-subtitle-language",
-    "controlGuideSHA256": "ff5c54c06c6166912c1919844b041da9f114e802b6f5077447f01f220e3cb72a"
+    "sha256": "50be75f7b166ce6e9b986beda20c9e51ec37ee0f56dbb6d2217ccb24cf0a9ef9",
+    "controlGuideRevision": "workflow-controls-guide-61-source-failure-continuation",
+    "controlGuideSHA256": "87d0ed8f099a9343d70f61c8690c98148047de48b54dc555d1dfb9fa5f66e540"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",

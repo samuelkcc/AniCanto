@@ -37,6 +37,20 @@ class RetentionTests(unittest.TestCase):
         p.write_bytes(data)
         return p
 
+    def test_library_licences_build_rules_and_patches_are_rescued_with_origins(self):
+        files=[self.file('old/'+name,b'source '+name.encode()) for name in ['rules.mak','Makefile.am','configure','fix.patch','COPYING.LIB','LICENSE','CMakeLists.txt']]
+        self.assertTrue(retention.rescue(self.build/'old',{},[],300,[10000],[10000,0]))
+        rows=[json.loads(line) for line in (self.build/'_retention-archive/source-origins.jsonl').read_text().splitlines()]
+        self.assertEqual({r['source'] for r in rows},{str(p.relative_to(self.build)) for p in files})
+        for row in rows:self.assertEqual(hashlib.sha256((self.build/row['archive']).read_bytes()).hexdigest(),row['sha256'])
+
+    def test_equal_rescued_content_keeps_both_original_paths(self):
+        a=self.file('old/one/module.c',b'shared source');b=self.file('old/two/module.c',b'shared source')
+        self.assertTrue(retention.rescue(self.build/'old',{},[],300,[10000],[10000,0]))
+        rows=[json.loads(line) for line in (self.build/'_retention-archive/source-origins.jsonl').read_text().splitlines()]
+        self.assertEqual({r['source'] for r in rows},{str(a.relative_to(self.build)),str(b.relative_to(self.build))})
+        self.assertEqual(len({r['archive'] for r in rows}),1)
+
     def test_handover_sentence_punctuation_does_not_change_protected_names(self):
         docs=self.root/'docs';docs.mkdir()
         (docs/'CODEX-HANDOVER.md').write_text('# Record\n## Work Records\n### Current\nProtect .build/lan-diagnostics-2026-11-02.\nKeep .build/archive.app.\n')

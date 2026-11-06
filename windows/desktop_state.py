@@ -125,6 +125,10 @@ class Store:
         settings['captionSpeechGuardMaxWindows']=12
         settings['captionSpeechGuardBudgetSeconds']=600
         settings['hongKongStyleRevision']=__import__('hk_spoken_style').REVISION
+        settings['voiceReferencePaddingRevision']=__import__('independent_voices').PADDING_REVISION342
+        settings['audioEdgeEnvelopeRevision']=__import__('pcm_mix').EDGE_REVISION
+        settings['voiceReferenceIdentityRevision']=__import__('independent_voices').IDENTITY_REVISION379
+        settings['draftOutputGuardRevision']=__import__('target_script_guard392').REVISION
         settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
         settings['sourceClockRecoveryRevision']=__import__('source_clock_recovery').REVISION
         settings['captionContinuationRevision']='caption-owner-no-duplicate-263'

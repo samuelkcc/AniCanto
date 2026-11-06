@@ -15,21 +15,20 @@
 
 ## 下載
 
-**[Mac 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto-macOS-0.25.46.zip)** · **[Windows 0.25.46](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/AniCanto.exe)**
+**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.46-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.46-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 近期更新 · 0.25.46／306
+## 近期更新 · 0.25.49／398
 
-- **自動接納來源：** 開啟「接納偵測語言」後，未另行選取時使用第一條音軌，廣東話及普通話優先使用中文字幕，並檢查未標示語言的字幕文字。找不到合適字幕時直接使用語音，不顯示字幕確認或啟用 OCR。英文輸出先選英文，再選中文。
-- **更清晰的校對報告：**分開顯示唯讀系統翻譯、已儲存修改、原聲及分離聲音、受保護的首次錄音、模型參數、新錄音與最終選擇。
-- **單句重新錄音：**儲存修改後，選擇語音模型及參數，再重新錄音；處理期間有進度提示，每段錄音都有獨立試聽按鈕。
-- **保留首次錄音：**首次錄音不可移除。其後未使用的錄音可移除，已選擇及已輸出的錄音仍受保護。
-- **重新輸出：**儲存錄音選擇後，按報告頂部按鈕製作新成品，保留先前輸出。
-- **區域網絡診斷：**預設關閉。在歡迎頁使用手冊的最後一章按開關，即會顯示裝置 IP、自動連接埠及登入碼；唯讀網頁每三秒更新設定與記錄。請使用可信任的私人網絡，HTTP 不會加密。
+- 原聲時間核對仍未能確認時，保留原聲供校對。
+- 整合目前的原聲字音時間及聲線參考處理修補。
+- 改善一般及快速翻譯的原文人名處理。
+- 繼續工作時保留首次有效錄音及已用修復次數。
+- 更新四語使用手冊及流程控制說明。
 
-本次版本的 Windows 實機執行、全片推理及聽感驗收仍待驗證；安裝包檢查與隔離介面測試屬於不同證據。
+沿用現有介面截圖。Windows 實機 GPU 速度及整片聽感仍需另行驗收。
 
 ## 點解會有 AniCanto
 

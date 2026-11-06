@@ -77,7 +77,7 @@ def resolve(profile,cfg):
     source=Path(row['reference'])
     if not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest()!=row['sha256']:
         raise ValueError('自然聲線素材未通過完整性檢查，請修復 App。')
-    return dict(profile,reference=str(source),promptText=row['promptText'],language=target,
+    return dict(profile,reference=str(source),referenceSHA256=row['sha256'],promptText=row['promptText'],language=target,
                 referenceCandidates=[],referenceRanges=[],referenceQuality={},mixedReference=False,
                 shortReference=False,transcriptSource='natural-voice-bank',naturalReferenceId=row['id'],
                 naturalReferenceTitle=row['title'],voiceStyleMode='natural')

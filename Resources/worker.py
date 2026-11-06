@@ -881,6 +881,12 @@ def convert(cfg):
         if cfg.get(field) is not None:identity[field]=cfg[field]
     identity['autoSpeakers'] = bool(cfg.get('autoSpeakers'))
     identity['roleAnalysisMode']=cfg.get('roleAnalysisMode','audio')
+    if __import__('independent_voices').own_padding(cfg):
+        identity['voiceReferencePaddingRevision']=cfg['voiceReferencePaddingRevision']
+    if __import__('independent_voices').content_bound(cfg):
+        identity['voiceReferenceIdentityRevision']=cfg['voiceReferenceIdentityRevision']
+    if cfg.get('audioEdgeEnvelopeRevision')==__import__('pcm_mix').EDGE_REVISION:
+        identity['audioEdgeEnvelopeRevision']=cfg['audioEdgeEnvelopeRevision']
     identity['voiceStyleMode']=cfg.get('voiceStyleMode','clone')
     identity['visualModel']=cfg.get('visualModel')
     identity["startOffset"] = float(cfg.get("startOffset", 0))

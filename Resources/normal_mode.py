@@ -156,6 +156,7 @@ def translate(w,cfg,job,cues):
                 remaining=[]
                 for i in pending:
                     text=answer.get(str(i),'')
+                    text=__import__('target_script_guard392').normalize(cfg,cues[i],text,language)
                     if valid_target(text,language,source_language):
                         candidate=w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()
                         cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,candidate)

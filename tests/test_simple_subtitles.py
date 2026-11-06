@@ -46,15 +46,15 @@ class SimpleSubtitleTests(unittest.TestCase):
    subs=[s for s in meta['streams'] if s['codec_type']=='subtitle'];self.assertEqual(len(subs),4)
    self.assertEqual(sorted(s.get('tags',{}).get('language') for s in subs),['eng','jpn','yue','zho'])
    self.assertFalse(report['burnOutputCaptions']);self.assertEqual({s['sourceStream'] for s in report['subtitleTracks'] if s['mode']=='original'},{2,3});w.ollama_chat.assert_not_called()
- def test_learning_track_contains_both_languages_with_cantonese_default_and_originals_last(self):
+ def test_learning_track_follows_translated_then_original_subtitles(self):
   with tempfile.TemporaryDirectory() as d:
    report,meta,w=self.mux(Path(d),['original','dual','english','yue'],[2,3])
    subs=[s for s in meta['streams'] if s['codec_type']=='subtitle']
-   self.assertEqual([s['mode'] for s in report['subtitleTracks']],['yue','english','dual','original','original'])
+   self.assertEqual([s['mode'] for s in report['subtitleTracks']],['yue','english','original','original','dual'])
    self.assertEqual([s['disposition']['default'] for s in subs],[1,0,0,0,0])
-   self.assertEqual([s['tags']['language'] for s in subs],['yue','eng','zho','jpn','zho'])
+   self.assertEqual([s['tags']['language'] for s in subs],['yue','eng','jpn','zho','zho'])
    output=Path(report['output']);ffmpeg=shutil.which('ffmpeg')
-   text=subprocess.check_output([ffmpeg,'-v','error','-i',str(output),'-map','0:s:2','-f','srt','pipe:1']).decode()
+   text=subprocess.check_output([ffmpeg,'-v','error','-i',str(output),'-map','0:s:4','-f','srt','pipe:1']).decode()
    self.assertIn('出發啦\nGo!',text);w.ollama_chat.assert_not_called()
 
  def test_deselected_original_and_english_subtitles_stay_absent(self):
@@ -68,7 +68,7 @@ class SimpleSubtitleTests(unittest.TestCase):
   for mode in ('basic','expert'):
    with self.subTest(mode=mode),tempfile.TemporaryDirectory() as d:
     report,meta,w=self.mux(Path(d),['yue','english','dual','original'],None,mode=mode)
-    self.assertEqual([t['mode'] for t in report['subtitleTracks']],['yue','english','dual','original'])
+    self.assertEqual([t['mode'] for t in report['subtitleTracks']],['yue','english','original','dual'])
     subs=[s for s in meta['streams'] if s['codec_type']=='subtitle']
     self.assertEqual([s['tags']['language'] for s in subs],['yue','eng','zho','zho'])
     self.assertEqual([s['disposition']['default'] for s in subs],[1,0,0,0])
