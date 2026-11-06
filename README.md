@@ -15,20 +15,20 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
+**[Mac 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto-macOS-0.25.50.zip)** · **[Windows 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.50-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.49 / build 398
+## Recent update · 0.25.50 / build 400
 
-- Preserve original speech when a bounded source-clock check remains unconfirmed.
-- Use the current source-word timing and band-limited voice-reference paths.
-- Improve source-witnessed name handling in normal and fast translation.
-- Keep the first audible recording and all spent recovery allowances on resume.
-- Include the current four-language user guide and workflow controls.
+- Show saved desktop work and separated audio even when the video list is empty.
+- Clear old recordings, saved progress and intermediate movies only after an explicit selection.
+- Keep original media, registered exports and installed models.
+- Open the full storage breakdown from the cleanup screen and keep one continuous cleanup counter.
+- Include the four-language cleanup guide and the revised build-storage policy.
 
-The existing interface screenshots remain. Native Windows GPU speed and complete-film listening quality need separate acceptance.
+Existing screenshots remain. Native Windows execution needs separate acceptance.
 
 ## Why AniCanto exists
 

@@ -1,5 +1,11 @@
 // Storage controls use the same four product languages on Mac and Windows.
 const copy={
+ 'Data removed':['已移除資料','已移除数据','削除したデータ'],
+ 'Saved desktop work and separation cache':['已儲存工作與分離音軌','已保存工作与分离音轨','保存した作業と分離音声'],
+ 'Saved working folders':['工作目錄','工作目录','作業フォルダ'],
+ 'Separated audio folders':['分離音軌目錄','分离音轨目录','分離音声フォルダ'],
+ 'Deletes old recordings, saved progress and intermediate videos. Original media, registered exports and installed models are kept.':['刪除舊錄音、進度及中間影片，保留原片、已登記成品及模型。','删除旧录音、进度和中间影片，保留原片、已登记成品和模型。','古い録音、進捗と中間動画を削除します。元動画、登録済み出力とモデルは保持します。'],
+ 'Empty the video list before clearing saved desktop work.':['請先清空影片清單。','请先清空影片列表。','先に動画一覧を空にしてください。'],
  'Storage and repair':['儲存空間與修復','存储空间与修复','ストレージと修復'],
  'Inspect application storage':['檢查應用程式儲存空間','检查应用存储空间','アプリのストレージを確認'],
  'Repair application folders':['修復應用程式目錄','修复应用目录','アプリのフォルダを修復'],

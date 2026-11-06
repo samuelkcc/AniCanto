@@ -15,20 +15,20 @@
 
 ## ダウンロード
 
-**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
+**[Mac 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto-macOS-0.25.50.zip)** · **[Windows 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.50-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/available-source-materials.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 最近の更新 · 0.25.49 / build 398
+## 最近の更新 · 0.25.50 / build 400
 
-- 限定的な音声時刻の確認で確定できない区間は、元音声を保持します。
-- 現行の単語時刻と声質参照の修正を統合します。
-- 通常・高速翻訳で、原文にある人名の処理を改善します。
-- 再開時も最初の有効な録音と使用済み修復回数を保持します。
-- 4言語の操作ガイドと処理設定の説明を更新します。
+- 動画一覧が空でも、保存した作業と分離音声を確認できます。
+- 明示的に選択した場合だけ、古い録音、進捗と中間動画を削除します。
+- 元動画、登録済み出力とインストール済みモデルは保持します。
+- 整理画面からストレージ全体を確認でき、削除の進捗は途中でゼロに戻りません。
+- 4言語の整理ガイドと開発ファイルの保持規則を更新しました。
 
-既存の画面画像を継続使用します。Windows実機のGPU速度と全編の聴感は別途確認が必要です。
+既存の画面画像を継続使用します。Windows実機の操作は別途確認が必要です。
 
 ## AniCanto を作った理由
 

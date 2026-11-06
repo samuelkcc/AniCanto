@@ -777,7 +777,7 @@ class Studio:
         if op in ('project-cache-plan','clear-project-cache'):
             if any(row.get('status')=='running' for row in self.store.queue):raise ValueError('Pause processing before clearing cache.')
             from project_cache import plan,tracked_execute
-            return plan(self.root,self.store.queue,self.store.settings) if op=='project-cache-plan' else tracked_execute(self.root,self.store.queue,p.get('token'),p.get('orphanIDs',[]),self.store.settings,p.get('operationID'))
+            return plan(self.root,self.store.queue,self.store.settings) if op=='project-cache-plan' else tracked_execute(self.root,self.store.queue,p.get('token'),p.get('orphanIDs',[]),self.store.settings,p.get('operationID'),p.get('savedWorkToken'))
         if op=='models':return self.model_inventory()
         if op in ('model-removal-plan','remove-model'):
             if any(r.get('status')=='running' for r in self.store.queue):raise ValueError('Pause processing before removing a model.')

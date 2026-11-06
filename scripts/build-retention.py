@@ -55,6 +55,7 @@ PROTECTED = {
     'anicanto-demo-runtime': 'Python virtualenv for the demo runtime.',
     '_retained-models': 'Model assets kept by this script.',
     '_retention-archive': 'Source rescued by this script.',
+    'closure340': 'Active private source, SDK and source-delivery inputs. Prune generated products separately.',
 }
 
 # Model weight files only. Packaging payloads such as .zip and .whl are build output, not models.
@@ -68,6 +69,7 @@ SOURCE_SUFFIXES = {'.swift', '.py', '.mjs', '.sh', '.json', '.md', '.m', '.h', '
 SOURCE_NAMES = {'makefile', 'gnumakefile', 'configure', 'bootstrap', 'bootstrap.sh',
                 'config.guess', 'config.sub', 'install-sh', 'meson.build', 'meson_options.txt',
                 'cmakelists.txt'}
+MEDIA_SUFFIXES = {'.wav', '.mp3', '.m4a', '.flac', '.aac', '.mp4', '.mkv', '.mov', '.webm'}
 
 def source_material(file: Path) -> bool:
     name=file.name.lower()
@@ -268,11 +270,15 @@ def prune_children(folder: Path, retain: int, release_budget=None) -> list:
 
 
 def rescue(path: Path, live: dict, report: list, model_min_mb: int, archive_left: list,
-           model_left: list) -> bool:
+           model_left: list, preserve_models=True) -> bool:
     """Move model assets out by rename, and copy source that exists nowhere else."""
     # Check the complete tree before moving any file out of a source checkout.
     for base, dirs, files in os.walk(path):
         parts = Path(base).relative_to(path).parts
+        if preserve_models and not any(part.endswith(('.app', '.xcarchive')) for part in (path.name, *parts)):
+            if any(Path(name).suffix.lower() in MEDIA_SUFFIXES for name in files):
+                report.append(f'protected {path.name}: contains loose media or recordings')
+                return False
         if '.git' in dirs or '.git' in files:
             if 'SourcePackages' in parts and 'checkouts' in parts:
                 if '.git' in dirs:dirs.remove('.git')
@@ -297,7 +303,7 @@ def rescue(path: Path, live: dict, report: list, model_min_mb: int, archive_left
                 size = file.lstat().st_size
             except OSError:
                 continue
-            if file.suffix.lower() in MODEL_SUFFIXES:
+            if file.suffix.lower() in MODEL_SUFFIXES and preserve_models:
                 if model_left[1] + size > model_left[0]:
                     report.append(f'protected {path.name}: model rescue cap reached')
                     return False
@@ -461,6 +467,122 @@ def share_live_models(plan_path, live_root, report, apply=False):
     return freed
 
 
+def checked_build_path(relative):
+    """Reject links and path traversal before a reviewed removal."""
+    raw = Path(relative)
+    if raw.is_absolute() or '..' in raw.parts or not raw.parts:
+        raise ValueError('The removal path must stay inside .build.')
+    path = BUILD / raw
+    for parent in [path, *path.parents]:
+        if parent == BUILD:
+            break
+        if parent.is_symlink():
+            raise ValueError('The removal path contains a symbolic link.')
+    if not path.resolve().is_relative_to(BUILD.resolve()):
+        raise ValueError('The removal path escapes .build.')
+    return path
+
+
+def retire_downloads(plan_path, report, apply=False):
+    """Remove only pinned, verified downloads from the retired model archive."""
+    plan = json.loads(Path(plan_path).read_text())
+    approved = []
+    seen = set()
+    live_targets = set()
+    roots = [ROOT/'mobile', BUILD/'closure340/delivery350/workspace/mobile',
+             BUILD/'iphone201/workspace/mobile', BUILD/'native-guard135-device-project/mobile']
+    for root in roots:
+        for base, dirs, files in os.walk(root, followlinks=False):
+            dirs[:] = [name for name in dirs if name not in {'.git', 'target', 'SourcePackages', 'CargoCache', 'node_modules'}]
+            for name in dirs + files:
+                link = Path(base, name)
+                if link.is_symlink():
+                    live_targets.add(link.resolve())
+    for row in plan['files']:
+        path = checked_build_path(row['path'])
+        if not path.is_relative_to(BUILD / '_retained-models') or path in seen:
+            raise ValueError('Invalid or repeated retired download path.')
+        seen.add(path)
+        if any(path.resolve() == target or path.resolve().is_relative_to(target) for target in live_targets):
+            raise ValueError('An active native input uses this retained model.')
+        url = row.get('url', '')
+        revision = row.get('revision', '')
+        if (row.get('httpStatus') != 200 or not re.fullmatch(r'[0-9a-f]{40}', revision)
+                or not url.startswith('https://huggingface.co/') or f'/resolve/{revision}/' not in url):
+            raise ValueError('The pinned public download has not been verified.')
+        info = path.stat()
+        if (not path.is_file() or info.st_size != row['bytes'] or info.st_mtime_ns != row['mtimeNs']
+                or digest(path) != row['sha256']):
+            raise ValueError('The retired download changed. Make a new plan.')
+        approved.append((path, info))
+    # Validate the entire plan before removing the first file.
+    for path, info in approved:
+        if apply:
+            path.unlink()
+        report.append(f'{"removed" if apply else "would remove"} retired download '
+                      f'{path.relative_to(BUILD)} ({info.st_size} bytes)')
+    return sum(info.st_size for _, info in approved)
+
+
+def nested_products(folder, retained_builds):
+    """Find old generated products without removing their source or evidence folders."""
+    candidates = []
+    excluded = {'target', 'Dependencies', 'SourcePackages', '.git', 'node_modules'}
+    for base, dirs, _files in os.walk(folder, followlinks=False):
+        dirs[:] = [name for name in dirs if name not in excluded and not (Path(base)/name).is_symlink()]
+        for name in list(dirs):
+            path = Path(base, name)
+            if path.suffix not in {'.app', '.xcarchive'}:
+                continue
+            dirs.remove(name)
+            plists = [path/'Info.plist', path/'Contents/Info.plist']
+            build = None
+            for plist in plists:
+                try:
+                    data = plistlib.loads(plist.read_bytes())
+                    build = int(data.get('ApplicationProperties', data)['CFBundleVersion'])
+                    break
+                except (OSError, ValueError, KeyError, plistlib.InvalidFileException):
+                    continue
+            if build is not None and build < min(retained_builds):
+                candidates.append((path, build))
+    return candidates
+
+
+def prune_nested_products(report, apply=False):
+    """Apply one five-build budget to generated products inside closure340."""
+    if not (ROOT/'VERSION.json').is_file():
+        return dict(retainedBuilds=[], products=0, removedLogicalBytes=0)
+    current = int(json.loads((ROOT/'VERSION.json').read_text())['build'])
+    # The production upload is one build after the current desktop release.
+    latest = current
+    for store in BUILD.glob('testflight*/AniCanto.xcarchive/Info.plist'):
+        try:
+            latest = max(latest, int(plistlib.loads(store.read_bytes())['ApplicationProperties']['CFBundleVersion']))
+        except (OSError, ValueError, KeyError, plistlib.InvalidFileException):
+            continue
+    retained = set(range(latest-4, latest+1))
+    folder = BUILD/'closure340'
+    if not folder.is_dir():
+        return dict(retainedBuilds=sorted(retained), products=0, removedLogicalBytes=0)
+    live = live_source_names()
+    archive_left = [700 * 1024 * 1024]
+    removed = 0
+    total = 0
+    for path, build in nested_products(folder, retained):
+        path = checked_build_path(path.relative_to(BUILD))
+        size = sum(p.stat().st_size for p in path.rglob('*') if p.is_file() and not p.is_symlink())
+        if apply:
+            if not rescue(path, live, report, 0, archive_left, [0, 0], preserve_models=False):
+                continue
+            shutil.rmtree(path)
+        total += size
+        removed += 1
+        report.append(f'{"removed" if apply else "would remove"} generated product '
+                      f'{path.relative_to(BUILD)}; build {build}; {size} logical bytes')
+    return dict(retainedBuilds=sorted(retained), products=removed, removedLogicalBytes=total)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--retain', type=int, default=5, help='build versions to keep (default 5)')
@@ -476,6 +598,10 @@ def main() -> int:
                         help='only remove repeated model shards in _retained-models')
     parser.add_argument('--share-model-plan', type=Path, help='reviewed cross-root SHA-256 model plan')
     parser.add_argument('--live-model-root', type=Path, help='installed model root for the reviewed plan')
+    parser.add_argument('--retire-download-plan', type=Path,
+                        help='reviewed pinned download plan; only retired model archive files can be removed')
+    parser.add_argument('--prune-nested-products', action='store_true',
+                        help='prune old generated closure340 products; preserve source and evidence folders')
     parser.add_argument('--apply', action='store_true', help='remove; default is a dry run')
     parser.add_argument('--refresh', action='store_true',
                         help='ignore the size cache and re-measure .build now')
@@ -501,6 +627,19 @@ def main() -> int:
 
 def run(args) -> int:
     report: list = []
+    if getattr(args, 'retire_download_plan', None) or getattr(args, 'prune_nested_products', False):
+        result = dict(action='applied' if args.apply else 'dry-run')
+        if getattr(args, 'retire_download_plan', None):
+            result['retiredDownloadLogicalBytes'] = retire_downloads(args.retire_download_plan, report, args.apply)
+        if getattr(args, 'prune_nested_products', False):
+            result['nestedProducts'] = prune_nested_products(report, args.apply)
+        manifest = BUILD / f'_retention-log-{time.strftime("%Y%m%d-%H%M%S")}-reviewed-{result["action"]}.txt'
+        manifest.write_text('\n'.join(report)+'\n', encoding='utf-8')
+        result['manifest'] = str(manifest)
+        if args.apply:
+            SIZES_CACHE.unlink(missing_ok=True)
+        print(json.dumps(result))
+        return 0
     if getattr(args, 'share_model_plan', None):
         freed = share_live_models(args.share_model_plan,args.live_model_root,report,args.apply)
         action = 'model-sharing-applied' if args.apply else 'model-sharing-plan'
@@ -516,6 +655,7 @@ def run(args) -> int:
         print(f'.build model dedupe: {freed // (1024 * 1024)} MB ({freed / (1024 ** 3):.2f} GB) '
               f'freed. manifest: {manifest}')
         return 0
+    nested_result = prune_nested_products(report, args.apply)
     sizes = du_mb(3, args.refresh)
     keep = protected_names()
     release_budget=desktop_release_budget(args.retain)
@@ -628,7 +768,8 @@ def run(args) -> int:
     manifest.write_text('\n'.join(report) + '\n', encoding='utf-8')
     print(f'manifest: {manifest}')
     print(json.dumps({'action': action, 'retain': args.retain, 'entries': len(entries),
-                      'to_remove': len(victims), 'kept': len(kept), 'freed_mb': freed}))
+                      'to_remove': len(victims), 'kept': len(kept), 'freed_mb': freed,
+                      'nestedProducts': nested_result}))
     return 0
 
 

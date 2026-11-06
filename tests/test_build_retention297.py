@@ -199,6 +199,75 @@ class RetentionTests(unittest.TestCase):
         third=self.build/'_retained-models/third/model.bin';third.parent.mkdir();os.link(source,third)
         self.assertEqual(retention.dedupe_retained([]),0)
 
+    def retirement_plan(self, path, **changes):
+        row = dict(path=str(path.relative_to(self.build)), bytes=path.stat().st_size,
+                   mtimeNs=path.stat().st_mtime_ns, sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+                   url='https://huggingface.co/example/model/resolve/'+'a'*40+'/weights.bin',
+                   revision='a'*40, httpStatus=200)
+        row.update(changes)
+        plan = self.root/'retirement.json'
+        plan.write_text(json.dumps({'files':[row]}))
+        return plan
+
+    def test_retired_download_dry_then_apply_keeps_installed_hardlink(self):
+        import os
+        old = self.file('_retained-models/old/weights.bin',b'downloadable')
+        installed = self.root/'installed.bin';os.link(old,installed)
+        plan = self.retirement_plan(old)
+        self.assertEqual(retention.retire_downloads(plan,[],False),12)
+        self.assertTrue(old.exists())
+        retention.retire_downloads(plan,[],True)
+        self.assertFalse(old.exists());self.assertEqual(installed.read_bytes(),b'downloadable')
+
+    def test_retirement_rejects_changed_unverified_and_nonarchive_paths(self):
+        old = self.file('_retained-models/old/weights.bin',b'first')
+        plan = self.retirement_plan(old);old.write_bytes(b'other')
+        with self.assertRaises(ValueError):retention.retire_downloads(plan,[],True)
+        plan = self.retirement_plan(old,httpStatus=404)
+        with self.assertRaises(ValueError):retention.retire_downloads(plan,[],True)
+        other = self.file('active/weights.bin',b'active')
+        with self.assertRaises(ValueError):retention.retire_downloads(self.retirement_plan(other),[],True)
+        self.assertTrue(old.exists());self.assertTrue(other.exists())
+
+    def test_retirement_protects_active_dependency_symlink(self):
+        old = self.file('_retained-models/old/weights.bin',b'downloadable')
+        link = self.root/'mobile/Dependencies/weights.bin';link.parent.mkdir(parents=True);link.symlink_to(old)
+        with self.assertRaises(ValueError):retention.retire_downloads(self.retirement_plan(old),[],True)
+        self.assertEqual(link.read_bytes(),b'downloadable')
+
+    def test_nested_product_budget_preserves_source_and_unknown_products(self):
+        import plistlib
+        base = self.build/'closure340'
+        for build in [340,394,395,396]:
+            p = base/f'qa{build}/AniCanto.app';p.mkdir(parents=True)
+            (p/'Info.plist').write_bytes(plistlib.dumps({'CFBundleVersion':str(build)}))
+        (base/'source').mkdir();(base/'source/live.swift').write_text('live')
+        (base/'unknown.app').mkdir()
+        self.assertEqual({b for _,b in retention.nested_products(base,{395,396,397,398,399})},{340,394})
+        self.assertTrue((base/'source/live.swift').exists());self.assertTrue((base/'unknown.app').exists())
+
+    def test_loose_recording_blocks_normal_retention_before_model_move(self):
+        old = self.file('old/recording.wav',b'unique recording')
+        model = self.file('old/weights.bin',b'weights')
+        self.assertFalse(retention.rescue(old.parent,{},[],300,[100],[100,0]))
+        self.assertFalse(model.is_symlink());self.assertTrue(old.exists())
+
+    def test_nested_apply_removes_only_old_product_and_rescues_unique_source(self):
+        import plistlib
+        (self.root/'VERSION.json').write_text('{"build":"398"}')
+        store=self.build/'testflight399/AniCanto.xcarchive';store.mkdir(parents=True)
+        (store/'Info.plist').write_bytes(plistlib.dumps({'ApplicationProperties':{'CFBundleVersion':'399'}}))
+        old=self.build/'closure340/release394/AniCanto.app';old.mkdir(parents=True)
+        (old/'Info.plist').write_bytes(plistlib.dumps({'CFBundleVersion':'394'}))
+        (old/'adapter.py').write_text('unique archived adapter')
+        sdk=self.file('closure340/release394/source/library.c',b'required library source')
+        result=retention.prune_nested_products([],True)
+        self.assertEqual(result['retainedBuilds'],[395,396,397,398,399])
+        self.assertEqual(result['products'],1);self.assertFalse(old.exists())
+        self.assertEqual(sdk.read_bytes(),b'required library source')
+        rescued=list((self.build/'_retention-archive').rglob('adapter.py'))
+        self.assertEqual([p.read_text() for p in rescued],['unique archived adapter'])
+
 
 if __name__ == '__main__':
     unittest.main()

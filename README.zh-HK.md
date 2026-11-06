@@ -15,20 +15,20 @@
 
 ## 下載
 
-**[Mac 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto-macOS-0.25.49.zip)** · **[Windows 0.25.49](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/AniCanto.exe)**
+**[Mac 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto-macOS-0.25.50.zip)** · **[Windows 0.25.50](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.49-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.49-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.50-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.50-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 近期更新 · 0.25.49／398
+## 近期更新 · 0.25.50／400
 
-- 原聲時間核對仍未能確認時，保留原聲供校對。
-- 整合目前的原聲字音時間及聲線參考處理修補。
-- 改善一般及快速翻譯的原文人名處理。
-- 繼續工作時保留首次有效錄音及已用修復次數。
-- 更新四語使用手冊及流程控制說明。
+- 影片清單清空後，仍可查看已儲存工作及分離音軌。
+- 明確勾選後，才清除舊錄音、進度及中間影片。
+- 保留原片、已登記成品及已安裝模型。
+- 清理頁面可查看完整儲存分類，清理進度不會重新歸零。
+- 更新四語清理指南及開發檔案保留規則。
 
-沿用現有介面截圖。Windows 實機 GPU 速度及整片聽感仍需另行驗收。
+沿用現有截圖。Windows 實機操作仍需另行驗收。
 
 ## 點解會有 AniCanto
 

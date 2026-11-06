@@ -9,9 +9,9 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-165-source-failure-continuation",
+    "revision": "application-user-guide-166-desktop-saved-work-cleanup",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "50be75f7b166ce6e9b986beda20c9e51ec37ee0f56dbb6d2217ccb24cf0a9ef9",
+    "sha256": "db9167b6f5a4b97de7f06ba4508fa3ea5d75315e98c9aa6fbaf8f779c8ea6ea9",
     "controlGuideRevision": "workflow-controls-guide-61-source-failure-continuation",
     "controlGuideSHA256": "87d0ed8f099a9343d70f61c8690c98148047de48b54dc555d1dfb9fa5f66e540"
   },

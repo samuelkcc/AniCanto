@@ -28,6 +28,8 @@ REVIEWED_ASSETS|={'Resources/welcome-art/welcome-'+theme+'-'+str(i)+'.png' for t
 REVIEWED_SYNTHETIC_VOICES={'Resources/natural-voices/yue-low.wav': '31a0e62d885c62d05088bb9a870a979055174f476ea865e14d407c1c4b13cdbb', 'Resources/natural-voices/yue-mid.wav': 'cc1c5706fd49923407f86eedc2234c2bb5a6a06c19d48cf58039717e2fbafbc5', 'Resources/natural-voices/yue-bright.wav': 'a52f80a32e1c24c975972f11eebd0b2dc63010e81e885b1e379db57e67d7b1ff', 'Resources/natural-voices/yue-soft.wav': 'a33e0c21adf2fd00698ce9673f95d54ba20a0012c1f4b28bacaa285a0c48a5b9', 'Resources/natural-voices/en-low.wav': '59a003dc1b8023c3c9beb38c741ee842798d415ef71c605d523f962354ede1c9', 'Resources/natural-voices/en-mid.wav': '9d8bc5e25f7923f7526195dc7c3bdde44e3cc38dc942548ea0f0863845339f8e', 'Resources/natural-voices/en-bright.wav': '331056d0a2d2c95fca1a1ccb2519be655e496af77d609e63cb836510f163798d'}
 
 
+DOCS.update({'BUILD-STORAGE-POLICY.md','DESKTOP-STORAGE-0.25.50.md'})
+
 def activity_sources():
     """Allow only the exact desktop scene assets referenced by the reviewed manifest."""
     folder=ROOT/'studio/web/assets/assistant-activities'

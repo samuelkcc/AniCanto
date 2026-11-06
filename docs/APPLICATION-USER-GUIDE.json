@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-165-source-failure-continuation",
+  "revision": "application-user-guide-166-desktop-saved-work-cleanup",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -2985,6 +2985,12 @@
               "zh-HK": "「專案及輸出 → 清理暫存」會直接掃描 App 自己的儲存目錄，包括舊預覽副本、套件／編譯快取，同沒有連結到清單的中斷工作。顯示 0 只代表掃描分類入面沒有可移除項目，不代表整個資料目錄是空。未連結工作可能仍有有用錄音，移除前應檢視選擇。清理暫存會保留已下載模型、執行環境、原片同成品，並顯示掃描、刪除進度及最後釋放容量；掃描時不會刪嘢。",
               "zh-CN": "「专案及输出 → 清理临时文件」扫描应用存储，包括旧预览副本、组件缓存与未关联的中断工作。显示零只代表所扫描类别无可删除项目；未关联工作可能含有用录音，删除前须检查。模型、运行环境、原片与成品保留。界面显示扫描、删除进度及释放空间；扫描不会删除文件。",
               "ja": "「プロジェクトと出力 → 一時ファイルを整理」で旧プレビュー、パッケージやコンパイルのキャッシュ、関連付けのない中断作業を走査します。ゼロは対象分類に削除可能な項目がないという意味です。中断作業には必要な録音がある場合があるため確認してください。モデル、実行環境、元動画と完成品は保持します。走査、削除の進捗と解放容量を表示し、走査中は削除しません。"
+            },
+            {
+              "en": "An empty video list can still have saved desktop work. Select Saved desktop work and separation cache only when you no longer need those recordings or progress. This option also removes intermediate job movies and separated audio. It remains off until selected and is unavailable while videos or batch work remain. Original media, registered exports, models and runtimes are kept. Inspect application storage shows the complete folder breakdown. The amount of data removed can differ from the available disk space because files can share blocks or remain in backup snapshots.",
+              "zh-HK": "影片清單清空後，仍可能保留舊工作資料。如不再需要舊錄音或進度，可選取「已儲存工作與分離音軌」；此選項亦會移除中間影片及分離音軌。選項預設不勾選，有影片或批量工作時不能使用。原片、已登記成品、模型及執行環境會保留。「檢查應用程式儲存空間」可查看完整目錄分類。共用區塊或備份快照可能令已移除資料量與實際磁碟可用空間不同。",
+              "zh-CN": "影片列表清空后，仍可能保留旧工作数据。如不再需要旧录音或进度，可选择「已保存工作与分离音轨」；此选项也会移除中间影片和分离音轨。选项默认不勾选，有影片或批量工作时不可使用。原片、已登记成品、模型和运行环境保留。「检查应用存储空间」显示完整目录分类。共享块或备份快照可能使已移除数据量与实际磁盘可用空间不同。",
+              "ja": "動画一覧が空でも、以前の作業データが残る場合があります。録音や進捗が不要な場合だけ「保存した作業と分離音声」を選んでください。中間動画と分離音声も削除します。初期状態では選択されず、動画やバッチ作業が残る間は使用できません。元動画、登録済み出力、モデルと実行環境は保持します。「アプリのストレージを確認」で全体の内訳を確認できます。共有ブロックやバックアップのスナップショットにより、削除量と実際の空き容量は異なる場合があります。"
             }
           ],
           "controlRefs": [],

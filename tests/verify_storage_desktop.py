@@ -36,4 +36,15 @@ with tempfile.TemporaryDirectory(prefix='anicanto-storage-boundary-') as scratch
         assert hashlib.sha256(saved.read_bytes()).hexdigest()==frozen
         assert recording.read_bytes()==b'keep selected recording' and weights.read_bytes()==b'keep model'
         results.append(dict(mode=mode,inspection=True,repair=True,cacheCleanup=True,frozenRequestAndAudioPreserved=True))
+    owned=root/'jobs'/('c'*16);owned.mkdir()
+    take=owned/'take.wav';take.write_bytes(b'explicitly disposable fixture')
+    source=owned/'source.mkv';source.write_bytes(b'original fixture')
+    sep=root/'separations'/('d'*20);sep.mkdir(parents=True)
+    (sep/'vocals.wav').write_bytes(b'derived fixture')
+    current=call('project-cache-plan')
+    assert current['savedWorkCleanup']['canRemove'] and current['savedWorkCleanup']['count']>=2
+    result=call('clear-project-cache',dict(token=current['token'],savedWorkToken=current['savedWorkCleanup']['token'],operationID='saved-work400'))
+    assert result['complete'] and not take.exists() and not sep.exists()
+    assert source.read_bytes()==b'original fixture' and recording.exists() and weights.exists()
+    results.append(dict(savedWorkOptIn=True,separatedAudioCleared=True,unknownJobAndOriginalPreserved=True))
     print(json.dumps(dict(nativeBoundary=True,modes=results,realUserLibraryUsed=False),indent=2))

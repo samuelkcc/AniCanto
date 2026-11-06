@@ -352,9 +352,12 @@ let cacheReview=null,cacheCleaning=false,cacheSession=0;
 function updateCacheSelection(){
  if(!cacheReview)return;
  const chosen=new Set($$('[data-cache-orphan]:checked').map(x=>x.dataset.cacheOrphan));
- const extra=(cacheReview.orphanWork||[]).filter(x=>chosen.has(x.id));
- const count=cacheReview.count+extra.reduce((n,x)=>n+x.files.length,0);
- const size=cacheReview.bytes+extra.reduce((n,x)=>n+x.bytes,0);
+ const bulk=!!$('#cache-saved-work')?.checked;
+ const extra=bulk?[]:(cacheReview.orphanWork||[]).filter(x=>chosen.has(x.id));
+ for(const box of $$('[data-cache-orphan]'))box.disabled=bulk||!((cacheReview.orphanWork||[]).find(x=>x.id===box.dataset.cacheOrphan)?.canRemove);
+ const outside=(cacheReview.files||[]).filter(x=>!x.path.startsWith('jobs/')&&!x.path.startsWith('separations/'));
+ const count=bulk?(cacheReview.savedWorkCleanup.count+outside.length):(cacheReview.count+extra.reduce((n,x)=>n+x.files.length,0));
+ const size=bulk?(cacheReview.savedWorkCleanup.bytes+outside.reduce((n,x)=>n+x.bytes,0)):(cacheReview.bytes+extra.reduce((n,x)=>n+x.bytes,0));
  const el=$('#cache-size');if(el)el.textContent=bytes(size);
  const confirm=$('[data-action=confirm-clear-cache]');if(confirm)confirm.disabled=!count;
 }
@@ -362,17 +365,17 @@ function cacheProgressHTML(status={}){
  const phase=status.phase||'checking',known=phase==='deleting'&&status.total>0;
  const labels={checking:'Checking selected files…',deleting:'Clearing selected files…',tidying:'Finishing cleanup…'};
  const percent=known?Math.round(status.processed/status.total*100):null;
- return `<section class="cache-progress" aria-busy="true"><h3 role="status">${esc(t(labels[phase]||'Finishing cleanup…'))}</h3><div class="download-fill ${known?'':'indeterminate'}" role="progressbar" aria-label="${esc(t('Cleanup progress'))}" aria-valuemin="0" aria-valuemax="100" ${known?`aria-valuenow="${percent}"`:''}><i style="width:${known?percent:30}%"></i></div>${known?`<p class="row spread"><span>${esc(t('Files processed'))}: ${status.processed.toLocaleString()} / ${status.total.toLocaleString()}</span><strong>${percent}%</strong></p><small>${esc(t('Space freed'))}: ${bytes(status.freedBytes||0)}${status.failed?` · ${esc(t('Files not removed'))}: ${status.failed}`:''}</small>`:''}<p>${esc(t('Please keep the app open until cleanup finishes.'))}</p></section>`;
+ return `<section class="cache-progress" aria-busy="true"><h3 role="status">${esc(t(labels[phase]||'Finishing cleanup…'))}</h3><div class="download-fill ${known?'':'indeterminate'}" role="progressbar" aria-label="${esc(t('Cleanup progress'))}" aria-valuemin="0" aria-valuemax="100" ${known?`aria-valuenow="${percent}"`:''}><i style="width:${known?percent:30}%"></i></div>${known?`<p class="row spread"><span>${esc(t('Files processed'))}: ${status.processed.toLocaleString()} / ${status.total.toLocaleString()}</span><strong>${percent}%</strong></p><small>${esc(t('Data removed'))}: ${bytes(status.freedBytes||0)}${status.failed?` · ${esc(t('Files not removed'))}: ${status.failed}`:''}</small>`:''}<p>${esc(t('Please keep the app open until cleanup finishes.'))}</p></section>`;
 }
-async function runCacheCleanup(token,orphanIDs){
+async function runCacheCleanup(token,orphanIDs,savedWorkToken=null){
  cacheCleaning=true;const operationID=crypto.randomUUID();let polling=true;
  await showDrawer('Clear temporary files',cacheProgressHTML());
  $('.drawer [data-action=close-drawer]').disabled=true;
  const poll=async()=>{while(polling){await new Promise(r=>setTimeout(r,350));if(!polling)break;try{const status=await rpc('project-cache-status',{operationID});if(polling&&status&&['checking','deleting','tidying'].includes(status.phase))$('.drawer-body').innerHTML=cacheProgressHTML(status);}catch{/* The completion RPC remains authoritative if telemetry is unavailable. */}}};
  void poll();
  try{
-  const result=await rpc('clear-project-cache',{token,orphanIDs,operationID});polling=false;cacheCleaning=false;render();updatePreviewSurface();
-  await showDrawer('Clear temporary files',`<section class="cache-result ${result.complete?'success':'warning'}" role="status"><h3>${icon(result.complete?'check':'info')}${esc(t(result.complete?'Cleanup complete':'Some files could not be cleared'))}</h3><dl><div><dt>${esc(t('Space freed'))}</dt><dd>${bytes(result.freedBytes)}</dd></div><div><dt>${esc(t('Files removed'))}</dt><dd>${result.removedCount??0}</dd></div>${result.failedCount?`<div><dt>${esc(t('Files not removed'))}</dt><dd>${result.failedCount}</dd></div>`:''}</dl><p>${esc(t('Downloaded models, runtimes, original videos and finished exports were kept.'))}</p>${!result.complete?`<p>${esc(t('Files in use may need another try. Scan again to review what remains.'))}</p>`:''}<div class="row">${button('close-drawer','Done',null,'primary')}${button('clear-cache','Scan again','refresh')}</div></section>`);
+  const result=await rpc('clear-project-cache',{token,orphanIDs,operationID,savedWorkToken});polling=false;cacheCleaning=false;render();updatePreviewSurface();
+  await showDrawer('Clear temporary files',`<section class="cache-result ${result.complete?'success':'warning'}" role="status"><h3>${icon(result.complete?'check':'info')}${esc(t(result.complete?'Cleanup complete':'Some files could not be cleared'))}</h3><dl><div><dt>${esc(t('Data removed'))}</dt><dd>${bytes(result.freedBytes)}</dd></div><div><dt>${esc(t('Files removed'))}</dt><dd>${result.removedCount??0}</dd></div>${result.failedCount?`<div><dt>${esc(t('Files not removed'))}</dt><dd>${result.failedCount}</dd></div>`:''}</dl><p>${esc(t('Downloaded models, runtimes, original videos and finished exports were kept.'))}</p><small>${esc(t('Shared filesystem blocks and snapshots can change the space recovered by cleanup.'))}</small>${!result.complete?`<p>${esc(t('Files in use may need another try. Scan again to review what remains.'))}</p>`:''}<div class="row">${button('close-drawer','Done',null,'primary')}${button('clear-cache','Scan again','refresh')}</div></section>`);
  }catch(error){
   polling=false;cacheCleaning=false;
   await showDrawer('Clear temporary files',`<section class="cache-result warning" role="alert"><h3>${esc(t('Cleanup did not finish'))}</h3><p>${esc(error.message||String(error))}</p><p>${esc(t('Scan again to check what remains before retrying.'))}</p><div class="row">${button('close-drawer','Close')}${button('clear-cache','Scan again','refresh','primary')}</div></section>`);
@@ -1225,6 +1228,8 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
   let p;try{p=await rpc('project-cache-plan');}catch(error){if(session===cacheSession)await showDrawer('Clear temporary files',`<p role="alert">${esc(error.message||String(error))}</p>${button('clear-cache','Scan again','refresh')}`);return;}if(session!==cacheSession)return;cacheReview=p;
   const labels={'ocr-frames':'OCR images','video-preview':'Video previews','package-cache':'Package download cache','compiler-cache':'Compiled cache'};
   await showDrawer('Clear temporary files',`<h3>${esc(t('Estimated space to free'))}: <span id="cache-size">${bytes(p.bytes)}</span></h3><p>${esc(t('Scans the app storage folders directly, including old previews and interrupted work that is no longer in the list.'))}</p><h4>${esc(t('Rebuildable temporary files'))}</h4>${Object.entries(p.groups||{}).map(([k,n])=>`<div class="package-row"><span>${esc(t(labels[k]||k))}</span><small>${bytes(n)}</small></div>`).join('')||`<p>${esc(t('No rebuildable cache found.'))}</p>`}<small>${esc(t('Shared files may free less space. Downloaded models, runtimes, source videos and final movies are kept.'))}</small>
+  ${(p.savedWorkCleanup?.count||0)>0?`<div class="rule"></div><label class="check cache-work"><input type="checkbox" id="cache-saved-work" ${p.savedWorkCleanup.canRemove?'':'disabled'}><span>${esc(t('Saved desktop work and separation cache'))}<small>${bytes(p.savedWorkCleanup.bytes)} · ${p.savedWorkCleanup.jobCount} ${esc(t('Saved working folders'))} · ${p.savedWorkCleanup.separationCount} ${esc(t('Separated audio folders'))}</small></span></label><p>${esc(t('Deletes old recordings, saved progress and intermediate videos. Original media, registered exports and installed models are kept.'))}</p>${!p.savedWorkCleanup.canRemove?`<p>${esc(t('Empty the video list before clearing saved desktop work.'))}</p>`:''}`:''}
+  <div class="row">${button('storage-health','Inspect application storage','folder')}</div>
   <div class="rule"></div><h4>${esc(t('Unlinked working data'))} (${(p.orphanWork||[]).length})</h4><p>${esc(t('These folders are not linked to the current queue or saved projects. They may contain recordings from an interrupted conversion. Select only if you no longer need to resume or edit them.'))}</p>
   ${(p.orphanWork||[]).map(x=>`<label class="check cache-work"><input type="checkbox" data-cache-orphan="${esc(x.id)}" ${x.canRemove?'':'disabled'}><span>${esc(x.title||x.id)}<small>${bytes(x.bytes)} · ${esc(t('Recordings and working data'))}</small></span></label>`).join('')}
   ${(p.warnings||[]).length?`<p class="warning">${esc(t('Saved project references could not be checked. Working data is protected; only rebuildable caches can be cleaned.'))}</p>`:''}
@@ -1234,7 +1239,7 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
   if(active||cacheCleaning)return;
   const token=b.dataset.token,orphanIDs=$$('[data-cache-orphan]:checked').map(x=>x.dataset.cacheOrphan);b.disabled=true;
   releasePreviewStream();previewEnabled=false;previewLoading=false;$('#video')?.pause();$('#video')?.removeAttribute('src');$('#video')?.load();
-  await runCacheCleanup(token,orphanIDs);return;
+  await runCacheCleanup(token,orphanIDs,$('#cache-saved-work')?.checked?cacheReview.savedWorkCleanup.token:null);return;
  }
  if(a==='remove-model'){
   if(active)return;
@@ -1263,7 +1268,7 @@ document.addEventListener('input',e=>{if(e.target.dataset.setting==='backgroundG
 document.addEventListener('change',e=>safely(async()=>{const el=e.target;
  if(el.hasAttribute('data-voice-download')){updateVoiceDownloadSelection(el.closest('.voice-library'));return;}
  if(el.hasAttribute('data-install-follow')){installationFollow=el.checked;paintInstallation();return;}
- if(el.dataset.cacheOrphan){updateCacheSelection();return;}
+ if(el.dataset.cacheOrphan||el.id==='cache-saved-work'){updateCacheSelection();return;}
  if(el.id==='use-terms-checkbox'){localTermsAccepted=el.checked;if(localTermsAccepted)localStorage.setItem(termsKey,'accepted');else localStorage.removeItem(termsKey);if(!localTermsAccepted){state.useTermsAccepted=false;if(runtimeReady)await rpc('revoke-use-terms');}await syncUseTerms();render();return}
   if(el.id==='welcome-language'||el.id==='preferences-language'){state=await configure({language:el.value,settings:{},preserveProductionSettings:true});render();if(page==='terminal')await refreshLogs();return}
  if(el.id==='voice-parameter-engine'){voiceParameterEngine=el.value;const viewport=settingsViewport();if($('#inspector-content'))$('#inspector-content').innerHTML=inspectorHTML();if(page==='defaults')$('.main .page').outerHTML=fullPage();restoreSettingsViewport(viewport);return}

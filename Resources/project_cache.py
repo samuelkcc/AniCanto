@@ -155,7 +155,13 @@ def plan(root,rows,settings=None):
     for label in {f['group'] for f in ordered}:groups[label]=footprint([f for f in ordered if f['group']==label])
     orphans.sort(key=lambda x:x['id'])
     identity=[str(root),ordered,orphans,sorted(str(p) for p in job_refs),warnings]
-    return dict(token=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest(),bytes=footprint(ordered),logicalBytes=sum(f['bytes'] for f in ordered),count=len(ordered),groups=groups,files=ordered,orphanWork=orphans,warnings=warnings,scannedJobFolders=job_count,scope='application-storage')
+    result=dict(token=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest(),bytes=footprint(ordered),logicalBytes=sum(f['bytes'] for f in ordered),count=len(ordered),groups=groups,files=ordered,orphanWork=orphans,warnings=warnings,scannedJobFolders=job_count,scope='application-storage')
+    try:
+        from desktop_work_cleanup import summary
+        result['savedWorkCleanup']=summary(root,rows)
+    except (OSError,ValueError,sqlite3.Error):
+        result['savedWorkCleanup']=dict(canRemove=False,reason='saved-project-index-unavailable',bytes=0,count=0,jobCount=0,separationCount=0,token=None)
+    return result
 
 
 def execute(root,rows,token,orphan_ids=(),settings=None,progress=None):
@@ -213,7 +219,7 @@ def cleanup_status(root,operation_id):
     return value if isinstance(value,dict) and value.get('operationID')==operation_id else None
 
 
-def tracked_execute(root,rows,token,orphan_ids=(),settings=None,operation_id=None):
+def tracked_execute(root,rows,token,orphan_ids=(),settings=None,operation_id=None,saved_work_token=None):
     # Validate the operation identifier before touching the last receipt.
     cleanup_status(root,operation_id)
     from atomic_files import write_json
@@ -227,7 +233,33 @@ def tracked_execute(root,rows,token,orphan_ids=(),settings=None,operation_id=Non
         try:write_json(path,state)
         except OSError:pass
     try:
-        result=execute(root,rows,token,orphan_ids,settings,report)
+        saved_result=None
+        cache_report=report
+        if saved_work_token is not None:
+            current=plan(root,rows,settings)
+            if current['token']!=token:raise ValueError('Cache changed. Review cleanup again.')
+            from desktop_work_cleanup import execute as remove_saved_work
+            saved_count=current['savedWorkCleanup']['count']
+            cache_count=sum(not f['path'].startswith(('jobs/','separations/')) for f in current['files'])
+            def saved_report(**values):
+                values['total']=saved_count+cache_count
+                report(**values)
+            saved_result=remove_saved_work(root,rows,saved_work_token,saved_report)
+            # Saved-work removal changes the ordinary orphan list. Rescan its safe
+            # cache categories; never reuse the stale pre-removal orphan selection.
+            token=plan(root,rows,settings)['token'];orphan_ids=()
+            def cache_report(**values):
+                values['total']=saved_count+max(cache_count,values.get('total',0))
+                values['processed']=saved_count+values.get('processed',0)
+                for key,source in [('removed','removedCount'),('failed','failedCount'),('freedBytes','freedBytes')]:
+                    values[key]=saved_result[source]+values.get(key,0)
+                report(**values)
+        result=execute(root,rows,token,orphan_ids,settings,cache_report)
+        if saved_result:
+            for key in ('freedBytes','removedCount','failedCount','processedCount'):result[key]+=saved_result[key]
+            result['complete']=result['complete'] and saved_result['complete']
+            result['savedWorkRemoved']=True
+            result['failedFiles']+=saved_result['failedFiles']
     except Exception:
         report(phase='failed')
         raise
