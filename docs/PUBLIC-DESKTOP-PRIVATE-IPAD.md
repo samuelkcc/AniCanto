@@ -1,4 +1,12 @@
-# Public desktop / private iPad boundary
+# Public desktop / private mobile boundary
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
+
+The fixed public desktop destination is `samuelkcc/AniCanto`. It contains Mac and Windows code only.
+The fixed mobile destination is `samuelkcc/AniCanto-iOS`. It must remain private and contains iPhone and iPad code only.
+Never change a mobile remote to the public desktop destination. Never combine the two source trees for publication.
+Before each push, run `scripts/repository_boundary.py` against the exact remote and current GitHub visibility.
+Install its pre-push guard in each publication checkout. Abort on a wrong destination, visibility or source scope.
+Do not disable the guard to complete a push. Keep media, model weights and signing credentials outside the mobile code backup.
 
 The public AniCanto GitHub repository and desktop Releases contain the Mac / Windows desktop application only. The iPad application remains private. A desktop update does not authorise publishing iPad application code, Xcode projects, StoreKit implementation, device validation data, provisioning profiles, IPAs or archives.
 
