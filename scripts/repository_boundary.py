@@ -5,7 +5,7 @@ import re
 import subprocess
 from pathlib import Path
 
-REPOSITORIES = {'public-desktop': 'samuelkcc/AniCanto', 'private-mobile': 'samuelkcc/AniCanto-iOS'}
+REPOSITORIES = {'public-desktop': 'samuelkcc/AniCanto', 'private-mobile': 'samuelkcc/AniCanto-iOS', 'private-website': 'samuelkcc/anicanto-website'}
 PRIVATE_MARKER = '.private-mobile-repository.json'
 
 
@@ -17,6 +17,7 @@ def remote_repository(url):
 
 
 def validate_paths(paths, kind):
+    website_files = set(json.loads((Path(__file__).parent / 'website-public-files.json').read_text())['files']) if kind == 'private-website' else set()
     for name in paths:
         p = Path(name)
         lower = name.lower()
@@ -25,6 +26,7 @@ def validate_paths(paths, kind):
                     or any(x.lower().endswith(('.xcodeproj', '.xcworkspace', '.xcarchive')) for x in p.parts)
                     or p.suffix.lower() in {'.ipa', '.mobileprovision', '.p12', '.p8', '.keychain-db'}
                     or p.name.startswith(('test_mobile_', 'build_mobile_'))
+                    or (p.parts[:1]==('scripts',) and re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I))
                     or p.name in {'test_caption_layers340.py', 'test_text_runtime_boundary345.py'}
                     or (p.suffix == '.swift' and p.name.lower().startswith(('ipad', 'iphone', 'ios', 'storekit', 'iap')))):
                 raise ValueError('Private mobile path in the public desktop tree: ' + name)
@@ -33,6 +35,9 @@ def validate_paths(paths, kind):
                 raise ValueError('Desktop source in the private mobile tree: ' + name)
             if p.suffix.lower() in {'.ipa', '.mobileprovision', '.p12', '.p8', '.keychain-db', '.safetensors', '.gguf', '.litertlm', '.onnx', '.mp4', '.mkv', '.mov', '.wav', '.m4a'}:
                 raise ValueError('Media, weights or signing material in the code backup: ' + name)
+        elif kind == 'private-website':
+            if name not in website_files:
+                raise ValueError('Unreviewed path in the website tree: ' + name)
         else:
             raise ValueError('Unknown repository kind.')
 
@@ -49,7 +54,7 @@ def verify(repo, kind, remote_url):
         if marker != {'repository': expected, 'visibility': 'private', 'codeFamily': 'mobile'}:
             raise ValueError('Missing or changed private mobile boundary marker.')
     remote = json.loads(subprocess.check_output(['gh', 'repo', 'view', expected, '--json', 'isPrivate'], text=True))
-    if remote['isPrivate'] != (kind == 'private-mobile'):
+    if remote['isPrivate'] != (kind in {'private-mobile', 'private-website'}):
         raise ValueError('Repository visibility does not match its fixed source boundary.')
     return {'repository': expected, 'kind': kind, 'files': len(paths), 'visibilityVerified': True}
 

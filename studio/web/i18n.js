@@ -654,3 +654,5 @@ Object.assign(zh,{"Speech recognition could not run on this computer, so this ap
 
 // Switch groups in the Production settings panel name the block, not each row.
 Object.assign(zh,{"Scope": "處理範圍", "Content priority": "內容優先次序", "Subtitles": "字幕", "OP / ED treatment": "片頭／片尾處理", "Voice and dubbing": "聲音與配音", "Models and output": "模型與輸出", "AI review": "AI 覆核"});
+
+Object.assign(zh,{"Reuse source analysis. A new dubbing language translates the original text again.":"沿用原聲分析；更改配音語言會由原文重新翻譯。","Source analysis retained; translate the original text again":"沿用原聲分析，並由原文重新翻譯"});

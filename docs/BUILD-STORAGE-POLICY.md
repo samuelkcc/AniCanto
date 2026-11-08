@@ -47,6 +47,12 @@ It does not remove parent workspaces, SDK directories, source delivery materials
 The tool rescues unique source and licence files before product removal.
 Unknown product identities remain untouched.
 
+Native protection reads the canonical project, the phone workspace and the actual production workspace.
+It also resolves source-tree links before selecting old folders. A linked tools folder is an active input.
+This check does not depend on the newest handover window. Do not follow compiler-cache trees during this scan.
+The410dry run exposes this gap through the live producer scripts link to voice-delivery333.
+The reviewed cleanup keeps that target. Regression tests cover this target without a handover entry.
+
 Normal retention stops when a work folder contains loose media or recordings.
 Such a folder needs an explicit review. A file extension alone does not prove that a recording is disposable.
 An unmatched model hash also requires review. Do not identify it as the current catalog version.

@@ -213,6 +213,7 @@ def render(w, request):
     original_emit=w.emit
     try:
         cues=materialize(source_review,draft)
+        __import__('update_plan').prepare_cues(draft.get('settings',{}),cues)
         __import__('terminology').apply({**source_review.get('config',{}),**draft.get('settings',{})},cues)
         if draft.get('settings',{}).get('subtitlesOnly'):
             cfg={**source_review['config'],**draft['settings']}
@@ -278,7 +279,7 @@ def render(w, request):
         seed_cache(root,Path(cfg['editorCache']))
         number(cfg.get('captionBottom',.045),0,.8,'字幕位置')
         number(cfg.get('captionSize',.043),.015,.12,'字幕大小')
-        for name in ('dual-asr-cues.json','japanese-analysis.json','nonverbal-classification-v2.json','source-cues.json','subtitle-cues.json','subtitle-context.json','source-coverage.json'):
+        for name in ('dual-asr-cues.json','japanese-analysis.json','nonverbal-classification-v2.json','source-cues.json','subtitle-cues.json','subtitle-context.json','source-coverage.json','independent-voices.json','source-policy.json','normal-names.json'):
             if (root/name).exists():shutil.copy2(root/name,folder/name)
         def relay(stage,message,progress=None,**extra):
             original_emit(stage,message,progress,job=str(folder),**{k:extra[k] for k in ('partial','autoRepair','workID','workCompleted','workTotal') if k in extra})

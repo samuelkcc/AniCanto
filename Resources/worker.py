@@ -1233,7 +1233,9 @@ def render_review(request):
     fast_mode.configure(cfg)
     if fast_mode.enabled(cfg) and not cfg.get("_singleEngine") and not request.get("fastPrepared"):
         submitted=request.get("cues",review["cues"])
-        __import__('primary_source').prepare(sys.modules[__name__],cfg,review_path.parent,submitted)
+        # An explicit recording child keeps the verified original allocation and clocks.
+        if cfg.get('updateRecordingPlan',{}).get('revision')!=__import__('update_plan').REVISION:
+            __import__('primary_source').prepare(sys.modules[__name__],cfg,review_path.parent,submitted)
         fast_mode.translate(sys.modules[__name__],cfg,review_path.parent,submitted)
         fast_mode.prepare_references(sys.modules[__name__],cfg,review_path.parent,submitted)
         review["cues"]=submitted

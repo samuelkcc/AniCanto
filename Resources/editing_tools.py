@@ -40,7 +40,7 @@ def impact(review,draft,params):
     tracks=pairs if operation in ('all','analysis','remix') else [target]
     changed=dict(operation=operation,segment=selected,engine=target[1],language=target[0],replaced=params.get('replaced'))
     return dict(token=fingerprint([review,draft,changed]),operation=operation,dialogueIDs=affected if operation!='remix' else [],dialogueCount=len(affected) if operation!='remix' else 0,tracks=tracks,
-        retainsSourceAnalysis=operation!='analysis',retainsScripts=operation!='analysis',retainsPreviousRecordings=True,retainsPreviousExports=True,
+        retainsSourceAnalysis=operation!='analysis',retainsScripts=operation!='analysis' and not (operation in ('append','replace') and __import__('update_plan').source_language_changed(review,target[0])),retainsPreviousRecordings=True,retainsPreviousExports=True,
         retainedTracks=[p for p in pairs if p not in tracks and p!=params.get('replaced')],parameters={k:v for k,v in cfg.items() if k.startswith(('gsv','cosy','drama','voice'))})
 
 

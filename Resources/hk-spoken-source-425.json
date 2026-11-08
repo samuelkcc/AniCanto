@@ -1,0 +1,4404 @@
+{
+  "revision": "hong-kong-contextual-425",
+  "ownership": "First-party style examples authored for AniCanto. No third-party dictionary or model output is copied.",
+  "maximumExamples": 3,
+  "scope": "Shared first-draft examples. Match the original source. Do not replace words in names or quotations.",
+  "entries": [
+    {
+      "id": "support",
+      "matchesAny": [
+        [
+          "提供",
+          "支持"
+        ]
+      ],
+      "written": "他為隊友提供支持。",
+      "spoken": "佢幫隊友手。",
+      "usage": "「為某人提供支持」嘅自然講法係「幫某人手」；保留原句嗰個人名，同有冇幫手。"
+    },
+    {
+      "id": "last-year",
+      "matchesAny": [
+        [
+          "去年"
+        ],
+        [
+          "昨年"
+        ]
+      ],
+      "written": "他是去年的冠軍。",
+      "spoken": "佢係舊年嘅冠軍。",
+      "usage": "一般對白將「去年」講成「舊年」；冠軍名同連勝次數照原句。"
+    },
+    {
+      "id": "bothered-passive",
+      "matchesAny": [
+        [
+          "被",
+          "困擾"
+        ]
+      ],
+      "written": "他被這些傳聞困擾。",
+      "spoken": "啲傳聞搞到佢好煩。",
+      "usage": "被動句改成自然口語因果句，唔好調轉邊個受影響。"
+    },
+    {
+      "id": "won-aspect",
+      "matchesAny": [
+        [
+          "贏",
+          "了"
+        ]
+      ],
+      "written": "他贏了這場比賽。",
+      "spoken": "佢贏咗呢場比賽。",
+      "usage": ""
+    },
+    {
+      "id": "lost-aspect",
+      "matchesAny": [
+        [
+          "輸",
+          "了"
+        ]
+      ],
+      "written": "他輸了比賽。",
+      "spoken": "佢輸咗場比賽。",
+      "usage": ""
+    },
+    {
+      "id": "anticipation",
+      "matchesAny": [
+        [
+          "翹首"
+        ],
+        [
+          "期待"
+        ]
+      ],
+      "written": "我們對這場比賽不勝翹首。",
+      "spoken": "我哋等呢場比賽等到頸都長。",
+      "usage": ""
+    },
+    {
+      "id": "uncertain-victory",
+      "matchesAny": [
+        [
+          "能否"
+        ],
+        [
+          "是否"
+        ]
+      ],
+      "written": "他能否連續兩屆奪冠？",
+      "spoken": "佢可唔可以連續兩屆攞冠軍？",
+      "usage": ""
+    },
+    {
+      "id": "too-much-harm",
+      "matchesAny": [
+        [
+          "損害",
+          "太"
+        ]
+      ],
+      "written": "這樣對輪胎的損害太大。",
+      "spoken": "咁樣太傷條胎喇。",
+      "usage": "「太勉強」同「損害太大」係兩層意思，要兩層都保留。"
+    },
+    {
+      "id": "lower-power",
+      "matchesAny": [
+        [
+          "馬力",
+          "壓"
+        ]
+      ],
+      "written": "你把馬力壓下來。",
+      "spoken": "你將馬力壓低啲。",
+      "usage": ""
+    },
+    {
+      "id": "spectators",
+      "matchesAny": [
+        [
+          "觀眾",
+          "面前"
+        ]
+      ],
+      "written": "他在四千名觀眾面前重新出發。",
+      "spoken": "佢當住四千個觀眾重新出發。",
+      "usage": ""
+    },
+    {
+      "id": "not-yet",
+      "matchesAny": [
+        [
+          "還沒有"
+        ],
+        [
+          "尚未"
+        ]
+      ],
+      "written": "他還沒有回來。",
+      "spoken": "佢仲未返嚟。",
+      "usage": ""
+    },
+    {
+      "id": "negative-command",
+      "matchesAny": [
+        [
+          "不要"
+        ],
+        [
+          "別走"
+        ]
+      ],
+      "written": "不要離開這裡。",
+      "spoken": "唔好離開呢度。",
+      "usage": ""
+    },
+    {
+      "id": "subject-and-object",
+      "matchesAny": [
+        [
+          "告訴"
+        ]
+      ],
+      "written": "我沒有告訴他。",
+      "spoken": "我冇話畀佢知。",
+      "usage": ""
+    },
+    {
+      "id": "question-why",
+      "matchesAny": [
+        [
+          "為什麼"
+        ],
+        [
+          "為何"
+        ]
+      ],
+      "written": "你為什麼不告訴我？",
+      "spoken": "你點解唔話我知？",
+      "usage": ""
+    },
+    {
+      "id": "current-progress",
+      "matchesAny": [
+        [
+          "正在"
+        ]
+      ],
+      "written": "他正在找朋友。",
+      "spoken": "佢搵緊朋友。",
+      "usage": ""
+    },
+    {
+      "id": "directions",
+      "matchesAny": [
+        [
+          "這裡"
+        ],
+        [
+          "那裡"
+        ]
+      ],
+      "written": "你先回到這裡。",
+      "spoken": "你返嚟呢度先。",
+      "usage": ""
+    },
+    {
+      "id": "negated-condition",
+      "matchesAny": [
+        [
+          "如果",
+          "不"
+        ]
+      ],
+      "written": "如果你不答應，我就不走。",
+      "spoken": "如果你唔應承，我就唔走。",
+      "usage": ""
+    },
+    {
+      "id": "first-time",
+      "matchesAny": [
+        [
+          "第一次"
+        ]
+      ],
+      "written": "這是我第一次參加。",
+      "spoken": "呢個係我第一次參加。",
+      "usage": ""
+    },
+    {
+      "id": "speech-idiom",
+      "matchesAny": [
+        [
+          "怎麼可能"
+        ],
+        [
+          "不可能"
+        ]
+      ],
+      "written": "這怎麼可能？",
+      "spoken": "呢啲點可能呀？",
+      "usage": ""
+    },
+    {
+      "id": "speech-need",
+      "matchesAny": [
+        [
+          "不用"
+        ],
+        [
+          "不需要"
+        ]
+      ],
+      "written": "你不用擔心。",
+      "spoken": "你唔使擔心。",
+      "usage": ""
+    },
+    {
+      "id": "fall-behind",
+      "matchesAny": [
+        [
+          "甩開"
+        ]
+      ],
+      "written": "如果被對手甩開就糟了。",
+      "spoken": "如果畀對手拋離就慘喇。",
+      "usage": "「被某人甩開」講成「畀某人拋離」；保留條件同對手名。"
+    },
+    {
+      "id": "what-question",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "什麼"
+        ],
+        [
+          "甚麼"
+        ]
+      ],
+      "written": "你在看什麼？",
+      "spoken": "你睇緊乜嘢？",
+      "usage": "保留問句，唔好變成答案。"
+    },
+    {
+      "id": "how-to-proceed",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "怎麼辦"
+        ],
+        [
+          "如何是好"
+        ]
+      ],
+      "written": "現在怎麼辦？",
+      "spoken": "而家點算？",
+      "usage": "問處理方法，唔係問原因。"
+    },
+    {
+      "id": "how-known",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "怎麼知道"
+        ]
+      ],
+      "written": "你怎麼知道這件事？",
+      "spoken": "你點知呢件事？",
+      "usage": "保留知道嘅對象。"
+    },
+    {
+      "id": "which-one",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "哪一個"
+        ],
+        [
+          "哪個"
+        ]
+      ],
+      "written": "你要哪一個？",
+      "spoken": "你想要邊個？",
+      "usage": "保留選擇範圍，唔好自行揀答案。"
+    },
+    {
+      "id": "any-or-not",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "有沒有"
+        ]
+      ],
+      "written": "你有沒有看見他？",
+      "spoken": "你有冇見到佢？",
+      "usage": "有冇係問句，唔好譯成肯定或否定。"
+    },
+    {
+      "id": "first-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "我們"
+        ]
+      ],
+      "written": "我們一起離開。",
+      "spoken": "我哋一齊走。",
+      "usage": "我哋係複數，唔可以變成我。"
+    },
+    {
+      "id": "second-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "你們"
+        ]
+      ],
+      "written": "你們先走。",
+      "spoken": "你哋行先。",
+      "usage": "保留複數同先後次序。"
+    },
+    {
+      "id": "third-plural",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "他們"
+        ],
+        [
+          "她們"
+        ]
+      ],
+      "written": "他們還在等。",
+      "spoken": "佢哋仲等緊。",
+      "usage": "佢哋係複數，唔好加其他人物。"
+    },
+    {
+      "id": "just-completed",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "剛剛"
+        ],
+        [
+          "剛才"
+        ]
+      ],
+      "written": "我剛剛到。",
+      "spoken": "我啱啱到。",
+      "usage": "保留啱啱發生嘅時間。"
+    },
+    {
+      "id": "already-ate",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "已經"
+        ]
+      ],
+      "written": "我已經吃飯了。",
+      "spoken": "我食咗飯喇。",
+      "usage": "按動作完成嘅意思用咗，唔好每個了都硬換。"
+    },
+    {
+      "id": "still-waiting",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "仍然"
+        ]
+      ],
+      "written": "他仍然在等你。",
+      "spoken": "佢仲等緊你。",
+      "usage": "保留動作仍然進行。"
+    },
+    {
+      "id": "no-longer",
+      "category": "polarity",
+      "matchesAny": [
+        [
+          "不再"
+        ]
+      ],
+      "written": "我不再相信他。",
+      "spoken": "我唔再信佢。",
+      "usage": "保留唔再，唔好變成從來都唔信。"
+    },
+    {
+      "id": "nearly",
+      "category": "aspect",
+      "matchesAny": [
+        [
+          "差點"
+        ],
+        [
+          "險些"
+        ]
+      ],
+      "written": "我差點忘記了。",
+      "spoken": "我爭啲唔記得咗。",
+      "usage": "爭啲係差少少發生，唔好變成已經發生。"
+    },
+    {
+      "id": "in-time",
+      "category": "time",
+      "matchesAny": [
+        [
+          "來得及"
+        ],
+        [
+          "來不及"
+        ]
+      ],
+      "written": "現在走還來得及。",
+      "spoken": "而家走仲趕得切。",
+      "usage": "來不及要用趕唔切，保留否定。"
+    },
+    {
+      "id": "tomorrow",
+      "category": "time",
+      "matchesAny": [
+        [
+          "明天"
+        ]
+      ],
+      "written": "明天再來吧。",
+      "spoken": "聽日再嚟啦。",
+      "usage": "保留原句日期同再做一次嘅意思。"
+    },
+    {
+      "id": "yesterday",
+      "category": "time",
+      "matchesAny": [
+        [
+          "昨天"
+        ]
+      ],
+      "written": "他昨天來過。",
+      "spoken": "佢尋日嚟過。",
+      "usage": "保留過去時間，唔好變成今日。"
+    },
+    {
+      "id": "wait-shortly",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "等一會"
+        ],
+        [
+          "等一等"
+        ]
+      ],
+      "written": "請等一會兒。",
+      "spoken": "唔該等陣。",
+      "usage": "保留請求嘅禮貌，唔好改成喝令。"
+    },
+    {
+      "id": "tell-me",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "告訴我"
+        ]
+      ],
+      "written": "請告訴我原因。",
+      "spoken": "唔該話我知點解。",
+      "usage": "保留邊個要知道同知道乜。"
+    },
+    {
+      "id": "stop-speaking",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "別說"
+        ],
+        [
+          "不要說"
+        ]
+      ],
+      "written": "別說了。",
+      "spoken": "唔好再講喇。",
+      "usage": "只改講話嘅動詞；小說、人名同引用文字唔作換字。"
+    },
+    {
+      "id": "less-nonsense",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "廢話少說"
+        ]
+      ],
+      "written": "廢話少說，快走。",
+      "spoken": "廢話少講，快啲走。",
+      "usage": "保持催促，唔好自行加入粗口。"
+    },
+    {
+      "id": "not-understand",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "聽不懂"
+        ],
+        [
+          "聽不明白"
+        ]
+      ],
+      "written": "我聽不懂你在說什麼。",
+      "spoken": "我聽唔明你講乜。",
+      "usage": "聽唔明唔等於聽唔到。"
+    },
+    {
+      "id": "not-hear",
+      "category": "communication",
+      "matchesAny": [
+        [
+          "聽不到"
+        ],
+        [
+          "聽不見"
+        ]
+      ],
+      "written": "他聽不到你說話，但他明白你的意思。",
+      "spoken": "佢聽唔到你講嘢，但佢明你嘅意思。",
+      "usage": "聽唔到同唔理解係兩回事。保留但後面嘅肯定或否定，唔好將陳述改成係咪問句。"
+    },
+    {
+      "id": "angry",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "生氣"
+        ],
+        [
+          "憤怒"
+        ]
+      ],
+      "written": "我真的很生氣。",
+      "spoken": "我真係好嬲。",
+      "usage": "保持原有情緒強度，唔好加辱罵。"
+    },
+    {
+      "id": "afraid",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "害怕"
+        ]
+      ],
+      "written": "我有點害怕。",
+      "spoken": "我有啲驚。",
+      "usage": "有啲唔係非常，保留程度。"
+    },
+    {
+      "id": "exhausted",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "筋疲力盡"
+        ]
+      ],
+      "written": "我已經筋疲力盡。",
+      "spoken": "我攰到冇晒力喇。",
+      "usage": "保留疲累程度，唔好當成生病。"
+    },
+    {
+      "id": "shocked",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "嚇我一跳"
+        ]
+      ],
+      "written": "你嚇我一跳。",
+      "spoken": "你嚇咗我一跳。",
+      "usage": "保留係邊個嚇親邊個。"
+    },
+    {
+      "id": "cannot-accept",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "不能接受"
+        ],
+        [
+          "無法接受"
+        ]
+      ],
+      "written": "我不能接受這個結果。",
+      "spoken": "我接受唔到呢個結果。",
+      "usage": "保留唔接受嘅對象。"
+    },
+    {
+      "id": "stop-joking",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "不要開玩笑"
+        ],
+        [
+          "別開玩笑"
+        ]
+      ],
+      "written": "不要開玩笑。",
+      "spoken": "唔好講笑。",
+      "usage": "唔好擅自添加憤怒或粗口。"
+    },
+    {
+      "id": "embarrassed",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "丟臉"
+        ]
+      ],
+      "written": "這樣太丟臉了。",
+      "spoken": "咁樣真係好瘀。",
+      "usage": "保留尷尬，唔好改成生氣。"
+    },
+    {
+      "id": "no-problem",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "沒關係"
+        ],
+        [
+          "沒有關係"
+        ]
+      ],
+      "written": "沒關係，我可以等。",
+      "spoken": "唔緊要，我可以等。",
+      "usage": "「沒有關係」如講人物冇關聯，要保留嗰個意思。"
+    },
+    {
+      "id": "apology",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "不好意思"
+        ],
+        [
+          "對不起"
+        ]
+      ],
+      "written": "對不起，我來晚了。",
+      "spoken": "唔好意思，我遲咗到。",
+      "usage": "正式道歉可用對唔住；唔好無故變成輕佻。"
+    },
+    {
+      "id": "thanks-help",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "謝謝",
+          "幫"
+        ],
+        [
+          "謝謝",
+          "讓"
+        ]
+      ],
+      "written": "謝謝你幫我開門。",
+      "spoken": "唔該你幫我開門。",
+      "usage": "幫忙常用唔該；收到禮物或讚賞常用多謝，唔好一律替換。"
+    },
+    {
+      "id": "thanks-gift",
+      "category": "politeness",
+      "matchesAny": [
+        [
+          "謝謝",
+          "禮物"
+        ]
+      ],
+      "written": "謝謝你的禮物。",
+      "spoken": "多謝你份禮物。",
+      "usage": "禮物用多謝，唔好套用請人幫手嘅唔該。"
+    },
+    {
+      "id": "worry",
+      "category": "emotion",
+      "matchesAny": [
+        [
+          "擔心"
+        ]
+      ],
+      "written": "我很擔心他。",
+      "spoken": "我好擔心佢。",
+      "usage": "保留關心對象，唔好加新嘅危險。"
+    },
+    {
+      "id": "quarrel",
+      "category": "actions",
+      "matchesAny": [
+        [
+          "吵架"
+        ]
+      ],
+      "written": "他們又吵架了。",
+      "spoken": "佢哋又嗌交喇。",
+      "usage": "保留又一次同人物複數。"
+    },
+    {
+      "id": "stop-noise",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "不要吵"
+        ],
+        [
+          "別吵"
+        ]
+      ],
+      "written": "不要吵，讓我想一下。",
+      "spoken": "唔好嘈，等我諗吓。",
+      "usage": "每一分句都保留。"
+    },
+    {
+      "id": "take-care",
+      "category": "requests",
+      "matchesAny": [
+        [
+          "小心一點"
+        ],
+        [
+          "小心點"
+        ]
+      ],
+      "written": "你小心一點。",
+      "spoken": "你小心啲。",
+      "usage": "保留提醒，唔好新增危險種類。"
+    },
+    {
+      "id": "not-necessary",
+      "category": "polarity",
+      "matchesAny": [
+        [
+          "不必"
+        ],
+        [
+          "無須"
+        ]
+      ],
+      "written": "你不必現在回答。",
+      "spoken": "你唔使而家答。",
+      "usage": "唔使係冇必要，唔好改成唔准。"
+    },
+    {
+      "id": "must-do",
+      "category": "obligation",
+      "matchesAny": [
+        [
+          "必須"
+        ]
+      ],
+      "written": "你必須今天完成。",
+      "spoken": "你一定要今日做完。",
+      "usage": "保留必須嘅強度；正式法律或引用文字可保留原有用語。"
+    },
+    {
+      "id": "should-not",
+      "category": "obligation",
+      "matchesAny": [
+        [
+          "不應該"
+        ]
+      ],
+      "written": "你不應該這樣做。",
+      "spoken": "你唔應該咁做。",
+      "usage": "唔應該唔等於做唔到。"
+    },
+    {
+      "id": "possible-weather",
+      "category": "context",
+      "matchesAny": [
+        [
+          "搞不好",
+          "明天"
+        ],
+        [
+          "搞不好",
+          "下雨"
+        ]
+      ],
+      "written": "搞不好明天會下雨。",
+      "spoken": "聽日可能會落雨。",
+      "usage": "呢度講可能性，唔係整唔好一件物件。"
+    },
+    {
+      "id": "cannot-fix",
+      "category": "context",
+      "matchesAny": [
+        [
+          "修不好"
+        ],
+        [
+          "搞不好",
+          "機器"
+        ]
+      ],
+      "written": "這台機器怎麼也修不好。",
+      "spoken": "呢部機點整都整唔好。",
+      "usage": "呢度講修理唔成功，唔好改成可能。"
+    },
+    {
+      "id": "almost-same",
+      "category": "degree",
+      "matchesAny": [
+        [
+          "差不多"
+        ]
+      ],
+      "written": "他們的速度差不多。",
+      "spoken": "佢哋嘅速度差唔多。",
+      "usage": "差唔多唔係完全一樣。"
+    },
+    {
+      "id": "fixed-title",
+      "category": "names",
+      "matchesAny": [
+        [
+          "《",
+          "》",
+          "叫"
+        ],
+        [
+          "《",
+          "》",
+          "小說"
+        ],
+        [
+          "《",
+          "》",
+          "電影"
+        ],
+        [
+          "《",
+          "》",
+          "書名"
+        ]
+      ],
+      "written": "這本小說叫《不要回來》。",
+      "spoken": "呢本小說叫《不要回來》。",
+      "usage": "《》內係書名，原樣保留，唔好改成《唔好返嚟》；書名以外嘅對白先改口語。"
+    },
+    {
+      "id": "context377-still-wait",
+      "matchesAny": [
+        [
+          "仍然"
+        ]
+      ],
+      "written": "他仍然在外面等你。",
+      "spoken": "佢仲喺出面等緊你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-already-left",
+      "matchesAny": [
+        [
+          "已經",
+          "離開"
+        ]
+      ],
+      "written": "他已經離開了。",
+      "spoken": "佢已經走咗喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-unexpected",
+      "matchesAny": [
+        [
+          "竟然"
+        ]
+      ],
+      "written": "他竟然一個人回來了。",
+      "spoken": "估唔到佢自己一個返咗嚟。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-cannot-only",
+      "matchesAny": [
+        [
+          "只能"
+        ]
+      ],
+      "written": "我們現在只能在這裡等。",
+      "spoken": "我哋而家唯有喺呢度等。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-mistaken-belief",
+      "matchesAny": [
+        [
+          "以為"
+        ]
+      ],
+      "written": "我以為你不會再來了。",
+      "spoken": "我以為你唔會再嚟添。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-feel-opinion",
+      "matchesAny": [
+        [
+          "覺得"
+        ]
+      ],
+      "written": "你覺得這樣真的可以嗎？",
+      "spoken": "你覺得咁樣真係得咩？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-fear-outcome",
+      "matchesAny": [
+        [
+          "恐怕"
+        ]
+      ],
+      "written": "恐怕趕不上最後一班車了。",
+      "spoken": "驚趕唔切尾班車喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-understand-now",
+      "matchesAny": [
+        [
+          "明白"
+        ]
+      ],
+      "written": "現在我終於明白你為什麼生氣。",
+      "spoken": "而家我終於明點解你嬲喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-hurry-action",
+      "matchesAny": [
+        [
+          "趕快"
+        ]
+      ],
+      "written": "趕快把門關上！",
+      "spoken": "快啲閂埋道門！",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-as-soon",
+      "matchesAny": [
+        [
+          "盡快"
+        ]
+      ],
+      "written": "請盡快告訴我結果。",
+      "spoken": "唔該盡快話畀我知個結果。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-rather-than",
+      "matchesAny": [
+        [
+          "與其"
+        ]
+      ],
+      "written": "與其一直擔心，不如先去看看。",
+      "spoken": "與其一路擔心，不如去睇吓先。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-contrary-result",
+      "matchesAny": [
+        [
+          "反而"
+        ]
+      ],
+      "written": "你這樣做反而會更危險。",
+      "spoken": "你咁做仲危險呀。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-deliberate",
+      "matchesAny": [
+        [
+          "故意"
+        ]
+      ],
+      "written": "你是故意不告訴我的嗎？",
+      "spoken": "你係咪特登唔話畀我知㗎？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-encounter",
+      "matchesAny": [
+        [
+          "遇到"
+        ]
+      ],
+      "written": "如果遇到他，幫我問一問。",
+      "spoken": "如果撞到佢，幫我問吓。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-yet",
+      "matchesAny": [
+        [
+          "尚未"
+        ]
+      ],
+      "written": "他們尚未找到出口。",
+      "spoken": "佢哋仲未搵到出口。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-necessarily",
+      "matchesAny": [
+        [
+          "未必"
+        ]
+      ],
+      "written": "不喜歡說話的人未必不開心。",
+      "spoken": "唔鍾意講嘢嘅人未必唔開心。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-that",
+      "matchesAny": [
+        [
+          "並非"
+        ]
+      ],
+      "written": "我並非不相信你，只是需要時間。",
+      "spoken": "我唔係唔信你，只係需要啲時間。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-otherwise",
+      "matchesAny": [
+        [
+          "否則"
+        ]
+      ],
+      "written": "現在就走，否則會遲到。",
+      "spoken": "而家就走啦，唔係會遲到㗎。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-as-long-as",
+      "matchesAny": [
+        [
+          "只要"
+        ]
+      ],
+      "written": "只要你願意，我就陪你去。",
+      "spoken": "只要你肯，我就陪你去。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-even-if",
+      "matchesAny": [
+        [
+          "即使"
+        ]
+      ],
+      "written": "即使沒有人相信，我也不會放棄。",
+      "spoken": "就算冇人信，我都唔會放棄。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-not-until",
+      "matchesAny": [
+        [
+          "直到"
+        ]
+      ],
+      "written": "直到昨天，我才知道這件事。",
+      "spoken": "我到噚日先知呢件事。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-almost-missed",
+      "matchesAny": [
+        [
+          "差點"
+        ]
+      ],
+      "written": "我差點忘了把信交給你。",
+      "spoken": "我爭啲唔記得畀封信你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-whether-question",
+      "matchesAny": [
+        [
+          "是否"
+        ]
+      ],
+      "written": "你是否還記得我們的約定？",
+      "spoken": "你仲記唔記得我哋嘅約定？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-rhetorical",
+      "matchesAny": [
+        [
+          "難道"
+        ]
+      ],
+      "written": "難道你真的不想回家嗎？",
+      "spoken": "唔通你真係唔想返屋企咩？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-look-like",
+      "matchesAny": [
+        [
+          "看來"
+        ]
+      ],
+      "written": "看來今天沒辦法出發了。",
+      "spoken": "睇嚟今日出發唔到喇。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-just-found",
+      "matchesAny": [
+        [
+          "原來"
+        ]
+      ],
+      "written": "原來你一直都在這裡。",
+      "spoken": "原來你一直都喺度。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-temporarily",
+      "matchesAny": [
+        [
+          "暫時"
+        ]
+      ],
+      "written": "我們暫時還不能告訴你。",
+      "spoken": "我哋暫時仲唔可以話畀你知。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-on-purpose-not",
+      "matchesAny": [
+        [
+          "無論"
+        ]
+      ],
+      "written": "無論發生什麼，我都會等你。",
+      "spoken": "無論發生乜嘢事，我都會等你。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-please-check",
+      "matchesAny": [
+        [
+          "確認"
+        ]
+      ],
+      "written": "請先確認她是否安全。",
+      "spoken": "唔該先睇清楚佢安唔安全。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-intention",
+      "matchesAny": [
+        [
+          "打算"
+        ]
+      ],
+      "written": "你打算一個人去嗎？",
+      "spoken": "你諗住自己一個去呀？",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-afterwards",
+      "matchesAny": [
+        [
+          "隨後"
+        ]
+      ],
+      "written": "他隨後把鑰匙交給了妹妹。",
+      "spoken": "跟住佢就將條鎖匙畀咗阿妹。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "context377-permission",
+      "matchesAny": [
+        [
+          "允許"
+        ]
+      ],
+      "written": "沒有他的允許，我不能開門。",
+      "spoken": "未得佢同意，我唔可以開門。",
+      "usage": "按本句意思選擇講法。保留人物、否定、條件及每一分句；例子唔係要搬入答案嘅內容。"
+    },
+    {
+      "id": "source415-reason",
+      "matchesAny": [
+        [
+          "為什麼"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "どうして",
+          "なぜ"
+        ],
+        "en": [
+          "why"
+        ]
+      },
+      "written": "你為什麼不告訴我？",
+      "spoken": "你點解唔話我知？",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-uncertain-memory",
+      "matchesAny": [
+        [
+          "好像"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "ような気が",
+          "気がする"
+        ],
+        "en": [
+          "seems like",
+          "feels like"
+        ]
+      },
+      "written": "我好像以前來過這裡。",
+      "spoken": "我好似以前嚟過呢度。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-negative-return",
+      "matchesAny": [
+        [
+          "沒有",
+          "回來"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "戻ってない",
+          "帰ってこない"
+        ],
+        "en": [
+          "has not come back",
+          "hasn’t come back",
+          "hasn't come back"
+        ]
+      },
+      "written": "他還沒有回來。",
+      "spoken": "佢仲未返嚟。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-place",
+      "matchesAny": [
+        [
+          "這些",
+          "這裡"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "ここに",
+          "ここで"
+        ],
+        "en": [
+          "put these",
+          "leave these here"
+        ]
+      },
+      "written": "我們先把這些東西放在這裡。",
+      "spoken": "我哋先將啲嘢放喺度。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-wait",
+      "matchesAny": [
+        [
+          "等一下"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "待って",
+          "待ちなさい"
+        ],
+        "en": [
+          "wait here",
+          "wait a moment"
+        ]
+      },
+      "written": "等一下，先別走。",
+      "spoken": "等陣，咪走住。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-condition",
+      "matchesAny": [
+        [
+          "如果"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "だったら",
+          "ならば"
+        ],
+        "en": [
+          "if that",
+          "in that case"
+        ]
+      },
+      "written": "如果你不想去，就留下吧。",
+      "spoken": "如果你唔想去，就留低啦。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-necessity",
+      "matchesAny": [
+        [
+          "必須"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "なければ",
+          "ないといけない"
+        ],
+        "en": [
+          "have to",
+          "must do"
+        ]
+      },
+      "written": "我們必須現在出發。",
+      "spoken": "我哋而家一定要出發。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-permission",
+      "matchesAny": [
+        [
+          "可以嗎"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "てもいい",
+          "ても構わない"
+        ],
+        "en": [
+          "can i",
+          "may i"
+        ]
+      },
+      "written": "我可以在這裡等嗎？",
+      "spoken": "我可唔可以喺度等？",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-caring",
+      "matchesAny": [
+        [
+          "珍惜",
+          "同伴"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "仲間を大事",
+          "人を大事"
+        ],
+        "en": [
+          "care about your friends",
+          "value your friends"
+        ]
+      },
+      "written": "他懂得珍惜同伴。",
+      "spoken": "佢識得重視啲同伴。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-good-side",
+      "matchesAny": [
+        [
+          "優點"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "いいところ",
+          "いいとこ"
+        ],
+        "en": [
+          "good side",
+          "good points"
+        ]
+      },
+      "written": "你也有好的一面。",
+      "spoken": "你都有好嘅一面喎。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-contrast",
+      "matchesAny": [
+        [
+          "但是"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "けれど",
+          "だけど"
+        ],
+        "en": [
+          "but i",
+          "although"
+        ]
+      },
+      "written": "但是我還不想離開。",
+      "spoken": "但係我仲唔想走。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-completed",
+      "matchesAny": [
+        [
+          "已經",
+          "完成"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "もう終わった",
+          "済んだ"
+        ],
+        "en": [
+          "already finished",
+          "already done"
+        ]
+      },
+      "written": "我已經做完了。",
+      "spoken": "我已經做完喇。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-underway",
+      "matchesAny": [
+        [
+          "正在"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "している",
+          "やっている"
+        ],
+        "en": [
+          "are you doing",
+          "is doing"
+        ]
+      },
+      "written": "你正在做什麼？",
+      "spoken": "你做緊乜嘢？",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-prohibition",
+      "matchesAny": [
+        [
+          "不要"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "やめて",
+          "しないで"
+        ],
+        "en": [
+          "don't do",
+          "do not do"
+        ]
+      },
+      "written": "不要再這樣做。",
+      "spoken": "唔好再咁做。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-request",
+      "matchesAny": [
+        [
+          "告訴"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "教えて",
+          "言ってくれ"
+        ],
+        "en": [
+          "tell me",
+          "let me know"
+        ]
+      },
+      "written": "請告訴我發生了什麼事。",
+      "spoken": "話我知發生咗乜嘢事吖。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-belief",
+      "matchesAny": [
+        [
+          "以為"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "と思った",
+          "だと思って"
+        ],
+        "en": [
+          "i thought",
+          "i believed"
+        ]
+      },
+      "written": "我以為你已經走了。",
+      "spoken": "我以為你已經走咗喇。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-reassure",
+      "matchesAny": [
+        [
+          "不用",
+          "擔心"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "大丈夫",
+          "心配しない"
+        ],
+        "en": [
+          "are you okay",
+          "don't worry"
+        ]
+      },
+      "written": "不用擔心，我沒事。",
+      "spoken": "唔使擔心，我冇事。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-time",
+      "matchesAny": [
+        [
+          "剛才"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "さっき",
+          "先ほど"
+        ],
+        "en": [
+          "just now",
+          "a moment ago"
+        ]
+      },
+      "written": "你剛才說了什麼？",
+      "spoken": "你頭先講咗乜嘢？",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-joint-action",
+      "matchesAny": [
+        [
+          "一起"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "一緒に"
+        ],
+        "en": [
+          "together",
+          "with us"
+        ]
+      },
+      "written": "我們一起回去吧。",
+      "spoken": "我哋一齊返去啦。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "source415-future",
+      "matchesAny": [
+        [
+          "以後"
+        ]
+      ],
+      "sourceTriggers": {
+        "ja": [
+          "これから",
+          "この先"
+        ],
+        "en": [
+          "from now on",
+          "in the future"
+        ]
+      },
+      "written": "以後無論發生什麼事，我都會幫你。",
+      "spoken": "第時無論發生乜嘢事，我都會幫你。",
+      "usage": "Style only. Preserve the actual source facts, subject, negation and uncertainty."
+    },
+    {
+      "id": "hk415-pronouns-01",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "我們都"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "all waiting for you"
+        ],
+        "ja": [
+          "みんなあなたを待って"
+        ]
+      },
+      "written": "我們都在等你。",
+      "spoken": "我哋個個都等緊你。",
+      "sourceExamples": {
+        "en": "We are all waiting for you.",
+        "ja": "私たちはみんなあなたを待っている。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-pronouns-02",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "你們先"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "you all go ahead"
+        ],
+        "ja": [
+          "あなたたちは先に"
+        ]
+      },
+      "written": "你們先走吧。",
+      "spoken": "你哋行先啦。",
+      "sourceExamples": {
+        "en": "You all go ahead.",
+        "ja": "あなたたちは先に行って。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-pronouns-03",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "他們不是"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not my friends"
+        ],
+        "ja": [
+          "友達ではない"
+        ]
+      },
+      "written": "他們不是我的朋友。",
+      "spoken": "佢哋唔係我朋友。",
+      "sourceExamples": {
+        "en": "They are not my friends.",
+        "ja": "彼らは私の友達ではない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-pronouns-04",
+      "category": "pronouns",
+      "matchesAny": [
+        [
+          "自己的選擇"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "her own choice"
+        ],
+        "ja": [
+          "彼女自身の選択"
+        ]
+      },
+      "written": "這是她自己的選擇。",
+      "spoken": "呢個係佢自己嘅選擇。",
+      "sourceExamples": {
+        "en": "This is her own choice.",
+        "ja": "これは彼女自身の選択だ。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-demonstratives-01",
+      "category": "demonstratives",
+      "matchesAny": [
+        [
+          "這個不是"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not mine"
+        ],
+        "ja": [
+          "私のものではない"
+        ]
+      },
+      "written": "這個不是我的。",
+      "spoken": "呢個唔係我嘅。",
+      "sourceExamples": {
+        "en": "This one is not mine.",
+        "ja": "これは私のものではない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-demonstratives-02",
+      "category": "demonstratives",
+      "matchesAny": [
+        [
+          "那個人"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "that person"
+        ],
+        "ja": [
+          "あの人"
+        ]
+      },
+      "written": "那個人在門口。",
+      "spoken": "嗰個人喺門口。",
+      "sourceExamples": {
+        "en": "That person is at the entrance.",
+        "ja": "あの人は入り口にいる。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-demonstratives-03",
+      "category": "demonstratives",
+      "matchesAny": [
+        [
+          "這些東西"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "these things"
+        ],
+        "ja": [
+          "これらの物"
+        ]
+      },
+      "written": "這些東西先不要動。",
+      "spoken": "呢啲嘢唔好郁住。",
+      "sourceExamples": {
+        "en": "Do not move these things yet.",
+        "ja": "これらの物はまだ動かさないで。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-demonstratives-04",
+      "category": "demonstratives",
+      "matchesAny": [
+        [
+          "那裡不是"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not the exit"
+        ],
+        "ja": [
+          "出口ではない"
+        ]
+      },
+      "written": "那裡不是出口。",
+      "spoken": "嗰度唔係出口。",
+      "sourceExamples": {
+        "en": "That is not the exit.",
+        "ja": "そこは出口ではない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-questions-01",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "為甚麼"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not saying anything"
+        ],
+        "ja": [
+          "何も言わない"
+        ]
+      },
+      "written": "你為甚麼不說話？",
+      "spoken": "你點解唔出聲？",
+      "sourceExamples": {
+        "en": "Why are you not saying anything?",
+        "ja": "どうして何も言わないの。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-questions-02",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "怎樣處理"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "going to handle"
+        ],
+        "ja": [
+          "対処するつもり"
+        ]
+      },
+      "written": "你打算怎樣處理？",
+      "spoken": "你諗住點處理？",
+      "sourceExamples": {
+        "en": "How are you going to handle it?",
+        "ja": "どう対処するつもり。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-questions-03",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "誰告訴"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "who told you"
+        ],
+        "ja": [
+          "誰が教えた"
+        ]
+      },
+      "written": "誰告訴你的？",
+      "spoken": "邊個話你知㗎？",
+      "sourceExamples": {
+        "en": "Who told you?",
+        "ja": "誰が教えたの。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-questions-04",
+      "category": "questions",
+      "matchesAny": [
+        [
+          "甚麼時候"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "when will you come back"
+        ],
+        "ja": [
+          "いつ戻って"
+        ]
+      },
+      "written": "你甚麼時候回來？",
+      "spoken": "你幾時返嚟？",
+      "sourceExamples": {
+        "en": "When will you come back?",
+        "ja": "いつ戻ってくるの。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-negation-01",
+      "category": "negation",
+      "matchesAny": [
+        [
+          "不知道"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "do not know"
+        ],
+        "ja": [
+          "私は知らない"
+        ]
+      },
+      "written": "我不知道。",
+      "spoken": "我唔知。",
+      "sourceExamples": {
+        "en": "I do not know.",
+        "ja": "私は知らない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-negation-02",
+      "category": "negation",
+      "matchesAny": [
+        [
+          "沒有看見"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "did not see him"
+        ],
+        "ja": [
+          "見かけなかった"
+        ]
+      },
+      "written": "我沒有看見他。",
+      "spoken": "我冇見到佢。",
+      "sourceExamples": {
+        "en": "I did not see him.",
+        "ja": "彼を見かけなかった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-negation-03",
+      "category": "negation",
+      "matchesAny": [
+        [
+          "還沒有吃"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not eaten yet"
+        ],
+        "ja": [
+          "ご飯を食べていない"
+        ]
+      },
+      "written": "我還沒有吃飯。",
+      "spoken": "我仲未食飯。",
+      "sourceExamples": {
+        "en": "I have not eaten yet.",
+        "ja": "まだご飯を食べていない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-negation-04",
+      "category": "negation",
+      "matchesAny": [
+        [
+          "不是我做"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not the one who did"
+        ],
+        "ja": [
+          "やったのは私じゃない"
+        ]
+      },
+      "written": "不是我做的。",
+      "spoken": "唔係我做嘅。",
+      "sourceExamples": {
+        "en": "I was not the one who did it.",
+        "ja": "やったのは私じゃない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-completed-aspect-01",
+      "category": "completed-aspect",
+      "matchesAny": [
+        [
+          "吃過了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "already eaten"
+        ],
+        "ja": [
+          "もう食べた"
+        ]
+      },
+      "written": "我已經吃過了。",
+      "spoken": "我已經食過喇。",
+      "sourceExamples": {
+        "en": "I have already eaten.",
+        "ja": "もう食べた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-completed-aspect-02",
+      "category": "completed-aspect",
+      "matchesAny": [
+        [
+          "剛才走了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "left just now"
+        ],
+        "ja": [
+          "さっき出ていった"
+        ]
+      },
+      "written": "他剛才走了。",
+      "spoken": "佢頭先走咗。",
+      "sourceExamples": {
+        "en": "He left just now.",
+        "ja": "彼はさっき出ていった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-completed-aspect-03",
+      "category": "completed-aspect",
+      "matchesAny": [
+        [
+          "門已經關"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "door is already closed"
+        ],
+        "ja": [
+          "ドアはもう閉まった"
+        ]
+      },
+      "written": "門已經關上了。",
+      "spoken": "道門已經閂咗。",
+      "sourceExamples": {
+        "en": "The door is already closed.",
+        "ja": "ドアはもう閉まった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-completed-aspect-04",
+      "category": "completed-aspect",
+      "matchesAny": [
+        [
+          "把錢還"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "returned the money"
+        ],
+        "ja": [
+          "お金を返した"
+        ]
+      },
+      "written": "我把錢還給他了。",
+      "spoken": "我還咗啲錢畀佢喇。",
+      "sourceExamples": {
+        "en": "I have returned the money to him.",
+        "ja": "彼にお金を返した。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ongoing-aspect-01",
+      "category": "ongoing-aspect",
+      "matchesAny": [
+        [
+          "正在洗澡"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "taking a shower",
+          "shower"
+        ],
+        "ja": [
+          "シャワーを浴びている",
+          "シャワー"
+        ]
+      },
+      "written": "她正在洗澡。",
+      "spoken": "佢沖緊涼。",
+      "sourceExamples": {
+        "en": "She is taking a shower.",
+        "ja": "彼女はシャワーを浴びている。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ongoing-aspect-02",
+      "category": "ongoing-aspect",
+      "matchesAny": [
+        [
+          "找鑰匙"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "looking for the keys",
+          "the key",
+          "my key",
+          "your key",
+          "keys"
+        ],
+        "ja": [
+          "鍵を探している",
+          "鍵"
+        ]
+      },
+      "written": "我正在找鑰匙。",
+      "spoken": "我搵緊鎖匙。",
+      "sourceExamples": {
+        "en": "I am looking for the keys.",
+        "ja": "鍵を探している。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ongoing-aspect-03",
+      "category": "ongoing-aspect",
+      "matchesAny": [
+        [
+          "正在睡覺"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "he is sleeping"
+        ],
+        "ja": [
+          "彼は寝ている"
+        ]
+      },
+      "written": "不要打擾他，他正在睡覺。",
+      "spoken": "唔好嘈住佢，佢瞓緊覺。",
+      "sourceExamples": {
+        "en": "Do not disturb him. He is sleeping.",
+        "ja": "邪魔しないで。彼は寝ている。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ongoing-aspect-04",
+      "category": "ongoing-aspect",
+      "matchesAny": [
+        [
+          "雨還在下"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "still raining"
+        ],
+        "ja": [
+          "まだ雨が降っている"
+        ]
+      },
+      "written": "雨還在下。",
+      "spoken": "仲落緊雨。",
+      "sourceExamples": {
+        "en": "It is still raining.",
+        "ja": "まだ雨が降っている。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-experience-aspect-01",
+      "category": "experience-aspect",
+      "matchesAny": [
+        [
+          "去過那裡"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "been there before"
+        ],
+        "ja": [
+          "行ったことがある"
+        ]
+      },
+      "written": "我以前去過那裡。",
+      "spoken": "我以前去過嗰度。",
+      "sourceExamples": {
+        "en": "I have been there before.",
+        "ja": "前にそこへ行ったことがある。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-experience-aspect-02",
+      "category": "experience-aspect",
+      "matchesAny": [
+        [
+          "從來沒有"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "never seen this person"
+        ],
+        "ja": [
+          "一度も見たことがない"
+        ]
+      },
+      "written": "我從來沒有見過這個人。",
+      "spoken": "我從來都冇見過呢個人。",
+      "sourceExamples": {
+        "en": "I have never seen this person.",
+        "ja": "この人は一度も見たことがない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-experience-aspect-03",
+      "category": "experience-aspect",
+      "matchesAny": [
+        [
+          "試過這個"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "tried this method"
+        ],
+        "ja": [
+          "この方法を試した"
+        ]
+      },
+      "written": "你試過這個方法嗎？",
+      "spoken": "你試過呢個方法未？",
+      "sourceExamples": {
+        "en": "Have you tried this method?",
+        "ja": "この方法を試したことはある。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-experience-aspect-04",
+      "category": "experience-aspect",
+      "matchesAny": [
+        [
+          "曾經幫過"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "helped me once"
+        ],
+        "ja": [
+          "以前私を助けて"
+        ]
+      },
+      "written": "他曾經幫過我。",
+      "spoken": "佢以前幫過我。",
+      "sourceExamples": {
+        "en": "He helped me once before.",
+        "ja": "彼は以前私を助けてくれた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-not-yet-and-again-01",
+      "category": "not-yet-and-again",
+      "matchesAny": [
+        [
+          "先不要進"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "go in yet"
+        ],
+        "ja": [
+          "まだ入らないで"
+        ]
+      },
+      "written": "先不要進去。",
+      "spoken": "住先唔好入去。",
+      "sourceExamples": {
+        "en": "Do not go in yet.",
+        "ja": "まだ入らないで。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-not-yet-and-again-02",
+      "category": "not-yet-and-again",
+      "matchesAny": [
+        [
+          "做完再說"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "until i finish"
+        ],
+        "ja": [
+          "終わってから話"
+        ]
+      },
+      "written": "等我做完再說。",
+      "spoken": "等我做完先講。",
+      "sourceExamples": {
+        "en": "Wait until I finish before we discuss it.",
+        "ja": "終わってから話そう。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-not-yet-and-again-03",
+      "category": "not-yet-and-again",
+      "matchesAny": [
+        [
+          "又遲到了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "late again"
+        ],
+        "ja": [
+          "また遅刻"
+        ]
+      },
+      "written": "他又遲到了。",
+      "spoken": "佢又遲到喇。",
+      "sourceExamples": {
+        "en": "He is late again.",
+        "ja": "彼はまた遅刻した。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-not-yet-and-again-04",
+      "category": "not-yet-and-again",
+      "matchesAny": [
+        [
+          "再說一次"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "say it again"
+        ],
+        "ja": [
+          "もう一度言って"
+        ]
+      },
+      "written": "請再說一次。",
+      "spoken": "唔該再講多次。",
+      "sourceExamples": {
+        "en": "Please say it again.",
+        "ja": "もう一度言ってください。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-necessity-and-permission-01",
+      "category": "necessity-and-permission",
+      "matchesAny": [
+        [
+          "不用等"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "need to wait for me"
+        ],
+        "ja": [
+          "私を待たなくていい"
+        ]
+      },
+      "written": "你不用等我。",
+      "spoken": "你唔使等我。",
+      "sourceExamples": {
+        "en": "You do not need to wait for me.",
+        "ja": "私を待たなくていい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-necessity-and-permission-02",
+      "category": "necessity-and-permission",
+      "matchesAny": [
+        [
+          "必須現在"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "must leave now"
+        ],
+        "ja": [
+          "出ていかなければ"
+        ]
+      },
+      "written": "你必須現在離開。",
+      "spoken": "你一定要而家走。",
+      "sourceExamples": {
+        "en": "You must leave now.",
+        "ja": "今すぐ出ていかなければならない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-necessity-and-permission-03",
+      "category": "necessity-and-permission",
+      "matchesAny": [
+        [
+          "可以坐"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "may i sit here"
+        ],
+        "ja": [
+          "座ってもいい"
+        ]
+      },
+      "written": "我可以坐這裡嗎？",
+      "spoken": "我可唔可以坐呢度？",
+      "sourceExamples": {
+        "en": "May I sit here?",
+        "ja": "ここに座ってもいいですか。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-necessity-and-permission-04",
+      "category": "necessity-and-permission",
+      "matchesAny": [
+        [
+          "不能進去"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not allowed to go in"
+        ],
+        "ja": [
+          "入ってはいけない"
+        ]
+      },
+      "written": "你不能進去。",
+      "spoken": "你唔可以入去。",
+      "sourceExamples": {
+        "en": "You are not allowed to go in.",
+        "ja": "中に入ってはいけない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ability-01",
+      "category": "ability",
+      "matchesAny": [
+        [
+          "聽不清楚"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "cannot hear clearly"
+        ],
+        "ja": [
+          "よく聞こえない"
+        ]
+      },
+      "written": "我聽不清楚。",
+      "spoken": "我聽唔清楚。",
+      "sourceExamples": {
+        "en": "I cannot hear clearly.",
+        "ja": "よく聞こえない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ability-02",
+      "category": "ability",
+      "matchesAny": [
+        [
+          "拿得到"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "can you reach"
+        ],
+        "ja": [
+          "手が届く"
+        ]
+      },
+      "written": "你拿得到嗎？",
+      "spoken": "你攞唔攞到？",
+      "sourceExamples": {
+        "en": "Can you reach it?",
+        "ja": "手が届く。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ability-03",
+      "category": "ability",
+      "matchesAny": [
+        [
+          "做不完"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "all on my own"
+        ],
+        "ja": [
+          "全部終えられない"
+        ]
+      },
+      "written": "我一個人做不完。",
+      "spoken": "我一個人做唔晒。",
+      "sourceExamples": {
+        "en": "I cannot finish it all on my own.",
+        "ja": "一人では全部終えられない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-ability-04",
+      "category": "ability",
+      "matchesAny": [
+        [
+          "跑得很快"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "runs very fast"
+        ],
+        "ja": [
+          "走るのがとても速い"
+        ]
+      },
+      "written": "他跑得很快。",
+      "spoken": "佢跑得好快。",
+      "sourceExamples": {
+        "en": "He runs very fast.",
+        "ja": "彼は走るのがとても速い。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-uncertainty-01",
+      "category": "uncertainty",
+      "matchesAny": [
+        [
+          "可能已經"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "may have gone home"
+        ],
+        "ja": [
+          "帰ったかもしれない"
+        ]
+      },
+      "written": "他可能已經回家了。",
+      "spoken": "佢可能已經返咗屋企。",
+      "sourceExamples": {
+        "en": "He may have gone home.",
+        "ja": "彼はもう家に帰ったかもしれない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-uncertainty-02",
+      "category": "uncertainty",
+      "matchesAny": [
+        [
+          "好像見過"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "seen you before"
+        ],
+        "ja": [
+          "見た気がする"
+        ]
+      },
+      "written": "我好像見過你。",
+      "spoken": "我好似見過你。",
+      "sourceExamples": {
+        "en": "I think I have seen you before.",
+        "ja": "どこかであなたを見た気がする。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-uncertainty-03",
+      "category": "uncertainty",
+      "matchesAny": [
+        [
+          "不太肯定"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not very sure"
+        ],
+        "ja": [
+          "あまり確信がない"
+        ]
+      },
+      "written": "我不太肯定。",
+      "spoken": "我唔係好肯定。",
+      "sourceExamples": {
+        "en": "I am not very sure.",
+        "ja": "あまり確信がない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-uncertainty-04",
+      "category": "uncertainty",
+      "matchesAny": [
+        [
+          "也許是我"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "perhaps i got"
+        ],
+        "ja": [
+          "私が間違えたのかも"
+        ]
+      },
+      "written": "也許是我弄錯了。",
+      "spoken": "或者係我搞錯咗。",
+      "sourceExamples": {
+        "en": "Perhaps I got it wrong.",
+        "ja": "私が間違えたのかもしれない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-belief-and-evidence-01",
+      "category": "belief-and-evidence",
+      "matchesAny": [
+        [
+          "以為你不"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "you were not coming"
+        ],
+        "ja": [
+          "来ないと思って"
+        ]
+      },
+      "written": "我以為你不來了。",
+      "spoken": "我以為你唔嚟喇。",
+      "sourceExamples": {
+        "en": "I thought you were not coming.",
+        "ja": "来ないと思っていた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-belief-and-evidence-02",
+      "category": "belief-and-evidence",
+      "matchesAny": [
+        [
+          "原來你"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "knew all along"
+        ],
+        "ja": [
+          "最初から知っていた"
+        ]
+      },
+      "written": "原來你一直都知道。",
+      "spoken": "原來你一直都知。",
+      "sourceExamples": {
+        "en": "So you knew all along.",
+        "ja": "最初から知っていたんだね。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-belief-and-evidence-03",
+      "category": "belief-and-evidence",
+      "matchesAny": [
+        [
+          "聽別人說"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "heard it from someone"
+        ],
+        "ja": [
+          "人から聞いただけ"
+        ]
+      },
+      "written": "他只是聽別人說的。",
+      "spoken": "佢只係聽人講嘅。",
+      "sourceExamples": {
+        "en": "He only heard it from someone else.",
+        "ja": "彼は人から聞いただけだ。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-belief-and-evidence-04",
+      "category": "belief-and-evidence",
+      "matchesAny": [
+        [
+          "親眼看見"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "with my own eyes"
+        ],
+        "ja": [
+          "自分の目で見た"
+        ]
+      },
+      "written": "我親眼看見的。",
+      "spoken": "我親眼見到嘅。",
+      "sourceExamples": {
+        "en": "I saw it with my own eyes.",
+        "ja": "自分の目で見た。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-cause-and-result-01",
+      "category": "cause-and-result",
+      "matchesAny": [
+        [
+          "因為下雨"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "because it was raining"
+        ],
+        "ja": [
+          "雨だったので"
+        ]
+      },
+      "written": "因為下雨，所以我沒有出去。",
+      "spoken": "因為落雨，所以我冇出去。",
+      "sourceExamples": {
+        "en": "I did not go out because it was raining.",
+        "ja": "雨だったので外に出なかった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-cause-and-result-02",
+      "category": "cause-and-result",
+      "matchesAny": [
+        [
+          "弄壞了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "broke my phone"
+        ],
+        "ja": [
+          "電話を壊した"
+        ]
+      },
+      "written": "他弄壞了我的電話。",
+      "spoken": "佢整壞咗我部電話。",
+      "sourceExamples": {
+        "en": "He broke my phone.",
+        "ja": "彼が私の電話を壊した。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-cause-and-result-03",
+      "category": "cause-and-result",
+      "matchesAny": [
+        [
+          "令我很擔心"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "makes me very worried"
+        ],
+        "ja": [
+          "このことでとても心配"
+        ]
+      },
+      "written": "這件事令我很擔心。",
+      "spoken": "呢件事令我好擔心。",
+      "sourceExamples": {
+        "en": "This makes me very worried.",
+        "ja": "このことでとても心配している。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-cause-and-result-04",
+      "category": "cause-and-result",
+      "matchesAny": [
+        [
+          "結果我們"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "ended up being late"
+        ],
+        "ja": [
+          "結局私たちは遅刻"
+        ]
+      },
+      "written": "結果我們還是遲到了。",
+      "spoken": "結果我哋都係遲到咗。",
+      "sourceExamples": {
+        "en": "We ended up being late anyway.",
+        "ja": "結局私たちは遅刻した。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-condition-and-concession-01",
+      "category": "condition-and-concession",
+      "matchesAny": [
+        [
+          "如果你有空"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "if you are free"
+        ],
+        "ja": [
+          "時間があったら"
+        ]
+      },
+      "written": "如果你有空，就過來吧。",
+      "spoken": "如果你得閒，就過嚟啦。",
+      "sourceExamples": {
+        "en": "Come over if you are free.",
+        "ja": "時間があったら来て。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-condition-and-concession-02",
+      "category": "condition-and-concession",
+      "matchesAny": [
+        [
+          "即使下雨"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "even if it rains"
+        ],
+        "ja": [
+          "雨が降っても"
+        ]
+      },
+      "written": "即使下雨，我也會去。",
+      "spoken": "就算落雨，我都會去。",
+      "sourceExamples": {
+        "en": "I will go even if it rains.",
+        "ja": "雨が降っても行く。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-condition-and-concession-03",
+      "category": "condition-and-concession",
+      "matchesAny": [
+        [
+          "只要你平安"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "as long as you are safe"
+        ],
+        "ja": [
+          "無事ならそれでいい"
+        ]
+      },
+      "written": "只要你平安就好了。",
+      "spoken": "只要你平安就得喇。",
+      "sourceExamples": {
+        "en": "As long as you are safe, that is enough.",
+        "ja": "あなたが無事ならそれでいい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-condition-and-concession-04",
+      "category": "condition-and-concession",
+      "matchesAny": [
+        [
+          "除非他"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "unless he agrees"
+        ],
+        "ja": [
+          "同意しない限り"
+        ]
+      },
+      "written": "除非他同意，否則我不會走。",
+      "spoken": "除非佢同意，唔係我唔會走。",
+      "sourceExamples": {
+        "en": "I will not leave unless he agrees.",
+        "ja": "彼が同意しない限り私は行かない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-contrast-and-degree-01",
+      "category": "contrast-and-degree",
+      "matchesAny": [
+        [
+          "雖然很累"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "tired but i want"
+        ],
+        "ja": [
+          "疲れたけど"
+        ]
+      },
+      "written": "雖然很累，但我還想試一次。",
+      "spoken": "雖然好攰，但係我仲想試多次。",
+      "sourceExamples": {
+        "en": "I am tired, but I want to try once more.",
+        "ja": "疲れたけどもう一度試したい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-contrast-and-degree-02",
+      "category": "contrast-and-degree",
+      "matchesAny": [
+        [
+          "比那個便宜"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "cheaper than that"
+        ],
+        "ja": [
+          "あれより安い"
+        ]
+      },
+      "written": "這個比那個便宜。",
+      "spoken": "呢個平過嗰個。",
+      "sourceExamples": {
+        "en": "This one is cheaper than that one.",
+        "ja": "これはあれより安い。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-contrast-and-degree-03",
+      "category": "contrast-and-degree",
+      "matchesAny": [
+        [
+          "越說"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "the more you explain"
+        ],
+        "ja": [
+          "説明されるほど"
+        ]
+      },
+      "written": "你越說我越不明白。",
+      "spoken": "你越講我越唔明。",
+      "sourceExamples": {
+        "en": "The more you explain, the less I understand.",
+        "ja": "説明されるほど分からなくなる。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-contrast-and-degree-04",
+      "category": "contrast-and-degree",
+      "matchesAny": [
+        [
+          "太吵了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "too noisy here"
+        ],
+        "ja": [
+          "うるさすぎる"
+        ]
+      },
+      "written": "這裡太吵了。",
+      "spoken": "呢度太嘈喇。",
+      "sourceExamples": {
+        "en": "It is too noisy here.",
+        "ja": "ここはうるさすぎる。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-location-and-direction-01",
+      "category": "location-and-direction",
+      "matchesAny": [
+        [
+          "放在桌上"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "on the table",
+          "on the desk"
+        ],
+        "ja": [
+          "テーブルの上に置いて",
+          "テーブルの上",
+          "机の上"
+        ]
+      },
+      "written": "把東西放在桌上。",
+      "spoken": "將啲嘢擺喺枱面。",
+      "sourceExamples": {
+        "en": "Put the things on the table.",
+        "ja": "物をテーブルの上に置いて。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-location-and-direction-02",
+      "category": "location-and-direction",
+      "matchesAny": [
+        [
+          "在樓下"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "waiting for you downstairs"
+        ],
+        "ja": [
+          "下であなたを待って"
+        ]
+      },
+      "written": "他在樓下等你。",
+      "spoken": "佢喺樓下等你。",
+      "sourceExamples": {
+        "en": "He is waiting for you downstairs.",
+        "ja": "彼は下であなたを待っている。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-location-and-direction-03",
+      "category": "location-and-direction",
+      "matchesAny": [
+        [
+          "過來一下"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "come here for a moment"
+        ],
+        "ja": [
+          "こっちに来て"
+        ]
+      },
+      "written": "你過來一下。",
+      "spoken": "你過嚟一陣。",
+      "sourceExamples": {
+        "en": "Come here for a moment.",
+        "ja": "ちょっとこっちに来て。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-location-and-direction-04",
+      "category": "location-and-direction",
+      "matchesAny": [
+        [
+          "我們回去"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "let us go back"
+        ],
+        "ja": [
+          "私たちは戻ろう"
+        ]
+      },
+      "written": "我們回去吧。",
+      "spoken": "我哋返去啦。",
+      "sourceExamples": {
+        "en": "Let us go back.",
+        "ja": "私たちは戻ろう。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-giving-and-receiving-01",
+      "category": "giving-and-receiving",
+      "matchesAny": [
+        [
+          "交給她"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "this letter to her"
+        ],
+        "ja": [
+          "手紙を彼女に渡して"
+        ]
+      },
+      "written": "請把這封信交給她。",
+      "spoken": "唔該將呢封信交畀佢。",
+      "sourceExamples": {
+        "en": "Please give this letter to her.",
+        "ja": "この手紙を彼女に渡してください。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-giving-and-receiving-02",
+      "category": "giving-and-receiving",
+      "matchesAny": [
+        [
+          "借了我的傘"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "borrowed my umbrella",
+          "umbrella"
+        ],
+        "ja": [
+          "私の傘を借りた",
+          "傘"
+        ]
+      },
+      "written": "他借了我的傘。",
+      "spoken": "佢借咗我把遮。",
+      "sourceExamples": {
+        "en": "He borrowed my umbrella.",
+        "ja": "彼は私の傘を借りた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-giving-and-receiving-03",
+      "category": "giving-and-receiving",
+      "matchesAny": [
+        [
+          "傘給他"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "lent him an umbrella"
+        ],
+        "ja": [
+          "彼に傘を貸した"
+        ]
+      },
+      "written": "我借了一把傘給他。",
+      "spoken": "我借咗把遮畀佢。",
+      "sourceExamples": {
+        "en": "I lent him an umbrella.",
+        "ja": "私は彼に傘を貸した。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-giving-and-receiving-04",
+      "category": "giving-and-receiving",
+      "matchesAny": [
+        [
+          "還沒有還錢"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "money back yet"
+        ],
+        "ja": [
+          "まだお金を返していない"
+        ]
+      },
+      "written": "她還沒有還錢。",
+      "spoken": "佢仲未還錢。",
+      "sourceExamples": {
+        "en": "She has not paid the money back yet.",
+        "ja": "彼女はまだお金を返していない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-quantities-01",
+      "category": "quantities",
+      "matchesAny": [
+        [
+          "剩下三個"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "only three left"
+        ],
+        "ja": [
+          "三つだけ"
+        ]
+      },
+      "written": "只剩下三個。",
+      "spoken": "淨返三個。",
+      "sourceExamples": {
+        "en": "There are only three left.",
+        "ja": "残りは三つだけだ。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-quantities-02",
+      "category": "quantities",
+      "matchesAny": [
+        [
+          "一點點"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "only want a little"
+        ],
+        "ja": [
+          "少しだけ欲しい"
+        ]
+      },
+      "written": "我只要一點點。",
+      "spoken": "我要少少就得。",
+      "sourceExamples": {
+        "en": "I only want a little.",
+        "ja": "少しだけ欲しい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-quantities-03",
+      "category": "quantities",
+      "matchesAny": [
+        [
+          "全部都是你的"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "all of these yours"
+        ],
+        "ja": [
+          "全部あなたのもの"
+        ]
+      },
+      "written": "全部都是你的嗎？",
+      "spoken": "全部都係你嘅？",
+      "sourceExamples": {
+        "en": "Are all of these yours?",
+        "ja": "これは全部あなたのもの。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-quantities-04",
+      "category": "quantities",
+      "matchesAny": [
+        [
+          "不是每個人"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not everyone agrees"
+        ],
+        "ja": [
+          "全員が賛成"
+        ]
+      },
+      "written": "不是每個人都同意。",
+      "spoken": "唔係個個都同意。",
+      "sourceExamples": {
+        "en": "Not everyone agrees.",
+        "ja": "全員が賛成しているわけではない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-polite-requests-01",
+      "category": "polite-requests",
+      "matchesAny": [
+        [
+          "幫我開門"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "open the door for me"
+        ],
+        "ja": [
+          "ドアを開けてもらえ"
+        ]
+      },
+      "written": "麻煩你幫我開門。",
+      "spoken": "唔該幫我開門。",
+      "sourceExamples": {
+        "en": "Please open the door for me.",
+        "ja": "ドアを開けてもらえますか。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-polite-requests-02",
+      "category": "polite-requests",
+      "matchesAny": [
+        [
+          "先說完"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "let me finish speaking"
+        ],
+        "ja": [
+          "最後まで話させて"
+        ]
+      },
+      "written": "請讓我先說完。",
+      "spoken": "唔該畀我講埋先。",
+      "sourceExamples": {
+        "en": "Please let me finish speaking.",
+        "ja": "最後まで話させてください。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-polite-requests-03",
+      "category": "polite-requests",
+      "matchesAny": [
+        [
+          "送我的禮物"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "thank you for the gift"
+        ],
+        "ja": [
+          "プレゼントをありがとう"
+        ]
+      },
+      "written": "謝謝你送我的禮物。",
+      "spoken": "多謝你送畀我嘅禮物。",
+      "sourceExamples": {
+        "en": "Thank you for the gift.",
+        "ja": "プレゼントをありがとう。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-polite-requests-04",
+      "category": "polite-requests",
+      "matchesAny": [
+        [
+          "是我的錯"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "was my fault"
+        ],
+        "ja": [
+          "私が悪かった"
+        ]
+      },
+      "written": "對不起，是我的錯。",
+      "spoken": "對唔住，係我唔啱。",
+      "sourceExamples": {
+        "en": "I am sorry. It was my fault.",
+        "ja": "ごめんなさい。私が悪かった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-emotion-and-care-01",
+      "category": "emotion-and-care",
+      "matchesAny": [
+        [
+          "想念你"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "miss you very much"
+        ],
+        "ja": [
+          "とても恋しい"
+        ]
+      },
+      "written": "我很想念你。",
+      "spoken": "我好掛住你。",
+      "sourceExamples": {
+        "en": "I miss you very much.",
+        "ja": "あなたのことがとても恋しい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-emotion-and-care-02",
+      "category": "emotion-and-care",
+      "matchesAny": [
+        [
+          "受不了了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "take it anymore",
+          "cannot take it",
+          "can't take it"
+        ],
+        "ja": [
+          "もう耐えられない",
+          "耐えられない"
+        ]
+      },
+      "written": "我真的受不了了。",
+      "spoken": "我真係頂唔順喇。",
+      "sourceExamples": {
+        "en": "I really cannot take it anymore.",
+        "ja": "本当にもう耐えられない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-emotion-and-care-03",
+      "category": "emotion-and-care",
+      "matchesAny": [
+        [
+          "別嚇我"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "do not scare me"
+        ],
+        "ja": [
+          "怖がらせないで"
+        ]
+      },
+      "written": "你別嚇我。",
+      "spoken": "你唔好嚇我。",
+      "sourceExamples": {
+        "en": "Do not scare me.",
+        "ja": "怖がらせないで。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-emotion-and-care-04",
+      "category": "emotion-and-care",
+      "matchesAny": [
+        [
+          "先休息"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "rest for a while"
+        ],
+        "ja": [
+          "少し休んで"
+        ]
+      },
+      "written": "你先休息一下。",
+      "spoken": "你休息一陣先啦。",
+      "sourceExamples": {
+        "en": "You should rest for a while first.",
+        "ja": "まず少し休んで。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-urgency-01",
+      "category": "urgency",
+      "matchesAny": [
+        [
+          "來不及了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "running out of time"
+        ],
+        "ja": [
+          "もう間に合わない"
+        ]
+      },
+      "written": "快一點，來不及了。",
+      "spoken": "快啲，嚟唔切喇。",
+      "sourceExamples": {
+        "en": "Hurry up. We are running out of time.",
+        "ja": "急いで。もう間に合わない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-urgency-02",
+      "category": "urgency",
+      "matchesAny": [
+        [
+          "不要過去"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "do not go over there"
+        ],
+        "ja": [
+          "そっちに行かないで"
+        ]
+      },
+      "written": "不要過去，很危險。",
+      "spoken": "唔好過去，好危險。",
+      "sourceExamples": {
+        "en": "Do not go over there. It is dangerous.",
+        "ja": "そっちに行かないで。危ない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-urgency-03",
+      "category": "urgency",
+      "matchesAny": [
+        [
+          "小心後面"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "behind you"
+        ],
+        "ja": [
+          "後ろに気をつけて"
+        ]
+      },
+      "written": "小心後面！",
+      "spoken": "小心後面！",
+      "sourceExamples": {
+        "en": "Watch out behind you!",
+        "ja": "後ろに気をつけて。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-urgency-04",
+      "category": "urgency",
+      "matchesAny": [
+        [
+          "先停下來"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "listen to me"
+        ],
+        "ja": [
+          "いったん止まって"
+        ]
+      },
+      "written": "先停下來，聽我說。",
+      "spoken": "停低先，聽我講。",
+      "sourceExamples": {
+        "en": "Stop for a moment and listen to me.",
+        "ja": "いったん止まって、私の話を聞いて。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-responses-and-intent-01",
+      "category": "responses-and-intent",
+      "matchesAny": [
+        [
+          "我知道了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "i understand now"
+        ],
+        "ja": [
+          "分かった"
+        ]
+      },
+      "written": "我知道了。",
+      "spoken": "我知喇。",
+      "sourceExamples": {
+        "en": "I understand now.",
+        "ja": "分かった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-responses-and-intent-02",
+      "category": "responses-and-intent",
+      "matchesAny": [
+        [
+          "原來如此"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "so that is how"
+        ],
+        "ja": [
+          "そういうことか"
+        ]
+      },
+      "written": "原來如此。",
+      "spoken": "原來係咁。",
+      "sourceExamples": {
+        "en": "So that is how it is.",
+        "ja": "そういうことか。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-responses-and-intent-03",
+      "category": "responses-and-intent",
+      "matchesAny": [
+        [
+          "這樣就可以"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "that will do"
+        ],
+        "ja": [
+          "それでいい"
+        ]
+      },
+      "written": "這樣就可以了。",
+      "spoken": "咁就得喇。",
+      "sourceExamples": {
+        "en": "That will do.",
+        "ja": "それでいい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-responses-and-intent-04",
+      "category": "responses-and-intent",
+      "matchesAny": [
+        [
+          "認真的嗎"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "are you serious"
+        ],
+        "ja": [
+          "本気で言っている"
+        ]
+      },
+      "written": "你認真的嗎？",
+      "spoken": "你講真㗎？",
+      "sourceExamples": {
+        "en": "Are you serious?",
+        "ja": "本気で言っているの。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-shopping-and-money-01",
+      "category": "shopping-and-money",
+      "matchesAny": [
+        [
+          "多少錢"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "how much is this"
+        ],
+        "ja": [
+          "これはいくら"
+        ]
+      },
+      "written": "這個多少錢？",
+      "spoken": "呢個幾多錢？",
+      "sourceExamples": {
+        "en": "How much is this?",
+        "ja": "これはいくら。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-shopping-and-money-02",
+      "category": "shopping-and-money",
+      "matchesAny": [
+        [
+          "太貴了"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "too expensive"
+        ],
+        "ja": [
+          "高すぎる"
+        ]
+      },
+      "written": "太貴了，我不買了。",
+      "spoken": "太貴喇，我唔買喇。",
+      "sourceExamples": {
+        "en": "It is too expensive. I will not buy it.",
+        "ja": "高すぎる。買わない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-shopping-and-money-03",
+      "category": "shopping-and-money",
+      "matchesAny": [
+        [
+          "帶錢包"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "bring my wallet",
+          "wallet"
+        ],
+        "ja": [
+          "財布を持って",
+          "財布"
+        ]
+      },
+      "written": "我忘了帶錢包。",
+      "spoken": "我唔記得帶銀包。",
+      "sourceExamples": {
+        "en": "I forgot to bring my wallet.",
+        "ja": "財布を持ってくるのを忘れた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-shopping-and-money-04",
+      "category": "shopping-and-money",
+      "matchesAny": [
+        [
+          "不用找錢"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "keep the change"
+        ],
+        "ja": [
+          "お釣りはいらない"
+        ]
+      },
+      "written": "不用找錢了。",
+      "spoken": "唔使找喇。",
+      "sourceExamples": {
+        "en": "Keep the change.",
+        "ja": "お釣りはいらない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-food-and-daily-life-01",
+      "category": "food-and-daily-life",
+      "matchesAny": [
+        [
+          "很餓"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "something to eat",
+          "hungry"
+        ],
+        "ja": [
+          "お腹がすいた",
+          "お腹がすい",
+          "腹が減"
+        ]
+      },
+      "written": "我很餓，想吃點東西。",
+      "spoken": "我好肚餓，想食啲嘢。",
+      "sourceExamples": {
+        "en": "I am hungry and want something to eat.",
+        "ja": "お腹がすいた。何か食べたい。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-food-and-daily-life-02",
+      "category": "food-and-daily-life",
+      "matchesAny": [
+        [
+          "不吃辣"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "spicy food"
+        ],
+        "ja": [
+          "辛いものは食べない"
+        ]
+      },
+      "written": "我不吃辣。",
+      "spoken": "我唔食辣。",
+      "sourceExamples": {
+        "en": "I do not eat spicy food.",
+        "ja": "辛いものは食べない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-food-and-daily-life-03",
+      "category": "food-and-daily-life",
+      "matchesAny": [
+        [
+          "沒有煮開"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not boiled yet"
+        ],
+        "ja": [
+          "まだ沸いていない"
+        ]
+      },
+      "written": "水還沒有煮開。",
+      "spoken": "啲水仲未滾。",
+      "sourceExamples": {
+        "en": "The water has not boiled yet.",
+        "ja": "水はまだ沸いていない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-food-and-daily-life-04",
+      "category": "food-and-daily-life",
+      "matchesAny": [
+        [
+          "沒有上班"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "work today",
+          "go to work",
+          "going to work"
+        ],
+        "ja": [
+          "仕事に行かなかった",
+          "仕事に行く",
+          "仕事に行か",
+          "出勤"
+        ]
+      },
+      "written": "我今天沒有上班。",
+      "spoken": "我今日冇返工。",
+      "sourceExamples": {
+        "en": "I did not go to work today.",
+        "ja": "今日は仕事に行かなかった。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-travel-and-time-01",
+      "category": "travel-and-time",
+      "matchesAny": [
+        [
+          "明天早上"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "tomorrow morning"
+        ],
+        "ja": [
+          "明日の朝"
+        ]
+      },
+      "written": "我明天早上過來。",
+      "spoken": "我聽朝過嚟。",
+      "sourceExamples": {
+        "en": "I will come over tomorrow morning.",
+        "ja": "明日の朝そちらに行く。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-travel-and-time-02",
+      "category": "travel-and-time",
+      "matchesAny": [
+        [
+          "昨天晚上"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "last night"
+        ],
+        "ja": [
+          "昨夜電話"
+        ]
+      },
+      "written": "他昨天晚上打過電話來。",
+      "spoken": "佢噚晚打過電話嚟。",
+      "sourceExamples": {
+        "en": "He called last night.",
+        "ja": "彼は昨夜電話してきた。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-travel-and-time-03",
+      "category": "travel-and-time",
+      "matchesAny": [
+        [
+          "還有十分鐘"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "still have ten minutes"
+        ],
+        "ja": [
+          "まだ十分ある"
+        ]
+      },
+      "written": "我們還有十分鐘。",
+      "spoken": "我哋仲有十分鐘。",
+      "sourceExamples": {
+        "en": "We still have ten minutes.",
+        "ja": "まだ十分ある。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-travel-and-time-04",
+      "category": "travel-and-time",
+      "matchesAny": [
+        [
+          "趕不上"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not catch this train"
+        ],
+        "ja": [
+          "電車には間に合わない"
+        ]
+      },
+      "written": "我趕不上這班車了。",
+      "spoken": "我趕唔切呢班車喇。",
+      "sourceExamples": {
+        "en": "I will not catch this train.",
+        "ja": "この電車には間に合わない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-relations-and-boundaries-01",
+      "category": "relations-and-boundaries",
+      "matchesAny": [
+        [
+          "只是他的同事"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "only his colleague"
+        ],
+        "ja": [
+          "彼の同僚"
+        ]
+      },
+      "written": "我只是他的同事。",
+      "spoken": "我只係佢同事。",
+      "sourceExamples": {
+        "en": "I am only his colleague.",
+        "ja": "私は彼の同僚にすぎない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-relations-and-boundaries-02",
+      "category": "relations-and-boundaries",
+      "matchesAny": [
+        [
+          "與你無關"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "nothing to do with you"
+        ],
+        "ja": [
+          "あなたには関係ない"
+        ]
+      },
+      "written": "這件事與你無關。",
+      "spoken": "呢件事唔關你事。",
+      "sourceExamples": {
+        "en": "This has nothing to do with you.",
+        "ja": "これはあなたには関係ない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-relations-and-boundaries-03",
+      "category": "relations-and-boundaries",
+      "matchesAny": [
+        [
+          "不是在怪你"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "not blaming you"
+        ],
+        "ja": [
+          "責めているわけじゃない"
+        ]
+      },
+      "written": "我不是在怪你。",
+      "spoken": "我唔係怪緊你。",
+      "sourceExamples": {
+        "en": "I am not blaming you.",
+        "ja": "あなたを責めているわけじゃない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk415-relations-and-boundaries-04",
+      "category": "relations-and-boundaries",
+      "matchesAny": [
+        [
+          "沒有別的意思"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "only want to help"
+        ],
+        "ja": [
+          "手伝いたいだけ"
+        ]
+      },
+      "written": "我只想幫忙，沒有別的意思。",
+      "spoken": "我只係想幫手，冇其他意思。",
+      "sourceExamples": {
+        "en": "I only want to help. I do not mean anything else.",
+        "ja": "手伝いたいだけで、他に意味はない。"
+      },
+      "usage": "Use this sentence as a style example only. Preserve the actual speaker, listener, facts, negation, uncertainty and time. Do not copy example facts or add emotion."
+    },
+    {
+      "id": "hk421-crying-want",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "想哭"
+        ],
+        [
+          "快哭了"
+        ],
+        [
+          "快要哭"
+        ],
+        [
+          "想喊"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "want to cry",
+          "feel like crying",
+          "about to cry"
+        ],
+        "ja": [
+          "泣きそう",
+          "泣きたい"
+        ]
+      },
+      "written": "我很想哭。",
+      "spoken": "我好想喊。",
+      "usage": "For ordinary emotional crying, use 喊 in spoken Hong Kong Cantonese. Preserve negation, intensity and cause. Keep a fixed title or name unchanged. English cry can mean shouting; resolve its actual meaning."
+    },
+    {
+      "id": "hk421-crying-cannot-help",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "忍不住哭"
+        ],
+        [
+          "哭了出來"
+        ],
+        [
+          "哭出來"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "could not stop crying",
+          "could not help crying",
+          "burst into tears"
+        ],
+        "ja": [
+          "泣いてしま",
+          "泣いちゃ"
+        ]
+      },
+      "written": "我忍不住哭了。",
+      "spoken": "我忍唔住喊咗出嚟。",
+      "usage": "For ordinary emotional crying, use 喊 in spoken Hong Kong Cantonese. Preserve negation, intensity and cause. Keep a fixed title or name unchanged. English cry can mean shouting; resolve its actual meaning."
+    },
+    {
+      "id": "hk421-crying-negative",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "不要哭"
+        ],
+        [
+          "別哭"
+        ],
+        [
+          "不許哭"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "do not cry",
+          "don't cry",
+          "stop crying"
+        ],
+        "ja": [
+          "泣かないで",
+          "泣くな"
+        ]
+      },
+      "written": "不要哭。",
+      "spoken": "唔好喊。",
+      "usage": "For ordinary emotional crying, use 喊 in spoken Hong Kong Cantonese. Preserve negation, intensity and cause. Keep a fixed title or name unchanged. English cry can mean shouting; resolve its actual meaning."
+    },
+    {
+      "id": "hk421-crying-ordinary",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "哭"
+        ],
+        [
+          "哭泣"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "crying",
+          "cries"
+        ],
+        "ja": [
+          "泣いて",
+          "泣く"
+        ]
+      },
+      "written": "他在哭泣。",
+      "spoken": "佢喊緊。",
+      "usage": "For ordinary emotional crying, use 喊 in spoken Hong Kong Cantonese. Preserve negation, intensity and cause. Keep a fixed title or name unchanged. English cry can mean shouting; resolve its actual meaning."
+    },
+    {
+      "id": "hk421-crying-joy",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "高興得哭"
+        ],
+        [
+          "開心得哭"
+        ],
+        [
+          "喜極而泣"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "tears of joy",
+          "cry with happiness"
+        ],
+        "ja": [
+          "うれしくて泣",
+          "嬉しくて泣"
+        ]
+      },
+      "written": "我高興得哭了。",
+      "spoken": "我開心到喊咗出嚟。",
+      "usage": "For ordinary emotional crying, use 喊 in spoken Hong Kong Cantonese. Preserve negation, intensity and cause. Keep a fixed title or name unchanged. English cry can mean shouting; resolve its actual meaning."
+    },
+    {
+      "id": "hk421-crying-shout",
+      "category": "emotional-crying-and-shouting",
+      "matchesAny": [
+        [
+          "大聲呼救"
+        ],
+        [
+          "喊救命"
+        ]
+      ],
+      "sourceTriggers": {
+        "en": [
+          "cry for help",
+          "cried for help"
+        ],
+        "ja": [
+          "助けを叫"
+        ]
+      },
+      "written": "他大聲呼救。",
+      "spoken": "佢大聲嗌救命。",
+      "usage": "English cry for help means calling for help, not emotional crying. Use 嗌救命 when the source means calling for help. Never turn shouting into tears."
+    }
+  ],
+  "coverage": {
+    "newCategories": [
+      "pronouns",
+      "demonstratives",
+      "questions",
+      "negation",
+      "completed-aspect",
+      "ongoing-aspect",
+      "experience-aspect",
+      "not-yet-and-again",
+      "necessity-and-permission",
+      "ability",
+      "uncertainty",
+      "belief-and-evidence",
+      "cause-and-result",
+      "condition-and-concession",
+      "contrast-and-degree",
+      "location-and-direction",
+      "giving-and-receiving",
+      "quantities",
+      "polite-requests",
+      "emotion-and-care",
+      "urgency",
+      "responses-and-intent",
+      "shopping-and-money",
+      "food-and-daily-life",
+      "travel-and-time",
+      "relations-and-boundaries"
+    ],
+    "newParallelExamples": 104,
+    "existingExamples": 117,
+    "totalExamples": 221,
+    "foreignSourceTriggerEntries": 124,
+    "languages": [
+      "zh-Hant",
+      "yue-Hant",
+      "en",
+      "ja"
+    ],
+    "limits": [
+      "This corpus does not cover all possible dialogue.",
+      "A matching phrase does not prove a complete semantic match.",
+      "Formal titles, proper names, numbers and uncertainty require independent preservation.",
+      "Text style examples do not control voice identity or prosody."
+    ],
+    "selection": "At most three lexical matches. No vector search or extra model pass.",
+    "runtime": "Compiled mirror in StandardSpokenDelivery415. The JSON is not loaded from the app bundle at runtime."
+  }
+}

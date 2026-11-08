@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-11-06",
+  "updated": "2026-11-08",
   "publicProjection": true,
   "platforms": [
     "macOS",
@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-166-desktop-saved-work-cleanup",
+    "revision": "application-user-guide-209-desktop-dubbing-update",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "db9167b6f5a4b97de7f06ba4508fa3ea5d75315e98c9aa6fbaf8f779c8ea6ea9",
-    "controlGuideRevision": "workflow-controls-guide-61-source-failure-continuation",
-    "controlGuideSHA256": "87d0ed8f099a9343d70f61c8690c98148047de48b54dc555d1dfb9fa5f66e540"
+    "sha256": "e1c837539e436d698b34cb946143b0c160d1efc7a1ffc8fda1c1b6e2d0c5246d",
+    "controlGuideRevision": "workflow-controls-guide-76-desktop-dubbing-update",
+    "controlGuideSHA256": "6dd32d5528186b05a7c5f37ae940f397e0834078664a5a9738bb61d639ed2e89"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",
@@ -98,6 +98,27 @@
     "preservation": "Resume retains frozen sources, scripts, recordings, choices and spent budgets.",
     "permissions": "WF-01/02/03/15/16/17 unchanged. No model call for text inspection."
   },
+  "desktopDubbing425": {
+    "rule": "Translate a changed target language from retained original source. Retain draft evidence before an existing bounded retry.",
+    "platforms": [
+      "macOS",
+      "Windows"
+    ],
+    "sourceRevision": "retained-source-dubbing-425",
+    "targetDraftRevision": "retained-target-draft-425",
+    "cantoneseRevision": "hong-kong-contextual-425",
+    "budgets": "New explicit child only. Resume preserves spent reservations. No extra translation or overlap allowance.",
+    "source": "Reuse verified source allocation, clocks, separation and reference caches. Unknown speech retains original audio and a review issue.",
+    "outputs": "Create a new output. Verify retained assets by hashes. Keep parent files unchanged.",
+    "unchangedWorkflowRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ]
+  },
   "activeRequirements": [
     {
       "id": "WF-01",
@@ -141,7 +162,7 @@
     },
     {
       "id": "WF-11",
-      "requirement": "Preserve OP/ED and nonverbal performances. A subtitle gap does not authorize new translated dialogue or prove silence."
+      "requirement": "Preserve OP/ED and nonverbal performances. A subtitle gap alone proves neither dialogue nor silence. New Automatic420 requests require independent lexical and speech evidence before gap translation. Explicit Subtitle first and older requests keep their frozen rules."
     },
     {
       "id": "WF-12",

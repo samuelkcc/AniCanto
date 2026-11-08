@@ -114,6 +114,7 @@ def translate(w,cfg,job,cues):
     if 'zh' in modes:languages.add('zh')
     if any(m in ('english','dual') for m in modes):languages.add('en')
     if any(m in ('yue','dual') for m in modes):languages.add('yue')
+    if cfg.get('_dubbingTranslationLanguages'):languages=set(cfg['_dubbingTranslationLanguages'])
     for language in sorted(languages):
         if language=='zh':
             from dub_languages import mandarin_script
@@ -124,11 +125,15 @@ def translate(w,cfg,job,cues):
             fresh=set(pending)
             for attempt in range(2):
                 if not pending:break
+                import target_draft
+                pending=[i for i in pending if target_draft.reserve(cfg,job,cues[i],language)]
+                if not pending:break
                 rows={str(i):dict(japanese=primary_content(cues[i]),ownedMeaning=cues[i].get('captionAllocation',{}).get('content',''),contextSubtitle=__import__('primary_source').caption(cues[i]),seconds=round(cues[i].get('speechEnd',cues[i]['end'])-cues[i].get('speechStart',cues[i]['start']),3)) for i in pending}
                 if source_language=='en':
                     for value in rows.values():value['sourceSpeech']=value.pop('japanese');value['sourceLanguage']='English'
                 for key,value in rows.items():
                     cue=cues[int(key)];value.update(ocrEvidence=cue.get('ocrEvidence',[]),asrConfidence=cue.get('asrConfidence'),sourceWarnings=cue.get('sourceReviewReasons',[]),independentSource='' if __import__('primary_source').authored(cue) else cue.get('japaneseAlt',''),contextHearing=None if __import__('primary_source').authored(cue) else cue.get('contextHearing'),captionIDs=cue.get('captionAlignment',{}).get('candidateIDs',[]))
+                target_draft.attach(cfg,job,cues,rows,language)
                 from concise_dialogue import budget
                 __import__('draft_length').apply(cfg,job,cues,rows,language)
                 for value in rows.values():
@@ -156,6 +161,7 @@ def translate(w,cfg,job,cues):
                 remaining=[]
                 for i in pending:
                     text=answer.get(str(i),'')
+                    target_draft.retain(w,cfg,job,cues[i],language,text)
                     text=__import__('target_script_guard392').normalize(cfg,cues[i],text,language)
                     if valid_target(text,language,source_language):
                         candidate=w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()
@@ -163,10 +169,10 @@ def translate(w,cfg,job,cues):
                         if language=='yue' and written_mandarin(text):remaining.append(i)
                     else:remaining.append(i)
                 pending=remaining;w.atomic_json(Path(job)/'cues.json',cues)
-            for i in pending:
+            for i in fresh:
                 if not valid_target(cues[i].get(field,''),language,source_language):
                     cues[i][field]='';cues[i].setdefault('normalDefects',[]).append('missing-'+field)
-                else:cues[i].setdefault('normalDefects',[]).append('written-register-needs-review')
+                elif language=='yue' and written_mandarin(cues[i].get(field,'')):cues[i].setdefault('normalDefects',[]).append('written-register-needs-review')
             if language=='en' and not __import__('delivery_policy').enabled(cfg):
                 from concise_dialogue import compact,units,budget
                 targets={i:budget(cues[i].get('speechEnd',cues[i]['end'])-cues[i].get('speechStart',cues[i]['start']),'en') for i in fresh}
@@ -221,6 +227,7 @@ def ensure_scripts(w,cfg,job,cues):
         if 'zh' in cfg.get('subtitleModes',[]):languages.add('zh')
         if any(m in ('english','dual') for m in cfg.get('subtitleModes',[])):languages.add('en')
         if any(m in ('yue','dual') for m in cfg.get('subtitleModes',[])):languages.add('yue')
+    if cfg.get('_dubbingTranslationLanguages'):languages=set(cfg['_dubbingTranslationLanguages'])
     for language in sorted(languages):
         field='cantonese' if cfg.get('_singleEngine') else __import__('output_language').field(language)
         for i,cue in enumerate(cues):
@@ -242,9 +249,13 @@ def ensure_scripts(w,cfg,job,cues):
                     from translation_source import audio_primary,priority_prompt
                     if audio_primary(cfg,cue):prompt+=priority_prompt(cfg)
                     schema=dict(type='object',properties=dict(text=dict(type='string',minLength=1,maxLength=1799)),required=['text'],additionalProperties=False)
+                    import target_draft
+                    repair_rows={str(i):dict(source=src,context=context,names=cfg.get('normalNameGlossary',[]))}
+                    target_draft.attach(cfg,job,cues,repair_rows,language)
                     try:
-                        reply=json.loads(w.ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(dict(source=src,context=context,names=cfg.get('normalNameGlossary',[])),ensure_ascii=False))],structured=schema,think=False))
+                        reply=json.loads(w.ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(repair_rows[str(i)],ensure_ascii=False))],structured=schema,think=False))
                         candidate=reply.get('text','') if isinstance(reply,dict) else ''
+                        target_draft.retain(w,cfg,job,cue,language,candidate)
                         if language=='yue' and valid_target(candidate,language,source_language):candidate=w.traditional_cantonese(cfg,candidate)
                         if valid_target(candidate,language,source_language) and not (language=='yue' and written_mandarin(candidate)):
                             text=candidate.strip();break

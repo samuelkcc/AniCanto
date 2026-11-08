@@ -17,7 +17,7 @@ The internal shared authority remains the source. This public projection does no
 | WF-08 | Use the selected TTS engine by default. Cross-engine and system-voice fallback need separate explicit permission. Low available memory grants no fallback permission. |
 | WF-09 | Attempt final output with saved valid work and report genuine missing target dubs. Storage, source, or encode failure stays an explicit error. |
 | WF-10 | New jobs use four source modes. Automatic selects Subtitle first with readable authored text, otherwise Speech first. Speech / OCR is explicit and ignores authored tracks/files. Speech supplies dubbing clocks. Speech-first drafts receive later same-turn caption proofreading. |
-| WF-11 | Preserve OP/ED and nonverbal performances. A subtitle gap does not authorize new translated dialogue or prove silence. |
+| WF-11 | Preserve OP/ED and nonverbal performances. A subtitle gap alone proves neither dialogue nor silence. New Automatic420 requests require independent lexical and speech evidence before gap translation. Explicit Subtitle first and older requests keep their frozen rules. |
 | WF-12 | Cantonese uses spoken Hong Kong grammar and Traditional Chinese. Preserve source meaning and keep source captions separately selectable. |
 | WF-13 | Keep source, subtitle display, and delivered audio clocks distinct. Do not drop captions because audio or caption intervals overlap. |
 | WF-14 | Each platform proves output decoding, audio/caption coverage, timing, and listening separately. Metadata alone is not acceptance. |

@@ -33,7 +33,7 @@ def apply(cfg,job,cues,rows,language):
  for key,row in rows.items():
   index=int(key);cue=cues[index]
   from primary_source import content as primary_content
-  examples=__import__('hk_spoken_style').retrieve(cfg,primary_content(cue),language)
+  examples=__import__('hk_spoken_style').retrieve(cfg,primary_content(cue),language,source_language=cue.get('primarySource',{}).get('language') or cfg.get('sourceLanguage'))
   if examples:row['spokenStyleExamples']=examples
   if cue.get('captionOnly'):
    row['captionOnly']=True;row['captionInstruction']='Translate the screen text for display only. Preserve its full meaning; no spoken-duration target or narrator.'

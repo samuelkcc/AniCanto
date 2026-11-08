@@ -129,6 +129,7 @@ class Store:
         settings['audioEdgeEnvelopeRevision']=__import__('pcm_mix').EDGE_REVISION
         settings['voiceReferenceIdentityRevision']=__import__('independent_voices').IDENTITY_REVISION379
         settings['draftOutputGuardRevision']=__import__('target_script_guard392').REVISION
+        settings['targetDraftRevision']=__import__('target_draft').REVISION
         settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
         settings['sourceClockRecoveryRevision']=__import__('source_clock_recovery').REVISION
         settings['captionContinuationRevision']='caption-owner-no-duplicate-263'

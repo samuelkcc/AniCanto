@@ -182,6 +182,20 @@ class RetentionTests(unittest.TestCase):
         project.write_text('OTHER_LDFLAGS = "/work/.build/native456/inputs/library.a";')
         self.assertIn('native456',retention.protected_names())
 
+    def test_actual_producer_tool_symlink_is_protected_without_handover(self):
+        target=self.file('live333/workspace/mobile/scripts/build.py',b'active tool')
+        producer=self.build/'closure340/delivery350/workspace/mobile'
+        producer.mkdir(parents=True)
+        (producer/'scripts').symlink_to(target.parent, target_is_directory=True)
+        self.assertIn('live333',retention.protected_names())
+        self.assertEqual(target.read_bytes(),b'active tool')
+
+    def test_native_source_link_outside_build_does_not_protect_a_build_name(self):
+        source=self.root/'mobile';source.mkdir()
+        outside=self.root/'outside-native/tool';outside.parent.mkdir();outside.write_bytes(b'tool')
+        (source/'tools').symlink_to(outside.parent,target_is_directory=True)
+        self.assertNotIn('outside-native',retention.protected_names())
+
     def test_partial_rescue_keeps_the_original_model_path_readable(self):
         model=self.file('work/weights.bin',b'preserved model')
         self.file('work/nested/module.py',b'unique source beyond the archive limit')

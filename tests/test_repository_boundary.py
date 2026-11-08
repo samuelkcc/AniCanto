@@ -25,3 +25,9 @@ class RepositoryBoundaryTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 validate_paths([value], 'private-mobile')
         validate_paths(['mobile/AniCantoApp/WelcomeView.swift', 'mobile/AniCanto-iPad.xcodeproj/project.pbxproj'], 'private-mobile')
+
+    def test_website_allows_only_reviewed_public_files(self):
+        validate_paths(['index.html', 'en/index.html', 'styles.css'], 'private-website')
+        for value in ['mobile/App.swift', 'secret.env', 'docs/private-validation.json', '../index.html']:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                validate_paths([value], 'private-website')

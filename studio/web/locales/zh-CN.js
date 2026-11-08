@@ -1257,3 +1257,5 @@ Object.assign(LOCALE.ui,{"Automatic processing": "自动处理", "Full AI review
 Object.assign(LOCALE.ui,{"One first take kept; only fully silent takes retry, at most twice, with no alternate or system voice substitution. Repair time adapts to measured work, capped at 5 minutes.": "首录一次并保留；只有完全无声才补录，最多两次，不改用后备或系统声线；按实测工作量分配补声时间，上限 5 分钟。", "Keep fitting first takes. One measured timing rewrite; repair first, then optional suspect listening. Repair cap: 15 minutes; listening: 1 minute.": "保留合时首录；实测过长可缩稿重配一次。先补声，再局部回听；修复上限 15 分钟，回听另限 1 分钟。", "Up to three initial attempts and two measured timing repairs. Repair first, then broader listening. Repair cap: 30 minutes; listening: 3 minutes.": "首次最多三次，实测对时最多两次。先补声，再较全面回听；修复上限 30 分钟，回听另限 3 分钟。"});
 
 Object.assign(LOCALE.ui,{"Scope": "处理范围", "Content priority": "内容优先次序", "Subtitles": "字幕", "OP / ED treatment": "OP/ED 处理", "Voice and dubbing": "声音与配音", "Models and output": "模型与输出", "AI review": "AI 复核"});
+
+Object.assign(LOCALE.ui,{"Reuse source analysis. A new dubbing language translates the original text again.": "复用原声分析；更改配音语言会从原文重新翻译。", "Source analysis retained; translate the original text again": "复用原声分析，并从原文重新翻译"});

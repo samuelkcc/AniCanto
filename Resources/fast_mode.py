@@ -91,6 +91,7 @@ def translate(w,cfg,job,cues):
     if 'zh' in modes:languages.add('zh')
     if any('english' in m or m in ('dual','all','complete') for m in modes):languages.add('en')
     if any(m in ('yue','dual','all','complete','original-yue') for m in modes):languages.add('yue')
+    if cfg.get('_dubbingTranslationLanguages'):languages=set(cfg['_dubbingTranslationLanguages'])
     for language in sorted(languages):
         if language=='zh':
             from dub_languages import mandarin_script

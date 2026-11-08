@@ -1,6 +1,35 @@
 """Explicit append/replace plans retain exact prior channels and old versions."""
 import copy,hashlib,json,uuid
 from pathlib import Path
+REVISION='retained-source-dubbing-425'
+
+def source_language_changed(review,language):
+ cfg=review.get('config',{})
+ previous=cfg.get('defaultDubLanguage') or cfg.get('targetLanguage') or (cfg.get('dubLanguages') or ['yue'])[0]
+ return language!=previous
+
+def prepare_cues(cfg,cues):
+ """Change only the new child. Preserve source clocks, exclusions and other scripts."""
+ plan=cfg.get('updateRecordingPlan',{})
+ if plan.get('revision')!=REVISION:return cues
+ language=(plan.get('target') or [None])[0]
+ field={'yue':'cantonese','zh':'mandarin','en':'english'}.get(language)
+ for cue in cues:
+  source=__import__('primary_source').content(cue).strip()
+  intentional=cue.get('preserveOriginalSpeech') and cue.get('originalSpeechReason') not in ('missing-script','missing-target-script','source-recognition-unconfirmed','source-content-unavailable')
+  if not intentional and cue.get('enabled',True) and (cue.get('sourcePolicyBlocked') or source in ('','[UNCONFIRMED_SOURCE]','[UNKNOWN_SOURCE]')):
+   cue.update(sourcePolicyBlocked=True,preserveOriginalSpeech=True,noSpeech=False)
+   cue.setdefault('originalSpeechReason','source-recognition-unconfirmed')
+   cue.setdefault('sourceReviewReasons',[])
+   if 'unconfirmed-retained-source' not in cue['sourceReviewReasons']:cue['sourceReviewReasons'].append('unconfirmed-retained-source')
+  if field and plan.get('translateFromOriginal'):
+   cue[field]=''
+   cue.pop('captionText',None);cue.pop(field+'CaptionText',None)
+   for key in ('editorAudio','editorAudioBackend','editorAudioLanguage','editorAudioVersion','userAcceptedAudio','userAcceptance'):
+    cue.pop(key,None)
+   if cue.get('originalSpeechReason') in ('missing-script','missing-target-script'):
+    cue.pop('originalSpeechReason',None);cue['preserveOriginalSpeech']=False
+ return cues
 
 def digest(path):
  with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
@@ -38,7 +67,9 @@ def build(review_path,draft,operation,engine=None,language=None,replaced=None):
   donors[':'.join(pair)]=dict(folder=str(manifest.parent),reportSHA256=digest(manifest),output=str(output),outputSHA256=digest(output))
  track_pairs=[list(p) for p in available if p!=remove]+[list(target)]
  cfg.update(_trackPairs=track_pairs,_retainedTracks=donors,selectedEngines=list(dict.fromkeys(p[1] for p in track_pairs)),dubLanguages=list(dict.fromkeys(p[0] for p in track_pairs)),ttsBackend=engine,defaultAudioEngine=engine,defaultDubLanguage=language,audioRerunToken=uuid.uuid4().hex,aiAutoFix=False)
- cfg['updateRecordingPlan']=dict(operation=operation,target=list(target),replaced=list(remove) if remove else None,retained=[list(p) for p in available if p!=remove])
+ cfg['updateRecordingPlan']=dict(revision=REVISION,operation=operation,target=list(target),replaced=list(remove) if remove else None,retained=[list(p) for p in available if p!=remove],translateFromOriginal=source_language_changed(review,language))
+ cfg['targetDraftRevision']=__import__('target_draft').REVISION
+ cfg['_dubbingTranslationLanguages']=[language]
  return result
 
 def retained(cfg,root):

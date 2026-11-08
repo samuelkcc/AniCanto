@@ -26,28 +26,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "24d9b83721dd2a05b46846dc3875533c2246b06277275249635e04c19a59d66b",
-      "bytes": 22337
+      "sha256": "c9929801edc2bbfd8ff912b0cfe55a6d47a52dba9f14bde8a04193f4916d6bf1",
+      "bytes": 22672
     },
     {
       "path": "README.ja.md",
-      "sha256": "59089015c658c0cd011037b2d27f3e41b26229c4bc3dbae114899a740e275695",
-      "bytes": 24592
+      "sha256": "77f6d2e463d6d9522c92d14010c304caedb33b9ed3d529144df077ccc54c8650",
+      "bytes": 24983
     },
     {
       "path": "README.md",
-      "sha256": "24d9b83721dd2a05b46846dc3875533c2246b06277275249635e04c19a59d66b",
-      "bytes": 22337
+      "sha256": "c9929801edc2bbfd8ff912b0cfe55a6d47a52dba9f14bde8a04193f4916d6bf1",
+      "bytes": 22672
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "966d92b98414fe64d98060bd63c667030691cfa640780fa5434a013f8c4b6794",
-      "bytes": 19088
+      "sha256": "7d54ef18ee12c934a8d9191c934bd1acf83b1bd2a3d9cec13650b46782072a40",
+      "bytes": 19380
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "ebb57a9cdaf956b1546efe0726bae694c5f4722a138d52e80e25a6de885a4bde",
-      "bytes": 19183
+      "sha256": "fd14bc423f5b68fb149f50974a5dbb4e9cd56086e90889225bd672f36c03f942",
+      "bytes": 19475
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -686,8 +686,8 @@
     },
     {
       "path": "Resources/draft_length.py",
-      "sha256": "b40ee77d49341eee2c4d00443b6ebe5708b02d4f4607881e7c9b4d58ae823031",
-      "bytes": 4623
+      "sha256": "39b6c2f19005033b1abb71f436d56c3b4e007673d7b8b658833a9256707828fd",
+      "bytes": 4712
     },
     {
       "path": "Resources/drama3.py",
@@ -706,8 +706,8 @@
     },
     {
       "path": "Resources/dub_languages.py",
-      "sha256": "503ec49d082f32d2b2e84828a826d86f46c8c4b5d4a1699b104abbfb50d3657e",
-      "bytes": 13057
+      "sha256": "65f71ee26bb567466305051d080cb8e2d7259ee678743383e662c59e64261266",
+      "bytes": 13459
     },
     {
       "path": "Resources/dubbing.py",
@@ -731,8 +731,8 @@
     },
     {
       "path": "Resources/editing_tools.py",
-      "sha256": "caa18e116fe22a986a9a31afcb424acbd697450a035468afc5722246e182a1a1",
-      "bytes": 11277
+      "sha256": "14f2308873abfc866e6434bccabb9af82cdadc04cdcfd6c5e02adbc7fd5b7ef2",
+      "bytes": 11393
     },
     {
       "path": "Resources/en.lproj/Localizable.strings",
@@ -776,8 +776,8 @@
     },
     {
       "path": "Resources/fast_mode.py",
-      "sha256": "2a6a50f6c356c46d2d7065a91ae0c8369433390fd5b2aba0be8dff66a7bc2b62",
-      "bytes": 37681
+      "sha256": "e89c075116603d8591ee9c5a6605db247a1691bc88492a0e10161c9d97e57a22",
+      "bytes": 37779
     },
     {
       "path": "Resources/final_delivery_cache.py",
@@ -840,14 +840,29 @@
       "bytes": 31704
     },
     {
+      "path": "Resources/hk-spoken-source-415.json",
+      "sha256": "ba5fd2696f5045feb26b00bb7827a7ca33c446c985dfc3b8ba8d7d8ec91ae772",
+      "bytes": 118303
+    },
+    {
+      "path": "Resources/hk-spoken-source-421.json",
+      "sha256": "553526b5277e2b5c8241f43b96098f73e58c98d27a8e5e385b8c2daf4d061fac",
+      "bytes": 122998
+    },
+    {
+      "path": "Resources/hk-spoken-source-425.json",
+      "sha256": "088addbbdba6d7a4f1bb11568a172f46152df6b944d7a4598e82917ef590195b",
+      "bytes": 122724
+    },
+    {
       "path": "Resources/hk-spoken-style.json",
       "sha256": "c16993a142f677dac0ed2c0ea9412eeee26f40b1f613fe1863f9a952493445e8",
       "bytes": 1862
     },
     {
       "path": "Resources/hk_spoken_style.py",
-      "sha256": "7a2488cf2ddcdf7ad0d9827fbb6fa78a85beeb893a79b744f317cf3c05d2c7a9",
-      "bytes": 2888
+      "sha256": "f13f472fdf24d97899f3384d1c50283cbbe19e58e13345627a76cecbb8260283",
+      "bytes": 3779
     },
     {
       "path": "Resources/hong_kong_dialogue.py",
@@ -861,8 +876,8 @@
     },
     {
       "path": "Resources/independent_voices.py",
-      "sha256": "d0895b3ab230d46fadb69ac0a92d513e6dabce8e509728df817302c926df7bb6",
-      "bytes": 11303
+      "sha256": "b8bb3bd55d76ac4a1235ac55cde748fedfed9fa5cde67a42bffb6286400ea481",
+      "bytes": 11572
     },
     {
       "path": "Resources/job_identity.py",
@@ -1071,8 +1086,8 @@
     },
     {
       "path": "Resources/normal_mode.py",
-      "sha256": "2e5c191ebed2435e6d372240c51643f2133d0a7eea173991866b4e03f1504fb4",
-      "bytes": 49931
+      "sha256": "5e984063734a6c716813e1e5357643b06151339dd042f87450c20c19475d1f1c",
+      "bytes": 50744
     },
     {
       "path": "Resources/normal_policy.py",
@@ -1251,8 +1266,8 @@
     },
     {
       "path": "Resources/project_edit.py",
-      "sha256": "4e2e8169a731ea09fb01b6f0e1554f69bf5a23fd8ca9118c0b297879befb0386",
-      "bytes": 31664
+      "sha256": "041938c80e0e53f7751464726fd0b803c0328a47d07d05adfca84d1397d6d39a",
+      "bytes": 31809
     },
     {
       "path": "Resources/project_reset.py",
@@ -1713,6 +1728,11 @@
       "path": "Resources/target_delivery.py",
       "sha256": "8fa8a90fbdc8859d8bb39ba84b1cb1eb7911f2de1f3b0b532d2cd977bf0f7790",
       "bytes": 2791
+    },
+    {
+      "path": "Resources/target_draft.py",
+      "sha256": "0df6ecd3c0e5fbd720b532072955a2c28edf7f0cee1f17ce1fc4313a1cd703bd",
+      "bytes": 1850
     },
     {
       "path": "Resources/target_script_guard392.py",
@@ -2561,8 +2581,8 @@
     },
     {
       "path": "Resources/update_plan.py",
-      "sha256": "b59e31aa6cf31fd80289cb22b81ee230b4323f88a75b05502e3725d8f698960a",
-      "bytes": 3641
+      "sha256": "c9a1479de583c86fd963afe45a64ae26881e76318e5b95e8eba27a351beda097",
+      "bytes": 5626
     },
     {
       "path": "Resources/use_terms.py",
@@ -2821,8 +2841,8 @@
     },
     {
       "path": "Resources/worker.py",
-      "sha256": "b1c6edd924cc1fa0829193eb35e2f813edbecc5ea023bd97bc6f889daa1517a3",
-      "bytes": 110409
+      "sha256": "0109b92de05551022724cb8825ea55d5f05be3440de1ca4d10e79f1e6ff49b26",
+      "bytes": 110600
     },
     {
       "path": "Resources/workflow-localization.json",
@@ -3366,7 +3386,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "5338d22614bd8414fa84869417935b5613e1771cb224c36e7c6965ed7e181909",
+      "sha256": "4d4fd94387c083f0868372f7efb62a63294a283fed590f85996497bdba530152",
       "bytes": 66
     },
     {
@@ -3411,8 +3431,8 @@
     },
     {
       "path": "docs/APPLICATION-USER-GUIDE.json",
-      "sha256": "db9167b6f5a4b97de7f06ba4508fa3ea5d75315e98c9aa6fbaf8f779c8ea6ea9",
-      "bytes": 604254
+      "sha256": "e1c837539e436d698b34cb946143b0c160d1efc7a1ffc8fda1c1b6e2d0c5246d",
+      "bytes": 669310
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
@@ -3421,8 +3441,8 @@
     },
     {
       "path": "docs/BUILD-STORAGE-POLICY.md",
-      "sha256": "ad2bb488a75ff3cc0682b4da5d12d35239eeaeb702fcfe07a8cb3fc373c2a537",
-      "bytes": 4017
+      "sha256": "e2d9737af5449f012c332486bdd9a2026a8d7b7f39ceed7e865f5dd1bbbb15ce",
+      "bytes": 4533
     },
     {
       "path": "docs/DESKTOP-ACCELERATION-0.24.71.md",
@@ -3446,8 +3466,13 @@
     },
     {
       "path": "docs/DESKTOP-DOWNLOADS.json",
-      "sha256": "86428b169a3ac61a7f33c6c242446dcf1c60de02fa27e8158377b328592e8995",
+      "sha256": "72a6723b4ee79a8305401053d1b9a0cae97aee2b3f611b630014c1ade89d1e69",
       "bytes": 221
+    },
+    {
+      "path": "docs/DESKTOP-DUBBING-0.25.51.md",
+      "sha256": "06981d6427843b571e99a3b518885bfc06b1b93bcc54d88272905de0b30a8580",
+      "bytes": 1189
     },
     {
       "path": "docs/DESKTOP-IMPROVEMENTS-0.24.77.md",
@@ -3456,8 +3481,8 @@
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "28dce49024b467a1156bda1aec05b9a805efd8c06646d13530e59469ec02450f",
-      "bytes": 3531
+      "sha256": "9cc5c184b0b301500caed9399b843cebf20e428216df7eb52ed0660940827e62",
+      "bytes": 3679
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
@@ -3681,8 +3706,8 @@
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "aef3dc401b07b76ea0957bb66ce9a3250b56850c32fe0f9439a6d4ffd522838a",
-      "bytes": 8468
+      "sha256": "474292b33c82fc1af38cee942e1df3f10f8114e69a7c00b5a0f4eb9d5bbfbadc",
+      "bytes": 9496
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -3741,8 +3766,8 @@
     },
     {
       "path": "docs/WORKFLOW-CONTROLS-GUIDE.json",
-      "sha256": "87d0ed8f099a9343d70f61c8690c98148047de48b54dc555d1dfb9fa5f66e540",
-      "bytes": 106139
+      "sha256": "6dd32d5528186b05a7c5f37ae940f397e0834078664a5a9738bb61d639ed2e89",
+      "bytes": 116029
     },
     {
       "path": "docs/en/DEMO.md",
@@ -13826,8 +13851,8 @@
     },
     {
       "path": "scripts/build-retention.py",
-      "sha256": "54a039f97029e40b64b92047898a3d9b950d3fd8143b18c010dd0bbec52019df",
-      "bytes": 38760
+      "sha256": "366ff1a4a347a521eccf6f2b3b7391f124df56d22a739517608660f530a0eaac",
+      "bytes": 39809
     },
     {
       "path": "scripts/build.py",
@@ -13911,8 +13936,8 @@
     },
     {
       "path": "scripts/package_shared_studio.py",
-      "sha256": "7f6c75b908a9f686d4d8482d6765f91b92ae16ef66c484e41f78c0fe6b815734",
-      "bytes": 9106
+      "sha256": "88a9e4b424ae234e5d77a9ac548f8d940a6c76b8ab213793dec7ffa460005911",
+      "bytes": 9162
     },
     {
       "path": "scripts/package_windows.py",
@@ -13931,8 +13956,8 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "79695113b8243aed1f12d1de9263f50637316faa5135cd9a513443ee763727b4",
-      "bytes": 17387
+      "sha256": "7bfe56f35d667c91acfdf628680314ffe3c1dbbfafd5b38b966d42a0dee7d9f8",
+      "bytes": 17845
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -13951,8 +13976,8 @@
     },
     {
       "path": "scripts/repository_boundary.py",
-      "sha256": "f3d81adece4452992aeb8e0cbb1d70894d00f31786174b68cecb9acdcd115d62",
-      "bytes": 3603
+      "sha256": "d016ddde21fd74750354da780d59d2d790eb3d6a6faeca889a98c330f3a6297d",
+      "bytes": 4111
     },
     {
       "path": "scripts/resource_assets.py",
@@ -14176,12 +14201,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "9fcce4e90082232554ecd01a525cbe70990ee01fe59e3a325c4850c0e58b685a",
+      "sha256": "27f5f1d16ff2917da2d3b61730ca14f233531868b906c7a1fc7e9fdd28ca99b6",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "6c3e6c951cf8a7a906fab93b75e0e41999f34806c3c753eafd4f435301800c3e",
+      "sha256": "18c7e25a61011a7f4a8bf92e03f31193bdc66db67338a37fb5d478c7f29cca40",
       "bytes": 543
     },
     {
@@ -14251,7 +14276,7 @@
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "76ab43d37390e3ca7626df6ed3a67cee77c27740088cd0ab7cc73765ac53b30e",
+      "sha256": "722bcf4d062ee75a68bb25f7d5c7d776226b1690eeacdbd889ed8ec5a1ed7d88",
       "bytes": 1051
     },
     {
@@ -14521,8 +14546,8 @@
     },
     {
       "path": "studio/web/editing-tools.js",
-      "sha256": "b5e4ee16ed557ad4de7b40a954c1d0a0469b3601701a89336d739c8c893c08c7",
-      "bytes": 5765
+      "sha256": "51f25fa5a262942865ed4e9af9d0ddd59052ecf31722d969ef3b5af734d27486",
+      "bytes": 5849
     },
     {
       "path": "studio/web/editor-locale.js",
@@ -14541,8 +14566,8 @@
     },
     {
       "path": "studio/web/i18n.js",
-      "sha256": "ee0407bee67a86607d601b913a167e954349344c0ac33c2c73c24a2bb7564c96",
-      "bytes": 108020
+      "sha256": "3947cc30e2a742605fb0de5b582ac85b263c9a61a15501778daee56c7003f841",
+      "bytes": 108305
     },
     {
       "path": "studio/web/icons.js",
@@ -14576,13 +14601,13 @@
     },
     {
       "path": "studio/web/locales/ja.js",
-      "sha256": "4f39fc2abd690dd9eb3fb5f72c1c466a540344528f010b727e7a1fdb1778311c",
-      "bytes": 214989
+      "sha256": "18c358a40fe38b206f6d7e709f1cca08131ec097cc3403046b3580d5a77fe999",
+      "bytes": 215338
     },
     {
       "path": "studio/web/locales/zh-CN.js",
-      "sha256": "ef206d8f7af3b8b20f28cc52734e1b584b1e3ed046102c25a6ae2e0f1cc28d1e",
-      "bytes": 158965
+      "sha256": "14fd08449dc1c709e20ad6d837b377720e5c5ec6515fed7a806e16596400a5b3",
+      "bytes": 159260
     },
     {
       "path": "studio/web/model.js",
@@ -14721,8 +14746,8 @@
     },
     {
       "path": "studio/web/workflow-dialogs.js",
-      "sha256": "a5baab384f33a722468469f6a62cb616d39f615477812c0a1c08a382d8608664",
-      "bytes": 9531
+      "sha256": "3948cc086b2817f3fca5d1e2a9798bbc5b326266dfe543e3f54467cca669039c",
+      "bytes": 9514
     },
     {
       "path": "studio/web/workflow-guide.js",
@@ -15341,8 +15366,8 @@
     },
     {
       "path": "tests/test_build_retention297.py",
-      "sha256": "65ac4f70f313693d5bbeac0b199725915296405004cf8252421f049e4bb3fbf0",
-      "bytes": 16222
+      "sha256": "2d72ea6e8e6727ec75fa0746997bbc65c4b30f4f93a3f0b995571c84934a8c40",
+      "bytes": 17078
     },
     {
       "path": "tests/test_cantonese_alignment.py",
@@ -15548,6 +15573,11 @@
       "path": "tests/test_dubbing.py",
       "sha256": "e2af12ac81d795ef4b8730df900a8ca10b6a07b92492a52c6d465eac1e2e048d",
       "bytes": 12951
+    },
+    {
+      "path": "tests/test_dubbing_update425.py",
+      "sha256": "a7c92ed77b9ec443c3dc51d72f6c67a69780fb0643836c8c38edf178236c3e73",
+      "bytes": 8545
     },
     {
       "path": "tests/test_duration_fit.py",
@@ -16021,8 +16051,8 @@
     },
     {
       "path": "tests/test_repository_boundary.py",
-      "sha256": "32d3764b3697b6d85eeec497bcb4f269d497a567cfd613000f00fbaa8acb4535",
-      "bytes": 1664
+      "sha256": "f494809710678a437b77db2a577ad81aaf3c4d32fdc2cdeeb3b57152beb06dc3",
+      "bytes": 2056
     },
     {
       "path": "tests/test_reset272.py",
@@ -16281,8 +16311,13 @@
     },
     {
       "path": "tests/test_spoken_retrieval377.py",
-      "sha256": "73284c7bf88cd95aaabf3f2fd3a7e10fe5b27bf83e2703837921af0521cb3d89",
-      "bytes": 2502
+      "sha256": "badf46fcee048bd5f2d1ae50545712ab934233ba97eb8b57ed501841c498b898",
+      "bytes": 2538
+    },
+    {
+      "path": "tests/test_spoken_retrieval415.py",
+      "sha256": "91a4150cdf1c3f500e43b56ca281f0efacad79b73461e2cb9096268d4a348865",
+      "bytes": 1576
     },
     {
       "path": "tests/test_standard_mode245.py",
@@ -16546,8 +16581,8 @@
     },
     {
       "path": "tests/test_workflow70_integration.py",
-      "sha256": "8b1a6bf46983ff3e63c58d1b3adfb879cb02e5c2935f22481140d1a16fd57f80",
-      "bytes": 10118
+      "sha256": "e330d034de5afa7c9c17020a7eaf491e6457d9821de8e855e8dbd4f5641b7f85",
+      "bytes": 10241
     },
     {
       "path": "tests/test_workflow_log.py",
@@ -16676,8 +16711,8 @@
     },
     {
       "path": "windows/desktop_state.py",
-      "sha256": "4a5b51612fa81e990e25472f4db1b14990a8aefea62df2a57108a50cfc45039d",
-      "bytes": 31446
+      "sha256": "4bdd9c6f5e97ea010b17da98f0da885986a1bd53bd029dc45368018f24f18fd0",
+      "bytes": 31522
     },
     {
       "path": "windows/desktop_widgets.py",

@@ -115,7 +115,14 @@ def assign(cfg,job,cues,emit):
     if __import__('source_workflow').subtitle_content_only(cfg):identity.append(['subtitle-content-only',[bool(c.get('subtitleContentOnlyGap')) for c in cues]])
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest();cache=job/'independent-voices.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}
-    reused=saved.get('key')==key and all(not p['reference'] or Path(p['reference']).is_file() for p in saved.get('profiles',[]))
+    def intact(profile):
+        reference=profile.get('reference')
+        if not reference:return True
+        path=Path(reference)
+        if not path.is_file():return False
+        expected=profile.get('referenceSHA256')
+        return not expected or hashlib.sha256(path.read_bytes()).hexdigest()==expected
+    reused=saved.get('key')==key and all(intact(p) for p in saved.get('profiles',[]))
     if not reused:
         model_job(cfg,'independent-voices',dict(storage=str(root),job=str(job),audio=str(source),cues=cues,sourceLanguage=cfg.get('sourceLanguage','ja'),productionMode=cfg.get('productionMode','standard'),continueOnError=cfg.get('continueOnError',True),voiceReferencePaddingRevision=cfg.get('voiceReferencePaddingRevision'),voiceReferenceIdentityRevision=cfg.get('voiceReferenceIdentityRevision')),emit)
         saved=json.loads(cache.read_text())

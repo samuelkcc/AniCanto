@@ -17,7 +17,7 @@ class SpokenRetrieval377(unittest.TestCase):
         self.assertEqual(len({row['id'] for row in rows}), len(rows))
 
     def test_examples_remain_bounded_and_match_the_current_source(self):
-        cfg = {'hongKongStyleRevision': style.REVISION}
+        cfg = {'hongKongStyleRevision': style.EXPANDED_REVISION}
         source = '難道你打算隨後確認他是否允許你無論如何都去？'
         rows = style.retrieve(cfg, source)
         self.assertEqual(len(rows), 3)
@@ -33,18 +33,18 @@ class SpokenRetrieval377(unittest.TestCase):
         for revision in [None, style.LEGACY_REVISION, 'unknown']:
             self.assertEqual(style.retrieve({'hongKongStyleRevision': revision}, '難道'), [])
         for language in ['zh', 'en', 'ja']:
-            self.assertEqual(style.retrieve({'hongKongStyleRevision': style.REVISION},
+            self.assertEqual(style.retrieve({'hongKongStyleRevision': style.EXPANDED_REVISION},
                                            '難道', language), [])
         self.assertNotIn('spokenStyleExamples', style.instruction(
             {'hongKongStyleRevision': style.LEGACY_REVISION}))
 
     def test_examples_do_not_change_or_replace_the_source(self):
         source = '沒有他的允許，我不能開門。'
-        result = style.retrieve({'hongKongStyleRevision': style.REVISION}, source)
+        result = style.retrieve({'hongKongStyleRevision': style.EXPANDED_REVISION}, source)
         self.assertTrue(result)
         self.assertEqual(source, '沒有他的允許，我不能開門。')
         self.assertTrue(any(row['id'] == 'context377-permission' for row in result))
-        self.assertEqual(style.retrieve({'hongKongStyleRevision': style.REVISION},
+        self.assertEqual(style.retrieve({'hongKongStyleRevision': style.EXPANDED_REVISION},
                                         'ZXQ-19'), [])
 
 

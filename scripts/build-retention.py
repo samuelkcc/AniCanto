@@ -56,6 +56,8 @@ PROTECTED = {
     '_retained-models': 'Model assets kept by this script.',
     '_retention-archive': 'Source rescued by this script.',
     'closure340': 'Active private source, SDK and source-delivery inputs. Prune generated products separately.',
+    'privacy-rights327': 'Required private SDK source and matching source-delivery inputs.',
+    'phone-navigation326': 'Active production derived data and relink objects for the current mobile delivery.',
 }
 
 # Model weight files only. Packaging payloads such as .zip and .whl are build output, not models.
@@ -151,10 +153,26 @@ def protected_names() -> dict:
     keep = dict(PROTECTED)
     # Active projects can link native libraries outside their own source tree.
     # A handover window is not a complete inventory of those build inputs.
-    for source in (ROOT/'mobile', BUILD/'iphone201/workspace/mobile'):
+    sources = (ROOT/'mobile', BUILD/'iphone201/workspace/mobile',
+               BUILD/'closure340/delivery350/workspace/mobile')
+    for source in sources:
         for project in source.glob('*.xcodeproj/project.pbxproj'):
             for name in re.findall(r'\.build/([A-Za-z0-9_.-]+)',project.read_text(encoding='utf-8')):
                 keep.setdefault(name,'Referenced by an active native project.')
+        # A source folder can link tools without naming them in its Xcode project.
+        for base, dirs, files in os.walk(source, followlinks=False):
+            for name in dirs + files:
+                link = Path(base, name)
+                if not link.is_symlink():
+                    continue
+                target = link.resolve()
+                if target.is_relative_to(BUILD.resolve()):
+                    parts = target.relative_to(BUILD.resolve()).parts
+                    if parts:
+                        keep.setdefault(parts[0], 'Used by an active native source link.')
+            dirs[:] = [name for name in dirs if name not in {
+                '.git', 'DerivedData', 'SourcePackages', 'node_modules', 'target', 'dd',
+            }]
     handover = ROOT / 'docs' / 'CODEX-HANDOVER.md'
     if handover.is_file():
         text = handover.read_text(encoding='utf-8')
