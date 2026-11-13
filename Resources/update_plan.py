@@ -69,6 +69,8 @@ def build(review_path,draft,operation,engine=None,language=None,replaced=None):
  cfg.update(_trackPairs=track_pairs,_retainedTracks=donors,selectedEngines=list(dict.fromkeys(p[1] for p in track_pairs)),dubLanguages=list(dict.fromkeys(p[0] for p in track_pairs)),ttsBackend=engine,defaultAudioEngine=engine,defaultDubLanguage=language,audioRerunToken=uuid.uuid4().hex,aiAutoFix=False)
  cfg['updateRecordingPlan']=dict(revision=REVISION,operation=operation,target=list(target),replaced=list(remove) if remove else None,retained=[list(p) for p in available if p!=remove],translateFromOriginal=source_language_changed(review,language))
  cfg['targetDraftRevision']=__import__('target_draft').REVISION
+ cfg['draftOutputGuardRevision']=__import__('target_script_guard392').REVISION
+ __import__('dialogue_policy441').configure(cfg,basic=cfg.get('interfaceMode')=='basic')
  cfg['_dubbingTranslationLanguages']=[language]
  return result
 

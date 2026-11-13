@@ -27,7 +27,7 @@ def validate_paths(paths, kind):
                     or p.suffix.lower() in {'.ipa', '.mobileprovision', '.p12', '.p8', '.keychain-db'}
                     or p.name.startswith(('test_mobile_', 'build_mobile_'))
                     or (p.parts[:1]==('scripts',) and re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I))
-                    or p.name in {'test_caption_layers340.py', 'test_text_runtime_boundary345.py'}
+                    or p.name in {'test_caption_layers340.py', 'test_text_runtime_boundary345.py', 'test_demo_payload_retention.py'}
                     or (p.suffix == '.swift' and p.name.lower().startswith(('ipad', 'iphone', 'ios', 'storekit', 'iap')))):
                 raise ValueError('Private mobile path in the public desktop tree: ' + name)
         elif kind == 'private-mobile':

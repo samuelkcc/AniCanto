@@ -21,8 +21,9 @@ def content(c):return c['primarySource'].get('text','') if current(c) else c.get
 def rules(cfg):
  if not enabled(cfg):return ''
  from source_workflow import priority,SPEECH_RULES,OCR_RULES,subtitle_content_only,SUBTITLE_ONLY_RULES
- if subtitle_content_only(cfg):return SUBTITLE_ONLY_RULES
- return SPEECH_RULES if priority(cfg)=='speech' else OCR_RULES if priority(cfg)=='ocr' else PROMPT
+ names=__import__('dialogue_policy441').instruction(cfg)
+ if subtitle_content_only(cfg):return SUBTITLE_ONLY_RULES+names
+ return (SPEECH_RULES if priority(cfg)=='speech' else OCR_RULES if priority(cfg)=='ocr' else PROMPT)+names
 def caption(c):return content(c) if authored(c) or c.get('primarySource',{}).get('kind')=='ocr-primary' else c.get('subtitleHint','')
 def secondary(c):return '' if authored(c) else c.get('japaneseAlt','')
 def normalize(s):return re.sub(r'\s+','',s)

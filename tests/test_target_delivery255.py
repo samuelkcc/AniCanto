@@ -112,10 +112,10 @@ class RoutingAndRetry255Tests(unittest.TestCase):
    for has_text in (True,False):
     cfg=dict(sourceWorkflowRevision=f.REVISION,sourceSelectionRevision='basic-source-defaults-231',interfaceMode=mode,sourceWorkflow='auto',defaultSubtitleWorkflow='speech-subtitles',defaultOCRWorkflow='ocr-speech')
     meta=dict(streams=[dict(index=2,codec_type='subtitle',codec_name='subrip')] if has_text else [])
-    f.configure(cfg,meta,lambda rows,*a:next(iter(rows),None));self.assertEqual(cfg['sourceWorkflowEffective'],'subtitles-speech' if has_text else 'speech-ocr')
+    f.configure(cfg,meta,lambda rows,*a:next(iter(rows),None));self.assertEqual(cfg['sourceWorkflowEffective'],'subtitles-speech' if has_text else 'speech-subtitles')
  def test_legacy_source_choices_and_expert_manual_choice_survive(self):
   import source_workflow as f
-  cfg=dict(sourceWorkflowRevision=f.REVISION,interfaceMode='expert',sourceWorkflow='auto',defaultOCRWorkflow='ocr-speech')
+  cfg=dict(sourceWorkflowRevision=f.LEGACY_REVISION,interfaceMode='expert',sourceWorkflow='auto',defaultOCRWorkflow='ocr-speech')
   f.configure(cfg,dict(streams=[]),lambda *a:None);self.assertEqual(cfg['sourceWorkflowEffective'],'ocr-speech')
   cfg.update(sourceSelectionRevision='basic-source-defaults-231',sourceWorkflow='ocr-speech');f.configure(cfg,dict(streams=[]),lambda *a:None);self.assertEqual(cfg['sourceWorkflowEffective'],'ocr-speech')
  def test_explicit_performance_repair_creates_new_version_without_changing_old_request(self):

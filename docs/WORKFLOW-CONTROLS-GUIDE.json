@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-76-desktop-dubbing-update",
+  "revision": "workflow-controls-guide-84-desktop-dialogue-alignment",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -102,10 +102,10 @@
         "ja": "吹き替え内容を修復"
       },
       "body": {
-        "zh-HK": "可靠核對證據確認配音內容有問題後，在已保存的次數及時間預算內修正譯稿並重新配音。這不是所有額外功能的總開關，也不會單憑不確定的辨識結果重錄。翻譯核對、時長限制、過度重疊、尾音及空檔分析各有獨立選項。使用另一模型或系統聲音還需要各自的許可。關閉此項不會關閉缺失、靜音或損壞配音的必要補錄。",
-        "zh-CN": "可靠核对证据确认配音内容有问题后，在已保存的次数和时间预算内修正译稿并重新配音。这不是所有额外功能的总开关，也不会仅凭不确定的识别结果重录。翻译核对、时长限制、过度重叠、尾音和空档分析各有独立选项。使用另一模型或系统声音还需要各自许可。关闭此项不会关闭缺失、静音或损坏配音的必要补录。",
-        "en": "When reliable review evidence confirms a content defect, correct the target draft and record again within saved limits. This is not a master switch for all extra controls. Uncertain recognition alone cannot trigger a retake. Translation review, duration, overlap, endpoint and gap controls remain independent. Another model and system voice each require separate permission. Turning this off does not disable required recovery for missing, silent or damaged dubbing.",
-        "ja": "確かな確認結果で内容の不具合が確定した場合、保存された回数・時間予算内で原稿を修正して再録音します。全追加機能の一括スイッチではありません。不確かな認識だけでは再録音しません。翻訳確認、長さ、重なり、末尾、空き時間は独立した設定です。別モデルとシステム音声にはそれぞれ許可が必要です。無効でも、欠落・無音・破損した必須音声の補完は行います。"
+        "en": "When reliable review evidence confirms a content defect, correct the target draft and record again within saved limits. This is not a master switch. Uncertain recognition alone cannot trigger a retake. Other controls and alternate AI engines keep their separate permissions. Required recovery for missing, silent or damaged dubbing remains. On iPhone and iPad, system voices are live readers only and cannot replace an exported dub.",
+        "zh-HK": "可靠核對證據確認配音內容有問題後，在已保存的預算內修正譯稿並重新配音。這不是總開關，未確認的辨識結果不能單獨觸發重錄。其他控制項及另一 AI 引擎仍須各自許可。缺失、靜音或損壞配音的必要補錄仍會保留。iPhone 及 iPad 的系統聲音只供即時朗讀，不會代替匯出配音。",
+        "zh-CN": "可靠核对证据确认配音内容有问题后，在保存预算内修正译稿并重新配音。这不是总开关，未确认的识别结果不能单独触发重录。其他控制和另一 AI 引擎仍需各自许可。缺失、静音或损坏配音的必要补录仍保留。iPhone 和 iPad 的系统声音仅用于即时朗读，不替代导出配音。",
+        "ja": "確かな確認結果で内容の不具合が確定した場合、保存予算内で原稿を修正して再録音します。一括スイッチではなく、不確かな認識だけでは再録音しません。他の制御と別AIモデルには個別の許可が必要です。欠落・無音・破損の必須補完は維持します。iPhoneとiPadのシステム音声はその場での読み上げ専用で、出力音声の代替には使いません。"
       }
     },
     {
@@ -192,10 +192,10 @@
         "ja": "インストール済みシステム音声の代替"
       },
       "body": {
-        "zh-HK": "需要同時開啟「配音內容修復」，並在處理前確認系統聲音提示。AI 後備仍失敗時，才可使用已安裝的目標語言系統聲音補配；不等同原角色聲線，也不保證可選 Siri 聲音。記錄實際引擎並沿用已保存預算。此項不是朗讀模式的聲線選擇；系統聲音的發布及使用條款仍須另行核實。 可用記憶體不足不會開啟此後備，也不會改變已選的 AI 引擎。曾經確認系統聲音提示，不等於已保存工作獲准使用系統聲線。",
-        "zh-CN": "需要同时开启“配音内容修复”，并在处理前确认系统声音提示。AI 后备仍失败时，才可使用已安装的目标语言系统声音补配；不等于原角色声音，也不保证可选 Siri 声音。记录实际引擎并沿用保存预算。不是朗读模式的声音选择；系统声音发布和使用条款仍须另行核实。 可用内存不足不会开启此后备，也不会改变已选的 AI 引擎。曾经确认系统声音提示，不等于已保存任务获准使用系统声音。",
-        "en": "Requires Repair dubbing content and confirmation before processing. If AI fallback still fails, use an installed target-language system voice within saved limits. This is not the original character voice and does not promise Siri voices. Record the actual engine. This is separate from Reading voice selection. Public distribution and system-audio use terms still require separate verification. Low available memory does not enable this fallback or change the selected AI engine. A previous system-voice confirmation is not a saved job permission.",
-        "ja": "内容修復の許可と処理前の確認が必要です。AI の代替処理でも失敗した場合、保存予算内で目標言語の導入済みシステム音声を使います。元の役の声ではなく、Siri 音声も保証しません。実際のエンジンを記録します。読み上げモードの声選択とは別です。公開配布やシステム音声の利用条件は別途確認が必要です。 空きメモリ不足でこの代替処理を有効にしたり、選択した AI エンジンを変更したりしません。過去のシステム音声の確認は、保存ジョブの使用許可ではありません。"
+        "en": "Apple system voices are live readers in Reading and Learning. They do not create WAV files or video audio tracks. Reading has no audio or video export. CosyVoice and GPT-SoVITS remain the production engines. Apple text translation remains available and is separate from speech synthesis. Existing outputs, recordings and spent attempts remain unchanged. An old system-voice production job needs an explicit AI dubbing update before a new export; AniCanto does not silently replace its engine.",
+        "zh-HK": "Apple 系統聲音只在朗讀及學習模式即時朗讀，不會建立 WAV 音檔或影片音軌。朗讀模式不提供音訊或影片匯出。製作配音使用 CosyVoice 或 GPT-SoVITS。Apple 文字翻譯仍可使用，與語音合成分開處理。現有成品、錄音及已使用次數保持不變。舊系統語音工作須先明確使用 AI 模型更新配音，才可重新匯出；App 不會暗中更換引擎。",
+        "zh-CN": "Apple 系统声音仅在朗读和学习模式即时朗读，不生成 WAV 音频或视频音轨。朗读模式不提供音频或视频导出。制作配音使用 CosyVoice 或 GPT-SoVITS。Apple 文字翻译仍可使用，与语音合成分开处理。现有成品、录音和已用次数保持不变。旧系统语音任务须先明确使用 AI 模型更新配音，才能重新导出；App 不暗中更换引擎。",
+        "ja": "Appleのシステム音声は朗読・学習でその場で読み上げる用途に限り、WAVや動画音声トラックを作りません。朗読モードに音声・動画の書き出しはありません。制作にはCosyVoiceまたはGPT-SoVITSを使います。Appleのテキスト翻訳は別の機能として維持します。既存の出力、録音、使用済み試行回数は変更しません。旧システム音声ジョブを再出力するにはAIでの吹き替え更新を明示的に行います。エンジンを自動変更しません。"
       }
     },
     {
@@ -267,10 +267,10 @@
         "ja": "最終音声フォールバック"
       },
       "body": {
-        "en": "Basic and Expert offer this choice. The default is First audible take. Production settings controls this choice; mobile Basic mode also provides it in operation options. Changes apply to new jobs; saved jobs keep their policy. This choice applies after permitted repair. First audible take keeps a usable original generation; it does not request a generic or system voice. Original source speech is the final source fallback. Generic target-language voice permits one bounded final trial in the selected engine, even with AI repair off. Other engines and installed system voices also require AI repair and their separate permission. Missing or silent audio still receives at most two fill retries. A strict duration limit still applies. If no permitted take can be delivered, preserve source continuity and report the missing target dub. Review uncertainty alone does not replace audible speech. For required missing audio with no usable clone reference, one selected-engine generic fill is allowed within the shared limit. It cannot replace audible audio or enable a system voice.",
-        "zh-HK": "基本與專家模式均提供此選項，預設為「第一條有聲錄音」。此選項集中喺製作設定；流動版基本模式亦可喺操作選項設定。更改只套用於新轉換；已儲存任務保留原設定。此選項在獲准修復後生效。「首次有聲錄音」保留可用的原始錄音，不會自動改用通用或系統聲線。「原片對白原聲」以原聲作最後後備。「通用目標語言聲線」允許所選引擎最後試配一次，即使 AI 修復關閉亦適用。其他引擎及已安裝系統聲線另須開啟 AI 修復及各自選項。缺聲或無聲仍最多補配兩次；已開啟的時長限制仍然生效。所有獲准錄音均無法交付時，會保留原聲連續性，並列明缺失的目標語言配音。單憑未確認的覆聽結果，不會替換有聲錄音。 缺少參考而完全沒有錄音時，必要補配可使用所選引擎的一次通用聲線；不會取代已有聲音，也不會自動改用系統聲音。",
-        "zh-CN": "基本与专家模式均提供此选项，默认为“第一条有声录音”。此选项集中在制作设置；移动版基本模式也可在操作选项设置。更改只应用于新转换；已保存任务保留原设置。此选项在获准修复后生效。“首次有声录音”保留可用的原始生成，不会暗中改用通用或系统声音。“原片对白原声”以原声作最终后备。“通用目标语言声音”使用已选引擎最后试配一次，即使 AI 修复关闭也适用。其他引擎和已安装系统声音，还须开启 AI 修复及各自选项。缺声或无声仍最多补配两次；已开启的时长限制仍然生效。所有获准录音都无法交付时，保留原声连续性，并列明缺失的目标语配音。仅凭复听未确认不会替换有声录音。 缺少参考且完全没有录音时，必要补配可使用所选引擎的一次通用声线；不替换已有声音，也不自动改用系统声音。",
-        "ja": "基本・専門モードの両方で選べます。既定は最初の音声付きテイクです。この選択は制作設定にあります。モバイルの基本モードでは操作オプションからも設定できます。変更は新規変換に適用し、保存済みジョブは元の設定を保持します。許可された修復の後に適用します。「最初の音声付きテイク」は使用可能な初回生成を保持し、汎用音声やシステム音声を要求しません。「原音声」は最終的に原音声を使います。「対象言語の汎用音声」は、AI修復がオフでも選択したエンジンで最後に1回試します。別エンジンとインストール済みシステム音声には、AI修復と各項目の許可も必要です。欠損・無音の再生成は最大2回です。有効な長さ制限は引き続き適用します。使用可能なテイクがない場合は原音声で連続性を保ち、対象言語の欠落を報告します。確認できない認識結果だけでは音声を置き換えません。 参照不足で音声がない場合、共通回数内で選択中エンジンの汎用音声による補完を1回許可します。有声音声の置換やシステム音声への切替は行いません。"
+        "en": "Basic and Expert default to First audible take. This keeps a usable initial recording after permitted repair. Original source speech is the final continuity fallback. Generic target-language voice permits one bounded final trial in the selected AI engine, even with extra AI repair off. Alternate AI engines need their separate permission. Missing or silent audio keeps its existing fill limits. Strict duration still applies. Preserve source continuity and report missing target dubbing when no permitted take succeeds. Uncertain review alone cannot replace audible speech. On iPhone and iPad, no system-voice audio file or exported track is generated. Saved attempts do not reset.",
+        "zh-HK": "基本及專家模式預設使用「第一條有聲錄音」，在獲准修復後保留可用的首次錄音。原片對白原聲是維持連續性的最後後備。「通用目標語言聲線」允許所選 AI 引擎在既有預算內最後試配一次，即使額外 AI 修復關閉亦適用。另一 AI 引擎須有獨立許可。缺聲或靜音維持既有補配上限；時長限制仍然生效。所有獲准錄音均失敗時，保留原聲並列明缺失的目標配音。未確認的核對結果不能單獨替換有聲錄音。iPhone 及 iPad 不會生成系統語音音檔或匯出音軌，已使用次數不會重設。",
+        "zh-CN": "基本和专家模式默认使用“第一条有声录音”，在获准修复后保留可用的首次录音。原片对白是保持连续性的最终后备。“通用目标语言声音”允许所选 AI 引擎在原预算内最后试配一次，即使额外 AI 修复关闭也适用。另一 AI 引擎需独立许可。缺声或静音保持原有补录上限；时长限制仍生效。所有获准录音都失败时，保留原声并列明缺失目标配音。未确认的核对结果不能单独替换有声录音。iPhone 和 iPad 不生成系统语音音频或导出音轨，已用次数不重置。",
+        "ja": "基本・専門モードの既定は最初の音声付きテイクです。許可された修復後も利用可能な最初の録音を保持します。最後は原音で連続性を保ちます。汎用の目標言語音声は追加修復が無効でも、選択AIモデルで予算内の最終試行を1回許可します。別AIモデルには個別の許可が必要です。欠落・無音の補完上限と長さ制限は維持します。全て失敗した場合は原音と不足表示を残します。不確かな確認だけでは録音を置き換えません。iPhoneとiPadではシステム音声ファイルや出力音声を生成せず、使用回数をリセットしません。"
       }
     },
     {
@@ -434,10 +434,10 @@
         "ja": "購入と無料機能"
       },
       "body": {
-        "en": "Basic, Reading, unlimited Learning and all exports are free. One purchase unlocks Expert only. Locked Expert opens the upgrade introduction. Purchase and restoration do not require model downloads. After deletion and reinstall, use the purchasing App Store Apple Account. Purchase keeps its price and remains separate from Restore purchases. Prior owners can tap Purchase. If Apple has verified an existing purchase, the app shows Already purchased and asks you to use Restore purchases. This notice does not unlock Expert or start restoration. A new customer continues to the Apple purchase flow. Price loading and active transactions temporarily disable Purchase. Reloading a price never starts a purchase. Restore purchases synchronizes and verifies the existing purchase before activating this installation. Ordinary app updates keep verified activation.",
-        "zh-HK": "基本模式、朗讀、無限對話學習及所有匯出功能免費。一次性購買只解鎖專家模式；按有鎖頭的專家模式即可查看升級介紹。購買及恢復購買毋須先下載模型。刪除後重新安裝，請使用購買時的 App Store Apple Account。「購買」保留售價，並與「恢復購買」分開。曾購買的用戶仍可按「購買」；如果 Apple 已確認現有購買，應用程式會顯示「已購買專家模式」，並提示使用「恢復購買」。此提示不會解鎖專家模式或自動恢復購買。未購買的用戶則繼續 Apple 購買流程。載入價格或處理交易期間會暫時停用購買按鈕；重新載入價格不會觸發購買。「恢復購買」會同步及驗證既有購買，再啟用本次安裝。一般更新會保留已驗證的啟用狀態。",
-        "zh-CN": "基本模式、朗读、无限对话学习及所有导出功能免费。一次性购买只解锁专家模式；点击带锁的专家模式即可查看升级介绍。购买及恢复购买无须先下载模型。删除后重新安装，请使用购买时的 App Store Apple Account。“购买”保留售价，并与“恢复购买”分开。曾购买的用户仍可点击“购买”；如果 Apple 已确认现有购买，应用会显示“已购买专家模式”，并提示使用“恢复购买”。此提示不会解锁专家模式或自动恢复购买。未购买的用户则继续 Apple 购买流程。加载价格或处理交易期间会暂时停用购买按钮；重新加载价格不会触发购买。“恢复购买”会同步并验证已有购买，再启用本次安装。通常更新会保留已验证的启用状态。",
-        "ja": "基本、読み上げ、会話数無制限の学習、すべての書き出しは無料です。1回の購入でエキスパートのみ解除します。鍵付き項目から紹介を開けます。購入や復元の前にモデルを取得する必要はありません。削除後の再インストールでは購入時のApp StoreのApple Accountを使います。「購入」は価格を表示し、「購入を復元」と分けて配置します。購入済みでも「購入」を押せます。Appleが既存の購入を確認した場合、「購入済み」と表示し、「購入を復元」を使うよう案内します。この通知だけでは解除や復元を行いません。未購入の場合はAppleの購入処理に進みます。価格の読込中や取引中のみ購入ボタンを一時的に無効にします。価格の再読み込みだけで購入は始まりません。「購入を復元」は既存の購入を同期・検証してから、このインストールを有効にします。通常の更新では検証済みの有効化状態を維持します。"
+        "en": "Basic, Reading, unlimited Learning and all exports are free. One purchase unlocks Expert only. Locked Expert opens the upgrade introduction. Purchase and restoration do not require model downloads. After deletion and reinstall, use the purchasing App Store Apple Account. Purchase keeps its price and remains separate from Restore purchases. Prior owners can tap Purchase. If Apple has verified an existing purchase, the app shows Already purchased and asks you to use Restore purchases. This notice does not unlock Expert or start restoration. A new customer continues to the Apple purchase flow. Price loading and active transactions temporarily disable Purchase. Reloading a price never starts a purchase. Restore purchases synchronizes and verifies the existing purchase before activating this installation. Ordinary app updates keep verified activation. On Apple Intelligence class iPhone and iPad hardware, Studio entry uses measured memory and GPU capabilities. A missing model name does not block entry. Apple Intelligence need not be enabled. Model memory checks and Apple purchase verification remain separate. After Restore purchases, a dialog shows whether Expert access was restored, no eligible purchase was found, or the connection failed. Dismiss the dialog to return to the upgrade page. An account without a verified purchase stays locked.",
+        "zh-HK": "基本模式、朗讀、無限對話學習及所有匯出功能免費。一次性購買只解鎖專家模式；按有鎖頭的專家模式即可查看升級介紹。購買及恢復購買毋須先下載模型。刪除後重新安裝，請使用購買時的 App Store Apple Account。「購買」保留售價，並與「恢復購買」分開。曾購買的用戶仍可按「購買」；如果 Apple 已確認現有購買，應用程式會顯示「已購買專家模式」，並提示使用「恢復購買」。此提示不會解鎖專家模式或自動恢復購買。未購買的用戶則繼續 Apple 購買流程。載入價格或處理交易期間會暫時停用購買按鈕；重新載入價格不會觸發購買。「恢復購買」會同步及驗證既有購買，再啟用本次安裝。一般更新會保留已驗證的啟用狀態。 支援 Apple Intelligence 的 iPhone 及 iPad 會按實際記憶體與 GPU 能力判斷工作室資格；型號未列入清單不會阻止進入，亦毋須開啟 Apple Intelligence。模型記憶體檢查及 Apple 購買驗證仍然分開執行。 「恢復購買」完成後，彈窗會顯示已恢復、找不到符合資格的購買，或連線失敗。關閉彈窗後返回升級頁面；沒有已驗證購買的帳戶仍然上鎖。",
+        "zh-CN": "基本模式、朗读、无限对话学习及所有导出功能免费。一次性购买只解锁专家模式；点击带锁的专家模式即可查看升级介绍。购买及恢复购买无须先下载模型。删除后重新安装，请使用购买时的 App Store Apple Account。“购买”保留售价，并与“恢复购买”分开。曾购买的用户仍可点击“购买”；如果 Apple 已确认现有购买，应用会显示“已购买专家模式”，并提示使用“恢复购买”。此提示不会解锁专家模式或自动恢复购买。未购买的用户则继续 Apple 购买流程。加载价格或处理交易期间会暂时停用购买按钮；重新加载价格不会触发购买。“恢复购买”会同步并验证已有购买，再启用本次安装。通常更新会保留已验证的启用状态。 支持 Apple Intelligence 的 iPhone 和 iPad 按实际内存与 GPU 能力判断工作室资格；机型未列入列表不会阻止进入，也无需开启 Apple Intelligence。模型内存检查和 Apple 购买验证仍分开执行。 “恢复购买”完成后，弹窗会显示已恢复、找不到符合资格的购买，或连接失败。关闭弹窗后返回升级页面；没有已验证购买的账户仍然上锁。",
+        "ja": "基本、読み上げ、会話数無制限の学習、すべての書き出しは無料です。1回の購入でエキスパートのみ解除します。鍵付き項目から紹介を開けます。購入や復元の前にモデルを取得する必要はありません。削除後の再インストールでは購入時のApp StoreのApple Accountを使います。「購入」は価格を表示し、「購入を復元」と分けて配置します。購入済みでも「購入」を押せます。Appleが既存の購入を確認した場合、「購入済み」と表示し、「購入を復元」を使うよう案内します。この通知だけでは解除や復元を行いません。未購入の場合はAppleの購入処理に進みます。価格の読込中や取引中のみ購入ボタンを一時的に無効にします。価格の再読み込みだけで購入は始まりません。「購入を復元」は既存の購入を同期・検証してから、このインストールを有効にします。通常の更新では検証済みの有効化状態を維持します。 Apple Intelligence対応のiPhoneとiPadは、実際のメモリとGPU機能でスタジオの利用条件を確認します。機種名が一覧にないだけでは制限せず、Apple Intelligenceを有効にする必要もありません。モデルの空きメモリ確認とAppleの購入検証は別に行います。 「購入を復元」の後、復元完了、対象の購入なし、または接続失敗をダイアログで表示します。閉じるとアップグレード画面に戻ります。購入が検証されていないアカウントはロックを維持します。"
       }
     },
     {
@@ -449,10 +449,10 @@
         "ja": "翻訳ソースのフロー"
       },
       "body": {
-        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts. Automatic detection is the default. Speech / OCR requires an explicit choice. A continued job uses its saved source choice, never an unrelated current preference. For new mobile conversions, the app checks distinct subtitles near the movie midpoint. Opening lyrics and repeated subtitle layers do not decide the language. It asks only when the middle text is missing or mixed. An explicitly chosen subtitle edition keeps its language. Saved conversions keep their frozen source and spent attempts. This check uses existing text and adds no speech, OCR or translation request. In Automatic mode, a new unfrozen subtitle candidate with no valid timed lines uses speech-first processing. The original subtitle file stays unchanged. An explicit subtitle selection or a saved subtitle identity is not silently replaced. Storage and decoding failures remain visible. Resume keeps spent attempts. New mobile Automatic jobs can translate a caption gap only after a complete source unit, independent recognition and speech evidence agree. Explicit Subtitle first retains caption-only content. Unknown speech is preserved and reported.",
-        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。預設為自動偵測；「語音 / OCR」需要明確選擇。繼續工作使用該工作已保存的來源選擇，不會改用其他目前偏好。 流動版本的新轉換會檢查影片中段附近的字幕，並先去除重複字幕層，避免由片頭歌詞決定語言。中段文字不足或包含多種語言時才詢問。已明確選擇的字幕版本保留其語言；已保存轉換保留凍結來源及已花費次數。此檢查只讀取現有文字，不會增加語音辨識、OCR 或翻譯。 自動偵測模式下，新的字幕候選如沒有有效時間段，會改用語音優先；原字幕檔案保持不變。明確選取的字幕或已保存的字幕來源不會被自動更換。儲存及解碼錯誤仍會顯示；繼續工作時保留已用次數。 流動版新的自動偵測工作只有在完整來源語句、獨立辨識及語音證據一致時才翻譯字幕空檔。明確選擇字幕優先仍只使用字幕內容。未知語音保留原聲並列入報告。",
-        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。默认为自动检测；“语音 / OCR”需要明确选择。继续任务使用该任务已保存的来源选择，不会改用其他当前偏好。 移动版本的新转换会检查影片中段附近的字幕，并先去除重复字幕层，避免由片头歌词决定语言。中段文字不足或包含多种语言时才询问。已明确选择的字幕版本保留其语言；已保存转换保留冻结来源及已花费次数。此检查只读取现有文字，不会增加语音识别、OCR 或翻译。 自动检测模式下，新的字幕候选如没有有效时间段，会改用语音优先；原字幕文件保持不变。明确选择的字幕或已保存的字幕来源不会被自动更换。存储及解码错误仍会显示；继续任务时保留已用次数。 移动版新的自动检测任务只有在完整来源语句、独立识别及语音证据一致时才翻译字幕空档。明确选择字幕优先仍只使用字幕内容。未知语音保留原声并列入报告。",
-        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。初期設定は自動検出です。「音声 / OCR」は明示的に選びます。再開時は作業に保存したソースを使用し、現在の別設定には切り替えません。 モバイル版の新しい変換では、動画の中間付近の字幕を調べ、重複する字幕レイヤーを先に除きます。冒頭の歌詞だけでは言語を決めません。中間の文字が不足するか複数言語が混在する場合だけ確認します。明示的に選んだ字幕版の言語と保存済み変換のソース・使用済み回数は保持します。既存の文字を使い、音声認識・OCR・翻訳の追加処理は行いません。 自動検出では、時刻が有効でない新規の字幕候補は音声優先で処理します。元の字幕ファイルは変更しません。明示的な字幕選択や保存済みの字幕は自動で置き換えません。保存・デコードのエラーは表示し、再開時も使用済みの試行回数を保持します。 モバイルの新しい自動検出は、完全な発話、独立した認識、音声の証拠が一致した場合だけ字幕の空白を翻訳します。明示的な字幕優先は字幕だけを使います。未確認の発話は原音を保ち、報告します。"
+        "en": "Automatic detection uses Subtitle first when readable embedded or imported subtitles exist. Otherwise it uses Speech first without OCR. Subtitle first translates only the chosen subtitles. Original speech sets dubbing start and end times. Speech first translates the speech, then checks that draft against same-turn subtitles. Speech / OCR follows the same order but reads screen subtitles through OCR only. It ignores embedded tracks and imported files, even when they exist. Cantonese and Mandarin outputs select Chinese subtitles. English output selects English, then Chinese when English is unavailable. On desktop, Accept detected language also skips the subtitle confirmation. The app checks subtitle labels and a bounded sample of unlabelled text tracks. If no suitable subtitle language is found, it uses speech without OCR. Explicit confirmed subtitle choices remain. Turn the switch off to retain subtitle confirmation. Mobile adoption of this desktop switch is pending. Saved jobs keep their frozen source, recordings, and spent attempts. Automatic detection is the default. Speech / OCR requires an explicit choice. A continued job uses its saved source choice, never an unrelated current preference. For new mobile conversions, the app checks distinct subtitles near the movie midpoint. Opening lyrics and repeated subtitle layers do not decide the language. It asks only when the middle text is missing or mixed. An explicitly chosen subtitle edition keeps its language. Saved conversions keep their frozen source and spent attempts. This check uses existing text and adds no speech, OCR or translation request. In Automatic mode, a new unfrozen subtitle candidate with no valid timed lines uses speech-first processing. The original subtitle file stays unchanged. An explicit subtitle selection or a saved subtitle identity is not silently replaced. Storage and decoding failures remain visible. Resume keeps spent attempts. New mobile Automatic jobs can translate a caption gap only after a complete source unit, independent recognition and speech evidence agree. Explicit Subtitle first retains caption-only content. Unknown speech is preserved and reported. New mobile427 jobs also accept sustained quiet speech that dominates music and singing, with unchanged independent transcript agreement. Singing veto, complete source units and saved attempt limits remain. Older jobs keep their frozen gate.",
+        "zh-HK": "自動偵測有可讀取的內置或匯入字幕時使用「字幕優先」，否則使用「語音優先」，不會自動啟用 OCR。「字幕優先」只翻譯所選字幕，並以原聲定位配音開始及結束時間。「語音優先」先翻譯原聲，再以同句字幕校對配音稿。「語音 / OCR」次序相同，但只以 OCR 讀取畫面字幕，即使有內置或匯入字幕也不使用。廣東話及普通話輸出選擇中文字幕；英文輸出先選英文，沒有英文時使用中文。桌面版開啟「接納偵測語言」後，也會略過字幕確認。程式檢查字幕標籤，並限量讀取未標示語言的文字字幕。找不到合適字幕時會使用語音，不會自動啟用 OCR。已明確確認的字幕選擇保持不變。關閉開關後保留字幕確認。流動版本尚待採用此桌面開關。已保存工作保留凍結來源、錄音及已花費次數。預設為自動偵測；「語音 / OCR」需要明確選擇。繼續工作使用該工作已保存的來源選擇，不會改用其他目前偏好。 流動版本的新轉換會檢查影片中段附近的字幕，並先去除重複字幕層，避免由片頭歌詞決定語言。中段文字不足或包含多種語言時才詢問。已明確選擇的字幕版本保留其語言；已保存轉換保留凍結來源及已花費次數。此檢查只讀取現有文字，不會增加語音辨識、OCR 或翻譯。 自動偵測模式下，新的字幕候選如沒有有效時間段，會改用語音優先；原字幕檔案保持不變。明確選取的字幕或已保存的字幕來源不會被自動更換。儲存及解碼錯誤仍會顯示；繼續工作時保留已用次數。 流動版新的自動偵測工作只有在完整來源語句、獨立辨識及語音證據一致時才翻譯字幕空檔。明確選擇字幕優先仍只使用字幕內容。未知語音保留原聲並列入報告。 流動版427的新工作亦可接納持續高於音樂及歌唱的細聲語音，但仍須獨立辨識文字一致。歌唱否決、完整來源語句及已保存次數限制保持不變；舊工作保留凍結門檻。",
+        "zh-CN": "自动检测有可读取的内置或导入字幕时使用“字幕优先”，否则使用“语音优先”，不会自动启用 OCR。“字幕优先”只翻译所选字幕，并以原声定位配音开始及结束时间。“语音优先”先翻译原声，再以同句字幕校对配音稿。“语音 / OCR”顺序相同，但只以 OCR 读取画面字幕，即使有内置或导入字幕也不使用。粤语及普通话输出选择中文字幕；英语输出先选英语，没有英语时使用中文。桌面版开启“接受检测语言”后，也会跳过字幕确认。程序检查字幕标签，并限量读取未标示语言的文字字幕。找不到合适字幕时会使用语音，不会自动启用 OCR。已明确确认的字幕选择保持不变。关闭开关后保留字幕确认。移动版本尚待采用此桌面开关。已保存任务保留冻结来源、录音及已花费次数。默认为自动检测；“语音 / OCR”需要明确选择。继续任务使用该任务已保存的来源选择，不会改用其他当前偏好。 移动版本的新转换会检查影片中段附近的字幕，并先去除重复字幕层，避免由片头歌词决定语言。中段文字不足或包含多种语言时才询问。已明确选择的字幕版本保留其语言；已保存转换保留冻结来源及已花费次数。此检查只读取现有文字，不会增加语音识别、OCR 或翻译。 自动检测模式下，新的字幕候选如没有有效时间段，会改用语音优先；原字幕文件保持不变。明确选择的字幕或已保存的字幕来源不会被自动更换。存储及解码错误仍会显示；继续任务时保留已用次数。 移动版新的自动检测任务只有在完整来源语句、独立识别及语音证据一致时才翻译字幕空档。明确选择字幕优先仍只使用字幕内容。未知语音保留原声并列入报告。 移动版427的新任务亦可接受持续高于音乐及歌唱的低声语音，但仍须独立识别文字一致。歌唱否决、完整来源语句及已保存次数限制保持不变；旧任务保留冻结门槛。",
+        "ja": "自動検出は読める内蔵・取り込み字幕があれば「字幕優先」、なければ「音声優先」を使い、OCRを自動では有効にしません。「字幕優先」は選択した字幕だけを翻訳し、元の音声で吹き替えの開始・終了時刻を決めます。「音声優先」は音声を翻訳してから、同じ発話の字幕で原稿を校正します。「音声 / OCR」も同じ順序ですが、画面字幕をOCRだけで読み、内蔵・取り込み字幕は使いません。広東語・標準中国語出力は中国語字幕を選びます。英語出力は英語を優先し、なければ中国語を使います。デスクトップ版では「検出した言語を使う」をオンにすると字幕の確認も省略します。字幕ラベルと、言語未指定のテキスト字幕の一部を調べます。適切な字幕が見つからなければ、OCRを有効にせず音声を使います。明示的に確認した字幕の選択は維持します。オフでは字幕の確認を続けます。モバイル版への採用は未完了です。保存済みジョブのソース、録音、使用済み回数は維持します。初期設定は自動検出です。「音声 / OCR」は明示的に選びます。再開時は作業に保存したソースを使用し、現在の別設定には切り替えません。 モバイル版の新しい変換では、動画の中間付近の字幕を調べ、重複する字幕レイヤーを先に除きます。冒頭の歌詞だけでは言語を決めません。中間の文字が不足するか複数言語が混在する場合だけ確認します。明示的に選んだ字幕版の言語と保存済み変換のソース・使用済み回数は保持します。既存の文字を使い、音声認識・OCR・翻訳の追加処理は行いません。 自動検出では、時刻が有効でない新規の字幕候補は音声優先で処理します。元の字幕ファイルは変更しません。明示的な字幕選択や保存済みの字幕は自動で置き換えません。保存・デコードのエラーは表示し、再開時も使用済みの試行回数を保持します。 モバイルの新しい自動検出は、完全な発話、独立した認識、音声の証拠が一致した場合だけ字幕の空白を翻訳します。明示的な字幕優先は字幕だけを使います。未確認の発話は原音を保ち、報告します。 モバイル427の新規作業では、音楽と歌声を継続して上回る小さな発話も対象にできます。独立した文字認識の一致、歌声の除外、完全な発話単位、保存済みの試行上限は保持します。既存の作業の判定規則は変更しません。"
       }
     },
     {
@@ -494,10 +494,10 @@
         "ja": "校正レポートの分類"
       },
       "body": {
-        "zh-HK": "「待補配音」只列需要目標配音但錄音缺失、無聲或損壞的段落，包括非用戶選擇的原聲後備。可用的首條錄音、通用聲線及已修復錄音列為「已有配音」；未執行或未能確認的 AI 核對不算失敗。字句、語言、時長及來源疑點另列「建議覆核」。片頭／片尾、刻意保留的反應聲及用戶選擇原聲不算缺漏。讀取錄音時另顯示檢查狀態；有聲不代表字句或口音已驗收。歷史失敗不能取代目前錄音狀態。分類不會開始重錄、增加修復次數或改變已保存設定。",
-        "zh-CN": "“待补配音”仅列需要目标配音但录音缺失、无声或损坏的片段，包括非用户选择的原声后备。可用的首条录音、通用声线与已修复录音列为“已有配音”；未执行或未能确认的 AI 核对不算失败。字句、语言、时长及来源疑点另列“建议复核”。片头／片尾、刻意保留的反应声与用户选择原声不算缺漏。读取录音时另显示检查状态；有声不代表字句或口音已验收。历史失败不能取代当前录音状态。分类不会开始重录、增加修复次数或改变已保存设置。",
-        "en": "Needs dubbing lists required target lines with missing, silent or damaged selected audio, including unplanned source fallback. Usable first takes, generic voices and repaired recordings belong in Audio available. Absent or inconclusive optional checks are not failures. Wording, language, duration and source notes belong in Review suggested. Exclude protected performances and explicit source choices from missing counts. Show file checks separately. Audio presence does not certify content or accent. Historical failures do not override current recording evidence. Categories never start retakes, grant attempts or change frozen settings.",
-        "ja": "「吹替が必要」は、対象音声が必要なのに選択音声が欠落・無音・破損した行だけを示し、意図しない元音声へのフォールバックも含みます。利用できる最初の録音、汎用音声、修復済み録音は「音声あり」です。未実行・判定不能の任意検査は失敗ではありません。言葉、言語、長さ、ソースの疑問は「確認を推奨」に分けます。保護された演技や利用者が選んだ元音声は欠落に数えません。ファイル確認中は別表示し、有音だけで内容やアクセントを認証しません。過去の失敗は現在の録音証拠を上書きしません。分類は再録音、試行回数、保存設定を変更しません。"
+        "en": "Needs dubbing counts confirmed source lines with missing target audio. Source unconfirmed is separate. Confirmed non-dialogue and OP/ED are excluded. Usable recordings stay available despite old errors. Categories do not start a model, change saved content or restore spent attempts.",
+        "zh-HK": "「待補配音」只計已確認原文但缺少配音的段落；「待確認原聲」另列。已確認無對白及 OP/ED 不列入問題。可用錄音不因舊錯誤變成失敗。分類不會啟動模型、改寫已保存內容或重設已用次數。",
+        "zh-CN": "“待补配音”仅统计已确认原文但缺少配音的片段；“待确认原声”另列。已确认无对白与 OP/ED 不列入问题。可用录音不因旧错误变成失败。分类不会启动模型、改写已保存内容或重置已用次数。",
+        "ja": "吹替待ちは原文が確認済みで対象音声がない行だけです。原音未確認は別に表示します。確認済みの非会話音とOP/EDは問題に含めません。過去のエラーで利用できる録音を失敗にしません。分類でモデル処理や保存内容、試行回数は変更しません。"
       }
     },
     {
@@ -614,10 +614,10 @@
         "ja": "校正状況"
       },
       "body": {
-        "zh-HK": "優先處理缺少配音的段落。未完成 AI 核對不代表配音失敗。",
-        "zh-CN": "优先处理缺少配音的片段。未完成 AI 核对不代表配音失败。",
-        "en": "Prioritize missing dubbing. An absent optional check does not mean the recording failed.",
-        "ja": "不足している吹替を優先します。任意検査の未実施は録音の失敗ではありません。"
+        "en": "Needs dubbing counts confirmed source lines with missing target audio. Source unconfirmed is separate. Confirmed non-dialogue and OP/ED are excluded. Usable recordings stay available despite old errors. Categories do not start a model, change saved content or restore spent attempts.",
+        "zh-HK": "「待補配音」只計已確認原文但缺少配音的段落；「待確認原聲」另列。已確認無對白及 OP/ED 不列入問題。可用錄音不因舊錯誤變成失敗。分類不會啟動模型、改寫已保存內容或重設已用次數。",
+        "zh-CN": "“待补配音”仅统计已确认原文但缺少配音的片段；“待确认原声”另列。已确认无对白与 OP/ED 不列入问题。可用录音不因旧错误变成失败。分类不会启动模型、改写已保存内容或重置已用次数。",
+        "ja": "吹替待ちは原文が確認済みで対象音声がない行だけです。原音未確認は別に表示します。確認済みの非会話音とOP/EDは問題に含めません。過去のエラーで利用できる録音を失敗にしません。分類でモデル処理や保存内容、試行回数は変更しません。"
       }
     },
     {
@@ -802,6 +802,82 @@
         "zh-HK": "iPhone 及 iPad 的新工作在字幕、語音及 OCR 來源使用相同的廣東話口語初稿規則。名稱按有佐證的中文寫法或發音譯寫，保留原有身份。個別段落用完翻譯次數後，其餘有效段落會繼續處理；未完成位置保留原聲，並在成品及校對報告列明缺漏。較舊的保存工作會先詢問是否更改完成方式。繼續處理會保留已用次數及已完成錄音。",
         "zh-CN": "iPhone 及 iPad 的新工作在字幕、语音及 OCR 来源使用相同的广东话口语初稿规则。名称按有佐证的中文写法或发音译写，保留原有身份。个别段落用完翻译次数后，其余有效段落会继续处理；未完成位置保留原声，并在成品及校对报告列明缺漏。较旧的保存工作会先询问是否更改完成方式。继续处理会保留已用次数及已完成录音。",
         "ja": "iPhoneとiPadの新しい処理では、字幕・音声・OCRに同じ広東語口語原稿ルールを使います。名前は根拠のある中国語表記または発音に基づく表記で同一性を保ちます。行ごとの翻訳試行上限に達しても、ほかの有効な行を処理します。未完了の行は原音を保ち、出力と確認レポートで不足を明示します。古い保存済み処理では、この完了方針を変更する前に確認します。再開しても使用済み回数と録音を保持します。"
+      }
+    },
+    {
+      "id": "repairMissingDubbing429",
+      "title": {
+        "en": "Fill missing dubbing",
+        "zh-HK": "補齊未完成配音",
+        "zh-CN": "补齐未完成配音",
+        "ja": "未完了の吹き替えを補う"
+      },
+      "body": {
+        "en": "Start this action from a completed output. The app creates a separate bounded repair job for confirmed source lines without target audio. It reuses source text, clocks and separated audio. It keeps successful scripts, recordings, source attempts and the previous movie. Each new repair job owns its target attempts; pause and resume do not restore spent attempts. Unknown source needs review and is counted separately. This action does not perform new full-video recognition or guarantee that a model can translate every line.",
+        "zh-HK": "在已完成的成品選擇此功能，應用程式會建立獨立且有次數上限的修復工作，只處理已有可靠原文但缺少配音的段落。流程沿用原文、時間定位及分離音訊，保留成功譯稿、錄音、原聲嘗試紀錄及舊成品。每次新修復工作獨立記錄翻譯及配音次數；暫停後繼續不會重設已用次數。待確認原聲另行計算並須校對。此功能不會重新辨識整部影片，也不保證模型能翻譯每一句。",
+        "zh-CN": "在已完成的成品选择此功能，应用会建立独立且有次数上限的修复任务，只处理已有可靠原文但缺少配音的片段。流程沿用原文、时间定位与分离音频，保留成功译稿、录音、原声尝试记录与旧成品。每次新修复任务独立记录翻译与配音次数；暂停后继续不会重置已用次数。待确认原声单独计数并须校对。此功能不会重新识别整部视频，也不保证模型能翻译每一句。",
+        "ja": "完成した出力でこの操作を選ぶと、原文が確認済みで吹き替えがない行だけを処理する、回数制限付きの別ジョブを作成します。原文、時間情報、分離音声を再利用し、成功した訳文、録音、原音の試行記録、以前の動画を保持します。新しい修復ジョブごとに翻訳と音声生成の試行回数を保存します。一時停止と再開で使用済み回数は戻りません。未確認の原音は別に数え、確認が必要です。動画全体の再認識は行わず、すべての行の翻訳成功を保証するものではありません。"
+      },
+      "platforms": [
+        "ipad",
+        "iphone"
+      ]
+    },
+    {
+      "id": "preserveNameSound435",
+      "platforms": [
+        "desktop",
+        "ipad",
+        "iphone"
+      ],
+      "title": {
+        "en": "Keep original name pronunciation",
+        "zh-HK": "保留人名原音",
+        "zh-CN": "保留人名原音",
+        "ja": "人名の元の発音を保つ"
+      },
+      "body": {
+        "en": "Off by default. Basic always uses this default. Expert can enable it to request the original pronunciation of names in a speakable target script. With it off, use supported translated names or their literal target-language reading. Both settings dub name-only calls and complete dialogue. Neither setting skips names, selects another speaker or promises exact pronunciation. Saved jobs retain their frozen setting. This choice adds no model pass or retry.",
+        "zh-HK": "預設關閉，基本模式固定使用此預設。專家模式可開啟，要求按原名發音編寫可朗讀的目標語言配音稿；關閉時使用有來源依據的譯名或按字面配音。兩種設定均會處理純人名稱呼及完整對白，不會略過人名或更換角色聲線，亦不保證發音完全一致。已保存工作沿用原有設定；此選項不會增加模型處理或重試次數。",
+        "zh-CN": "默认关闭，基本模式固定使用此默认值。专家模式可开启，要求按原名发音编写可朗读的目标语言配音稿；关闭时使用有来源依据的译名或按字面配音。两种设置均处理纯人名称呼及完整对白，不会跳过人名或更换角色声线，也不保证发音完全一致。已保存任务沿用原有设置；此选项不增加模型处理或重试次数。",
+        "ja": "初期値はオフで、基本モードはこの値を使います。エキスパートではオンにして、人名の元の発音を出力言語で発音できる表記にするよう指定できます。オフでは根拠のある訳名または文字に沿った読みを使います。名前だけの呼びかけも台詞全体も吹き替えます。名前の省略や別話者への変更は行わず、完全な発音一致は保証しません。保存済みジョブの設定と試行回数は保持し、モデル処理を追加しません。"
+      }
+    },
+    {
+      "id": "reportUnknownSource436",
+      "platforms": [
+        "ipad",
+        "iphone"
+      ],
+      "title": {
+        "en": "Source unconfirmed",
+        "zh-HK": "待確認原聲",
+        "zh-CN": "待确认原声",
+        "ja": "原音未確認"
+      },
+      "body": {
+        "en": "Speech could not be confirmed in this source interval. The app keeps original audio. It is not a confirmed dubbing gap or proof of silence. Confirmed silence, non-dialogue sounds and OP/ED do not belong in Needs dubbing. A short name or call remains dialogue.",
+        "zh-HK": "此時段未能確認對白，暫時保留原聲；不代表已確認漏配音，也不代表無聲。已確認無對白、非語言聲音及 OP/ED 不列入待補配音；短人名及呼喊仍屬對白。",
+        "zh-CN": "此时段未能确认对白，暂时保留原声；不代表已确认漏配音，也不代表无声。已确认无对白、非语言声音与 OP/ED 不列入待补配音；短人名与呼喊仍属对白。",
+        "ja": "この区間の台詞は未確認のため原音を保持します。吹替の欠落や無音の確定ではありません。確認済みの非会話音やOP/EDは吹替待ちに含めません。短い名前や呼びかけは台詞です。"
+      }
+    },
+    {
+      "id": "reportSource",
+      "platforms": [
+        "desktop"
+      ],
+      "title": {
+        "en": "Source unconfirmed",
+        "zh-HK": "原聲待確認",
+        "zh-CN": "原声待确认",
+        "ja": "原音未確認"
+      },
+      "body": {
+        "en": "Recognition did not confirm these source words. This is separate from known missing target dubbing. Keep the original audio and inspect the source. A translated subtitle alone does not prove delivered speech.",
+        "zh-HK": "語音識別未能確認這些原聲字句，與已知缺少目標配音的情況分開顯示。保留原聲並檢查來源；翻譯字幕本身不代表已完成配音。",
+        "zh-CN": "语音识别未能确认这些原声字句，与已知缺少目标配音的情况分开显示。保留原声并检查来源；翻译字幕本身不代表已完成配音。",
+        "ja": "音声認識で原音の語句を確認できませんでした。既知の吹き替え欠落とは別に表示します。原音を保持して確認してください。翻訳字幕だけでは音声の完成を証明しません。"
       }
     }
   ],

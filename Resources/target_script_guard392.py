@@ -1,7 +1,14 @@
 """Normalize a source-witnessed name suffix without another model call."""
 import re
 
-REVISION = 'bounded-target-response-392'
+LEGACY_REVISION = 'bounded-target-response-392'
+REVISION = 'bounded-target-response-441'
+
+
+def short_loop(text):
+    if not isinstance(text, str):return False
+    compact = ''.join(c for c in text if c.isalnum())
+    return len(compact) >= 18 and bool(re.search(r'(.{2,16})\1{4,}', compact))
 
 
 def names(text, source, source_language, target_language):
@@ -13,7 +20,9 @@ def names(text, source, source_language, target_language):
 
 
 def normalize(cfg, cue, text, language):
-    if cfg.get('draftOutputGuardRevision') != REVISION:
+    revision = cfg.get('draftOutputGuardRevision')
+    if revision == REVISION and short_loop(text):return ''
+    if revision not in (REVISION, LEGACY_REVISION):
         return text
     from primary_source import content, authored
     # Chinese captions remain the primary text. Do not reinterpret them as Japanese.

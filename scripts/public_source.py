@@ -50,7 +50,7 @@ ACTIVITY_SOURCE_FILES=set(ACTIVITY_IMAGES)|{'studio/web/assets/assistant-activit
 def selected(relative):
     p=Path(relative)
     # Keep private native implementation tests and build tools outside desktop exports.
-    if p.parts[:1]==('tests',) and (p.name.startswith('test_mobile_') or p.name in {'test_caption_layers340.py','test_text_runtime_boundary345.py'}):return False
+    if p.parts[:1]==('tests',) and (p.name.startswith('test_mobile_') or p.name in {'test_caption_layers340.py','test_text_runtime_boundary345.py','test_demo_payload_retention.py'}):return False
     if p.parts[:1]==('scripts',) and (p.name.startswith('build_mobile_') or 'website' in p.stem):return False
     if p.parts[:1]==('scripts',) and re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I):return False
     if p.as_posix() in {'tests/test_mobile_model_defaults300.py','scripts/website-mobile-support-copy.json'}:return False
@@ -143,6 +143,8 @@ The internal shared authority remains the source. This public projection does no
             if 'desktopDubbing425' in document:
                 update=document['desktopDubbing425']
                 projected['desktopDubbing425']={key:update[key] for key in ('rule','platforms','sourceRevision','targetDraftRevision','cantoneseRevision','budgets','source','outputs','unchangedWorkflowRules')}
+            if 'desktopDialogue441' in document:
+                projected['desktopDialogue441']=document['desktopDialogue441']
             authority=Path(root)/'docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md'
             if authority.is_file():
                 projected['activeRequirements']=[dict(id=parts[1].strip(),requirement=parts[2].strip())

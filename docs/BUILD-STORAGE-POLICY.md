@@ -57,6 +57,23 @@ Normal retention stops when a work folder contains loose media or recordings.
 Such a folder needs an explicit review. A file extension alone does not prove that a recording is disposable.
 An unmatched model hash also requires review. Do not identify it as the current catalog version.
 
+## CoreDevice installation cache, 2026-11-12
+
+CoreDevice stores generated installation deltas outside the project and outside the installed AniCanto data folder.
+The path is `~/Library/Containers/com.apple.CoreDevice.CoreDeviceService/Data/Library/Caches/AppInstallationBinaryDeltas`.
+The project retention script does not cover this Apple-managed path.
+Repeated development and QA installations can retain older app copies under separate bundle identifiers.
+The November12inspection finds ten AniCanto cache folders. The screenshot reports194.62GB.
+Finder removal leaves zero items. This does not delete a device application's Documents or Application Support data.
+Check that no installation is active before a reviewed cache cleanup. Limit removal to the approved bundle identifiers.
+If macOS blocks direct cache access, use the approved Finder route. Do not weaken privacy permissions to run cleanup.
+Measure physical free space after removal. APFS clones and local snapshots can retain deleted file blocks.
+Do not report the directory size as physical recovered space.
+Samuel approves reclamation of thirteen named local snapshots. Time Machine thins eleven.
+The remaining two November10snapshots are mounted. APFS refuses deletion with error-69528.
+Do not interrupt backups, force unmounts or expand the approved snapshot list to hide that limit.
+The cleanup receipt is `mobile/Validation/conversion-audit427-2026-11-12.json`.
+
 ## Restoration
 
 Read the exact file URL and revision from the removal receipt.
@@ -76,3 +93,13 @@ Hard links, APFS clones and local backup snapshots can retain the same blocks.
 Measure volume availability after deletion and report the actual difference.
 Do not remove Time Machine snapshots as part of this procedure.
 Samuel must make a separate explicit decision about local backup restore points.
+
+## Matching-source archive placement
+
+On2026-11-13 the retention script removes the scratch welcome-aspect430 copy of the cleaned SDK source archive.
+The private recovery release still holds the exact archive. Its verified digest is unchanged.
+Restore it to .build/compliance/source-delivery430/anicanto-local-media-sdk-sources.tar.gz.
+The compliance parent is protected. Future builds refer to this protected path.
+Do not put the only local matching-source archive in an expiring build folder.
+Keep historical receipt paths as recorded; resolve the same source digest through the current material-delivery guide.
+See mobile/Validation/source-delivery-retention438-2026-11-13.json.

@@ -85,6 +85,7 @@ def translate(w,cfg,job,cues):
         return normal_translate(w,cfg,job,cues)
     from translation_source import remove_caption_evidence
     remove_caption_evidence(cfg,cues)
+    __import__('dialogue_policy441').prepare(cfg,cues)
     from dub_languages import selected
     languages=set(selected(cfg))
     modes=cfg.get('subtitleModes',[]) or [cfg.get('subtitleOutput','yue')]
@@ -108,7 +109,7 @@ def translate(w,cfg,job,cues):
             system+=AUDIO_PRIORITY_PROMPT
         for start in range(0,len(cues),4):
             # OCR is context; an unreadable caption cannot override Japanese.
-            indices=[i for i in range(start,min(start+4,len(cues))) if cues[i].get('enabled',True) and not cues[i].get('sourcePolicyBlocked') and not cues[i].get(field,'').strip()]
+            indices=[i for i in range(start,min(start+4,len(cues))) if cues[i].get('enabled',True) and not cues[i].get('sourcePolicyBlocked') and not cues[i].get('preserveOriginalSpeech') and not cues[i].get(field,'').strip()]
             if not indices:continue
             rows={str(i):dict(japanese=primary_content(cues[i]),subtitle=__import__('primary_source').caption(cues[i]),seconds=round(cues[i].get('speechEnd',cues[i]['end'])-cues[i].get('speechStart',cues[i]['start']),2)) for i in indices}
             from concise_dialogue import budget
@@ -130,6 +131,7 @@ def translate(w,cfg,job,cues):
                 result={};w.emit('高速模式記錄','翻譯未完成：'+str(error)[:300])
             for i in indices:
                 text=result.get(str(i))
+                __import__('target_draft').retain(w,cfg,job,cues[i],language,text)
                 text=__import__('target_script_guard392').normalize(cfg,cues[i],text,language)
                 cues[i][field]=(w.traditional_cantonese(cfg,text.strip()) if language=='yue' else text.strip()) if isinstance(text,str) and text.strip() else ''
                 if cues[i][field]:cues[i][field]=__import__('own_turn').guard(w,cfg,job,cues,i,language,cues[i][field],fresh=True)

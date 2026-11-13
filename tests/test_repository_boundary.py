@@ -15,7 +15,7 @@ class RepositoryBoundaryTests(unittest.TestCase):
 
     def test_public_tree_rejects_private_code_at_multiple_depths(self):
         for value in ['mobile/App.swift', 'Sources/mobile/App.swift', 'nested/App.xcodeproj/project.pbxproj',
-                      '.private-mobile-repository.json', 'Sources/StoreKitRuntime.swift', 'tests/test_mobile_fixture.py']:
+                      '.private-mobile-repository.json', 'Sources/StoreKitRuntime.swift', 'tests/test_mobile_fixture.py', 'tests/test_demo_payload_retention.py']:
             with self.subTest(value=value), self.assertRaises(ValueError):
                 validate_paths([value], 'public-desktop')
         validate_paths(['Sources/Main.swift', 'studio/backend.py', 'windows/desktop_state.py'], 'public-desktop')

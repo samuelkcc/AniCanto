@@ -104,6 +104,7 @@ def translate(w,cfg,job,cues):
     from dub_languages import selected
     from translation_source import remove_caption_evidence
     remove_caption_evidence(cfg,cues)
+    __import__('dialogue_policy441').prepare(cfg,cues)
     from terminology import apply as apply_terms
     apply_terms(cfg,cues)
     from caption_alignment import prepare as prepare_captions,batches as scene_batches,payload as scene_payload,record_batch
@@ -121,7 +122,7 @@ def translate(w,cfg,job,cues):
             mandarin_script(w,cfg,job,cues);continue
         field='english' if language=='en' else 'cantonese'
         for start,stop in scene_batches(cues):
-            pending=[i for i in range(start,stop) if cues[i].get('enabled',True) and not cues[i].get('sourcePolicyBlocked') and (not valid_target(cues[i].get(field,''),language,source_language) or language=='yue' and written_mandarin(cues[i].get(field,'')))]
+            pending=[i for i in range(start,stop) if cues[i].get('enabled',True) and not cues[i].get('sourcePolicyBlocked') and not cues[i].get('preserveOriginalSpeech') and (not valid_target(cues[i].get(field,''),language,source_language) or language=='yue' and written_mandarin(cues[i].get(field,'')))]
             fresh=set(pending)
             for attempt in range(2):
                 if not pending:break
@@ -216,6 +217,7 @@ def ensure_scripts(w,cfg,job,cues):
     from script_gap_recovery import evidence,recover
     from workflow_policy import reserve
     remove_caption_evidence(cfg,cues)
+    __import__('dialogue_policy441').prepare(cfg,cues)
     job=Path(job);job.mkdir(parents=True,exist_ok=True)
     cachefile=job/'normal-script-rescue.json'
     try:saved=json.loads(cachefile.read_text())
@@ -256,6 +258,7 @@ def ensure_scripts(w,cfg,job,cues):
                         reply=json.loads(w.ollama_chat(cfg['port'],cfg['model'],[dict(role='system',content=prompt),dict(role='user',content=json.dumps(repair_rows[str(i)],ensure_ascii=False))],structured=schema,think=False))
                         candidate=reply.get('text','') if isinstance(reply,dict) else ''
                         target_draft.retain(w,cfg,job,cue,language,candidate)
+                        candidate=__import__('target_script_guard392').normalize(cfg,cue,candidate,language)
                         if language=='yue' and valid_target(candidate,language,source_language):candidate=w.traditional_cantonese(cfg,candidate)
                         if valid_target(candidate,language,source_language) and not (language=='yue' and written_mandarin(candidate)):
                             text=candidate.strip();break
@@ -277,10 +280,14 @@ def ensure_scripts(w,cfg,job,cues):
         if language=='yue':
             rescue=[dict(c) for c in cues]
             for i,c in enumerate(rescue):
-                needs=c.get('enabled',True) and not valid_target(c.get('cantonese',''),'yue',source_language)
+                needs=c.get('enabled',True) and not c.get('sourcePolicyBlocked') and not c.get('captionPolicyExcluded') and not __import__('workflow_policy').original_allowed(cfg,c) and bool(primary_content(c).strip()) and not valid_target(c.get('cantonese',''),'yue',source_language)
                 c['enabled']=needs and reserve(job,'normal-caption-rescue',[REVISION,evidence(c)],1)
             recovered=recover(w,cfg,job,rescue) if any(c.get('enabled') for c in rescue) else []
             for i,c in enumerate(rescue):
+                raw=c.get('cantonese','')
+                if raw and not valid_target(cues[i].get('cantonese',''),'yue',source_language):
+                    __import__('target_draft').retain(w,cfg,job,cues[i],'yue',raw)
+                c['cantonese']=__import__('target_script_guard392').normalize(cfg,c,raw,'yue')
                 if valid_target(c.get('cantonese',''),'yue',source_language) and not valid_target(cues[i].get('cantonese',''),'yue',source_language):
                     original_enabled=cues[i].get('enabled',True);cues[i].update(c);cues[i]['enabled']=original_enabled
             added.extend(recovered)

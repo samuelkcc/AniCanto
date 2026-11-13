@@ -71,7 +71,8 @@ def project(root,report,review,row,evidence,contexts):
     choice=draft_choice or cue.get('editorDecisions',{}).get(language+':'+engine)
     preserved=index in excluded or (__import__('workflow_policy').original_allowed(cfg,cue) and not __import__('target_delivery').required_clock(cue)) or not cue.get('enabled',True) or bool(cue.get('opEdKind')) or bool(choice and choice.get('action')=='original')
     path=(choice or {}).get('audio') if choice and choice.get('action')=='recording' else timing.get('renderedAudio') or timing.get('audio') or delivery.get('retainedAudio')
-    health=evidence.inspect(path) if not preserved else dict(state='preserved')
+    unknown_source=__import__('dialogue_policy441').source_unconfirmed(cue)
+    health=evidence.inspect(path) if not preserved or unknown_source and path and not timing.get('originalFallback') and not timing.get('originalPreserved') else dict(state='preserved')
     expected=(choice.get('audioSHA256') or choice.get('recordingSHA256')) if choice and choice.get('action')=='recording' else timing.get('audioSHA256') or timing.get('recordingSHA256')
     if expected and health.get('sha256') and expected!=health['sha256']:health=dict(health,state='damaged',reason='Selected recording hash changed')
     available=health['state']=='available'
@@ -88,7 +89,8 @@ def project(root,report,review,row,evidence,contexts):
       issue=dict(issue,kind=others[-1].get('kind') or others[-1].get('reason') or 'verification-unresolved',evidence=others);items[key]=issue
      else:
       items.pop(key,None);issue=None
-    if preserved:group='reportPreserved';state='preserved'
+    if __import__('dialogue_policy441').source_unconfirmed(cue) and not available:group='reportSource';state='source-unconfirmed'
+    elif preserved and not (unknown_source and available):group='reportPreserved';state='preserved'
     elif health['state']=='checking' or active and not timing and not delivery:group='checking';state='checking'
     elif not available:group='reportMissing';state=health['state']
     else:
@@ -102,7 +104,7 @@ def project(root,report,review,row,evidence,contexts):
      if available and issue.get('kind')=='first-audible-take-retained':issue['reviewLevel']='available'
     record=dict(index=index,engine=engine,language=language,captionOnly=bool(cue.get('captionOnly')),captionCovered=bool(cue.get('captionCovered')),captionCoverageOwners=cue.get('captionCoverageOwners',[]),preservationReason=cue.get('originalSpeechReason'),reportGroup=group,deliveryState=state,recordingAvailable=available,recordingSHA256=health.get('sha256'),selectedAudio=str(path) if path and available else None,processingState=row.get('status','unknown'),verificationState='inconclusive' if issue else 'not-run',hasReviewNote=group=='reportAdvisory',repaired=bool(fixed and available),userChoice=bool(choice),pendingExport=bool(draft_choice),qualityCertified=False)
     rows.append(record)
- counts={k:sum(x['reportGroup']==k for x in rows) for k in ['reportMissing','reportAdvisory','reportAvailable','reportPreserved','checking']}
+ counts={k:sum(x['reportGroup']==k for x in rows) for k in ['reportMissing','reportAdvisory','reportAvailable','reportPreserved','reportSource','checking']}
  report.update(issues=list(items.values()),resolvedIssues=list(resolved.values()),reportRows=rows,reportHistory=history,reportClassificationRevision=REVISION)
- report['reviewState'].update(reportCounts=counts,pending=counts['reportMissing'],needsDubbing=counts['reportMissing'],repairEligible=sum(x.get('reportGroup')=='reportMissing' and bool(x.get('repairEligible')) for x in items.values()),advisory=counts['reportAdvisory'],available=counts['reportAvailable'],checking=counts['checking'],userChoices=sum(x['userChoice'] for x in rows),repaired=sum(x['repaired'] for x in rows),qualityCertified=False)
+ report['reviewState'].update(reportCounts=counts,sourceUnconfirmed=counts['reportSource'],pending=counts['reportMissing'],needsDubbing=counts['reportMissing'],repairEligible=sum(x.get('reportGroup')=='reportMissing' and bool(x.get('repairEligible')) for x in items.values()),advisory=counts['reportAdvisory'],available=counts['reportAvailable'],checking=counts['checking'],userChoices=sum(x['userChoice'] for x in rows),repaired=sum(x['repaired'] for x in rows),qualityCertified=False)
  evidence.flush();return report

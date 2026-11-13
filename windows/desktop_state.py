@@ -30,7 +30,7 @@ def defaults(language='en'):
         subtitleModes=['yue','english','dual','original'] if language=='en' else ['yue','original'],subtitleSelection='automatic',
         subtitleSource='embedded',batchAutoSubtitles=True,sourceWorkflow='auto',defaultSubtitleWorkflow='subtitles-speech',defaultOCRWorkflow='speech-ocr',workMode='performance',workModeRevision=__import__('work_modes').REVISION,fullAIReview=False,productionMode='fast',normalRepairPolicy='missing-only',independentAsrBackend='auto',speechAcceleration='auto',
         translationSource=COMBINED,roleAnalysisMode='independent',visualRoleAnalysisEnabled=False,translate=True,autoApprove=True,autoSpeakers=True,
-        autoApproveSourceLanguage=True,
+        autoApproveSourceLanguage=True,keepOriginalNamePronunciation=False,
         speechTiming=True,speechRatePolicy='natural',autoFit=True,aiAutoFix=False,continueOnError=True,
         speechDurationRevision=__import__('speech_duration').REVISION,limitSpeechDuration=False,
         repairExcessiveAudibleOverlap=False,contentChecks=0,skipNonDialogueCaptions=False,translationTextReview=False,safeEndpointCheck=False,analyzeBackgroundGaps=False,
@@ -130,6 +130,7 @@ class Store:
         settings['voiceReferenceIdentityRevision']=__import__('independent_voices').IDENTITY_REVISION379
         settings['draftOutputGuardRevision']=__import__('target_script_guard392').REVISION
         settings['targetDraftRevision']=__import__('target_draft').REVISION
+        __import__('dialogue_policy441').configure(settings,basic=self.mode=='basic')
         settings['targetDeliveryRevision']=__import__('target_delivery').REVISION
         settings['sourceClockRecoveryRevision']=__import__('source_clock_recovery').REVISION
         settings['captionContinuationRevision']='caption-owner-no-duplicate-263'

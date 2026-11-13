@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-11-08",
+  "updated": "2026-11-13",
   "publicProjection": true,
   "platforms": [
     "macOS",
@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-209-desktop-dubbing-update",
+    "revision": "application-user-guide-232-desktop-dialogue-alignment",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "e1c837539e436d698b34cb946143b0c160d1efc7a1ffc8fda1c1b6e2d0c5246d",
-    "controlGuideRevision": "workflow-controls-guide-76-desktop-dubbing-update",
-    "controlGuideSHA256": "6dd32d5528186b05a7c5f37ae940f397e0834078664a5a9738bb61d639ed2e89"
+    "sha256": "77321bd8b14ec6c1ea9332f570e013d474c6126873a270789811a01744b769e6",
+    "controlGuideRevision": "workflow-controls-guide-84-desktop-dialogue-alignment",
+    "controlGuideSHA256": "a9552e0a214a1ee6e0429c00783b1cf8fa443da70dc48b8ed5067e6a0254beed"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",
@@ -118,6 +118,36 @@
       "WF-16",
       "WF-17"
     ]
+  },
+  "desktopDialogue441": {
+    "rule": "Share source-only exclusions, name instructions, target rejection and bounded resume with mobile.",
+    "platforms": [
+      "macOS",
+      "Windows"
+    ],
+    "revision": "names-and-sustained-source-441",
+    "targetGuard": "bounded-target-response-441",
+    "nameControl": "preserveNameSound435",
+    "basic": false,
+    "expertDefault": false,
+    "budgets": "Keep existing source and target reservations. Do not reset on resume.",
+    "systemTextFallback": "Desktop has no installed Apple Translation adapter. Keep the existing local-model final fallback; do not download a provider or add a reservation.",
+    "scope": "New full requests and explicit language-track children. Report and display do not mutate old jobs.",
+    "sourceStatus": "Unconfirmed source is separate from known missing target dubbing. Authored content and existing target text remain eligible.",
+    "unchangedWorkflowRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ],
+    "sourceImplemented": true,
+    "tests": ".build/desktop441/focused-tests-final.log",
+    "packaged": true,
+    "installed": true,
+    "published": false,
+    "wholeFilmAccepted": false
   },
   "activeRequirements": [
     {

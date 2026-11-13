@@ -1,8 +1,8 @@
 [English](README.md) · **繁體中文** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-## 0.25.51 Beta：配音流程更新
+## 0.25.52 Beta：配音流程更新
 
-更改配音語言會由保存的原文重新翻譯，重用原聲分析及已驗證的聲線參考，保留其他音軌及舊成品。翻譯重試會參考上次稿件，繼續工作不會重設已用次數；香港廣東話口語例表亦已更新。
+專家模式可選擇保留人名原音；原聲待確認與待補配音分開顯示。系統會在原有重試限制內拒絕短句重複的翻譯結果，保留已保存工作及已用次數。
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -19,12 +19,12 @@
 
 ## 下載
 
-**[Mac 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto-macOS-0.25.51.zip)** · **[Windows 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto.exe)**
+**[Mac 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-macOS-0.25.52.zip)** · **[Windows 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.51-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/available-source-materials.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-0.25.52-source-materials-reviewed.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 近期更新 · 0.25.51／400
+## 近期更新 · 0.25.52／400
 
 - 影片清單清空後，仍可查看已儲存工作及分離音軌。
 - 明確勾選後，才清除舊錄音、進度及中間影片。

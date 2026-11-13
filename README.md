@@ -1,8 +1,8 @@
 **English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-## 0.25.51 Beta — dubbing workflow
+## 0.25.52 Beta — dubbing workflow
 
-A new dubbing language now translates the retained original text again. Source analysis and verified voice references are reused. Other audio tracks and earlier outputs are kept. Target retries retain their previous draft and spent attempts. Hong Kong Cantonese first-draft examples are updated.
+Name pronunciation is optional in Expert. Source uncertainty stays separate from missing target dubbing. Short repeated target responses are rejected within existing retry limits. Saved jobs and their spent attempts remain intact.
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -19,12 +19,12 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto-macOS-0.25.51.zip)** · **[Windows 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto.exe)**
+**[Mac 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-macOS-0.25.52.zip)** · **[Windows 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.51-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-0.25.52-source-materials-reviewed.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.51 / build 400
+## Recent update · 0.25.52 / build 441
 
 - Show saved desktop work and separated audio even when the video list is empty.
 - Clear old recordings, saved progress and intermediate movies only after an explicit selection.
