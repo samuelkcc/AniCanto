@@ -72,14 +72,22 @@ def analyze(cfg,job,cues,run,emit):
     cache=job/'asr-verification.json'
     identity=[(c['start'],c['end'],c.get('enabled',True)) for c in cues]
     saved=json.loads(cache.read_text()) if cache.exists() else {}
+    gap_source=None
+    if __import__('caption_gap445').enabled(cfg):
+        with (job/'japanese-original.wav').open('rb') as stream:gap_source=__import__('hashlib').file_digest(stream,'sha256').hexdigest()
     from model_catalog import selected
     variant=cfg.get('asrModel') or selected(cfg['storage'],'asr')
-    if saved.get('identity')!=[list(x) for x in identity] or saved.get('model')!=variant:
-        model_job(cfg,'asr',dict(storage=cfg['storage'],job=str(job),audio=str(job/'japanese-original.wav'),cues=cues),emit)
+    if saved.get('identity')!=[list(x) for x in identity] or saved.get('model')!=variant or gap_source and (saved.get('sourceAudioSHA256')!=gap_source or saved.get('sourceLanguage')!=cfg.get('sourceLanguage','ja')):
+        model_job(cfg,'asr',dict(storage=cfg['storage'],job=str(job),audio=str(job/'japanese-original.wav'),cues=cues,**(dict(sourceLanguage=cfg.get('sourceLanguage','ja')) if cfg.get('captionGapPolicyRevision') else {})),emit)
         saved=json.loads(cache.read_text())
+        if gap_source:
+            with (job/'japanese-original.wav').open('rb') as stream:after=__import__('hashlib').file_digest(stream,'sha256').hexdigest()
+            if after!=gap_source:raise ValueError('Owned source audio changed during independent recognition')
+            saved['sourceAudioSHA256']=gap_source;saved['sourceLanguage']=cfg.get('sourceLanguage','ja');atomic_json(cache,saved)
     for cue,row in zip(cues,saved['rows']):
         cue['japaneseAlt']=row['text']
         cue['asrAgreement']=row['agreement']
+        __import__('caption_gap445').independent(cfg,job,cue,row,variant)
         if any(t in cue.get('japanese','') for t in ('ご視','チャンネル登録')) and row['text'] and not any(t in row['text'] for t in ('ご視','チャンネル登録','ありがとう')):
             cue['japaneseOriginal']=cue['japanese']
             cue['japanese']=cue['text']=row['text']
@@ -107,7 +115,7 @@ def verify(request):
         if not c.get('enabled',True) or len(clip)<sr*.3:text=''
         else:
             with contextlib.redirect_stdout(sys.stderr):
-                result=model.generate(audio_array(clip),language='Japanese',max_tokens=min(256,max(32,round(len(clip)/sr*24))),verbose=False)
+                result=model.generate(audio_array(clip),language={'ja':'Japanese','en':'English','zh':'Chinese','yue':'Cantonese'}.get(request.get('sourceLanguage','ja'),'Japanese'),max_tokens=min(256,max(32,round(len(clip)/sr*24))),verbose=False)
             text=result.text.strip()
             if len(text)>len(clip)/sr*25+10 or re.search(r'(.{2,8})\1{3,}',text):text=''
         agreement=SequenceMatcher(None,normalized(c.get('japanese',c.get('text',''))),normalized(text)).ratio() if text else 0

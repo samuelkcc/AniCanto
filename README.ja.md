@@ -1,6 +1,6 @@
 [English](README.md) · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · **日本語**
 
-## 0.25.52 Beta：吹き替え処理の更新
+## 0.25.54 Beta：吹き替え処理の更新
 
 エキスパートで人名の元の発音を指定できます。原音未確認と吹き替え欠落を分け、短い繰り返しの翻訳を既存の再試行回数内で拒否します。保存済みジョブと使用済み回数は保持します。
 
@@ -19,20 +19,17 @@
 
 ## ダウンロード
 
-**[Mac 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-macOS-0.25.52.zip)** · **[Windows 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto.exe)**
+**[Mac 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-macOS-0.25.54.zip)** · **[Windows 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-0.25.52-source-materials-reviewed.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.54-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-0.25.54-source-materials-reviewed.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 最近の更新 · 0.25.52 / build 441
+## 最近の更新 · 0.25.54 / build 446
 
-- 動画一覧が空でも、保存した作業と分離音声を確認できます。
-- 明示的に選択した場合だけ、古い録音、進捗と中間動画を削除します。
-- 元動画、登録済み出力とインストール済みモデルは保持します。
-- 整理画面からストレージ全体を確認でき、削除の進捗は途中でゼロに戻りません。
-- 4言語の整理ガイドと開発ファイルの保持規則を更新しました。
-
-既存の画面画像を継続使用します。Windows実機の操作は別途確認が必要です。
+- 変換中の動画選択を固定し、一時停止と保存の完了後に切り替えます。
+- 声の参照音声を、そのセリフの時間範囲内に限定します。
+- 字幕の空白区間の分類と、書き出し時の任意音声キャッシュ処理を改善しました。
+- 保存済み録音、原音の時間軸、使用済みの修復回数を保持します。
 
 ## AniCanto を作った理由
 

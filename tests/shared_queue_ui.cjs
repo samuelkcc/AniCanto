@@ -25,7 +25,7 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
     if(name==='studio_appearance')return null;
     if(name==='studio_ack_finished'){f.acks=(f.acks||0)+1;return true;}
     if(name==='studio_pick')return ['/fixtures/episode-c.mkv'];
-    if(name==='studio_pause'){f.pauses=(f.pauses||0)+1;setTimeout(()=>f.finish({paused:true}),0);return;}
+    if(name==='studio_pause'){f.pauses=(f.pauses||0)+1;setTimeout(()=>f.finish({paused:true}),options.pauseDelay||0);return;}
     if(name==='studio_media'){f.media++;throw Error('Preview must stay off');}
     if(name==='studio_start'){
      if(args.op!=='start')throw Error('Unexpected task '+args.op);
@@ -66,13 +66,44 @@ const out=path.resolve('.build/shared-queue-qa');fs.mkdirSync(out,{recursive:tru
     throw Error('Unexpected fixture IPC '+name+' '+args.op);
    }},event:{listen:async(name,fn)=>{f.listeners.set(name,fn);return ()=>f.listeners.delete(name)}},window:{getCurrentWindow:()=>({close:async()=>{f.closed=true}})}};
   },options);
-  await page.goto(process.env.ANICANTO_QA_URL||'http://127.0.0.1:18732');await page.waitForSelector('#welcome-language');if(!options.stayWelcome){await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');}
+  await page.goto(process.env.ANICANTO_QA_URL||'http://127.0.0.1:18732');try{await page.waitForSelector('#welcome-language');}catch(error){await page.screenshot({path:path.join(out,'fixture-start-failure.png')});fs.writeFileSync(path.join(out,'fixture-start-failure.json'),JSON.stringify({options,errors,html:await page.locator('body').innerText()},null,2));throw error;}if(!options.stayWelcome){await page.locator('[data-action=enter]').click();await page.waitForSelector('#video');}
   async function count(n){await page.waitForFunction(n=>window.queueFixture.starts.length===n,n);await page.waitForFunction(()=>!document.querySelector('[data-action=start]')?.textContent.includes('Starting'));const pause=page.locator('button[data-action=pause]').first();if(await pause.count()){const color=await pause.evaluate(e=>getComputedStyle(e).backgroundColor);assert(['rgb(189, 48, 61)','rgb(159, 35, 48)'].includes(color),'Pause & save must be red on the shared Mac/Windows UI: '+color);}}
   async function finish(opts){await page.evaluate(opts=>window.queueFixture.finish(opts),opts);}
   async function end(name){assert.deepEqual(errors,[],name);if(!options.sourceLanguage)assert.equal(await page.evaluate(()=>window.queueFixture.drawers),0,'Automatic Japanese detection flashed a drawer');assert.equal(await page.evaluate(()=>window.queueFixture.media),0,'Preview decoder was started');console.log('PASS '+name);results.push({name,starts:await page.evaluate(()=>window.queueFixture.starts),errors});await page.close();}
   return {page,count,finish,end};
  }
 
+ if(process.env.ANICANTO_SELECTION_LOCK_ONLY){
+  for(const mode of ['basic','expert']){
+   const {page,count,finish,end}=await fixture({mode,pauseDelay:180});
+   await page.locator('[data-action=start]').first().click();await count(1);
+   const other=page.locator('[data-action=select][data-value=b]');
+   assert.equal(await other.getAttribute('aria-disabled'),'true');
+   assert.equal(await other.getAttribute('tabindex'),'-1');
+   // A forced stale click still reaches the real handler and must be ignored.
+   await other.evaluate(el=>el.click());
+   await other.evaluate(el=>el.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
+   assert.equal(await page.evaluate(()=>window.queueFixture.state.selected),'a');
+   assert.equal(await page.locator('[data-queue-id=a]').first().getAttribute('aria-current'),'true');
+   await page.locator('[data-action=pause]').first().click();
+   await other.evaluate(el=>el.click());
+   assert.equal(await page.evaluate(()=>window.queueFixture.state.selected),'a','Wait for saved pause completion');
+   await page.waitForFunction(()=>window.queueFixture.state.queue[0].status==='paused');
+   await page.waitForFunction(()=>document.querySelector('[data-action=select][data-value=b]')?.getAttribute('aria-disabled')==='false');
+   await other.click();
+   await page.waitForFunction(()=>window.queueFixture.state.selected==='b');
+   await end('Active video stays selected until Pause & save completes: '+mode);
+  }
+  const {page,count,finish,end}=await fixture();
+  await page.locator('[data-action=start]').click();await count(1);await finish();await count(2);
+  assert.equal(await page.evaluate(()=>window.queueFixture.state.selected),'b');
+  assert.equal(await page.locator('[data-action=select][data-value=a]').getAttribute('aria-disabled'),'true');
+  await finish();await page.waitForFunction(()=>document.querySelector('[data-action=select][data-value=a]')?.getAttribute('aria-disabled')==='false');
+  await page.locator('[data-action=select][data-value=a]').click();
+  await page.waitForFunction(()=>window.queueFixture.state.selected==='a');
+  await end('Automatic queue advances ownership and unlocks after completion');
+  await browser.close();fs.writeFileSync(path.join(out,'selection-lock-acceptance.json'),JSON.stringify({fixtureOnly:true,results},null,2));return;
+ }
  if(process.env.ANICANTO_NATIVE_QUEUE_ONLY){
   const {page,count,finish,end}=await fixture({nativeOwned:true,rows:[['a','waiting'],['b','waiting']]});
   await page.locator('[data-action=start]').first().click();await count(1);await finish();

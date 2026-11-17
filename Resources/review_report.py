@@ -48,13 +48,15 @@ def project(root,review,row):
         target=resolved if status=='repaired' else items
         item=target.setdefault(key,dict(id=hashlib.sha256(key.encode()).hexdigest()[:20],index=index,engine=e,language=lang,start=value.get('start',cue.get('start')),end=value.get('end',cue.get('end')),kind=value.get('kind') or value.get('reason') or 'verification-unresolved',status=status,evidence=[],attempts=[]))
         item['evidence'].append(dict(file=origin,**value));item['text']=cue.get(__import__('output_language').field(lang),'')
+        if value.get('kind')=='caption-gap-source-unconfirmed':item['message']=__import__('caption_gap445').MESSAGE
         if value.get('kind') in ('timing-overrun','targeted-language-or-integrity','reference-blocked','missing-script','name-term-mismatch'):item['kind']=value['kind']
         if status=='repairing':item['status']='repairing'
     for index,cue in enumerate(cues,1):
         if cue.get('sourcePrimaryFallback'):
             insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-primary-fallback',message='The selected primary source had no readable content here. The auxiliary source supplied this line; compare the recording and source text.'),origin='source-policy.json')
         if cue.get('sourcePolicyBlocked') or cue.get('sourceAllocationReview'):
-            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='subtitle-allocation-unconfirmed',message='Source subtitles were read. The split between spoken turns needs review; inspect the source caption and recording before regenerating.'),origin='source-policy.json')
+            gap_issue=__import__('caption_gap445').display_issue(cue)
+            insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='caption-gap-source-unconfirmed' if gap_issue else 'subtitle-allocation-unconfirmed',message=gap_issue or 'Source subtitles were read. The split between spoken turns needs review; inspect the source caption and recording before regenerating.'),origin='source-policy.json')
         if cue.get('sourceClockUnconfirmed') or 0<cue.get('end',0)-cue.get('start',0)<.12:
             insert(dict(index=index,language=(cfg.get('dubLanguages') or [cfg.get('targetLanguage','yue')])[0],kind='source-clock-unconfirmed',message='Source word timing could not be confirmed. Compare the original audio; preservation and current delivery are shown separately.'),origin='source-timing-review.json')
     # Explicit current-track records avoid merging every obsolete render hash.

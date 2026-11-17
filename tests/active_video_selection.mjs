@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {selectionOwner,selectionLocked,selectionLockCopy} from '../studio/web/active-video-selection.js';
+const state={selected:'a',queue:[{id:'a',status:'waiting'},{id:'b',status:'running'}]};
+assert.equal(selectionOwner(state,null),'b');
+assert(selectionLocked(state,null));
+assert.equal(selectionOwner(state,{rowID:'c'}),'c');
+assert(selectionLocked({queue:[]},null,true));
+assert(!selectionLocked({queue:[{id:'a',status:'paused'}]},null));
+assert(!selectionLocked({queue:[]},{setup:true}));
+for(const language of ['en','zh-HK','zh-CN','ja']) assert(selectionLockCopy(language).length>10);
+console.log('Active-video selection: worker ownership, queue ownership, pending save, paused state and four languages pass.');

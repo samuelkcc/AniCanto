@@ -16,6 +16,7 @@ SCORE_LABELS=LABELS+('music','singing','choir_singing','speech','rapping')
 # Keep the validated model context; raw probabilities are not cross-model calibrated.
 # The one-second AST trial reduced event confidence on public evaluation clips.
 CLASSIFICATION_REVISION='performance-taxonomy-6-paired-tails'
+GAP_CLASSIFICATION_REVISION='performance-taxonomy-7-gap-evidence-445'
 
 
 def classification_profile(platform=None):
@@ -40,7 +41,8 @@ def classification(cfg,job,run):
     source=Path(cfg['dialoguePath'])
     with source.open('rb') as stream:digest=hashlib.file_digest(stream,'sha256').hexdigest()
     profile=classification_profile()
-    identity=[CLASSIFICATION_REVISION,digest,profile]
+    revision=GAP_CLASSIFICATION_REVISION if cfg.get('captionGapPolicyRevision') else CLASSIFICATION_REVISION
+    identity=[revision,digest,profile]
     key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()
     local=Path(job)/'nonverbal-classification-v3.json'
     shared=Path(cfg['storage'])/'cache/nonverbal'/(key+'.json') if cfg.get('storage') else local
@@ -55,7 +57,7 @@ def classification(cfg,job,run):
     if not isinstance(rows,list):raise ValueError('Invalid nonverbal classification result')
     validate_classification(rows)
     from atomic_files import write_json
-    saved=dict(key=key,revision=CLASSIFICATION_REVISION,**profile,rows=rows)
+    saved=dict(key=key,revision=revision,**profile,rows=rows)
     write_json(shared,saved)
     if shared!=local:write_json(local,saved)
     return rows

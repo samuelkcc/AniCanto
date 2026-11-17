@@ -103,3 +103,12 @@ The compliance parent is protected. Future builds refer to this protected path.
 Do not put the only local matching-source archive in an expiring build folder.
 Keep historical receipt paths as recorded; resolve the same source digest through the current material-delivery guide.
 See mobile/Validation/source-delivery-retention438-2026-11-13.json.
+
+## Required source-delivery archives, 2026-11-17
+
+Keep explicitly named corresponding-source, source-delivery and source-offer archives outside the generated-build budget.
+Also protect anicanto-local-media-sdk-sources archives. These are required matching-source materials.
+The rule applies to .tar.gz, .tar.xz and .zip files. Keep these archives under compliance where possible.
+Generic available-source-materials release snapshots retain the existing five-release budget. They are not a matching-source obligation marker.
+The first guard also exempted generic release snapshots. A regression test exposed that overbroad classification.
+The final guard preserves explicit delivery materials and retains the existing release-snapshot budget.

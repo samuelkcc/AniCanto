@@ -115,6 +115,9 @@ class Studio:
     def state(self):
         from use_terms import accepted
         from output_delivery import presentation
+        running=next((r for r in self.store.queue if r.get('status')=='running'),None)
+        if running and self.store.selected!=running['id']:
+            self.store.selected=running['id'];self.store.save()
         selected=next((r for r in self.store.queue if r['id']==self.store.selected),None)
         return dict(schemaVersion=1,language=self.store.language,mode=self.store.mode,settings=self.store.settings,productionSettings=self.store.settings_for(selected),
             queue=[presentation(self.root,r,self.store.settings.get('exportFolder','')) for r in self.store.queue],selected=self.store.selected,ui=self.store.ui,storage=str(self.root),platform=self.platform,useTermsAccepted=accepted(self.root))
@@ -470,7 +473,11 @@ class Studio:
                 row.pop('externalSubtitle',None)
                 if row.get('conversionSubtitleChoice')=='external':row['conversionSubtitleChoice']='auto'
             self.store.save();return self.state()
-        if op=='select':self.row(p['id']);self.store.selected=p['id'];self.store.save();return self.state()
+        if op=='select':
+            self.row(p['id'])
+            if any(r.get('status')=='running' and r['id']!=p['id'] for r in self.store.queue):
+                raise ValueError('Pause and save before switching videos.')
+            self.store.selected=p['id'];self.store.save();return self.state()
         if op in ('reset-video-plan','reset-video'):
             from project_reset import preview,reset
             row=self.row(p.get('id'))

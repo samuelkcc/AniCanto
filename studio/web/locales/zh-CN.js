@@ -1,6 +1,7 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Pause and save before switching videos.":"请先暂停并保存，然后切换视频。",
 "Selected location unavailable. Debug report saved to:": "所选位置无法保存，调试记录已保存至：",
 // Review: the recorded voice reference behind each saved recording.
 "Used a different separated voice than the first recording of this line.": "采用了与本句首次录音不同的分离语音。",

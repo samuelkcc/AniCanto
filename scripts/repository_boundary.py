@@ -31,7 +31,7 @@ def validate_paths(paths, kind):
                     or (p.suffix == '.swift' and p.name.lower().startswith(('ipad', 'iphone', 'ios', 'storekit', 'iap')))):
                 raise ValueError('Private mobile path in the public desktop tree: ' + name)
         elif kind == 'private-mobile':
-            if p.parts[0] in {'studio', 'windows', 'Sources', 'Resources'}:
+            if p.parts[0] in {'studio', 'windows', 'Sources', 'Resources', 'core', 'native', 'desktop', 'dist', 'website'}:
                 raise ValueError('Desktop source in the private mobile tree: ' + name)
             if p.suffix.lower() in {'.ipa', '.mobileprovision', '.p12', '.p8', '.keychain-db', '.safetensors', '.gguf', '.litertlm', '.onnx', '.mp4', '.mkv', '.mov', '.wav', '.m4a'}:
                 raise ValueError('Media, weights or signing material in the code backup: ' + name)

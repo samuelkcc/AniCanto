@@ -213,6 +213,7 @@ def analyze(cfg,job,captions,run,emit):
     from worker import atomic_json
     from model_catalog import resolve,selected,choice
     variant=cfg.get('speechModel') or selected(cfg['storage'],'speech')
+    cfg['_sourceClockModelRevision']=choice(variant)['revision']
     model_path=resolve(cfg['storage'],variant)
     if not (Path(cfg['storage'])/'speech-ready.json').exists():
         raise ValueError('請先喺環境頁部署「日語原聲時間辨識」。')
@@ -222,10 +223,13 @@ def analyze(cfg,job,captions,run,emit):
         run([cfg['ffmpeg'],'-v','error','-y','-ss',str(cfg.get('startOffset',0)),'-i',cfg['video'],'-map',f"0:{cfg['sourceAudioStream']}" if cfg.get('sourceAudioStream') is not None else '0:a:0','-t',str(cfg['duration']),'-vn','-ac','1','-ar','16000',path])
     from source_evidence import chinese_captions,merge_ranges
     chinese=chinese_captions(captions,cfg)
+    # New Automatic jobs use one complete source pass, including caption gaps.
+    if __import__('caption_gap445').enabled(cfg):chinese=[]
     caption_windows=merge_ranges([dict(start=max(0,c['start']-.8),end=min(cfg['duration'],c['end']+.8)) for c in chinese])
-    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows,compute_identity(cfg),*([cfg['sourceClockRecoveryRevision']] if cfg.get('sourceClockRecoveryRevision') else [])]).encode()).hexdigest()
+    key=hashlib.sha256(json.dumps([REVISION,cfg.get('productionMode','standard'),variant,choice(variant)['revision'],cfg['video'],cfg.get('startOffset',0),cfg['duration'],caption_windows,compute_identity(cfg),*([cfg['sourceClockRecoveryRevision']] if cfg.get('sourceClockRecoveryRevision') else []),*([cfg['captionGapPolicyRevision']] if cfg.get('captionGapPolicyRevision') else [])]).encode()).hexdigest()
     cache=job/'japanese-analysis.json'
     saved=json.loads(cache.read_text()) if cache.exists() else {}
+    model=None;audio=None
     if saved.get('key')!=key:
         emit('日語原聲','按原裝中文字幕時段辨識日語同逐字時間。' if chinese else '未有中文字幕；按原片音軌辨識日語同逐字時間。',.21)
         raw=run([cfg['ffmpeg'],'-v','error','-i',path,'-f','f32le','pipe:1'])
@@ -293,8 +297,10 @@ def analyze(cfg,job,captions,run,emit):
         if __import__('caption_only').enabled(cfg) and voice_audio is not None:
             saved['noDialogueEvidence']=dict(complete=True,dualInput=abs(len(voice_audio)-len(audio))<=800,sourceSHA256=hashlib.sha256(path.read_bytes()).hexdigest(),stemSHA256=hashlib.sha256(Path(cfg['dialoguePath']).read_bytes()).hexdigest(),startOffset=cfg.get('startOffset',0))
         atomic_json(cache,saved)
-        del model
     cues=build_cues(saved['segments'],saved['spans'],captions,cfg['duration'],cfg.get('startOffset',0))
+    if one_pass(cfg):
+        cues=__import__('caption_gap445').corroborate(model,audio,cfg,job,cues,captions,variant,atomic_json,emit)
+    del model
     if not cues: raise ValueError('原片未辨識到有效日語，請檢查音軌同開始位置；未改用 OCR 碎句配音。')
     atomic_json(job/'subtitle-context.json',caption_context(captions))
     emit('日語原聲',f'{len(captions)} 段字幕取樣只作參考；按日語原聲建立 {len(cues)} 句對白。',.29)

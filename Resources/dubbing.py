@@ -179,6 +179,7 @@ def separate(cfg, run, emit):
   model_job(cfg,'separate',dict(storage=cfg['storage'],input=str(source),out=str(folder),device=cfg.get('separationDevice','mps')),emit)
   validate_stems(cfg,folder,run,emit)
  (folder/'complete.json').write_text(json.dumps(identity))
+ __import__('final_background445').remember(cfg,folder)
  emit('背景已就緒','可獨立試聽背景軌，檢查音效同日語殘留。',0.18,background=str(bg),dialogue=str(dialogue))
  return bg,dialogue
 

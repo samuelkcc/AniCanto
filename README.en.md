@@ -24,15 +24,14 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 [Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.51-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## Recent update · 0.25.51 / build 400
+## Recent update · 0.25.54 / build 446
 
-- Show saved desktop work and separated audio even when the video list is empty.
-- Clear old recordings, saved progress and intermediate movies only after an explicit selection.
-- Keep original media, registered exports and installed models.
-- Open the full storage breakdown from the cleanup screen and keep one continuous cleanup counter.
-- Include the four-language cleanup guide and the revised build-storage policy.
+- Keep the active video selected during conversion. Use Pause & save before switching videos.
+- Keep confirmed voice-reference ranges inside their own dialogue cue.
+- Improve subtitle-gap classification and reuse verified optional background audio during export.
+- Preserve saved recordings, source clocks and spent recovery attempts.
 
-Existing screenshots remain. Native Windows execution needs separate acceptance.
+Mac and Windows package checks pass. Physical Windows GPU inference and whole-film voice quality remain separate acceptance work.
 
 ## Why AniCanto exists
 

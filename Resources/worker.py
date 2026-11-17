@@ -869,6 +869,7 @@ def convert(cfg):
     identity["pipeline_revision"] = 24
     if __import__('source_workflow').enabled(cfg):
         identity.update({k:cfg.get(k) for k in ('sourceWorkflowRevision','sourceWorkflowEffective','sourceAllocationRevision','deliveryPolicyRevision')})
+    if cfg.get('captionGapPolicyRevision'):identity['captionGapPolicyRevision']=cfg['captionGapPolicyRevision']
     identity['opRanges']=cfg.get('opRanges',[])
     identity['translateOPED']=bool(cfg.get('translateOPED'))
     identity['autoSkipOP']=bool(cfg.get('autoSkipOP'))
@@ -885,6 +886,8 @@ def convert(cfg):
         identity['voiceReferencePaddingRevision']=cfg['voiceReferencePaddingRevision']
     if __import__('independent_voices').content_bound(cfg):
         identity['voiceReferenceIdentityRevision']=cfg['voiceReferenceIdentityRevision']
+    if __import__('independent_voices').owned_window(cfg):
+        identity['voiceReferenceWindowRevision']=cfg['voiceReferenceWindowRevision']
     if cfg.get('audioEdgeEnvelopeRevision')==__import__('pcm_mix').EDGE_REVISION:
         identity['audioEdgeEnvelopeRevision']=cfg['audioEdgeEnvelopeRevision']
     identity['voiceStyleMode']=cfg.get('voiceStyleMode','clone')
@@ -1333,12 +1336,15 @@ def render_review(request):
     temporary = job / "output.partial.mp4"
     has_audio = any(s.get("codec_type") == "audio" for s in meta["streams"])
     caption_mixed=bool(cfg.get('captionPolicy',{}).get('mode')=='original-chinese' and has_audio)
+    optional_background=__import__('final_background445').enabled(cfg) and cfg.get('separateBackground')
+    final_background=__import__('final_background445').prepare(cfg,job,run,emit) if optional_background else None
     if caption_mixed:
         background=None
         if cfg.get('separateBackground'):
             import dubbing,nonverbal
-            background,_=dubbing.separate(cfg,run,emit)
-            background=nonverbal.preserve_background(cfg,job,background,run,emit)
+            background=final_background if optional_background else dubbing.separate(cfg,run,emit)[0]
+            if background is not None:
+                background=__import__('final_background445').preserve(cfg,job,background,run,emit) if optional_background else nonverbal.preserve_background(cfg,job,background,run,emit)
         from source_evidence import mix_caption_audio
         audio=mix_caption_audio(sys.modules[__name__],cfg,job,audio,background)
     has_captions=bool((job/"cantonese.srt").read_text().strip())
@@ -1347,11 +1353,11 @@ def render_review(request):
     has_audio = any(s.get("codec_type") == "audio" for s in meta["streams"])
     if caption_mixed:
         cmd += ['-map','0:v:0','-map','1:a:0']
-    elif cfg.get("separateBackground"):
+    elif cfg.get("separateBackground") and (not optional_background or final_background is not None):
         import dubbing
-        background, _ = dubbing.separate(cfg, run, emit)
+        background = final_background if optional_background else dubbing.separate(cfg, run, emit)[0]
         import nonverbal
-        background = nonverbal.preserve_background(cfg, job, background, run, emit)
+        background = __import__('final_background445').preserve(cfg,job,background,run,emit) if optional_background else nonverbal.preserve_background(cfg,job,background,run,emit)
         gain = float(cfg.get("backgroundGain", 0.8))
         if not math.isfinite(gain) or not 0 <= gain <= 1.5:
             raise ValueError("背景音量設定無效。")
@@ -1365,6 +1371,14 @@ def render_review(request):
         if not has_captions:mix=mix.replace('[3:a:0]','[2:a:0]')
         if ranges:mix+=';'+opening.preserve_filter(ranges,original=__import__('source_language').audio_label(cfg))
         cmd += ["-i", background, "-filter_complex", mix, "-map", "0:v:0", "-map", "[dub]"]
+    elif optional_background and has_audio:
+        # Keep saved voices. The verified source provides a quiet fallback bed.
+        original=__import__('source_language').audio_label(cfg)
+        mix=f'[{original}]volume=0.12[bg];[1:a:0][bg]amix=inputs=2:duration=first:normalize=0[dub]'
+        import opening
+        ranges=opening.local_ranges(cfg)
+        if ranges:mix=mix.replace('[dub]','[mixed]')+';'+opening.preserve_filter(ranges,original=original)
+        cmd += ['-filter_complex',mix,'-map','0:v:0','-map','[dub]']
     elif cfg.get('opRanges') and has_audio:
         import opening
         ranges=opening.local_ranges(cfg)
@@ -1436,6 +1450,10 @@ def render_review(request):
     atomic_json(job / "report.json", {"output":str(target),"sourceStart":cfg.get("startOffset",0),"duration":cfg.get("outputDuration",cfg["duration"]),"sourceDuration":cfg["duration"],"cues":len(cues),"warnings":warnings,"validation":str(job/'validation.json'),"qualityStatus":validation['qualityStatus'],"segmentIssues":json.loads((job/"segment-issues.json").read_text()) if (job/"segment-issues.json").exists() else [],"voice":cfg.get("ttsBackend", "cosyvoice3"),"backgroundSeparated":bool(cfg.get("separateBackground")),"burnOutputCaptions":burn,"backgroundPath":cfg.get("backgroundPath"),"voiceProfiles":cfg.get("voiceProfiles",[]),"originalSpeechIndices":[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if c.get('preserveOriginalSpeech')],"runtimeRecovery":json.loads((job/'runtime-recovery.json').read_text()) if (job/'runtime-recovery.json').exists() else []})
     from dialogue_delivery import audit as delivery_audit,summary as delivery_summary
     single_report=json.loads((job/'report.json').read_text())
+    if optional_background:
+        single_report['backgroundSeparated']=final_background is not None
+        notice=job/'optional-background445.json'
+        if notice.exists():single_report['optionalBackgroundWarning']=json.loads(notice.read_text())
     if __import__('delivery_policy').safe_capacity(cfg):single_report['safeAudioEndpoints']=validation.get('safeAudioEndpoints',{})
     if __import__('delivery_policy').bounded_delivery(cfg):
         from repair_limits import read as recovery_read,root as recovery_root

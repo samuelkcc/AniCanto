@@ -16,6 +16,20 @@ spec.loader.exec_module(retention)
 
 
 class RetentionTests(unittest.TestCase):
+    def test_source_delivery_archives_survive_the_five_build_budget(self):
+        archive=self.file('public-review/AniCanto-source-delivery-0.25.49.tar.gz',b'required corresponding source')
+        payload=self.file('public-review/AniCanto-0.25.49.zip',b'generated payload')
+        for version in range(50,55):self.file(f'public-review/candidate-0.25.{version}/receipt.json',b'{}')
+        victims=retention.prune_children(archive.parent,5)
+        self.assertNotIn(archive,victims)
+        self.assertIn(payload,victims)
+
+    def test_required_archive_names_are_distinct_from_generated_packages(self):
+        for name in ['anicanto-local-media-sdk-sources.tar.gz','corresponding-source-445.zip','source-delivery-444.tar.xz']:
+            self.assertTrue(retention.source_delivery_archive(Path(name)))
+        for name in ['available-source-materials-0.25.49.tar.gz','AniCanto-0.25.49.zip','payload-445.zip','available-source-materials-445.log']:
+            self.assertFalse(retention.source_delivery_archive(Path(name)))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)

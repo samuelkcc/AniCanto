@@ -22,7 +22,9 @@ def rules(cfg):
  if not enabled(cfg):return ''
  from source_workflow import priority,SPEECH_RULES,OCR_RULES,subtitle_content_only,SUBTITLE_ONLY_RULES
  names=__import__('dialogue_policy441').instruction(cfg)
- if subtitle_content_only(cfg):return SUBTITLE_ONLY_RULES+names
+ if subtitle_content_only(cfg):
+  if __import__('caption_gap445').enabled(cfg):return PROMPT+' AUTOMATIC GAP POLICY: the server-selected primary text can include a separately corroborated complete audio gap. Translate only that selected primary text. The server excludes unconfirmed gaps before this request. Never infer a new gap, add neighbouring words or omit a confirmed short call.'+names
+  return SUBTITLE_ONLY_RULES+names
  return (SPEECH_RULES if priority(cfg)=='speech' else OCR_RULES if priority(cfg)=='ocr' else PROMPT)+names
 def caption(c):return content(c) if authored(c) or c.get('primarySource',{}).get('kind')=='ocr-primary' else c.get('subtitleHint','')
 def secondary(c):return '' if authored(c) else c.get('japaneseAlt','')
@@ -184,6 +186,7 @@ def prepare(w,cfg,job,cues):
   __import__('target_delivery').prepare(cfg,cues)
   __import__('caption_only').apply(cfg,job,cues,w.atomic_json)
   w.atomic_json(job/'source-policy.json',dict(revision=REVISION,kind=kind,unresolved=[],clocksChanged=False));return cues
+ __import__('caption_gap445').prepare(w,cfg,job,cues,records)
  owners={};by_id={r['id']:r for r in records};assigned={i:[] for i in range(len(cues))}
  for record in records:
   ids=speech_owners(record,cues) if modern else [str(i) for i,c in enumerate(cues) if c.get('enabled',True) and min(c.get('speechEnd',c['end']),record['end'])>max(c.get('speechStart',c['start']),record['start'])]
@@ -195,8 +198,13 @@ def prepare(w,cfg,job,cues):
  for i,c in enumerate(cues):
   c['captionRecords']=assigned[i]
   if not assigned[i] and only:
-   attach(c,kind,'')
-   __import__('subtitle_content_only').preserve_gap(c)
+   if __import__('caption_gap445').enabled(cfg) and c.get('captionGapSpeech445'):
+    attach(c,'asr',c['captionGapAcceptedText445']);c['primarySource']['language']=cfg.get('sourceLanguage','ja')
+   elif __import__('caption_gap445').enabled(cfg) and c.get('originalSpeechReason') in (__import__('caption_gap445').UNKNOWN,__import__('caption_gap445').CONFIRMED):
+    attach(c,'asr','')
+   else:
+    attach(c,kind,'')
+    __import__('subtitle_content_only').preserve_gap(c)
    continue
   if not assigned[i]:
    attach(c,'asr',c.get('japanese') or c.get('text',''));c['primarySource']['language']=cfg.get('sourceLanguage','ja')

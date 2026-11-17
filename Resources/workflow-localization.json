@@ -204,7 +204,9 @@
     "比對記錄無法讀取；保留正常配音。": "The comparison record cannot be read. Keep normal dubbing.",
     "先辨識及翻譯實際短句，再比較同時段字幕；不確定時保留配音。": "Recognize and translate actual speech before comparing the same-window caption. Keep dubbing when uncertain.",
     "比對證據未能確認；保留正常配音。": "Comparison evidence is unconfirmed. Keep normal dubbing.",
-    "原聲短句與畫面字幕內容明顯不相關；已略過生成配音，保留原聲及字幕。": "The short source utterance is clearly unrelated to the screen caption. Keep original audio and captions without generated dubbing."
+    "原聲短句與畫面字幕內容明顯不相關；已略過生成配音，保留原聲及字幕。": "The short source utterance is clearly unrelated to the screen caption. Keep original audio and captions without generated dubbing.",
+    "背景提示": "Background warning",
+    "非必要背景處理失敗。將保留已有配音，並以已核對的原片低音量背景匯出。": "Optional background preparation failed. Saved dubbing will still be exported with the verified source mix."
   },
   "patterns": [
     [

@@ -1,6 +1,6 @@
 [English](README.md) · **繁體中文** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-## 0.25.52 Beta：配音流程更新
+## 0.25.54 Beta：配音流程更新
 
 專家模式可選擇保留人名原音；原聲待確認與待補配音分開顯示。系統會在原有重試限制內拒絕短句重複的翻譯結果，保留已保存工作及已用次數。
 
@@ -19,20 +19,17 @@
 
 ## 下載
 
-**[Mac 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-macOS-0.25.52.zip)** · **[Windows 0.25.52](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto.exe)**
+**[Mac 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-macOS-0.25.54.zip)** · **[Windows 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.52-beta/AniCanto-0.25.52-source-materials-reviewed.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.54-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-0.25.54-source-materials-reviewed.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
-## 近期更新 · 0.25.52／400
+## 近期更新 · 0.25.54／446
 
-- 影片清單清空後，仍可查看已儲存工作及分離音軌。
-- 明確勾選後，才清除舊錄音、進度及中間影片。
-- 保留原片、已登記成品及已安裝模型。
-- 清理頁面可查看完整儲存分類，清理進度不會重新歸零。
-- 更新四語清理指南及開發檔案保留規則。
-
-沿用現有截圖。Windows 實機操作仍需另行驗收。
+- 轉換期間鎖定處理中的影片；完成「暫停並儲存」後才可切換。
+- 聲線參考只使用所屬對白時間範圍內的音訊。
+- 改善字幕空檔分類及輸出時的可選原聲快取處理。
+- 保留已儲存錄音、來源時間線及已使用的補救次數。
 
 ## 點解會有 AniCanto
 

@@ -4,6 +4,8 @@ import CoreMedia
 
 private let performanceLabels = ["music", "singing", "choir_singing", "speech", "rapping", "laughter", "baby_laughter", "belly_laugh", "crying_sobbing", "sigh", "breathing", "gasp", "screaming", "shout", "yell"]
 
+private let gapSoundLabels445 = ["silence", "music", "breathing", "sigh", "gasp", "artillery_fire", "fire", "fire_crackle", "firecracker", "fireworks", "glass_breaking", "glass_clink", "gunshot_gunfire", "slap_smack", "thump_thud", "thunder", "thunderstorm", "whoosh_swoosh_swish", "wind_rustling_leaves"]
+
 private final class OpeningSoundObserver: NSObject, SNResultsObserving {
     var requireCompletePerformance = false
     var rows: [[String: Double]] = []
@@ -18,6 +20,12 @@ private final class OpeningSoundObserver: NSObject, SNResultsObserving {
                 return
             }
             row[key] = classification?.confidence ?? 0
+        }
+        if requireCompletePerformance {
+            row["gapTaxonomyComplete445"] = 1
+            for key in gapSoundLabels445 {
+                if let classification = result.classification(forIdentifier: key) { row[key] = classification.confidence }
+            }
         }
         rows.append(row)
     }

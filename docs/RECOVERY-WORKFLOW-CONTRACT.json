@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "id": "anicanto-recovery-workflow-4",
-  "updated": "2026-11-13",
+  "updated": "2026-11-17",
   "publicProjection": true,
   "platforms": [
     "macOS",
@@ -146,8 +146,10 @@
     "tests": ".build/desktop441/focused-tests-final.log",
     "packaged": true,
     "installed": true,
-    "published": false,
-    "wholeFilmAccepted": false
+    "published": true,
+    "wholeFilmAccepted": false,
+    "publicationURL": "https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta",
+    "publicSourceCommit": "cee79da31e8e976b099e1dffa559235ff4eaabbd"
   },
   "activeRequirements": [
     {

@@ -1,6 +1,7 @@
 // AniCanto interface localization. Source copy is English; model names and licensing terms are preserved.
 export const LOCALE={
   "ui": {
+"Pause and save before switching videos.":"先に一時停止して保存してから、動画を切り替えてください。",
 "Selected location unavailable. Debug report saved to:": "選択した場所に保存できません。デバッグ記録の保存先：",
 // レビュー：保存済み各録音に使った分離音声の記録。
 "Used a different separated voice than the first recording of this line.": "この行の最初の録音とは異なる分離音声を使用しました。",

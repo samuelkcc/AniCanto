@@ -25,12 +25,13 @@ def source_unconfirmed(cue):
         return False
     if any(str(cue.get(k, '') or '').strip() for k in ('cantonese', 'english', 'mandarin')):
         return False
+    if cue.get('originalSpeechReason')==__import__('caption_gap445').CONFIRMED:return False
     return bool(cue.get('sourcePolicyBlocked') or cue.get('originalSpeechReason') in
                 ('uncertain-source-clock', 'source-recognition-unconfirmed', 'source-content-unavailable'))
 
 
 def excluded_card(cue):
-    return bool(cue.get('noSpeech') or cue.get('opEdKind') or
+    return bool(cue.get('originalSpeechReason')==__import__('caption_gap445').CONFIRMED or cue.get('noSpeech') or cue.get('opEdKind') or
                 str(cue.get('japanese') or cue.get('text') or '').strip() == '[NO_SPEECH]')
 
 

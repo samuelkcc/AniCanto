@@ -5,6 +5,7 @@ import {reviewLocale} from './review-locale.js';
 import {localeData} from './locale-data.js';
 import {storageTranslation} from './storage-copy.js';
 const zh={
+"Pause and save before switching videos.":"請先暫停並儲存，然後切換影片。",
 "Retained source audio":"保留原聲",
 "Shared subtitle continuation":"共用字幕延續片段",
 "No assigned subtitle wording":"未有配對字幕文字",

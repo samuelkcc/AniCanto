@@ -73,6 +73,11 @@ SOURCE_NAMES = {'makefile', 'gnumakefile', 'configure', 'bootstrap', 'bootstrap.
                 'cmakelists.txt'}
 MEDIA_SUFFIXES = {'.wav', '.mp3', '.m4a', '.flac', '.aac', '.mp4', '.mkv', '.mov', '.webm'}
 
+def source_delivery_archive(path: Path) -> bool:
+    """Keep named source-delivery materials outside the generated-build budget."""
+    name=path.name.lower()
+    return (bool(re.search(r'(?:^|-)(?:corresponding-source|source-delivery|source-offer)(?:-|\.)',name)) or name.startswith('anicanto-local-media-sdk-sources.')) and name.endswith(('.tar.gz', '.tar.xz', '.zip'))
+
 def source_material(file: Path) -> bool:
     name=file.name.lower()
     return file.suffix.lower() in SOURCE_SUFFIXES or name in SOURCE_NAMES or name.startswith(('license', 'licence', 'copying', 'notice', 'authors'))
@@ -276,7 +281,7 @@ def desktop_release_budget(retain):
 
 def prune_children(folder: Path, retain: int, release_budget=None) -> list:
     """Return the older version children of one folder, keeping the newest `retain`."""
-    ordered = sorted(version_children(folder),
+    ordered = sorted((child for child in version_children(folder) if not source_delivery_archive(child)),
                      key=lambda child: (version_key(child.name), child.stat().st_mtime),
                      reverse=True)
     if release_budget is not None:
@@ -725,6 +730,9 @@ def run(args) -> int:
     removed_count = 0
     for entry in sorted(victims, key=lambda item: str(item.relative_to(BUILD))):
         label = entry.relative_to(BUILD).as_posix()
+        if source_delivery_archive(entry):
+            kept[label] = 'Required source-delivery archive; not a generated build.'
+            continue
         size_mb = sizes.get(label, (entry.stat().st_size + 1024*1024 - 1)//(1024*1024) if entry.is_file() else 0)
         if not args.apply:
             freed += size_mb

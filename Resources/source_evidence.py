@@ -177,7 +177,10 @@ def mix_caption_audio(w,cfg,job,audio,background=None):
         graph='['+__import__('source_language').audio_label(cfg,1)+']volume=0.12[bg];[0:a:0][bg]amix=inputs=2:duration=first:normalize=0[dub]'
         w.run([cfg['ffmpeg'],'-v','error','-y','-i',audio,'-ss',str(cfg.get('startOffset',0)),'-t',str(cfg['duration']),'-i',cfg['video'],'-filter_complex',graph,'-map','[dub]','-ar','48000','-ac','2',base])
     ranges=[(r['start'],r['end']) for r in opening.local_ranges(cfg)]
-    return nonverbal.preserve_background(dict(cfg,_originalSoundRanges=ranges),job,base,w.run,w.emit)
+    final_cfg=dict(cfg,_originalSoundRanges=ranges)
+    if __import__('final_background445').enabled(cfg):
+        return __import__('final_background445').preserve(final_cfg,job,base,w.run,w.emit)
+    return nonverbal.preserve_background(final_cfg,job,base,w.run,w.emit)
 
 def windows(cues,duration):
     result=[]

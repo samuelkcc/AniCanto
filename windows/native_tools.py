@@ -38,6 +38,13 @@ def performance_scores(labels,scores,require_complete=False):
  result={key:max((scores[i] for i in indices),default=0) for key,indices in matched.items()}
  moans=[i for i,label in labels.items() if label.lower().strip() in ('groan','groaning','moan','moaning','grunt','grunting')]
  if moans:result['moaning_groaning']=max(scores[i] for i in moans)
+ if require_complete:
+  from caption_gap445 import LABELS
+  aliases={'silence':('silence',),'music':('music',),'breathing':('breathing',),'sigh':('sigh',),'gasp':('gasp',),'gunshot_gunfire':('gunshot, gunfire',),'thunder':('thunder',),'glass_breaking':('shatter',),'fireworks':('fireworks',),'firecracker':('firecracker',),'wind_rustling_leaves':('rustling leaves',)}
+  for key in LABELS:
+   indices=[i for i,label in labels.items() if label.strip().lower() in aliases.get(key,(key.replace('_',' '),))]
+   if indices:result[key]=max(scores[i] for i in indices)
+  result['gapTaxonomyComplete445']=1
  return result
 
 def classify(path,detailed=False):

@@ -15,7 +15,7 @@ def consolidate(cues,captions):
             b=clean_text(c.get('japanese',c.get('text','')))
             gap=c['start']-previous['end']
             same=bool(previous.get('speakerId') and previous.get('speakerId')==c.get('speakerId'))
-            safe=same and previous.get('enabled',True) and c.get('enabled',True) and not previous.get('mixedVoices') and not c.get('mixedVoices') and -.001<=gap<=.6 and c['end']-previous['start']<=12
+            safe=same and not previous.get('captionGapIndependent445') and not c.get('captionGapIndependent445') and previous.get('enabled',True) and c.get('enabled',True) and not previous.get('mixedVoices') and not c.get('mixedVoices') and -.001<=gap<=.6 and c['end']-previous['start']<=12
             prefix=bool(a and b.startswith(a) and len(b)>len(a) and len(a)<=3 and previous['end']-previous['start']<=.6 and gap<=.15)
             shared=[r for r in captions if r['start']<previous['end'] and r['end']>c['start']]
             continuation=bool(re.search(r'(?:ともかく|けど|から|ので|[はをにのともがへ])[、。\s]*$',previous.get('japanese','')))

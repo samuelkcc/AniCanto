@@ -36,7 +36,7 @@ def group_turns(cues, max_seconds=8):
         cue['sourceParts']=[dict(start=cue['start'],end=cue['end'],japanese=cue.get('japanese',cue['text']),japaneseAlt=cue.get('japaneseAlt',''))]
         previous=result[-1] if result else None
         same=previous and previous.get('speakerId') and previous.get('speakerId')==cue.get('speakerId')
-        if (same and previous.get('enabled',True) and cue.get('enabled',True)
+        if (same and not previous.get('captionGapIndependent445') and not cue.get('captionGapIndependent445') and previous.get('enabled',True) and cue.get('enabled',True)
                 and 0<=cue['start']-previous['end']<=.25
                 and cue['end']-previous['start']<=max_seconds
                 and cue.get('previousSpeakerSimilarity',1)>=.5

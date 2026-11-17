@@ -15,6 +15,26 @@ REVISION='independent-source-lines-native-2-scene-tone'
 PADDING_REVISION342='own-utterance-zero-padding-342'
 REFERENCE_REVISION342='independent-source-lines-own-padding-342'
 IDENTITY_REVISION379='own-reference-bytes-379'
+WINDOW_REVISION='confirmed-owned-reference-window-1'
+
+
+def owned_window(cfg):return cfg.get('voiceReferenceWindowRevision')==WINDOW_REVISION
+
+
+def reference_window(cfg,cue,duration):
+    """Use a confirmed speech clock only inside its owning cue."""
+    start,end=float(cue['start']),float(cue['end'])
+    if not math.isfinite(start+end) or start<0 or end<=start:
+        raise ValueError('本句原聲範圍無效。')
+    left,right=start,end
+    confirmed=False
+    try:
+        a,b=float(cue.get('speechStart')),float(cue.get('speechEnd'))
+        confirmed=(not cue.get('sourceClockUnconfirmed') and math.isfinite(a+b)
+                   and start<=a<b<=end)
+        if confirmed:left,right=max(start,a-.06),min(end,b+.1)
+    except (TypeError,ValueError):pass
+    return left,min(right,left+8,duration),confirmed
 
 def content_bound(cfg):return cfg.get('voiceReferenceIdentityRevision')==IDENTITY_REVISION379
 
@@ -56,14 +76,20 @@ def prepare(cfg, emit):
     from reference_quality import measure
     source=Path(cfg['audio']);job=Path(cfg['job']);root=Path(cfg['storage'])
     profiles=[];assignments=[]
+    source_sha=None
+    if owned_window(cfg):
+        with source.open('rb') as handle:source_sha=hashlib.file_digest(handle,'sha256').hexdigest()
     with sf.SoundFile(source) as stream:
         sr=stream.samplerate;duration=stream.frames/sr
         for index,cue in enumerate(cfg['cues']):
             if not cue.get('enabled',True) or cue.get('subtitleContentOnlyGap') or cue.get('captionOnly'):continue
             ident=f'line-{job.name}-{index+1}'
             profile=dict(id=ident,name=f'第 {index+1} 句原聲',reference='',promptText='',language=cfg.get('sourceLanguage','ja'),referenceCandidates=[],referenceRanges=[],identityStatus='independent',sourceIndex=index)
-            a=float(cue.get('speechStart',cue['start']));b=min(float(cue.get('speechEnd',cue['end'])),a+8,duration)
+            if not owned_window(cfg):
+                a=float(cue.get('speechStart',cue['start']));b=min(float(cue.get('speechEnd',cue['end'])),a+8,duration)
             try:
+                confirmed=False
+                if owned_window(cfg):a,b,confirmed=reference_window(cfg,cue,duration)
                 if not math.isfinite(a+b) or a<0 or b<=a:raise ValueError('本句原聲範圍無效。')
                 stream.seek(round(a*sr));clip=stream.read(max(1,round(b*sr)-round(a*sr)),dtype='float32',always_2d=True).mean(axis=1)
                 if not len(clip):raise ValueError('本句未有有效原聲。')
@@ -71,7 +97,7 @@ def prepare(cfg, emit):
                 actual=len(clip)/sr;short=actual<3
                 # Keep source-bandwidth PCM and expose actual speech length.
                 need=max(0,round(padding.MINIMUM_SECONDS*sr)-len(clip)) if short else 0
-                if need and own_padding(cfg):
+                if need and (own_padding(cfg) or owned_window(cfg)):
                     padded=np.pad(clip,(0,need));padding_method='silence';padding_range=None
                 elif need:
                     def reader(fill_start,fill_end,stream=stream,sr=sr):
@@ -79,6 +105,7 @@ def prepare(cfg, emit):
                     padded,padding_method,padding_range=padding.pad(clip,sr,b,need,reader,cfg['cues'],duration)
                 else:padded,padding_method,padding_range=clip,'none',None
                 key=hashlib.sha256(json.dumps([policy_revision(cfg),str(source),source.stat().st_size,source.stat().st_mtime_ns,index,a,b]).encode()).hexdigest()[:20]
+                if owned_window(cfg):key=hashlib.sha256((key+WINDOW_REVISION+source_sha).encode()).hexdigest()[:24]
                 if content_bound(cfg):key=hashlib.sha256((key+hashlib.sha256(padded.tobytes()).hexdigest()).encode()).hexdigest()[:24]
                 folder=job/'line-references'/key;folder.mkdir(parents=True,exist_ok=True)
                 target=folder/'reference.wav'
@@ -89,7 +116,9 @@ def prepare(cfg, emit):
                 if short:warnings.append('short-source-reference')
                 profile.update(reference=str(target),referenceRanges=[[a,a+actual]],shortReference=short,mixedReference=bool(cue.get('mixedVoices',False)),referenceQuality=dict(quality,warnings=warnings),originalReferenceSeconds=actual,paddedSeconds=len(padded)/sr-actual,
                                paddingSeconds=round(len(padded)/sr-actual,3),paddingMethod=padding_method,paddingRange=padding_range)
-                (folder/'source.json').write_text(json.dumps(dict(source=str(source),sourceIndex=index,range=profile['referenceRanges'][0],sampleRate=sr,originalSeconds=actual,paddingSeconds=profile['paddingSeconds'],paddingMethod=padding_method,paddingRange=padding_range,silencePaddingSeconds=profile['paddingSeconds'] if padding_method=='silence' else 0.,speakerGrouped=False,visualAnalysis=False,method=policy_revision(cfg)),ensure_ascii=False,indent=2))
+                receipt=dict(source=str(source),sourceIndex=index,range=profile['referenceRanges'][0],sampleRate=sr,originalSeconds=actual,paddingSeconds=profile['paddingSeconds'],paddingMethod=padding_method,paddingRange=padding_range,silencePaddingSeconds=profile['paddingSeconds'] if padding_method=='silence' else 0.,speakerGrouped=False,visualAnalysis=False,method=policy_revision(cfg))
+                if owned_window(cfg):receipt.update(windowRevision=WINDOW_REVISION,sourceSHA256=source_sha,cueID=cue.get('id'),cueRange=[cue['start'],cue['end']],usesSpeechClock=confirmed,referenceSHA256=hashlib.sha256(target.read_bytes()).hexdigest())
+                (folder/'source.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2))
             except (ValueError,OSError,RuntimeError) as error:
                 profile['referenceIssue']=str(error)
                 if not cfg.get('continueOnError',True):raise
@@ -110,6 +139,7 @@ def assign(cfg,job,cues,emit):
     analysis=job/'japanese-analysis.json'
     text_hash=hashlib.sha256(analysis.read_bytes()).hexdigest() if analysis.exists() else ''
     identity=[policy_revision(cfg),cfg.get('productionMode','standard'),str(source),source.stat().st_size,source.stat().st_mtime_ns,cfg.get('referenceSpeechModel'),text_hash,[(c['start'],c['end'],c.get('speechStart'),c.get('speechEnd'),c.get('enabled',True),bool(c.get('captionOnly'))) for c in cues]]
+    if owned_window(cfg):identity.append([WINDOW_REVISION,[bool(c.get('sourceClockUnconfirmed')) for c in cues]])
     if content_bound(cfg):
         with source.open('rb') as stream:identity.append([IDENTITY_REVISION379,hashlib.file_digest(stream,'sha256').hexdigest()])
     if __import__('source_workflow').subtitle_content_only(cfg):identity.append(['subtitle-content-only',[bool(c.get('subtitleContentOnlyGap')) for c in cues]])
@@ -124,7 +154,7 @@ def assign(cfg,job,cues,emit):
         return not expected or hashlib.sha256(path.read_bytes()).hexdigest()==expected
     reused=saved.get('key')==key and all(intact(p) for p in saved.get('profiles',[]))
     if not reused:
-        model_job(cfg,'independent-voices',dict(storage=str(root),job=str(job),audio=str(source),cues=cues,sourceLanguage=cfg.get('sourceLanguage','ja'),productionMode=cfg.get('productionMode','standard'),continueOnError=cfg.get('continueOnError',True),voiceReferencePaddingRevision=cfg.get('voiceReferencePaddingRevision'),voiceReferenceIdentityRevision=cfg.get('voiceReferenceIdentityRevision')),emit)
+        model_job(cfg,'independent-voices',dict(storage=str(root),job=str(job),audio=str(source),cues=cues,sourceLanguage=cfg.get('sourceLanguage','ja'),productionMode=cfg.get('productionMode','standard'),continueOnError=cfg.get('continueOnError',True),voiceReferencePaddingRevision=cfg.get('voiceReferencePaddingRevision'),voiceReferenceIdentityRevision=cfg.get('voiceReferenceIdentityRevision'),voiceReferenceWindowRevision=cfg.get('voiceReferenceWindowRevision')),emit)
         saved=json.loads(cache.read_text())
         speech=folder(root,choice(cfg.get('referenceSpeechModel') or selected(root,'referenceSpeech')))
         ready=[p for p in saved['profiles'] if p.get('reference')]
