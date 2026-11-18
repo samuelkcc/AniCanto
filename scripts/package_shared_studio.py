@@ -3,7 +3,7 @@
 Windows embeds the same web bundle in the native host and then packages that
 host inside the existing verified single-file bootstrap launcher.
 """
-import hashlib,json,plistlib,shutil,subprocess,sys
+import hashlib,json,os,plistlib,shutil,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
@@ -26,7 +26,8 @@ def notices(resources,platform='aarch64-apple-darwin'):
                     if path.is_file():dest.mkdir(parents=True,exist_ok=True);shutil.copy2(path,dest/path.name);files.append(str((dest/path.name).relative_to(resources)))
             if not files:raise RuntimeError('Missing shared UI dependency notice: '+package['name'])
         if package.get('license') and 'MPL' in package['license']:
-            archive=next((Path.home()/'.cargo/registry/cache').glob('*/'+package['name']+'-'+package['version']+'.crate'))
+            cargo_home=Path(os.environ.get('CARGO_HOME',str(Path.home()/'.cargo')))
+            archive=next((cargo_home/'registry/cache').glob('*/'+package['name']+'-'+package['version']+'.crate'))
             shutil.copy2(archive,dest/archive.name)
         records.append(dict(name=package['name'],version=package['version'],license=package.get('license'),origin=package.get('repository') or 'Rust dependency',files=files))
     return records

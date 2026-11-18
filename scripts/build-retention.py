@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Enforce the .build retention rule: keep at most 5 build versions, remove the rest.
+"""Keep only the latest generated build version for each platform.
 
 Samuel set this rule on 2026-11-01. .build held 1.35 TB across 1,038 entries and the volume
 had 31 GB free. .build is scratch space. Source lives in the repo, shipped output lives in
@@ -10,9 +10,9 @@ The rule, in order:
   1. Protected entries are never touched. That covers live trees, build toolchains, model
      caches, runtimes, entries named in the newest handover records, and entries written in
      the optional --active-days interval. The default interval is zero.
-  2. Desktop release containers share one budget of 5 versions. The current version and
-     recorded published version stay protected. Unmanaged version folders keep 5 groups.
-  3. Other work folders keep their 5 newest versions. Protected source and evidence are
+  2. Desktop release containers share one budget of 1 version.
+     Source, required assets and records stay separate from generated products.
+  3. Other work folders keep their newest version. Protected source and evidence are
      separate. A Git checkout or a preservation failure prevents removal.
   4. Recognized model assets move to .build/_retained-models at every size. A move keeps
      downloads. Exact SHA-256 matches can share storage while both paths remain available.
@@ -71,6 +71,11 @@ SOURCE_SUFFIXES = {'.swift', '.py', '.mjs', '.sh', '.json', '.md', '.m', '.h', '
 SOURCE_NAMES = {'makefile', 'gnumakefile', 'configure', 'bootstrap', 'bootstrap.sh',
                 'config.guess', 'config.sub', 'install-sh', 'meson.build', 'meson_options.txt',
                 'cmakelists.txt'}
+# Source assets are required to rebuild the interface. Keep these with source code.
+SOURCE_SUFFIXES.update({'.mm', '.metal', '.strings', '.xcstrings', '.xcprivacy', '.storyboard',
+                        '.xib', '.svg', '.png', '.jpg', '.jpeg', '.webp', '.gif', '.ico',
+                        '.icns', '.ttf', '.otf', '.txt', '.yaml', '.yml', '.ts', '.tsx',
+                        '.jsx', '.ps1', '.cmd', '.bat', '.csv', '.rst', '.xcworkspacedata'})
 MEDIA_SUFFIXES = {'.wav', '.mp3', '.m4a', '.flac', '.aac', '.mp4', '.mkv', '.mov', '.webm'}
 
 def source_delivery_archive(path: Path) -> bool:
@@ -272,7 +277,7 @@ def desktop_release_budget(retain):
             if isinstance(value,dict):
                 match=SEMVER_IN_NAME.search(str(value.get('version','')))
                 if match:required.add(tuple(int(x) for x in match.groups()))
-    keep=set(required)
+    keep=set(sorted(required,reverse=True)[:retain])
     for value in sorted(versions,reverse=True):
         if len(keep)>=retain:break
         keep.add(value)
@@ -298,6 +303,14 @@ def rescue(path: Path, live: dict, report: list, model_min_mb: int, archive_left
     # Check the complete tree before moving any file out of a source checkout.
     for base, dirs, files in os.walk(path):
         parts = Path(base).relative_to(path).parts
+        if any(source_delivery_archive(Path(name)) for name in files):
+            report.append(f'protected {path.name}: contains required source-delivery materials')
+            return False
+        for name in files:
+            file = Path(base, name)
+            if not file.is_symlink() and source_material(file) and file.stat().st_size > SOURCE_MAX_BYTES:
+                report.append(f'protected {path.name}: source asset exceeds the rescue file limit')
+                return False
         if preserve_models and not any(part.endswith(('.app', '.xcarchive')) for part in (path.name, *parts)):
             if any(Path(name).suffix.lower() in MEDIA_SUFFIXES for name in files):
                 report.append(f'protected {path.name}: contains loose media or recordings')
@@ -573,7 +586,7 @@ def nested_products(folder, retained_builds):
 
 
 def prune_nested_products(report, apply=False):
-    """Apply one five-build budget to generated products inside closure340."""
+    """Keep the latest generated mobile build inside closure340."""
     if not (ROOT/'VERSION.json').is_file():
         return dict(retainedBuilds=[], products=0, removedLogicalBytes=0)
     current = int(json.loads((ROOT/'VERSION.json').read_text())['build'])
@@ -584,7 +597,7 @@ def prune_nested_products(report, apply=False):
             latest = max(latest, int(plistlib.loads(store.read_bytes())['ApplicationProperties']['CFBundleVersion']))
         except (OSError, ValueError, KeyError, plistlib.InvalidFileException):
             continue
-    retained = set(range(latest-4, latest+1))
+    retained = {latest}
     folder = BUILD/'closure340'
     if not folder.is_dir():
         return dict(retainedBuilds=sorted(retained), products=0, removedLogicalBytes=0)
@@ -608,7 +621,7 @@ def prune_nested_products(report, apply=False):
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--retain', type=int, default=5, help='build versions to keep (default 5)')
+    parser.add_argument('--retain', type=int, default=1, help='build versions to keep (must be 1)')
     parser.add_argument('--active-days', type=int, default=0,
                         help='optional age guard; default 0 enforces the version limit')
     parser.add_argument('--model-min-mb', type=int, default=300,
@@ -625,12 +638,17 @@ def main() -> int:
                         help='reviewed pinned download plan; only retired model archive files can be removed')
     parser.add_argument('--prune-nested-products', action='store_true',
                         help='prune old generated closure340 products; preserve source and evidence folders')
+    parser.add_argument('--scan-generated-caches', type=Path, help='write a compiler-cache review plan; remove nothing')
+    parser.add_argument('--generated-cache-plan', type=Path, help='reviewed compiler-cache plan; source and dependencies stay')
+    parser.add_argument('--scan-generated-products', type=Path, help='write a plan for obsolete generated App products')
+    parser.add_argument('--generated-product-plan', type=Path, help='reviewed obsolete App product plan')
+    parser.add_argument('--retire-recovery-check', type=Path, help='reviewed completed recovery check; keep verified source inputs and proof')
     parser.add_argument('--apply', action='store_true', help='remove; default is a dry run')
     parser.add_argument('--refresh', action='store_true',
                         help='ignore the size cache and re-measure .build now')
     args = parser.parse_args()
-    if not 1 <= args.retain <= 5:
-        print('retain must be between 1 and 5')
+    if args.retain != 1:
+        print('retain must be 1 under the 2026-11-18 storage rule')
         return 2
     if bool(args.share_model_plan) != bool(args.live_model_root):
         parser.error('--share-model-plan and --live-model-root must be used together')
@@ -650,6 +668,44 @@ def main() -> int:
 
 def run(args) -> int:
     report: list = []
+    if getattr(args,'retire_recovery_check',None):
+        from recovery_check_retention import execute
+        result=execute(ROOT,args.retire_recovery_check,args.apply)
+        output=BUILD/f'_retention-recovery-{time.strftime("%Y%m%d-%H%M%S")}-{result["action"]}.json'
+        output.write_text(json.dumps(result,indent=2)+'\n')
+        if args.apply:SIZES_CACHE.unlink(missing_ok=True)
+        print(json.dumps(dict(result,receipt=str(output))))
+        return 0
+    if getattr(args, 'scan_generated_products', None) or getattr(args, 'generated_product_plan', None):
+        from build_product_retention import scan, execute
+        if getattr(args, 'scan_generated_products', None):
+            if args.apply:raise ValueError('A product scan cannot remove files.')
+            result=scan(ROOT,args.scan_generated_products)
+            print(json.dumps(dict(plan=str(args.scan_generated_products),products=len(result['files']),latest=result['latest'],
+                                  allocatedBytes=sum(r['allocatedBytes'] for r in result['files']))))
+        else:
+            result=execute(ROOT,args.generated_product_plan,args.apply)
+            output=BUILD/f'_retention-products-{time.strftime("%Y%m%d-%H%M%S")}-{result["action"]}.json'
+            output.write_text(json.dumps(result,indent=2)+'\n')
+            if args.apply:SIZES_CACHE.unlink(missing_ok=True)
+            print(json.dumps(dict(result,receipt=str(output))))
+        return 0
+    if getattr(args, 'scan_generated_caches', None) or getattr(args, 'generated_cache_plan', None):
+        from generated_cache_retention import make_plan, execute
+        if getattr(args, 'scan_generated_caches', None):
+            if args.apply:
+                raise ValueError('A cache scan cannot remove files.')
+            result = make_plan(ROOT, args.scan_generated_caches)
+            print(json.dumps(dict(plan=str(args.scan_generated_caches), paths=len(result['files']),
+                                 allocatedBytes=sum(r['allocatedBytes'] for r in result['files']))))
+        else:
+            result = execute(ROOT, args.generated_cache_plan, args.apply)
+            output = BUILD/f'_retention-cache-{time.strftime("%Y%m%d-%H%M%S")}-{result["action"]}.json'
+            output.write_text(json.dumps(result, indent=2)+'\n')
+            if args.apply:
+                SIZES_CACHE.unlink(missing_ok=True)
+            print(json.dumps(dict(result, receipt=str(output))))
+        return 0
     if getattr(args, 'retire_download_plan', None) or getattr(args, 'prune_nested_products', False):
         result = dict(action='applied' if args.apply else 'dry-run')
         if getattr(args, 'retire_download_plan', None):

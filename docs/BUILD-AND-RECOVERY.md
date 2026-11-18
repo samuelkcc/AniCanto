@@ -1,36 +1,60 @@
-# Source delivery and restoring AniCanto
+# Restore and rebuild the desktop application
+> Language standard: English, ASD-STE100 style. See docs/DOCUMENTATION-STANDARD.md.
 
-## What to keep
+## Keep the source and matching release assets
 
-For each desktop release, keep the matching Mac ZIP or Windows EXE, `available-source-materials.tar.gz`, and `SHA256SUMS.txt`. The source attachment contains the published desktop application source and the checked third-party source inputs, patches, lockfiles and available build recipes assembled by `scripts/source_materials.py`. `SOURCE-MATERIALS.json` identifies its contents; `AniCanto/SOURCE-MANIFEST.json` identifies application files. GitHub's automatic source ZIP contains the repository snapshot, **not** all separately attached third-party source materials.
+The public desktop repository contains Mac and Windows application source only.
+Private iPhone and iPad implementation belongs in the separate private mobile repository.
+Keep the matching source-materials attachment. GitHub automatic source ZIP files do not include every third-party source attachment.
+The 0.25.54 release keeps its original `v0.25.54-beta` tag. It is now the latest formal release.
 
-This can recover the published application code if the development computer is lost. It is **not a complete computer or project backup**, a bundled development environment, or a guarantee of a clean-machine/bit-identical rebuild. User videos, projects, generated takes, settings, installed runtimes, downloaded model weights and credentials are not published. The iPad development tree is outside this desktop source delivery.
+## Recovery command
 
-Back up personal projects, media and any locally held model files separately, with the app closed. If only the application is lost, reinstalling the matching published binary is the simplest recovery; rebuilding requires a development setup.
+Install Python 3.12 or newer, compatible Xcode tools, Rust and cargo-xwin on an Apple Silicon Mac.
+The tested environment uses Xcode 27.2, Python 3.14.7, Rust 1.97.0 and cargo-xwin 0.23.0.
+Install the Rust Windows MSVC target. The recovery build selects Microsoft SDK 10.0.22621.
 
-## Restore and verify the source
+Clone the current public desktop repository. From that checkout, run:
 
-1. Download the four release assets from the same version. Check the three archive/executable digests against `SHA256SUMS.txt` (for example, `shasum -a 256` on macOS or `Get-FileHash -Algorithm SHA256` on Windows).
-2. Extract `available-source-materials.tar.gz` to a new development folder. The `AniCanto/` subfolder is the application source. Keep the neighbouring `native/`, `tools/`, `desktop-crates/` and other source materials alongside it for reference and licence obligations.
-3. Verify files against the two JSON manifests. Preserve notices, licence texts and patches when rebuilding or redistributing. Optional model weights have separate licences and download revisions.
+```sh
+python3 scripts/restore_desktop_release.py --destination ../desktop-recovery --assets ../release-downloads --download --build
+```
 
-## Development environment and build entry points
+Use a new destination. The tool does not replace an installed App or read personal projects.
+The tool downloads the exact Mac ZIP, Windows EXE and source attachment for 0.25.54.
+It checks their pinned SHA-256 values, 4,700 source-material files and 3,422 application-source files.
+It restores unchanged native tools and the framed icon from the matching public binary package.
+It creates an isolated Cargo home and vendors 479 locked crates from the source attachment.
+The older notice recipe needs a checked adapter to read that Cargo home. The original recipe remains available beside its hash.
+The build prepares both hosts, packages both platforms and runs both product verifiers.
+The output receipt and logs remain inside the recovery directory.
 
-The desktop interface uses Tauri/Rust with a shared Python worker. The current Mac adapter also needs Swift/Xcode on an Apple Silicon Mac. Windows uses the x64 MSVC target; builds from macOS use `cargo-xwin`. Python 3, Rust/Cargo, the platform SDKs, FFmpeg and the applicable native/Python prerequisites must be installed or prepared. Model inference has its own deployment requirements.
+## Verification limits
 
-- `VERSION.json`, `core/Cargo.lock`, `studio/src-tauri/Cargo.lock` and `windows/launcher/Cargo.lock` pin release identity and Rust dependencies.
-- `scripts/prepare_shared_studio.py` generates the shared interface assets from checked source originals. Original activity images, their manifest and atlas mapping are kept under `studio/web/assets/assistant-activities/`; the source export checks their hashes. Keep this directory and `docs/APPLICATION-USER-GUIDE.json` when restoring the desktop source.
-- `scripts/build_shared_host.py` builds the Mac host; `--target x86_64-pc-windows-msvc` builds the Windows host. Its `--locked --offline` build requires the Cargo dependency cache to be prepared first. Attached crate files are source inputs, not an automatically configured Cargo vendor directory.
-- `scripts/build.py` is the cold Mac native application entry point. It expects its native tools and assets to be prepared; choose an isolated output through `CANTO_BUILD_APP`. It is not a one-command replacement for installing all prerequisites.
-- `scripts/stage_release.py` is an incremental Swift worker build and requires an existing bundled application in `dist`; it cannot bootstrap a missing base release by itself.
-- `scripts/package_shared_studio.py` combines the built Mac host with the versioned staged native application. `scripts/build_portable_windows.py` combines the built Windows host, launcher, helpers and prepared tool payload; it also requires prepared tools and cached locked dependencies.
+On 2026-11-18, the separate preparation and build commands pass in an isolated directory.
+Both Mac and Windows product verifiers pass. The new combined `--build` entry point has not been rerun as one command.
+The rebuilt Mac App passes signature and native-contract checks. Windows hardware execution and GPU inference remain untested.
+This is an application-source rebuild with checked released third-party binary tools.
+It is not a complete compiler, operating-system SDK or third-party-tool rebuild from source.
+It does not certify a bit-identical output or future upstream availability.
+Xcode, Microsoft SDK access, platform accounts and compatible development tools remain external prerequisites.
 
-See [shared desktop architecture and build validation](SHARED-STUDIO.md) and the native/component manifests under `licenses/` for details. The checked build paths used an existing prepared development environment. **A full clean-computer rebuild has not been certified.** General-purpose compilers/SDKs and optional model downloads remain external prerequisites; changes in those tools or download availability may require maintenance.
+## Source and asset coverage
 
-## Before replacing an installed application
+The source attachment includes application code, active interface artwork, synthetic voice references, notices, patches and locked dependencies.
+The older source allowlist omitted `Resources/app-icon-art-framed.png`.
+The restore tool recovers that asset from the checked Mac release. New source exports include it directly.
+The ZIP extractor omits AppleDouble metadata so those files cannot break bundle signing.
+Required source-delivery and relink materials remain separate from disposable compiler output.
 
-Build into a separate staging directory. Check source/payload identity, required notices, private-data scans, signatures and startup before installation. Stop the application before replacing its files, keep a rollback copy, and preserve user projects. Test actual inference on the intended hardware: cross-compilation and a matching archive hash do not establish Windows GPU or voice quality acceptance.
+## Personal recovery
 
-## 中文說明
+User films, saved projects, generated recordings, model libraries, account credentials and signing keys are outside this code backup.
+Back up personal data separately with the App closed.
+Optional models use pinned download definitions. Do not publish personal media or signing material with application source.
 
-每個桌面版本會同時提供對應源碼及第三方來源包，可以下載返嚟繼續修改或重建。呢份包唔係成部電腦嘅備份，亦未驗證全新電腦一鍵重建：需要另外準備編譯工具、SDK、執行環境同模型。你自己嘅影片、專案、錄音、設定同已下載模型要另外備份；唔會公開放上 GitHub。只需要恢復使用時，直接安裝相同版本嘅 Mac ZIP／Windows EXE 會較簡單。
+## Local retention
+
+From 2026-11-18, keep only the latest generated desktop version and latest generated mobile version.
+Keep all required source, assets, records and matching-source materials.
+Run the reviewed retention tool before removal. Never treat source workspaces as ordinary compiler caches.

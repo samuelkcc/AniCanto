@@ -16,6 +16,27 @@ spec.loader.exec_module(retention)
 
 
 class RetentionTests(unittest.TestCase):
+    def test_interface_assets_and_locales_are_rescued(self):
+        names = ['avatar.png', 'font.otf', 'Localizable.strings', 'shader.metal', 'view.tsx', 'help.yaml']
+        for name in names:
+            self.file('old/assets/' + name, ('unique ' + name).encode())
+        self.assertTrue(retention.rescue(self.build/'old', {}, [], 300, [10000], [10000, 0]))
+        rows = [json.loads(line) for line in (self.build/'_retention-archive/source-origins.jsonl').read_text().splitlines()]
+        self.assertEqual({Path(row['source']).name for row in rows}, set(names))
+        for row in rows:
+            self.assertEqual(hashlib.sha256((self.build/row['archive']).read_bytes()).hexdigest(), row['sha256'])
+
+    def test_large_source_asset_prevents_tree_removal(self):
+        image = self.file('old/art.png', b'unique large asset')
+        with patch.object(retention, 'SOURCE_MAX_BYTES', 3):
+            self.assertFalse(retention.rescue(image.parent, {}, [], 300, [10000], [10000, 0]))
+        self.assertTrue(image.exists())
+
+    def test_nested_required_archive_prevents_tree_removal(self):
+        archive = self.file('old/sdk/source-offer-445.tar.gz', b'required source')
+        self.assertFalse(retention.rescue(self.build/'old', {}, [], 300, [10000], [10000, 0]))
+        self.assertTrue(archive.exists())
+
     def test_source_delivery_archives_survive_the_five_build_budget(self):
         archive=self.file('public-review/AniCanto-source-delivery-0.25.49.tar.gz',b'required corresponding source')
         payload=self.file('public-review/AniCanto-0.25.49.zip',b'generated payload')
@@ -290,7 +311,7 @@ class RetentionTests(unittest.TestCase):
         (old/'adapter.py').write_text('unique archived adapter')
         sdk=self.file('closure340/release394/source/library.c',b'required library source')
         result=retention.prune_nested_products([],True)
-        self.assertEqual(result['retainedBuilds'],[395,396,397,398,399])
+        self.assertEqual(result['retainedBuilds'],[399])
         self.assertEqual(result['products'],1);self.assertFalse(old.exists())
         self.assertEqual(sdk.read_bytes(),b'required library source')
         rescued=list((self.build/'_retention-archive').rglob('adapter.py'))

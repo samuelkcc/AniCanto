@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "scope": "Local source candidate with checksum-approved original synthetic references; no executable/model/private recording publication",
+  "scope": "Desktop source snapshot with verified recovery tools and latest-only local build retention.",
   "published": false,
   "legalApproval": false,
   "files": [
@@ -3456,13 +3456,13 @@
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
-      "sha256": "0bd1b9edabeadab880c034248d5a34f02eed33cbf39103eb6a38db99a4b5a12a",
-      "bytes": 5329
+      "sha256": "d1e64d6f2c30859c3071613a1f43039338337f32ee0f96511cb0b46a230a2755",
+      "bytes": 3744
     },
     {
       "path": "docs/BUILD-STORAGE-POLICY.md",
-      "sha256": "98294865814073157ca429bbe9b90174b3f64ebdfabff61d1233701c86070d13",
-      "bytes": 7393
+      "sha256": "2fe58afd362fe9c00ab7a27449066a1a2c2abf768953336b5ba3c249c40f8ca5",
+      "bytes": 10083
     },
     {
       "path": "docs/DESKTOP-ACCELERATION-0.24.71.md",
@@ -13876,8 +13876,8 @@
     },
     {
       "path": "scripts/build-retention.py",
-      "sha256": "07b361013c8cdc38eae4e3eee13f9989bc285a96a1fe59c21ac7c1dc0d7c1793",
-      "bytes": 40390
+      "sha256": "2e4b18cb9fcfd93e20c6b0100731fc45ca61c12044c3aae8fd7c60c24c652e5b",
+      "bytes": 44365
     },
     {
       "path": "scripts/build.py",
@@ -13961,8 +13961,8 @@
     },
     {
       "path": "scripts/package_shared_studio.py",
-      "sha256": "88a9e4b424ae234e5d77a9ac548f8d940a6c76b8ab213793dec7ffa460005911",
-      "bytes": 9162
+      "sha256": "05939dd485a6af337651dd65bde29f8bba9571d1aac1c00f7ec198e9a11f286e",
+      "bytes": 9241
     },
     {
       "path": "scripts/package_windows.py",
@@ -13981,8 +13981,8 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "b0feb4e42a38a3ddc86e9fdf837348233084740457cc0f486eeed7896c4fc469",
-      "bytes": 18490
+      "sha256": "6fe1a82e36f48f87773a0a72f6c6b600599ed1cd8c520c9bb0c1bd6ce46e883c",
+      "bytes": 18544
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -15406,8 +15406,8 @@
     },
     {
       "path": "tests/test_build_retention297.py",
-      "sha256": "5cdb30b2ed6b77f975000bd8d1a56c3a16aacf48da9b54ca0949750dd47d5c58",
-      "bytes": 18105
+      "sha256": "b66f2cc35376e14ff8a1dacc5f5e1d9ffe55bd9d7661bc68fbd2413301526669",
+      "bytes": 19407
     },
     {
       "path": "tests/test_cantonese_alignment.py",
@@ -17113,6 +17113,51 @@
       "path": "windows/workflow_settings.py",
       "sha256": "637579414c9c01165d09557497531917d118cc9a3d44e8ecc19ced483f23ad34",
       "bytes": 2039
+    },
+    {
+      "path": "Resources/app-icon-art-framed.png",
+      "sha256": "198d44284253d58df01ca76e0153d82d22918d57d935a43439662afe59f983a2",
+      "bytes": 1485771
+    },
+    {
+      "path": "scripts/build_product_retention.py",
+      "sha256": "fd5a35afa3b99447a42ff3a11f6de2447c6a2370873e5050779d195a160b0259",
+      "bytes": 9326
+    },
+    {
+      "path": "scripts/generated_cache_retention.py",
+      "sha256": "0b82bed79bace7f40fab884ba91c382207ef799b581c5dc7a6ec8424f91e561f",
+      "bytes": 8224
+    },
+    {
+      "path": "scripts/recovery_check_retention.py",
+      "sha256": "6de175cf99f5959b211e5465ce4b5ce392273e6d3f900bb9df66b3b311db1b9b",
+      "bytes": 3905
+    },
+    {
+      "path": "scripts/restore_desktop_release.py",
+      "sha256": "5a42be1001f1efead5418b0de87d165bff50504f72147f776bcc540f78538f5d",
+      "bytes": 10964
+    },
+    {
+      "path": "tests/test_build_product_retention.py",
+      "sha256": "d6c3eacc5f3680564d7f71745ee8cc76e8f5fdfa0a73e9c9423af5d8f10a96f7",
+      "bytes": 5069
+    },
+    {
+      "path": "tests/test_generated_cache_retention.py",
+      "sha256": "98c85ee5c8a03505698c87fb4c3564f010b6c1c86b9a090d0001e2ac3bba844f",
+      "bytes": 4555
+    },
+    {
+      "path": "tests/test_recovery_check_retention.py",
+      "sha256": "ca048b6c352a6f3fd8af7befe5179a2b1b9e098283b88206c0b2b8faf948aaed",
+      "bytes": 2963
+    },
+    {
+      "path": "tests/test_restore_desktop_release.py",
+      "sha256": "2b0ee2349c3d6eed4f58968ca1d741b0f46d774c6c18d058d9d7dca2c4e62086",
+      "bytes": 1562
     }
   ]
 }

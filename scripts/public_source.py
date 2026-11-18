@@ -21,6 +21,7 @@ SECRET=re.compile(rb'(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pou
 IMAGE_SUFFIXES={'.jpg','.png','.otf','.icns','.ico'}
 THEMES={'studio','energy','ocean','ninja','retro','forest','future','mint','moonflower'}
 REVIEWED_ASSETS={'Resources/AniCanto.icns','Resources/app-icon-art.png','Resources/AniCanto-icon.png',
+                 'Resources/app-icon-art-framed.png',
                  'Resources/fonts/NotoSansCJKtc-Regular.otf','studio/src-tauri/icons/icon.ico','studio/src-tauri/icons/icon.png'}
 REVIEWED_ASSETS|={'Resources/pet-'+theme+'.png' for theme in THEMES}
 REVIEWED_ASSETS|={'Resources/welcome-art/welcome-'+theme+'-'+str(i)+'.png' for theme in THEMES for i in range(1,5)}

@@ -4,6 +4,14 @@
 
 ## Decision
 
+Samuel changed generated-build retention on 2026-11-18.
+Keep only the latest desktop build version and the latest iOS/iPadOS build version.
+This rule replaces the previous five-version budget.
+Remove obsolete generated App bundles, archives, installation packages and compiler caches.
+Keep source, records, required assets, matching-source and relink materials, installed models and owner data.
+Keep App Store and TestFlight state records even when their obsolete local packages are removed.
+A protected source parent must not protect obsolete generated children.
+
 Samuel changed the storage rule on 2026-11-06.
 Do not keep an obsolete download only because a new download takes time.
 Remove an unused copy when its fixed source, revision and checksum permit restoration.
@@ -42,7 +50,7 @@ The explicit saved-work cleanup implementation remains unshipped at this record 
 10. Verify active source hashes, current application metadata and retained build identities after removal.
 
 The nested product pass removes only recognized old `.app` and `.xcarchive` directories inside `closure340`.
-It keeps five build numbers through the current desktop build and the newer production upload.
+It keeps the latest mobile build number. Desktop products use a separate latest-version identity.
 It does not remove parent workspaces, SDK directories, source delivery materials or loose evidence.
 The tool rescues unique source and licence files before product removal.
 Unknown product identities remain untouched.
@@ -109,6 +117,34 @@ See mobile/Validation/source-delivery-retention438-2026-11-13.json.
 Keep explicitly named corresponding-source, source-delivery and source-offer archives outside the generated-build budget.
 Also protect anicanto-local-media-sdk-sources archives. These are required matching-source materials.
 The rule applies to .tar.gz, .tar.xz and .zip files. Keep these archives under compliance where possible.
-Generic available-source-materials release snapshots retain the existing five-release budget. They are not a matching-source obligation marker.
+Generic available-source-materials release snapshots now use the one-release budget. They are not a matching-source obligation marker.
 The first guard also exempted generic release snapshots. A regression test exposed that overbroad classification.
 The final guard preserves explicit delivery materials and retains the existing release-snapshot budget.
+
+## Reviewed generated cleanup, 2026-11-18
+
+Use `--scan-generated-caches <plan>` to record generated compiler-cache paths and tree identities.
+Use `--generated-cache-plan <plan>` for a dry run. Then use the same command with `--apply`.
+The pass excludes source, dependency checkouts, installed models and active native inputs.
+It keeps an exact current Windows host when the delivered-product verifier requires that host.
+AppleDouble metadata can be removed from an isolated restored App after its header and content hash pass.
+These metadata files are not ordinary bundle resources. A ZIP restore must omit them.
+
+Use `--scan-generated-products <plan>` to read older AniCanto App, archive and IPA identities.
+Use `--generated-product-plan <plan>` for a dry run. Then use the same command with `--apply`.
+The pass keeps the latest desktop version and the latest mobile version independently.
+Unknown identities, newer products, live dependency targets and changed plans stop removal.
+Before removal, the pass preserves copied program text with content hashes and original paths.
+Loose films, recordings, source workspaces, required SDK inputs and records outside bundles remain unchanged.
+Record logical bytes removed and the change in available volume space separately.
+
+## Completed recovery checks
+
+A successful isolated recovery check must not become a permanent duplicate source and binary tree.
+Use `--retire-recovery-check <plan>` for a dry run, then use the same command with `--apply`.
+Require successful desktop build and product-verifier receipts.
+Keep all three exact release inputs locally outside the selected scratch child. Verify their SHA-256 values again.
+Check all source-material rows. A changed recipe must match its recorded adapter and the retained canonical source.
+Reject an unexpected top-level input, a unique source change, an active native link or a changed tree.
+Copy the verified recovery receipt outside scratch before removal. Keep the source archive, maintenance tools and logs.
+This removes a reproducible test workspace. It does not remove authoritative source, installed models or owner media.
