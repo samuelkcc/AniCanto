@@ -24,3 +24,5 @@ The internal shared authority remains the source. This public projection does no
 | WF-15 | Freeze the duration choice. Off keeps full first takes at source onset, with overlap and a held final frame if needed. On permits one measured timing rewrite. Source clocks, captions, and internal pauses stay unchanged. |
 | WF-16 | Budget the first translation against original speech time in Cantonese, Mandarin, and English. Use language-aware soft limits; preserve complete meaning. This is first-draft work, not an extra review or retake. |
 | WF-17 | Excessive audible-overlap repair is an independent Expert option, default off. Only more than two seconds of confirmed simultaneous target speech permits one faithful rewrite and retake per affected line. Silence and empty gaps do not trigger it. |
+
+Confirmed removal of a completed video deletes its app-owned working files. Original movies, finished exports and installed models are kept. Shared separation audio remains available to other saved projects. Undo restores unfinished list items only.

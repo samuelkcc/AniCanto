@@ -127,7 +127,9 @@ The internal shared authority remains the source. This public projection does no
 
 | Rule ID | Shared requirement |
 | --- | --- |
-'''+ '\n'.join(rules)+'\n').encode()
+'''+ '\n'.join(rules)+'\n'+(
+    '\nConfirmed removal of a completed video deletes its app-owned working files. Original movies, finished exports and installed models are kept. Shared separation audio remains available to other saved projects. Undo restores unfinished list items only.\n'
+    if b'### Completed video removal, 2026-11-18' in raw else '')).encode()
     if Path(relative).as_posix()=='docs/RECOVERY-WORKFLOW-CONTRACT.json':
         try:document=json.loads(raw)
         except ValueError:return raw
@@ -153,6 +155,9 @@ The internal shared authority remains the source. This public projection does no
                 projected['desktopDubbing425']={key:update[key] for key in ('rule','platforms','sourceRevision','targetDraftRevision','cantoneseRevision','budgets','source','outputs','unchangedWorkflowRules')}
             if 'desktopDialogue441' in document:
                 projected['desktopDialogue441']=document['desktopDialogue441']
+            if 'completedVideoRemoval20261118' in document:
+                removal=document['completedVideoRemoval20261118']
+                projected['completedVideoRemoval20261118']={key:removal[key] for key in ('rule','desktop','evidence','delivery')}
             authority=Path(root)/'docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md'
             if authority.is_file():
                 projected['activeRequirements']=[dict(id=parts[1].strip(),requirement=parts[2].strip())

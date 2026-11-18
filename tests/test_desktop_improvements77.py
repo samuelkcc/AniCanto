@@ -1,4 +1,4 @@
-import copy,json,sys,tempfile,unittest
+import copy,hashlib,json,sys,tempfile,unittest
 from pathlib import Path
 from unittest.mock import Mock,patch
 ROOT=Path(__file__).resolve().parents[1]
@@ -14,12 +14,55 @@ class DesktopImprovements(unittest.TestCase):
   self.app=Studio(self.root,ROOT/'Resources',platform='darwin')
   self.app.store.queue=[dict(id=k,video=str(self.root/(k+'.mkv')),status=s) for k,s in [('a','running'),('b','complete'),('c','paused'),('d','waiting')]]
   self.app.store.selected='a';self.app.store.save()
- def test_bulk_remove_retains_every_file_and_running_selection(self):
-  work=self.root/'jobs'/'b';work.mkdir(parents=True);audio=work/'voice.wav';audio.write_bytes(b'keep')
+ def test_bulk_remove_cleans_completed_work_and_restores_only_unfinished(self):
+  from project_store import sync,connect
+  row=self.app.store.queue[1];source=Path(row['video']);source.write_bytes(b'original')
+  work=self.root/'jobs'/'b';work.mkdir(parents=True)
+  review=work/'review.json';write(review,dict(config=dict(video=str(source))))
+  (work/'voice.wav').write_bytes(b'working take')
+  output=work/'finished.mp4';output.write_bytes(b'first finished movie')
+  other_output=work/'other.mp4';other_output.write_bytes(b'older finished movie')
+  sync(self.root,review,str(output),'complete');sync(self.root,review,str(other_output),'complete')
+  row.update(job=str(work),review=str(review),output=str(output))
+  self.app.store.save()
+  identity=[str(source.resolve()),8,123,0,45,'separation-version',0]
+  stem=self.root/'separations'/hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:20]
+  write(stem/'complete.json',identity);(stem/'dialogue.wav').write_bytes(b'cache')
+  other_stem=self.root/'separations'/('f'*20)
+  write(other_stem/'complete.json',identity)
+  unfinished=self.root/'jobs'/'c';write(unfinished/'review.json',{})
+  self.app.store.queue[2]['job']=str(unfinished)
+  model=self.root/'models'/'model.weights';model.parent.mkdir();model.write_bytes(b'model')
   result=self.app.dispatch('remove-videos',dict(ids=['b','c']))
-  self.assertEqual([r['id'] for r in result['state']['queue']],['a','d']);self.assertEqual(result['state']['selected'],'a');self.assertEqual(audio.read_bytes(),b'keep')
+  self.assertEqual([r['id'] for r in result['state']['queue']],['a','d'])
+  self.assertEqual(result['state']['selected'],'a');self.assertEqual(result['completedIDs'],['b']);self.assertEqual(result['failed'],[])
+  self.assertFalse(work.exists());self.assertFalse(stem.exists());self.assertTrue(unfinished.exists());self.assertTrue(other_stem.exists())
+  self.assertEqual(source.read_bytes(),b'original');self.assertEqual(model.read_bytes(),b'model')
+  self.assertEqual((self.root/'exports'/'finished.mp4').read_bytes(),b'first finished movie')
+  self.assertEqual((self.root/'exports'/'other.mp4').read_bytes(),b'older finished movie')
+  with connect(self.root) as db:
+   self.assertEqual(len(db.execute('SELECT path FROM outputs WHERE project=""').fetchall()),2)
   self.app.dispatch('restore-videos',dict(batch=result['batch']));self.app.dispatch('restore-videos',dict(batch=result['batch']))
-  self.assertEqual(len(self.app.store.queue),4)
+  self.assertEqual({r['id'] for r in self.app.store.queue},{'a','c','d'})
+ def test_failed_cleanup_leaves_completed_video_in_list(self):
+  row=self.app.store.queue[1];folder=self.root/'jobs'/'b';folder.mkdir(parents=True)
+  source=folder/'original.mp4';source.write_bytes(b'original')
+  row.update(job=str(folder),video=str(source))
+  result=self.app.dispatch('remove-videos',dict(ids=['b']))
+  self.assertEqual(result['removedIDs'],[]);self.assertEqual(result['failed'][0]['id'],'b')
+  self.assertIn('b',[item['id'] for item in result['state']['queue']])
+  self.assertEqual(source.read_bytes(),b'original')
+ def test_keeps_shared_separation_until_last_completed_video_is_removed(self):
+  first,second=self.app.store.queue[1:3]
+  second.update(status='complete',video=first['video'])
+  identity=[str(Path(first['video']).resolve()),8,123,0,45,'separation-version',0]
+  stem=self.root/'separations'/hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:20]
+  write(stem/'complete.json',identity)
+  self.app.dispatch('remove-videos',dict(ids=['b']))
+  self.assertTrue(stem.exists())
+  result=self.app.dispatch('remove-videos',dict(ids=['c']))
+  self.assertIsNone(result['batch']);self.assertEqual(result['completedIDs'],['c'])
+  self.assertFalse(stem.exists())
  def test_bulk_invalid_or_running_selection_is_atomic(self):
   before=self.app.store.path.read_bytes()
   for ids in [['a','b'],['b','gone'],['b','b'],[],['b',1]]:

@@ -540,7 +540,10 @@ class Studio:
             return dict(state=self.state(),token=token,scale=result['scale'],offset=result['offset'],count=len(result['cues']),sample=result['cues'][:8]+result['cues'][-2:])
         if op=='remove-videos':
             from queue_library import detach
-            result=detach(self.store,p.get('ids'),self.root/'studio'/'removed-videos.json')
+            from desktop_cleanup import remove
+            def clean_completed(row, others):
+                remove(self.root,row,others,completed_list_removal=True)
+            result=detach(self.store,p.get('ids'),self.root/'studio'/'removed-videos.json',clean_completed)
             return dict(state=self.state(),**result)
         if op=='restore-videos':
             from queue_library import restore

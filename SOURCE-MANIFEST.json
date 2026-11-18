@@ -1331,8 +1331,8 @@
     },
     {
       "path": "Resources/queue_library.py",
-      "sha256": "0c1cb23d3a3875305e05a50b4fa5f04483cae0a248a01b701640b28ad8df9898",
-      "bytes": 1820
+      "sha256": "664749278770bbef904f3cc9371f03b93c9b5d024161780f50c0eaa5f814eb74",
+      "bytes": 2739
     },
     {
       "path": "Resources/qwen-requirements.lock",
@@ -3451,8 +3451,8 @@
     },
     {
       "path": "docs/APPLICATION-USER-GUIDE.json",
-      "sha256": "26dbb31804436ed0248a592b78371bf4df36059821054f7bf2547757b029a815",
-      "bytes": 787883
+      "sha256": "9b9387484e6a43cd0d251d48abdb1b4c2a3846c6ff8e5ba77926b8ab6ca72858",
+      "bytes": 792533
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
@@ -3501,8 +3501,8 @@
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "9cc5c184b0b301500caed9399b843cebf20e428216df7eb52ed0660940827e62",
-      "bytes": 3679
+      "sha256": "d84baa473d9a15c01a78b75cfa3ee217799003c255b9c9c76c5fbf043bb7111d",
+      "bytes": 3930
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
@@ -3731,8 +3731,8 @@
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "16396e204d3265c97505044811a25972d28a92373d8ed300f4108bc3f61a045d",
-      "bytes": 10899
+      "sha256": "19f53e47d72c4437feeb0742f9c40a3b1a426b8c9033b0b375f69c9bdd6238a2",
+      "bytes": 11543
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -13981,8 +13981,8 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "6fe1a82e36f48f87773a0a72f6c6b600599ed1cd8c520c9bb0c1bd6ce46e883c",
-      "bytes": 18544
+      "sha256": "e0e561a2a30dfb96ca14703372001d1ed2425265a5f545aa399d0a240c2a6b98",
+      "bytes": 19128
     },
     {
       "path": "scripts/python_installer_assets.py",
@@ -14036,8 +14036,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "dbba6faa345df69223bd0df579798903aa3396467aa78df999f0848e09ce68cc",
-      "bytes": 69277
+      "sha256": "59c76d6e876195c50f60e2e29a9ecb00311b06c1dfb61693b926835f65b2c7e7",
+      "bytes": 69459
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -14316,8 +14316,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "e72de70a94195a3b06cbf67ddbac5fed9f1d0675d58f696a2b9d4926d91be18b",
-      "bytes": 242700
+      "sha256": "6c08e646a302795718c54f10560f624834ef29d4d4eab760a80643265529d37c",
+      "bytes": 243371
     },
     {
       "path": "studio/web/appearance.js",
@@ -14671,8 +14671,8 @@
     },
     {
       "path": "studio/web/queue-library.js",
-      "sha256": "f5ff1e1b7fd9be6d130666384d11b34b5fcff6f0a75e0637479c81bf2714b395",
-      "bytes": 1130
+      "sha256": "7280372e70b72f693c3bfe46be481d2df86e847b8c935d4a5ea33d5853d7b7a8",
+      "bytes": 1182
     },
     {
       "path": "studio/web/queue-order.js",
@@ -14741,8 +14741,8 @@
     },
     {
       "path": "studio/web/storage-copy.js",
-      "sha256": "702072ab5154b46e4e54ba5f5db5572a4177cf31ff4a2beca6d930e78c3de786",
-      "bytes": 4672
+      "sha256": "aa92c014b144894efb65b95f3aa0516765d9f4aa029579fcd739da7104018a17",
+      "bytes": 5583
     },
     {
       "path": "studio/web/styles.css",
@@ -15121,8 +15121,8 @@
     },
     {
       "path": "tests/shared_improvements77_ui.cjs",
-      "sha256": "5d6f56a5fac1cb4c49ae33f71b85dad72312796bfc0e606c9b4b75df3cbc7a45",
-      "bytes": 6587
+      "sha256": "acd133188aa2336cb8371135418dba2a596d7119a0f1b8c6f9c3c7c02654c676",
+      "bytes": 6718
     },
     {
       "path": "tests/shared_installation_modules.cjs",
@@ -15546,8 +15546,8 @@
     },
     {
       "path": "tests/test_desktop_improvements77.py",
-      "sha256": "bb9ffa24744802eef19ff7c46bc4164b629cbda9f9e384bfad59aa5494887afe",
-      "bytes": 19090
+      "sha256": "4879d26d63b856e4087c0ed9f4b62f2141825b1aec4d9a3bd964b3f494ada660",
+      "bytes": 22017
     },
     {
       "path": "tests/test_desktop_operation_contract.py",
@@ -16661,8 +16661,8 @@
     },
     {
       "path": "tests/verify_improvements77_native.py",
-      "sha256": "4d14759519acb4633817e1c5149821d288ad94bbd0286110df81a9536c5bb9bd",
-      "bytes": 4657
+      "sha256": "a415039c8d96c66f7fc5caa17298798cf4fea3c38dce1110b321670d59342766",
+      "bytes": 4636
     },
     {
       "path": "tests/verify_mac_desktop.py",
@@ -16776,8 +16776,8 @@
     },
     {
       "path": "windows/desktop_cleanup.py",
-      "sha256": "7a2ddadf6e39a3783e12f57e8a568ad8c8358d0c04834437e7f8d01e42ec724c",
-      "bytes": 5728
+      "sha256": "c1c04c61a15042f6765771d10c43eea7de538aec832216fe770334dd988ffd71",
+      "bytes": 11046
     },
     {
       "path": "windows/desktop_state.py",

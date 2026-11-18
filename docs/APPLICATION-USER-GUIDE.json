@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-261-owned-reference-and-active-video",
+  "revision": "application-user-guide-264-completed-video-cleanup",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -3347,10 +3347,10 @@
           },
           "body": [
             {
-              "en": "The removal drawer lists queued videos. Use Select all, Select none or Completed only, check the chosen rows and confirm. Removing a queue item and deleting its processing files are different choices. Read the confirmation before deleting; keep original movies and finished exports unless you explicitly choose otherwise.",
-              "zh-HK": "移除側欄會列出影片；可用「全部選擇」、「取消全選」或「只選已完成」，核對選取項目後確認。移除清單項目與刪除處理檔案是不同操作；刪除前請閱讀確認內容，除非另有明確選擇，否則保留原片及完成成品。",
-              "zh-CN": "移除侧栏列出各条影片。可全选、全不选、只选已完成，再检查并确认。移除列表项目与删除其处理文件是不同操作；阅读确认内容，除非明确选择，否则保留原片与成品。",
-              "ja": "削除ドロワーで動画を一覧表示します。「すべて選択」「選択解除」「完了のみ」を使い、対象を確認します。キューからの除去と作業ファイルの削除は別です。確認内容を読み、明示的に選ばない限り元動画と完成品は保持してください。"
+              "en": "Open Manage video list and select the videos to remove. Confirming removal of a completed video permanently deletes its saved progress, project recordings, intermediate files and unshared separated audio. Original videos, finished exports and installed models are kept. Undo removal restores only unfinished items. Use Clear temporary files to clear saved work from older removals.",
+              "zh-HK": "開啟「管理影片清單」並選取要移除的影片。確認移除已完成的影片後，其轉換進度、專案錄音、中間檔案及獨用分離音軌將永久刪除。原片、已匯出成品及已安裝模型會保留。「復原移除」只可復原未完成項目。先前移除的影片如仍有工作檔案，可使用「清理暫存」。",
+              "zh-CN": "打开「管理影片列表」并选取要移除的影片。确认移除已完成影片后，其转换进度、项目录音、中间文件及独用分离音轨将永久删除。原片、已导出成品及已安装模型将保留。「撤销移除」仅恢复未完成项目。先前移除的影片如仍有工作文件，可使用「清理临时文件」。",
+              "ja": "「動画一覧を管理」で削除する動画を選びます。完了した動画を削除すると、保存した進捗、プロジェクトの録音、中間ファイル、他のプロジェクトと共有していない分離音声を完全に削除します。元動画、出力済みの動画、インストール済みモデルは保持します。削除を取り消せるのは未完了の項目だけです。以前に削除した動画の作業データは「一時ファイルを整理」で削除できます。"
             }
           ],
           "controlRefs": [],
@@ -4040,6 +4040,35 @@
               "zh-CN": "符合硬件要求的设备可在欢迎页直接点击基本模式或专家模式。侧边菜单提供编辑与预览、播放清单、配音器、学习模式和朗读模式。导入影片及管理来源列表统一在编辑与预览中操作，点击上方加号添加影片。播放清单先显示已保存成品，选择后才打开播放器。专家模式另提供对齐和试听报告及制作预设；其后为模型中心、偏好设置、使用手册和关于与许可。切换模式按钮位于菜单上方。",
               "en": "On eligible hardware, choose Basic or Expert on Welcome. The drawer offers Edit and preview, Playlist, Dubbing studio, Learning and Reading. Import and manage source videos in Edit and preview; use the upper Plus to add videos. Playlist shows saved outputs before opening the selected player. Expert also offers the alignment and listening report and Production defaults. Models, Preferences, Guide and About follow below. The mode switch stays at the top.",
               "ja": "対応する端末では、開始画面で基本・専門モードを選びます。メニューには編集とプレビュー、プレイリスト、音声スタジオ、学習、読み上げがあります。動画の読み込みと入力リストの管理は編集とプレビューで行い、上部のプラスから動画を追加します。プレイリストで保存済みの出力を選ぶと再生画面が開きます。専門モードには位置合わせ・試聴レポートと制作プリセットもあります。その下にモデル、環境設定、使い方、情報とライセンスが続きます。モード切り替えはメニューの上側にあります。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "shared-return-controls464",
+          "platforms": [
+            "iphone",
+            "ipad"
+          ],
+          "title": {
+            "en": "Return controls",
+            "zh-HK": "返回控制",
+            "zh-CN": "返回控件",
+            "ja": "戻る操作"
+          },
+          "body": [
+            {
+              "en": "Return controls use the same curved arrow as Dubbing studio. The icon has no circle. Its colour follows the selected theme on iPhone, iPad and opened or closed Duo. In list editing, Done finishes editing. Previous-line, seek, undo and reset controls keep their separate actions.",
+              "zh-HK": "返回控制統一使用與配音器相同的彎箭嘴，圖示沒有圓圈；iPhone、iPad 及展開或合上 Duo 的顏色均跟隨所選主題。清單編輯時，「完成」用於結束編輯。上一段、快退、復原及重設仍保留各自用途。",
+              "zh-CN": "返回控件统一使用与配音器相同的弯曲箭头，图标没有圆圈；iPhone、iPad 以及展开或合上 Duo 的颜色均跟随所选主题。编辑列表时，“完成”用于结束编辑。上一段、快退、撤销和重置仍保留各自用途。",
+              "ja": "戻る操作は吹き替えスタジオと同じ曲線矢印に統一します。円は付けず、iPhone、iPad、展開・折り畳みDuoの選択テーマ色に従います。リスト編集中の「完了」は編集を終了します。前の行、シーク、取り消し、リセットはそれぞれの操作を維持します。"
+            },
+            {
+              "en": "On a narrow screen, use the chapter-list button to open the guide index and search. Select a chapter to read it. The return arrow closes the guide. A wide screen keeps the index beside the selected chapter.",
+              "zh-HK": "窄畫面可按章節目錄按鈕開啟目錄及搜尋，再選擇章節閱讀。返回箭嘴會關閉使用手冊。寬畫面會在章節內容旁保留目錄。",
+              "zh-CN": "窄屏幕可按章节目录按钮打开目录和搜索，再选择章节阅读。返回箭头会关闭使用手册。宽屏幕会在章节内容旁保留目录。",
+              "ja": "狭い画面では章リストボタンで目次と検索を開き、章を選択します。戻る矢印でガイドを閉じます。広い画面では章の隣に目次を表示します。"
             }
           ],
           "controlRefs": [],
@@ -6741,16 +6770,22 @@
               "ja": "プレーヤーまたは再生リストで完成した出力を開き、動画や利用できる字幕をデバイスに保存します。「ファイル」の「この iPhone 内」または「この iPad 内」から AniCanto を開くと、確認画面に示された保存場所を確認できます。ローカル保存に専門モードの購入は不要です。生成内容の直接共有やクラウド保存先の選択画面はありません。"
             },
             {
-              "en": "Completed movies and saved speech already use the local Exports and SpeechStudio folders. Saving reuses these files without another large copy. Generated files outside Documents, such as a bundled subtitle or test recording, go to Saved Files. Existing files are not overwritten. System backups and actions taken in other apps follow your device settings; AniCanto does not control them.",
-              "zh-HK": "完成影片及已存配音已位於本機 Exports 和 SpeechStudio 資料夾，儲存時直接重用，不會再複製一份大檔案。Documents 以外的生成檔案，例如隨附字幕或測試錄音，會儲存到 Saved Files；既有檔案不會被覆寫。系統備份及其他 App 的操作依照裝置設定運作，並非由 AniCanto 控制。",
-              "zh-CN": "完成影片和已存配音已位于本机 Exports 和 SpeechStudio 文件夹，保存时直接复用，不会再复制一份大文件。Documents 以外的生成文件，例如附带字幕或测试录音，会保存到 Saved Files；既有文件不会被覆盖。系统备份及其他 App 的操作按设备设置运作，并非由 AniCanto 控制。",
-              "ja": "完成した動画と保存済み音声は、ローカルの Exports と SpeechStudio にあります。大きなファイルを複製せず、そのまま使用します。付属字幕やテスト録音など Documents 外の生成ファイルは Saved Files に保存し、既存ファイルを上書きしません。システムのバックアップや他のアプリでの操作は端末設定に従い、AniCanto は制御しません。"
+              "en": "New finished videos and subtitles use the source video name followed by -AniCanto. A number before -AniCanto prevents name collisions. Earlier output files stay unchanged. Saving an older output creates a named local file in Saved Files; an identical existing copy is reused. The save result uses the standard reminder popup.",
+              "zh-HK": "新成品影片及字幕採用原影片名稱，並在結尾加上 -AniCanto；同名時會在 -AniCanto 前加編號。舊成品檔案保留原狀。另存舊成品時，會在 Saved Files 建立易讀檔名；相同副本會直接重用。儲存結果使用標準提示彈窗。",
+              "zh-CN": "新成品视频及字幕采用原视频名称，并在结尾加上 -AniCanto；同名时会在 -AniCanto 前加编号。旧成品文件保留原状。另存旧成品时，会在 Saved Files 建立易读文件名；相同副本会直接复用。保存结果使用标准提示弹窗。",
+              "ja": "新しい完成動画と字幕は元動画名の末尾に-AniCantoを付けます。同名の場合は-AniCantoの前に番号を追加します。既存ファイルは変更しません。古い出力の保存ではSaved Filesに読みやすい名前を作成し、同一コピーがあれば再利用します。保存結果は標準の通知ポップアップで表示します。"
             },
             {
               "en": "The save controls stay below the movie details. An opened Duo uses equal-width save buttons in its bottom bar. A closed phone uses stacked buttons. Playback and Learning remain available.",
               "zh-HK": "儲存按鈕維持在影片資料下方。Duo 展開後，底部的儲存按鈕等闊排列；手機摺合或直向使用時上下排列。播放及學習功能保留。",
               "zh-CN": "保存按钮保留在影片资料下方。Duo 展开后，底部保存按钮等宽排列；手机折叠或竖屏时上下排列。播放及学习功能保留。",
               "ja": "保存ボタンは動画情報の下に表示します。開いた Duo では下部に同じ幅で並び、閉じた端末の縦画面では縦に並びます。再生と学習機能は引き続き利用できます。"
+            },
+            {
+              "en": "On iPhone, the player uses the upper-right curved return arrow to return to the same Playlist opened from the menu. There is no second purple Playlist button or separate list sheet.",
+              "zh-HK": "iPhone 播放器使用右上角的彎返回箭嘴，回到與功能選單相同的播放清單；不再另設下方紫色播放清單按鈕或另一個清單彈頁。",
+              "zh-CN": "iPhone 播放器使用右上角的弯曲返回箭头，回到与功能菜单相同的播放列表；不再另设下方紫色播放列表按钮或另一个列表弹页。",
+              "ja": "iPhoneのプレーヤーでは右上の円のない曲線矢印で、メニューと同じ再生リストに戻ります。下部の紫色ボタンや別のリストシートはありません。"
             }
           ],
           "controlRefs": [],
@@ -7047,16 +7082,22 @@
           },
           "body": [
             {
-              "en": "Each finished-video card shows two lines in its lower-right corner: the recorded translation model above the recorded dubbing model. This applies to iPhone, iPad and the opened Duo layout.",
-              "zh-HK": "每個已轉換影片的卡片會在右下角分兩行顯示模型：上方為翻譯模型，下方為配音模型。iPhone、iPad 及 Duo 展開介面採用相同排列。",
-              "zh-CN": "每个已转换视频的卡片会在右下角分两行显示模型：上方为翻译模型，下方为配音模型。iPhone、iPad 和 Duo 展开界面采用相同排列。",
-              "ja": "変換済み動画の各カードの右下に、上段は翻訳モデル、下段は音声生成モデルの2行で表示します。iPhone、iPad、展開したDuoでも同じ配置です。"
+              "en": "Each finished-video card shows three saved lines at the lower right: total conversion time in hours:minutes:seconds, translation model, then dubbing model. This applies to iPhone, iPad and opened Duo.",
+              "zh-HK": "每個成品卡片在右下角顯示三行保存資料：總轉換時間（時:分:秒）、翻譯模型、配音模型。iPhone、iPad 及 Duo 展開介面採用相同排列。",
+              "zh-CN": "每个成品卡片在右下角显示三行保存资料：总转换时间（时:分:秒）、翻译模型、配音模型。iPhone、iPad 和 Duo 展开界面采用相同排列。",
+              "ja": "完成動画のカードの右下に、総変換時間（時:分:秒）、翻訳モデル、音声生成モデルの順で3行表示します。iPhone、iPad、開いたDuoも同じ配置です。"
             },
             {
               "en": "These names come from the saved output record. Changing the current model preference does not change old output labels. An older output without model evidence shows Not recorded.",
               "zh-HK": "模型名稱根據該成品保存的記錄顯示。更改目前模型偏好不會改變舊成品的標籤；舊成品沒有模型記錄時會顯示「未記錄」。",
               "zh-CN": "模型名称根据该成品保存的记录显示。更改当前模型偏好不会改变旧成品的标签；旧成品没有模型记录时会显示“未记录”。",
               "ja": "モデル名は保存された作品の記録に基づきます。現在のモデル設定を変えても過去の作品の表示は変わりません。古い作品にモデル情報がない場合は「記録なし」と表示します。"
+            },
+            {
+              "en": "Time comes from that saved conversion or its identity-matched archived project. It excludes recorded pauses. Missing historical timing shows Not recorded. Current model preferences do not replace saved evidence.",
+              "zh-HK": "時間取自該次轉換保存的記錄，或身份相符的封存工作，不包含已記錄的暫停時間。舊成品缺少時間資料時顯示「未記錄」；目前模型偏好不會取代保存的證據。",
+              "zh-CN": "时间取自该次转换保存的记录，或身份相符的归档任务，不包含已记录的暂停时间。旧成品缺少时间资料时显示“未记录”；当前模型偏好不会取代保存的证据。",
+              "ja": "時間は保存された変換記録、またはIDが一致する保存済み処理から取得し、記録された一時停止時間を除きます。過去の時間情報がない場合は「記録なし」と表示します。現在のモデル設定で保存記録を置き換えません。"
             }
           ],
           "controlRefs": [],

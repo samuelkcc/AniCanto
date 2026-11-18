@@ -9,9 +9,9 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-232-desktop-dialogue-alignment",
+    "revision": "application-user-guide-264-completed-video-cleanup",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "77321bd8b14ec6c1ea9332f570e013d474c6126873a270789811a01744b769e6",
+    "sha256": "9b9387484e6a43cd0d251d48abdb1b4c2a3846c6ff8e5ba77926b8ab6ca72858",
     "controlGuideRevision": "workflow-controls-guide-84-desktop-dialogue-alignment",
     "controlGuideSHA256": "a9552e0a214a1ee6e0429c00783b1cf8fa443da70dc48b8ed5067e6a0254beed"
   },
@@ -150,6 +150,12 @@
     "wholeFilmAccepted": false,
     "publicationURL": "https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta",
     "publicSourceCommit": "cee79da31e8e976b099e1dffa559235ff4eaabbd"
+  },
+  "completedVideoRemoval20261118": {
+    "rule": "Confirmed removal of a completed video deletes its app-owned work after preserving original media and finished exports. Keep shared separation audio until the last retained project releases it. Keep installed models.",
+    "desktop": "The Mac and Windows shared host uses the same removal operation. Undo restores unfinished items only. Report failures and retain their list entries.",
+    "evidence": "Completed, shared-source, mixed-status and failure cases in test_desktop_improvements77.py.",
+    "delivery": "Source validation only. Packaged desktop and device acceptance are separate."
   },
   "activeRequirements": [
     {

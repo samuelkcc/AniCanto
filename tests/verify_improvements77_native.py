@@ -31,8 +31,9 @@ try:
   before=(folder/'review.json').read_bytes();impact=call('recording-impact',**params);assert impact['dialogueCount']==1;assert (folder/'review.json').read_bytes()==before
   call('update-recording-plan',expect=False,**params,impactToken='stale');updated=call('update-recording-plan',**params,impactToken=impact['token']);assert updated['settings']['audioRerunToken'];assert (folder/'review.json').read_bytes()==before
   suggestions=call('boundary-proposals',id=ident,draft=draft);assert suggestions['proposals'];split=call('apply-boundary',id=ident,draft=draft,proposalIndex=0,token=suggestions['token'],parts=dict(original=dict(left='こん',right='にちは'),text=dict(left='你',right='好')));assert len(split['draft']['segments'])==2;assert (folder/'voice.wav').is_file()
-  removed=call('remove-videos',ids=[ident]);assert not removed['state']['queue'];assert (folder/'voice.wav').is_file();restored=call('restore-videos',batch=removed['batch']);assert restored['state']['queue'][0]['id']==ident
-  result=dict(packagedNative=True,subtitlePreviewAndApply=True,stalePreviewRejected=True,waveforms=True,coverage=True,regenerationImpactGuard=True,wordBoundaryDraftOnly=True,metadataRemovalAndRestore=True,modelInference=False,sourceModified=False)
+  removed=call('remove-videos',ids=[ident]);assert not removed['state']['queue'];assert not folder.exists()
+  assert removed['completedIDs']==[ident] and removed['batch'] is None and Fixture.source.is_file()
+  result=dict(packagedNative=True,subtitlePreviewAndApply=True,stalePreviewRejected=True,waveforms=True,coverage=True,regenerationImpactGuard=True,wordBoundaryDraftOnly=True,completedWorkRemoval=True,modelInference=False,sourceModified=False)
   if os.environ.get('ANICANTO_TEST_REPORT'):Path(os.environ['ANICANTO_TEST_REPORT']).write_text(json.dumps(result,indent=2))
   print(json.dumps(result))
 finally:Fixture.tearDownClass()

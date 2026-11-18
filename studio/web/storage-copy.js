@@ -1,5 +1,8 @@
 // Storage controls use the same four product languages on Mac and Windows.
 const copy={
+ 'Removing completed videos permanently deletes their project recordings and working files. Original videos, finished exports and models are kept.':['移除已完成影片會永久刪除其專案錄音及工作檔案。原片、已匯出成品及模型會保留。','移除已完成视频会永久删除其项目录音和工作文件。原片、已导出成品和模型将保留。','完了した動画を削除すると、作業用の録音とファイルも完全に削除されます。元動画、出力済みの動画、モデルは保持されます。'],
+ 'Working files for completed videos were removed.':['已刪除完成影片的工作檔案。','已删除完成视频的工作文件。','完了した動画の作業ファイルを削除しました。'],
+ 'Some videos could not be removed':['部分影片未能移除','部分视频无法移除','一部の動画を削除できませんでした'],
  'Data removed':['已移除資料','已移除数据','削除したデータ'],
  'Saved desktop work and separation cache':['已儲存工作與分離音軌','已保存工作与分离音轨','保存した作業と分離音声'],
  'Saved working folders':['工作目錄','工作目录','作業フォルダ'],

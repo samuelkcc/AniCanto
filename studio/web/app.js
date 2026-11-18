@@ -88,7 +88,7 @@ let previewStreamID=null,previewHeartbeat=null;
 async function playVideo(element){const generation=previewToken;try{await element?.play();}catch(error){if(error?.name==='AbortError'&&(generation!==previewToken||!previewEnabled||element!==$('#video')))return;throw error;}}
 const playbackAsset=path=>/^http:\/\/127\.0\.0\.1:\d+\//.test(path||'')?path:asset(path);
 let previewPlayerDispose=null;
-function releasePreviewStream(){previewPlayerDispose?.();previewPlayerDispose=null;clearInterval(previewHeartbeat);previewHeartbeat=null;const id=previewStreamID;previewStreamID=null;if(id)invoke('studio_stop_stream',{id}).catch(()=>{});}
+function releasePreviewStream(){previewPlayerDispose?.();previewPlayerDispose=null;clearInterval(previewHeartbeat);previewHeartbeat=null;const id=previewStreamID;previewStreamID=null;if(id)return invoke('studio_stop_stream',{id}).catch(()=>{});}
 let previewEnabled=false,previewLoading=false,previewError='',previewProgress=null,previewFallback=false,previewOutput=false,previewTimer=null,helpQuery='',helpChapter='start',aboutSession=0;
 const finishedRunIDs=new Set(),conversionQueue=new ConversionQueue(),mediaRequests=new Map();
 let starting=false,startPromise=null,finishingRun=false,finishChain=Promise.resolve(),retryReviewStarting=false,retryReviewError='';
@@ -1093,10 +1093,27 @@ async function action(e){const b=e.target.closest('[data-action]');if(!b||b.disa
  if(a.startsWith('remove-select-')){const mode=a.slice('remove-select-'.length),ids=new Set(removableIDs(state.queue,mode));for(const box of $$('[data-remove-id]'))box.checked=!box.disabled&&ids.has(box.dataset.removeId);updateRemovalCount();return;}
  if(a==='remove-selected-videos'){
   const ids=$$('[data-remove-id]:checked:not(:disabled)').map(b=>b.dataset.removeId);if(!ids.length)return;
-  b.disabled=true;if(dirty&&ids.includes(state.selected))await save();const previous=state.selected,result=await rpc('remove-videos',{ids});state=result.state;
+  b.disabled=true;const previous=state.selected,rows=state.queue;
+  let result;
+  try {
+   if(ids.includes(previous)){
+    if(dirty)await save();
+    await releasePreviewStream();
+    for(const element of [$('#video'),$('#audition')]){
+     element?.pause();element?.removeAttribute('src');element?.load();
+    }
+   }
+   result=await rpc('remove-videos',{ids});
+  } finally {b.disabled=false;}
+  state=result.state;
   if(previous!==state.selected){releasePreviewStream();++previewToken;$('#video')?.pause();$('#audition')?.pause();snapshot={};draft=null;dirty=false;selectedCue=0;sourceTime=0;duration=0;mediaPath='';}
   await closeDrawer();render();if(previous!==state.selected&&state.selected){await refreshSnapshot();await loadMedia();}
-  await showDrawer('Videos removed',`<p>${esc(t('Saved work and recordings were retained.'))}</p><div class="row">${button('restore-removed-videos','Undo removal','undo','',`data-value="${esc(result.batch)}"`)}${button('close-drawer','Done',null,'primary')}</div>`);return;
+  const failures=(result.failed||[]).map(({id,reason})=>`<li>${esc(filename(rows.find(r=>r.id===id)?.video||id))}: ${esc(t(reason))}</li>`).join('');
+  await showDrawer(failures?'Some videos could not be removed':'Videos removed',
+   `${result.completedIDs?.length?`<p>${esc(t('Working files for completed videos were removed.'))}</p>`:''}
+   ${result.retainedWork?`<p>${esc(t('Saved work and recordings were retained.'))}</p>`:''}
+   ${failures?`<ul role="alert">${failures}</ul>`:''}
+   <div class="row">${result.batch?button('restore-removed-videos','Undo removal','undo','',`data-value="${esc(result.batch)}"`):''}${button('close-drawer','Done',null,'primary')}</div>`);return;
  }
  if(a==='restore-removed-videos'){const result=await rpc('restore-videos',{batch:v});state=result.state;await closeDrawer();render();return;}
  if(a==='detect-best-models'){
