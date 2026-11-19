@@ -1,5 +1,13 @@
 **English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
+<p align="center"><strong>AniCanto for iPhone and iPad</strong></p>
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-en.svg" height="44" alt="Download on the App Store"></a>
+</p>
+
+<p align="center"><a href="#download">Mac and Windows downloads</a></p>
+
 ## 0.25.51 Beta — dubbing workflow
 
 A new dubbing language now translates the retained original text again. Source analysis and verified voice references are reused. Other audio tracks and earlier outputs are kept. Target retries retain their previous draft and spent attempts. Hong Kong Cantonese first-draft examples are updated.

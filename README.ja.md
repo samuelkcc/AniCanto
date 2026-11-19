@@ -1,5 +1,13 @@
 [English](README.md) · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · **日本語**
 
+<p align="center"><strong>AniCanto iPhone・iPad 版</strong></p>
+
+<p align="center">
+  <a href="https://apps.apple.com/jp/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-ja.svg" height="44" alt="App Storeからダウンロード"></a>
+</p>
+
+<p align="center"><a href="#download">Mac・Windows 版のダウンロード</a></p>
+
 ## 0.25.54 Beta：吹き替え処理の更新
 
 エキスパートで人名の元の発音を指定できます。原音未確認と吹き替え欠落を分け、短い繰り返しの翻訳を既存の再試行回数内で拒否します。保存済みジョブと使用済み回数は保持します。

@@ -1,5 +1,13 @@
 **English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
+<p align="center"><strong>AniCanto for iPhone and iPad</strong></p>
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-en.svg" height="44" alt="Download on the App Store"></a>
+</p>
+
+<p align="center"><a href="#download">Mac and Windows downloads</a></p>
+
 ## 0.25.54 Beta — conversion and reference handling
 
 Keep the active video selected during conversion. Confirmed voice references stay inside their own dialogue cue. Subtitle-gap and optional export-audio handling are improved. Saved recordings and spent attempts remain intact.
