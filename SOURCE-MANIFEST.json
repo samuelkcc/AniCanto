@@ -26,28 +26,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "06fe75f9a76865210d3cf72720e1eede5e2eec04cafc7778aee2bdba287289d7",
-      "bytes": 22980
+      "sha256": "608d14454fd2fc88ad872417bb1f516d109c169f54f36ab33f18aad138ad759f",
+      "bytes": 22857
     },
     {
       "path": "README.ja.md",
-      "sha256": "0495dec5f88680fc889b56d0e9eee45acabe20b33c06994fbc9da52867dd111e",
-      "bytes": 25080
+      "sha256": "624badfbeb8a6118343c73fbef47ff8eab31a798cbe5dbf0e7b551c8ad5d88b0",
+      "bytes": 24950
     },
     {
       "path": "README.md",
-      "sha256": "ea4e5ff06f05520afc030d6ec1164d6a92439e6d25dec365bfd2dfe9df6a65e4",
-      "bytes": 22943
+      "sha256": "764b0abb641c9fe7f0d9fa546eadca1faf0cd61d8981668d6149bd30ec664d2e",
+      "bytes": 22820
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "ac748188901de608e82a571fe33225e9d283e694385f9cbf6ffb8622c80ca510",
-      "bytes": 19581
+      "sha256": "cf258136ada5fedd55abe4769da72bca5db35df343d50469db3df43f8f26729a",
+      "bytes": 19462
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "503a09fa83a6848c53cee07501b04626b4503a4d8713a470e6364a1c2828bc94",
-      "bytes": 19674
+      "sha256": "5931c4c5bfe9ac780d9ae8250e4c30f6598e6e4a6ed56f5bf4dd775459943f3d",
+      "bytes": 19555
     },
     {
       "path": "Resources/AniCanto-icon.png",

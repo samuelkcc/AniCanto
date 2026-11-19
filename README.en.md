@@ -1,13 +1,5 @@
 **English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-<p align="center"><strong>AniCanto for iPhone and iPad</strong></p>
-
-<p align="center">
-  <a href="https://apps.apple.com/us/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-en.svg" height="44" alt="Download on the App Store"></a>
-</p>
-
-<p align="center"><a href="#download">Mac and Windows downloads</a></p>
-
 ## 0.25.51 Beta — dubbing workflow
 
 A new dubbing language now translates the retained original text again. Source analysis and verified voice references are reused. Other audio tracks and earlier outputs are kept. Target retries retain their previous draft and spent attempts. Hong Kong Cantonese first-draft examples are updated.
@@ -31,6 +23,10 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 [Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.51-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
+
+**iOS / iPadOS · Separate mobile edition**
+
+<a href="https://apps.apple.com/us/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-en.svg" height="44" alt="Download on the App Store"></a>
 
 ## Recent update · 0.25.54 / build 446
 

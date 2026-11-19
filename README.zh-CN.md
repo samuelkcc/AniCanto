@@ -1,13 +1,5 @@
 [English](README.md) · [繁體中文](README.zh-HK.md) · **简体中文** · [日本語](README.ja.md)
 
-<p align="center"><strong>AniCanto iPhone 和 iPad 版</strong></p>
-
-<p align="center">
-  <a href="https://apps.apple.com/cn/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-zh-Hans.svg" height="44" alt="在 App Store 下载"></a>
-</p>
-
-<p align="center"><a href="#download">Mac 和 Windows 下载</a></p>
-
 ## 0.25.54 Beta：配音流程更新
 
 专家模式可选择保留人名原音；原声待确认与待补配音分开显示。系统在原有重试限制内拒绝短句重复的翻译结果，保留已保存任务及已用次数。
@@ -31,6 +23,10 @@
 
 [版本说明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.54-beta) · [对应源码](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-0.25.54-source-materials-reviewed.tar.gz) · [源码备份及重建说明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
+
+**iOS / iPadOS · 独立移动分支版本**
+
+<a href="https://apps.apple.com/cn/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-zh-Hans.svg" height="44" alt="在 App Store 下载"></a>
 
 ## 近期更新 · 0.25.54／446
 
