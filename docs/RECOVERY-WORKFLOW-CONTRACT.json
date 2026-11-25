@@ -9,11 +9,11 @@
   ],
   "status": "Public desktop rules. Private platform implementation logs and device validation are omitted.",
   "applicationUserGuide": {
-    "revision": "application-user-guide-264-completed-video-cleanup",
+    "revision": "guide-desktop-media-recovery",
     "source": "docs/APPLICATION-USER-GUIDE.json",
-    "sha256": "9b9387484e6a43cd0d251d48abdb1b4c2a3846c6ff8e5ba77926b8ab6ca72858",
-    "controlGuideRevision": "workflow-controls-guide-84-desktop-dialogue-alignment",
-    "controlGuideSHA256": "a9552e0a214a1ee6e0429c00783b1cf8fa443da70dc48b8ed5067e6a0254beed"
+    "sha256": "b4ea389d5e41278057c2ef129858516a0523e57a05ecded5e93f4e5b3fd86507",
+    "controlGuideRevision": "workflow-controls-guide-103-desktop-media",
+    "controlGuideSHA256": "869fd74178c39fd084dd0c257a5895c53b49336ed35cc6304cf21f2e2fdcc90b"
   },
   "standardFirstAudible": {
     "revision": "standard-first-audible-196",
@@ -151,11 +151,49 @@
     "publicationURL": "https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.52-beta",
     "publicSourceCommit": "cee79da31e8e976b099e1dffa559235ff4eaabbd"
   },
+  "desktopVerifiedExportPackages": {
+    "revision": "verified-desktop-packages-1",
+    "appliesTo": [
+      "macOS",
+      "Windows"
+    ],
+    "status": "Source candidate. Read the release receipt for implementation and verification.",
+    "rules": [
+      "Verify the picture stream independently of the movie and audio duration.",
+      "Use only the available saved export retry for picture re-encoding.",
+      "Freeze the optional package policy when a new request starts.",
+      "Keep the verified base through each optional package.",
+      "Keep each readable original track in source order after the default dub.",
+      "Keep separate captions and record any omitted optional tracks.",
+      "Keep required audio revisions strict. Stop on cancellation.",
+      "Use the saved settings and attempts. Add no model calls."
+    ],
+    "openingSearch": {
+      "choicesMinutes": [
+        5,
+        10,
+        15,
+        30
+      ],
+      "defaultMinutes": 5,
+      "resume": "Use the frozen range. Use five minutes for legacy requests.",
+      "wholeFilmSinging": "Desktop counterpart pending."
+    },
+    "frozenRules": [
+      "WF-01",
+      "WF-02",
+      "WF-03",
+      "WF-09",
+      "WF-15",
+      "WF-16",
+      "WF-17"
+    ]
+  },
   "completedVideoRemoval20261118": {
     "rule": "Confirmed removal of a completed video deletes its app-owned work after preserving original media and finished exports. Keep shared separation audio until the last retained project releases it. Keep installed models.",
     "desktop": "The Mac and Windows shared host uses the same removal operation. Undo restores unfinished items only. Report failures and retain their list entries.",
     "evidence": "Completed, shared-source, mixed-status and failure cases in test_desktop_improvements77.py.",
-    "delivery": "Source validation only. Packaged desktop and device acceptance are separate."
+    "delivery": "Local desktop 0.25.55 / 447 passes both product verifiers and the packaged Mac removal test. Physical Windows and owner acceptance stay open."
   },
   "activeRequirements": [
     {
@@ -192,7 +230,7 @@
     },
     {
       "id": "WF-09",
-      "requirement": "Attempt final output with saved valid work and report genuine missing target dubs. Storage, source, or encode failure stays an explicit error."
+      "requirement": "Attempt final output with saved valid work and report genuine missing target dubs. If a local subtitle problem prevents alignment, keep original audio in that interval, report it, and continue. Storage, source, or encode failure stays an explicit error."
     },
     {
       "id": "WF-10",

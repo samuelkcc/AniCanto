@@ -128,7 +128,10 @@ class FastModeTests(unittest.TestCase):
     def test_three_language_mux_preserves_mandarin_metadata_and_simplified_subtitles(self):
         self.check_one_pass_mux('fast',mandarin=True)
 
-    def check_one_pass_mux(self, mode,missing_script=False,preview=False,mandarin=False):
+    def test_new_submission_exports_all_dubs_with_optional_package_policy(self):
+        self.check_one_pass_mux('fast',mandarin=True,verified_packages=True)
+
+    def check_one_pass_mux(self, mode,missing_script=False,preview=False,mandarin=False,verified_packages=False):
         from contextlib import ExitStack
         with tempfile.TemporaryDirectory() as folder,ExitStack() as stack:
             job=Path(folder);video=job/'source.mp4'
@@ -136,6 +139,9 @@ class FastModeTests(unittest.TestCase):
             bg=job/'background.wav';voice=job/'dialogue.wav'
             for path in (bg,voice):worker.run([FF,'-v','error','-y','-i',video,'-vn','-ar','24000','-ac','2','-c:a','pcm_s16le',path])
             cfg=dict(normalRepairPolicy="verified",productionMode=mode,video=str(video),storage=str(job/'storage'),ffmpeg=FF,ffprobe=PROBE,duration=3,ttsBackend='cosyvoice3',selectedEngines=['cosyvoice3'],dubLanguages=['yue','en'],includeOriginal=True,subtitleModes=['yue','english'],interfaceMode='simple',model='qwen',port=1,backgroundPath=str(bg),dialoguePath=str(voice),exportFolder=str(job/'export'))
+            if verified_packages:
+                from export_packages import REVISION
+                cfg['exportPackageRevision']=REVISION
             if mandarin:cfg.update(dubLanguages=['yue','zh','en'],subtitleModes=['yue','zh','english'])
             if preview:cfg.update(speechRatePolicy='natural',automaticRecovery=False)
             (job/'export').mkdir();(job/'storage').mkdir()
@@ -168,6 +174,9 @@ class FastModeTests(unittest.TestCase):
                 stack.enter_context(patch(name,side_effect=AssertionError('Fast called '+name)))
             worker.render_review(dict(review=str(job/'review.json')))
             report=json.loads((job/'report.json').read_text())
+            if verified_packages:
+                self.assertEqual(report['exportPackagingWarnings'],[])
+                self.assertEqual(len(report['originalAudioStreams']),1)
             output=Path(report['exportedOutput']);self.assertTrue(output.is_file())
             self.assertEqual(report['qualityStatus'],'needs-review' if preview else 'targeted-checks-only' if mode=='normal' else 'not-checked-fast-mode')
             self.assertEqual(json.loads((job/'review.json').read_text())['status'],'complete')

@@ -50,9 +50,11 @@ ACTIVITY_SOURCE_FILES=set(ACTIVITY_IMAGES)|{'studio/web/assets/assistant-activit
 
 def selected(relative):
     p=Path(relative)
+    if any(re.sub(r'[^a-z0-9]', '', part.casefold()) == 'appstoreredeemcode' for part in p.parts):return False
     # Keep private native implementation tests and build tools outside desktop exports.
     if p.parts[:1]==('tests',) and (p.name.startswith('test_mobile_') or p.name in {'test_caption_layers340.py','test_text_runtime_boundary345.py','test_demo_payload_retention.py'}):return False
-    if p.parts[:1]==('scripts',) and (p.name.startswith('build_mobile_') or 'website' in p.stem):return False
+    if p.parts[:1]==('scripts',) and (p.name.startswith('build_mobile_') or 'website' in p.stem
+                                    or p.name=='build-store-import-preview.py'):return False
     if p.parts[:1]==('scripts',) and re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I):return False
     if p.as_posix() in {'tests/test_mobile_model_defaults300.py','scripts/website-mobile-support-copy.json'}:return False
     if p.parts[:1]==('scripts',) and p.name.startswith(('website-','build-website-','install-website-','package-website-','audit-website-')):return False
@@ -155,6 +157,8 @@ The internal shared authority remains the source. This public projection does no
                 projected['desktopDubbing425']={key:update[key] for key in ('rule','platforms','sourceRevision','targetDraftRevision','cantoneseRevision','budgets','source','outputs','unchangedWorkflowRules')}
             if 'desktopDialogue441' in document:
                 projected['desktopDialogue441']=document['desktopDialogue441']
+            if 'desktopVerifiedExportPackages' in document:
+                projected['desktopVerifiedExportPackages']=document['desktopVerifiedExportPackages']
             if 'completedVideoRemoval20261118' in document:
                 removal=document['completedVideoRemoval20261118']
                 projected['completedVideoRemoval20261118']={key:removal[key] for key in ('rule','desktop','evidence','delivery')}

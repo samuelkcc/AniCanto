@@ -1,8 +1,8 @@
 **English** · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-## 0.25.51 Beta — dubbing workflow
+## 0.25.56 Beta — more reliable export
 
-A new dubbing language now translates the retained original text again. Source analysis and verified voice references are reused. Other audio tracks and earlier outputs are kept. Target retries retain their previous draft and spent attempts. Hong Kong Cantonese first-draft examples are updated.
+Export checks the picture and sound. The first audio track is the dub. Readable original tracks follow in their source order.
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -19,23 +19,21 @@ Turn Japanese anime dialogue into **Hong Kong Cantonese, Mandarin or English dub
 
 ## Download
 
-**[Mac 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto-macOS-0.25.51.zip)** · **[Windows 0.25.51](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/AniCanto.exe)**
+**[Mac 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-macOS-0.25.56.zip)** · **[Windows 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto.exe)**
 
-[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.51-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.51-beta/available-source-materials.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
+[Release notes](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.56-beta) · [Source materials](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-0.25.56-source-materials-reviewed.tar.gz) · [Source backup and rebuild guide](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 **iOS / iPadOS · Separate mobile edition**
 
 <a href="https://apps.apple.com/us/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-en.svg" height="44" alt="Download on the App Store"></a>
 
-## Recent update · 0.25.54 / build 446
+## Recent update · 0.25.56 / build 448
 
-- Keep the active video selected during conversion. Use Pause & save before switching videos.
-- Keep confirmed voice-reference ranges inside their own dialogue cue.
-- Improve subtitle-gap classification and reuse verified optional background audio during export.
-- Preserve saved recordings, source clocks and spent recovery attempts.
-
-Mac and Windows package checks pass. Physical Windows GPU inference and whole-film voice quality remain separate acceptance work.
+- Check the picture duration separately. If a copied picture fails this check, use the available export retry to re-encode it.
+- Keep the verified movie if optional audio or subtitle packaging fails. See Review report for details.
+- Keep each readable original audio track by default in new Basic and Expert jobs.
+- Choose 5, 10, 15 or 30 minutes for OP / ED detection. Saved jobs keep their settings.
 
 ## Why AniCanto exists
 

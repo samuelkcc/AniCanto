@@ -19,7 +19,7 @@ def render(config,labels):
   if not re.fullmatch(r'\d+\.\d+\.\d+',value):raise ValueError('Invalid released version')
  urls={key:f"{base}/download/v{versions[key]}-beta/{config[key]['asset']}" for key in versions}
  release=f"{base}/tag/v{versions['windows']}-beta"
- sources=f"{base}/download/v{versions['windows']}-beta/available-source-materials.tar.gz"
+ sources=f"{base}/download/v{versions['windows']}-beta/{config.get('sourceAsset','available-source-materials.tar.gz')}"
  return (START+'\n<a id="download"></a>\n\n## '+title+'\n\n'
   +f"**[{mac} {versions['mac']}]({urls['mac']})** · **[{windows} {versions['windows']}]({urls['windows']})**\n\n"
   +f'[{notes}]({release}) · [{source}]({sources}) · [{rebuild}](docs/BUILD-AND-RECOVERY.md)\n'+END)

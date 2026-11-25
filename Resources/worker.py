@@ -1348,8 +1348,10 @@ def render_review(request):
         from source_evidence import mix_caption_audio
         audio=mix_caption_audio(sys.modules[__name__],cfg,job,audio,background)
     has_captions=bool((job/"cantonese.srt").read_text().strip())
+    defer_packages=cfg.get('_singleEngine') and __import__('export_packages').enabled(cfg)
+    caption_input=has_captions and not defer_packages
     cmd = [cfg["ffmpeg"], "-v", "error", "-y", "-ss", str(cfg.get("startOffset",0)), "-t", str(cfg["duration"]), "-i", video, "-i", audio]
-    if has_captions:cmd += ["-i",job/"cantonese.srt"]
+    if caption_input:cmd += ["-i",job/"cantonese.srt"]
     has_audio = any(s.get("codec_type") == "audio" for s in meta["streams"])
     if caption_mixed:
         cmd += ['-map','0:v:0','-map','1:a:0']
@@ -1368,7 +1370,7 @@ def render_review(request):
         balance=resolve_mix_balance(cfg,job,background)
         if balance=='auto':emit('混音自動修復','偵測到細聲配音被背景掩蓋；說話期間有限降低背景，保留原裝日文音軌。')
         mix=separated_filter(gain,label,balance)
-        if not has_captions:mix=mix.replace('[3:a:0]','[2:a:0]')
+        if not caption_input:mix=mix.replace('[3:a:0]','[2:a:0]')
         if ranges:mix+=';'+opening.preserve_filter(ranges,original=__import__('source_language').audio_label(cfg))
         cmd += ["-i", background, "-filter_complex", mix, "-map", "0:v:0", "-map", "[dub]"]
     elif optional_background and has_audio:
@@ -1390,8 +1392,9 @@ def render_review(request):
         cmd += ["-filter_complex", "["+__import__("source_language").audio_label(cfg)+"]volume=0.12[bg];[1:a:0][bg]amix=inputs=2:duration=first:normalize=0[dub]", "-map", "0:v:0", "-map", "[dub]"]
     else:
         cmd += ["-map", "0:v:0", "-map", "1:a:0"]
-    cmd += ["-map", f"0:{cfg['sourceAudioStream']}?" if cfg.get("sourceAudioStream") is not None else "0:a:0?"]
-    if has_captions:cmd += ["-map","2:s:0"]
+    if not defer_packages:
+        cmd += ["-map", f"0:{cfg['sourceAudioStream']}?" if cfg.get("sourceAudioStream") is not None else "0:a:0?"]
+    if caption_input:cmd += ["-map","2:s:0"]
     cmd += ["-t",str(cfg.get("outputDuration",cfg["duration"]))]
     extension=max(0,cfg.get("outputDuration",cfg["duration"])-cfg["duration"])
     burn=bool(cfg.get('burnOutputCaptions',False)) and has_captions
@@ -1416,14 +1419,14 @@ def render_review(request):
     cmd += ["-ac:a:0", "2", "-channel_layout:a:0", "stereo"]
     source_audio = next((s for s in meta["streams"] if s.get("codec_type") == "audio" and (cfg.get('sourceAudioStream') is None or s['index']==cfg['sourceAudioStream'])), {})
     source_layout = source_audio.get("channel_layout") or {1:"mono", 2:"stereo"}.get(source_audio.get("channels"))
-    if source_layout:
+    if source_layout and not defer_packages:
         cmd += ["-channel_layout:a:1", source_layout]
     cmd += ["-c:a", "aac", "-b:a", "192k", "-c:s", "mov_text", "-metadata:s:a:0", "language="+voice_language[2], "-metadata:s:a:0", "title="+voice_language[1]+" · "+cfg.get("ttsBackend", ""), "-disposition:a:0", "default", "-metadata:s:s:0", "language="+voice_language[2], "-movflags", "+faststart"]
     cmd += ["-disposition:s:0", "0" if burn else "default", "-metadata:s:s:0", "title=廣東話字幕"]
     voice_label = {"cosyvoice3":"CosyVoice 3", "gpt-sovits":"GPT-SoVITS V4", "gpt-sovits-v2":"GPT-SoVITS V2 Pro Plus", "gpt-sovits-v3":"GPT-SoVITS V3", "qwen-tts":"Qwen3-TTS", "voxcpm2":"VoxCPM2", "wsyue":"WenetSpeech-Yue", "drama3":"Drama 3"}.get(cfg.get("ttsBackend"), "Cantonese")
     cmd += ["-metadata:s:a:0", "handler_name="+voice_language[1]+" / "+voice_language[0]+" · " + voice_label, "-metadata:s:s:0", "handler_name="+voice_language[1]+" / "+voice_language[0]]
     if burn:cmd += ["-metadata", "comment=CantoSync:burned-captions", "-fps_mode:v", "vfr", "-enc_time_base:v", "1:90000"]
-    if has_audio:
+    if has_audio and not defer_packages:
         source_language=cfg.get('sourceLanguage','ja')
         from source_language import NAMES,iso_code
         source_code=iso_code(source_language)

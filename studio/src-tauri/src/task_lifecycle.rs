@@ -49,6 +49,10 @@ impl TaskLifecycle {
         if record.finished.as_ref().is_some_and(|v|v["runID"]==id){record.power.take();true}else{false}
     }
     pub fn inhibited(&self)->bool {self.0.lock().unwrap().power.is_some()}
+    #[cfg(target_os="macos")]
+    pub fn release_on_exit(&self) {
+        self.0.lock().unwrap().power.take();
+    }
 }
 #[cfg(test)] mod tests {
     use super::*;
@@ -62,7 +66,9 @@ impl TaskLifecycle {
     #[test]
     #[cfg(target_os="macos")]
     fn actual_owned_idle_assertion_is_released_without_changing_display_sleep(){
-        let guard=PowerGuard::start().unwrap();let pid=guard.child.id();
+        let life=TaskLifecycle::default();
+        life.started().unwrap();
+        let pid=life.0.lock().unwrap().power.as_ref().unwrap().child.id();
         let needle=format!("pid {pid}(caffeinate)");let mut observed=false;
         for _ in 0..30 {
             let raw=std::process::Command::new("/usr/bin/pmset").args(["-g","assertions"]).output().unwrap();
@@ -70,7 +76,12 @@ impl TaskLifecycle {
             if text.lines().any(|line|line.contains(&needle)&&line.contains("PreventUserIdleSystemSleep")){observed=true;break;}
             std::thread::sleep(std::time::Duration::from_millis(100));
         }
-        assert!(observed,"The owned idle-sleep assertion must actually exist");drop(guard);
+        assert!(observed,"The owned idle-sleep assertion must actually exist");
+        life.finished(serde_json::json!({"runID":"fixture","paused":false}));
+        life.release_on_exit();
+        life.release_on_exit();
+        assert!(!life.inhibited());
+        assert_eq!(life.last_finished().unwrap()["runID"],"fixture");
         let raw=std::process::Command::new("/usr/bin/pmset").args(["-g","assertions"]).output().unwrap();assert!(!String::from_utf8_lossy(&raw.stdout).contains(&needle));
     }
 }

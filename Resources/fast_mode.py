@@ -471,12 +471,16 @@ def validation(cfg,job,cues,target,run,emit):
     meta=json.loads(run([cfg['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',target]))
     streams=meta.get('streams',[]);duration=float(meta.get('format',{}).get('duration',0))
     audio=[s for s in streams if s.get('codec_type')=='audio']
-    if not any(s.get('codec_type')=='video' for s in streams) or not audio or not math.isfinite(duration) or abs(duration-(cfg.get('outputDuration',cfg['duration']) if __import__('basic_flow').enabled(cfg) else cfg['duration']))>.2:raise ValueError('高速合成檔案無效：影片、音軌或長度不符。')
+    expected=cfg.get('outputDuration',cfg['duration']) if __import__('basic_flow').enabled(cfg) else cfg['duration']
+    picture=__import__('export_picture').verify(streams,expected)
+    if not audio or not math.isfinite(duration) or abs(duration-expected)>.2:raise ValueError('高速合成檔案無效：影片、音軌或長度不符。')
     if audio[0].get('tags',{}).get('language')!=__import__('output_language').LANGUAGES[cfg.get('targetLanguage','yue')][2]:raise ValueError('輸出音軌語言標籤不符。')
-    if not cfg.get('burnOutputCaptions') and (not __import__('delivery_policy').bounded_delivery(cfg) or any(c.get('enabled',True) and c.get('captionText',c.get('cantonese','')).strip() for c in cues)) and not any(s.get('codec_type')=='subtitle' for s in streams):raise ValueError('輸出字幕軌缺失。')
+    deferred=cfg.get('_singleEngine') and __import__('export_packages').enabled(cfg)
+    if not deferred and not cfg.get('burnOutputCaptions') and (not __import__('delivery_policy').bounded_delivery(cfg) or any(c.get('enabled',True) and c.get('captionText',c.get('cantonese','')).strip() for c in cues)) and not any(s.get('codec_type')=='subtitle' for s in streams):raise ValueError('輸出字幕軌缺失。')
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     normal=cfg.get('productionMode')=='normal'
     result=dict(structuralStatus='passed',fullDecode='passed',qualityStatus='targeted-checks-only' if normal else 'not-checked-fast-mode',qualityChecked=False,contentCheck='targeted-language-and-integrity' if normal else 'skipped-fast-mode',timingReviewIndices=[],contentReviewIndices=[],duration=duration,cues=len(cues),warning=warning(cfg))
+    result['pictureRange']=picture
     result['scriptReviewIndices']=[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if any(isinstance(note,dict) and note.get('stage')=='own-turn-caption' for note in c.get('translationWarnings',[]))]
     from normal_policy import retain
     if normal and retain(cfg) and not __import__('delivery_policy').bounded_delivery(cfg):result.update(qualityStatus='retained-recordings-unverified',contentCheck='not-automatically-reviewed',repairPolicy='missing-only')

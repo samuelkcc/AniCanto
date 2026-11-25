@@ -17,9 +17,16 @@ def migrate(settings):
 
 def validated(settings):
     result=migrate(settings)
+    if 'openingDetectionMinutes' in result:
+        from opening import SEARCH_MINUTES
+        minutes=result['openingDetectionMinutes']
+        if type(minutes) is not int or minutes not in SEARCH_MINUTES:
+            raise ValueError('Invalid OP / ED detection range.')
     __import__('basic_flow').validate(result)
     if not isinstance(result.get('skipNonDialogueCaptions',True),bool):raise ValueError('Caption-only control must be on or off.')
     for key in ('translationTextReview','safeEndpointCheck','analyzeBackgroundGaps','keepOriginalNamePronunciation'):
+        if key in result and not isinstance(result[key],bool):raise ValueError('Invalid on/off setting: '+key)
+    for key in ('includeOriginal','autoSkipOP','translateOPED'):
         if key in result and not isinstance(result[key],bool):raise ValueError('Invalid on/off setting: '+key)
     modes=__import__('work_modes')
     # Revision 2 has no speed choice. The stored value stays 'performance' so the

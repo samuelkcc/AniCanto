@@ -9,6 +9,11 @@ def read(path):
 def project(root):
  root=Path(root);notices=[]
  def metric(label,value):return dict(label=label,value=len(value) if isinstance(value,list) else value)
+ packages=read(root/'report.json').get('exportPackagingWarnings')
+ if isinstance(packages,list) and packages:
+  notices.append(dict(code='optional-export-packaging', title='Optional tracks omitted',
+   message='The verified movie was saved. Some original audio or embedded subtitles could not be added.',
+   metrics=[metric('Packaging warnings',packages)]))
  ocr=read(root/'ocr-status.json');source=read(root/'input-source.json')
  if ocr.get('status') in ('failed','partial') or source.get('ocrError'):
   notices.append(dict(code='ocr-incomplete',title='OCR needs attention',message='Some screen subtitles could not be read. Audio transcription was used; existing recordings are retained.',metrics=[metric('Unread subtitle frames',ocr.get('failedFrames',0))],detail=ocr.get('error') or source.get('ocrError') or str(ocr.get('failedFrames',0))))

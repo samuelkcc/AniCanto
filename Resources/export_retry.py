@@ -22,6 +22,7 @@ def run(cfg,job,cmd,execute,emit,validate):
  from delivery_policy import bounded_delivery
  from video_acceleration import encode
  from track_control import UserSkipped
+ from export_picture import PictureCoverageError,reencode
  if not bounded_delivery(cfg) or cfg.get('editorRender'):
   encode(execute,cmd,cfg,emit);return validate()
  from worker import atomic_json
@@ -33,21 +34,32 @@ def run(cfg,job,cmd,execute,emit,validate):
    if p.is_file():inputs.append([str(p),digest_file(p) if p.suffix.lower() in ('.wav','.srt','.ass','.vtt') else [p.stat().st_size,p.stat().st_mtime_ns]])
  key=hashlib.sha256(json.dumps([list(map(str,cmd)),inputs,cfg.get('audioRerunToken')],sort_keys=True).encode()).hexdigest()[:24]
  path=job/'export-retry.json';ledger=read(path);record=ledger.setdefault(key,dict(maximumAttempts=2,attempts=[],status='pending'))
- if record.get('status')=='complete' and Path(cmd[-1]).is_file():return validate()
+ if record.get('status')=='complete' and Path(cmd[-1]).is_file():
+  try:return validate()
+  except PictureCoverageError:
+   if len(record['attempts'])>=2 or reencode(cmd)==cmd:raise
+   record.update(status='failed',videoReencodeRequired=True)
  if __import__('basic_flow').enabled(cfg) and record.get('status')=='complete' and record.get('completedSHA256') and not Path(cmd[-1]).exists():
   final=Path(read(job/'report.json').get('output') or '/nonexistent')
   if final.is_file() and final.resolve().is_relative_to(job.resolve()) and digest_file(final)==record['completedSHA256']:
    import shutil
-   shutil.copy2(final,Path(cmd[-1]));return validate()
+   shutil.copy2(final,Path(cmd[-1]))
+   try:return validate()
+   except PictureCoverageError:
+    if len(record['attempts'])>=2 or reencode(cmd)==cmd:raise
+    record.update(status='failed',videoReencodeRequired=True)
 
  while len(record['attempts'])<2:
   attempt=dict(number=len(record['attempts'])+1,status='reserved',startedAt=time.time());record['attempts'].append(attempt);atomic_json(path,ledger)
   try:
-   encode(execute,cmd,cfg,emit);result=validate();attempt['status']='complete';record['status']='complete'
+   command=reencode(cmd) if record.get('videoReencodeRequired') else cmd
+   encode(execute,command,cfg,emit);result=validate();attempt['status']='complete';record['status']='complete'
    if __import__('basic_flow').enabled(cfg):record['completedSHA256']=digest_file(Path(cmd[-1]))
    atomic_json(path,ledger);return result
   except UserSkipped:raise
   except (OSError,RuntimeError,ValueError) as error:
+   if isinstance(error,PictureCoverageError) and reencode(cmd)!=cmd:
+    record['videoReencodeRequired']=True
    attempt.update(status='failed',error=str(error)[:1000]);record['status']='terminal-error' if terminal(error) else 'failed';atomic_json(path,ledger)
    if terminal(error) or len(record['attempts'])>=2:raise
    emit('匯出重試','合成／字幕包裝未完成；沿用現有錄音，自動再試一次，不重新配音。',.96)

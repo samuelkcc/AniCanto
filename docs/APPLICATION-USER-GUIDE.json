@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "application-user-guide-264-completed-video-cleanup",
+  "revision": "guide-desktop-media-recovery",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "controlGuide": "docs/WORKFLOW-CONTROLS-GUIDE.json",
   "locales": [
@@ -1065,6 +1065,7 @@
           ],
           "controlRefs": [
             "openingTreatment",
+            "openingSearchRange",
             "resume"
           ],
           "steps": false
@@ -1592,6 +1593,32 @@
           "steps": false
         },
         {
+          "id": "mobile-subtitle-alignment-fallback",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Review an unaligned subtitle interval",
+            "zh-HK": "校對未能對齊的字幕時段",
+            "zh-CN": "校对未能对齐的字幕时段",
+            "ja": "字幕を同期できない区間の確認"
+          },
+          "body": [
+            {
+              "en": "In Expert, open Review report and select an affected interval to check the source. Use Resume for a saved job that stopped before subtitle alignment. The app uses the saved source recognition and settings.",
+              "zh-HK": "在專家模式開啟「校對報告」，選擇受影響的時段以核對原片。如已保存的工作在字幕對齊前停止，可選擇「續做」。程式會沿用已保存的原聲辨識及設定。",
+              "zh-CN": "在专家模式打开“校对报告”，选择受影响的时段以核对原片。如果已保存的任务在字幕对齐前停止，可选择“继续”。程序会沿用已保存的原声识别及设置。",
+              "ja": "エキスパートモードで校正レポートを開き、該当区間を選んで元の動画を確認します。字幕の同期前に止まった保存済みの作業は再開できます。保存された音声認識と設定が使われます。"
+            }
+          ],
+          "controlRefs": [
+            "subtitleAlignmentFallback",
+            "resume"
+          ],
+          "steps": false
+        },
+        {
           "id": "mobile-automatic-caption-gaps420",
           "platforms": [
             "iphone",
@@ -1726,6 +1753,37 @@
             }
           ],
           "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-dubbing-memory-recovery",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Low memory during dubbing",
+            "zh-HK": "配音期間記憶體不足",
+            "zh-CN": "配音期间内存不足",
+            "ja": "吹き替え中のメモリ不足"
+          },
+          "body": [
+            {
+              "en": "Keep AniCanto in the foreground. During dubbing, the app checks memory again before it starts another recording. If memory remains low, it saves progress, releases the model and waits up to 30 seconds for memory to recover. Each saved job can use this automatic recovery once.",
+              "zh-HK": "請保持 AniCanto 在前景運行。配音期間，程式會在開始下一段錄音前再次檢查記憶體。如可用記憶體仍然偏低，程式會保存進度、釋放模型，並等候最多 30 秒。每項已保存的工作可使用一次自動恢復。",
+              "zh-CN": "请保持 AniCanto 在前台运行。配音期间，程序会在开始下一段录音前再次检查内存。如果可用内存仍然偏低，程序会保存进度、释放模型，并等待最多 30 秒。每个已保存的任务可使用一次自动恢复。",
+              "ja": "AniCanto を前面に表示したままにしてください。吹き替え中は次の音声を生成する前にメモリを再確認します。空きメモリが少ない状態が続く場合は、進捗を保存し、モデルを解放して最長30秒待ちます。自動復帰は保存済みの作業ごとに1回です。"
+            },
+            {
+              "en": "If memory is stable again, dubbing continues with the selected model. If the app stays paused, use Resume for the same job when resources are available. Saved recordings and used attempts carry over.",
+              "zh-HK": "可用記憶體恢復穩定後，程式會沿用所選模型繼續配音。如工作維持暫停，請在資源充足後選擇「續做」。已保存的錄音及已用嘗試次數會保留。",
+              "zh-CN": "可用内存恢复稳定后，程序会继续使用所选模型配音。如果任务仍处于暂停状态，请在资源充足后选择“继续”。已保存的录音和已用尝试次数会保留。",
+              "ja": "空きメモリが安定したら、選択したモデルで吹き替えを続けます。一時停止が続く場合は、メモリを確保して同じ作業を再開してください。保存済みの録音と使用済みの試行回数は引き継がれます。"
+            }
+          ],
+          "controlRefs": [
+            "resume"
+          ],
           "steps": false
         },
         {
@@ -1940,6 +1998,62 @@
           "steps": false
         },
         {
+          "id": "mobile-opening-search-range",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Set the OP / ED detection range",
+            "zh-HK": "設定片頭／片尾偵測範圍",
+            "zh-CN": "设置片头／片尾检测范围",
+            "ja": "OP／ED の検出範囲を設定"
+          },
+          "body": [
+            {
+              "en": "In Basic or Expert, open Production settings, then OP / ED. Turn on Detect automatically and select the range before you start the conversion.",
+              "zh-HK": "在基本或專家模式開啟「製作設定」，再開啟「片頭／片尾處理」。開啟「自動偵測」後，在開始轉換前選擇偵測範圍。",
+              "zh-CN": "在基本或专家模式打开“制作设置”，再打开“片头／片尾处理”。打开“自动检测”后，在开始转换前选择检测范围。",
+              "ja": "基本モードまたはエキスパートモードで制作設定の「OP／ED 処理」を開きます。「自動検出」をオンにして、変換を始める前に範囲を選びます。"
+            }
+          ],
+          "controlRefs": [
+            "openingSearchRange"
+          ],
+          "steps": false
+        },
+        {
+          "id": "mobile-full-film-singing",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Detect singing throughout the video",
+            "zh-HK": "全片歌唱偵測",
+            "zh-CN": "全片歌唱检测",
+            "ja": "全編の歌声を検出"
+          },
+          "body": [
+            {
+              "en": "Open Production settings in Basic or Expert. Use the OP / ED group to turn on this option before the next conversion. Expand the song and singing-with-dialogue times in the conversion status. Reassemble an existing output from saved recordings to correct its mix. To apply new song boundaries, start a new conversion.",
+              "zh-HK": "在基本或專家模式開啟「製作設定」。開始下一次轉換前，在「片頭／片尾處理」開啟此選項。可在轉換狀態展開歌曲或歌唱與對白重疊的時間。要修正現有成品的混音，可用已儲存的錄音重新合併。要套用新的歌曲邊界，須開始新轉換。",
+              "zh-CN": "在基本或专家模式打开“制作设置”。开始下一次转换前，在“片头／片尾处理”中开启此选项。可在转换状态中展开歌曲或歌唱与对白重叠的时间。要修正现有成品的混音，可用已保存的录音重新合并。要应用新的歌曲边界，需开始新转换。",
+              "ja": "基本モードまたはエキスパートモードで制作設定を開きます。次の変換の前に「OP／ED 処理」でこの項目を有効にします。変換状況で曲や歌声と会話が重なる時刻を展開できます。既存の動画は保存済み録音で再合成するとミックスを修正できます。新しい曲の境界を適用するには、新しく変換を始めます。"
+            },
+            {
+              "en": "When a conversion is paused, the OP / ED group displays its saved detection settings. Resume uses those settings and continues from saved progress. To change detection for the same video, start a new conversion and select the settings before conversion starts.",
+              "zh-HK": "暫停轉換時，「片頭／片尾處理」會顯示該次轉換已保存的偵測設定。「續做」會沿用這些設定及已保存的進度。要更改同一影片的偵測設定，請開始新轉換，並在轉換開始前選擇設定。",
+              "zh-CN": "暂停转换时，“片头／片尾处理”会显示该次转换已保存的检测设置。“继续”会沿用这些设置及已保存的进度。要更改同一视频的检测设置，请开始新转换，并在转换开始前选择设置。",
+              "ja": "変換を一時停止すると、「OP／ED 処理」にその変換の保存済み検出設定が表示されます。再開すると、その設定と保存済みの進捗を使って続行します。同じ動画の検出設定を変えるには、新しい変換を開始し、処理が始まる前に設定を選択します。"
+            }
+          ],
+          "controlRefs": [
+            "fullFilmSinging"
+          ],
+          "steps": false
+        },
+        {
           "id": "mobile-export-source-clock",
           "platforms": [
             "ipad",
@@ -1959,10 +2073,10 @@
               "ja": "アプリの更新で既存の完成動画は置き換わりません。映像時刻の修正を適用するには、保存済み録音で再合成します。元動画と録音は残ります。合成のみの修正では翻訳や音声生成のやり直しは不要です。"
             },
             {
-              "en": "Conversion findings must not block a usable output. The app keeps usable dubbing and uses source audio where a permitted target recording is unavailable. A failed picture check first uses the original source to rebuild the picture. An incomplete tail can hold the last readable frame while audio continues. The output discloses incomplete work. It does not certify complete dubbing or picture fidelity. Unreadable or changed source files, insufficient storage, cancellation and system resource failures can still prevent saving. Keep the source and saved job; do not reset spent attempts.",
-              "zh-HK": "轉換的校對問題不應阻止可用成品輸出。程式會保留可用配音；未有可用的獲准配音時，相關位置沿用原聲。畫面核對失敗時會先由原片重新建立畫面；如尾段不完整，可保留最後可讀畫面，讓聲音繼續至結束。成品會列明未完成項目，不代表全部配音或畫面已通過品質核對。原片無法讀取或已改變、儲存空間不足、取消及系統資源故障仍可能令成品無法保存。請保留原片及已保存工作，毋須重設已用嘗試次數。",
-              "zh-CN": "转换的校对问题不应阻止可用成品输出。程序会保留可用配音；没有可用的获准配音时，相关位置沿用原声。画面核对失败时会先从原片重新建立画面；如尾段不完整，可保留最后可读画面，让声音继续至结束。成品会列明未完成项目，不代表全部配音或画面已通过质量核对。原片无法读取或已改变、存储空间不足、取消及系统资源故障仍可能使成品无法保存。请保留原片和已保存任务，无需重置已用尝试次数。",
-              "ja": "確認事項は使用可能な動画の出力を妨げません。使用可能な吹き替えを保持し、許可された音声がない区間は原音を使用します。映像の確認に失敗した場合は元動画から再構築します。末尾が不完全な場合は、音声の終わりまで最後の読めるフレームを保持できます。未完了の処理は明示され、全台詞や画質の合格を意味しません。元動画が読めない場合や変更、容量不足、キャンセル、システム資源の障害では保存できないことがあります。元動画と保存済み作業を保持し、使用済み試行回数をリセットしないでください。"
+              "en": "Conversion findings must not block a usable output. The app keeps usable dubbing and uses source audio where a permitted target recording is unavailable. If the picture check fails, AniCanto tries to rebuild it from the original. If the picture still does not cover the selected range, the app saves your recordings and pauses export. A gap of up to half a second at the end can hold the last frame. The output discloses incomplete work. It does not certify complete dubbing or picture fidelity. Unreadable or changed source files, insufficient storage, cancellation and system resource failures can still prevent saving. Keep the source and saved job; do not reset spent attempts.",
+              "zh-HK": "轉換的校對問題不應阻止可用成品輸出。程式會保留可用配音；未有可用的獲准配音時，相關位置沿用原聲。畫面核對失敗時，AniCanto 會嘗試從原片重建畫面。如畫面仍未涵蓋所選範圍，程式會保留錄音並暫停匯出。尾段最多可用最後一格畫面補足半秒。成品會列明未完成項目，不代表全部配音或畫面已通過品質核對。原片無法讀取或已改變、儲存空間不足、取消及系統資源故障仍可能令成品無法保存。請保留原片及已保存工作，毋須重設已用嘗試次數。",
+              "zh-CN": "转换的校对问题不应阻止可用成品输出。程序会保留可用配音；没有可用的获准配音时，相关位置沿用原声。画面核对失败时，AniCanto 会尝试从原片重建画面。如果画面仍未覆盖所选范围，应用会保留录音并暂停导出。末尾最多可用最后一帧画面补足半秒。成品会列明未完成项目，不代表全部配音或画面已通过质量核对。原片无法读取或已改变、存储空间不足、取消及系统资源故障仍可能使成品无法保存。请保留原片和已保存任务，无需重置已用尝试次数。",
+              "ja": "確認事項は使用可能な動画の出力を妨げません。使用可能な吹き替えを保持し、許可された音声がない区間は原音を使用します。映像の確認に失敗した場合、AniCanto は元動画から映像の再構築を試みます。それでも選択範囲を映像でカバーできない場合、録音を保持して書き出しを一時停止します。末尾の不足は、最後のフレームで最大 0.5 秒補えます。未完了の処理は明示され、全台詞や画質の合格を意味しません。元動画が読めない場合や変更、容量不足、キャンセル、システム資源の障害では保存できないことがあります。元動画と保存済み作業を保持し、使用済み試行回数をリセットしないでください。"
             },
             {
               "en": "If the app pauses because of low memory during the final video check, keep the saved job. A reader correction requires an app update. Resume the same job after that update. The app keeps memory protection and reuses the saved recordings.",
@@ -2182,6 +2296,28 @@
               "zh-HK": "轉換期間退出前請按「暫停並保存」，等候顯示已暫停。恢復時會盡量重用已存台詞及有效錄音。轉換中不要移除模型；如顯示需要處理，先看終端機並匯出除錯報告，再重試。",
               "zh-CN": "转换中退出前先按「暂停并保存」，等待暂停状态。继续时尽量复用保存的译稿及有效录音。运行中不要删除模型。若显示需要处理，先看终端并导出调试报告，再决定重试。",
               "ja": "変換中に終了する前は「一時停止して保存」を押し、一時停止状態を待ちます。再開時は保存した台本と有効な録音を再利用します。処理中にモデルを削除しないでください。対応が必要と表示されたら、ターミナルを確認してデバッグレポートを保存してから再試行を判断します。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mac-quit",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Quit AniCanto on Mac",
+            "zh-HK": "在 Mac 結束 AniCanto",
+            "zh-CN": "在 Mac 退出 AniCanto",
+            "ja": "Mac で AniCanto を終了する"
+          },
+          "body": [
+            {
+              "en": "On Mac, press Command-Q or choose Quit AniCanto in the app menu. If a conversion is running, choose Pause and close to save your progress. When the app quits, it stops its preview services and releases its idle-sleep protection.",
+              "zh-HK": "在 Mac 按 Command-Q，或在應用程式選單選擇「結束 AniCanto」。如正在轉換，請選擇「暫停並關閉」以保存進度。應用程式結束時會停止預覽服務，並解除防止閒置睡眠的設定。",
+              "zh-CN": "在 Mac 上按 Command-Q，或在应用菜单选择“退出 AniCanto”。如果正在转换，请选择“暂停并关闭”保存进度。应用退出时会停止预览服务，并解除防止闲置睡眠的设置。",
+              "ja": "Mac では Command-Q を押すか、アプリメニューから AniCanto を終了します。変換中は「一時停止して終了」を選んで進捗を保存します。終了時にプレビューサービスを停止し、アイドル時のスリープ抑止を解除します。"
             }
           ],
           "controlRefs": [],
@@ -3032,10 +3168,16 @@
           },
           "body": [
             {
-              "zh-HK": "在校對報告按配音稿旁的鉛筆，修改文字後選擇「取消」或「儲存草稿」。儲存不會重錄或更改已採用錄音。再按「重錄此句」，試聽新版本後自行選擇採用；原文、舊錄音及成品會保留。",
-              "zh-CN": "在校对报告点击配音稿旁的铅笔，修改文本后选择“取消”或“保存草稿”。保存不会重录或更改已采用录音。再点击“重录此句”，试听新版本后自行选择采用；原文、旧录音及成品会保留。",
-              "en": "In the proofreading report, tap the pencil beside the target dialogue. Edit the draft, then Cancel or Save draft. Saving does not record or select audio. Use Re-record this line, listen to the new take, and select it explicitly. Source text, old recordings and exports remain intact.",
-              "ja": "校正レポートで吹き替え原稿の横の鉛筆を押します。編集後にキャンセルまたは下書きを保存します。保存では録音や音声選択は変わりません。「この台詞を再録音」で作成し、試聴してから採用します。原文、以前の録音、出力済み動画は残ります。"
+              "zh-HK": "在校對報告的「校對問題」或「全部對白」按譯稿旁的鉛筆。編輯視窗會在報告上方開啟。修改文字後選擇「取消」或「保存譯稿」。如需更新錄音，按「重錄此句」，試聽新版本後再選擇採用。",
+              "zh-CN": "在校对报告的“校对问题”或“全部对白”中点击译稿旁的铅笔。编辑窗口会在报告上方打开。修改文本后选择“取消”或“保存译稿”。如需更新录音，点击“重新生成本句”，试听新版本后再选择采用。",
+              "en": "In Review report, tap the pencil beside the draft in Proofreading issues or All dialogue. Edit the text in the window, then tap Cancel or Save draft. To update the audio, tap Generate this line again, listen to the new take, then select it.",
+              "ja": "校正レポートの指摘項目またはすべての台詞で、訳文の横の鉛筆を押します。編集画面で文章を修正し、「キャンセル」または「下書きを保存」を押します。音声を更新するには「この台詞を再生成」を押し、試聴してから採用します。"
+            },
+            {
+              "zh-HK": "保存譯稿只會更新文字草稿。原文、已採用錄音、以往錄音及成品會保留。",
+              "zh-CN": "保存译稿只会更新文本草稿。原文、已采用的录音、以往录音和成品会保留。",
+              "en": "Save draft updates the draft text. It keeps the source text, selected recording, earlier recordings and exports.",
+              "ja": "下書きの保存は訳文の下書きだけを更新します。原文、採用済みの録音、以前の録音、出力済みの動画は保持されます。"
             }
           ],
           "controlRefs": [],
@@ -3054,10 +3196,16 @@
           },
           "body": [
             {
-              "zh-HK": "在校對報告按配音稿旁的鉛筆，修改文字後選擇「取消」或「儲存草稿」。儲存不會重錄或更改已採用錄音。再按「重錄此句」，試聽新版本後自行選擇採用；原文、舊錄音及成品會保留。",
-              "zh-CN": "在校对报告点击配音稿旁的铅笔，修改文本后选择“取消”或“保存草稿”。保存不会重录或更改已采用录音。再点击“重录此句”，试听新版本后自行选择采用；原文、旧录音及成品会保留。",
-              "en": "In the proofreading report, tap the pencil beside the target dialogue. Edit the draft, then Cancel or Save draft. Saving does not record or select audio. Use Retake line, listen to the new take, and select it explicitly. Source text, old recordings and exports remain intact.",
-              "ja": "校正レポートで吹き替え原稿の横の鉛筆を押します。編集後にキャンセルまたは下書きを保存します。保存では録音や音声選択は変わりません。「この台詞を再録音」で作成し、試聴してから採用します。原文、以前の録音、出力済み動画は残ります。"
+              "zh-HK": "在校對報告的「校對問題」或「全部對白」按譯稿旁的鉛筆。編輯視窗會在報告上方開啟。修改文字後選擇「取消」或「保存譯稿」。如需更新錄音，按「重錄此句」，試聽新版本後再選擇採用。",
+              "zh-CN": "在校对报告的“校对问题”或“全部对白”中点击译稿旁的铅笔。编辑窗口会在报告上方打开。修改文本后选择“取消”或“保存译稿”。如需更新录音，点击“重新生成本句”，试听新版本后再选择采用。",
+              "en": "In Review report, tap the pencil beside the draft in Proofreading issues or All dialogue. Edit the text in the window, then tap Cancel or Save draft. To update the audio, tap Generate this line again, listen to the new take, then select it.",
+              "ja": "校正レポートの指摘項目またはすべての台詞で、訳文の横の鉛筆を押します。編集画面で文章を修正し、「キャンセル」または「下書きを保存」を押します。音声を更新するには「この台詞を再生成」を押し、試聴してから採用します。"
+            },
+            {
+              "zh-HK": "保存譯稿只會更新文字草稿。原文、已採用錄音、以往錄音及成品會保留。",
+              "zh-CN": "保存译稿只会更新文本草稿。原文、已采用的录音、以往录音和成品会保留。",
+              "en": "Save draft updates the draft text. It keeps the source text, selected recording, earlier recordings and exports.",
+              "ja": "下書きの保存は訳文の下書きだけを更新します。原文、採用済みの録音、以前の録音、出力済みの動画は保持されます。"
             }
           ],
           "controlRefs": [],
@@ -3193,6 +3341,30 @@
       },
       "sections": [
         {
+          "id": "desktop-verified-export-packages",
+          "platforms": [
+            "desktop"
+          ],
+          "title": {
+            "en": "Picture and optional tracks",
+            "zh-HK": "畫面與附加音軌及字幕",
+            "zh-CN": "画面与附加音轨及字幕",
+            "ja": "映像と追加トラック"
+          },
+          "body": [
+            {
+              "en": "The app checks the picture range before saving the movie. If an optional audio track or embedded subtitles cannot be added, the app keeps the verified movie and lists the omission in its review report. The separate subtitle file stays in the project.",
+              "zh-HK": "程式在儲存影片前會檢查畫面時長。若無法加入附加音軌或內嵌字幕，程式會保留已驗證的影片，在校對報告列出未能加入的項目。獨立字幕檔案會保留在專案中。",
+              "zh-CN": "程序保存视频前会检查画面时长。如果无法添加附加音轨或内嵌字幕，程序会保留已验证的视频，并在校对报告中列出未能添加的项目。独立字幕文件会保留在项目中。",
+              "ja": "保存前に映像の長さを確認します。追加音声や埋め込み字幕を追加できない場合は、検証済み動画を保持し、追加できなかった項目をレビュー報告に表示します。別ファイルの字幕はプロジェクトに残ります。"
+            }
+          ],
+          "controlRefs": [
+            "originalAudioTrack"
+          ],
+          "steps": false
+        },
+        {
           "id": "general-partial-output452",
           "platforms": [
             "ipad",
@@ -3206,10 +3378,10 @@
           },
           "body": [
             {
-              "en": "Conversion findings must not block a usable output. The app keeps usable dubbing and uses source audio where a permitted target recording is unavailable. A failed picture check first uses the original source to rebuild the picture. An incomplete tail can hold the last readable frame while audio continues. The output discloses incomplete work. It does not certify complete dubbing or picture fidelity. Unreadable or changed source files, insufficient storage, cancellation and system resource failures can still prevent saving. Keep the source and saved job; do not reset spent attempts.",
-              "zh-HK": "轉換的校對問題不應阻止可用成品輸出。程式會保留可用配音；未有可用的獲准配音時，相關位置沿用原聲。畫面核對失敗時會先由原片重新建立畫面；如尾段不完整，可保留最後可讀畫面，讓聲音繼續至結束。成品會列明未完成項目，不代表全部配音或畫面已通過品質核對。原片無法讀取或已改變、儲存空間不足、取消及系統資源故障仍可能令成品無法保存。請保留原片及已保存工作，毋須重設已用嘗試次數。",
-              "zh-CN": "转换的校对问题不应阻止可用成品输出。程序会保留可用配音；没有可用的获准配音时，相关位置沿用原声。画面核对失败时会先从原片重新建立画面；如尾段不完整，可保留最后可读画面，让声音继续至结束。成品会列明未完成项目，不代表全部配音或画面已通过质量核对。原片无法读取或已改变、存储空间不足、取消及系统资源故障仍可能使成品无法保存。请保留原片和已保存任务，无需重置已用尝试次数。",
-              "ja": "確認事項は使用可能な動画の出力を妨げません。使用可能な吹き替えを保持し、許可された音声がない区間は原音を使用します。映像の確認に失敗した場合は元動画から再構築します。末尾が不完全な場合は、音声の終わりまで最後の読めるフレームを保持できます。未完了の処理は明示され、全台詞や画質の合格を意味しません。元動画が読めない場合や変更、容量不足、キャンセル、システム資源の障害では保存できないことがあります。元動画と保存済み作業を保持し、使用済み試行回数をリセットしないでください。"
+              "en": "Conversion findings must not block a usable output. The app keeps usable dubbing and uses source audio where a permitted target recording is unavailable. If the picture check fails, AniCanto tries to rebuild it from the original. If the picture still does not cover the selected range, the app saves your recordings and pauses export. A gap of up to half a second at the end can hold the last frame. The output discloses incomplete work. It does not certify complete dubbing or picture fidelity. Unreadable or changed source files, insufficient storage, cancellation and system resource failures can still prevent saving. Keep the source and saved job; do not reset spent attempts.",
+              "zh-HK": "轉換的校對問題不應阻止可用成品輸出。程式會保留可用配音；未有可用的獲准配音時，相關位置沿用原聲。畫面核對失敗時，AniCanto 會嘗試從原片重建畫面。如畫面仍未涵蓋所選範圍，程式會保留錄音並暫停匯出。尾段最多可用最後一格畫面補足半秒。成品會列明未完成項目，不代表全部配音或畫面已通過品質核對。原片無法讀取或已改變、儲存空間不足、取消及系統資源故障仍可能令成品無法保存。請保留原片及已保存工作，毋須重設已用嘗試次數。",
+              "zh-CN": "转换的校对问题不应阻止可用成品输出。程序会保留可用配音；没有可用的获准配音时，相关位置沿用原声。画面核对失败时，AniCanto 会尝试从原片重建画面。如果画面仍未覆盖所选范围，应用会保留录音并暂停导出。末尾最多可用最后一帧画面补足半秒。成品会列明未完成项目，不代表全部配音或画面已通过质量核对。原片无法读取或已改变、存储空间不足、取消及系统资源故障仍可能使成品无法保存。请保留原片和已保存任务，无需重置已用尝试次数。",
+              "ja": "確認事項は使用可能な動画の出力を妨げません。使用可能な吹き替えを保持し、許可された音声がない区間は原音を使用します。映像の確認に失敗した場合、AniCanto は元動画から映像の再構築を試みます。それでも選択範囲を映像でカバーできない場合、録音を保持して書き出しを一時停止します。末尾の不足は、最後のフレームで最大 0.5 秒補えます。未完了の処理は明示され、全台詞や画質の合格を意味しません。元動画が読めない場合や変更、容量不足、キャンセル、システム資源の障害では保存できないことがあります。元動画と保存済み作業を保持し、使用済み試行回数をリセットしないでください。"
             }
           ],
           "controlRefs": [
@@ -3441,6 +3613,12 @@
               "zh-HK": "如裝置空間不足導致匯出失敗，請先釋放該裝置空間，再繼續已保存工作，無須重新匯入原片。程式會拒絕未完成的影片暫存，重新建立損壞的衍生副本，並保留已完成錄音。失敗的匯出會移除本次臨時檔案；成品如有保留原聲提示，仍須校對。",
               "zh-CN": "如设备空间不足导致导出失败，请先释放该设备空间，再继续已保存任务，无须重新导入原片。程序会拒绝未完成的视频缓存，重新建立损坏的衍生副本，并保留已完成录音。失败的导出会移除本次临时文件；成品如有保留原声提示，仍须校对。",
               "ja": "容量不足で書き出しに失敗した場合は、その端末の空き容量を確保し、保存済みの作業を再開してください。元の動画を再読み込みする必要はありません。不完全な動画キャッシュは使用せず、破損した派生ファイルを作り直します。完成済みの録音は保持し、失敗した書き出しの一時ファイルは削除します。原音を保持した区間がある完成品は確認が必要です。"
+            },
+            {
+              "en": "If only the final export is pending, continue the conversion to reuse the saved recordings. Keep the original video until the export finishes. The last video frame can stay on screen briefly to let the final dubbing line finish.",
+              "zh-HK": "如只待完成最後匯出，請繼續轉換，以重用已保存的錄音。請保留原片，直至匯出完成。畫面可能會短暫停留在最後一格，讓最後一句配音播放完畢。",
+              "zh-CN": "如果只剩最后的导出尚未完成，请继续转换，以复用已保存的录音。请保留原视频，直到导出完成。画面可能会短暂停留在最后一帧，让最后一句配音播放完毕。",
+              "ja": "最後の書き出しだけが残っている場合は、変換を再開すると保存済みの録音が使われます。書き出しが完了するまで元の動画を残してください。最後の吹き替えが終わるまで、動画の最終フレームが短時間表示されることがあります。"
             }
           ],
           "controlRefs": [
@@ -4174,10 +4352,10 @@
               "ja": "「購入」はApp Storeの価格を表示し、「購入を復元」と分けます。購入済みの場合も、購入を選ぶとAppleへ要求を送ります。確認画面はAppleが管理し、所有済みの非消耗型商品には再課金しません。アプリ内の所有権確認で要求を止めません。Appleが以前の購入を返した場合、再インストールしたアプリの有効化には「購入を復元」を案内します。価格の読込中と取引中のみ購入を一時的に無効にします。価格の再読込だけでは購入しません。復元は所有権を同期して検証します。通常の更新では検証済みの有効状態を保ちます。"
             },
             {
-              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports an original second audio track. Purchase does not guarantee translation or voice quality.",
-              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原聲第二音軌。購買不保證翻譯或聲音品質。",
-              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原声第二音轨。购买不保证翻译或声音质量。",
-              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元音声の第2トラックは基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
+              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports keeping the original audio tracks. Purchase does not guarantee translation or voice quality.",
+              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原裝音軌。購買不保證翻譯或聲音品質。",
+              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原版音轨。购买不保证翻译或声音质量。",
+              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元の音声トラックの保持は基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
             }
           ],
           "controlRefs": [
@@ -4216,10 +4394,10 @@
               "ja": "エキスパートモードの紹介は、iPhone では iPhone の画面、iPad では iPad の画面を表示します。画像は表示言語と外観に合わせて切り替わります。"
             },
             {
-              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports an original second audio track. Purchase does not guarantee translation or voice quality.",
-              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原聲第二音軌。購買不保證翻譯或聲音品質。",
-              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原声第二音轨。购买不保证翻译或声音质量。",
-              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元音声の第2トラックは基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
+              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports keeping the original audio tracks. Purchase does not guarantee translation or voice quality.",
+              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原裝音軌。購買不保證翻譯或聲音品質。",
+              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原版音轨。购买不保证翻译或声音质量。",
+              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元の音声トラックの保持は基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
             }
           ],
           "controlRefs": [],
@@ -4378,10 +4556,10 @@
               "ja": "言語の入口はAniCantoロゴと同じ高さに置きます。横長の画面では右端を「スタジオに入る」ボタンに揃え、ウィンドウの大きさに合わせて実際のボタンの位置に追従します。"
             },
             {
-              "en": "The landscape iPad Welcome artwork fills more of the left panel and sits slightly lower. Mode and entry controls keep their space. On iPad and opened Duo, Meet AniCanto uses a centred popup with a border in the selected theme colour. The closed phone presentation stays full screen.",
-              "zh-HK": "iPad 橫向歡迎頁左側的角色圖會放大並稍微向下移，保留模式選擇及進入按鈕的空間。iPad 及展開的 Duo 以置中彈出視窗顯示「認識 AniCanto」，外框跟隨所選主題顏色。摺合手機的介紹則維持全螢幕。",
-              "zh-CN": "iPad 横向欢迎页左侧的角色图放大并稍微下移，保留模式选择及进入按钮的空间。iPad 及展开的 Duo 以居中弹窗显示“认识 AniCanto”，边框跟随所选主题颜色。折叠手机的介绍保持全屏。",
-              "ja": "iPadの横向きの開始画面では、左のキャラクターを大きくして少し下へ移し、モード選択と開始ボタンの領域を保ちます。iPadと開いたDuoのAniCanto紹介は、選択したテーマ色の枠がある中央のポップアップに表示します。閉じたスマートフォンの紹介は全画面のままです。"
+              "en": "Meet AniCanto plays automatically. Its audio and subtitles follow the system language when supported. English is the fallback. Use the language buttons to change the audio and subtitles for this playback. On iPad, it uses the same wide player as the tutorials. On iPhone, it uses the full screen. Skip and Don’t show again stay below the picture.",
+              "zh-HK": "「認識 AniCanto」會自動播放，配音及字幕會跟隨支援的系統語言，其他語言則使用英文。可用語言按鈕更改今次播放嘅配音及字幕。iPad 使用與教學相同的寬播放器，iPhone 則以全螢幕顯示。「略過」和「下次不再顯示」放在影片下方。",
+              "zh-CN": "「认识 AniCanto」会自动播放，配音及字幕会跟随支持的系统语言，其他语言则使用英文。可用语言按钮更改本次播放的配音和字幕。iPad 使用与教学相同的宽播放器，iPhone 则以全屏显示。「略过」和「不再显示」放在视频下方。",
+              "ja": "AniCanto紹介は自動で再生します。音声と字幕は対応するシステム言語に従い、対応外の場合は英語になります。言語ボタンで再生中の音声と字幕を切り替えられます。iPadではチュートリアルと同じ広いプレーヤー、iPhoneでは全画面で表示します。「スキップ」と「今後表示しない」は映像の下にあります。"
             },
             {
               "en": "Welcome shows the local cover while its animated frame loads. It keeps the cover if the animation cannot load.",
@@ -4522,6 +4700,12 @@
               "zh-HK": "「恢復購買」完成後，彈窗會顯示已恢復、找不到符合資格的購買，或連線失敗。關閉彈窗後返回升級頁面；沒有已驗證購買的帳戶仍然上鎖。",
               "zh-CN": "“恢复购买”完成后，弹窗会显示已恢复、找不到符合资格的购买，或连接失败。关闭弹窗后返回升级页面；没有已验证购买的账户仍然上锁。",
               "ja": "「購入を復元」の後、復元完了、対象の購入なし、または接続失敗をダイアログで表示します。閉じるとアップグレード画面に戻ります。購入が検証されていないアカウントはロックを維持します。"
+            },
+            {
+              "en": "After starting the app, Expert can show Checking purchase while StoreKit verifies access. Basic stays available. A normal restart keeps activation for the verified purchase.",
+              "zh-HK": "啟動後，專家模式可能會顯示「正在確認購買」，等候 StoreKit 驗證。期間仍可使用基本模式。一般重開會保留已驗證購買的啟用狀態。",
+              "zh-CN": "启动后，专家模式可能会显示“正在确认购买”，等待 StoreKit 验证。期间仍可使用基本模式。正常重启会保留已验证购买的激活状态。",
+              "ja": "アプリの起動後は、StoreKit の確認中にエキスパートに「購入を確認中」と表示される場合があります。基本モードは引き続き利用できます。通常の再起動では確認済みの購入の有効化状態が維持されます。"
             }
           ],
           "controlRefs": [],
@@ -4553,10 +4737,10 @@
               "ja": "読み上げモード紹介の全3ページは、iPhoneでもiPadの横向き画面を表示します。「今後表示しない」のラベルは右側のスイッチの隣に配置します。"
             },
             {
-              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports an original second audio track. Purchase does not guarantee translation or voice quality.",
-              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原聲第二音軌。購買不保證翻譯或聲音品質。",
-              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原声第二音轨。购买不保证翻译或声音质量。",
-              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元音声の第2トラックは基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
+              "en": "Expert adds voice-model sampling parameters, production presets, original-name pronunciation, script approval and per-line revision. Basic also supports keeping the original audio tracks. Purchase does not guarantee translation or voice quality.",
+              "zh-HK": "專家模式提供配音模型取樣參數、製作預設、人名原音、配音前確認譯稿及逐句修訂。基本模式亦支援保留原裝音軌。購買不保證翻譯或聲音品質。",
+              "zh-CN": "专家模式提供配音模型采样参数、制作预设、人名原音、配音前确认译稿与逐句修订。基本模式也支持保留原版音轨。购买不保证翻译或声音质量。",
+              "ja": "エキスパートでは音声サンプリング設定、制作プリセット、人名の元の発音、台本確認、行ごとの修訂を使えます。元の音声トラックの保持は基本でも使えます。購入で翻訳や音声の品質を保証するものではありません。"
             }
           ],
           "controlRefs": [],
@@ -4582,10 +4766,10 @@
               "ja": "ホームは「基本モード」と表示し、自動検出を追加しません。基本モードの制作設定では「字幕とソース」に自動検出を表示します。エキスパートにはソースメニューがあり、基本モードは読み取れる字幕を優先します。"
             },
             {
-              "en": "Both modes default to OP / ED detection on and the original second audio track off. This update applies these preferences once. Reset status and Restart restore them for new jobs. Later manual choices remain until reset. Saved jobs and existing outputs keep their frozen choices.",
-              "zh-HK": "兩個模式均預設開啟片頭／片尾偵測，並關閉保留原聲為第二音軌。此更新會一次性套用這兩項偏好；「重設狀態」及「重新開始」會還原這些新工作預設。之後的手動選擇保留至重設，已保存工作及舊成品維持原有選擇。",
-              "zh-CN": "两个模式均默认开启片头／片尾检测，并关闭保留原声为第二音轨。此次更新会一次性应用这两项偏好；“重设状态”和“重新开始”会恢复这些新任务默认值。之后的手动选择保留至重设，已保存任务和旧成品保持原选择。",
-              "ja": "両モードの既定はOP／ED検出オン、原音の第2音声トラックはオフです。この更新で一度だけ適用します。状態リセットと最初から再開は新規作業の既定値を復元します。その後の手動選択はリセットまで保持し、保存済み作業と既存出力は従来の設定を保持します。"
+              "en": "For new jobs, both modes default to OP / ED detection and retain the readable original audio tracks after the new dub. You can switch to original dialogue and songs in the player's Audio menu. Reset status and Restart restore the new-job defaults. Saved jobs keep their original choices and existing movies stay available.",
+              "zh-HK": "兩個模式的新工作均預設開啟片頭／片尾偵測，並在新配音後按原片次序保留可讀嘅原裝音軌。可在播放器的「音訊」選單切回原裝對白及歌曲。「重設狀態」及「重新開始」會還原新工作預設。已保存工作維持原有選擇，舊成品仍可播放。",
+              "zh-CN": "两个模式的新任务均默认开启片头／片尾检测，并在新配音之后按源视频顺序保留可读取的原版音轨。可在播放器的“音频”菜单切回原版对白和歌曲。“重设状态”和“重新开始”会恢复新任务默认值。已保存任务保留原选择，旧成品仍可播放。",
+              "ja": "両モードの新規作業では、OP／ED検出と元の音声トラックの保持が既定でオンです。読み取れる元の音声トラックは新しい吹き替えの後に元の順序で並びます。プレーヤーの音声メニューで元の台詞や歌に切り替えられます。状態リセットと最初から再開は新規作業の既定値を復元します。保存済み作業は従来の選択を保持し、既存の動画も再生できます。"
             },
             {
               "en": "In Advanced production settings, turn off Whole video to show 30 seconds and 3 minutes. Both modes start at the selected source position. Choose the current frame or seek the source preview. Check the displayed start and end. A preset longer than the remaining source is unavailable. A shorter remaining range is shown explicitly. Samples do not advance the queue.",
@@ -4685,10 +4869,10 @@
           },
           "body": [
             {
-              "en": "Basic, Expert and Reading use the same long press to edit the video list. Hold a file for about half a second. Cards wiggle while editing, unless Reduce Motion is on. Drag to change the order, or use the delete action. Select Done to leave editing.",
-              "zh-HK": "基本、專家及朗讀模式使用相同的影片清單長按操作。按住檔案約半秒即可編輯；編輯期間卡片會輕微搖動，啟用「減少動態效果」時除外。拖動可更改次序，或使用刪除按鈕。按「完成」結束編輯。",
-              "zh-CN": "基本、专家和朗读模式使用相同的视频列表长按操作。按住文件约半秒即可编辑；编辑时卡片会轻微晃动，开启“减弱动态效果”时除外。拖动可以调整顺序，或使用删除按钮。点击“完成”结束编辑。",
-              "ja": "基本・エキスパート・読み上げでは同じ長押し操作で動画一覧を編集します。ファイルを約半秒押すと、カードが小さく揺れます。「視差効果を減らす」がオンの場合は揺れません。ドラッグで順序を変更し、削除ボタンで削除します。「完了」で編集を終了します。"
+              "en": "Hold a video card for about half a second to edit the list in Basic, Expert or Reading. Cards wiggle unless Reduce Motion is on. Move a card to start reordering. Use the delete button to remove an import, and select Done to leave editing.",
+              "zh-HK": "在基本、專家或朗讀模式，按住影片卡片約半秒即可編輯清單。卡片會輕微搖動，啟用「減少動態效果」時除外。移動卡片即可開始排序。按刪除按鈕可移除匯入副本，按「完成」結束編輯。",
+              "zh-CN": "在基本、专家或朗读模式，按住视频卡片约半秒即可编辑列表。卡片会轻微晃动，开启“减弱动态效果”时除外。移动卡片即可开始排序。点击删除按钮可移除导入副本，点击“完成”结束编辑。",
+              "ja": "基本・エキスパート・読み上げでは、動画カードを約半秒押すと一覧を編集できます。「視差効果を減らす」がオフの場合はカードが小さく揺れます。カードを動かすと並べ替えが始まります。削除ボタンで読み込んだコピーを削除し、「完了」で編集を終了します。"
             },
             {
               "en": "Deleting a file keeps the list in edit mode. Wait until deletion finishes before another delete or move. Select Done to leave editing.",
@@ -5148,6 +5332,12 @@
               "zh-HK": "模型按鈕採用較緊湊高度，文字置中。未準備的模型仍清楚顯示，但不能選擇；向下捲動可查看各模型的下載項目。",
               "zh-CN": "模型按钮采用较紧凑高度，文字居中。未准备的模型仍清楚显示，但不能选择；向下滚动可查看各模型的下载项目。",
               "ja": "モデルボタンはコンパクトな高さで、ラベルを中央に表示します。未準備のモデルも読みやすく表示しますが選択できません。下にスクロールすると各モデルのダウンロード項目を確認できます。"
+            },
+            {
+              "en": "If you delete the selected translation or voice model, AniCanto selects a verified replacement for new jobs. It prefers the default if installed. If no compatible model remains, the next setup proposes the default download. Saved jobs keep their original models.",
+              "zh-HK": "刪除所選翻譯或配音模型後，AniCanto 會為新工作改用已驗證的模型，並優先使用已安裝的預設模型。如沒有相容模型，下一次設定會建議下載預設模型。已保存工作沿用原有模型。",
+              "zh-CN": "删除所选翻译或配音模型后，AniCanto 会为新任务改用已验证的模型，并优先使用已安装的默认模型。如果没有兼容模型，下次设置会建议下载默认模型。已保存任务沿用原有模型。",
+              "ja": "選択中の翻訳・音声モデルを削除すると、新規ジョブには検証済みのモデルを選びます。同梱の既定設定に対応するモデルが導入済みなら優先します。互換モデルがなければ次回の設定で既定モデルのダウンロードを案内します。保存済みジョブでは元のモデルを使います。"
             }
           ],
           "controlRefs": [
@@ -5193,10 +5383,10 @@
           },
           "body": [
             {
-              "zh-HK": "按加號在「檔案」選擇多個影片，依選擇次序匯入。長按影片進入編輯，可拖動排序；減號先顯示移除確認，按完成停止編輯。內置介紹影片置頂且不編號，只可以隱藏：該列顯示眼仔按鈕，冇刪除選項。隱藏介紹影片後會自動選擇下一條影片，「編輯與預覽」繼續顯示影片。",
-              "zh-CN": "点击加号在“文件”中选择多个影片，按选择次序导入。长按影片进入编辑，可拖动排序；减号先显示移除确认，点击完成结束编辑。内置介绍影片置顶且无编号，只能隐藏：该行显示眼睛按钮，没有删除选项。隐藏介绍影片后会自动选择下一个影片，“编辑与预览”继续显示影片。",
-              "en": "Use Plus to select multiple movies in Files. Imports follow the selection order. Touch and hold to edit and drag the list. Minus requests confirmation; Done ends editing. The unnumbered introduction stays pinned and is hide-only: its row shows an eye control, and no delete control exists. After you hide it, the next movie becomes selected, so Edit and Preview still shows a movie.",
-              "ja": "プラスから「ファイル」で複数動画を選び、選択順に読み込みます。長押しで編集・並べ替え、マイナスで削除確認、完了で編集を終了します。番号のない紹介動画は先頭に固定され、非表示にできます。行には目のアイコンが表示され、削除の選択肢はありません。紹介を非表示にすると次の動画が選択され、「編集とプレビュー」に引き続き表示されます。"
+              "zh-HK": "按加號並選擇「檔案」，即可選取多個影片，依選擇次序匯入。長按影片進入編輯，可拖動排序；減號先顯示移除確認，按完成停止編輯。內置介紹影片置頂且不編號，只可以隱藏：該列顯示眼仔按鈕，冇刪除選項。隱藏介紹影片後會自動選擇下一條影片，「編輯與預覽」繼續顯示影片。",
+              "zh-CN": "点击加号并选择“文件”，即可选取多个影片，按选择次序导入。长按影片进入编辑，可拖动排序；减号先显示移除确认，点击完成结束编辑。内置介绍影片置顶且无编号，只能隐藏：该行显示眼睛按钮，没有删除选项。隐藏介绍影片后会自动选择下一个影片，“编辑与预览”继续显示影片。",
+              "en": "Open Plus, then Files to select multiple movies. Imports follow the selection order. Touch and hold to edit and drag the list. Minus requests confirmation; Done ends editing. The unnumbered introduction stays pinned and is hide-only: its row shows an eye control, and no delete control exists. After you hide it, the next movie becomes selected, so Edit and Preview still shows a movie.",
+              "ja": "プラスを押して「ファイル」を開き、複数の動画を選び、選択順に読み込みます。長押しで編集・並べ替え、マイナスで削除確認、完了で編集を終了します。番号のない紹介動画は先頭に固定され、非表示にできます。行には目のアイコンが表示され、削除の選択肢はありません。紹介を非表示にすると次の動画が選択され、「編集とプレビュー」に引き続き表示されます。"
             },
             {
               "en": "On iPhone and closed Duo, Basic and Expert open Edit and preview first. Use Plus to add videos. Video list above the preview opens the full-screen selection list and shows the current filename. The card has space below the mode header. Select a row to return to that video. The upper-right player icon returns to preview without changing selection. Touch and hold a row to reorder or remove videos; Done ends editing. The list has no separate Edit videos button. Empty production shows Add video in the centre. Opened Duo keeps the tablet layout.",
@@ -5262,10 +5452,10 @@
           },
           "body": [
             {
-              "zh-HK": "影片內有可選文字字幕時，先在字幕選單選擇要使用的字幕；外掛字幕可為目前影片匯入 SRT、ASS 或 VTT。相同片名及語言後綴可用來關聯，例如 abc.mp4 配 abc.tc.ass 或 abc.sc.ass。畫面上燒錄的字並非可選字幕軌，需要 OCR。",
-              "zh-CN": "影片含可选文字字幕时，先在字幕菜单选择字幕；外部字幕可为当前影片导入 SRT、ASS 或 VTT。同名及语言后缀可用于关联，例如 abc.mp4 配 abc.tc.ass 或 abc.sc.ass。烧录在画面的字不是可选字幕轨，需要 OCR。",
-              "en": "Select readable embedded text subtitles from the subtitle menu. Import SRT, ASS or VTT for the current movie. Matching names and language suffixes can associate sidecars, such as abc.tc.ass or abc.sc.ass with abc.mp4. Burned-in screen text needs OCR.",
-              "ja": "字幕メニューから読み取れる内蔵テキスト字幕を選びます。現在の動画に SRT、ASS、VTT を読み込めます。abc.mp4 に abc.tc.ass や abc.sc.ass など同名・言語接尾辞の字幕を関連付けられます。映像に焼き込まれた文字には OCR が必要です。"
+              "en": "Choose embedded text subtitles in the subtitle menu. For separate files, use Plus to open Add files. Select SRT, ASS or VTT files with their videos or select subtitles for videos already in the list. AniCanto matches names and supports suffixes such as Film.tc.ass and Film.sc.ass.",
+              "zh-HK": "在字幕選單選擇內嵌文字字幕。外掛字幕可按「＋」開啟「加入檔案」，一併選擇影片和 SRT、ASS 或 VTT，或為清單內的影片加入字幕。AniCanto 會按檔名配對，支援 Film.tc.ass 及 Film.sc.ass 等後綴。",
+              "zh-CN": "在字幕菜单选择内嵌文本字幕。外部字幕可点击“＋”打开“添加文件”，同时选择视频和 SRT、ASS 或 VTT，或为列表中的视频添加字幕。AniCanto 会按文件名匹配，支持 Film.tc.ass 和 Film.sc.ass 等后缀。",
+              "ja": "字幕メニューで内蔵テキスト字幕を選びます。外部字幕は「＋」から「ファイルを追加」を開きます。動画と SRT、ASS、VTT をまとめて選ぶか、一覧にある動画の字幕を選びます。AniCanto はファイル名で照合し、Film.tc.ass や Film.sc.ass などの名前にも対応します。"
             }
           ],
           "controlRefs": [],
@@ -5284,10 +5474,209 @@
           },
           "body": [
             {
-              "zh-HK": "基本及專家模式在預覽上方提供匯入字幕檔，即使預覽已收起亦可使用。朗讀模式在朗讀語言下方提供相同入口，會關聯至目前選擇的影片。",
-              "zh-CN": "基本和专家模式在预览上方提供导入字幕文件，即使预览收起也可使用。朗读模式在朗读语言下方提供相同入口，关联到当前选中的影片。",
-              "en": "Basic and Expert have Import subtitles above Preview, even when Preview is closed. Reading provides the same action below Reading language. The import attaches to the selected movie.",
-              "ja": "基本・専門モードにはプレビューを閉じた状態でも使える字幕読み込みボタンがあります。読み上げモードでは言語の下にあり、選択中の動画に字幕を関連付けます。"
+              "en": "Tap Plus in Basic, Expert or Reading. Choose subtitle files in Add files. You can select them with their videos. Both Duo layouts use the same steps.",
+              "zh-HK": "在基本、專家或閱讀模式按「＋」，用「加入檔案」選擇字幕。可以同批選擇對應影片。Duo 兩種版面做法相同。",
+              "zh-CN": "在基本、专家或阅读模式点击“＋”，用“添加文件”选择字幕。可以同时选择对应视频。Duo 两种布局的步骤相同。",
+              "ja": "基本、エキスパート、リーディングモードで「＋」を押し、「ファイルを追加」から字幕を選びます。対応する動画とまとめて選択できます。Duo の両レイアウトで手順は同じです。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-video-import-sources",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Add videos and subtitles",
+            "zh-HK": "加入影片和字幕",
+            "zh-CN": "添加视频和字幕",
+            "ja": "動画と字幕を追加"
+          },
+          "body": [
+            {
+              "en": "Tap Plus in Basic, Expert or Reading on iPhone or iPad. Choose Files for this device or USB storage. Choose Google Drive or OneDrive for direct cloud imports and download progress. Use Browser Transfer from a computer on the same Wi-Fi.",
+              "zh-HK": "在 iPhone 或 iPad 的基本、專家或閱讀模式按「＋」。本機及 USB 儲存裝置用「檔案」。雲端檔案可用 Google Drive 或 OneDrive 直接匯入，並查看下載進度。同一 Wi-Fi 上的電腦可用「瀏覽器傳檔」。",
+              "zh-CN": "在 iPhone 或 iPad 的基本、专家或阅读模式点击“＋”。本机或 USB 存储设备使用“文件”。云端文件可用 Google Drive 或 OneDrive 直接导入，并查看下载进度。同一 Wi-Fi 上的电脑可使用“浏览器传输”。",
+              "ja": "iPhone または iPad の基本、エキスパート、リーディングモードで「＋」を押します。端末や USB ストレージには「ファイル」を使います。Google Drive や OneDrive から直接読み込むと進行状況を確認できます。同じ Wi-Fi 上のコンピューターからはブラウザー転送を使います。"
+            },
+            {
+              "en": "Select videos and same-name SRT, ASS or VTT files together, for example Film.mkv and Film.srt. AniCanto imports the videos first and matches the subtitles by filename. You can also select a subtitle for an existing video. AniCanto reports missing or ambiguous matches.",
+              "zh-HK": "可一併選擇影片及同名的 SRT、ASS 或 VTT，例如 Film.mkv 和 Film.srt。AniCanto 會先匯入影片，再按檔名配對字幕。亦可為已匯入的影片選擇字幕。如找不到唯一對應影片，AniCanto 會顯示提示。",
+              "zh-CN": "可同时选择视频和同名的 SRT、ASS 或 VTT，例如 Film.mkv 和 Film.srt。AniCanto 会先导入视频，再按文件名匹配字幕。也可以为已导入的视频选择字幕。如果找不到唯一匹配的视频，AniCanto 会显示提示。",
+              "ja": "Film.mkv と Film.srt のように、動画と同名の SRT、ASS、VTT をまとめて選びます。AniCanto は動画を先に読み込み、ファイル名で字幕を照合します。読み込み済みの動画に字幕を追加することもできます。一意に照合できない場合は案内が表示されます。"
+            },
+            {
+              "en": "In a wide iPad or open Duo window, Add files opens on the left. The workspace stays visible on the right. Read the instructions at the top. Use the return arrow to close the panel.",
+              "zh-HK": "在寬螢幕 iPad 或已打開的 Duo，「加入檔案」會在左側開啟，工作區仍顯示在右側。請參閱頂部說明。按返回箭嘴可關閉面板。",
+              "zh-CN": "在宽屏 iPad 或已展开的 Duo，“添加文件”在左侧打开，工作区仍显示在右侧。请参阅顶部说明。点击返回箭头可关闭面板。",
+              "ja": "ワイド表示の iPad や開いた Duo では、左側に「ファイルを追加」が開き、右側に作業画面が表示されます。上部に案内があり、戻る矢印で閉じます。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "local-browser-transfer",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Browser Transfer",
+            "zh-HK": "瀏覽器傳檔",
+            "zh-CN": "浏览器传输",
+            "ja": "ブラウザー転送"
+          },
+          "body": [
+            {
+              "en": "Open Browser Transfer from Add files or from the player playlist. Connect the computer and your iPhone or iPad to the same Wi-Fi. Select the finished videos available to that computer, then tap Start Transfer.",
+              "zh-HK": "從「加入檔案」或播放器嘅播放清單開啟「瀏覽器傳檔」。將電腦同 iPhone 或 iPad 連接到同一個 Wi-Fi。先勾選畀電腦下載嘅成品，再按「開始傳檔」。",
+              "zh-CN": "从“添加文件”或播放器的播放列表打开“浏览器传输”。让电脑和 iPhone 或 iPad 连接到同一个 Wi-Fi。选中允许电脑下载的成品，再点击“开始传输”。",
+              "ja": "動画追加またはプレーヤーの再生リストから「ブラウザー転送」を開きます。コンピューターと iPhone または iPad を同じ Wi-Fi に接続します。ダウンロードする完成動画を選択し、「転送を開始」をタップします。"
+            },
+            {
+              "en": "Open the displayed HTTPS address on the computer. The browser will show a self-signed certificate warning. Compare its SHA-256 fingerprint with the value in AniCanto before trusting the address. Enter the eight-digit code to pair this browser.",
+              "zh-HK": "喺電腦開啟 App 顯示嘅 HTTPS 網址。瀏覽器會顯示自簽證書提示。信任網址前先核對證書嘅 SHA-256 指紋，再輸入八位配對碼。",
+              "zh-CN": "在电脑上打开应用显示的 HTTPS 地址。浏览器会显示自签名证书提示。信任地址前先核对证书的 SHA-256 指纹，再输入八位配对码。",
+              "ja": "コンピューターで表示された HTTPS アドレスを開きます。自己署名証明書の警告が表示されたら、AniCanto に表示される SHA-256 フィンガープリントと照合してから信頼します。8 桁のコードでペアリングします。"
+            },
+            {
+              "en": "The browser uses the app language and theme. Use Choose files or drag videos and subtitles into the upload area. Videos in the same selection upload first. Uploads go to Edit & Preview by default. To keep an offline copy, select Offline Videos in the playlist before sending files. Match each SRT, ASS or VTT filename to the video. Each subtitle can be up to 10 MB. Download the finished video and available SRT separately. Tap Stop Transfer when finished.",
+              "zh-HK": "網頁使用 App 的語言及主題。按「選擇檔案」，或把影片和字幕拖到上載區。同批影片會先上載。預設儲存到「編輯與預覽」。如需離線播放，請先選擇播放清單的離線影片。SRT、ASS 或 VTT 字幕檔名須與影片配對，每個字幕最多 10 MB。成品影片和可用的 SRT 可分開下載。完成後按「停止傳檔」。",
+              "zh-CN": "网页使用应用的语言和主题。点击“选择文件”，或将视频和字幕拖到上传区。同批视频先上传。默认保存到“编辑与预览”。如需离线播放，请先选择播放列表的离线视频。SRT、ASS 或 VTT 字幕文件名须与视频匹配，每个字幕最多 10 MB。成品视频和可用的 SRT 可分别下载。完成后点击“停止传输”。",
+              "ja": "ブラウザーにはアプリの言語とテーマが反映されます。「ファイルを選択」を押すか、動画と字幕をアップロード欄にドロップします。同じ選択内の動画が先に送信されます。既定の保存先は「編集とプレビュー」です。オフラインで再生するには、先に再生リストのオフライン動画を選びます。動画と同名の SRT、ASS、VTT 字幕は 1 ファイルにつき 10 MB までです。完成動画と利用可能な SRT は個別にダウンロードできます。最後に「転送を停止」をタップします。"
+            },
+            {
+              "en": "When finished videos have the same title, use the filenames under the titles to tell them apart. The browser shows the filename for each video and subtitle download.",
+              "zh-HK": "如多個成品影片的標題相同，可按標題下方的檔名區分。瀏覽器會顯示每個影片和字幕下載項目的檔名。",
+              "zh-CN": "如果多个成品视频的标题相同，请根据标题下方的文件名区分。浏览器会显示每个视频和字幕下载项的文件名。",
+              "ja": "完成動画のタイトルが同じ場合は、タイトルの下に表示されるファイル名で区別できます。ブラウザーには動画と字幕のダウンロードごとにファイル名が表示されます。"
+            },
+            {
+              "en": "While the transfer screen stays open, the device stays awake. Its screen saver uses the selected delay and brightness. At 0% brightness, the saver shows a black screen. At other levels, the assistant shows whether a transfer is active. Tap the screen to return to the transfer without stopping it.",
+              "zh-HK": "傳檔畫面開啟時，裝置會保持開啟，螢幕保護程式依照設定的等候時間和亮度顯示。亮度設為 0% 時顯示全黑畫面，其他亮度會顯示助手及傳檔狀態。輕觸螢幕可返回傳檔畫面，傳檔會繼續。",
+              "zh-CN": "传输界面打开时，设备会保持唤醒，屏幕保护程序使用设定的等待时间和亮度。亮度设为 0% 时显示全黑画面，其他亮度会显示助手及传输状态。轻触屏幕可返回传输界面，传输会继续。",
+              "ja": "転送画面を開いている間は端末が自動ロックしません。スクリーンセーバーには設定した待ち時間と明るさが適用されます。明るさが0%の場合は真っ黒な画面を表示し、それ以外では助手が転送状態を示します。画面をタップすると転送を続けたまま戻れます。"
+            },
+            {
+              "en": "Copy the displayed HTTPS address and open it on the computer. If it times out, restart Browser Transfer and copy the new address.",
+              "zh-HK": "複製畫面上的 HTTPS 網址，在電腦開啟。若連線逾時，請重新開始瀏覽器傳檔，再複製新的網址。",
+              "zh-CN": "复制屏幕上的 HTTPS 网址，在电脑上打开。如果连接超时，请重新开始浏览器传输，再复制新网址。",
+              "ja": "表示された HTTPS アドレスをコピーし、コンピューターで開きます。タイムアウトした場合は転送をやり直し、新しいアドレスをコピーします。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "cloud-compatible-playback",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Play cloud videos",
+            "zh-HK": "播放雲端影片",
+            "zh-CN": "播放云端视频",
+            "ja": "クラウド動画を再生"
+          },
+          "body": [
+            {
+              "en": "Open Video to find downloaded videos in the same playlist as completed videos. Tap a downloaded video to play it without a network connection.",
+              "zh-HK": "在「影片」分頁，已下載影片與已完成影片會一同顯示在播放清單。點按已下載影片即可離線播放。",
+              "zh-CN": "在“视频”选项卡，已下载视频与已完成视频会一同显示在播放列表。点击已下载的视频即可离线播放。",
+              "ja": "「動画」タブの再生リストには、ダウンロードした動画と変換済みの動画が一緒に表示されます。ダウンロードした動画はオフラインで再生できます。"
+            },
+            {
+              "en": "In Cloud storage, select a Google Drive or OneDrive video. Supported MP4, M4V and MOV files stream. MKV and other compatible formats download temporarily before playback. Close playback to remove the temporary file. Use Download to playlist to keep a local copy. To import for conversion, select the cloud provider in Add videos.",
+              "zh-HK": "在「雲端儲存」選擇 Google Drive 或 OneDrive 影片。支援的 MP4、M4V 和 MOV 可以串流。MKV 等相容格式會先下載到暫存才播放。關閉播放器時會清理暫存。選擇「下載到播放清單」可保留本機副本。如需匯入作轉換，請在「加入影片」選擇雲端服務。",
+              "zh-CN": "在“云存储”选择 Google Drive 或 OneDrive 视频。支持的 MP4、M4V 和 MOV 可在线播放。MKV 等兼容格式先下载到临时存储再播放。关闭播放器时会删除临时文件。选择“下载到播放列表”可保留本地副本。如需导入进行转换，请在“添加视频”选择云服务。",
+              "ja": "クラウドストレージで Google Drive または OneDrive の動画を選択します。対応する MP4、M4V、MOV はストリーミングします。MKV などは一時保存して再生し、プレーヤーを閉じると一時ファイルを削除します。「再生リストにダウンロード」で端末に保存しします。変換用の読み込みは、動画の追加画面でクラウドサービスを選択します。"
+            },
+            {
+              "en": "Video, Dub, and the cloud icon share one row. In a wide window on iPad or open Duo, tap the cloud icon to open the file list on the left. The selected video plays on the right. Use Show cloud files or Hide cloud files to adjust the player space. Compact windows use a full-page file list.",
+              "zh-HK": "「影片」、「配音」及雲端圖示排列於同一列。在 iPad 或已展開 Duo 的寬版視窗中，點按雲端圖示即可開啟左側檔案列表，並在右側播放所選影片。可顯示或隱藏檔案列表以調整播放空間。窄版視窗使用全頁檔案列表。",
+              "zh-CN": "“视频”、“配音”和云图标排列在同一行。在 iPad 或已展开 Duo 的宽屏窗口中，点击云图标即可打开左侧文件列表，并在右侧播放所选视频。可显示或隐藏文件列表以调整播放空间。窄窗口使用全页文件列表。",
+              "ja": "「動画」「吹替」とクラウドアイコンは同じ行に並びます。iPad または開いた Duo のワイド表示では、クラウドアイコンをタップすると左にファイル一覧が開き、選んだ動画は右で再生されます。一覧の表示を切り替えて再生スペースを調整できます。狭いウィンドウでは全画面のファイル一覧を使います。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "onedrive-readonly",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "OneDrive (read-only)",
+            "zh-HK": "OneDrive（唯讀）",
+            "zh-CN": "OneDrive（只读）",
+            "ja": "OneDrive（読み取り専用）"
+          },
+          "body": [
+            {
+              "en": "If OneDrive is available in Add videos, open it and sign in with Microsoft. Choose the personal or work account where you saved the videos. Microsoft may show two accounts with the same email address. AniCanto stores the read-only connection in the Keychain on this device. Open a folder in My files to browse it.",
+              "zh-HK": "如果「加入影片」有 OneDrive，開啟後用 Microsoft 帳戶登入。請選擇存放影片的個人或工作帳戶。Microsoft 可能會顯示兩個電郵地址相同的帳戶。AniCanto 將唯讀連線儲存在此裝置的鑰匙圈。從「我的檔案」開啟資料夾瀏覽。",
+              "zh-CN": "如果“添加视频”有 OneDrive，打开后用 Microsoft 账号登录。请选择存放视频的个人或工作账号。Microsoft 可能会显示两个电子邮箱地址相同的账号。AniCanto 将只读连接保存在此设备的钥匙串。从“我的文件”打开文件夹浏览。",
+              "ja": "動画追加に OneDrive がある場合は、開いて Microsoft アカウントでサインインします。動画を保存した個人用または職場用のアカウントを選びます。Microsoft の画面に同じメールアドレスのアカウントが二つ表示されることがあります。読み取り専用接続はこのデバイスのキーチェーンに保存されます。「マイ ファイル」でフォルダを開きます。"
+            },
+            {
+              "en": "In Add files, open OneDrive. Select videos and matching subtitle files, then tap Download and Import. You can stream supported videos from OneDrive under Cloud storage in the player.",
+              "zh-HK": "在「加入檔案」開啟 OneDrive。選擇影片及同名字幕，再按「下載並匯入」。可在播放器的「雲端儲存」使用 OneDrive 串流播放支援的影片。",
+              "zh-CN": "在“添加文件”中打开 OneDrive。选择视频及同名字幕，再点击“下载并导入”。可在播放器的“云端存储”中通过 OneDrive 流式播放支持的视频。",
+              "ja": "「ファイルを追加」で OneDrive を開き、動画と同名の字幕を選んで「ダウンロードして読み込む」を押します。対応動画はプレーヤーの「クラウドストレージ」からストリーミングできます。"
+            },
+            {
+              "en": "Finished videos stay on the device. Use Forget Connection in the OneDrive menu to remove the connection from this device. The files in OneDrive and on the device stay in place.",
+              "zh-HK": "成品保存在裝置上。在 OneDrive 選單按「忘記連線」，可移除此裝置的連線。OneDrive 及裝置上的檔案會保留。",
+              "zh-CN": "成品保存在设备上。在 OneDrive 菜单选择“忘记连接”，即可移除此设备的连接。OneDrive 和设备上的文件会保留。",
+              "ja": "完成動画はデバイスに保存されます。OneDrive メニューの「接続を削除」でこのデバイスの接続を解除できます。OneDrive とデバイス上のファイルは保持されます。"
+            }
+          ],
+          "controlRefs": [],
+          "steps": false
+        },
+        {
+          "id": "mobile-connected-drive",
+          "platforms": [
+            "ipad",
+            "iphone"
+          ],
+          "title": {
+            "en": "Connected Google Drive",
+            "zh-HK": "已連接的 Google Drive",
+            "zh-CN": "已连接的 Google Drive",
+            "ja": "Google Driveの接続"
+          },
+          "body": [
+            {
+              "en": "Open Cloud storage in the player, or open Google Drive from Add videos. Connect to Google in read-only mode on the first visit. Later visits open My Drive in AniCanto. Tap a folder to browse it.",
+              "zh-HK": "在播放器開啟「雲端儲存」，或從「加入影片」開啟 Google Drive。首次使用時建立唯讀連線。之後會直接在 AniCanto 開啟「我的雲端硬碟」。點按資料夾即可瀏覽。",
+              "zh-CN": "在播放器打开“云存储”，或从“添加视频”打开 Google Drive。首次使用时建立只读连接。之后会直接在 AniCanto 打开“我的云端硬盘”。点击文件夹即可浏览。",
+              "ja": "プレーヤーの「クラウドストレージ」または動画追加からGoogle Driveを開きます。初回は読み取り専用で接続します。次回からはAniCantoの「マイドライブ」が直接開きます。フォルダをタップして閲覧します。"
+            },
+            {
+              "en": "In the player’s Cloud storage, tap a supported MP4, M4V, or MOV file. Use the 10-second controls to skip. On iPhone, rotate the device or use Play in landscape. Use Subtitles and Audio to choose from tracks in the file.",
+              "zh-HK": "在播放器的「雲端儲存」點按支援的 MP4、M4V 或 MOV 檔案。使用前進或後退 10 秒按鈕跳播。iPhone 可轉動裝置或選擇「橫向播放」。在「字幕」及「音訊」選擇檔案內的軌道。",
+              "zh-CN": "在播放器的“云存储”点击支持的 MP4、M4V 或 MOV 文件。使用前进或后退 10 秒按钮跳播。iPhone 可旋转设备或选择“横向播放”。在“字幕”和“音频”中选择文件内的轨道。",
+              "ja": "プレーヤーの「クラウドストレージ」で対応するMP4、M4V、MOVをタップします。10秒の早送り・巻き戻しを使えます。iPhoneでは端末を回転するか「横向きで再生」を選びます。「字幕」「音声」で動画内のトラックを選びます。"
+            },
+            {
+              "en": "In Add files, open Google Drive. Select videos and matching subtitle files, then tap Download and Import.",
+              "zh-HK": "在「加入檔案」開啟 Google Drive。選擇影片及同名字幕，再按「下載並匯入」。",
+              "zh-CN": "在“添加文件”中打开 Google Drive。选择视频及同名字幕，再点击“下载并导入”。",
+              "ja": "「ファイルを追加」で Google Drive を開き、動画と同名の字幕を選んで「ダウンロードして読み込む」を押します。"
+            },
+            {
+              "en": "To remove the connection from this device, select Forget Connection in the Google Drive menu. Videos stay in Drive and on the device. Finished videos are available in Files.",
+              "zh-HK": "在 Google Drive 選單選擇「忘記連線」可移除此裝置的連線。Drive 及裝置上的影片會保留。成品可在「檔案」查看。",
+              "zh-CN": "在 Google Drive 菜单选择“忘记连接”可移除此设备的连接。Drive 和设备上的视频将保留。成品可在“文件”查看。",
+              "ja": "Google Driveメニューから「接続を削除」を選ぶと、この端末の接続情報を削除できます。Driveと端末の動画は保持されます。完成品は「ファイル」で確認できます。"
             }
           ],
           "controlRefs": [],
@@ -5300,35 +5689,35 @@
             "iphone"
           ],
           "title": {
-            "en": "Notice before a cloud file",
-            "zh-HK": "雲端檔案等候提示",
-            "zh-CN": "云端文件等待提示",
-            "ja": "クラウドファイルの待機案内"
+            "en": "Files and cloud import notice",
+            "zh-HK": "檔案及雲端匯入提示",
+            "zh-CN": "文件与云端导入提示",
+            "ja": "ファイルとクラウドの読み込み案内"
           },
           "body": [
             {
-              "en": "Use the Files app to save the video locally before importing it into AniCanto. USB storage is another option.",
-              "zh-HK": "建議先使用「檔案」App 將影片儲存至本機，再匯入 AniCanto；亦可從 USB 儲存裝置匯入。",
-              "zh-CN": "建议先使用“文件”App 将视频保存到本机，再导入 AniCanto；也可从 USB 存储设备导入。",
-              "ja": "「ファイル」アプリで動画を本体に保存してから、AniCanto に読み込んでください。USB ストレージからも読み込めます。"
+              "en": "Choose Files for local or USB videos. For a Google Drive or OneDrive video, use its entry in Add Videos to see download progress.",
+              "zh-HK": "本機或 USB 影片請用「檔案」。Google Drive 或 OneDrive 影片請用「加入影片」內相應的入口，並查看下載進度。",
+              "zh-CN": "本机或 USB 视频请用“文件”。Google Drive 或 OneDrive 视频请用“添加视频”中的相应入口，并查看下载进度。",
+              "ja": "端末や USB の動画は「ファイル」を選びます。Google Drive や OneDrive 上の動画は「動画を追加」の該当する項目から選ぶと、ダウンロード状況を確認できます。"
             },
             {
-              "en": "Cloud files must download before Files hands them to AniCanto. Files may show only a loading indicator during this wait. Do not select the file again. AniCanto shows preparation progress after receiving the file. It cannot measure the earlier cloud download.",
-              "zh-HK": "雲端檔案須先下載，「檔案」才會交給 AniCanto。等候期間可能只顯示載入圖示，請勿重複點選。AniCanto 收到檔案後才會顯示準備進度，無法量度交接前的雲端下載進度。",
-              "zh-CN": "云端文件须先下载，“文件”才会交给 AniCanto。等待期间可能只显示加载图标，请勿重复点选。AniCanto 收到文件后才显示准备进度，无法测量交接前的云端下载进度。",
-              "ja": "クラウドファイルはダウンロード後に「ファイル」から AniCanto へ渡されます。待機中は読み込み表示だけの場合があります。繰り返し選択しないでください。AniCanto の準備進捗は受け取り後に始まり、それ以前のクラウドダウンロードは測定できません。"
+              "en": "Files can download a cloud video before AniCanto receives it. During that wait, Files may show only a loading icon. Wait for the download. AniCanto can report preparation progress after Files hands over the file.",
+              "zh-HK": "「檔案」可能要先下載雲端影片，才可交給 AniCanto。這段時間可能只顯示載入圖示，請等待下載完成。「檔案」交付後，AniCanto 才會顯示檔案準備進度。",
+              "zh-CN": "“文件”可能需要先下载云端视频，才会交给 AniCanto。期间可能只显示加载图标，请等待下载完成。交付后，AniCanto 才会显示文件准备进度。",
+              "ja": "「ファイル」から AniCanto に動画が渡る前にクラウドからのダウンロードが必要な場合があります。その間は読み込みアイコンだけが表示されることがあります。ダウンロードを待つと、受け取り後に AniCanto が準備状況を表示します。"
             },
             {
-              "en": "Download the video from its cloud storage app, then import it through Files. This version does not receive files directly from other apps or sign in to cloud accounts.",
-              "zh-HK": "先從雲端儲存 App 下載影片，再透過「檔案」匯入。此版本未提供從其他 App 直接接收檔案或登入雲端帳戶的功能。",
-              "zh-CN": "先从云端存储 App 下载视频，再通过“文件”导入。此版本未提供从其他 App 直接接收文件或登录云端账户的功能。",
-              "ja": "クラウドストレージのアプリから動画をダウンロードし、「ファイル」から読み込みます。この版は他のアプリからの直接受信やクラウドアカウントへのログインに対応しません。"
+              "en": "For another cloud service, you can save the video to the device first and select the local copy in Files.",
+              "zh-HK": "使用其他雲端服務時，可以先將影片儲存到本機，再在「檔案」選擇本機副本。",
+              "zh-CN": "使用其他云服务时，可以先将视频保存到本机，再在“文件”中选择本地副本。",
+              "ja": "ほかのクラウドサービスを使うときは、先に端末へ動画を保存し、「ファイル」でそのコピーを選ぶこともできます。"
             },
             {
-              "en": "The notice includes the rights reminder. Continue opens Files; Back closes it. Do not show again applies to this notice. Reset reminders and demos restores it. The updated local-storage advice appears once even if the older notice was hidden. Export does not show this notice.",
-              "zh-HK": "提示包含使用權利提醒。「明白，前往選取檔案」會開啟「檔案」；「返回」會關閉提示。「下次不再顯示」只套用於這項提示，可從「重設提示與示範」恢復。即使曾隱藏舊提示，更新後的本機儲存建議仍會顯示一次。匯出時不顯示此提示。",
-              "zh-CN": "提示包含使用权提醒。“明白，前往选取文件”会打开“文件”；“返回”会关闭提示。“下次不再显示”只用于此提示，可从“重设提示与示范”恢复。即使曾隐藏旧提示，更新后的本机存储建议仍显示一次。导出时不显示此提示。",
-              "ja": "案内は利用権の注意を含み、続行するとファイルを開き、戻ると閉じます。「次回から表示しない」はこの案内に適用し、案内と紹介のリセットで戻せます。以前の案内を非表示にしていても、新しい本体保存の案内は一度表示します。書き出しでは表示しません。"
+              "en": "Continue opens Files. Back closes the notice. Do not show again hides the notice. Reset reminders and demos restores it.",
+              "zh-HK": "選擇「明白，前往選取檔案」可開啟「檔案」；「返回」會關閉提示。可選擇「下次不再顯示」，並透過重設提示與示範恢復。",
+              "zh-CN": "选择“明白，前往选择文件”打开“文件”；选择“返回”关闭提示。可勾选“下次不再显示”，并通过重置提示与演示恢复。",
+              "ja": "続けると「ファイル」が開きます。「戻る」で案内を閉じます。「次回から表示しない」で非表示にできます。案内とデモをリセットすると再表示されます。"
             }
           ],
           "controlRefs": [],
@@ -5341,53 +5730,35 @@
             "ipad"
           ],
           "title": {
-            "en": "Basic and Reading tutorials",
-            "zh-HK": "基本模式與朗讀模式教學",
-            "zh-CN": "基本模式与朗读模式教程",
-            "ja": "基本モードと読み上げモードの操作ガイド"
+            "en": "Tutorial videos",
+            "zh-HK": "教學影片",
+            "zh-CN": "教学视频",
+            "ja": "チュートリアル動画"
           },
           "body": [
             {
-              "en": "Basic mode and Reading mode each have nine tutorial chapters. Each assistant owns one step and uses its matching voice. The film follows the interface language. Chinese captions use written Traditional or Simplified Chinese. Phone portrait uses the portrait film; iPad and full-screen Duo use the landscape film.",
-              "zh-HK": "基本模式與朗讀模式各有九段教學，由九位助手各自負責一個步驟，並使用對應的聲音。影片配合介面語言播放，中文字幕使用書面語並區分繁體與簡體。iPhone 及直向 Duo 使用直向影片；iPad 及全螢幕 Duo 使用橫向影片。",
-              "zh-CN": "基本模式与朗读模式各有九段教程，由九位助手各自负责一个步骤，并使用对应的声音。影片根据界面语言播放，中文字幕使用书面语并区分繁体和简体。iPhone 和竖向 Duo 使用竖向影片；iPad 和全屏 Duo 使用横向影片。",
-              "ja": "基本モードと読み上げモードには、それぞれ9つの手順があります。9人のアシスタントが1つずつ担当し、対応する声で案内します。動画はインターフェイスの言語に従い、中国語字幕は書き言葉の繁体字と簡体字を区別します。iPhoneと縦向きDuoは縦長、iPadと全画面Duoは横長の動画を使います。"
+              "en": "For tutorials opened from About & Licenses, tap Back to tutorials to return. Manual playback does not change first-entry preferences.",
+              "zh-HK": "從「關於及授權」開啟的影片可按「返回教學列表」退出。手動播放不會更改首次進入模式時的教學設定。",
+              "zh-CN": "从“关于及授权”打开的视频可点击“返回教学列表”退出。手动播放不会更改首次进入模式时的教学设置。",
+              "ja": "「情報とライセンス」から開いた動画は「チュートリアル一覧に戻る」で閉じます。手動の再生で初回表示の設定は変わりません。"
             },
             {
-              "en": "On iPhone and portrait Duo, the tutorial uses the borderless black Welcome layout. Portrait film proportions match the Welcome introduction. On iPad and expanded Duo, a centered theme-colored card fits the film and controls over a dimmed workspace. The card scrolls when content exceeds the available height. Playback starts automatically. Tap the film to pause or play, and use the slider to seek. A manual pause stays paused after a layout or language change.",
-              "zh-HK": "iPhone 及直向 Duo 使用與歡迎介紹相同的無框黑底版面，直向影片比例亦與歡迎介紹一致。iPad 及展開的 Duo 會在調暗的工作畫面中央，以貼合影片及控制按鈕的主題色框顯示；內容超出可用高度時可捲動。進入後會自動播放。輕觸影片可暫停或播放，拖動進度條可調整位置。手動暫停後，更改版面或語言仍會保持暫停。",
-              "zh-CN": "iPhone 和竖向 Duo 使用与欢迎介绍相同的无框黑底界面，竖向影片比例也与欢迎介绍一致。iPad 和展开的 Duo 会在调暗的工作界面中央，以贴合影片及控制按钮的主题色框显示；内容超出可用高度时可以滚动。进入后会自动播放。轻触影片可以暂停或播放，拖动进度条可以调整位置。手动暂停后，更改布局或语言仍会保持暂停。",
-              "ja": "iPhoneと縦向きDuoは、歓迎動画と同じ枠なしの黒い画面を使います。縦長動画の比率も歓迎動画に合わせます。iPadと展開したDuoは、暗くした作業画面の中央に、動画と操作ボタンに合う大きさのテーマ色のカードを表示します。内容が画面の高さを超える場合はスクロールできます。自動で再生を開始します。動画をタップして一時停止や再生、スライダーで移動ができます。手動で一時停止した場合は、画面や言語が変わっても停止を保ちます。"
+              "en": "Open About & Licenses to replay the Basic, Expert, Reading, and Study mode tutorials. The matching video also opens when you enter each mode, unless you selected Don’t show again.",
+              "zh-HK": "可在「關於及授權」重播基本、專家、朗讀及學習模式教學。進入各個模式時，也會播放對應影片，除非你已選擇「下次不再顯示」。",
+              "zh-CN": "可在「关于及授权」重播基本、专家、朗读及学习模式教学。进入各个模式时，也会播放相应的视频，除非你已选择「不再显示」。",
+              "ja": "「情報とライセンス」から、基本・エキスパート・読み上げ・学習モードの動画を再生できます。「今後表示しない」を選ぶまでは、各モードに入ったときにも対応する動画が開きます。"
             },
             {
-              "en": "Skip or the end of playback closes only this entry. The tutorial appears again when you leave and re-enter that mode. Only Don’t show again suppresses later entries and app launches. Reset notices and demos restores both tutorials and the Welcome introduction. A themed popup confirms the reset. Reset does not force immediate replay or change saved conversion progress.",
-              "zh-HK": "「跳過」或播放完畢只會關閉本次教學。離開後再次進入該模式，教學仍會顯示；只有「下次不再顯示」才會停用日後的顯示，包括重新啟動 App 後。「重設提示與示範」會恢復兩個模式的教學與歡迎介紹，並以主題風格彈窗確認完成。重設不會立即強制重播，也不會更改已保存的轉換進度。",
-              "zh-CN": "“跳过”或播放完毕只会关闭本次教程。离开后重新进入该模式，教程仍会显示；只有“下次不再显示”才会关闭以后的显示，包括重新启动 App 后。“重设提示与示范”会恢复两个模式的教程和欢迎介绍，并以主题风格弹窗确认完成。重设不会立即强制重播，也不会更改已保存的转换进度。",
-              "ja": "「スキップ」と再生終了は、今回の表示だけを閉じます。モードを離れて入り直すと、再表示します。「次回から表示しない」を選んだ場合だけ、再起動後も表示を停止します。設定のリセットで、両モードのガイドと歓迎動画を戻せます。テーマに合うポップアップで完了を知らせます。直ちに再生せず、保存済みの変換進捗も変更しません。"
+              "en": "Basic and Expert both check the required models when you enter or switch modes. The Basic tutorial also opens when you switch from Expert to Basic. If setup needs a download, finish or skip the Basic tutorial before you see the download confirmation.",
+              "zh-HK": "進入或切換至基本及專家模式時，都會檢查所需模型。由專家切換至基本模式時，也會播放基本模式教學。如需下載模型，請先看完或跳過基本模式教學，再確認下載。",
+              "zh-CN": "进入或切换至基本及专家模式时，都会检查所需模型。由专家切换至基本模式时，也会播放基本模式教学。如果需要下载模型，请先看完或跳过基本模式教学，再确认下载。",
+              "ja": "基本・エキスパートの各モードを開くときや切り替えるときに、必要なモデルを確認します。エキスパートから基本へ切り替えると、基本のチュートリアルも開きます。ダウンロードが必要な場合は、動画が終わるかスキップしてから確認画面へ進みます。"
             },
             {
-              "en": "If you need more time to read a step, tap the tutorial to pause. Tap again when you are ready to continue.",
-              "zh-HK": "如需更多時間閱讀某個步驟，可輕觸教學影片暫停，準備好後再輕觸繼續。",
-              "zh-CN": "如需更多时间阅读某个步骤，可以轻触教程影片暂停，准备好后再轻触继续。",
-              "ja": "手順を読む時間が必要な場合は、動画をタップして一時停止できます。準備ができたら、もう一度タップして再生を続けてください。"
-            },
-            {
-              "en": "The opening overview highlights each operation in order, starting with the first operation. Only one operation is highlighted at a time. Basic shows five overview operations. Reading shows three.",
-              "zh-HK": "開場概覽會由第一項開始，依次亮起各項操作，每次只會亮起一項。基本模式概覽有五項操作，朗讀模式有三項。",
-              "zh-CN": "开场概览会从第一项开始，依次突出显示各项操作，每次只会突出显示一项。基本模式概览有五项操作，朗读模式有三项。",
-              "ja": "冒頭の概要は、最初の操作から順に一つずつ強調表示します。基本モードは五つ、読み上げモードは三つの操作を示します。"
-            },
-            {
-              "en": "Tutorial assistants keep their heads steady and use only a small breathing motion. When the narration explains burned-in subtitle recognition, the OCR option is highlighted.",
-              "zh-HK": "教學助手的頭部保持穩定，只保留輕微呼吸動作。解說燒入字幕辨識時，畫面會亮起 OCR 選項。",
-              "zh-CN": "教程助手的头部保持稳定，只保留轻微呼吸动作。解说烧录字幕识别时，画面会突出显示 OCR 选项。",
-              "ja": "操作ガイドのアシスタントは頭を安定させ、小さな呼吸動作だけを行います。焼き込み字幕の認識を説明するときは、OCRの項目を強調表示します。"
-            },
-            {
-              "en": "Each tutorial chapter shows only the controls that it introduces. Each visible control is highlighted once, from top to bottom. External subtitles includes External subtitles, Subtitle language / version, then Import subtitle file. The progress segments keep one fixed baseline and fill on the current chapter clock.",
-              "zh-HK": "每段教學只列出該段介紹的操作，各個可見選項會由上至下依次亮起一次。「使用外掛字幕」會依次介紹「外掛字幕」、「字幕語言／版本」及「匯入字幕檔」。進度條各段保持同一基線，並按目前段落的播放進度填滿。",
-              "zh-CN": "每段教程只列出该段介绍的操作，各个可见选项会从上到下依次突出显示一次。“使用外挂字幕”会依次介绍“外挂字幕”、“字幕语言／版本”和“导入字幕文件”。进度条各段保持同一基线，并按当前段落的播放进度填满。",
-              "ja": "各章では、その章で紹介する操作だけを表示します。見えている各項目を上から下へ順に一度ずつ強調表示します。外部字幕では、外部字幕、字幕の言語／版、字幕ファイルの読み込みの順に示します。進捗バーは各区間の高さをそろえ、現在の章の再生位置に合わせて進みます。"
+              "en": "On iPad, tutorials open in a wide player. On iPhone, they use the full screen. Skip and Don’t show again are outside the picture.",
+              "zh-HK": "iPad 教學影片使用加寬的播放器，iPhone 則以全螢幕播放。「跳過」和「下次不再顯示」位於影片畫面外。",
+              "zh-CN": "iPad 教学视频使用加宽的播放器，iPhone 则以全屏播放。「跳过」和「不再显示」位于视频画面外。",
+              "ja": "iPadでは広いプレーヤーで、iPhoneでは全画面で再生します。「スキップ」と「今後表示しない」は映像の外側にあります。"
             }
           ],
           "controlRefs": [],
@@ -6770,10 +7141,10 @@
               "ja": "プレーヤーまたは再生リストで完成した出力を開き、動画や利用できる字幕をデバイスに保存します。「ファイル」の「この iPhone 内」または「この iPad 内」から AniCanto を開くと、確認画面に示された保存場所を確認できます。ローカル保存に専門モードの購入は不要です。生成内容の直接共有やクラウド保存先の選択画面はありません。"
             },
             {
-              "en": "New finished videos and subtitles use the source video name followed by -AniCanto. A number before -AniCanto prevents name collisions. Earlier output files stay unchanged. Saving an older output creates a named local file in Saved Files; an identical existing copy is reused. The save result uses the standard reminder popup.",
-              "zh-HK": "新成品影片及字幕採用原影片名稱，並在結尾加上 -AniCanto；同名時會在 -AniCanto 前加編號。舊成品檔案保留原狀。另存舊成品時，會在 Saved Files 建立易讀檔名；相同副本會直接重用。儲存結果使用標準提示彈窗。",
-              "zh-CN": "新成品视频及字幕采用原视频名称，并在结尾加上 -AniCanto；同名时会在 -AniCanto 前加编号。旧成品文件保留原状。另存旧成品时，会在 Saved Files 建立易读文件名；相同副本会直接复用。保存结果使用标准提示弹窗。",
-              "ja": "新しい完成動画と字幕は元動画名の末尾に-AniCantoを付けます。同名の場合は-AniCantoの前に番号を追加します。既存ファイルは変更しません。古い出力の保存ではSaved Filesに読みやすい名前を作成し、同一コピーがあれば再利用します。保存結果は標準の通知ポップアップで表示します。"
+              "en": "New finished videos use the source video name followed by -AniCanto. A number before -AniCanto prevents name collisions. In the player, select Show video location to find the existing file. Open Files, then On My iPhone or iPad, AniCanto, and Exports. The app shows the exact name, including for earlier files. To get a separate SRT file, use the subtitle save action.",
+              "zh-HK": "新成品影片採用原影片名稱，並在結尾加上 -AniCanto。同名時會在 -AniCanto 前加編號。在播放器選擇「查看影片位置」，即可得知現有檔案的實際名稱。開啟「檔案」→「我的 iPhone／iPad」→ AniCanto → Exports。需要獨立 SRT 檔案時，可使用字幕儲存操作。",
+              "zh-CN": "新成品视频采用原视频名称，并在结尾加上 -AniCanto。同名时会在 -AniCanto 前加编号。在播放器选择“查看视频位置”即可查看已有文件的实际名称。打开“文件”→“我的 iPhone／iPad”→ AniCanto → Exports。需要独立的 SRT 文件时，可使用字幕保存操作。",
+              "ja": "新しい完成動画には元動画名の末尾に-AniCantoを付けます。同名の場合は-AniCantoの前に番号を追加します。プレーヤーの「動画の場所を表示」で既存ファイルの正確な名前を確認できます。「ファイル」から「このiPhone／iPad内」、AniCanto、Exportsの順に開きます。独立したSRTファイルは字幕の保存操作で作成できます。"
             },
             {
               "en": "The save controls stay below the movie details. An opened Duo uses equal-width save buttons in its bottom bar. A closed phone uses stacked buttons. Playback and Learning remain available.",
@@ -7193,16 +7564,16 @@
           },
           "body": [
             {
-              "zh-HK": "偏好設定可預覽不同角色與動作。處理中助手會配合準備、辨識、翻譯或配音；沒有工作時，角色會坐下休息或打瞌睡，不會繼續跑動。工作室右上角月亮可立即開啟螢幕保護；轉換開始後預設五分鐘自動開啟螢幕保護，偏好設定可改做 30 秒、1、3、5、10、15 或 30 分鐘，亦可取消自動開啟。待機不顯示進度，處理中才顯示；輕點會返回工作室並重新倒數。 休息動畫保留輕微呼吸、頭部起伏及頭髮擺動，腳部與座椅底部維持穩定。啟用系統「減少動態效果」時會停止這些局部動作。",
-              "zh-CN": "偏好设置可预览不同角色和动作。处理中助手对应准备、识别、翻译或配音；没有任务时，角色会坐下休息或打瞌睡，不会继续跑动。工作室右上月亮可立即开屏保；转换开始后默认五分钟自动开屏保；偏好设置可改为 30 秒、1、3、5、10、15 或 30 分钟，也可取消自动开启。待机不显示进度，处理时才显示；轻点返回并重新倒数。 休息动画保留轻微呼吸、头部起伏和头发摆动，脚部和座椅底部保持稳定。启用系统“减弱动态效果”时停止这些局部动作。",
-              "en": "Preview characters and actions in Preferences. Active assistants follow preparation, recognition, translation or dubbing; idle assistants sit down to rest or doze, rather than keep running. The studio moon opens the screen saver. A conversion opens the saver five minutes after the job starts. Preferences offers 30 seconds, 1, 3, 5, 10, 15 or 30 minutes, or no automatic entry. Idle has no progress; active work shows it. A tap returns and restarts the count. Resting characters keep gentle breathing, head nods and hair sway. Feet and the chair base stay fixed. System Reduce Motion disables these local movements.",
-              "ja": "環境設定で人物と動作を試せます。処理中は準備・認識・翻訳・録音に対応し、待機中は走り続けず、座って休んだり居眠りする姿勢になります。スタジオの月アイコンでスクリーンセーバーを開き、変換は開始の五分後に自動的に開き、環境設定では 30 秒、1・3・5・10・15・30 分、または自動開始なしを選べます。待機時は進捗を出さず、処理中のみ表示します。タップで戻り、再びカウントします。 休息中も穏やかな呼吸、頭の上下、髪の揺れが続き、足と椅子の脚は固定します。システムの「視差効果を減らす」が有効な場合、この局所的な動きを停止します。"
+              "zh-HK": "在偏好設定預覽角色與動作。助手會按目前的處理階段顯示動作。工作室的月亮按鈕可立即開啟螢幕保護。轉換期間停止操作後，螢幕保護會在設定的等候時間過後自動開啟。預設為 5 分鐘，可選 5 秒、30 秒、1、3、5、10、15 或 30 分鐘，亦可關閉自動開啟。輕觸畫面可返回並重新計時。啟用系統「減少動態效果」時會停止助手的局部動作。",
+              "zh-CN": "在偏好设置中预览角色与动作。助手会按当前的处理阶段显示动作。工作室的月亮按钮可立即打开屏幕保护。转换期间停止操作后，屏幕保护会在设定的等待时间结束后自动打开。默认为 5 分钟，可选 5 秒、30 秒、1、3、5、10、15 或 30 分钟，也可关闭自动打开。轻触屏幕可返回并重新计时。启用系统“减弱动态效果”时会停止助手的局部动作。",
+              "en": "Preview assistants and their actions in Preferences. The studio moon button opens the screen saver. During conversion, the screen saver opens after the selected time without input. The default is 5 minutes. Choose 5 or 30 seconds, 1, 3, 5, 10, 15 or 30 minutes, or turn off automatic entry. Tap to return and restart the timer. System Reduce Motion stops the assistant’s small movements.",
+              "ja": "環境設定で助手と動作をプレビューできます。スタジオの月ボタンでスクリーンセーバーを開きます。変換中に操作がないと、設定した待ち時間の後に自動で開きます。既定は5分です。5秒、30秒、1・3・5・10・15・30分、または自動開始オフを選べます。画面をタップすると戻り、計測を再開します。システムの「視差効果を減らす」を有効にすると、助手の細かな動きが止まります。"
             },
             {
-              "en": "Open Preferences > Screen saver to adjust Brightness from0%to100% in5%steps. The initial value is30%. Manual and automatic entry use the same saved level. Conversion does not force0%. Leaving the saver or entering the background restores the original level. Saved brightness choices remain unchanged.",
-              "zh-HK": "在「偏好設定」的「螢幕保護」內調整亮度，範圍為 0% 至 100%，每格 5%，預設為 30%。手動及自動開啟均使用同一個已保存的亮度，轉換不會強制設為 0%。離開螢幕保護或切換至背景時會恢復原本亮度，並保留用戶的亮度選擇。",
-              "zh-CN": "在“偏好设置”的“屏幕保护”内调整亮度，范围为 0% 至 100%，每格 5%，默认为 30%。手动和自动打开都使用同一个已保存的亮度，转换不会强制设为 0%。离开屏幕保护或切换到后台时会恢复原来的亮度，并保留用户的亮度选择。",
-              "ja": "環境設定のスクリーンセーバーで明るさを0%から100%まで5%刻みで調整します。初期値は30%です。手動と自動の両方で保存した値を使い、変換時に0%へ強制しません。終了時やバックグラウンド移行時は元の明るさを復元し、選択した設定は保持します。"
+              "en": "Set Brightness from 0% to 100% in 5% steps in Preferences > Screen saver. The default is 30%. At 0%, the saver shows a black screen. For other levels, the assistant is visible. Tap the screen or leave the app to restore the original brightness. The same setting applies to automatic entry, manual entry and Browser Transfer.",
+              "zh-HK": "在「偏好設定」的「螢幕保護」內調整亮度，範圍為 0% 至 100%，每格 5%，預設為 30%。設為 0% 時，螢幕保護顯示全黑畫面。其他亮度會顯示助手。輕觸畫面或切換至其他 App 可恢復原本亮度。自動開啟、手動開啟及瀏覽器傳檔均使用此設定。",
+              "zh-CN": "在“偏好设置”的“屏幕保护”内调整亮度，范围为 0% 至 100%，每格 5%，默认为 30%。设为 0% 时，屏幕保护显示全黑画面。其他亮度会显示助手。轻触屏幕或切换到其他 App 可恢复原来的亮度。自动打开、手动打开和浏览器传输均使用此设置。",
+              "ja": "「環境設定」>「スクリーンセーバー」で、明るさを0%から100%まで5%刻みで調整します。既定は30%です。0%では真っ黒な画面を表示し、それ以外では助手を表示します。画面をタップするか、別のアプリに切り替えると元の明るさに戻ります。自動開始、手動開始、ブラウザー転送に同じ設定を使います。"
             },
             {
               "en": "On iPhone, the moon button appears only in Edit and Preview. Learning keeps its Settings button. Other pages have no moon button. Automatic screen saver entry during conversion still uses the saved delay and brightness.",
@@ -7215,12 +7586,6 @@
               "zh-HK": "朗讀模式生成字幕時，助手顯示辨識動畫；翻譯字幕時則顯示翻譯動畫。兩者均使用已保存的螢幕保護延遲及亮度，進度對應目前的工作。工作完成、取消或失敗後，仍開啟的手動螢幕保護會返回休息動畫；自動開啟則沿用原有的返回方式。",
               "zh-CN": "朗读模式生成字幕时，助手显示识别动画；翻译字幕时则显示翻译动画。两者均使用已保存的屏幕保护延迟和亮度，进度对应当前任务。任务完成、取消或失败后，仍打开的手动屏幕保护会返回休息动画；自动打开则沿用原有的返回方式。",
               "ja": "読み上げモードで字幕を生成している間は認識の動作、字幕を翻訳している間は翻訳の動作を表示します。保存したスクリーンセーバーの待ち時間と明るさを使い、現在の処理の進捗を表示します。完了、キャンセル、失敗後、手動で開いたスクリーンセーバーは休息の動作に戻ります。自動で開いた場合の終了動作は従来どおりです。"
-            },
-            {
-              "en": "The default screen saver delay is five minutes on iPhone, iPad and Duo. This update changes a stored five-second value to five minutes once. Other delays, disabled automatic entry and saved brightness remain unchanged. You can choose five seconds again after this update.",
-              "zh-HK": "iPhone、iPad 及 Duo 的螢幕保護預設等候五分鐘。此更新會將已儲存的五秒設定一次性改為五分鐘。其他時間、停用自動開啟及已儲存亮度維持不變。更新後仍可重新選擇五秒。",
-              "zh-CN": "iPhone、iPad 和 Duo 的屏幕保护默认等待五分钟。此次更新会将已保存的五秒设置一次性改为五分钟。其他时间、停用自动开启和已保存亮度保持不变。更新后仍可重新选择五秒。",
-              "ja": "iPhone、iPad、Duoの既定の待ち時間は5分です。この更新で保存済みの5秒を一度だけ5分に変更します。他の時間、自動開始オフ、保存済みの明るさは保持します。更新後は再び5秒を選択できます。"
             }
           ],
           "controlRefs": [],
@@ -7628,6 +7993,30 @@
               "zh-HK": "原聲快取必須與目前工作相符。如快取不可用，應用程式會改用已驗證原片的分段。額外背景聲處理失敗時，匯出會保留原聲背景及已保存配音，不重做已完成錄音，亦不重設已用次數。匯出錯誤後，請保留工作，更新應用程式後繼續。原片變更、所選錄音損壞、儲存空間不足或已暫停，仍需要處理。",
               "zh-CN": "原声缓存必须与当前任务相符。如缓存不可用，应用会改用已验证原片的分段。额外背景声处理失败时，导出会保留原声背景和已保存配音，不重做已完成录音，也不重置已用次数。导出错误后，请保留任务，更新应用后继续。原片更改、所选录音损坏、储存空间不足或已暂停，仍需要处理。",
               "ja": "原音キャッシュは現在の処理と一致する必要があります。利用できない場合は検証済み原動画の区間を使います。追加の背景音処理が失敗しても、原音の背景と保存済み吹替を保持して書き出します。完成した録音や使用済み試行回数は変更しません。書き出しエラー後は処理を保持し、更新後に再開してください。原動画の変更、選択録音の破損、容量不足、一時停止には対応が必要です。"
+            },
+            {
+              "en": "When a saved job only needs final export, select Continue. AniCanto uses the saved recordings and available source sound. This step needs no model download.",
+              "zh-HK": "已保存的工作只待最後匯出時，請選擇「繼續」。AniCanto 會使用已保存的錄音及可用原聲。此步驟無需下載模型。",
+              "zh-CN": "已保存的任务只待最后导出时，请选择“继续”。AniCanto 会使用已保存的录音和可用原声。此步骤无需下载模型。",
+              "ja": "保存済みの処理が最終書き出しを待っている場合は、「続行」を選びます。AniCanto は保存済みの録音と使用できる原音を使います。この手順にモデルのダウンロードは不要です。"
+            },
+            {
+              "en": "For a new job, AniCanto checks the picture before conversion. It copies a verified full picture track when possible. It encodes the picture if the range needs a cut or a final frame hold, or if a copied track fails validation.",
+              "zh-HK": "開始新工作時，AniCanto 會先檢查影片畫面。完整畫面軌通過驗證時，會盡量直接封裝。如所選範圍需要剪輯或延長尾格，或封裝後驗證失敗，便會重新編碼。",
+              "zh-CN": "开始新任务时，AniCanto 会先检查视频画面。完整画面轨通过验证时，会尽量直接封装。如果所选范围需要剪辑或延长尾帧，或封装后验证失败，就会重新编码。",
+              "ja": "新しい処理では、変換の前に映像を確認します。検証済みの映像トラック全体は、可能な限りそのまま格納します。範囲の切り出しや最終フレームの延長が必要な場合、または格納した映像が検証に失敗した場合は再エンコードします。"
+            },
+            {
+              "en": "Near the end of export, AniCanto verifies the saved movie. You can still use the on-screen controls while the check runs.",
+              "zh-HK": "接近匯出完成時，AniCanto 會驗證已寫入的影片。驗證期間，你仍可使用畫面上的控制項。",
+              "zh-CN": "接近导出完成时，AniCanto 会验证已写入的视频。验证期间，你仍可使用屏幕上的控件。",
+              "ja": "書き出しの終盤で、AniCanto は保存された動画を検証します。検証中も画面上の操作ボタンを使えます。"
+            },
+            {
+              "en": "If adding original audio tracks or embedded subtitles fails, AniCanto saves the last verified movie. Review report records the missing tracks. Use saved recordings to rebuild the output.",
+              "zh-HK": "如未能加入原聲音軌或嵌入字幕，AniCanto 會儲存上一份通過驗證的影片。校對報告會列出未能加入的軌道。可用已保存錄音重新合併成品。",
+              "zh-CN": "如无法添加原声音轨或嵌入字幕，AniCanto 会保存上一份通过验证的视频。校对报告会列出未能添加的轨道。可以用已保存的录音重新合成成品。",
+              "ja": "原音トラックや埋め込み字幕を追加できなかった場合、AniCanto は最後に検証を通過した動画を保存します。校正レポートに追加できなかったトラックを表示します。保存済みの録音で成果物を再合成できます。"
             }
           ],
           "controlRefs": [],

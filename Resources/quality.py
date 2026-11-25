@@ -95,13 +95,15 @@ def validate_export(cfg,job,cues,target,run,emit):
     videos=[s for s in meta['streams'] if s.get('codec_type')=='video']
     audio=[s for s in meta['streams'] if s.get('codec_type')=='audio']
     expected=cfg.get('outputDuration',cfg['duration'])
+    picture=__import__('export_picture').verify(videos,expected)
     duration=float(meta['format']['duration'])
     if not videos or not audio or not math.isfinite(duration) or abs(duration-expected)>.2:
         raise ValueError('輸出驗證失敗：影片或音軌缺失／長度唔一致。')
     if audio[0].get('tags',{}).get('language')!=__import__('output_language').LANGUAGES[cfg.get('targetLanguage','yue')][2] or not audio[0].get('disposition',{}).get('default'):
         raise ValueError('輸出驗證失敗：預設音軌同所選配音語言不符。')
     if cfg.get('separateBackground') and audio[0].get('channels')!=2:raise ValueError('輸出驗證失敗：背景立體聲缺失。')
-    if not cfg.get('burnOutputCaptions') and any(c.get('enabled',True) and c.get('captionText',c.get('cantonese','')).strip() for c in cues) and not any(s.get('codec_type')=='subtitle' for s in meta['streams']):
+    deferred=cfg.get('_singleEngine') and __import__('export_packages').enabled(cfg)
+    if not deferred and not cfg.get('burnOutputCaptions') and any(c.get('enabled',True) and c.get('captionText',c.get('cantonese','')).strip() for c in cues) and not any(s.get('codec_type')=='subtitle' for s in meta['streams']):
         raise ValueError('輸出驗證失敗：字幕軌缺失。')
     run([cfg['ffmpeg'],'-v','error','-xerror','-i',target,'-map','0:v:0','-map','0:a:0','-f','null','-'])
     can_check=cfg.get('autoValidate',True) and not cfg.get('_userSkipped') and (Path(cfg.get('storage',''))/'asr-ready.json').is_file()
@@ -145,5 +147,6 @@ def validate_export(cfg,job,cues,target,run,emit):
         professionalStatus='not-certified',pronunciationCheck='not-run',pronunciationStatus='audition-required',sourceCoverage=coverage,verificationError=verification_error,originalSpeechIndices=[c.get('reviewIndex',i)+1 for i,c in enumerate(cues) if c.get('preserveOriginalSpeech')],
         qualityStatus='needs-review' if coverage['status']!='checked' or content_flags or level_flags or script_flags or voice_flags or source_flags or references['reviewIndices'] or performance_pending or clipped or any(r['requiresTimingReview'] for r in rows) or content is None else 'automatic-checks-passed',
         limitations='Acoustic timing and ASR are evidence, not certified meaning, character identity, native pronunciation or lip sync.')
+    result['pictureRange']=picture
     tmp=job/'validation.partial.json';tmp.write_text(json.dumps(result,ensure_ascii=False,indent=2));tmp.replace(job/'validation.json')
     return result

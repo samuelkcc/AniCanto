@@ -119,8 +119,14 @@ class Studio:
         if running and self.store.selected!=running['id']:
             self.store.selected=running['id'];self.store.save()
         selected=next((r for r in self.store.queue if r['id']==self.store.selected),None)
+        frozen_opening=None
+        if selected and selected.get('status') in ('running','paused') and selected.get('request'):
+            frozen=read(Path(selected['request']), None)
+            if isinstance(frozen,dict):
+                frozen_opening={key:frozen.get(key,default) for key,default in
+                    (('autoSkipOP',True),('translateOPED',False),('openingDetectionMinutes',5))}
         return dict(schemaVersion=1,language=self.store.language,mode=self.store.mode,settings=self.store.settings,productionSettings=self.store.settings_for(selected),
-            queue=[presentation(self.root,r,self.store.settings.get('exportFolder','')) for r in self.store.queue],selected=self.store.selected,ui=self.store.ui,storage=str(self.root),platform=self.platform,useTermsAccepted=accepted(self.root))
+            frozenOpeningPolicy=frozen_opening,queue=[presentation(self.root,r,self.store.settings.get('exportFolder','')) for r in self.store.queue],selected=self.store.selected,ui=self.store.ui,storage=str(self.root),platform=self.platform,useTermsAccepted=accepted(self.root))
 
     def review_path(self,row):
         path=Path(row.get('review') or Path(row.get('job','/nonexistent'))/'review.json').resolve()

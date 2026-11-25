@@ -12,9 +12,14 @@ def configure(settings, basic=False):
     if basic or settings.get('subtitleSelection','automatic')=='automatic':
         settings['subtitleModes']=automatic_modes(settings.get('dubLanguages'))
     if basic:
-        settings.update(subtitleSelection='automatic',includeOriginal=True,
+        settings.update(subtitleSelection='automatic',
                         separateBackground=True,mixOriginal=0,backgroundDucking=True,
-                        burnOutputCaptions=False,
-                        autoSkipOP=True,translateOPED=False)
+                        burnOutputCaptions=False)
+        if __import__('export_packages').enabled(settings):
+            settings.setdefault('includeOriginal',True)
+            settings.setdefault('autoSkipOP',True)
+            settings.setdefault('translateOPED',False)
+        else:
+            settings.update(includeOriginal=True,autoSkipOP=True,translateOPED=False)
         settings.pop('originalSubtitleStreams',None)
     return settings

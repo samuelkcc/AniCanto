@@ -5,6 +5,8 @@ import math
 import re
 from pathlib import Path
 
+SEARCH_MINUTES = (5, 10, 15, 30)
+
 
 def candidates(rows, duration=300):
     rows=[r for r in rows if all(math.isfinite(float(r.get(k,0))) for k in ('start','duration','music','singing','speech'))]
@@ -43,6 +45,10 @@ def candidates(rows, duration=300):
 
 def detect(cfg,meta,run,emit):
     duration=float(meta['format']['duration'])
+    minutes=cfg.get('openingDetectionMinutes', 5)
+    if type(minutes) is not int or minutes not in SEARCH_MINUTES:
+        raise ValueError('片頭／片尾偵測範圍無效。')
+    search_seconds=minutes*60
     found=[]
     for chapter in meta.get('chapters',[]):
         title=chapter.get('tags',{}).get('title','').lower()
@@ -51,23 +57,37 @@ def detect(cfg,meta,run,emit):
         if not kind:continue
         try:a,b=float(chapter['start_time']),float(chapter['end_time'])
         except (KeyError,ValueError,TypeError):continue
-        if 0<=a<b<=duration and 15<=b-a<=240 and (a<300 if kind=='OP' else b>duration-300):
+        if 0<=a<b<=duration and 15<=b-a<=240 and (a<search_seconds if kind=='OP' else b>duration-search_seconds):
             found.append(dict(start=a,end=b,confidence=1,source='chapter',kind=kind))
     video=Path(cfg['video']);stat=video.stat()
     normal=cfg.get('productionMode')=='normal'
-    key=hashlib.sha256(json.dumps([str(video.resolve()),stat.st_size,stat.st_mtime_ns,'normal-song-4' if normal else 3]).encode()).hexdigest()[:20]
+    identity=[str(video.resolve()),stat.st_size,stat.st_mtime_ns,'normal-song-4' if normal else 3]
+    if minutes != 5:identity.append(minutes)
+    key=hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:20]
     folder=Path(cfg['storage'])/'openings'/key;folder.mkdir(parents=True,exist_ok=True)
     result=folder/'result.json'
     if result.exists():return json.loads(result.read_text())
     failures=[]
-    for kind,offset,length in [('OP',0,min(300,duration)),('ED',max(0,duration-300),min(300,duration))]:
+    analysed={}
+    from track_control import UserSkipped
+    for kind,offset,length in [('OP',0,min(search_seconds,duration)),('ED',max(0,duration-search_seconds),min(search_seconds,duration))]:
         if any(r['kind']==kind for r in found):continue
         emit('OP／ED 分析',f'分析{kind}區域嘅歌唱、音樂同對白；單有配樂唔會當成歌曲。',.01)
         audio=folder/(kind+'.wav')
-        run([cfg['ffmpeg'],'-v','error','-y','-ss',str(offset),'-i',video,'-t',str(length),'-vn','-ac','1','-ar','16000',audio])
         try:
-            rows=json.loads(run([cfg['executable'],'--classify-opening',audio]))
-            if not isinstance(rows,list):raise ValueError('Invalid audio classification result')
+            window=(offset,length)
+            if window in analysed:
+                rows=analysed[window]
+            else:
+                run([cfg['ffmpeg'],'-v','error','-y','-ss',str(offset),'-i',video,'-t',str(length),'-vn','-ac','1','-ar','16000',audio])
+                rows=json.loads(run([cfg['executable'],'--classify-opening',audio]))
+                if not isinstance(rows,list) or not rows or any(not isinstance(row, dict) or
+                        any(type(row.get(key)) not in (int, float) or not math.isfinite(row[key])
+                            for key in ('start', 'duration')) for row in rows):
+                    raise ValueError('Invalid audio classification result')
+                analysed[window]=rows
+        except UserSkipped:
+            raise
         except (RuntimeError,OSError,ValueError) as error:
             # Optional song analysis must not abort translation and speech.
             # Retain verified chapters; do not invent an unverified song range
@@ -78,6 +98,10 @@ def detect(cfg,meta,run,emit):
             audio.unlink(missing_ok=True)
             continue
         (folder/(kind+'-scores.json')).write_text(json.dumps(rows))
+        if minutes != 5:
+            rows = [row for row in rows if not any(
+                offset+row['start'] < known['end'] and
+                offset+row['start']+row['duration'] > known['start'] for known in found)]
         detected=candidates(rows,length)
         if normal and not detected:detected=source_song_ranges(rows,length,meta.get('chapters',[]),offset)
         for r in detected:

@@ -20,13 +20,16 @@ def validate_paths(paths, kind):
     website_files = set(json.loads((Path(__file__).parent / 'website-public-files.json').read_text())['files']) if kind == 'private-website' else set()
     for name in paths:
         p = Path(name)
+        if any(re.sub(r'[^a-z0-9]', '', part.casefold()) == 'appstoreredeemcode' for part in p.parts):
+            raise ValueError('Local App Store redemption material is excluded from Git.')
         lower = name.lower()
         if kind == 'public-desktop':
             if (p.name == PRIVATE_MARKER or any(x.lower() in {'mobile', 'ipad', 'iphone', 'ios', 'devicevalidation'} for x in p.parts)
                     or any(x.lower().endswith(('.xcodeproj', '.xcworkspace', '.xcarchive')) for x in p.parts)
                     or p.suffix.lower() in {'.ipa', '.mobileprovision', '.p12', '.p8', '.keychain-db'}
                     or p.name.startswith(('test_mobile_', 'build_mobile_'))
-                    or (p.parts[:1]==('scripts',) and re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I))
+                    or (p.parts[:1]==('scripts',) and (p.name=='build-store-import-preview.py'
+                        or re.search(r'(^|[-_])(mobile|ipad|iphone|ios)([-_.]|$)',p.name,re.I)))
                     or p.name in {'test_caption_layers340.py', 'test_text_runtime_boundary345.py', 'test_demo_payload_retention.py'}
                     or (p.suffix == '.swift' and p.name.lower().startswith(('ipad', 'iphone', 'ios', 'storekit', 'iap')))):
                 raise ValueError('Private mobile path in the public desktop tree: ' + name)

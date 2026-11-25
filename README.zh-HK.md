@@ -1,8 +1,8 @@
 [English](README.md) · **繁體中文** · [简体中文](README.zh-CN.md) · [日本語](README.ja.md)
 
-## 0.25.54 Beta：配音流程更新
+## 0.25.56 Beta：改善匯出穩定性
 
-專家模式可選擇保留人名原音；原聲待確認與待補配音分開顯示。系統會在原有重試限制內拒絕短句重複的翻譯結果，保留已保存工作及已用次數。
+匯出時會檢查畫面同聲音。第一條音軌係配音，其餘可讀取嘅原聲音軌按原本次序排列。
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -19,21 +19,21 @@
 
 ## 下載
 
-**[Mac 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-macOS-0.25.54.zip)** · **[Windows 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto.exe)**
+**[Mac 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-macOS-0.25.56.zip)** · **[Windows 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto.exe)**
 
-[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.54-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-0.25.54-source-materials-reviewed.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
+[版本說明](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.56-beta) · [對應源碼](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-0.25.56-source-materials-reviewed.tar.gz) · [源碼備份及重建說明](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 **iOS / iPadOS · 獨立流動分支版本**
 
 <a href="https://apps.apple.com/hk/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-zh-HK.svg" height="44" alt="在 App Store 下載"></a>
 
-## 近期更新 · 0.25.54／446
+## 近期更新 · 0.25.56／448
 
-- 轉換期間鎖定處理中的影片；完成「暫停並儲存」後才可切換。
-- 聲線參考只使用所屬對白時間範圍內的音訊。
-- 改善字幕空檔分類及輸出時的可選原聲快取處理。
-- 保留已儲存錄音、來源時間線及已使用的補救次數。
+- 獨立檢查畫面長度。複製畫面未通過檢查時，會用尚未使用嘅匯出重試次數重新編碼。
+- 附加音軌或者字幕封裝失敗時，會保留通過驗證嘅影片。詳情可喺校對報告查看。
+- 新嘅基本同專家模式工作預設保留每條可讀取嘅原聲音軌。
+- 片頭／片尾偵測可選 5、10、15 或 30 分鐘。已儲存嘅工作沿用原本設定。
 
 ## 點解會有 AniCanto
 

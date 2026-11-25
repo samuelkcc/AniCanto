@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "scope": "Desktop source snapshot with verified recovery tools and latest-only local build retention.",
+  "scope": "Local source candidate with checksum-approved original synthetic references; no executable/model/private recording publication",
   "published": false,
   "legalApproval": false,
   "files": [
@@ -11,8 +11,8 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "1586c56ff554b1769cdf8d66130982cf8acd31bf91fb786983e58cd80a73f318",
-      "bytes": 623
+      "sha256": "448a41fc7021f98cdd72dd60486df529f3fa66f9d7434c30dd05a548d9fd5bfb",
+      "bytes": 649
     },
     {
       "path": "LICENSE",
@@ -26,28 +26,28 @@
     },
     {
       "path": "README.en.md",
-      "sha256": "608d14454fd2fc88ad872417bb1f516d109c169f54f36ab33f18aad138ad759f",
-      "bytes": 22857
+      "sha256": "a0f1081f90417d481cf37c740895c7c879b5529871daf6377a669669a8353f6c",
+      "bytes": 22643
     },
     {
       "path": "README.ja.md",
-      "sha256": "624badfbeb8a6118343c73fbef47ff8eab31a798cbe5dbf0e7b551c8ad5d88b0",
-      "bytes": 24950
+      "sha256": "e39002fc2f7d15c344cdccef1509ada288b613f79e67c63e46059f7ea8153273",
+      "bytes": 25081
     },
     {
       "path": "README.md",
-      "sha256": "764b0abb641c9fe7f0d9fa546eadca1faf0cd61d8981668d6149bd30ec664d2e",
-      "bytes": 22820
+      "sha256": "a0f1081f90417d481cf37c740895c7c879b5529871daf6377a669669a8353f6c",
+      "bytes": 22643
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "cf258136ada5fedd55abe4769da72bca5db35df343d50469db3df43f8f26729a",
-      "bytes": 19462
+      "sha256": "bdb53af67fc2472eaa92c8166faaae50bbad7fe9efb947e0bf19bcd810ff59a3",
+      "bytes": 19491
     },
     {
       "path": "README.zh-HK.md",
-      "sha256": "5931c4c5bfe9ac780d9ae8250e4c30f6598e6e4a6ed56f5bf4dd775459943f3d",
-      "bytes": 19555
+      "sha256": "3a73633277336c9c3b01245b2449e51406bc167a314ca624ad8af17a1a0808b8",
+      "bytes": 19596
     },
     {
       "path": "Resources/AniCanto-icon.png",
@@ -408,6 +408,11 @@
       "path": "Resources/ai_result_repair.py",
       "sha256": "71662dfa10e08aef431ffe49ee794803dc9b74751fa2cd76a2b63e95d90fdacb",
       "bytes": 36610
+    },
+    {
+      "path": "Resources/app-icon-art-framed.png",
+      "sha256": "198d44284253d58df01ca76e0153d82d22918d57d935a43439662afe59f983a2",
+      "bytes": 1485771
     },
     {
       "path": "Resources/app-icon-art.png",
@@ -775,9 +780,19 @@
       "bytes": 1078
     },
     {
+      "path": "Resources/export_packages.py",
+      "sha256": "7fb9e651d27ba4a2dd0806838a979efd59b973dc72feef4ae7727017f101f00a",
+      "bytes": 6328
+    },
+    {
+      "path": "Resources/export_picture.py",
+      "sha256": "8d18e9be19a00879a6f8442c5782976465c0b950ae501fd230e1ea64c8c56018",
+      "bytes": 1930
+    },
+    {
       "path": "Resources/export_retry.py",
-      "sha256": "e990c83e04aeb077dced056f9cf8f73fe72bc164d755241491a507ea156f1753",
-      "bytes": 3189
+      "sha256": "c14f281eac1eedebd66af4cd60efdc5293d65252ecdfd36b220a7038a7c20b60",
+      "bytes": 3757
     },
     {
       "path": "Resources/failed_voice_policy.py",
@@ -786,8 +801,8 @@
     },
     {
       "path": "Resources/fast_mode.py",
-      "sha256": "1b5883db76d1e74355fcd92d9820b04870338f524377a35c399de8abcb8c1d6d",
-      "bytes": 37963
+      "sha256": "b2bd49c3ab104bc8fb47aaa826f630c7ac4e68c96a73a3c9dbe837b46f420189",
+      "bytes": 38128
     },
     {
       "path": "Resources/final_background445.py",
@@ -996,8 +1011,8 @@
     },
     {
       "path": "Resources/multitrack.py",
-      "sha256": "e45768d9bf7f27a037a108036eb7edc1e834c9a4eb8b8f6795e61314640d9ae5",
-      "bytes": 52698
+      "sha256": "fca82b5d7a763ec20a23720ceb95f06da8d42bac8650e43482d66cf25f350070",
+      "bytes": 54038
     },
     {
       "path": "Resources/name_evidence.py",
@@ -1141,8 +1156,8 @@
     },
     {
       "path": "Resources/opening.py",
-      "sha256": "47de01f19ff78d4fde2d064c6337688fc4a6960325e09d43cda4f65ee2aea2bb",
-      "bytes": 10580
+      "sha256": "339a7ba0296cced98ac15f29acdef35c4ebef9097bd3338eac58c1b05f2a8c72",
+      "bytes": 11699
     },
     {
       "path": "Resources/output_delivery.py",
@@ -1326,8 +1341,8 @@
     },
     {
       "path": "Resources/quality.py",
-      "sha256": "a83b3bf5da2140bb4bef10d1289aa26dd3a063dfb41dedc2bb5cbe31fbf5f4f6",
-      "bytes": 11972
+      "sha256": "74422b447d54690d27815834c5659932511ad362c1e5adb830d7bab1909c09bf",
+      "bytes": 12174
     },
     {
       "path": "Resources/queue_library.py",
@@ -1431,8 +1446,8 @@
     },
     {
       "path": "Resources/review_notices.py",
-      "sha256": "102079ac834e9193388a7602aae473bd495e72d6c23615684c78158a39eee8aa",
-      "bytes": 2900
+      "sha256": "964f6da287f9bec75db3019e77f68fc8b4abdebee2ae02d5e25eca64f8f0ff60",
+      "bytes": 3258
     },
     {
       "path": "Resources/review_report.py",
@@ -1711,8 +1726,8 @@
     },
     {
       "path": "Resources/subtitle_policy.py",
-      "sha256": "af8d86958704e0a54502eb4772f57602bdd308f201910f25794b58956f52cd6e",
-      "bytes": 959
+      "sha256": "91d8785b38238471c74f74280ae7e8f0a0b3f676ff785643eb898032fe6b7709",
+      "bytes": 1199
     },
     {
       "path": "Resources/subtitle_preference.py",
@@ -2861,8 +2876,8 @@
     },
     {
       "path": "Resources/worker.py",
-      "sha256": "bcfa4cbb0c6e923467af5e1f52e6993c151e0d8a53664006e1a1a6eb90ff94e9",
-      "bytes": 112247
+      "sha256": "37ad168f143ed78d64500d9a00ad91cce389261fa47b288c0428de6abe9d74d3",
+      "bytes": 112472
     },
     {
       "path": "Resources/workflow-localization.json",
@@ -3406,7 +3421,7 @@
     },
     {
       "path": "VERSION.json",
-      "sha256": "054831cf5f0943c27294f76484836b1e216948c03d5905d3f644512d827ed0c1",
+      "sha256": "ae0fc03d06ba26cc458c072d3b0df795b80f6a5c114ceaa5248065fa7839763b",
       "bytes": 66
     },
     {
@@ -3451,8 +3466,8 @@
     },
     {
       "path": "docs/APPLICATION-USER-GUIDE.json",
-      "sha256": "9b9387484e6a43cd0d251d48abdb1b4c2a3846c6ff8e5ba77926b8ab6ca72858",
-      "bytes": 792533
+      "sha256": "b4ea389d5e41278057c2ef129858516a0523e57a05ecded5e93f4e5b3fd86507",
+      "bytes": 828434
     },
     {
       "path": "docs/BUILD-AND-RECOVERY.md",
@@ -3486,8 +3501,8 @@
     },
     {
       "path": "docs/DESKTOP-DOWNLOADS.json",
-      "sha256": "fab1877df479f2fa0fc7c309402cff5d40a42ef2a61f71ba4c9c09f665f9670c",
-      "bytes": 221
+      "sha256": "d302b791d523ed75d3369195151b609dde36003dfd7bc286934be4c2c3a24aab",
+      "bytes": 291
     },
     {
       "path": "docs/DESKTOP-DUBBING-0.25.51.md",
@@ -3501,8 +3516,8 @@
     },
     {
       "path": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
-      "sha256": "d84baa473d9a15c01a78b75cfa3ee217799003c255b9c9c76c5fbf043bb7111d",
-      "bytes": 3930
+      "sha256": "037a4d6afb90c1d36595ea6136b548b36258cb7cea48b506e7ccecd5af7bd0a6",
+      "bytes": 4041
     },
     {
       "path": "docs/DESKTOP-MANDARIN-OCR.md",
@@ -3731,8 +3746,8 @@
     },
     {
       "path": "docs/RECOVERY-WORKFLOW-CONTRACT.json",
-      "sha256": "19f53e47d72c4437feeb0742f9c40a3b1a426b8c9033b0b375f69c9bdd6238a2",
-      "bytes": 11543
+      "sha256": "268d7bf1f0f503dcfc7e63abbd1503f9f7f141a7a5dbab18737e2a8c4755a028",
+      "bytes": 12935
     },
     {
       "path": "docs/SCREENSHOTS.md",
@@ -3791,8 +3806,8 @@
     },
     {
       "path": "docs/WORKFLOW-CONTROLS-GUIDE.json",
-      "sha256": "dfaa8b16b1ac061f5139e91001c066db688b567016f38d569504b1f3d348ed68",
-      "bytes": 130775
+      "sha256": "869fd74178c39fd084dd0c257a5895c53b49336ed35cc6304cf21f2e2fdcc90b",
+      "bytes": 140706
     },
     {
       "path": "docs/en/DEMO.md",
@@ -13900,6 +13915,11 @@
       "bytes": 8336
     },
     {
+      "path": "scripts/build_product_retention.py",
+      "sha256": "fd5a35afa3b99447a42ff3a11f6de2447c6a2370873e5050779d195a160b0259",
+      "bytes": 9326
+    },
+    {
       "path": "scripts/build_shared_host.py",
       "sha256": "703c88cfa672ca0403f19a694d5d2fdb1ef6c4f8868627ca8727c9966193cd49",
       "bytes": 1658
@@ -13945,6 +13965,11 @@
       "bytes": 863
     },
     {
+      "path": "scripts/generated_cache_retention.py",
+      "sha256": "0b82bed79bace7f40fab884ba91c382207ef799b581c5dc7a6ec8424f91e561f",
+      "bytes": 8224
+    },
+    {
       "path": "scripts/license_inventory.py",
       "sha256": "a3c8d0e1565382b000c025ec41a855c9157b5a1d700df62aa10c16aa34b04ecd",
       "bytes": 4240
@@ -13966,8 +13991,8 @@
     },
     {
       "path": "scripts/package_windows.py",
-      "sha256": "4c693120b8865bfdc2ee9493070b8e1148a6ac10a77e4d5b5a989da8203ab1a0",
-      "bytes": 4298
+      "sha256": "1c7ce50011c3d212248987b81df71318e2c379a5a7c5c63f17bbdc35ec5963f8",
+      "bytes": 4315
     },
     {
       "path": "scripts/prepare_shared_studio.py",
@@ -13981,13 +14006,18 @@
     },
     {
       "path": "scripts/public_source.py",
-      "sha256": "e0e561a2a30dfb96ca14703372001d1ed2425265a5f545aa399d0a240c2a6b98",
-      "bytes": 19128
+      "sha256": "c022a363dd4d035db714ffa501f59a3ae6f8a770fb52b03f5d513df1b0eafcf2",
+      "bytes": 19479
     },
     {
       "path": "scripts/python_installer_assets.py",
       "sha256": "735ffd46f798351a88d095e427361fac9e1de8bb8190a0f0657dceab9a083e1c",
       "bytes": 888
+    },
+    {
+      "path": "scripts/recovery_check_retention.py",
+      "sha256": "6de175cf99f5959b211e5465ce4b5ce392273e6d3f900bb9df66b3b311db1b9b",
+      "bytes": 3905
     },
     {
       "path": "scripts/release_notices.py",
@@ -14001,13 +14031,18 @@
     },
     {
       "path": "scripts/repository_boundary.py",
-      "sha256": "3413730788c1bba9a34ac7d409d3d8dd83ee64ac49e39c882fc75063e6a82ba1",
-      "bytes": 4193
+      "sha256": "b8eaa8623b09b609821b6ad5fdf007316433fecb8fd6d71af40cb88b9a044fa8",
+      "bytes": 4455
     },
     {
       "path": "scripts/resource_assets.py",
       "sha256": "0a7445af50bf8358b992068a298fc5e558c92ddbd2a3b554c7dfc2bd3674993b",
       "bytes": 1778
+    },
+    {
+      "path": "scripts/restore_desktop_release.py",
+      "sha256": "5a42be1001f1efead5418b0de87d165bff50504f72147f776bcc540f78538f5d",
+      "bytes": 10964
     },
     {
       "path": "scripts/sanitize_build_paths.py",
@@ -14026,8 +14061,8 @@
     },
     {
       "path": "scripts/update_desktop_downloads.py",
-      "sha256": "40e1a88efcc2b997a95b7223d73846016e4b1c41a7c9426f628b27deb0f4f624",
-      "bytes": 2546
+      "sha256": "152574908ab6285f45f139ea49677c8bda129abd4de1b2666e1dbe6a4e8da8a5",
+      "bytes": 2576
     },
     {
       "path": "scripts/validate_user_guide.py",
@@ -14036,8 +14071,8 @@
     },
     {
       "path": "studio/backend.py",
-      "sha256": "59c76d6e876195c50f60e2e29a9ecb00311b06c1dfb61693b926835f65b2c7e7",
-      "bytes": 69459
+      "sha256": "6f42c81381d1deaa83015a929bfbffd8bf61cf6f3613766749447cf3b1acaef5",
+      "bytes": 69895
     },
     {
       "path": "studio/bootstrap-windows.ps1",
@@ -14226,12 +14261,12 @@
     },
     {
       "path": "studio/src-tauri/Cargo.lock",
-      "sha256": "02a566799830626351d333dcf99be24f8a60a7f3fe24a9ba85450bc43edf31b1",
+      "sha256": "ecbc9d555571d437abace5ca5d71ee23652387924e4bce75c1c936bbc5f9dd7f",
       "bytes": 123430
     },
     {
       "path": "studio/src-tauri/Cargo.toml",
-      "sha256": "dd12099ba4afd340990f504cfa01338a364811e08d4864200bbc20350f1c7e14",
+      "sha256": "104716bc582aa197c1d1a5e3ffec094e4a8e0b7e750e3a867ff06fd19b0dec08",
       "bytes": 543
     },
     {
@@ -14271,8 +14306,8 @@
     },
     {
       "path": "studio/src-tauri/src/main.rs",
-      "sha256": "1a988677f12177f54ee75435063e318c4df27dbc81d056d5cf3632dcf406a358",
-      "bytes": 70103
+      "sha256": "77c495890029cd576e7bfc6840e6c4b7a4a54c2bfc28721f8ddc0fff9edaad02",
+      "bytes": 72597
     },
     {
       "path": "studio/src-tauri/src/native_queue.rs",
@@ -14281,8 +14316,8 @@
     },
     {
       "path": "studio/src-tauri/src/preview_stream.rs",
-      "sha256": "83131a95206bcecb5e126e938924763716811178ff25fc85e8edbfbf4d701f89",
-      "bytes": 3727
+      "sha256": "037e3c85b9fe236bcdccaebf3d220477d00b0c278863428e2e0c0494937000f9",
+      "bytes": 5757
     },
     {
       "path": "studio/src-tauri/src/runtime_probe.rs",
@@ -14296,12 +14331,12 @@
     },
     {
       "path": "studio/src-tauri/src/task_lifecycle.rs",
-      "sha256": "169b5f9adffc5f825e00ec7624f9bdcee6e186825b56bd704a0500f3c60871e3",
-      "bytes": 4506
+      "sha256": "d0ba0322eff99c98eb3db49e36f00af095bc6e116ec8058c60b335e17083b46b",
+      "bytes": 4937
     },
     {
       "path": "studio/src-tauri/tauri.conf.json",
-      "sha256": "c17c60f6dc40b16167f37cd11827aa70f24490cf13f10ba32a2fdaeaf58acbf4",
+      "sha256": "216008f0e9e36bf536cca64e0635aa10079fd670c07ce619ffef2eb8c3c020d2",
       "bytes": 1051
     },
     {
@@ -14316,8 +14351,8 @@
     },
     {
       "path": "studio/web/app.js",
-      "sha256": "6c08e646a302795718c54f10560f624834ef29d4d4eab760a80643265529d37c",
-      "bytes": 243371
+      "sha256": "171455a45ec94d450f5aab7cfe1b26df551ec781bba24ff059432183520e7b43",
+      "bytes": 243931
     },
     {
       "path": "studio/web/appearance.js",
@@ -14686,8 +14721,8 @@
     },
     {
       "path": "studio/web/review-locale.js",
-      "sha256": "d19f453ac50c6e912c80ccb1ab6ed71f7e988d3fbceec5ac25c129557056c906",
-      "bytes": 16472
+      "sha256": "6498f317e2bd3ba83608b53f188da83c7c57f56a5cd64edad476e464cd01cf66",
+      "bytes": 17399
     },
     {
       "path": "studio/web/review-notices.js",
@@ -15405,6 +15440,11 @@
       "bytes": 3515
     },
     {
+      "path": "tests/test_build_product_retention.py",
+      "sha256": "d6c3eacc5f3680564d7f71745ee8cc76e8f5fdfa0a73e9c9423af5d8f10a96f7",
+      "bytes": 5069
+    },
+    {
       "path": "tests/test_build_retention297.py",
       "sha256": "b66f2cc35376e14ff8a1dacc5f5e1d9ffe55bd9d7661bc68fbd2413301526669",
       "bytes": 19407
@@ -15540,6 +15580,11 @@
       "bytes": 3606
     },
     {
+      "path": "tests/test_desktop_export_parity.py",
+      "sha256": "9a20ad3987585fcbf845b159dbf4974ae86dfe717ae6a1231cbbd60d12a57934",
+      "bytes": 6650
+    },
+    {
       "path": "tests/test_desktop_gap445.py",
       "sha256": "6a5af9891a742722cee3c2fffd8101e9755d740c0084c5c632bae06335038749",
       "bytes": 16369
@@ -15671,8 +15716,8 @@
     },
     {
       "path": "tests/test_fast_mode.py",
-      "sha256": "e81e036331568cf973f79098c6d9804e2dd079ac6903f52f614873e558a855fa",
-      "bytes": 17073
+      "sha256": "393e4036926616ba450b1563969b7212ba9851208fa6fa393b892bca93ad4c11",
+      "bytes": 17574
     },
     {
       "path": "tests/test_fast_output_audit.py",
@@ -15698,6 +15743,11 @@
       "path": "tests/test_full_voice_pipeline.py",
       "sha256": "7653dc54a5ec9247b94e20e5ab787abecb069fc8621419470327ca239bb719e9",
       "bytes": 7394
+    },
+    {
+      "path": "tests/test_generated_cache_retention.py",
+      "sha256": "98c85ee5c8a03505698c87fb4c3564f010b6c1c86b9a090d0001e2ac3bba844f",
+      "bytes": 4555
     },
     {
       "path": "tests/test_gsv_reference.py",
@@ -16030,6 +16080,11 @@
       "bytes": 18252
     },
     {
+      "path": "tests/test_recovery_check_retention.py",
+      "sha256": "ca048b6c352a6f3fd8af7befe5179a2b1b9e098283b88206c0b2b8faf948aaed",
+      "bytes": 2963
+    },
+    {
       "path": "tests/test_reference_continuity.py",
       "sha256": "d9ec7a7d28e97a7ea0ffa5e05016f24da327528e442bd2d33d1b08c1f3a0acac",
       "bytes": 7209
@@ -16108,6 +16163,11 @@
       "path": "tests/test_restart79.py",
       "sha256": "c471185630749fd54a2c80934d2a3e5a134729567106e5238b8b3bc646f52e21",
       "bytes": 3397
+    },
+    {
+      "path": "tests/test_restore_desktop_release.py",
+      "sha256": "2b0ee2349c3d6eed4f58968ca1d741b0f46d774c6c18d058d9d7dca2c4e62086",
+      "bytes": 1562
     },
     {
       "path": "tests/test_review_cards.py",
@@ -16781,8 +16841,8 @@
     },
     {
       "path": "windows/desktop_state.py",
-      "sha256": "c50f7c689c7f45a13f138caf1655fc37f63f88291c7240532ab82dc92a40116a",
-      "bytes": 31916
+      "sha256": "56f3b564358c6e5609e4ec888af36e9232db0c04cec976cc4df78bbc36810421",
+      "bytes": 32023
     },
     {
       "path": "windows/desktop_widgets.py",
@@ -17111,53 +17171,8 @@
     },
     {
       "path": "windows/workflow_settings.py",
-      "sha256": "637579414c9c01165d09557497531917d118cc9a3d44e8ecc19ced483f23ad34",
-      "bytes": 2039
-    },
-    {
-      "path": "Resources/app-icon-art-framed.png",
-      "sha256": "198d44284253d58df01ca76e0153d82d22918d57d935a43439662afe59f983a2",
-      "bytes": 1485771
-    },
-    {
-      "path": "scripts/build_product_retention.py",
-      "sha256": "fd5a35afa3b99447a42ff3a11f6de2447c6a2370873e5050779d195a160b0259",
-      "bytes": 9326
-    },
-    {
-      "path": "scripts/generated_cache_retention.py",
-      "sha256": "0b82bed79bace7f40fab884ba91c382207ef799b581c5dc7a6ec8424f91e561f",
-      "bytes": 8224
-    },
-    {
-      "path": "scripts/recovery_check_retention.py",
-      "sha256": "6de175cf99f5959b211e5465ce4b5ce392273e6d3f900bb9df66b3b311db1b9b",
-      "bytes": 3905
-    },
-    {
-      "path": "scripts/restore_desktop_release.py",
-      "sha256": "5a42be1001f1efead5418b0de87d165bff50504f72147f776bcc540f78538f5d",
-      "bytes": 10964
-    },
-    {
-      "path": "tests/test_build_product_retention.py",
-      "sha256": "d6c3eacc5f3680564d7f71745ee8cc76e8f5fdfa0a73e9c9423af5d8f10a96f7",
-      "bytes": 5069
-    },
-    {
-      "path": "tests/test_generated_cache_retention.py",
-      "sha256": "98c85ee5c8a03505698c87fb4c3564f010b6c1c86b9a090d0001e2ac3bba844f",
-      "bytes": 4555
-    },
-    {
-      "path": "tests/test_recovery_check_retention.py",
-      "sha256": "ca048b6c352a6f3fd8af7befe5179a2b1b9e098283b88206c0b2b8faf948aaed",
-      "bytes": 2963
-    },
-    {
-      "path": "tests/test_restore_desktop_release.py",
-      "sha256": "2b0ee2349c3d6eed4f58968ca1d741b0f46d774c6c18d058d9d7dca2c4e62086",
-      "bytes": 1562
+      "sha256": "1485ab144ac8180660de112c9593095d6b2d0b3269073360e0d3cb731d0e766f",
+      "bytes": 2487
     }
   ]
 }

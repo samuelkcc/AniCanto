@@ -522,20 +522,23 @@ def render(w, request):
             if row is successes[0] and mode==burn_mode: burn_track=track
     tracks=ordered(tracks)
     burn = burn_track is not None
+    import export_packages
+    safe_packages = export_packages.enabled(cfg)
+    mux_tracks = [] if safe_packages else tracks
     longest = max(successes, key=lambda x: x['report']['duration'])
     duration = float(longest['report']['duration'])
     # Put the longest video first so a longer final phrase never loses its image.
     inputs = [longest] + [x for x in successes if x is not longest]
     cmd = [cfg['ffmpeg'],'-v','error','-y']
     for row in inputs: cmd += ['-i', row['output']]
-    for track in tracks: cmd += ['-i', track['path']]
+    for track in mux_tracks: cmd += ['-i', track['path']]
     cmd += ['-map','0:v:0']
     for i,row in enumerate(successes):
-        cmd += ['-map', f'{inputs.index(row)}:a:0', f'-metadata:s:a:{i}', 'language='+dub_languages.LANGUAGES[row['language']][2], f'-metadata:s:a:{i}', f'title={dub_languages.LANGUAGES[row["language"]][0]} · {ENGINES[row["engine"]]}', f'-disposition:a:{i}', 'default' if i == 0 and not original_only_fallback else '0']
-    if cfg.get('includeOriginal', True):
+        cmd += ['-map', f'{inputs.index(row)}:a:0', f'-metadata:s:a:{i}', 'language='+dub_languages.LANGUAGES[row['language']][2], f'-metadata:s:a:{i}', f'title={dub_languages.LANGUAGES[row["language"]][0]} · {ENGINES[row["engine"]]}', f'-disposition:a:{i}', 'default' if i == 0 and (safe_packages or not original_only_fallback) else '0']
+    if not safe_packages and cfg.get('includeOriginal', True):
         cmd += ['-map','0:a:1?', f'-disposition:a:{len(successes)}','default' if original_only_fallback else '0', f'-metadata:s:a:{len(successes)}','title='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original', f'-metadata:s:a:{len(successes)}','language='+__import__('source_language').iso_code(cfg.get('sourceLanguage','ja'))]
     # Soft captions remain independently selectable, disabled by default if baked.
-    for i,track in enumerate(tracks):
+    for i,track in enumerate(mux_tracks):
         lang,title=labels(track)
         cmd += ['-map', f'{len(inputs)+i}:s:0', f'-metadata:s:s:{i}', 'language='+lang, f'-metadata:s:s:{i}', 'title='+title, f'-disposition:s:{i}', 'default' if i == 0 and (track['mode']=='original' or not burn) else '0']
     if burn:
@@ -549,28 +552,43 @@ def render(w, request):
     # MP4 players display handler_name; title alone is discarded by this muxer.
     for i,row in enumerate(successes):
         cmd += [f'-metadata:s:a:{i}', f'handler_name={dub_languages.LANGUAGES[row["language"]][1]} · {ENGINES[row["engine"]]}'+(' (mixed fallback)' if row['report'].get('audioFallbacks') or row['report'].get('originalSpeechIndices') or row['report'].get('systemVoiceFallbacks') else '')]
-    if cfg.get('includeOriginal', True):
+    if not safe_packages and cfg.get('includeOriginal', True):
         cmd += [f'-metadata:s:a:{len(successes)}', 'handler_name='+__import__('source_language').NAMES.get(cfg.get('sourceLanguage','ja'),'Original')+' · Original']
-    for i,track in enumerate(tracks):
+    for i,track in enumerate(mux_tracks):
         cmd += [f'-metadata:s:s:{i}', 'handler_name='+labels(track)[1],f'-metadata:s:s:{i}','name='+labels(track)[1]]
     if incomplete_delivery:cmd += ['-metadata','comment=AniCanto final export; some dialogue needs review. See the accompanying report.']
     temp = job/'multitrack.partial.mp4' 
     w.emit('合成',f'封裝 {len(successes)} 條配音音軌、{len(tracks)} 條字幕。',.96)
     def validate_mux():
-        w.run([cfg['ffmpeg'],'-v','error','-i',temp,'-map','0:v','-map','0:a','-f','null','-'])
         actual = json.loads(w.run([cfg['ffprobe'],'-v','error','-show_streams','-show_format','-of','json',temp]))
-        expected_audio = len(successes) + (int(any(s.get('codec_type') == 'audio' for s in review['meta']['streams'])) if cfg.get('includeOriginal',True) else 0)
-        if sum(s['codec_type']=='audio' for s in actual['streams']) != expected_audio or sum(s['codec_type']=='subtitle' for s in actual['streams']) != len(tracks):
+        __import__('export_picture').verify(actual['streams'],duration)
+        expected_audio = len(successes) + (int(any(s.get('codec_type') == 'audio' for s in review['meta']['streams'])) if not safe_packages and cfg.get('includeOriginal',True) else 0)
+        if sum(s['codec_type']=='audio' for s in actual['streams']) != expected_audio or sum(s['codec_type']=='subtitle' for s in actual['streams']) != len(mux_tracks):
             raise RuntimeError('封裝音軌／字幕數目唔正確，未交付成品。')
+        w.run([cfg['ffmpeg'],'-v','error','-xerror','-i',temp,'-map','0:v','-map','0:a','-f','null','-'])
         return actual
     from export_retry import run as export_with_retry
     meta=export_with_retry(cfg,job,cmd+[temp],w.run,original_emit,validate_mux)
-    temp.replace(target)
+    package_warnings = []
+    final_movie = temp
+    if safe_packages:
+        source_streams = [s for s in review['meta']['streams'] if s.get('codec_type') == 'audio'] if cfg.get('includeOriginal', True) else []
+        if source_streams or tracks:
+            final_movie, meta, original_streams, embedded, package_warnings = export_packages.package(
+                cfg, w.run, original_emit, temp, job/'multitrack.packaged.partial.mp4',
+                duration, source_streams, tracks, meta, required=repair_only, burned=burn)
+        else:
+            original_streams, embedded = [], []
+    else:
+        original_streams, embedded = [], tracks
+    final_movie.replace(target)
     # Keep legacy report consumers working, with full per-engine reports linked.
     primary = successes[0]
     for name in ('validation.json','nonverbal-report.json','timing.json','source-coverage.json'):
         if (primary['folder']/name).exists(): shutil.copyfile(primary['folder']/name,job/name)
-    report = dict(primary['report'], output=str(target), duration=duration, burnOutputCaptions=burn, burnSubtitleMode=burn_mode, tracks=[dict(engine=x['engine'], language=x['language'], model=recorded_model(x,cfg), report=str(x['folder']/'report.json')) for x in successes], failedEngines=failures, engineSelectionRecovery=cfg.get('engineSelectionRecovery',[]), subtitleTracks=[dict(engine=x['engine'],language=x['language'], mode=x['mode'],**({'sourceStream':x['sourceStream']} if 'sourceStream' in x else {})) for x in tracks])
+    report = dict(primary['report'], output=str(target), duration=duration, burnOutputCaptions=burn, burnSubtitleMode=burn_mode, tracks=[dict(engine=x['engine'], language=x['language'], model=recorded_model(x,cfg), report=str(x['folder']/'report.json')) for x in successes], failedEngines=failures, engineSelectionRecovery=cfg.get('engineSelectionRecovery',[]), subtitleTracks=[dict(engine=x['engine'],language=x['language'], mode=x['mode'],**({'sourceStream':x['sourceStream']} if 'sourceStream' in x else {})) for x in embedded])
+    if safe_packages:
+        report.update(originalAudioStreams=original_streams, exportPackagingWarnings=package_warnings)
     from audio_fallback import read_json
     script_recovery=read_json(job/'script-gap-recovery.json',{})
     recovered_scripts=[r for r in script_recovery.get('rows',[]) if r.get('text')]
@@ -589,7 +607,7 @@ def render(w, request):
     report['qualityStatus']='needs-review' if failures or any(x['report'].get('qualityStatus')!='automatic-checks-passed' for x in successes) else 'automatic-checks-passed'
     report['trackQuality']={x['id']:x['report'].get('qualityStatus','not-checked') for x in successes}
     report['dialogueDelivery']=dict(status=delivery_coverage['status'],tracks=[{k:v for k,v in t.items() if k!='rows'} for t in delivery_coverage['tracks']],path=str(job/'dialogue-delivery-audit.json'))
-    if delivery_coverage['status']=='missing-dialogue':report['qualityStatus']='needs-review'
+    if delivery_coverage['status']=='missing-dialogue' or package_warnings:report['qualityStatus']='needs-review'
     if fast:report['qualityStatus']='not-checked-fast-mode'
     w.atomic_json(job/'report.json', report)
     sidecars = [(job/name, '.'+name) for name in ('report.json','validation.json','nonverbal-report.json')]
@@ -606,7 +624,9 @@ def render(w, request):
     destination = export_copy(target, cfg, sidecars)
     report['exportedOutput'] = str(destination)
     w.atomic_json(job/'report.json', report)
-    summary=f'音軌封裝 {len(successes)}/{len(pairs)}；日文原聲：'+('保留' if cfg.get('includeOriginal',True) else '未選擇')+'\n'
+    original_summary = str(len(original_streams))+' 條' if safe_packages and cfg.get('includeOriginal', True) else ('保留' if cfg.get('includeOriginal',True) else '未選擇')
+    summary=f'音軌封裝 {len(successes)}/{len(pairs)}；原聲：{original_summary}\n'
+    if package_warnings:summary+='部分附加音軌或內嵌字幕未能封裝，詳見報告。\n'
     summary+='\n'.join(('部分音軌保留：' if x['report'].get('generationFailed') else '已處理（需覆核）：')+dub_languages.LANGUAGES[x['language']][0]+' · '+ENGINES[x['engine']] for x in successes)
     if any(x['report'].get('userSkipped') for x in successes):summary+='\n使用者跳過餘下生成：'+','.join(x['id'] for x in successes if x['report'].get('userSkipped'))+'；完成錄音及缺聲紀錄保留。'
     if cfg.get('modelRecovery'):summary+='\n模型切換：'+'；'.join(x['previous']+' → '+x['selected'] for x in cfg['modelRecovery'])

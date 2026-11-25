@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "workflow-controls-guide-92-model-centre",
+  "revision": "workflow-controls-guide-103-desktop-media",
   "contentKind": "product-help-copy",
   "authority": "docs/DESKTOP-IPAD-RECOVERY-WORKFLOW.md",
   "title": {
@@ -434,10 +434,10 @@
         "ja": "購入と無料機能"
       },
       "body": {
-        "en": "Basic, Reading, unlimited Learning and all exports are free. One purchase unlocks Expert only. Locked Expert opens the upgrade introduction. Purchase and restoration do not require model downloads. After deletion and reinstall, use the purchasing App Store Apple Account. Purchase keeps its price and remains separate from Restore purchases. Prior owners can tap Purchase. If Apple has verified an existing purchase, the app shows Already purchased and asks you to use Restore purchases. This notice does not unlock Expert or start restoration. A new customer continues to the Apple purchase flow. Price loading and active transactions temporarily disable Purchase. Reloading a price never starts a purchase. Restore purchases synchronizes and verifies the existing purchase before activating this installation. Ordinary app updates keep verified activation. On Apple Intelligence class iPhone and iPad hardware, Studio entry uses measured memory and GPU capabilities. A missing model name does not block entry. Apple Intelligence need not be enabled. Model memory checks and Apple purchase verification remain separate. After Restore purchases, a dialog shows whether Expert access was restored, no eligible purchase was found, or the connection failed. Dismiss the dialog to return to the upgrade page. An account without a verified purchase stays locked.",
-        "zh-HK": "基本模式、朗讀、無限對話學習及所有匯出功能免費。一次性購買只解鎖專家模式；按有鎖頭的專家模式即可查看升級介紹。購買及恢復購買毋須先下載模型。刪除後重新安裝，請使用購買時的 App Store Apple Account。「購買」保留售價，並與「恢復購買」分開。曾購買的用戶仍可按「購買」；如果 Apple 已確認現有購買，應用程式會顯示「已購買專家模式」，並提示使用「恢復購買」。此提示不會解鎖專家模式或自動恢復購買。未購買的用戶則繼續 Apple 購買流程。載入價格或處理交易期間會暫時停用購買按鈕；重新載入價格不會觸發購買。「恢復購買」會同步及驗證既有購買，再啟用本次安裝。一般更新會保留已驗證的啟用狀態。 支援 Apple Intelligence 的 iPhone 及 iPad 會按實際記憶體與 GPU 能力判斷工作室資格；型號未列入清單不會阻止進入，亦毋須開啟 Apple Intelligence。模型記憶體檢查及 Apple 購買驗證仍然分開執行。 「恢復購買」完成後，彈窗會顯示已恢復、找不到符合資格的購買，或連線失敗。關閉彈窗後返回升級頁面；沒有已驗證購買的帳戶仍然上鎖。",
-        "zh-CN": "基本模式、朗读、无限对话学习及所有导出功能免费。一次性购买只解锁专家模式；点击带锁的专家模式即可查看升级介绍。购买及恢复购买无须先下载模型。删除后重新安装，请使用购买时的 App Store Apple Account。“购买”保留售价，并与“恢复购买”分开。曾购买的用户仍可点击“购买”；如果 Apple 已确认现有购买，应用会显示“已购买专家模式”，并提示使用“恢复购买”。此提示不会解锁专家模式或自动恢复购买。未购买的用户则继续 Apple 购买流程。加载价格或处理交易期间会暂时停用购买按钮；重新加载价格不会触发购买。“恢复购买”会同步并验证已有购买，再启用本次安装。通常更新会保留已验证的启用状态。 支持 Apple Intelligence 的 iPhone 和 iPad 按实际内存与 GPU 能力判断工作室资格；机型未列入列表不会阻止进入，也无需开启 Apple Intelligence。模型内存检查和 Apple 购买验证仍分开执行。 “恢复购买”完成后，弹窗会显示已恢复、找不到符合资格的购买，或连接失败。关闭弹窗后返回升级页面；没有已验证购买的账户仍然上锁。",
-        "ja": "基本、読み上げ、会話数無制限の学習、すべての書き出しは無料です。1回の購入でエキスパートのみ解除します。鍵付き項目から紹介を開けます。購入や復元の前にモデルを取得する必要はありません。削除後の再インストールでは購入時のApp StoreのApple Accountを使います。「購入」は価格を表示し、「購入を復元」と分けて配置します。購入済みでも「購入」を押せます。Appleが既存の購入を確認した場合、「購入済み」と表示し、「購入を復元」を使うよう案内します。この通知だけでは解除や復元を行いません。未購入の場合はAppleの購入処理に進みます。価格の読込中や取引中のみ購入ボタンを一時的に無効にします。価格の再読み込みだけで購入は始まりません。「購入を復元」は既存の購入を同期・検証してから、このインストールを有効にします。通常の更新では検証済みの有効化状態を維持します。 Apple Intelligence対応のiPhoneとiPadは、実際のメモリとGPU機能でスタジオの利用条件を確認します。機種名が一覧にないだけでは制限せず、Apple Intelligenceを有効にする必要もありません。モデルの空きメモリ確認とAppleの購入検証は別に行います。 「購入を復元」の後、復元完了、対象の購入なし、または接続失敗をダイアログで表示します。閉じるとアップグレード画面に戻ります。購入が検証されていないアカウントはロックを維持します。"
+        "en": "Basic, Reading, unlimited Learning and all exports are free. One purchase unlocks Expert only. Locked Expert opens the upgrade introduction. Purchase and restoration do not require model downloads. After deletion and reinstall, use the purchasing App Store Apple Account. Purchase keeps its price and remains separate from Restore purchases. Prior owners can tap Purchase. If Apple has verified an existing purchase, the app shows Already purchased and asks you to use Restore purchases. This notice does not unlock Expert or start restoration. A new customer continues to the Apple purchase flow. Price loading and active transactions temporarily disable Purchase. Reloading a price never starts a purchase. Restore purchases synchronizes and verifies the existing purchase before activating this installation. Ordinary app updates keep verified activation. On Apple Intelligence class iPhone and iPad hardware, Studio entry uses measured memory and GPU capabilities. A missing model name does not block entry. Apple Intelligence need not be enabled. Model memory checks and Apple purchase verification remain separate. After Restore purchases, a dialog shows whether Expert access was restored, no eligible purchase was found, or the connection failed. Dismiss the dialog to return to the upgrade page. An account without a verified purchase stays locked. After starting the app, Expert can show Checking purchase while StoreKit verifies access. Basic stays available. A normal restart keeps activation for the verified purchase.",
+        "zh-HK": "基本模式、朗讀、無限對話學習及所有匯出功能免費。一次性購買只解鎖專家模式；按有鎖頭的專家模式即可查看升級介紹。購買及恢復購買毋須先下載模型。刪除後重新安裝，請使用購買時的 App Store Apple Account。「購買」保留售價，並與「恢復購買」分開。曾購買的用戶仍可按「購買」；如果 Apple 已確認現有購買，應用程式會顯示「已購買專家模式」，並提示使用「恢復購買」。此提示不會解鎖專家模式或自動恢復購買。未購買的用戶則繼續 Apple 購買流程。載入價格或處理交易期間會暫時停用購買按鈕；重新載入價格不會觸發購買。「恢復購買」會同步及驗證既有購買，再啟用本次安裝。一般更新會保留已驗證的啟用狀態。 支援 Apple Intelligence 的 iPhone 及 iPad 會按實際記憶體與 GPU 能力判斷工作室資格；型號未列入清單不會阻止進入，亦毋須開啟 Apple Intelligence。模型記憶體檢查及 Apple 購買驗證仍然分開執行。 「恢復購買」完成後，彈窗會顯示已恢復、找不到符合資格的購買，或連線失敗。關閉彈窗後返回升級頁面；沒有已驗證購買的帳戶仍然上鎖。 啟動後，專家模式可能會顯示「正在確認購買」，等候 StoreKit 驗證。期間仍可使用基本模式。一般重開會保留已驗證購買的啟用狀態。",
+        "zh-CN": "基本模式、朗读、无限对话学习及所有导出功能免费。一次性购买只解锁专家模式；点击带锁的专家模式即可查看升级介绍。购买及恢复购买无须先下载模型。删除后重新安装，请使用购买时的 App Store Apple Account。“购买”保留售价，并与“恢复购买”分开。曾购买的用户仍可点击“购买”；如果 Apple 已确认现有购买，应用会显示“已购买专家模式”，并提示使用“恢复购买”。此提示不会解锁专家模式或自动恢复购买。未购买的用户则继续 Apple 购买流程。加载价格或处理交易期间会暂时停用购买按钮；重新加载价格不会触发购买。“恢复购买”会同步并验证已有购买，再启用本次安装。通常更新会保留已验证的启用状态。 支持 Apple Intelligence 的 iPhone 和 iPad 按实际内存与 GPU 能力判断工作室资格；机型未列入列表不会阻止进入，也无需开启 Apple Intelligence。模型内存检查和 Apple 购买验证仍分开执行。 “恢复购买”完成后，弹窗会显示已恢复、找不到符合资格的购买，或连接失败。关闭弹窗后返回升级页面；没有已验证购买的账户仍然上锁。 启动后，专家模式可能会显示“正在确认购买”，等待 StoreKit 验证。期间仍可使用基本模式。正常重启会保留已验证购买的激活状态。",
+        "ja": "基本、読み上げ、会話数無制限の学習、すべての書き出しは無料です。1回の購入でエキスパートのみ解除します。鍵付き項目から紹介を開けます。購入や復元の前にモデルを取得する必要はありません。削除後の再インストールでは購入時のApp StoreのApple Accountを使います。「購入」は価格を表示し、「購入を復元」と分けて配置します。購入済みでも「購入」を押せます。Appleが既存の購入を確認した場合、「購入済み」と表示し、「購入を復元」を使うよう案内します。この通知だけでは解除や復元を行いません。未購入の場合はAppleの購入処理に進みます。価格の読込中や取引中のみ購入ボタンを一時的に無効にします。価格の再読み込みだけで購入は始まりません。「購入を復元」は既存の購入を同期・検証してから、このインストールを有効にします。通常の更新では検証済みの有効化状態を維持します。 Apple Intelligence対応のiPhoneとiPadは、実際のメモリとGPU機能でスタジオの利用条件を確認します。機種名が一覧にないだけでは制限せず、Apple Intelligenceを有効にする必要もありません。モデルの空きメモリ確認とAppleの購入検証は別に行います。 「購入を復元」の後、復元完了、対象の購入なし、または接続失敗をダイアログで表示します。閉じるとアップグレード画面に戻ります。購入が検証されていないアカウントはロックを維持します。 アプリの起動後は、StoreKit の確認中にエキスパートに「購入を確認中」と表示される場合があります。基本モードは引き続き利用できます。通常の再起動では確認済みの購入の有効化状態が維持されます。"
       }
     },
     {
@@ -456,6 +456,22 @@
       }
     },
     {
+      "id": "subtitleAlignmentFallback",
+      "platforms": ["iOS", "iPadOS"],
+      "title": {
+        "en": "Subtitle alignment fallback",
+        "zh-HK": "字幕對齊後備",
+        "zh-CN": "字幕对齐后备",
+        "ja": "字幕の同期に失敗した場合"
+      },
+      "body": {
+        "en": "If overlapping or long subtitles cannot fit a safe processing window, the app keeps the original audio for that interval and continues the conversion. It keeps the selected subtitle text and times. Review report shows where target dubbing is unavailable and gives the reason. This works with whole-film singing detection on or off.",
+        "zh-HK": "若重疊或過長的字幕無法在安全的處理範圍內對齊，程式會保留該時段的原聲，並繼續轉換。所選字幕的文字及時間會保留。「校對報告」會列出未有配音的時段及原因。全片歌唱偵測開啟或關閉時均適用。",
+        "zh-CN": "如果重叠或过长的字幕无法在安全的处理范围内对齐，程序会保留该时段的原声，并继续转换。所选字幕的文字及时间会保留。“校对报告”会列出未配音的时段及原因。全片歌唱检测开启或关闭时均适用。",
+        "ja": "重複または長い字幕を安全な処理範囲に合わせられない場合、その区間の原音を保持して変換を続けます。選択した字幕の本文と表示時刻は保持されます。校正レポートに吹き替えのない区間と理由を表示します。全編の歌声検出の設定にかかわらず適用します。"
+      }
+    },
+    {
       "id": "openingTreatment",
       "title": {
         "zh-HK": "片頭／片尾處理",
@@ -464,10 +480,45 @@
         "ja": "OP／ED 処理"
       },
       "body": {
-        "en": "Detect automatically is on by default. It first checks named opening and ending chapters, then local singing, music and speech evidence in the first and last 300 seconds. A confirmed song keeps original audio without translation or dubbing. Background music alone is not a song. Uncertain ranges and classifier failures continue as dialogue. On desktop, Translate dialogue is a separate switch and defaults off. iPad and iPhone currently show automatic detection only. New jobs use these preferences; resumed jobs keep their frozen policy. New mobile requests retain a confirmed song interior when a caption crosses its edge. The complete boundary caption continues normally. This does not guarantee detection of every song.",
-        "zh-HK": "「自動偵測」預設開啟。系統先檢查片頭及片尾章節，再檢查首尾 300 秒內的歌唱、音樂及語音證據。確認為歌曲時會保留原聲，不翻譯或配音。背景音樂本身不等於歌曲；範圍不確定或分類失敗時仍按對白處理。桌面版另有「翻譯對白」開關，預設關閉。iPad 及 iPhone 目前只提供自動偵測。新工作使用偏好設定；續做沿用已保存政策。 流動版的新工作在字幕跨越歌曲邊界時保留已確認的歌曲中段，邊界字幕仍會完整處理。這不代表可以偵測所有歌曲。",
-        "zh-CN": "自动检测默认开启。系统先检查片头片尾章节，再检查首尾 300 秒内的歌唱、音乐及语音证据。确认歌曲后保留原声，不翻译或配音。背景音乐本身不等于歌曲；范围不确定或分类失败时仍按对白处理。桌面版另有翻译对白开关，默认关闭。iPad 和 iPhone 当前仅提供自动检测。新任务使用偏好设置；继续处理沿用已保存规则。 移动版的新任务在字幕跨越歌曲边界时保留已确认的歌曲中段，边界字幕仍会完整处理。这不代表可以检测所有歌曲。",
-        "ja": "自動検出は既定でオンです。章名を先に調べ、先頭と末尾の300秒の歌唱・音楽・音声をローカルで確認します。歌と確認した区間は元音声を保持し、翻訳や吹替を行いません。背景音楽だけでは歌と判定しません。不確かな区間や分類失敗では会話として処理します。デスクトップの会話を翻訳スイッチは既定でオフです。iPadとiPhoneは現在、自動検出だけを表示します。新規作業は現在の設定を使い、再開は保存済み規則を維持します。 モバイルの新規変換は、字幕が曲の境界をまたいでも確認済みの内部区間を保護します。境界の字幕は完全に処理します。すべての歌の検出を保証するものではありません。"
+        "en": "Detect automatically is on by default. It first checks named opening and ending chapters, then local singing, music and speech evidence within the search range. The default is the first and last five minutes. A confirmed song keeps original audio without translation or dubbing. Background music alone is not a song. Uncertain ranges and classifier failures continue as dialogue. On desktop, Translate dialogue is a separate switch and defaults off. Mobile has a separate whole-film singing option. New jobs use these preferences; resumed jobs keep their frozen policy. New mobile requests retain a confirmed song interior when a caption crosses its edge. The complete boundary caption continues normally. This does not guarantee detection of every song.",
+        "zh-HK": "「自動偵測」預設開啟。系統先檢查片頭及片尾章節，再檢查偵測範圍內的歌唱、音樂及語音證據，預設為首尾各 5 分鐘。確認為歌曲時會保留原聲，不翻譯或配音。背景音樂本身不等於歌曲；範圍不確定或分類失敗時仍按對白處理。桌面版另有「翻譯對白」開關，預設關閉。流動版另有全片歌唱偵測選項。新工作使用偏好設定；續做沿用已保存政策。 流動版的新工作在字幕跨越歌曲邊界時保留已確認的歌曲中段，邊界字幕仍會完整處理。這不代表可以偵測所有歌曲。",
+        "zh-CN": "自动检测默认开启。系统先检查片头片尾章节，再检查检测范围内的歌唱、音乐及语音证据，默认为首尾各 5 分钟。确认歌曲后保留原声，不翻译或配音。背景音乐本身不等于歌曲；范围不确定或分类失败时仍按对白处理。桌面版另有翻译对白开关，默认关闭。移动版另有全片歌唱检测选项。新任务使用偏好设置；继续处理沿用已保存规则。 移动版的新任务在字幕跨越歌曲边界时保留已确认的歌曲中段，边界字幕仍会完整处理。这不代表可以检测所有歌曲。",
+        "ja": "自動検出は既定でオンです。章名を先に調べ、指定範囲の歌唱・音楽・音声をローカルで確認します。既定は先頭と末尾の各 5 分です。歌と確認した区間は元音声を保持し、翻訳や吹替を行いません。背景音楽だけでは歌と判定しません。不確かな区間や分類失敗では会話として処理します。デスクトップの会話を翻訳スイッチは既定でオフです。モバイル版には全編の歌声を検出する項目もあります。新規作業は現在の設定を使い、再開は保存済み規則を維持します。 モバイルの新規変換は、字幕が曲の境界をまたいでも確認済みの内部区間を保護します。境界の字幕は完全に処理します。すべての歌の検出を保証するものではありません。"
+      }
+    },
+    {
+      "id": "openingSearchRange",
+      "platforms": ["macOS", "Windows", "iOS", "iPadOS"],
+      "title": {
+        "en": "OP / ED detection range",
+        "zh-HK": "片頭／片尾偵測範圍",
+        "zh-CN": "片头／片尾检测范围",
+        "ja": "OP／ED の検出範囲"
+      },
+      "body": {
+        "en": "Choose 5, 10, 15 or 30 minutes. The default is 5 minutes. The app searches from the start for the OP and from the end for the ED. It first checks named chapters, including supported MKV chapters. A larger range can take longer. This setting applies to new conversions. Resume keeps the saved range.",
+        "zh-HK": "可選擇 5、10、15 或 30 分鐘，預設為 5 分鐘。程式在影片開頭尋找片頭曲，在影片結尾尋找片尾曲。程式先檢查已命名的章節，包括支援的 MKV 章節。擴大範圍可能增加處理時間。此設定套用於新轉換，續做時沿用已保存的範圍。",
+        "zh-CN": "可选择 5、10、15 或 30 分钟，默认为 5 分钟。程序在视频开头查找片头曲，在视频结尾查找片尾曲。程序先检查已命名的章节，包括支持的 MKV 章节。扩大范围可能增加处理时间。此设置用于新转换，继续处理时沿用已保存的范围。",
+        "ja": "5、10、15、30 分から選べます。既定は 5 分です。動画の先頭から OP、末尾から ED を探します。対応する MKV チャプターを含め、名前の付いたチャプターを先に確認します。範囲を広げると処理に時間がかかる場合があります。新規変換に適用し、再開時は保存済みの範囲を使います。"
+      }
+    },
+    {
+      "id": "fullFilmSinging",
+      "platforms": [
+        "iOS",
+        "iPadOS"
+      ],
+      "title": {
+        "en": "Detect singing throughout the video",
+        "zh-HK": "全片歌唱偵測",
+        "zh-CN": "全片歌唱检测",
+        "ja": "全編の歌声を検出"
+      },
+      "body": {
+        "en": "Off by default. Turn it on in Production settings under OP / ED before a new conversion. AniCanto checks the selected range on the device. It uses the original sound to identify singing, including where lyrics appear as subtitles. Confirmed singing keeps its original sound and available lyric captions. When singing and foreground dialogue overlap, the app keeps the original mix only while dubbing the matching dialogue. For dialogue over instrumental music, it uses verified separated accompaniment. If the sound is uncertain, normal dialogue processing continues. This scan adds processing time. Resuming or re-assembling an existing job uses its saved settings.",
+        "zh-HK": "預設關閉。在新轉換前，可於「製作設定」的「片頭／片尾處理」開啟。AniCanto 在裝置上分析所選範圍，根據原聲辨別歌唱，包括有歌詞字幕的片段。確認的歌唱範圍保留原聲及可用的歌詞字幕。當歌唱與前景對白同時出現，只會在對應對白的配音時段保留原聲混音。若對白只有背景配樂，程式會使用已核對的分離配樂。無法確認的片段會按原有對白流程處理。掃描會增加處理時間。續做或重新合併會沿用已保存設定。",
+        "zh-CN": "默认关闭。新建转换前，可在“制作设置”的“片头／片尾处理”中开启。AniCanto 在设备上分析所选范围，根据原声识别歌唱，包括有歌词字幕的片段。确认的歌唱范围保留原声和可用歌词字幕。当歌唱与前景对白同时出现时，仅在对应对白的配音时段保留原声混音。如果对白只有背景配乐，程序会使用已核对的分离配乐。未能确认的片段继续按原有对白流程处理。扫描会增加处理时间。继续或重新合并会沿用已保存的设置。",
+        "ja": "既定ではオフです。新しい変換の前に、制作設定の「OP／ED 処理」で有効にします。AniCanto は選択範囲の原音を端末上で解析し、歌詞字幕がある区間も確認します。歌声を確認した区間は原音と利用可能な歌詞字幕を保持します。歌声と前景の会話が重なる場合は、該当する台詞を吹き替える間だけ原音を保持します。会話に歌声のないBGMがある場合は、確認済みの分離した伴奏を使用します。判断できない区間は通常の台詞処理を続けます。解析には追加の時間がかかります。再開や再合成には保存済みの設定を使います。"
       }
     },
     {
@@ -659,10 +710,10 @@
         "ja": "プリセットの導入済みモデル"
       },
       "body": {
-        "en": "On iPhone and iPad, Gemma 4 E4B remains the initial default. In Model centre, download optional Hy-MT2 1.8B or CantoneseLLM v2 8B, then select Translation model. This preference affects new jobs. Saved jobs keep their model, recordings and spent attempts. Qwen remains for old jobs only. Voice model selection is separate.",
-        "zh-HK": "iPhone 及 iPad：Gemma 4 E4B 仍為初始預設。在模型中心下載選配的 Hy-MT2 1.8B 或 CantoneseLLM v2 8B，再按「翻譯模型」選擇。此偏好只影響新工作；已保存工作保留原有模型、錄音及已使用次數。Qwen 只供舊工作使用，配音模型獨立選擇。",
-        "zh-CN": "iPhone 和 iPad：Gemma 4 E4B 仍为初始默认。在模型中心下载可选的 Hy-MT2 1.8B 或 CantoneseLLM v2 8B，再点按“翻译模型”选择。此偏好仅影响新任务；已保存任务保留原模型、录音及已使用次数。Qwen 仅供旧任务使用，配音模型单独选择。",
-        "ja": "iPhoneとiPadでは、初期設定は引き続きGemma 4 E4Bです。モデルセンターで追加のHy-MT2 1.8BまたはCantoneseLLM v2 8Bをダウンロードし、「翻訳モデル」で選択します。設定は新規ジョブに適用します。保存済みジョブのモデル、録音、使用済み試行回数は保持します。Qwenは旧ジョブ専用です。音声モデルは別に選択します。"
+        "en": "On iPhone and iPad, Gemma 4 E4B remains the initial default. In Model centre, download optional Hy-MT2 1.8B or CantoneseLLM v2 8B, then select Translation model. This preference affects new jobs. Saved jobs keep their model, recordings and spent attempts. Qwen remains for old jobs only. Voice model selection is separate. If you delete the selected translation or voice model, AniCanto selects a verified replacement for new jobs. It prefers the default if installed. If no compatible model remains, the next setup proposes the default download. Saved jobs keep their original models.",
+        "zh-HK": "iPhone 及 iPad：Gemma 4 E4B 仍為初始預設。在模型中心下載選配的 Hy-MT2 1.8B 或 CantoneseLLM v2 8B，再按「翻譯模型」選擇。此偏好只影響新工作；已保存工作保留原有模型、錄音及已使用次數。Qwen 只供舊工作使用，配音模型獨立選擇。 刪除所選翻譯或配音模型後，AniCanto 會為新工作改用已驗證的模型，並優先使用已安裝的預設模型。如沒有相容模型，下一次設定會建議下載預設模型。已保存工作沿用原有模型。",
+        "zh-CN": "iPhone 和 iPad：Gemma 4 E4B 仍为初始默认。在模型中心下载可选的 Hy-MT2 1.8B 或 CantoneseLLM v2 8B，再点按“翻译模型”选择。此偏好仅影响新任务；已保存任务保留原模型、录音及已使用次数。Qwen 仅供旧任务使用，配音模型单独选择。 删除所选翻译或配音模型后，AniCanto 会为新任务改用已验证的模型，并优先使用已安装的默认模型。如果没有兼容模型，下次设置会建议下载默认模型。已保存任务沿用原有模型。",
+        "ja": "iPhoneとiPadでは、初期設定は引き続きGemma 4 E4Bです。モデルセンターで追加のHy-MT2 1.8BまたはCantoneseLLM v2 8Bをダウンロードし、「翻訳モデル」で選択します。設定は新規ジョブに適用します。保存済みジョブのモデル、録音、使用済み試行回数は保持します。Qwenは旧ジョブ専用です。音声モデルは別に選択します。 選択中の翻訳・音声モデルを削除すると、新規ジョブには検証済みのモデルを選びます。同梱の既定設定に対応するモデルが導入済みなら優先します。互換モデルがなければ次回の設定で既定モデルのダウンロードを案内します。保存済みジョブでは元のモデルを使います。"
       }
     },
     {
@@ -762,16 +813,16 @@
     {
       "id": "originalAudioTrack",
       "title": {
-        "en": "Keep original audio as a second track",
-        "zh-HK": "保留原聲為第二音軌",
-        "zh-CN": "保留原声为第二音轨",
-        "ja": "原音を第2音声トラックとして保持"
+        "en": "Keep original audio tracks",
+        "zh-HK": "保留原裝音軌",
+        "zh-CN": "保留原版音轨",
+        "ja": "元の音声トラックを保持"
       },
       "body": {
-        "en": "On iPhone and iPad, this is off by default in Basic and Expert. On adds a separately selectable source-audio track to new outputs. It does not change voice references or background music. Saved jobs retain their frozen choice. A verified same-job original-audio cache can avoid a second full-source decode.",
-        "zh-HK": "iPhone 及 iPad 的基本與專家模式均預設關閉。開啟後，新成品會額外加入可切換的原聲音軌，不會改變聲線參考或背景音樂。已保存工作保留原有選擇；同一工作已驗證的原聲快取可避免再次解碼全片。",
-        "zh-CN": "iPhone 和 iPad 的基本与专家模式均默认关闭。开启后，新成品额外加入可切换的原声音轨，不改变声线参考或背景音乐。已保存任务保留原选择；同一任务经过验证的原声缓存可避免再次解码全片。",
-        "ja": "iPhoneとiPadの基本・エキスパートでは既定でオフです。オンにすると、新しい出力に切り替え可能な原音トラックを追加します。声の参照や背景音楽は変更しません。保存済み作業は従来の設定を保持し、検証済みキャッシュがあれば全体の再デコードを避けます。"
+        "en": "Basic and Expert turn this on by default for new jobs. The new dub plays first. The app keeps each readable source track separately in source order. Use the player's Audio menu to select the original dialogue, music and songs. Tracks with the same name show a track number. You can turn this off in Production settings. Saved jobs keep their original choice.",
+        "zh-HK": "基本與專家模式均為新工作預設開啟。新配音排第一並預設播放，其後按原片次序保留每條可讀的原裝音軌。可在播放器的「音訊」選單切回原裝對白、音樂及歌曲。同名音軌會顯示編號。可在製作設定關閉。已保存工作保留原有選擇。",
+        "zh-CN": "基本与专家模式均为新任务默认开启。新配音排第一并默认播放，其后按源视频顺序保留每条可读的原版音轨。可在播放器的“音频”菜单切回原版对白、音乐和歌曲。同名音轨会显示编号。可在制作设置中关闭。已保存任务保留原有选择。",
+        "ja": "基本・エキスパートでは、新規作業の既定でオンになります。新しい吹き替えを先頭にして既定で再生し、読み取れる元の音声トラックは元の順序で個別に保持します。プレーヤーの音声メニューで元の台詞・音楽・歌に切り替えられます。同じ名前のトラックには番号が付きます。制作設定でオフにできます。保存済みの作業は従来の選択を保持します。"
       }
     },
     {
@@ -783,10 +834,10 @@
         "ja": "吹き替え言語の更新"
       },
       "body": {
-        "en": "On Mac, Windows, iPhone and iPad, changing the output language starts a new translation from retained original source text. The old language draft and recording are not the new target. An unchanged language can reuse its verified saved draft. Reuse verified source analysis, timings, separated audio and voice references. Unresolved source lines keep original audio and review issues; other lines continue. Changed or missing source files still fail verification. Add another track saves a new output with existing tracks plus new language audio and captions. Replace changes only the selected target track in the new output. Earlier outputs stay available. Resume keeps consumed attempts. Optional target checks still require their saved permissions.",
-        "zh-HK": "Mac、Windows、iPhone 及 iPad 更換輸出語言時，會由保存的原文重新翻譯，不會沿用舊語言文稿或錄音作為新目標。同一語言可沿用已驗證的保存文稿。流程重用已驗證的原聲分析、時間定位、分離音訊及聲線參考。未確認的原文段落保留原聲及校對問題，其他段落繼續處理；來源檔案已改變或遺失時仍會驗證失敗。新增音軌會另存新成品，保留現有聲軌並加入新語言配音及字幕；取代只會更換新成品內所選的目標音軌。舊成品保留；繼續轉換不會重設已用次數。額外目標語言檢查仍按已保存的權限執行。",
-        "zh-CN": "Mac、Windows、iPhone 和 iPad 更换输出语言时，会从保存的原文重新翻译，不会沿用旧语言文稿或录音作为新目标。同一语言可复用已验证的保存文稿。流程复用已验证的原声分析、时间定位、分离音频和声线参考。未确认的原文段落保留原声和校对问题，其他段落继续处理；来源文件已改变或丢失时仍会验证失败。新增音轨会另存新成品，保留现有声轨并加入新语言配音和字幕；替换只更换新成品中所选的目标音轨。旧成品保留；继续转换不重置已用次数。额外目标语言检查仍按保存的权限执行。",
-        "ja": "Mac、Windows、iPhone、iPadで出力言語を変えると、保存した原文から新しく翻訳します。以前の言語の台本や録音は新しい言語として使いません。同じ言語では検証済みの台本を再利用できます。検証済みの原音解析、時刻、分離音声、声の参照を再利用します。原文が未確認の区間は原音と校正課題を保持し、他の区間は続行します。元ファイルの変更や欠落は引き続き検証エラーになります。トラックの追加は既存の音声と新言語の音声・字幕を別の出力へ保存します。置換は新しい出力の選択した音声だけを変更します。以前の出力と使用済み回数を保持します。追加の確認には保存済みの許可が必要です。"
+        "en": "On Mac, Windows, iPhone and iPad, changing the output language starts a new translation from retained original source text. The old language draft and recording are not the new target. An unchanged language can reuse its verified saved draft. Reuse verified source analysis, timings, separated audio and voice references. Unresolved source lines keep original audio and review issues; other lines continue. Changed or missing source files still fail verification. Add another track saves a new output with existing tracks plus new language audio and captions. Replace changes only the selected target track in the new output. Earlier outputs stay available. Resume keeps consumed attempts. Optional target checks still require their saved permissions. On iPhone and iPad, a new output keeps one current dubbed track and its captions per language. If the language already exists, the new track becomes current in the new output. The original audio track is separate.",
+        "zh-HK": "Mac、Windows、iPhone 及 iPad 更換輸出語言時，會由保存的原文重新翻譯，不會沿用舊語言文稿或錄音作為新目標。同一語言可沿用已驗證的保存文稿。流程重用已驗證的原聲分析、時間定位、分離音訊及聲線參考。未確認的原文段落保留原聲及校對問題，其他段落繼續處理；來源檔案已改變或遺失時仍會驗證失敗。新增音軌會另存新成品，保留現有聲軌並加入新語言配音及字幕；取代只會更換新成品內所選的目標音軌。舊成品保留；繼續轉換不會重設已用次數。額外目標語言檢查仍按已保存的權限執行。 在 iPhone 及 iPad，新成品每種語言保留一條現行配音及對應字幕。如已有該語言，新音軌會成為新成品內該語言的現行版本。原聲是獨立音軌。",
+        "zh-CN": "Mac、Windows、iPhone 和 iPad 更换输出语言时，会从保存的原文重新翻译，不会沿用旧语言文稿或录音作为新目标。同一语言可复用已验证的保存文稿。流程复用已验证的原声分析、时间定位、分离音频和声线参考。未确认的原文段落保留原声和校对问题，其他段落继续处理；来源文件已改变或丢失时仍会验证失败。新增音轨会另存新成品，保留现有声轨并加入新语言配音和字幕；替换只更换新成品中所选的目标音轨。旧成品保留；继续转换不重置已用次数。额外目标语言检查仍按保存的权限执行。 在 iPhone 和 iPad，新成品每种语言保留一条当前配音和对应字幕。如果已存在该语言，新音轨会成为新成品中该语言的当前版本。原声为独立音轨。",
+        "ja": "Mac、Windows、iPhone、iPadで出力言語を変えると、保存した原文から新しく翻訳します。以前の言語の台本や録音は新しい言語として使いません。同じ言語では検証済みの台本を再利用できます。検証済みの原音解析、時刻、分離音声、声の参照を再利用します。原文が未確認の区間は原音と校正課題を保持し、他の区間は続行します。元ファイルの変更や欠落は引き続き検証エラーになります。トラックの追加は既存の音声と新言語の音声・字幕を別の出力へ保存します。置換は新しい出力の選択した音声だけを変更します。以前の出力と使用済み回数を保持します。追加の確認には保存済みの許可が必要です。 iPhoneとiPadの新しい出力では、言語ごとに現在の吹き替えと対応する字幕を一つずつ保持します。同じ言語がすでにある場合は、新しいトラックを新しい出力の現在の版とします。原音は別のトラックです。"
       }
     },
     {
@@ -1053,6 +1104,12 @@
       "zh-HK": "續做沿用已保存設定；偏好變更套用於新轉換。",
       "zh-CN": "继续处理沿用已保存设置；偏好变更用于新转换。",
       "ja": "再開時は保存済み設定を使い、設定の変更は新しい変換に適用します。"
+    },
+    "settingsSavedDetection": {
+      "en": "These are the saved settings for this conversion. To change detection for this video, start a new conversion.",
+      "zh-HK": "以上為此次轉換已保存的設定。要更改此影片的偵測設定，請開始新轉換。",
+      "zh-CN": "以上为本次转换已保存的设置。要更改此视频的检测设置，请开始新转换。",
+      "ja": "この変換に保存されている設定です。この動画の検出設定を変更するには、新しい変換を開始します。"
     },
     "settingsModels": {
       "en": "Translation & recognition models",

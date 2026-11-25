@@ -3,6 +3,7 @@ dist/
 __pycache__/
 .DS_Store
 outputs/
+**/App Store redeem code/
 
 # Regenerable compiler output and local editor metadata
 **/target/

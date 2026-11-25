@@ -38,7 +38,7 @@ impl OwnedJob {
 #[cfg(windows)] impl Drop for OwnedJob {fn drop(&mut self){#[link(name="kernel32")] unsafe extern "system" {fn CloseHandle(handle:isize)->i32;}unsafe{CloseHandle(self.0);}}}
 struct Active { child:Child, id:String, row:Option<String>, paused:bool, setup:bool, action:String, model_id:Option<String>, started:Instant, #[cfg(windows)] _job:Option<OwnedJob> }
 struct Host { root:PathBuf, shared:PathBuf, windows:PathBuf, backend:PathBuf, helper:PathBuf,
-    recovery_checked:AtomicBool, cleanup_pending:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<HashSet<u32>>>, _instance:File }
+    recovery_checked:AtomicBool, cleanup_pending:AtomicBool, rpc_lock:Mutex<()>, task_lock:Mutex<()>, active:Mutex<Option<Active>>, media:Arc<Mutex<Option<HashSet<u32>>>>, _instance:File }
 const DESKTOP_OPERATIONS:&[&str]=&["export-logs","finish-current","speech-library","speech-upload","speech-import","speech-save","speech-draft","speech-new","speech-select","speech-load","speech-delete","speech-rename","speech-export-file","state","configure","add","select","reset-video-plan","reset-video","move-video","remove-videos","restore-videos","remove","snapshot","save-draft","review-resolution","review-take-removal","models","model-choices","model-removal-plan","remove-model","remove-retired-model","activate-models","project-cache-plan","project-cache-status","clear-project-cache","storage-health","repair-storage","plan","media-status","logs","log-sources","licenses","use-terms","accept-use-terms","revoke-use-terms","source-language","source-prepare-status","source-prepare-cancel","source-prepare-wait","compute-status","project-terms","set-project-terms","performance-choice","reset-production-parameters","update-recording-plan","media-thumbnail","media-subtitles","set-subtitle-source","set-external-subtitle","review-triage","recording-impact","audio-waveforms","boundary-proposals","apply-boundary","subtitle-alignment-preview","set-subtitle-alignment","record-events"];
 // A conversion worker that stops reporting must not hold the automatic queue
 // forever. The longest measured silent stretch on the reference Mac is 301
@@ -180,7 +180,7 @@ impl Host {
         instance.try_lock_exclusive().map_err(|_|"AniCanto Studio is already open for this library.".to_string())?;
         let helper=if packaged{exe.parent().unwrap().join("AniCanto-worker")}else{
             std::env::var_os("CANTOSYNC_MAC_HELPER").map(PathBuf::from).unwrap_or(development.join("dist/AniCanto.app/Contents/MacOS/AniCanto"))};
-        Ok(Self{root,shared,windows,backend,helper,recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance})
+        Ok(Self{root,shared,windows,backend,helper,recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(Some(HashSet::new()))),_instance:instance})
     }
     fn debug_contents(&self)->String {
         let report=self.rpc("export-logs",json!({})).and_then(|r|r.as_str().map(str::to_owned).ok_or_else(||"The Python debug report returned invalid output.".to_owned()));
@@ -233,17 +233,36 @@ impl Host {
         let mut cmd=Command::new(python);cmd.arg(&self.backend).arg("--root").arg(&self.root).arg("--shared").arg(&self.shared).arg("--helper").arg(&self.helper)
             .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
         self.environment(&mut cmd);
-        #[cfg(unix)] if ["media","media-subtitles"].contains(&op) {use std::os::unix::process::CommandExt;cmd.process_group(0);}
-        let mut child=cmd.spawn().map_err(|e|e.to_string())?;
-        let media_pid=if ["media","media-subtitles"].contains(&op){self.media.lock().unwrap().insert(child.id());Some(child.id())}else{None};
+        let mut media=if ["media","media-subtitles","media-thumbnail"].contains(&op){
+            Some(self.media.lock().unwrap())
+        }else{None};
+        let mut child=if let Some(guard)=media.as_mut(){
+            let pids=guard.as_mut().ok_or("AniCanto is closing.")?;
+            #[cfg(unix)] {use std::os::unix::process::CommandExt;cmd.process_group(0);}
+            let child=cmd.spawn().map_err(|e|e.to_string())?;
+            pids.insert(child.id());
+            child
+        }else{cmd.spawn().map_err(|e|e.to_string())?};
+        let media_pid=media.is_some().then(||child.id());
+        drop(media);
         #[cfg(windows)] let _rpc_job=Some(OwnedJob::assign(&child)?);
         let recover=!self.recovery_checked.load(Ordering::SeqCst)&&self.active.lock().unwrap().is_none()&&!self.older_app_open();
-        child.stdin.take().unwrap().write_all(json!({"op":op,"params":params,"recoverOrphans":recover}).to_string().as_bytes()).map_err(|e|e.to_string())?;
-        let output=child.wait_with_output().map_err(|e|e.to_string())?;
-        if let Some(pid)=media_pid{self.media.lock().unwrap().remove(&pid);}
+        let request=child.stdin.take().unwrap().write_all(json!({"op":op,"params":params,"recoverOrphans":recover}).to_string().as_bytes());
+        let output=child.wait_with_output();
+        if let Some(pid)=media_pid{
+            if let Some(pids)=self.media.lock().unwrap().as_mut(){pids.remove(&pid);}
+        }
+        request.map_err(|e|e.to_string())?;
+        let output=output.map_err(|e|e.to_string())?;
         let text=String::from_utf8_lossy(&output.stdout);
         let result:Value=text.lines().rev().find_map(|s|serde_json::from_str(s).ok()).ok_or_else(||format!("Desktop adapter failed: {}",String::from_utf8_lossy(&output.stderr)))?;
         if result["ok"]==true {self.recovery_checked.store(true,Ordering::SeqCst);Ok(result["result"].clone())} else {Err(result["error"].as_str().unwrap_or("Desktop adapter failed").to_string())}
+    }
+    #[cfg(unix)]
+    fn stop_media_on_exit(&self){
+        if let Some(pids)=self.media.lock().unwrap().take() {
+            for pid in pids {unsafe{libc::kill(-(pid as i32),libc::SIGTERM);}}
+        }
     }
     fn cold_model_choices(&self)->Result<Value,String>{
         let models:Vec<Value>=serde_json::from_slice(&std::fs::read(self.shared.join("model-options.json")).map_err(|e|e.to_string())?).map_err(|e|e.to_string())?;
@@ -602,7 +621,7 @@ async fn studio_pause(app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<(),
     }Ok(())
 }
 #[tauri::command]
-async fn studio_media(params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
+async fn studio_media(params:Value,app:tauri::AppHandle,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
         // Media transcoding must not hold the state lock for its whole duration.
         // A separate adapter instance only reads state for this operation.
@@ -610,14 +629,16 @@ async fn studio_media(params:Value,host:State<'_,Arc<Host>>)->Result<Value,Strin
         let mut result=shadow.rpc("media",params)?;
         if result["mode"]=="demand" {
             let python=host.python().ok_or("The playback runtime is missing.")?;
-            let stream=preview_stream::start(&python,&host.shared.join("studio_stream.py"),result["streamConfig"].take())?;
+            let stream=app.state::<preview_stream::Service>().start(&python,&host.shared.join("studio_stream.py"),result["streamConfig"].take())?;
             result["url"]=stream["url"].clone();result["streamID"]=stream["streamID"].clone();
         }
         Ok(result)
     }).await.map_err(|e|e.to_string())?
 }
 #[tauri::command]
-async fn studio_stop_stream(id:String)->Result<(),String>{tauri::async_runtime::spawn_blocking(move||preview_stream::stop(&id)).await.map_err(|e|e.to_string())?;Ok(())}
+async fn studio_stop_stream(id:String,app:tauri::AppHandle)->Result<(),String>{
+    tauri::async_runtime::spawn_blocking(move||app.state::<preview_stream::Service>().stop(&id)).await.map_err(|e|e.to_string())
+}
 #[tauri::command]
 async fn studio_thumbnail(params:Value,host:State<'_,Arc<Host>>)->Result<Value,String> {
     let host=host.inner().clone();tauri::async_runtime::spawn_blocking(move||{
@@ -720,7 +741,27 @@ fn main(){
         let result=host.rpc("state",json!({})).and_then(|state|host.rpc("models",json!({})).map(|models|json!({"ok":true,"state":state,"installedModels":models,"sharedResources":host.shared,"adapter":host.backend,"interfaceManifest":serde_json::from_str::<Value>(include_str!("../../web/assets/interface-manifest.json")).unwrap()})));
         match result{Ok(value)=>println!("{value}"),Err(error)=>{eprintln!("{error}");std::process::exit(1)}}return;
     }
-    tauri::Builder::default().manage(host).manage(lan_debug::Service::default()).manage(TaskLifecycle::default()).manage(QueueControl::default()).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
+    let builder=tauri::Builder::default();
+    #[cfg(target_os="macos")]
+    let builder=builder.menu(|app|{
+        use tauri::menu::{Menu, MenuItem};
+        let menu=Menu::default(app)?;
+        // Keep the system menu layout and send Quit through the window's save guard.
+        let items=menu.items()?;
+        let app_menu=items.first().and_then(|item|item.as_submenu()).expect("macOS application menu");
+        let entries=app_menu.items()?;
+        let quit=entries.last().and_then(|item|item.as_predefined_menuitem()).expect("macOS Quit item");
+        let text=quit.text()?;
+        app_menu.remove(quit)?;
+        app_menu.append(&MenuItem::with_id(app,"studio-quit",text,true,Some("Cmd+Q"))?)?;
+        Ok(menu)
+    }).on_menu_event(|app,event|{
+        if event.id()=="studio-quit" {
+            if let Some(window)=app.get_webview_window("main"){let _=window.close();}
+            else {app.exit(0);}
+        }
+    });
+    builder.manage(host).manage(lan_debug::Service::default()).manage(preview_stream::Service::default()).manage(TaskLifecycle::default()).manage(QueueControl::default()).manage(StartupWindow(Arc::new(AtomicBool::new(false))))
         .setup(|app|{
             let log_root=app.state::<Arc<Host>>().root.clone();
             app.listen("studio-log",move |event|{let folder=log_root.join("logs");let _=std::fs::create_dir_all(&folder);let path=folder.join("native-host.log");if path.metadata().is_ok_and(|m|m.len()>2*1024*1024){let _=std::fs::rename(&path,folder.join("native-host.previous.log"));}if let Ok(mut file)=OpenOptions::new().create(true).append(true).open(path){let _=writeln!(file,"{} {}",std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs(),support_export::redact(event.payload()));}});
@@ -755,10 +796,36 @@ fn main(){
         })
         .invoke_handler(tauri::generate_handler![studio_diagnostics,studio_ack_finished,studio_appearance,studio_rpc,studio_status,studio_pick,studio_start,studio_pause,studio_media,studio_stop_stream,studio_thumbnail,studio_subtitles,studio_bootstrap,studio_cleanup,studio_reveal,studio_open_project,studio_export_logs,studio_export_speech])
         .on_window_event(|window,event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{
-            let host=window.state::<Arc<Host>>();if host.task_lock.try_lock().is_err(){api.prevent_close();let _=window.emit("studio-cleanup-close-requested",());return;}if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
-            else {window.state::<lan_debug::Service>().stop();preview_stream::stop_all();#[cfg(unix)] for pid in host.media.lock().unwrap().iter(){unsafe{libc::kill(-(*pid as i32),libc::SIGTERM);}}}
+            let host=window.state::<Arc<Host>>();
+            let Ok(_task)=host.task_lock.try_lock() else {
+                api.prevent_close();
+                let _=window.emit("studio-cleanup-close-requested",());
+                return;
+            };
+            if host.active.lock().unwrap().is_some(){api.prevent_close();let _=window.emit("studio-close-requested",());}
+            else {
+                #[cfg(target_os="macos")]
+                window.state::<QueueControl>().stop();
+                #[cfg(not(target_os="macos"))] {
+                    window.state::<lan_debug::Service>().stop();
+                    window.state::<preview_stream::Service>().stop_all();
+                    #[cfg(unix)] host.stop_media_on_exit();
+                }
+            }
         }})
-        .run(tauri::generate_context!()).expect("AniCanto desktop could not start");
+        .build(tauri::generate_context!()).expect("AniCanto desktop could not start")
+        .run(|app,event|{
+            #[cfg(target_os="macos")]
+            if let tauri::RunEvent::Exit=event {
+                app.state::<QueueControl>().stop();
+                app.state::<Arc<Host>>().stop_media_on_exit();
+                app.state::<preview_stream::Service>().stop_all();
+                app.state::<TaskLifecycle>().release_on_exit();
+                app.state::<lan_debug::Service>().stop();
+            }
+            #[cfg(not(target_os="macos"))]
+            let _=(app,event);
+        });
 }
 
 
@@ -772,7 +839,7 @@ mod cleanup_progress_tests {
         std::fs::create_dir_all(&root).unwrap();
         let child=Command::new("/bin/sleep").arg("10").spawn().unwrap();
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
-        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(Some(Active{child,id:"owned".into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()})),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
+        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(Some(Active{child,id:"owned".into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()})),media:Arc::new(Mutex::new(Some(HashSet::new()))),_instance:instance};
         assert_eq!(host.desktop_rpc("source-language",json!({"id":"next"})).unwrap_err(),"Pause processing before checking another source language.");
         assert_eq!(host.desktop_rpc("reset-video",json!({"id":"next"})).unwrap_err(),"Pause processing before resetting a video.");
         assert_eq!(host.desktop_rpc("remove-model",json!({"id":"unused"})).unwrap_err(),"Pause processing before removing a model.");
@@ -787,7 +854,7 @@ mod cleanup_progress_tests {
         let receipt=root.join("project-cache-progress.json");
         std::fs::write(&receipt,json!({"operationID":"test-operation","phase":"deleting","processed":2,"total":4}).to_string()).unwrap();
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
-        let host=Arc::new(Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance});
+        let host=Arc::new(Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(false),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(Some(HashSet::new()))),_instance:instance});
         let held=host.rpc_lock.lock().unwrap();let reader=host.clone();let (tx,rx)=std::sync::mpsc::channel();
         let worker=std::thread::spawn(move||{let _=tx.send(reader.desktop_rpc("project-cache-status",json!({"operationID":"test-operation"})));});
         let result=rx.recv_timeout(std::time::Duration::from_secs(2));
@@ -834,7 +901,7 @@ mod cleanup_progress_tests {
         let root=std::env::temp_dir().join(format!("anicanto-stall-{}-{nonce}",std::process::id()));
         std::fs::create_dir_all(&root).unwrap();
         let instance=OpenOptions::new().create(true).truncate(false).read(true).write(true).open(root.join("instance.lock")).unwrap();
-        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(HashSet::new())),_instance:instance};
+        let host=Host{root:root.clone(),shared:root.clone(),windows:root.clone(),backend:root.clone(),helper:root.clone(),recovery_checked:AtomicBool::new(true),cleanup_pending:AtomicBool::new(false),rpc_lock:Mutex::new(()),task_lock:Mutex::new(()),active:Mutex::new(None),media:Arc::new(Mutex::new(Some(HashSet::new()))),_instance:instance};
         let own=|host:&Host,id:&str|{let child=Command::new("/bin/sleep").arg("300").stdout(Stdio::piped()).spawn().unwrap();
             *host.active.lock().unwrap()=Some(Active{child,id:id.into(),row:Some("row".into()),paused:false,setup:false,action:"batch".into(),model_id:None,started:Instant::now()});};
         own(&host,"owned");

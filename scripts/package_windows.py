@@ -10,7 +10,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/'windows'
 VERSION=json.loads((ROOT/'VERSION.json').read_text())
-DEST=ROOT/('dist/windows/AniCanto-Windows-'+VERSION['version']+'-architecture')
+DEST=ROOT/'.build/windows/architecture'/('AniCanto-Windows-'+VERSION['version']+'-architecture')
 EXE=ROOT/'.build/windows/launcher-target/x86_64-pc-windows-msvc/release/AniCanto-Windows.exe'
 
 

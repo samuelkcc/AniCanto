@@ -37,7 +37,7 @@ def defaults(language='en'):
         fillMissingVoiceScripts=True,requireCompleteDubbing=True,fallbackToRoleVoice=True,automaticAlternateVoice=False,preferFirstAudibleTake=True,
         failedVoicePolicy='first-take',automaticSystemVoice=False,
         separateBackground=True,independentReferences=True,voiceStyleMode='clone',
-        cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,
+        cantoneseLocale='yue-HK',maxNaturalCandidates=0,autoSkipOP=True,translateOPED=False,openingDetectionMinutes=5,
         burnOutputCaptions=False,startOffset=0,limit=0,mixOriginal=0,subtitleOutput='none')
 
 def restore_requested_drama(store,ready,small_capable):
@@ -115,6 +115,7 @@ class Store:
         settings['sourcePolicyRevision']=source_revision
         settings['sourceAllocationRevision']=allocation_revision
         settings['deliveryPolicyRevision']=__import__('delivery_policy').REVISION
+        settings['exportPackageRevision']=__import__('export_packages').REVISION
         settings['workModeRevision']=__import__('work_modes').REVISION
         settings['speechDurationRevision']=__import__('speech_duration').REVISION
         settings['repairPermissionsRevision']=__import__('repair_permissions').REVISION

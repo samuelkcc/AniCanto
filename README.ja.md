@@ -1,8 +1,8 @@
 [English](README.md) · [繁體中文](README.zh-HK.md) · [简体中文](README.zh-CN.md) · **日本語**
 
-## 0.25.54 Beta：吹き替え処理の更新
+## 0.25.56 Beta：書き出しの安定性を向上
 
-エキスパートで人名の元の発音を指定できます。原音未確認と吹き替え欠落を分け、短い繰り返しの翻訳を既存の再試行回数内で拒否します。保存済みジョブと使用済み回数は保持します。
+書き出し時に映像と音声を確認します。先頭に吹き替え音声を置き、読み取り可能な原音トラックを元の順に収録します。
 
 <p align="center"><img src="docs/images/anicanto-cantonese-cover.png" alt="AniCanto — original Cantonese studio assistants" width="1100"></p>
 
@@ -19,21 +19,21 @@
 
 ## ダウンロード
 
-**[Mac 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-macOS-0.25.54.zip)** · **[Windows 0.25.54](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto.exe)**
+**[Mac 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-macOS-0.25.56.zip)** · **[Windows 0.25.56](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto.exe)**
 
-[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.54-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.54-beta/AniCanto-0.25.54-source-materials-reviewed.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
+[リリースノート](https://github.com/samuelkcc/AniCanto/releases/tag/v0.25.56-beta) · [対応ソース](https://github.com/samuelkcc/AniCanto/releases/download/v0.25.56-beta/AniCanto-0.25.56-source-materials-reviewed.tar.gz) · [ソースの保管と再ビルド](docs/BUILD-AND-RECOVERY.md)
 <!-- desktop-downloads:end -->
 
 **iOS / iPadOS · 独立したモバイル版**
 
 <a href="https://apps.apple.com/jp/app/anicanto/id6828568012"><img src="https://anicanto.com/assets/app-store/download-ja.svg" height="44" alt="App Storeからダウンロード"></a>
 
-## 最近の更新 · 0.25.54 / build 446
+## 最近の更新 · 0.25.56 / build 448
 
-- 変換中の動画選択を固定し、一時停止と保存の完了後に切り替えます。
-- 声の参照音声を、そのセリフの時間範囲内に限定します。
-- 字幕の空白区間の分類と、書き出し時の任意音声キャッシュ処理を改善しました。
-- 保存済み録音、原音の時間軸、使用済みの修復回数を保持します。
+- 映像の長さを個別に確認します。コピーした映像が検証に失敗した場合は、残っている再試行回数で再エンコードします。
+- 追加音声や字幕の格納に失敗した場合も、検証済みの動画を保持します。詳細は校正レポートで確認できます。
+- 基本モードとエキスパートモードの新しいジョブでは、読み取り可能な原音トラックを既定で保持します。
+- OP / ED の検出範囲を 5、10、15、30 分から選べます。保存済みのジョブは既存の設定を使用します。
 
 ## AniCanto を作った理由
 

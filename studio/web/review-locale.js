@@ -1,5 +1,8 @@
 export const reviewLocale={
   "zh-HK": {
+    "Optional tracks omitted": "附加音軌或字幕未加入",
+    "The verified movie was saved. Some original audio or embedded subtitles could not be added.": "已儲存驗證通過的影片。部分原裝音軌或內嵌字幕未能加入。",
+    "Packaging warnings": "封裝提示",
     "Subtitle voiced by neighbouring turn": "字幕由相鄰對白配音",
     "Source timing review": "原聲時間需覆核",
     "Subtitle allocation review": "字幕分句需覆核",
@@ -44,6 +47,9 @@ export const reviewLocale={
     "Recording presence does not certify pronunciation. Delivery problems and optional listening notes are reported separately.": "有錄音唔代表讀音已驗證；目標配音未交付同可選試聽提示會分開顯示。"
   },
   "zh-CN": {
+    "Optional tracks omitted": "附加音轨或字幕未添加",
+    "The verified movie was saved. Some original audio or embedded subtitles could not be added.": "已保存验证通过的视频。部分原版音轨或内嵌字幕未能添加。",
+    "Packaging warnings": "封装提示",
     "Subtitle voiced by neighbouring turn": "字幕由相邻对白配音",
     "Source timing review": "原声时间需复核",
     "Subtitle allocation review": "字幕分句需复核",
@@ -88,6 +94,9 @@ export const reviewLocale={
     "Recording presence does not certify pronunciation. Delivery problems and optional listening notes are reported separately.": "有录音不代表读音已验证；目标配音未交付与可选试听提示会分开显示。"
   },
   "ja": {
+    "Optional tracks omitted": "追加トラックの省略",
+    "The verified movie was saved. Some original audio or embedded subtitles could not be added.": "検証済みの動画を保存しました。一部の元音声または埋め込み字幕を追加できませんでした。",
+    "Packaging warnings": "パッケージの警告",
     "Subtitle voiced by neighbouring turn": "隣の発話で吹き替え済み",
     "Source timing review": "元音声の時刻を確認",
     "Subtitle allocation review": "字幕の分割を確認",
